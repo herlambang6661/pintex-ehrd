@@ -32,3 +32,17 @@
         </div>
     </div>
 </footer>
+
+<script type="text/javascript">
+    $(function () {
+        $('#entitasText').html($('#selectEntitas').val());
+        $('#entitas').val($('#selectEntitas').val());
+
+        $('#selectEntitas').on('keydown keyup load change hover', function() {
+            var sp = this.value;
+            console.log("Entitas Terpilih: " + sp);
+            $('#entitasText').html(sp);
+            $('#entitas').val(sp);
+        });
+    });
+</script>
