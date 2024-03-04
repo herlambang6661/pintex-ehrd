@@ -7,6 +7,7 @@ use App\Http\Controllers\Penerimaan;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Administrasi;
 use App\Http\Controllers\AuthController;
+use App\Http\Controllers\Datatables\DataLamaran;
 use Illuminate\Contracts\Auth\Access\Authorizable;
 use SebastianBergmann\CodeCoverage\Report\Html\Dashboard;
 
@@ -24,6 +25,10 @@ use SebastianBergmann\CodeCoverage\Report\Html\Dashboard;
 Route::get('/', function () {
     return view('login');
 });
+
+// Source untuk datatables
+Route::resource('getLamaran', DataLamaran::class);
+
 
 Route::controller(AuthController::class)->group(function () {
     Route::get('login', 'index')->name('login');
@@ -47,6 +52,8 @@ Route::controller(Penerimaan::class)->group(function () {
     Route::get('penerimaan/wawancara', 'wawancara')->name('penerimaan/wawancara');
     Route::get('penerimaan/karyawan', 'karyawan')->name('penerimaan/karyawan');
     Route::get('penerimaan/legalitas', 'legalitas')->name('penerimaan/legalitas');
+
+    Route::post('storedataLamaran', 'storeLamaran');
 });
 
 Route::controller(Absensi::class)->group(function () {

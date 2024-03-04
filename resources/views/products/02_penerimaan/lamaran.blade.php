@@ -3,13 +3,23 @@
 
         <style>
             td.cuspad0 {
-                padding-top: 1px;
-                padding-bottom: 1px;
+                padding-top: 10px;
+                padding-bottom: 10px;
                 padding-right: 13px;
                 padding-left: 13px;
             }
             td.cuspad1 {
                 text-transform: uppercase;
+            }
+            td.cuspad2 {
+                /* padding-top: 0.5px;
+                padding-bottom: 0.5px;
+                padding-right: 0.5px;
+                padding-left: 0.5px;
+                margin-top: 5px;
+                margin-bottom: 5px;
+                margin-right: 5px;
+                margin-left: 5px; */
             }
         </style>
         <div class="page">
@@ -72,11 +82,11 @@
                                             <i class="fa-solid fa-users"></i>
                                         </div>
                                     </div>
-                                    <table style="width:100%; text-transform:uppercase;font-family: 'Trebuchet MS', Helvetica, sans-serif;"
+                                    <table style="width:100%; font-family: 'Trebuchet MS', Helvetica, sans-serif;"
                                         class="display table table-vcenter card-table table-sm table-striped table-bordered table-hover text-nowrap datatable-lamaran">
                                         <thead>
                                             <tr class="text-center">
-                                                <th>No</th>
+                                                <th></th>
                                                 <th>NIK</th>
                                                 <th>Nama</th>
                                                 <th>Gender</th>
@@ -89,7 +99,7 @@
                                                 <th>Email</th>
                                                 <th>Posisi Dituju</th>
                                                 <th>Ket</th>
-                                                <th width="150px">Action</th>
+                                                <th>Wawancara</th>
                                             </tr>
                                         </thead>
                                     </table>
@@ -108,17 +118,17 @@
                         <h5 class="modal-title"><i class="fa-solid fa-user-plus"></i> Buat Data Lamaran</h5>
                         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                     </div>
-                    <form id="formCotton" name="formCotton" method="post" action="javascript:void(0)">
+                    <form id="formLamaran" name="formLamaran" method="post" action="javascript:void(0)">
                         @csrf
                             <div class="modal-body">
                                 <div class="card-stamp card-stamp-lg">
                                     <div class="card-stamp-icon bg-primary">
-                                        <i class="fa-regular fa-circle-check"></i>
+                                        <i class="fa-solid fa-pen-to-square"></i>
                                     </div>
                                 </div>
                                 <div class="mb-3">
                                     <label class="form-label">Entitas</label>
-                                    <input type="text" class="form-control border border-dark" name="entitas" id="entitas" placeholder="Entitas" readonly>
+                                    <input type="text" class="form-control border border-dark bg-secondary-lt" name="entitas" id="entitas" readonly>
                                 </div>
                                 <div class="mb-3">
                                     <label class="form-label">Nama</label>
@@ -152,12 +162,12 @@
                                     <div class="col-lg-6">
                                         <div class="mb-3">
                                             <label class="form-label">Tanggal Lahir</label>
-                                            <div class="input-icon mb-2">
-                                                <input name="tanggallahir" class="form-control border-dark" placeholder="Select a date" id="datepicker-icon"/>
+                                            <input name="tanggallahir" class="form-select border-dark" placeholder="Select a date" id="datepicker0"/>
+                                            {{-- <div class="input-icon mb-2">
                                                 <span class="input-icon-addon">
                                                     <svg xmlns="http://www.w3.org/2000/svg" class="icon" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><path d="M4 7a2 2 0 0 1 2 -2h12a2 2 0 0 1 2 2v12a2 2 0 0 1 -2 2h-12a2 2 0 0 1 -2 -2v-12z" /><path d="M16 3v4" /><path d="M8 3v4" /><path d="M4 11h16" /><path d="M11 15h1" /><path d="M12 15v3" /></svg>
                                                 </span>
-                                            </div>
+                                            </div> --}}
                                         </div>
                                     </div>
                                 </div>
@@ -213,21 +223,11 @@
                                             <div class="row">
                                                 <div class="col-lg-4">
                                                     <label class="form-label">Tinggi</label>
-                                                    <div class="input-group mb-2">
-                                                        <input type="number" min="140" class="form-control border border-dark" name="tinggi" id="tinggi" placeholder="Tinggi badan">
-                                                        <span class="input-group-text border border-dark">
-                                                            cm
-                                                        </span>
-                                                    </div>
+                                                    <input type="number" min="140" class="form-control border border-dark" name="tinggi" id="tinggi" placeholder="Tinggi badan">
                                                 </div>
                                                 <div class="col-lg-4">
                                                     <label class="form-label">Berat</label>
-                                                    <div class="input-group mb-2">
-                                                        <input type="number" min="20" class="form-control border border-dark" name="berat" id="berat" placeholder="Berat badan">
-                                                        <span class="input-group-text border border-dark">
-                                                            kg
-                                                        </span>
-                                                    </div>
+                                                    <input type="number" min="20" class="form-control border border-dark" name="berat" id="berat" placeholder="Berat badan">
                                                 </div>
                                                 <div class="col-lg-4">
                                                     <label class="form-label">Nomor Telepon</label>
@@ -241,9 +241,14 @@
                                     <div class="col-lg-6">
                                         <div class="mb-3">
                                             <label class="form-label">Posisi Yang Dituju</label>
-                                            <div class="form-group">
-                                                <input type="text" value="112" min="1" class="form-control border border-dark" name="banyakbales" id="banyakbales" placeholder="Masukkan Banyak Bales dalam 1 Container">
-                                            </div>
+                                            <select name="posisi" id="posisi" class="form-select border-dark">
+                                                <option value="" hidden>-- Pilih Posisi --</option>
+                                                <option value="Operator">Operator</option>
+                                                <option value="Pengemudi">Pengemudi</option>
+                                                <option value="Keamanan">Keamanan</option>
+                                                <option value="IT">IT</option>
+                                                <option value="HRD">HRD</option>
+                                            </select>
                                         </div>
                                     </div>
                                     <div class="col-lg-6">
@@ -284,7 +289,7 @@
                             </div>
                             <div class="modal-footer">
                                 <a href="#" class="btn btn-link link-secondary" data-bs-dismiss="modal"><i class="fa-solid fa-fw fa-arrow-rotate-left"></i> Kembali</a>
-                                <button type="submit" id="submitCotton" class="btn btn-primary ms-auto">
+                                <button type="submit" id="submitLamaran" class="btn btn-primary ms-auto">
                                     <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-device-floppy" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><path d="M6 4h10l4 4v10a2 2 0 0 1 -2 2h-12a2 2 0 0 1 -2 -2v-12a2 2 0 0 1 2 -2" /><path d="M12 14m-2 0a2 2 0 1 0 4 0a2 2 0 1 0 -4 0" /><path d="M14 4l0 4l-6 0l0 -4" /></svg>
                                     Simpan
                                 </button>
@@ -316,25 +321,107 @@
                 </form>
             </div>
         </div>
+        {{-- Modal Filter --}}
+        <div class="offcanvas offcanvas-blur offcanvas-end" tabindex="-1" id="offcanvasEnd-lamaran" aria-labelledby="offcanvasEndLabel">
+            <div class="offcanvas-header">
+                <h2 class="offcanvas-title" id="offcanvasEndLabel">Saring Data Lamaran</h2>
+                <button type="button" class="btn-close text-reset" data-bs-dismiss="offcanvas" aria-label="Close"></button>
+            </div>
+            <div class="offcanvas-body">
+                <div>
+                    <div class="card-stamp card-stamp-lg">
+                        <div class="card-stamp-icon bg-blue">
+                            <i class="fa-solid fa-users"></i>
+                        </div>
+                    </div>
+                    <form action="#" id="form-filter-items" method="get" autocomplete="off" novalidate="" class="sticky-top">
+                        <div class="form-label">Tanggal Penginputan</div>
+                        <div class="row">
+                            <div class="col">
+                                <div class="input-icon mb-2">
+                                    <input name="dari" class="form-control border-primary" placeholder="Select a date" id="datepicker1" value="<?= date('Y-01-01'); ?>"/>
+                                    <span class="input-icon-addon">
+                                        <svg xmlns="http://www.w3.org/2000/svg" class="icon" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><path d="M4 7a2 2 0 0 1 2 -2h12a2 2 0 0 1 2 2v12a2 2 0 0 1 -2 2h-12a2 2 0 0 1 -2 -2v-12z" /><path d="M16 3v4" /><path d="M8 3v4" /><path d="M4 11h16" /><path d="M11 15h1" /><path d="M12 15v3" /></svg>
+                                    </span>
+                                </div>
+                            </div>
+                            <div class="col">
+                                <div class="input-icon mb-2">
+                                    <input name="sampai" class="form-control border-primary" placeholder="Select a date" id="datepicker2" value="<?= date('Y-12-31'); ?>"/>
+                                    <span class="input-icon-addon">
+                                        <svg xmlns="http://www.w3.org/2000/svg" class="icon" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><path d="M4 7a2 2 0 0 1 2 -2h12a2 2 0 0 1 2 2v12a2 2 0 0 1 -2 2h-12a2 2 0 0 1 -2 -2v-12z" /><path d="M16 3v4" /><path d="M8 3v4" /><path d="M4 11h16" /><path d="M11 15h1" /><path d="M12 15v3" /></svg>
+                                    </span>
+                                </div>
+                            </div>
+                        </div>
+                        <br>
+                        <div class="form-label">Jenis Kelamin</div>
+                        <div class="mb-4">
+                            <div class="row">
+                                <div class="col-sm-6">
+                                    <label class="form-check">
+                                        <input type="checkbox" class="form-check-input filter-checkbox-rayon" name="pendidikan[]" value="IBR" checked="" id="sSmp">
+                                        <span class="form-check-label">Pria</span>
+                                    </label>
+                                    <label class="form-check">
+                                        <input type="checkbox" class="form-check-input filter-checkbox-rayon" name="pendidikan[]" value="SPV" checked="" id="sSma">
+                                        <span class="form-check-label">Wanita</span>
+                                    </label>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="form-label">Posisi Dituju</div>
+                        <div class="mb-4">
+                            <label class="form-check">
+                                <input type="checkbox" class="form-check-input" name="posisidituju[]" value="OPERATOR" checked="" id="pOperator">
+                                <span class="form-check-label">Operator</span>
+                            </label>
+                            <label class="form-check">
+                                <input type="checkbox" class="form-check-input" name="posisidituju[]" value="PENGEMUDI" checked="" id="pPengemudi">
+                                <span class="form-check-label">Pengemudi</span>
+                            </label>
+                            <label class="form-check">
+                                <input type="checkbox" class="form-check-input" name="posisidituju[]" value="IT" checked="" id="pIT">
+                                <span class="form-check-label">IT</span>
+                            </label>
+                            <label class="form-check">
+                                <input type="checkbox" class="form-check-input" name="posisidituju[]" value="HRD" checked="" id="pHRD">
+                                <span class="form-check-label">HRD</span>
+                            </label>
+                            <label class="form-check">
+                                <input type="checkbox" class="form-check-input" name="posisidituju[]" value="KEAMANAN" checked="" id="pKeamanan">
+                                <span class="form-check-label">Keamanan</span>
+                            </label>
+                        </div>
+                        <div class="form-label">Tinggi Minimal</div>
+                        <div class="mb-4">
+                            <input type="number" min="0" max="300" class="form-control" id="tinggi">
+                        </div>
+                        <div class="form-label">Proses Wawancara</div>
+                        <div class="mb-4">
+                            <label class="form-check form-switch">
+                                <input class="form-check-input" type="checkbox">
+                                <span class="form-check-label form-check-label-on">Sudah</span>
+                                <span class="form-check-label form-check-label-off">Belum</span>
+                            </label>
+                        </div>
+                        <div class="mt-5">
+                            <button type="button" class="btn btn-primary w-100" id="btn-filter">Filter
+                                Data</button> <br>
+                            <button type="button" class="btn btn-link w-100" id="btn-reset-items">Reset to
+                                defaults</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
         <script type="text/javascript">
-            // @formatter:off
-            document.addEventListener("DOMContentLoaded", function () {
-                window.Litepicker && (new Litepicker({
-                    element: document.getElementById('datepicker-icon'),
-                    buttonText: {
-                        previousMonth: `<svg xmlns="http://www.w3.org/2000/svg" class="icon" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><path d="M15 6l-6 6l6 6" /></svg>`,
-                        nextMonth: `<svg xmlns="http://www.w3.org/2000/svg" class="icon" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><path d="M9 6l6 6l-6 6" /></svg>`,
-                    },
-                }));
-            });
-            // @formatter:on
-            
             /*------------------------------------------
             --------------------------------------------
             Render DataTable
             --------------------------------------------
             --------------------------------------------*/
-            var tableRayon = $('.datatable-lamaran').DataTable({
+            var tableLamaran = $('.datatable-lamaran').DataTable({
                 "processing": true, //Feature control the processing indicator.
                 "serverSide": true, //Feature control DataTables' server-side processing mode.
                 "scrollX": true,
@@ -343,30 +430,40 @@
                 "dom": "<'card-header h3' B>" +
                     "<'card-body border-bottom py-3' <'row'<'col-sm-6'l><'col-sm-6'f>> >" +
                     "<'table-responsive' <'col-sm-12'tr> >" +
-                    "<'card-footer' <'row'<'col-sm-5'i><'col-sm-7'p> >>",
+                    "<'card-footer' <'row'<'col-sm-8'i><'col-sm-4'p> >>",
                 buttons: [
                     {
-                        text: '<i class="fa-solid fa-filter" style="margin-right:5px"></i>Filter',
-                        className: 'btn btn-warning',
+                        text: '<i class="fa-solid fa-fw fa-trash-can"></i>',
+                        className: 'btn btn-red',
                         attr: {
-                            'href': '#offcanvasEnd-rayon',
+                            'href': '#offcanvasEnd-lamaran',
                             'data-bs-toggle': 'offcanvas',
                             'role': 'button',
                             'aria-controls': 'offcanvasEnd',
-
                         }
                     },
                     {
-                        extend: 'copyHtml5',
-                        className: 'btn btn-teal',
-                        text: '<i class="fa fa-copy text-white" style="margin-right:5px"></i> Copy',
-                        action: newexportaction,
-                    }, 
+                        text: '<i class="fa-solid fa-filter" style="margin-right:5px"></i>Filter',
+                        className: 'btn btn-blue',
+                        attr: {
+                            'href': '#offcanvasEnd-lamaran',
+                            'data-bs-toggle': 'offcanvas',
+                            'role': 'button',
+                            'aria-controls': 'offcanvasEnd',
+                        }
+                    },
+                    {
+                        className: 'btn btn-pink',
+                        text: '<i class="fa-solid fa-check-to-slot"></i> Proses Wawancara',
+                        action: function(e, node, config) {
+                            $('#myModalAccQty').modal('show')
+                        }
+                    },
                     {
                         extend: 'excelHtml5',
                         autoFilter: true,
                         className: 'btn btn-success',
-                        text: '<i class="fa fa-file-excel text-white" style="margin-right:5px"></i> Excel',
+                        text: '<i class="fa fa-file-excel text-white" style="margin-right:5px"></i> Download Excel',
                         action: newexportaction,
                     }, 
                 ],
@@ -384,21 +481,253 @@
                         "next": '<svg xmlns="http://www.w3.org/2000/svg" class="icon" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z" fill="none"></path><path d="M9 6l6 6l-6 6"></path></svg>',
                         "previous": '<svg xmlns="http://www.w3.org/2000/svg" class="icon" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z" fill="none"></path><path d="M15 6l-6 6l6 6"></path></svg>',
                     },
+                    "select": {
+                        rows: {
+                            _: "%d kandidat dipilih",
+                            0: "Pilih item dan tekan tombol Proses data untuk memproses Wawancara",
+                        }
+                    },
                 },
                 ajax: "{{ route('getLamaran.index') }}",
+                columnDefs: [
+                    {
+                        'targets': 0,
+                        'checkboxes': {
+                            'selectRow': true
+                        },
+                        // orderable: false,
+                        // targets: 0,
+                        className: 'select-checkbox' //<--- here
+                    }
+                    
+                ],
+                select: {
+                    'style': 'multi'
+                },
                 columns: [
-                    {data: 'DT_RowIndex', name: 'DT_RowIndex', className:'cuspad0'},
-                    {data: 'NOCONTRACT', name: 'NOCONTRACT', className:'cuspad0'},
-                    {data: 'TERIMA', name: 'TERIMA', className:'cuspad0'},
-                    {data: 'NOFORM', name: 'NOFORM', className:'cuspad0'},
-                    {data: 'NOIMP', name: 'NOIMP', className:'cuspad0'},
-                    {data: 'KODEBALE_RAYON', name: 'KODEBALE_RAYON', className:'cuspad0'},
-                    {data: 'ENTITAS', name: 'ENTITAS', className:'cuspad0'},
-                    {data: 'SUPPLIER', name: 'SUPPLIER', className:'cuspad0'},
-                    {data: 'QTY_BALES', name: 'QTY_BALES', className:'cuspad0'},
-                    {data: 'action', name: 'action', orderable: false, searchable: false, className:'cuspad0'},
+                    {data: 'select_orders', name: 'select_orders', className:'cuspad2', orderable: false, searchable: false},
+                    {data: 'nik', name: 'nik', className:'cuspad0 text-center'},
+                    {data: 'nama', name: 'nama', className:'cuspad0'},
+                    {data: 'gender', name: 'gender', className:'cuspad0 text-center'},
+                    {data: 'ttl', name: 'ttl'},
+                    {data: 'pendidikan', name: 'pendidikan', className:'cuspad0 text-center'},
+                    {data: 'jurusan', name: 'jurusan', className:'cuspad0 text-center'},
+                    {data: 'tinggi', name: 'tinggi', className:'cuspad0 text-center'},
+                    {data: 'berat', name: 'berat', className:'cuspad0 text-center'},
+                    {data: 'notlp', name: 'notlp', className:'cuspad0 text-center'},
+                    {data: 'email', name: 'email', className:'cuspad0 text-center'},
+                    {data: 'posisi', name: 'posisi', className:'cuspad0 text-center'},
+                    {data: 'keterangan', name: 'keterangan', className:'cuspad0'},
+                    {data: 'status', name: 'status', className:'cuspad0 text-center'},
+                    // {data: 'action', name: 'action', orderable: false, searchable: false, className:'cuspad0 text-center'},
                 ],
                 
             });
+            
+            function newexportaction(e, dt, button, config) {
+                var self = this;
+                var oldStart = dt.settings()[0]._iDisplayStart;
+                dt.one('preXhr', function(e, s, data) {
+                    // Just this once, load all data from the server...
+                    data.start = 0;
+                    data.length = 2147483647;
+                    dt.one('preDraw', function(e, settings) {
+                        // Call the original action function
+                        if (button[0].className.indexOf('buttons-copy') >= 0) {
+                            $.fn.dataTable.ext.buttons.copyHtml5.action.call(self, e, dt, button, config);
+                        } else if (button[0].className.indexOf('buttons-excel') >= 0) {
+                            $.fn.dataTable.ext.buttons.excelHtml5.available(dt, config) ?
+                                $.fn.dataTable.ext.buttons.excelHtml5.action.call(self, e, dt, button, config) :
+                                $.fn.dataTable.ext.buttons.excelFlash.action.call(self, e, dt, button, config);
+                        } else if (button[0].className.indexOf('buttons-csv') >= 0) {
+                            $.fn.dataTable.ext.buttons.csvHtml5.available(dt, config) ?
+                                $.fn.dataTable.ext.buttons.csvHtml5.action.call(self, e, dt, button, config) :
+                                $.fn.dataTable.ext.buttons.csvFlash.action.call(self, e, dt, button, config);
+                        } else if (button[0].className.indexOf('buttons-pdf') >= 0) {
+                            $.fn.dataTable.ext.buttons.pdfHtml5.available(dt, config) ?
+                                $.fn.dataTable.ext.buttons.pdfHtml5.action.call(self, e, dt, button, config) :
+                                $.fn.dataTable.ext.buttons.pdfFlash.action.call(self, e, dt, button, config);
+                        } else if (button[0].className.indexOf('buttons-print') >= 0) {
+                            $.fn.dataTable.ext.buttons.print.action(e, dt, button, config);
+                        }
+                        dt.one('preXhr', function(e, s, data) {
+                            // DataTables thinks the first item displayed is index 0, but we're not drawing that.
+                            // Set the property to what it was before exporting.
+                            settings._iDisplayStart = oldStart;
+                            data.start = oldStart;
+                        });
+                        // Reload the grid with the original page. Otherwise, API functions like table.cell(this) don't work properly.
+                        setTimeout(dt.ajax.reload, 0);
+                        // Prevent rendering of the full data to the DOM
+                        return false;
+                    });
+                });
+                // Requery the server with the new one-time export settings
+                dt.ajax.reload();
+            }
+
+            $(function () {
+                /*------------------------------------------==============================================================================================================================================================
+                --------------------------------------------==============================================================================================================================================================
+                Create Data
+                --------------------------------------------==============================================================================================================================================================
+                --------------------------------------------==============================================================================================================================================================*/
+                    if ($("#formLamaran").length > 0) {
+                        $("#formLamaran").validate({
+                            rules: {
+                                entitas: {
+                                    required: true,
+                                },
+                                nama: {
+                                    required: true,
+                                },
+                                nik: {
+                                    required: true,
+                                },
+                                gender: {
+                                    required: true,
+                                },
+                                tempat: {
+                                    required: true,
+                                },
+                                tanggallahir: {
+                                    required: true,
+                                },
+                                pendidikan: {
+                                    required: true,
+                                },
+                                jurusan: {
+                                    required: true,
+                                },
+                                alamat: {
+                                    required: true,
+                                },
+                                agama: {
+                                    required: true,
+                                },
+                                tinggi: {
+                                    required: true,
+                                },
+                                berat: {
+                                    required: true,
+                                },
+                                notlp: {
+                                    required: true,
+                                },
+                                posisi: {
+                                    required: true,
+                                },
+                            },
+                            messages: {
+                                entitas: {
+                                    required: "Masukkan Entitas",
+                                },
+                                nama: {
+                                    required: "Masukkan Nama Kandidat",
+                                },
+                                nik: {
+                                    required: "Masukkan NIK KTP",
+                                },
+                                gender: {
+                                    required: "Masukkan Gender Kandidat",
+                                },
+                                tempat: {
+                                    required: "Masukkan tempat tinggal",
+                                },
+                                tanggallahir: {
+                                    required: "Masukkan tanggal lahir",
+                                },
+                                pendidikan: {
+                                    required: "Masukkan pendidikan",
+                                },
+                                jurusan: {
+                                    required: "Masukkan jurusan",
+                                },
+                                alamat: {
+                                    required: "Masukkan alamat",
+                                },
+                                agama: {
+                                    required: "Masukkan agama",
+                                },
+                                tinggi: {
+                                    required: "Masukkan tinggi",
+                                },
+                                berat: {
+                                    required: "Masukkan berat",
+                                },
+                                notlp: {
+                                    required: "Masukkan nomor telepon",
+                                },
+                                posisi: {
+                                    required: "Masukkan posisi dituju",
+                                },
+                            },
+
+                            submitHandler: function(form) {
+                                $.ajaxSetup({
+                                    headers: {
+                                    'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                                    }
+                                });
+                                $('#submitLamaran').html('<i class="fa-solid fa-fw fa-spinner fa-spin"></i> Please Wait...');
+                                $("#submitLamaran"). attr("disabled", true);
+                                $.ajax({
+                                    url: "{{url('storedataLamaran')}}",
+                                    type: "POST",
+                                    data: $('#formLamaran').serialize(),
+                                    beforeSend: function() {
+                                        Swal.fire({
+                                            title: 'Mohon Menunggu',
+                                            html: '<center><lottie-player src="https://assets9.lottiefiles.com/private_files/lf30_al2qt2jz.json"  background="transparent"  speed="1"  style="width: 300px; height: 300px;"  loop autoplay></lottie-player></center><br><h1 class="h4">Sedang memproses data, Proses mungkin membutuhkan beberapa menit. <br><br><b class="text-danger">(Jangan menutup jendela ini, bisa mengakibatkan error)</b></h1>',
+                                            showConfirmButton: false,
+                                            timerProgressBar: true,
+                                            allowOutsideClick: false,
+                                            allowEscapeKey: false,
+                                        })
+                                    },
+                                    success: function( response ) {
+                                        console.log( 'Completed.' );
+                                        $('#submitLamaran').html('<svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-device-floppy" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><path d="M6 4h10l4 4v10a2 2 0 0 1 -2 2h-12a2 2 0 0 1 -2 -2v-12a2 2 0 0 1 2 -2" /><path d="M12 14m-2 0a2 2 0 1 0 4 0a2 2 0 1 0 -4 0" /><path d="M14 4l0 4l-6 0l0 -4" /></svg> Simpan');
+                                        $("#submitLamaran"). attr("disabled", false);
+                                        tableLamaran.draw();
+                                        const Toast = Swal.mixin({
+                                            toast: true,
+                                            position: "top-end",
+                                            showConfirmButton: false,
+                                            timer: 4000,
+                                            timerProgressBar: true,
+                                            didOpen: (toast) => {
+                                                toast.onmouseenter = Swal.stopTimer;
+                                                toast.onmouseleave = Swal.resumeTimer;
+                                            }
+                                        });
+                                            Toast.fire({
+                                            icon: "success",
+                                            title: response.msg,
+                                        });
+                                        document.getElementById("formLamaran").reset();
+                                        var sp = $('#selectEntitas').val();
+                                        $('#entitas').val(sp);
+                                        $('#modal-lamaran').modal('hide');
+                                    },
+                                    error: function (data) {
+                                        console.log('Error:', data);
+                                        // const obj = JSON.parse(data.responseJSON);
+                                        tableLamaran.draw();
+                                        Swal.fire({
+                                            icon: 'error',
+                                            title: 'Gagal Input',
+                                            html: data.responseJSON.message,
+                                            showConfirmButton: true
+                                        });
+                                        $('#submitLamaran').html('<svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-device-floppy" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><path d="M6 4h10l4 4v10a2 2 0 0 1 -2 2h-12a2 2 0 0 1 -2 -2v-12a2 2 0 0 1 2 -2" /><path d="M12 14m-2 0a2 2 0 1 0 4 0a2 2 0 1 0 -4 0" /><path d="M14 4l0 4l-6 0l0 -4" /></svg> Simpan');
+                                        $("#submitLamaran"). attr("disabled", false);
+                                    }
+                                });
+                            }
+                        })
+                    }
+            });
+
         </script>
 @endsection
