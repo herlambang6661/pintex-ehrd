@@ -90,4 +90,119 @@ class Penerimaan extends Controller
         }
         return Response()->json($arr);
     }
+
+    public function checkLamaran(Request $request)
+    {
+        if (empty($request->id)) {
+            echo "Tidak ada data yang dipilih";
+        } else {
+            $jml = count($request->id);
+
+            echo '<div class="table-responsive">';
+            echo "      <table class='table table-bordered table-sm text-nowrap'>
+                            <tr>
+                                <td><b>No</b></td>
+                                <td><b>NIK</b></td>
+                                <td><b>Nama</b></td>
+                                <td><b>Pendidikan</b></td>
+                                <td><b>Jurusan</b></td>
+                                <td><b>Tinggi</b></td>
+                                <td><b>Berat</b></td>
+                                <td><b>Telp</b></td>
+                                <td><b>Keterangan</b></td>
+                            </tr>";
+            $j = 1;
+            for ($i = 0; $i < $jml; $i++) {
+                $data = DB::table('penerimaan_lamaran')->where('id', $request->id[$i])->get();
+                foreach ($data as $u) {
+                    echo  '<input type="text" name="idlamaran" value="' . $u->id . '" hidden>';
+                    echo  "<tr>";
+                    echo  "<td>" . $j . "</td>";
+                    echo  "<td>" . $u->nik . "</td>";
+                    echo  "<td>" . $u->nama . "</td>";
+                    echo  "<td>" . $u->pendidikan . "</td>";
+                    echo  "<td>" . $u->jurusan . "</td>";
+                    echo  "<td>" . $u->tinggi . "</td>";
+                    echo  "<td>" . $u->berat . "</td>";
+                    echo  "<td>" . $u->notlp . "</td>";
+                    echo  "<td>" . $u->keterangan . "</td>";
+                    echo  "</tr>";
+                }
+                $j++;
+            }
+            echo '      </table>  
+                    </div>
+                    <hr>
+                    <div class="row">
+                        <div class="col-lg-4 col-md-12">
+                            <div class="mb-3">
+                                <label class="form-label">Tanggal Wawancara</label>
+                                <input type="date" class="form-control" name="tglwawancara" value="' . date("Y-m-d") . '">
+                            </div>
+                        </div>
+                        <div class="col-lg-8 col-md-12">
+                            <div class="mb-3">
+                                <label class="form-label">User <i>(Optional)</i></label>
+                                <input type="text" class="form-control" name="user" placeholder="User yang ikut mewawancarai">
+                            </div>
+                        </div>
+                    </div>';
+        }
+        // return $result;
+    }
+
+    public function storeChecklistLamaran(Request $request)
+    {
+        $request->validate(
+            [
+                '_token' => 'required',
+                'entitas' => 'required',
+                'nik' => 'required|unique:penerimaan_lamaran,nik',
+                'nama' => 'required',
+                'gender' => 'required',
+                'tempat' => 'required',
+                'tanggallahir' => 'required',
+                'pendidikan' => 'required',
+                'jurusan' => 'required',
+                'alamat' => 'required',
+                'agama' => 'required',
+                'tinggi' => 'required',
+                'berat' => 'required',
+                'notlp' => 'required',
+                'posisi' => 'required',
+            ],
+            [
+                'nik.unique' => 'Nomor NIK: ' . $request->nik . ' sudah ada, Cek kembali inputan anda',
+            ]
+        );
+
+        $check = DB::table('penerimaan_lamaran')->insert([
+            'remember_token' => $request->_token,
+            'entitas' => $request->entitas,
+            'nik' => $request->nik,
+            'nama' => $request->nama,
+            'gender' => $request->gender,
+            'tempat' => $request->tempat,
+            'tgllahir' => $request->tanggallahir,
+            'pendidikan' => $request->pendidikan,
+            'jurusan' => $request->jurusan,
+            'alamat' => $request->alamat,
+            'agama' => $request->agama,
+            'tinggi' => $request->tinggi,
+            'berat' => $request->berat,
+            'notlp' => $request->notlp,
+            'posisi' => $request->posisi,
+            'email' => $request->email,
+            'wawancara' => 0,
+            'diterima' => 0,
+            'keterangan' => $request->keterangan,
+            'dibuat' => Auth::user()->name,
+            'created_at' => date('Y-m-d H:i:s'),
+        ]);
+        $arr = array('msg' => 'Something goes to wrong. Please try later', 'status' => false);
+        if ($check) {
+            $arr = array('msg' => 'Data: ' . $request->nik . ' telah berhasil disimpan', 'status' => true);
+        }
+        return Response()->json($arr);
+    }
 }

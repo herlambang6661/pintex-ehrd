@@ -54,6 +54,8 @@ Route::controller(Penerimaan::class)->group(function () {
     Route::get('penerimaan/legalitas', 'legalitas')->name('penerimaan/legalitas');
 
     Route::post('storedataLamaran', 'storeLamaran');
+    Route::post('checkLamaran', 'checkLamaran');
+    Route::post('storeChecklistLamaran', 'storeChecklistLamaran');
 });
 
 Route::controller(Absensi::class)->group(function () {

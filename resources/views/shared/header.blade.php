@@ -11,8 +11,7 @@
     <link href="{{ url('assets/dist/css/demo.min.css?1684106062') }}" rel="stylesheet"/>
     <link href="{{ asset('assets/extentions/fontawesome/css/all.min.css') }}" rel="stylesheet">
     <link href="{{ asset('assets/extentions/select2/css/select2.min.css') }}" rel="stylesheet">
-
-    {{-- <link href="{{ asset('assets/extentions/datatables/Select-1.6.0/css/select.dataTables.min.css') }}" rel="stylesheet"> --}}
+    
     <link href="{{ asset('assets/extentions/datatables/Select-1.6.0/css/select.bulma.min.css') }}" rel="stylesheet">
     <style>
         @import url('https://rsms.me/inter/inter.css');

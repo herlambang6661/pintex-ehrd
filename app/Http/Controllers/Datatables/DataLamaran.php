@@ -38,7 +38,12 @@ class DataLamaran extends Controller
                     $ttl = $row->tempat . ', ' . $tgl_indo;
                     return $ttl;
                 })
-                ->editColumn('select_orders', static function ($row) {
+                ->addColumn('umur', function ($row) {
+                    $umur = Carbon::parse($row->tgllahir)->age;
+
+                    return $umur;
+                })
+                ->editColumn('select_orders', function ($row) {
                     return '';
                 })
 
@@ -47,7 +52,7 @@ class DataLamaran extends Controller
                 //     $btn = $btn . ' <a href="javascript:void(0)" data-toggle="tooltip" data-noform="' . $row->nik . '" data-id="' . $row->id . '" data-original-title="Delete" class="btn btn-outline-danger btn-icon deleteContract"><i class="fa-solid fa-fw fa-trash-can"></i></a>';
                 //     return $btn;
                 // })
-                ->rawColumns(['status', 'select_orders', 'ttl'])
+                ->rawColumns(['status', 'select_orders', 'ttl', 'umur'])
                 ->make(true);
         }
         return view('products.02_penerimaan.lamaran');
