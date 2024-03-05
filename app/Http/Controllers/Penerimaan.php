@@ -14,6 +14,7 @@ class Penerimaan extends Controller
         $this->middleware('auth');
     }
 
+    // ======================== START LAMARAN ==============================================================================================
     public function lamaran()
     {
         return view('products/02_penerimaan.lamaran');
@@ -86,7 +87,7 @@ class Penerimaan extends Controller
         ]);
         $arr = array('msg' => 'Something goes to wrong. Please try later', 'status' => false);
         if ($check) {
-            $arr = array('msg' => 'Data: ' . $request->nik . ' telah berhasil disimpan', 'status' => true);
+            $arr = array('msg' => 'Data: ' . $request->nama . ' telah berhasil disimpan', 'status' => true);
         }
         return Response()->json($arr);
     }
@@ -115,7 +116,7 @@ class Penerimaan extends Controller
             for ($i = 0; $i < $jml; $i++) {
                 $data = DB::table('penerimaan_lamaran')->where('id', $request->id[$i])->get();
                 foreach ($data as $u) {
-                    echo  '<input type="text" name="idlamaran" value="' . $u->id . '" hidden>';
+                    echo  '<input type="hidden" name="idlamaran[]" value="' . $u->id . '" >';
                     echo  "<tr>";
                     echo  "<td>" . $j . "</td>";
                     echo  "<td>" . $u->nik . "</td>";
@@ -156,53 +157,35 @@ class Penerimaan extends Controller
         $request->validate(
             [
                 '_token' => 'required',
-                'entitas' => 'required',
-                'nik' => 'required|unique:penerimaan_lamaran,nik',
-                'nama' => 'required',
-                'gender' => 'required',
-                'tempat' => 'required',
-                'tanggallahir' => 'required',
-                'pendidikan' => 'required',
-                'jurusan' => 'required',
-                'alamat' => 'required',
-                'agama' => 'required',
-                'tinggi' => 'required',
-                'berat' => 'required',
-                'notlp' => 'required',
-                'posisi' => 'required',
+                'idlamaran' => 'required',
             ],
-            [
-                'nik.unique' => 'Nomor NIK: ' . $request->nik . ' sudah ada, Cek kembali inputan anda',
-            ]
         );
-
-        $check = DB::table('penerimaan_lamaran')->insert([
-            'remember_token' => $request->_token,
-            'entitas' => $request->entitas,
-            'nik' => $request->nik,
-            'nama' => $request->nama,
-            'gender' => $request->gender,
-            'tempat' => $request->tempat,
-            'tgllahir' => $request->tanggallahir,
-            'pendidikan' => $request->pendidikan,
-            'jurusan' => $request->jurusan,
-            'alamat' => $request->alamat,
-            'agama' => $request->agama,
-            'tinggi' => $request->tinggi,
-            'berat' => $request->berat,
-            'notlp' => $request->notlp,
-            'posisi' => $request->posisi,
-            'email' => $request->email,
-            'wawancara' => 0,
-            'diterima' => 0,
-            'keterangan' => $request->keterangan,
-            'dibuat' => Auth::user()->name,
-            'created_at' => date('Y-m-d H:i:s'),
-        ]);
+        $jml = count($request->idlamaran);
+        for ($i = 0; $i < $jml; $i++) {
+            $check = DB::table('penerimaan_lamaran')
+                ->where('id', $request->idlamaran[$i])
+                ->limit(1)
+                ->update(
+                    array(
+                        'remember_token' => $request->_token,
+                        'wawancara' => 1,
+                        'dibuat' => Auth::user()->name,
+                        'updated_at' => date('Y-m-d H:i:s'),
+                    )
+                );
+        }
         $arr = array('msg' => 'Something goes to wrong. Please try later', 'status' => false);
         if ($check) {
-            $arr = array('msg' => 'Data: ' . $request->nik . ' telah berhasil disimpan', 'status' => true);
+            $arr = array('msg' => 'Data telah berhasil diproses', 'status' => true);
         }
         return Response()->json($arr);
     }
+    // ======================== END LAMARAN ==============================================================================================
+    // ======================== START WAWANCARA ============================================================================================
+
+    public function wawancara()
+    {
+        return view('products/02_penerimaan.wawancara');
+    }
+    // ======================== END WAWANCARA ==============================================================================================
 }

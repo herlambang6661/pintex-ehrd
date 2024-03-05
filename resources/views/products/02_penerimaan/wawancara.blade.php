@@ -36,15 +36,15 @@
                             <div class="col">
                                 <!-- Page pre-title -->
                                 <h2 class="page-title">
-                                    <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-clipboard-text" width="24" height="24" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><path d="M9 5h-2a2 2 0 0 0 -2 2v12a2 2 0 0 0 2 2h10a2 2 0 0 0 2 -2v-12a2 2 0 0 0 -2 -2h-2" /><path d="M9 3m0 2a2 2 0 0 1 2 -2h2a2 2 0 0 1 2 2v0a2 2 0 0 1 -2 2h-2a2 2 0 0 1 -2 -2z" /><path d="M9 12h6" /><path d="M9 16h6" /></svg>
-                                    Lamaran
+                                    <svg xmlns="http://www.w3.org/2000/svg" style="margin-right: 10px" class="icon icon-tabler icon-tabler-heart-handshake" width="24" height="24" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><path d="M19.5 12.572l-7.5 7.428l-7.5 -7.428a5 5 0 1 1 7.5 -6.566a5 5 0 1 1 7.5 6.572" /><path d="M12 6l-3.293 3.293a1 1 0 0 0 0 1.414l.543 .543c.69 .69 1.81 .69 2.5 0l1 -1a3.182 3.182 0 0 1 4.5 0l2.25 2.25" /><path d="M12.5 15.5l2 2" /><path d="M15 13l2 2" /></svg>
+                                    Wawancara
                                     <div id="entitasText" style="margin-left: 5px;">Loading... <i class="fa-solid fa-spinner fa-spin-pulse"></i> </div>
                                 </h2>
                                 <div class="page-pretitle">
                                     <ol class="breadcrumb" aria-label="breadcrumbs">
                                         <li class="breadcrumb-item"><a href="{{ url('dashboard'); }}"><i class="fa fa-home"></i> Dashboard</a></li>
                                         <li class="breadcrumb-item"><a href="#"><i class="fa-solid fa-user-pen"></i> Penerimaan</a></li>
-                                        <li class="breadcrumb-item active" aria-current="page"><a href="#"><i class="fa-regular fa-paste"></i> Lamaran</a></li>
+                                        <li class="breadcrumb-item active" aria-current="page"><a href="#"><i class="fa-regular fa-handshake"></i> Wawancara</a></li>
                                     </ol>
                                 </div>
                             </div>
@@ -164,8 +164,8 @@
                                     </div>
                                     <div class="col-lg-6">
                                         <div class="mb-3">
-                                            <label class="form-label">Tanggal Lahir <small><i>(Format: YYYY-MM-DD)</i></small></label>
-                                            <input name="tanggallahir" class="form-select border-dark" placeholder="YYYY-MM-DD" id="datepicker0"/>
+                                            <label class="form-label">Tanggal Lahir</label>
+                                            <input name="tanggallahir" class="form-select border-dark" placeholder="Select a date" id="datepicker0"/>
                                             {{-- <div class="input-icon mb-2">
                                                 <span class="input-icon-addon">
                                                     <svg xmlns="http://www.w3.org/2000/svg" class="icon" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><path d="M4 7a2 2 0 0 1 2 -2h12a2 2 0 0 1 2 2v12a2 2 0 0 1 -2 2h-12a2 2 0 0 1 -2 -2v-12z" /><path d="M16 3v4" /><path d="M8 3v4" /><path d="M4 11h16" /><path d="M11 15h1" /><path d="M12 15v3" /></svg>
@@ -485,6 +485,45 @@
             --------------------------------------------*/
             
             $(document).ready(function() {
+                var tableLamaran;
+                var selected = new Array();
+
+                $('#myModalCheck').on('show.bs.modal', function(e) {
+                    $("#overlay").fadeIn(300);
+                    itemTables = [];
+                    // console.log(count);
+
+                    $.each(tableLamaran.rows('.selected').nodes(), function(index, rowId) {
+                        var rows_selected = tableLamaran.rows('.selected').data();
+                        itemTables.push(rows_selected[index]['id']);
+                    });
+                    console.log(itemTables);
+                    
+                    $.ajaxSetup({
+                        headers: {
+                        'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                        }
+                    });
+                    //menggunakan fungsi ajax untuk pengambilan data
+                    $.ajax({
+                        type: 'POST',
+                        url: '{{ url("checkLamaran") }}',
+                        data: {
+                            "_token": "{{ csrf_token() }}",
+                            id: itemTables,
+                            jml:itemTables.length,
+                        },
+                        success: function(data) {
+                            $('.fetched-data-pembelian-checklist').html(data); //menampilkan data ke dalam modal
+                            // alert(itemTables);
+                        }
+                    }).done(function() {
+                        setTimeout(function() {
+                            $("#overlay").fadeOut(300);
+                        }, 500);
+                    });
+                });
+                
             });
             
             function newexportaction(e, dt, button, config) {
@@ -530,157 +569,119 @@
             }
 
             $(function () {
-                
-                var tableLamaran = $('.datatable-lamaran').DataTable({
-                    "processing": true, //Feature control the processing indicator.
-                    "serverSide": false, //Feature control DataTables' server-side processing mode.
-                    "scrollX": true,
-                    "scrollCollapse": true,
-                    "pagingType": 'full_numbers',
-                    "dom": "<'card-header h3' B>" +
-                        "<'card-body border-bottom py-3' <'row'<'col-sm-6'l><'col-sm-6'f>> >" +
-                        "<'table-responsive' <'col-sm-12'tr> >" +
-                        "<'card-footer' <'row'<'col-sm-8'i><'col-sm-4'p> >>",
-                    buttons: [
-                        {
-                            className: 'btn btn-dark checkall',
-                            text: '<i class="fa-regular fa-square-check"></i>',
-                        },
-                        {
-                            text: '<i class="fa-solid fa-filter" style="margin-right:5px"></i>',
-                            className: 'btn btn-blue',
-                            attr: {
-                                'href': '#offcanvasEnd-lamaran',
-                                'data-bs-toggle': 'offcanvas',
-                                'role': 'button',
-                                'aria-controls': 'offcanvasEnd',
-                            }
-                        },
-                        {
-                            text: '<i class="fa-solid fa-fw fa-trash-can"></i>',
-                            className: 'btn btn-red',
-                            attr: {
-                                'href': '#offcanvasEnd-lamaran',
-                                'data-bs-toggle': 'offcanvas',
-                                'role': 'button',
-                                'aria-controls': 'offcanvasEnd',
-                            }
-                        },
-                        {
-                            extend: 'excelHtml5',
-                            autoFilter: true,
-                            className: 'btn btn-success',
-                            text: '<i class="fa fa-file-excel text-white" style="margin-right:5px"></i>',
-                            action: newexportaction,
-                        }, 
-                        {
-                            className: 'btn btn-pink',
-                            text: '<i class="fa-solid fa-check-to-slot"></i>',
-                            action: function(e, node, config) {
-                                $('#myModalCheck').modal('show')
-                            }
-                        },
-                    ],
-                    "language": {
-                        "lengthMenu": "Menampilkan _MENU_",
-                        "zeroRecords": "Data Tidak Ditemukan",
-                        "info": "Menampilkan _START_ sampai _END_ dari _TOTAL_ total data",
-                        "infoEmpty": "Data Tidak Ditemukan",
-                        "infoFiltered": "(Difilter dari _MAX_ total records)",
-                        "processing": '<div class="container container-slim py-4"><div class="text-center"><div class="mb-3"></div><div class="text-secondary mb-3">Loading Data...</div><div class="progress progress-sm"><div class="progress-bar progress-bar-indeterminate"></div></div></div></div>',
-                        "search": '<svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-search" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z" fill="none"></path><path d="M10 10m-7 0a7 7 0 1 0 14 0a7 7 0 1 0 -14 0"></path><path d="M21 21l-6 -6"></path></svg>',
-                        "paginate": {
-                            "first": '<svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-chevron-left-pipe" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z" fill="none"></path><path d="M7 6v12"></path><path d="M18 6l-6 6l6 6"></path></svg>',
-                            "last": '<svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-chevron-right-pipe" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z" fill="none"></path><path d="M6 6l6 6l-6 6"></path><path d="M17 5v13"></path></svg>',
-                            "next": '<svg xmlns="http://www.w3.org/2000/svg" class="icon" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z" fill="none"></path><path d="M9 6l6 6l-6 6"></path></svg>',
-                            "previous": '<svg xmlns="http://www.w3.org/2000/svg" class="icon" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z" fill="none"></path><path d="M15 6l-6 6l6 6"></path></svg>',
-                        },
-                        "select": {
-                            rows: {
-                                _: "%d kandidat dipilih",
-                                0: "Pilih item dan tekan tombol Proses data untuk memproses Wawancara",
-                            }
-                        },
-                    },
-                    ajax: "{{ route('getLamaran.index') }}",
-                    columnDefs: [
-                        {
-                            'targets': 0,
-                            "orderable": false,
-                            'className': 'select-checkbox',
-                            'checkboxes': {
-                                'selectRow': true
-                            },
-                        }
-                        
-                    ],
-                    select: {
-                        'style': 'multi',
-                        "selector": 'td:not(:last-child)',
-                    },
-                    columns: [
-                        {data: 'select_orders', name: 'select_orders', className:'cuspad2', orderable: false, searchable: false},
-                        {data: 'nik', name: 'nik', className:'cuspad0 text-center'},
-                        {data: 'nama', name: 'nama', className:'cuspad0'},
-                        {data: 'gender', name: 'gender', className:'cuspad0 text-center'},
-                        {data: 'ttl', name: 'ttl', className:'cuspad0 text-center'},
-                        {data: 'umur', name: 'umur', className:'cuspad0 text-center'},
-                        {data: 'pendidikan', name: 'pendidikan', className:'cuspad0 text-center'},
-                        {data: 'jurusan', name: 'jurusan', className:'cuspad0 text-center'},
-                        {data: 'tinggi', name: 'tinggi', className:'cuspad0 text-center'},
-                        {data: 'berat', name: 'berat', className:'cuspad0 text-center'},
-                        {data: 'notlp', name: 'notlp', className:'cuspad0 text-center'},
-                        {data: 'email', name: 'email', className:'cuspad0 text-center'},
-                        {data: 'posisi', name: 'posisi', className:'cuspad0 text-center'},
-                        {data: 'keterangan', name: 'keterangan', className:'cuspad0'},
-                        {data: 'status', name: 'status', className:'cuspad0 text-center'},
-                        {data: 'action', name: 'action', orderable: false, searchable: false, className:'cuspad0 text-center'},
-                    ],
-                    
-                });
-                
-                var selected = new Array();
-
-                $('#myModalCheck').on('show.bs.modal', function(e) {
-                    $("#overlay").fadeIn(300);
-                    itemTables = [];
-                    // console.log(count);
-
-                    $.each(tableLamaran.rows('.selected').nodes(), function(index, rowId) {
-                        var rows_selected = tableLamaran.rows('.selected').data();
-                        itemTables.push(rows_selected[index]['id']);
-                    });
-                    console.log(itemTables);
-                    
-                    $.ajaxSetup({
-                        headers: {
-                        'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
-                        }
-                    });
-                    //menggunakan fungsi ajax untuk pengambilan data
-                    $.ajax({
-                        type: 'POST',
-                        url: '{{ url("checkLamaran") }}',
-                        data: {
-                            "_token": "{{ csrf_token() }}",
-                            id: itemTables,
-                            jml:itemTables.length,
-                        },
-                        success: function(data) {
-                            $('.fetched-data-pembelian-checklist').html(data); //menampilkan data ke dalam modal
-                            // alert(itemTables);
-                        }
-                    }).done(function() {
-                        setTimeout(function() {
-                            $("#overlay").fadeOut(300);
-                        }, 500);
-                    });
-                });
                 /*------------------------------------------==============================================================================================================================================================
                 --------------------------------------------==============================================================================================================================================================
                 Create Data
                 --------------------------------------------==============================================================================================================================================================
                 --------------------------------------------==============================================================================================================================================================*/
+                    
+                    var tableLamaran = $('.datatable-lamaran').DataTable({
+                        "processing": true, //Feature control the processing indicator.
+                        "serverSide": false, //Feature control DataTables' server-side processing mode.
+                        "scrollX": true,
+                        "scrollCollapse": true,
+                        "pagingType": 'full_numbers',
+                        "dom": "<'card-header h3' B>" +
+                            "<'card-body border-bottom py-3' <'row'<'col-sm-6'l><'col-sm-6'f>> >" +
+                            "<'table-responsive' <'col-sm-12'tr> >" +
+                            "<'card-footer' <'row'<'col-sm-8'i><'col-sm-4'p> >>",
+                        buttons: [
+                            {
+                                className: 'btn btn-dark checkall',
+                                text: '<i class="fa-regular fa-square-check"></i>',
+                            },
+                            {
+                                text: '<i class="fa-solid fa-filter" style="margin-right:5px"></i>',
+                                className: 'btn btn-blue',
+                                attr: {
+                                    'href': '#offcanvasEnd-lamaran',
+                                    'data-bs-toggle': 'offcanvas',
+                                    'role': 'button',
+                                    'aria-controls': 'offcanvasEnd',
+                                }
+                            },
+                            {
+                                text: '<i class="fa-solid fa-fw fa-trash-can"></i>',
+                                className: 'btn btn-red',
+                                attr: {
+                                    'href': '#offcanvasEnd-lamaran',
+                                    'data-bs-toggle': 'offcanvas',
+                                    'role': 'button',
+                                    'aria-controls': 'offcanvasEnd',
+                                }
+                            },
+                            {
+                                extend: 'excelHtml5',
+                                autoFilter: true,
+                                className: 'btn btn-success',
+                                text: '<i class="fa fa-file-excel text-white" style="margin-right:5px"></i>',
+                                action: newexportaction,
+                            }, 
+                            {
+                                className: 'btn btn-pink',
+                                text: '<i class="fa-solid fa-check-to-slot"></i>',
+                                action: function(e, node, config) {
+                                    $('#myModalCheck').modal('show')
+                                }
+                            },
+                        ],
+                        "language": {
+                            "lengthMenu": "Menampilkan _MENU_",
+                            "zeroRecords": "Data Tidak Ditemukan",
+                            "info": "Menampilkan _START_ sampai _END_ dari _TOTAL_ total data",
+                            "infoEmpty": "Data Tidak Ditemukan",
+                            "infoFiltered": "(Difilter dari _MAX_ total records)",
+                            "processing": '<div class="container container-slim py-4"><div class="text-center"><div class="mb-3"></div><div class="text-secondary mb-3">Loading Data...</div><div class="progress progress-sm"><div class="progress-bar progress-bar-indeterminate"></div></div></div></div>',
+                            "search": '<svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-search" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z" fill="none"></path><path d="M10 10m-7 0a7 7 0 1 0 14 0a7 7 0 1 0 -14 0"></path><path d="M21 21l-6 -6"></path></svg>',
+                            "paginate": {
+                                "first": '<svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-chevron-left-pipe" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z" fill="none"></path><path d="M7 6v12"></path><path d="M18 6l-6 6l6 6"></path></svg>',
+                                "last": '<svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-chevron-right-pipe" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z" fill="none"></path><path d="M6 6l6 6l-6 6"></path><path d="M17 5v13"></path></svg>',
+                                "next": '<svg xmlns="http://www.w3.org/2000/svg" class="icon" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z" fill="none"></path><path d="M9 6l6 6l-6 6"></path></svg>',
+                                "previous": '<svg xmlns="http://www.w3.org/2000/svg" class="icon" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z" fill="none"></path><path d="M15 6l-6 6l6 6"></path></svg>',
+                            },
+                            "select": {
+                                rows: {
+                                    _: "%d kandidat dipilih",
+                                    0: "Pilih item dan tekan tombol Proses data untuk memproses Wawancara",
+                                }
+                            },
+                        },
+                        ajax: "{{ route('getLamaran.index') }}",
+                        columnDefs: [
+                            {
+                                'targets': 0,
+                                "orderable": false,
+                                'className': 'select-checkbox',
+                                'checkboxes': {
+                                    'selectRow': true
+                                },
+                            }
+                            
+                        ],
+                        select: {
+                            'style': 'multi',
+                            "selector": 'td:not(:last-child)',
+                        },
+                        columns: [
+                            {data: 'select_orders', name: 'select_orders', className:'cuspad2', orderable: false, searchable: false},
+                            {data: 'nik', name: 'nik', className:'cuspad0 text-center'},
+                            {data: 'nama', name: 'nama', className:'cuspad0'},
+                            {data: 'gender', name: 'gender', className:'cuspad0 text-center'},
+                            {data: 'ttl', name: 'ttl', className:'cuspad0 text-center'},
+                            {data: 'umur', name: 'umur', className:'cuspad0 text-center'},
+                            {data: 'pendidikan', name: 'pendidikan', className:'cuspad0 text-center'},
+                            {data: 'jurusan', name: 'jurusan', className:'cuspad0 text-center'},
+                            {data: 'tinggi', name: 'tinggi', className:'cuspad0 text-center'},
+                            {data: 'berat', name: 'berat', className:'cuspad0 text-center'},
+                            {data: 'notlp', name: 'notlp', className:'cuspad0 text-center'},
+                            {data: 'email', name: 'email', className:'cuspad0 text-center'},
+                            {data: 'posisi', name: 'posisi', className:'cuspad0 text-center'},
+                            {data: 'keterangan', name: 'keterangan', className:'cuspad0'},
+                            {data: 'status', name: 'status', className:'cuspad0 text-center'},
+                            {data: 'action', name: 'action', orderable: false, searchable: false, className:'cuspad0 text-center'},
+                        ],
+                        
+                    });
                     if ($("#formLamaran").length > 0) {
                         $("#formLamaran").validate({
                             rules: {
@@ -787,7 +788,7 @@
                                     beforeSend: function() {
                                         Swal.fire({
                                             title: 'Mohon Menunggu',
-                                            html: '<center><lottie-player src="https://lottie.host/933bb0e2-47c0-4fa6-83f9-3330b433b883/yymyeZt49h.json"  background="transparent"  speed="1"  style="width: 300px; height: 300px;"  loop autoplay></lottie-player></center><br><h1 class="h4">Sedang memproses data, Proses mungkin membutuhkan beberapa menit. <br><br><b class="text-danger">(Jangan menutup jendela ini, bisa mengakibatkan error)</b></h1>',
+                                            html: '<center><lottie-player src="https://assets9.lottiefiles.com/private_files/lf30_al2qt2jz.json"  background="transparent"  speed="1"  style="width: 300px; height: 300px;"  loop autoplay></lottie-player></center><br><h1 class="h4">Sedang memproses data, Proses mungkin membutuhkan beberapa menit. <br><br><b class="text-danger">(Jangan menutup jendela ini, bisa mengakibatkan error)</b></h1>',
                                             showConfirmButton: false,
                                             timerProgressBar: true,
                                             allowOutsideClick: false,
@@ -863,7 +864,6 @@
                                     type: "POST",
                                     data: $('#formCheckWawancara').serialize(),
                                     beforeSend: function() {
-                                        console.log($('#formCheckWawancara').serialize());
                                         Swal.fire({
                                             title: 'Mohon Menunggu',
                                             html: '<center><lottie-player src="https://lottie.host/933bb0e2-47c0-4fa6-83f9-3330b433b883/yymyeZt49h.json"  background="transparent"  speed="1"  style="width: 300px; height: 300px;"  loop autoplay></lottie-player></center><br><h1 class="h4">Sedang memproses data, Proses mungkin membutuhkan beberapa menit. <br><br><b class="text-danger">(Jangan menutup jendela ini, bisa mengakibatkan error)</b></h1>',

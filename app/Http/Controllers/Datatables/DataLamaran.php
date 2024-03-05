@@ -47,12 +47,12 @@ class DataLamaran extends Controller
                     return '';
                 })
 
-                // ->addColumn('action', function ($row) {
-                //     $btn = ' <a href="javascript:void(0)" data-toggle="tooltip" data-item="' . $row->nik . '" data-id="' . $row->id . '" data-original-title="Delete" class="btn btn-outline-info btn-icon deleteProduct"><i class="fa-solid fa-fw fa-eye"></i></a>';
-                //     $btn = $btn . ' <a href="javascript:void(0)" data-toggle="tooltip" data-noform="' . $row->nik . '" data-id="' . $row->id . '" data-original-title="Delete" class="btn btn-outline-danger btn-icon deleteContract"><i class="fa-solid fa-fw fa-trash-can"></i></a>';
-                //     return $btn;
-                // })
-                ->rawColumns(['status', 'select_orders', 'ttl', 'umur'])
+                ->addColumn('action', function ($row) {
+                    $btn = ' <a href="javascript:void(0)" data-toggle="tooltip" data-item="' . $row->nik . '" data-id="' . $row->id . '" data-original-title="Delete" class="btn btn-outline-info btn-icon deleteProduct"><i class="fa-solid fa-fw fa-eye"></i></a>';
+                    $btn = $btn . ' <a href="javascript:void(0)" data-toggle="tooltip" data-noform="' . $row->nik . '" data-id="' . $row->id . '" data-original-title="Delete" class="btn btn-outline-danger btn-icon deleteContract"><i class="fa-solid fa-fw fa-trash-can"></i></a>';
+                    return $btn;
+                })
+                ->rawColumns(['status', 'action', 'select_orders', 'ttl', 'umur'])
                 ->make(true);
         }
         return view('products.02_penerimaan.lamaran');
