@@ -95,43 +95,158 @@ class Penerimaan extends Controller
     public function checkLamaran(Request $request)
     {
         if (empty($request->id)) {
-            echo "Tidak ada data yang dipilih";
+            echo '<center><iframe src="https://lottie.host/embed/94d605b9-2cc4-4d11-809a-7f41357109b0/OzwBgj9bHl.json" width="300px" height="300px"></iframe></center>';
+            echo "<center>Tidak ada data yang dipilih</center>";
         } else {
             $jml = count($request->id);
 
             echo '<div class="table-responsive">';
-            echo "      <table class='table table-bordered table-sm text-nowrap'>
-                            <tr>
-                                <td><b>No</b></td>
-                                <td><b>NIK</b></td>
-                                <td><b>Nama</b></td>
-                                <td><b>Pendidikan</b></td>
-                                <td><b>Jurusan</b></td>
-                                <td><b>Tinggi</b></td>
-                                <td><b>Berat</b></td>
-                                <td><b>Telp</b></td>
-                                <td><b>Keterangan</b></td>
-                            </tr>";
-            $j = 1;
+            echo '<div class="space-y">';
+
+            // echo "      <table class='table table-bordered table-sm text-nowrap'>
+            //                 <tr>
+            //                     <td><b>No</b></td>
+            //                     <td><b>NIK</b></td>
+            //                     <td><b>Nama</b></td>
+            //                     <td><b>Pendidikan</b></td>
+            //                     <td><b>Jurusan</b></td>
+            //                     <td><b>Tinggi</b></td>
+            //                     <td><b>Berat</b></td>
+            //                     <td><b>Telp</b></td>
+            //                     <td><b>Keterangan</b></td>
+            //                 </tr>";
             for ($i = 0; $i < $jml; $i++) {
                 $data = DB::table('penerimaan_lamaran')->where('id', $request->id[$i])->get();
                 foreach ($data as $u) {
-                    echo  '<input type="hidden" name="idlamaran[]" value="' . $u->id . '" >';
-                    echo  "<tr>";
-                    echo  "<td>" . $j . "</td>";
-                    echo  "<td>" . $u->nik . "</td>";
-                    echo  "<td>" . $u->nama . "</td>";
-                    echo  "<td>" . $u->pendidikan . "</td>";
-                    echo  "<td>" . $u->jurusan . "</td>";
-                    echo  "<td>" . $u->tinggi . "</td>";
-                    echo  "<td>" . $u->berat . "</td>";
-                    echo  "<td>" . $u->notlp . "</td>";
-                    echo  "<td>" . $u->keterangan . "</td>";
-                    echo  "</tr>";
+                    if ($u->wawancara == 1) {
+                        echo  '<input type="hidden" name="idlamaran[]" value="' . $u->id . '" >';
+                        echo  '<input type="hidden" name="nama[]" value="' . $u->nama . '" >';
+                        echo '
+                        <div class="card shadow border-warning">
+                            <div class="row g-0">
+                                <div class="col-auto">
+                                    <div class="card-body">
+                                        <div class="avatar avatar-md shadow" style="background-image: url(./static/jobs/job-1.jpg)"></div>
+                                    </div>
+                                </div>
+                                <div class="col">
+                                    <div class="card-body ps-0">
+                                        <div class="row">
+                                        <div class="col">
+                                            <h3 class="mb-0"><a href="#">' . $u->nama . '</a></h3>
+                                        </div>
+                                        </div>
+                                        <div class="row">
+                                        <div class="col-md">
+                                            <div class="mt-3 list-inline list-inline-dots mb-0 text-secondary d-sm-block d-none">
+                                                <div class="list-inline-item">
+                                                    <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-inline" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z" fill="none"></path><path d="M8 9l5 5v7h-5v-4m0 4h-5v-7l5 -5m1 1v-6a1 1 0 0 1 1 -1h10a1 1 0 0 1 1 1v17h-8"></path><path d="M13 7l0 .01"></path><path d="M17 7l0 .01"></path><path d="M17 11l0 .01"></path><path d="M17 15l0 .01"></path></svg>
+                                                    ' . $u->pendidikan . '
+                                                </div>
+                                                <div class="list-inline-item">
+                                                    <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-inline" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z" fill="none"></path><path d="M15 21h-9a3 3 0 0 1 -3 -3v-1h10v2a2 2 0 0 0 4 0v-14a2 2 0 1 1 2 2h-2m2 -4h-11a3 3 0 0 0 -3 3v11"></path><path d="M9 7l4 0"></path><path d="M9 11l4 0"></path></svg>
+                                                    ' . $u->nik . '
+                                                </div>
+                                                <div class="list-inline-item">
+                                                    <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-inline icon-tabler-phone" width="24" height="24" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><path d="M5 4h4l2 5l-2.5 1.5a11 11 0 0 0 5 5l1.5 -2.5l5 2v4a2 2 0 0 1 -2 2a16 16 0 0 1 -15 -15a2 2 0 0 1 2 -2" /></svg>
+                                                    ' . $u->notlp . '
+                                                </div>
+                                                </div>
+                                                <div class="mt-3 list mb-0 text-secondary d-block d-sm-none">
+                                                <div class="list-item">
+                                                    <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-inline" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z" fill="none"></path><path d="M8 9l5 5v7h-5v-4m0 4h-5v-7l5 -5m1 1v-6a1 1 0 0 1 1 -1h10a1 1 0 0 1 1 1v17h-8"></path><path d="M13 7l0 .01"></path><path d="M17 7l0 .01"></path><path d="M17 11l0 .01"></path><path d="M17 15l0 .01"></path></svg>
+                                                    ' . $u->pendidikan . '
+                                                </div>
+                                                <div class="list-item">
+                                                    <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-inline" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z" fill="none"></path><path d="M15 21h-9a3 3 0 0 1 -3 -3v-1h10v2a2 2 0 0 0 4 0v-14a2 2 0 1 1 2 2h-2m2 -4h-11a3 3 0 0 0 -3 3v11"></path><path d="M9 7l4 0"></path><path d="M9 11l4 0"></path></svg>
+                                                    ' . $u->nik . '
+                                                </div>
+                                                <div class="list-item">
+                                                    <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-inline icon-tabler-phone" width="24" height="24" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><path d="M5 4h4l2 5l-2.5 1.5a11 11 0 0 0 5 5l1.5 -2.5l5 2v4a2 2 0 0 1 -2 2a16 16 0 0 1 -15 -15a2 2 0 0 1 2 -2" /></svg>
+                                                    ' . $u->notlp . '
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-auto">
+                                            <div class="mt-3 badges">
+                                                <a href="#" class="badge badge-outline bg-red fw-normal badge-pill">Sudah Pernah Di Wawancara</a>
+                                                <a href="#" class="badge badge-outline text-secondary fw-normal badge-pill">' . $u->jurusan . '</a>
+                                                <a href="#" class="badge badge-outline text-secondary fw-normal badge-pill">Tinggi: ' . $u->tinggi . '</a>
+                                                <a href="#" class="badge badge-outline text-secondary fw-normal badge-pill">Berat: ' . $u->berat . '</a>
+                                            </div>
+                                        </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        ';
+                    } else {
+                        echo  '<input type="hidden" name="idlamaran[]" value="' . $u->id . '" >';
+                        echo  '<input type="hidden" name="nama[]" value="' . $u->nama . '" >';
+                        echo '
+                        <div class="card shadow border-green">
+                            <div class="row g-0">
+                                <div class="col-auto">
+                                <div class="card-body">
+                                    <div class="avatar avatar-md shadow" style="background-image: url(./static/jobs/job-1.jpg)"></div>
+                                </div>
+                                </div>
+                                <div class="col">
+                                <div class="card-body ps-0">
+                                    <div class="row">
+                                    <div class="col">
+                                        <h3 class="mb-0"><a href="#">' . $u->nama . '</a></h3>
+                                    </div>
+                                    </div>
+                                    <div class="row">
+                                    <div class="col-md">
+                                        <div class="mt-3 list-inline list-inline-dots mb-0 text-secondary d-sm-block d-none">
+                                            <div class="list-inline-item">
+                                                <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-inline" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z" fill="none"></path><path d="M8 9l5 5v7h-5v-4m0 4h-5v-7l5 -5m1 1v-6a1 1 0 0 1 1 -1h10a1 1 0 0 1 1 1v17h-8"></path><path d="M13 7l0 .01"></path><path d="M17 7l0 .01"></path><path d="M17 11l0 .01"></path><path d="M17 15l0 .01"></path></svg>
+                                                ' . $u->pendidikan . '
+                                            </div>
+                                            <div class="list-inline-item">
+                                                <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-inline" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z" fill="none"></path><path d="M15 21h-9a3 3 0 0 1 -3 -3v-1h10v2a2 2 0 0 0 4 0v-14a2 2 0 1 1 2 2h-2m2 -4h-11a3 3 0 0 0 -3 3v11"></path><path d="M9 7l4 0"></path><path d="M9 11l4 0"></path></svg>
+                                                ' . $u->nik . '
+                                            </div>
+                                            <div class="list-inline-item">
+                                                <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-inline icon-tabler-phone" width="24" height="24" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><path d="M5 4h4l2 5l-2.5 1.5a11 11 0 0 0 5 5l1.5 -2.5l5 2v4a2 2 0 0 1 -2 2a16 16 0 0 1 -15 -15a2 2 0 0 1 2 -2" /></svg>
+                                                ' . $u->notlp . '
+                                            </div>
+                                            </div>
+                                            <div class="mt-3 list mb-0 text-secondary d-block d-sm-none">
+                                            <div class="list-item">
+                                                <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-inline" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z" fill="none"></path><path d="M8 9l5 5v7h-5v-4m0 4h-5v-7l5 -5m1 1v-6a1 1 0 0 1 1 -1h10a1 1 0 0 1 1 1v17h-8"></path><path d="M13 7l0 .01"></path><path d="M17 7l0 .01"></path><path d="M17 11l0 .01"></path><path d="M17 15l0 .01"></path></svg>
+                                                ' . $u->pendidikan . '
+                                            </div>
+                                            <div class="list-item">
+                                                <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-inline" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z" fill="none"></path><path d="M15 21h-9a3 3 0 0 1 -3 -3v-1h10v2a2 2 0 0 0 4 0v-14a2 2 0 1 1 2 2h-2m2 -4h-11a3 3 0 0 0 -3 3v11"></path><path d="M9 7l4 0"></path><path d="M9 11l4 0"></path></svg>
+                                                ' . $u->nik . '
+                                            </div>
+                                            <div class="list-item">
+                                                <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-inline icon-tabler-phone" width="24" height="24" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><path d="M5 4h4l2 5l-2.5 1.5a11 11 0 0 0 5 5l1.5 -2.5l5 2v4a2 2 0 0 1 -2 2a16 16 0 0 1 -15 -15a2 2 0 0 1 2 -2" /></svg>
+                                                ' . $u->notlp . '
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-auto">
+                                        <div class="mt-3 badges">
+                                            <a href="#" class="badge badge-outline text-secondary fw-normal badge-pill">' . $u->jurusan . '</a>
+                                            <a href="#" class="badge badge-outline text-secondary fw-normal badge-pill">Tinggi: ' . $u->tinggi . '</a>
+                                            <a href="#" class="badge badge-outline text-secondary fw-normal badge-pill">Berat: ' . $u->berat . '</a>
+                                        </div>
+                                    </div>
+                                    </div>
+                                </div>
+                                </div>
+                            </div>
+                        </div>
+                        ';
+                    }
                 }
-                $j++;
             }
-            echo '      </table>  
+            echo '      </div>  
                     </div>
                     <hr>
                     <div class="row">
@@ -161,6 +276,23 @@ class Penerimaan extends Controller
             ],
         );
         $jml = count($request->idlamaran);
+
+        $noform = date('y') . "00000";
+        // // GET NOFORM
+        $checknoform = DB::table('penerimaan_wawancara')->orderBy('noform', 'desc')->limit('1')->get();
+        foreach ($checknoform as $key) {
+            $noform = $key->noform;
+        }
+        $y = substr($noform, 0, 2);
+        if (date('y') == $y) {
+            $noUrut = substr($noform, 2, 5);
+            $na = $noUrut + 1;
+            $char = date('y');
+            $kodeSurat = $char . sprintf("%05s", $na);
+        } else {
+            $kodeSurat = date('y') . "00001";
+        }
+
         for ($i = 0; $i < $jml; $i++) {
             $check = DB::table('penerimaan_lamaran')
                 ->where('id', $request->idlamaran[$i])
@@ -173,12 +305,35 @@ class Penerimaan extends Controller
                         'updated_at' => date('Y-m-d H:i:s'),
                     )
                 );
+
+            // GET NOFORM
+            DB::table('penerimaan_wawancara')->insert([
+                'remember_token' => $request->_token,
+                'idlamaran' => $request->idlamaran[$i],
+                'noform' => $kodeSurat,
+                'nama' => $request->nama[$i],
+                'tglwawancara' => $request->tglwawancara,
+                'user' => $request->user,
+                'dibuat' => Auth::user()->name,
+                'created_at' => date('Y-m-d H:i:s'),
+            ]);
         }
         $arr = array('msg' => 'Something goes to wrong. Please try later', 'status' => false);
         if ($check) {
             $arr = array('msg' => 'Data telah berhasil diproses', 'status' => true);
+
+            $product = DB::table('penerimaan_wawancara')->orderBy('id', 'desc')->limit('1')->get();
+            foreach ($product as $key) {
+                $noform = $key->noform;
+            }
+            $arr = array('val' => $noform);
         }
         return Response()->json($arr);
+    }
+
+    public function printLamaran($id)
+    {
+        return view('products/02_penerimaan.print');
     }
     // ======================== END LAMARAN ==============================================================================================
     // ======================== START WAWANCARA ============================================================================================

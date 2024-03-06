@@ -8,6 +8,7 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Administrasi;
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\Datatables\DataLamaran;
+use App\Http\Controllers\Datatables\DataWawancara;
 use Illuminate\Contracts\Auth\Access\Authorizable;
 use SebastianBergmann\CodeCoverage\Report\Html\Dashboard;
 
@@ -28,6 +29,7 @@ Route::get('/', function () {
 
 // Source untuk datatables
 Route::resource('getLamaran', DataLamaran::class);
+Route::resource('getWawancara', DataWawancara::class);
 
 
 Route::controller(AuthController::class)->group(function () {
@@ -52,6 +54,8 @@ Route::controller(Penerimaan::class)->group(function () {
     Route::get('penerimaan/wawancara', 'wawancara')->name('penerimaan/wawancara');
     Route::get('penerimaan/karyawan', 'karyawan')->name('penerimaan/karyawan');
     Route::get('penerimaan/legalitas', 'legalitas')->name('penerimaan/legalitas');
+
+    Route::get('penerimaan/printLamaran/{id}', 'printLamaran')->name('penerimaan/printLamaran/{id}');
 
     Route::post('storedataLamaran', 'storeLamaran');
     Route::post('checkLamaran', 'checkLamaran');

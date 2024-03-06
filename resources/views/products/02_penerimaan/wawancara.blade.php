@@ -50,7 +50,7 @@
                             </div>
                             
                             <!-- Page title actions -->
-                            <div class="col-auto ms-auto d-print-none">
+                            {{-- <div class="col-auto ms-auto d-print-none">
                                 <div class="btn-list">
                                     <a href="#" class="btn btn-primary d-none d-sm-inline-block" data-bs-toggle="modal" data-bs-target="#modal-lamaran" data-bs-backdrop="static" data-bs-keyboard="false">
                                         <i class="fa-solid fa-user-plus"></i>
@@ -67,7 +67,7 @@
                                         <i class="fa-regular fa-file-excel"></i>
                                     </a>
                                 </div>
-                            </div>
+                            </div> --}}
                         </div>
                     </div>
                 </div>
@@ -83,7 +83,7 @@
                                         </div>
                                     </div>
                                     <table style="width:100%; font-family: 'Trebuchet MS', Helvetica, sans-serif;"
-                                        class="display table table-vcenter card-table table-sm table-striped table-bordered table-hover text-nowrap datatable-lamaran" id="tblamaran">
+                                        class="display table table-vcenter card-table table-sm table-striped table-bordered table-hover text-nowrap datatable-wawancara" id="tblamaran">
                                         <thead>
                                             <tr class="text-center">
                                                 <th></th>
@@ -100,7 +100,6 @@
                                                 <th>Email</th>
                                                 <th>Posisi Dituju</th>
                                                 <th>Ket</th>
-                                                <th>Wawancara</th>
                                                 <th>Opsi</th>
                                             </tr>
                                         </thead>
@@ -111,194 +110,6 @@
                     </div>
                 </div>
                 @include('shared.footer')
-            </div>
-        </div>
-        {{-- Modal tambah lamaran --}}
-        <div class="modal modal-blur fade" id="modal-lamaran" tabindex="-1" role="dialog" aria-hidden="true">
-            <div class="modal-dialog modal-lg" role="document">
-                <div class="modal-content">
-                    <div class="modal-header bg-primary text-white">
-                        <h5 class="modal-title"><i class="fa-solid fa-user-plus"></i> Buat Data Lamaran</h5>
-                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                    </div>
-                    <form id="formLamaran" name="formLamaran" method="post" action="javascript:void(0)">
-                        @csrf
-                            <div class="modal-body">
-                                <div class="card-stamp card-stamp-lg">
-                                    <div class="card-stamp-icon bg-primary">
-                                        <i class="fa-solid fa-pen-to-square"></i>
-                                    </div>
-                                </div>
-                                <div class="mb-3">
-                                    <label class="form-label">Entitas</label>
-                                    <input type="text" class="form-control border border-dark bg-secondary-lt" name="entitas" id="entitas" readonly>
-                                </div>
-                                <div class="mb-3">
-                                    <label class="form-label">Nama</label>
-                                    <input type="text" class="form-control border border-dark" name="nama" id="nama" placeholder="Masukkan Nama Kandidat">
-                                </div>
-                                <div class="row">
-                                    <div class="col-lg-6">
-                                        <div class="mb-3">
-                                            <label class="form-label">NIK KTP</label>
-                                            <input type="text" class="form-control border border-dark" name="nik" id="nik" placeholder="Masukkan NIK KTP kandidat">
-                                        </div>
-                                    </div>
-                                    <div class="col-lg-6">
-                                        <div class="mb-3">
-                                            <label class="form-label">Gender</label>
-                                            <select name="gender" id="gender" class="form-select border-dark">
-                                                <option value="" hidden>-- Pilih Gender --</option>
-                                                <option value="Pria">Pria</option>
-                                                <option value="Wanita">Wanita</option>
-                                            </select>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="row">
-                                    <div class="col-lg-6">
-                                        <div class="mb-3">
-                                            <label class="form-label">Tempat</label>
-                                            <input type="text" class="form-control border border-dark" name="tempat" id="tempat" placeholder="Masukkan tempat tinggal kandidat">
-                                        </div>
-                                    </div>
-                                    <div class="col-lg-6">
-                                        <div class="mb-3">
-                                            <label class="form-label">Tanggal Lahir</label>
-                                            <input name="tanggallahir" class="form-select border-dark" placeholder="Select a date" id="datepicker0"/>
-                                            {{-- <div class="input-icon mb-2">
-                                                <span class="input-icon-addon">
-                                                    <svg xmlns="http://www.w3.org/2000/svg" class="icon" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><path d="M4 7a2 2 0 0 1 2 -2h12a2 2 0 0 1 2 2v12a2 2 0 0 1 -2 2h-12a2 2 0 0 1 -2 -2v-12z" /><path d="M16 3v4" /><path d="M8 3v4" /><path d="M4 11h16" /><path d="M11 15h1" /><path d="M12 15v3" /></svg>
-                                                </span>
-                                            </div> --}}
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="modal-body">
-                                <div class="row">
-                                    <div class="col-lg-6">
-                                        <div class="mb-3">
-                                            <label class="form-label">Pendidikan</label>
-                                            <select name="pendidikan" id="pendidikan" class="form-select border-dark">
-                                                <option value="" hidden>-- Pilih Pendidikan --</option>
-                                                <option value="SMP">SMP</option>
-                                                <option value="SMA">SMA</option>
-                                                <option value="SMK">SMK</option>
-                                                <option value="D3">D3</option>
-                                                <option value="S1">S1</option>
-                                                <option value="S2">S2</option>
-                                            </select>
-                                        </div>
-                                    </div>
-                                    <div class="col-lg-6">
-                                        <div class="mb-3">
-                                            <label class="form-label">Jurusan</label>
-                                            <input type="text" class="form-control border border-dark" name="jurusan" id="jurusan" placeholder="Masukkan Jurusan">
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="row">
-                                    <div class="col-lg-6">
-                                        <div class="mb-3">
-                                            <label class="form-label">Alamat</label>
-                                            <input type="text" class="form-control border border-dark" name="alamat" id="alamat" placeholder="Masukkan Alamat">
-                                        </div>
-                                    </div>
-                                    <div class="col-lg-6">
-                                        <div class="mb-3">
-                                            <label class="form-label">Agama</label>
-                                            <select name="agama" id="agama" class="form-select border-dark">
-                                                <option value="" hidden>-- Pilih Agama --</option>
-                                                <option value="Islam">Islam</option>
-                                                <option value="Kristen">Kristen</option>
-                                                <option value="Katolik">Katolik</option>
-                                                <option value="Hindu">Hindu</option>
-                                                <option value="Buddha">Buddha</option>
-                                                <option value="Khonghucu">Khonghucu</option>
-                                            </select>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="row">
-                                    <div class="col-lg-12">
-                                        <div class="mb-3">
-                                            <div class="row">
-                                                <div class="col-lg-4">
-                                                    <label class="form-label">Tinggi</label>
-                                                    <input type="number" min="140" class="form-control border border-dark" name="tinggi" id="tinggi" placeholder="Tinggi badan">
-                                                </div>
-                                                <div class="col-lg-4">
-                                                    <label class="form-label">Berat</label>
-                                                    <input type="number" min="20" class="form-control border border-dark" name="berat" id="berat" placeholder="Berat badan">
-                                                </div>
-                                                <div class="col-lg-4">
-                                                    <label class="form-label">Nomor Telepon</label>
-                                                    <input type="text" class="form-control border border-dark" name="notlp" id="notlp" placeholder="No Telp">
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="row">
-                                    <div class="col-lg-6">
-                                        <div class="mb-3">
-                                            <label class="form-label">Posisi Yang Dituju</label>
-                                            <select name="posisi" id="posisi" class="form-select border-dark">
-                                                <option value="" hidden>-- Pilih Posisi --</option>
-                                                <option value="Operator">Operator</option>
-                                                <option value="Pengemudi">Pengemudi</option>
-                                                <option value="Keamanan">Keamanan</option>
-                                                <option value="IT">IT</option>
-                                                <option value="HRD">HRD</option>
-                                            </select>
-                                        </div>
-                                    </div>
-                                    <div class="col-lg-6">
-                                        <div class="mb-3">
-                                            <label class="form-label">Email</label>
-                                            <div class="form-group">
-                                                <input type="email" class="form-control border border-dark" name="email" id="email" placeholder="Email Kandidat">
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="modal-body">
-                                <div class="mb-3">
-                                    <label class="form-check form-switch">
-                                        <input class="form-check-input" id="reff" type="checkbox">
-                                        <span class="form-check-label">Tambah Keterangan / Referensi Bawaan</span>
-                                    </label>
-                                </div>
-                                <div class="mb-3">
-                                    <label class="form-label">Keterangan</label>
-                                    <div class="col-lg-12">
-                                        <textarea name="keterangan" id="keterangan" cols="90" rows="2" class="form-control border border-dark" disabled></textarea>
-                                    </div>
-                                </div>
-                                <script>
-                                    var checkboxes = $("#reff"),
-                                        keterangan = $("#keterangan");
-                                    checkboxes.click(function() {
-                                        keterangan.attr("disabled", !checkboxes.is(":checked"));
-                                        if (this.checked) {
-                                            keterangan.val("", !checkboxes.is(":checked"));
-                                        } else {
-                                            keterangan.val("", !checkboxes.is(":checked"));
-                                        }
-                                    });
-                                </script>
-                            </div>
-                            <div class="modal-footer">
-                                <a href="#" class="btn btn-link link-secondary" data-bs-dismiss="modal"><i class="fa-solid fa-fw fa-arrow-rotate-left"></i> Kembali</a>
-                                <button type="submit" id="submitLamaran" class="btn btn-primary ms-auto">
-                                    <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-device-floppy" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><path d="M6 4h10l4 4v10a2 2 0 0 1 -2 2h-12a2 2 0 0 1 -2 -2v-12a2 2 0 0 1 2 -2" /><path d="M12 14m-2 0a2 2 0 1 0 4 0a2 2 0 1 0 -4 0" /><path d="M14 4l0 4l-6 0l0 -4" /></svg>
-                                    Simpan
-                                </button>
-                            </div>
-                    </form>
-                </div>
             </div>
         </div>
         {{-- Modal Check --}}
@@ -360,33 +171,10 @@
                 </div>
             </div>
         </div>
-        {{-- Modal Excel --}}
-        <div class="modal modal-blur fade" id="importExcel" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
-            <div class="modal-dialog" role="document">
-                <form method="post" action="/testkapas/import_excel" enctype="multipart/form-data">
-                    <div class="modal-content">
-                        <div class="modal-header">
-                            <h5 class="modal-title" id="exampleModalLabel">Upload Excel</h5>
-                            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                        </div>
-                        <div class="modal-body">
-                            {{ csrf_field() }}
-                            <div class="mb-3">
-                                <label class="form-label">Pilih file excel (xlsx)</label>
-                                <input type="file" name="file" required="required" accept="application/vnd.openxmlformats-officedocument.spreadsheetml.sheet" class="form-control">
-                            </div>
-                        </div>
-                        <div class="modal-footer">
-                            <button type="submit" class="btn btn-primary"><i class="fa-solid fa-cloud-arrow-up" style="margin-right:5px"></i> Import</button>
-                        </div>
-                    </div>
-                </form>
-            </div>
-        </div>
         {{-- Modal Filter --}}
         <div class="offcanvas offcanvas-blur offcanvas-end" tabindex="-1" id="offcanvasEnd-lamaran" aria-labelledby="offcanvasEndLabel">
             <div class="offcanvas-header">
-                <h2 class="offcanvas-title" id="offcanvasEndLabel">Saring Data Lamaran</h2>
+                <h2 class="offcanvas-title" id="offcanvasEndLabel">Saring Data Wawancara</h2>
                 <button type="button" class="btn-close text-reset" data-bs-dismiss="offcanvas" aria-label="Close"></button>
             </div>
             <div class="offcanvas-body">
@@ -575,7 +363,7 @@
                 --------------------------------------------==============================================================================================================================================================
                 --------------------------------------------==============================================================================================================================================================*/
                     
-                    var tableLamaran = $('.datatable-lamaran').DataTable({
+                    var tableLamaran = $('.datatable-wawancara').DataTable({
                         "processing": true, //Feature control the processing indicator.
                         "serverSide": false, //Feature control DataTables' server-side processing mode.
                         "scrollX": true,
@@ -601,7 +389,7 @@
                                 }
                             },
                             {
-                                text: '<i class="fa-solid fa-fw fa-trash-can"></i>',
+                                text: '<i class="fa-solid fa-arrow-rotate-left"></i>',
                                 className: 'btn btn-red',
                                 attr: {
                                     'href': '#offcanvasEnd-lamaran',
@@ -619,7 +407,7 @@
                             }, 
                             {
                                 className: 'btn btn-pink',
-                                text: '<i class="fa-solid fa-check-to-slot"></i>',
+                                text: '<i class="fa-solid fa-clipboard-check"></i>',
                                 action: function(e, node, config) {
                                     $('#myModalCheck').modal('show')
                                 }
@@ -642,11 +430,11 @@
                             "select": {
                                 rows: {
                                     _: "%d kandidat dipilih",
-                                    0: "Pilih item dan tekan tombol Proses data untuk memproses Wawancara",
+                                    0: "Pilih item dan tekan tombol Proses data untuk Penerimaan karyawan",
                                 }
                             },
                         },
-                        ajax: "{{ route('getLamaran.index') }}",
+                        ajax: "{{ route('getWawancara.index') }}",
                         columnDefs: [
                             {
                                 'targets': 0,
@@ -677,7 +465,6 @@
                             {data: 'email', name: 'email', className:'cuspad0 text-center'},
                             {data: 'posisi', name: 'posisi', className:'cuspad0 text-center'},
                             {data: 'keterangan', name: 'keterangan', className:'cuspad0'},
-                            {data: 'status', name: 'status', className:'cuspad0 text-center'},
                             {data: 'action', name: 'action', orderable: false, searchable: false, className:'cuspad0 text-center'},
                         ],
                         
