@@ -60,6 +60,8 @@ Route::controller(Penerimaan::class)->group(function () {
     Route::post('storedataLamaran', 'storeLamaran');
     Route::post('checkLamaran', 'checkLamaran');
     Route::post('storeChecklistLamaran', 'storeChecklistLamaran');
+    Route::post('cancelWawancara', 'cancelWawancara');
+    Route::post('checkWawancara', 'checkWawancara');
 });
 
 Route::controller(Absensi::class)->group(function () {

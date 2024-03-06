@@ -21,6 +21,37 @@
                 margin-right: 5px;
                 margin-left: 5px; */
             }
+            .overlay {
+                position: fixed;
+                top: 0;
+                z-index: 100;
+                width: 100%;
+                height: 100%;
+                display: none;
+                background: rgba(0, 0, 0, 0.6);
+            }
+            .cv-spinner {
+                height: 100%;
+                display: flex;
+                justify-content: center;
+                align-items: center;
+            }
+            .spinner {
+                width: 40px;
+                height: 40px;
+                border: 4px #ddd solid;
+                border-top: 4px #2e93e6 solid;
+                border-radius: 50%;
+                animation: sp-anime 0.8s infinite linear;
+            }
+            @keyframes sp-anime {
+                100% {
+                    transform: rotate(360deg);
+                }
+            }
+            .is-hide {
+                display: none;
+            }
         </style>
         <div class="page">
             <!-- Sidebar -->
@@ -100,6 +131,7 @@
                                                 <th>Email</th>
                                                 <th>Posisi Dituju</th>
                                                 <th>Ket</th>
+                                                <th>Status</th>
                                                 <th>Opsi</th>
                                             </tr>
                                         </thead>
@@ -114,40 +146,7 @@
         </div>
         {{-- Modal Check --}}
         <div class="modal modal-blur fade" id="myModalCheck" tabindex="-1" role="dialog" aria-hidden="true">
-            <style>
-                #overlay {
-                    position: fixed;
-                    top: 0;
-                    z-index: 100;
-                    width: 100%;
-                    height: 100%;
-                    display: none;
-                    background: rgba(0, 0, 0, 0.6);
-                }
-                .cv-spinner {
-                    height: 100%;
-                    display: flex;
-                    justify-content: center;
-                    align-items: center;
-                }
-                .spinner {
-                    width: 40px;
-                    height: 40px;
-                    border: 4px #ddd solid;
-                    border-top: 4px #2e93e6 solid;
-                    border-radius: 50%;
-                    animation: sp-anime 0.8s infinite linear;
-                }
-                @keyframes sp-anime {
-                    100% {
-                        transform: rotate(360deg);
-                    }
-                }
-                .is-hide {
-                    display: none;
-                }
-            </style>
-            <div id="overlay">
+            <div class="overlay">
                 <div class="cv-spinner">
                     <span class="spinner"></span>
                 </div>
@@ -156,16 +155,16 @@
                 <div class="modal-content">
                     <form id="formCheckWawancara" name="formCheckWawancara" method="post" action="javascript:void(0)">
                         @csrf
-                        <div class="modal-header">
-                            <h5 class="modal-title"><i class="fa-solid fa-user-check" style="margin-right: 5px"></i> Proses Kandidat ke Wawancara</h5>
+                        <div class="modal-header bg-green-lt text-white">
+                            <h5 class="modal-title"><i class="fa-solid fa-user-check" style="margin-right: 5px"></i> Proses Penerimaan Kandidat</h5>
                             <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                         </div>
                         <div class="modal-body">
-                            <div class="fetched-data-pembelian-checklist"></div>
+                            <div class="fetched-data-wawancara-checklist"></div>
                         </div>
                         <div class="modal-footer">
-                            <button type="submit" id="submitCheck" class="btn btn-blue mr-auto"><i class="fas fa-save" style="margin-right: 5px"></i> Proses</button>
-                            <button type="button" class="btn btn-link link-secondary" data-bs-dismiss="modal"><i class="fa-solid fa-fw fa-arrow-rotate-left"></i> Batal</button>
+                            <button type="submit" id="submitCheck" class="btn btn-green"><i class="fas fa-save" style="margin-right: 5px"></i> Proses</button>
+                            <button type="button" class="btn btn-link link-secondary ms-auto" data-bs-dismiss="modal"><i class="fa-solid fa-fw fa-arrow-rotate-left"></i> Batal</button>
                         </div>
                     </form>
                 </div>
@@ -272,48 +271,6 @@
             --------------------------------------------
             --------------------------------------------*/
             
-            $(document).ready(function() {
-                var tableLamaran;
-                var selected = new Array();
-
-                $('#myModalCheck').on('show.bs.modal', function(e) {
-                    $("#overlay").fadeIn(300);
-                    itemTables = [];
-                    // console.log(count);
-
-                    $.each(tableLamaran.rows('.selected').nodes(), function(index, rowId) {
-                        var rows_selected = tableLamaran.rows('.selected').data();
-                        itemTables.push(rows_selected[index]['id']);
-                    });
-                    console.log(itemTables);
-                    
-                    $.ajaxSetup({
-                        headers: {
-                        'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
-                        }
-                    });
-                    //menggunakan fungsi ajax untuk pengambilan data
-                    $.ajax({
-                        type: 'POST',
-                        url: '{{ url("checkLamaran") }}',
-                        data: {
-                            "_token": "{{ csrf_token() }}",
-                            id: itemTables,
-                            jml:itemTables.length,
-                        },
-                        success: function(data) {
-                            $('.fetched-data-pembelian-checklist').html(data); //menampilkan data ke dalam modal
-                            // alert(itemTables);
-                        }
-                    }).done(function() {
-                        setTimeout(function() {
-                            $("#overlay").fadeOut(300);
-                        }, 500);
-                    });
-                });
-                
-            });
-            
             function newexportaction(e, dt, button, config) {
                 var self = this;
                 var oldStart = dt.settings()[0]._iDisplayStart;
@@ -363,343 +320,455 @@
                 --------------------------------------------==============================================================================================================================================================
                 --------------------------------------------==============================================================================================================================================================*/
                     
-                    var tableLamaran = $('.datatable-wawancara').DataTable({
-                        "processing": true, //Feature control the processing indicator.
-                        "serverSide": false, //Feature control DataTables' server-side processing mode.
-                        "scrollX": true,
-                        "scrollCollapse": true,
-                        "pagingType": 'full_numbers',
-                        "dom": "<'card-header h3' B>" +
-                            "<'card-body border-bottom py-3' <'row'<'col-sm-6'l><'col-sm-6'f>> >" +
-                            "<'table-responsive' <'col-sm-12'tr> >" +
-                            "<'card-footer' <'row'<'col-sm-8'i><'col-sm-4'p> >>",
-                        buttons: [
-                            {
-                                className: 'btn btn-dark checkall',
-                                text: '<i class="fa-regular fa-square-check"></i>',
-                            },
-                            {
-                                text: '<i class="fa-solid fa-filter" style="margin-right:5px"></i>',
-                                className: 'btn btn-blue',
-                                attr: {
-                                    'href': '#offcanvasEnd-lamaran',
-                                    'data-bs-toggle': 'offcanvas',
-                                    'role': 'button',
-                                    'aria-controls': 'offcanvasEnd',
-                                }
-                            },
-                            {
-                                text: '<i class="fa-solid fa-arrow-rotate-left"></i>',
-                                className: 'btn btn-red',
-                                attr: {
-                                    'href': '#offcanvasEnd-lamaran',
-                                    'data-bs-toggle': 'offcanvas',
-                                    'role': 'button',
-                                    'aria-controls': 'offcanvasEnd',
-                                }
-                            },
-                            {
-                                extend: 'excelHtml5',
-                                autoFilter: true,
-                                className: 'btn btn-success',
-                                text: '<i class="fa fa-file-excel text-white" style="margin-right:5px"></i>',
-                                action: newexportaction,
-                            }, 
-                            {
-                                className: 'btn btn-pink',
-                                text: '<i class="fa-solid fa-clipboard-check"></i>',
-                                action: function(e, node, config) {
-                                    $('#myModalCheck').modal('show')
-                                }
-                            },
-                        ],
-                        "language": {
-                            "lengthMenu": "Menampilkan _MENU_",
-                            "zeroRecords": "Data Tidak Ditemukan",
-                            "info": "Menampilkan _START_ sampai _END_ dari _TOTAL_ total data",
-                            "infoEmpty": "Data Tidak Ditemukan",
-                            "infoFiltered": "(Difilter dari _MAX_ total records)",
-                            "processing": '<div class="container container-slim py-4"><div class="text-center"><div class="mb-3"></div><div class="text-secondary mb-3">Loading Data...</div><div class="progress progress-sm"><div class="progress-bar progress-bar-indeterminate"></div></div></div></div>',
-                            "search": '<svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-search" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z" fill="none"></path><path d="M10 10m-7 0a7 7 0 1 0 14 0a7 7 0 1 0 -14 0"></path><path d="M21 21l-6 -6"></path></svg>',
-                            "paginate": {
-                                "first": '<svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-chevron-left-pipe" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z" fill="none"></path><path d="M7 6v12"></path><path d="M18 6l-6 6l6 6"></path></svg>',
-                                "last": '<svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-chevron-right-pipe" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z" fill="none"></path><path d="M6 6l6 6l-6 6"></path><path d="M17 5v13"></path></svg>',
-                                "next": '<svg xmlns="http://www.w3.org/2000/svg" class="icon" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z" fill="none"></path><path d="M9 6l6 6l-6 6"></path></svg>',
-                                "previous": '<svg xmlns="http://www.w3.org/2000/svg" class="icon" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z" fill="none"></path><path d="M15 6l-6 6l6 6"></path></svg>',
-                            },
-                            "select": {
-                                rows: {
-                                    _: "%d kandidat dipilih",
-                                    0: "Pilih item dan tekan tombol Proses data untuk Penerimaan karyawan",
-                                }
-                            },
+                var tableLamaran = $('.datatable-wawancara').DataTable({
+                    "processing": true, //Feature control the processing indicator.
+                    "serverSide": false, //Feature control DataTables' server-side processing mode.
+                    "scrollX": true,
+                    "scrollCollapse": true,
+                    "pagingType": 'full_numbers',
+                    "dom": "<'card-header h3' B>" +
+                        "<'card-body border-bottom py-3' <'row'<'col-sm-6'l><'col-sm-6'f>> >" +
+                        "<'table-responsive' <'col-sm-12'tr> >" +
+                        "<'card-footer' <'row'<'col-sm-8'i><'col-sm-4'p> >>",
+                    buttons: [
+                        {
+                            className: 'btn btn-dark checkall',
+                            text: '<i class="fa-regular fa-square-check"></i>',
                         },
-                        ajax: "{{ route('getWawancara.index') }}",
-                        columnDefs: [
-                            {
-                                'targets': 0,
-                                "orderable": false,
-                                'className': 'select-checkbox',
-                                'checkboxes': {
-                                    'selectRow': true
-                                },
+                        {
+                            text: '<i class="fa-solid fa-filter" style="margin-right:5px"></i>',
+                            className: 'btn btn-blue',
+                            attr: {
+                                'href': '#offcanvasEnd-lamaran',
+                                'data-bs-toggle': 'offcanvas',
+                                'role': 'button',
+                                'aria-controls': 'offcanvasEnd',
                             }
-                            
-                        ],
-                        select: {
-                            'style': 'multi',
-                            "selector": 'td:not(:last-child)',
                         },
-                        columns: [
-                            {data: 'select_orders', name: 'select_orders', className:'cuspad2', orderable: false, searchable: false},
-                            {data: 'nik', name: 'nik', className:'cuspad0 text-center'},
-                            {data: 'nama', name: 'nama', className:'cuspad0'},
-                            {data: 'gender', name: 'gender', className:'cuspad0 text-center'},
-                            {data: 'ttl', name: 'ttl', className:'cuspad0 text-center'},
-                            {data: 'umur', name: 'umur', className:'cuspad0 text-center'},
-                            {data: 'pendidikan', name: 'pendidikan', className:'cuspad0 text-center'},
-                            {data: 'jurusan', name: 'jurusan', className:'cuspad0 text-center'},
-                            {data: 'tinggi', name: 'tinggi', className:'cuspad0 text-center'},
-                            {data: 'berat', name: 'berat', className:'cuspad0 text-center'},
-                            {data: 'notlp', name: 'notlp', className:'cuspad0 text-center'},
-                            {data: 'email', name: 'email', className:'cuspad0 text-center'},
-                            {data: 'posisi', name: 'posisi', className:'cuspad0 text-center'},
-                            {data: 'keterangan', name: 'keterangan', className:'cuspad0'},
-                            {data: 'action', name: 'action', orderable: false, searchable: false, className:'cuspad0 text-center'},
-                        ],
+                        {
+                            extend: 'excelHtml5',
+                            autoFilter: true,
+                            className: 'btn btn-success',
+                            text: '<i class="fa fa-file-excel text-white" style="margin-right:5px"></i>',
+                            action: newexportaction,
+                        }, 
+                        {
+                            text: '<i class="fa-solid fa-arrow-rotate-left"></i>',
+                            className: 'btn btn-warning',
+                            attr: {
+                                'href': '#offcanvasEnd-lamaran',
+                                'data-bs-toggle': 'offcanvas',
+                                'role': 'button',
+                                'aria-controls': 'offcanvasEnd',
+                            }
+                        },
+                        {
+                            className: 'btn btn-lime',
+                            text: '<i class="fa-solid fa-check"></i>',
+                            action: function(e, node, config) {
+                                $('#myModalCheck').modal('show')
+                            }
+                        },
+                        {
+                            className: 'btn btn-red',
+                            text: '<i class="fa-solid fa-xmark"></i>',
+                            action: function(e, node, config) {
+                                $('#myModalXmark').modal('show')
+                            }
+                        },
+                    ],
+                    "language": {
+                        "lengthMenu": "Menampilkan _MENU_",
+                        "zeroRecords": "Data Tidak Ditemukan",
+                        "info": "Menampilkan _START_ sampai _END_ dari _TOTAL_ total data",
+                        "infoEmpty": "Data Tidak Ditemukan",
+                        "infoFiltered": "(Difilter dari _MAX_ total records)",
+                        "processing": '<div class="container container-slim py-4"><div class="text-center"><div class="mb-3"></div><div class="text-secondary mb-3">Loading Data...</div><div class="progress progress-sm"><div class="progress-bar progress-bar-indeterminate"></div></div></div></div>',
+                        "search": '<svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-search" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z" fill="none"></path><path d="M10 10m-7 0a7 7 0 1 0 14 0a7 7 0 1 0 -14 0"></path><path d="M21 21l-6 -6"></path></svg>',
+                        "paginate": {
+                            "first": '<svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-chevron-left-pipe" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z" fill="none"></path><path d="M7 6v12"></path><path d="M18 6l-6 6l6 6"></path></svg>',
+                            "last": '<svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-chevron-right-pipe" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z" fill="none"></path><path d="M6 6l6 6l-6 6"></path><path d="M17 5v13"></path></svg>',
+                            "next": '<svg xmlns="http://www.w3.org/2000/svg" class="icon" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z" fill="none"></path><path d="M9 6l6 6l-6 6"></path></svg>',
+                            "previous": '<svg xmlns="http://www.w3.org/2000/svg" class="icon" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z" fill="none"></path><path d="M15 6l-6 6l6 6"></path></svg>',
+                        },
+                        "select": {
+                            rows: {
+                                _: "%d kandidat dipilih",
+                                0: "Pilih item dan tekan tombol Proses data untuk Penerimaan karyawan",
+                            }
+                        },
+                    },
+                    ajax: "{{ route('getWawancara.index') }}",
+                    columnDefs: [
+                        {
+                            'targets': 0,
+                            "orderable": false,
+                            'className': 'select-checkbox',
+                            'checkboxes': {
+                                'selectRow': true
+                            },
+                        }
                         
+                    ],
+                    select: {
+                        'style': 'multi',
+                        "selector": 'td:not(:last-child)',
+                    },
+                    columns: [
+                        {data: 'select_orders', name: 'select_orders', className:'cuspad2', orderable: false, searchable: false},
+                        {data: 'nik', name: 'nik', className:'cuspad0 text-center'},
+                        {data: 'nama', name: 'nama', className:'cuspad0'},
+                        {data: 'gender', name: 'gender', className:'cuspad0 text-center'},
+                        {data: 'ttl', name: 'ttl', className:'cuspad0 text-center'},
+                        {data: 'umur', name: 'umur', className:'cuspad0 text-center'},
+                        {data: 'pendidikan', name: 'pendidikan', className:'cuspad0 text-center'},
+                        {data: 'jurusan', name: 'jurusan', className:'cuspad0 text-center'},
+                        {data: 'tinggi', name: 'tinggi', className:'cuspad0 text-center'},
+                        {data: 'berat', name: 'berat', className:'cuspad0 text-center'},
+                        {data: 'notlp', name: 'notlp', className:'cuspad0 text-center'},
+                        {data: 'email', name: 'email', className:'cuspad0 text-center'},
+                        {data: 'posisi', name: 'posisi', className:'cuspad0 text-center'},
+                        {data: 'keterangan', name: 'keterangan', className:'cuspad0'},
+                        {data: 'status', name: 'status', className:'cuspad0'},
+                        {data: 'action', name: 'action', orderable: false, searchable: false, className:'cuspad0 text-center'},
+                    ],
+                    
+                });
+                var selected = new Array();
+
+                $('#myModalCheck').on('show.bs.modal', function(e) {
+                    $("#overlay").fadeIn(300);
+                    itemTables = [];
+                    // console.log(count);
+
+                    $.each(tableLamaran.rows('.selected').nodes(), function(index, rowId) {
+                        var rows_selected = tableLamaran.rows('.selected').data();
+                        itemTables.push(rows_selected[index]['id']);
                     });
-                    if ($("#formLamaran").length > 0) {
-                        $("#formLamaran").validate({
-                            rules: {
-                                entitas: {
-                                    required: true,
-                                },
-                                nama: {
-                                    required: true,
-                                },
-                                nik: {
-                                    required: true,
-                                },
-                                gender: {
-                                    required: true,
-                                },
-                                tempat: {
-                                    required: true,
-                                },
-                                tanggallahir: {
-                                    required: true,
-                                },
-                                pendidikan: {
-                                    required: true,
-                                },
-                                jurusan: {
-                                    required: true,
-                                },
-                                alamat: {
-                                    required: true,
-                                },
-                                agama: {
-                                    required: true,
-                                },
-                                tinggi: {
-                                    required: true,
-                                },
-                                berat: {
-                                    required: true,
-                                },
-                                notlp: {
-                                    required: true,
-                                },
-                                posisi: {
-                                    required: true,
-                                },
+                    console.log(itemTables);
+                    
+                    $.ajaxSetup({
+                        headers: {
+                        'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                        }
+                    });
+                    //menggunakan fungsi ajax untuk pengambilan data
+                    $.ajax({
+                        type: 'POST',
+                        url: '{{ url("checkWawancara") }}',
+                        data: {
+                            "_token": "{{ csrf_token() }}",
+                            id: itemTables,
+                            jml:itemTables.length,
+                        },
+                        success: function(data) {
+                            $('.fetched-data-wawancara-checklist').html(data); //menampilkan data ke dalam modal
+                            // alert(itemTables);
+                        }
+                    }).done(function() {
+                        setTimeout(function() {
+                            $("#overlay").fadeOut(300);
+                        }, 500);
+                    });
+                });
+                if ($("#formLamaran").length > 0) {
+                    $("#formLamaran").validate({
+                        rules: {
+                            entitas: {
+                                required: true,
                             },
-                            messages: {
-                                entitas: {
-                                    required: "Masukkan Entitas",
-                                },
-                                nama: {
-                                    required: "Masukkan Nama Kandidat",
-                                },
-                                nik: {
-                                    required: "Masukkan NIK KTP",
-                                },
-                                gender: {
-                                    required: "Masukkan Gender Kandidat",
-                                },
-                                tempat: {
-                                    required: "Masukkan tempat tinggal",
-                                },
-                                tanggallahir: {
-                                    required: "Masukkan tanggal lahir",
-                                },
-                                pendidikan: {
-                                    required: "Masukkan pendidikan",
-                                },
-                                jurusan: {
-                                    required: "Masukkan jurusan",
-                                },
-                                alamat: {
-                                    required: "Masukkan alamat",
-                                },
-                                agama: {
-                                    required: "Masukkan agama",
-                                },
-                                tinggi: {
-                                    required: "Masukkan tinggi",
-                                },
-                                berat: {
-                                    required: "Masukkan berat",
-                                },
-                                notlp: {
-                                    required: "Masukkan nomor telepon",
-                                },
-                                posisi: {
-                                    required: "Masukkan posisi dituju",
-                                },
+                            nama: {
+                                required: true,
                             },
+                            nik: {
+                                required: true,
+                            },
+                            gender: {
+                                required: true,
+                            },
+                            tempat: {
+                                required: true,
+                            },
+                            tanggallahir: {
+                                required: true,
+                            },
+                            pendidikan: {
+                                required: true,
+                            },
+                            jurusan: {
+                                required: true,
+                            },
+                            alamat: {
+                                required: true,
+                            },
+                            agama: {
+                                required: true,
+                            },
+                            tinggi: {
+                                required: true,
+                            },
+                            berat: {
+                                required: true,
+                            },
+                            notlp: {
+                                required: true,
+                            },
+                            posisi: {
+                                required: true,
+                            },
+                        },
+                        messages: {
+                            entitas: {
+                                required: "Masukkan Entitas",
+                            },
+                            nama: {
+                                required: "Masukkan Nama Kandidat",
+                            },
+                            nik: {
+                                required: "Masukkan NIK KTP",
+                            },
+                            gender: {
+                                required: "Masukkan Gender Kandidat",
+                            },
+                            tempat: {
+                                required: "Masukkan tempat tinggal",
+                            },
+                            tanggallahir: {
+                                required: "Masukkan tanggal lahir",
+                            },
+                            pendidikan: {
+                                required: "Masukkan pendidikan",
+                            },
+                            jurusan: {
+                                required: "Masukkan jurusan",
+                            },
+                            alamat: {
+                                required: "Masukkan alamat",
+                            },
+                            agama: {
+                                required: "Masukkan agama",
+                            },
+                            tinggi: {
+                                required: "Masukkan tinggi",
+                            },
+                            berat: {
+                                required: "Masukkan berat",
+                            },
+                            notlp: {
+                                required: "Masukkan nomor telepon",
+                            },
+                            posisi: {
+                                required: "Masukkan posisi dituju",
+                            },
+                        },
 
-                            submitHandler: function(form) {
-                                $.ajaxSetup({
-                                    headers: {
-                                    'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
-                                    }
-                                });
-                                $('#submitLamaran').html('<i class="fa-solid fa-fw fa-spinner fa-spin"></i> Please Wait...');
-                                $("#submitLamaran"). attr("disabled", true);
-                                $.ajax({
-                                    url: "{{url('storedataLamaran')}}",
-                                    type: "POST",
-                                    data: $('#formLamaran').serialize(),
-                                    beforeSend: function() {
-                                        Swal.fire({
-                                            title: 'Mohon Menunggu',
-                                            html: '<center><lottie-player src="https://assets9.lottiefiles.com/private_files/lf30_al2qt2jz.json"  background="transparent"  speed="1"  style="width: 300px; height: 300px;"  loop autoplay></lottie-player></center><br><h1 class="h4">Sedang memproses data, Proses mungkin membutuhkan beberapa menit. <br><br><b class="text-danger">(Jangan menutup jendela ini, bisa mengakibatkan error)</b></h1>',
-                                            showConfirmButton: false,
-                                            timerProgressBar: true,
-                                            allowOutsideClick: false,
-                                            allowEscapeKey: false,
-                                        })
-                                    },
-                                    success: function( response ) {
-                                        console.log( 'Completed.' );
-                                        $('#submitLamaran').html('<svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-device-floppy" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><path d="M6 4h10l4 4v10a2 2 0 0 1 -2 2h-12a2 2 0 0 1 -2 -2v-12a2 2 0 0 1 2 -2" /><path d="M12 14m-2 0a2 2 0 1 0 4 0a2 2 0 1 0 -4 0" /><path d="M14 4l0 4l-6 0l0 -4" /></svg> Simpan');
-                                        $("#submitLamaran"). attr("disabled", false);
-                                        tableLamaran.draw();
-                                        const Toast = Swal.mixin({
-                                            toast: true,
-                                            position: "top-end",
-                                            showConfirmButton: false,
-                                            timer: 4000,
-                                            timerProgressBar: true,
-                                            didOpen: (toast) => {
-                                                toast.onmouseenter = Swal.stopTimer;
-                                                toast.onmouseleave = Swal.resumeTimer;
-                                            }
-                                        });
-                                            Toast.fire({
-                                            icon: "success",
-                                            title: response.msg,
-                                        });
-                                        document.getElementById("formLamaran").reset();
-                                        var sp = $('#selectEntitas').val();
-                                        $('#entitas').val(sp);
-                                        $('#modal-lamaran').modal('hide');
-                                    },
-                                    error: function (data) {
-                                        console.log('Error:', data);
-                                        // const obj = JSON.parse(data.responseJSON);
-                                        tableLamaran.draw();
-                                        Swal.fire({
-                                            icon: 'error',
-                                            title: 'Gagal Input',
-                                            html: data.responseJSON.message,
-                                            showConfirmButton: true
-                                        });
-                                        $('#submitLamaran').html('<svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-device-floppy" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><path d="M6 4h10l4 4v10a2 2 0 0 1 -2 2h-12a2 2 0 0 1 -2 -2v-12a2 2 0 0 1 2 -2" /><path d="M12 14m-2 0a2 2 0 1 0 4 0a2 2 0 1 0 -4 0" /><path d="M14 4l0 4l-6 0l0 -4" /></svg> Simpan');
-                                        $("#submitLamaran"). attr("disabled", false);
-                                    }
-                                });
-                            }
-                        })
-                    }
-
-                    if ($("#formCheckWawancara").length > 0) {
-                        $("#formCheckWawancara").validate({
-                            rules: {
-                                tglwawancara: {
-                                    required: true,
+                        submitHandler: function(form) {
+                            $.ajaxSetup({
+                                headers: {
+                                'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                                }
+                            });
+                            $('#submitLamaran').html('<i class="fa-solid fa-fw fa-spinner fa-spin"></i> Please Wait...');
+                            $("#submitLamaran"). attr("disabled", true);
+                            $.ajax({
+                                url: "{{url('storedataLamaran')}}",
+                                type: "POST",
+                                data: $('#formLamaran').serialize(),
+                                beforeSend: function() {
+                                    Swal.fire({
+                                        title: 'Mohon Menunggu',
+                                        html: '<center><lottie-player src="https://assets9.lottiefiles.com/private_files/lf30_al2qt2jz.json"  background="transparent"  speed="1"  style="width: 300px; height: 300px;"  loop autoplay></lottie-player></center><br><h1 class="h4">Sedang memproses data, Proses mungkin membutuhkan beberapa menit. <br><br><b class="text-danger">(Jangan menutup jendela ini, bisa mengakibatkan error)</b></h1>',
+                                        showConfirmButton: false,
+                                        timerProgressBar: true,
+                                        allowOutsideClick: false,
+                                        allowEscapeKey: false,
+                                    })
                                 },
-                            },
-                            messages: {
-                                tglwawancara: {
-                                    required: "Masukkan Tanggal Wawancara",
+                                success: function( response ) {
+                                    console.log( 'Completed.' );
+                                    $('#submitLamaran').html('<svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-device-floppy" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><path d="M6 4h10l4 4v10a2 2 0 0 1 -2 2h-12a2 2 0 0 1 -2 -2v-12a2 2 0 0 1 2 -2" /><path d="M12 14m-2 0a2 2 0 1 0 4 0a2 2 0 1 0 -4 0" /><path d="M14 4l0 4l-6 0l0 -4" /></svg> Simpan');
+                                    $("#submitLamaran"). attr("disabled", false);
+                                    tableLamaran.draw();
+                                    const Toast = Swal.mixin({
+                                        toast: true,
+                                        position: "top-end",
+                                        showConfirmButton: false,
+                                        timer: 4000,
+                                        timerProgressBar: true,
+                                        didOpen: (toast) => {
+                                            toast.onmouseenter = Swal.stopTimer;
+                                            toast.onmouseleave = Swal.resumeTimer;
+                                        }
+                                    });
+                                        Toast.fire({
+                                        icon: "success",
+                                        title: response.msg,
+                                    });
+                                    document.getElementById("formLamaran").reset();
+                                    var sp = $('#selectEntitas').val();
+                                    $('#entitas').val(sp);
+                                    $('#modal-lamaran').modal('hide');
                                 },
-                            },
+                                error: function (data) {
+                                    console.log('Error:', data);
+                                    // const obj = JSON.parse(data.responseJSON);
+                                    tableLamaran.draw();
+                                    Swal.fire({
+                                        icon: 'error',
+                                        title: 'Gagal Input',
+                                        html: data.responseJSON.message,
+                                        showConfirmButton: true
+                                    });
+                                    $('#submitLamaran').html('<svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-device-floppy" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><path d="M6 4h10l4 4v10a2 2 0 0 1 -2 2h-12a2 2 0 0 1 -2 -2v-12a2 2 0 0 1 2 -2" /><path d="M12 14m-2 0a2 2 0 1 0 4 0a2 2 0 1 0 -4 0" /><path d="M14 4l0 4l-6 0l0 -4" /></svg> Simpan');
+                                    $("#submitLamaran"). attr("disabled", false);
+                                }
+                            });
+                        }
+                    })
+                }
 
-                            submitHandler: function(form) {
-                                $.ajaxSetup({
-                                    headers: {
-                                    'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
-                                    }
-                                });
-                                $('#submitCheck').html('<i class="fa-solid fa-fw fa-spinner fa-spin"></i> Please Wait...');
-                                $("#submitCheck"). attr("disabled", true);
-                                $.ajax({
-                                    url: "{{url('storeChecklistLamaran')}}",
-                                    type: "POST",
-                                    data: $('#formCheckWawancara').serialize(),
-                                    beforeSend: function() {
-                                        Swal.fire({
-                                            title: 'Mohon Menunggu',
-                                            html: '<center><lottie-player src="https://lottie.host/933bb0e2-47c0-4fa6-83f9-3330b433b883/yymyeZt49h.json"  background="transparent"  speed="1"  style="width: 300px; height: 300px;"  loop autoplay></lottie-player></center><br><h1 class="h4">Sedang memproses data, Proses mungkin membutuhkan beberapa menit. <br><br><b class="text-danger">(Jangan menutup jendela ini, bisa mengakibatkan error)</b></h1>',
-                                            showConfirmButton: false,
-                                            timerProgressBar: true,
-                                            allowOutsideClick: false,
-                                            allowEscapeKey: false,
-                                        })
-                                    },
-                                    success: function( response ) {
-                                        console.log( 'Completed.' );
-                                        $('#submitCheck').html('<svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-device-floppy" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><path d="M6 4h10l4 4v10a2 2 0 0 1 -2 2h-12a2 2 0 0 1 -2 -2v-12a2 2 0 0 1 2 -2" /><path d="M12 14m-2 0a2 2 0 1 0 4 0a2 2 0 1 0 -4 0" /><path d="M14 4l0 4l-6 0l0 -4" /></svg> Simpan');
-                                        $("#submitCheck"). attr("disabled", false);
-                                        tableLamaran.draw();
-                                        const Toast = Swal.mixin({
-                                            toast: true,
-                                            position: "top-end",
-                                            showConfirmButton: false,
-                                            timer: 4000,
-                                            timerProgressBar: true,
-                                            didOpen: (toast) => {
-                                                toast.onmouseenter = Swal.stopTimer;
-                                                toast.onmouseleave = Swal.resumeTimer;
-                                            }
-                                        });
-                                            Toast.fire({
-                                            icon: "success",
-                                            title: response.msg,
-                                        });
-                                        document.getElementById("formCheckWawancara").reset();
-                                        $('#myModalCheck').modal('hide');
-                                    },
-                                    error: function (data) {
-                                        console.log('Error:', data);
-                                        // const obj = JSON.parse(data.responseJSON);
-                                        tableLamaran.draw();
-                                        Swal.fire({
-                                            icon: 'error',
-                                            title: 'Gagal Input',
-                                            html: data.responseJSON.message,
-                                            showConfirmButton: true
-                                        });
-                                        $('#submitCheck').html('<svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-device-floppy" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><path d="M6 4h10l4 4v10a2 2 0 0 1 -2 2h-12a2 2 0 0 1 -2 -2v-12a2 2 0 0 1 2 -2" /><path d="M12 14m-2 0a2 2 0 1 0 4 0a2 2 0 1 0 -4 0" /><path d="M14 4l0 4l-6 0l0 -4" /></svg> Simpan');
-                                        $("#submitCheck"). attr("disabled", false);
-                                    }
-                                });
-                            }
-                        })
-                    }
+                if ($("#formCheckWawancara").length > 0) {
+                    $("#formCheckWawancara").validate({
+                        rules: {
+                            tglwawancara: {
+                                required: true,
+                            },
+                        },
+                        messages: {
+                            tglwawancara: {
+                                required: "Masukkan Tanggal Wawancara",
+                            },
+                        },
+
+                        submitHandler: function(form) {
+                            $.ajaxSetup({
+                                headers: {
+                                'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                                }
+                            });
+                            $('#submitCheck').html('<i class="fa-solid fa-fw fa-spinner fa-spin"></i> Please Wait...');
+                            $("#submitCheck"). attr("disabled", true);
+                            $.ajax({
+                                url: "{{url('storeChecklistLamaran')}}",
+                                type: "POST",
+                                data: $('#formCheckWawancara').serialize(),
+                                beforeSend: function() {
+                                    Swal.fire({
+                                        title: 'Mohon Menunggu',
+                                        html: '<center><lottie-player src="https://lottie.host/933bb0e2-47c0-4fa6-83f9-3330b433b883/yymyeZt49h.json"  background="transparent"  speed="1"  style="width: 300px; height: 300px;"  loop autoplay></lottie-player></center><br><h1 class="h4">Sedang memproses data, Proses mungkin membutuhkan beberapa menit. <br><br><b class="text-danger">(Jangan menutup jendela ini, bisa mengakibatkan error)</b></h1>',
+                                        showConfirmButton: false,
+                                        timerProgressBar: true,
+                                        allowOutsideClick: false,
+                                        allowEscapeKey: false,
+                                    })
+                                },
+                                success: function( response ) {
+                                    console.log( 'Completed.' );
+                                    $('#submitCheck').html('<svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-device-floppy" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><path d="M6 4h10l4 4v10a2 2 0 0 1 -2 2h-12a2 2 0 0 1 -2 -2v-12a2 2 0 0 1 2 -2" /><path d="M12 14m-2 0a2 2 0 1 0 4 0a2 2 0 1 0 -4 0" /><path d="M14 4l0 4l-6 0l0 -4" /></svg> Simpan');
+                                    $("#submitCheck"). attr("disabled", false);
+                                    tableLamaran.draw();
+                                    const Toast = Swal.mixin({
+                                        toast: true,
+                                        position: "top-end",
+                                        showConfirmButton: false,
+                                        timer: 4000,
+                                        timerProgressBar: true,
+                                        didOpen: (toast) => {
+                                            toast.onmouseenter = Swal.stopTimer;
+                                            toast.onmouseleave = Swal.resumeTimer;
+                                        }
+                                    });
+                                        Toast.fire({
+                                        icon: "success",
+                                        title: response.msg,
+                                    });
+                                    document.getElementById("formCheckWawancara").reset();
+                                    $('#myModalCheck').modal('hide');
+                                },
+                                error: function (data) {
+                                    console.log('Error:', data);
+                                    // const obj = JSON.parse(data.responseJSON);
+                                    tableLamaran.draw();
+                                    Swal.fire({
+                                        icon: 'error',
+                                        title: 'Gagal Input',
+                                        html: data.responseJSON.message,
+                                        showConfirmButton: true
+                                    });
+                                    $('#submitCheck').html('<svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-device-floppy" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><path d="M6 4h10l4 4v10a2 2 0 0 1 -2 2h-12a2 2 0 0 1 -2 -2v-12a2 2 0 0 1 2 -2" /><path d="M12 14m-2 0a2 2 0 1 0 4 0a2 2 0 1 0 -4 0" /><path d="M14 4l0 4l-6 0l0 -4" /></svg> Simpan');
+                                    $("#submitCheck"). attr("disabled", false);
+                                }
+                            });
+                        }
+                    })
+                }
+                
+                $('body').on('click', '.cancelWawancara', function () {
+                    var contract_id = $(this).data("id");
+                    var nama = $(this).data("nama");
+                    var noform = $(this).data("noform");
+                    var token = $("meta[name='csrf-token']").attr("content");
+                    Swal.fire({
+                        icon: 'warning',
+                        title: 'Batalkan Proses Wawancara',
+                        text: 'Apakah anda yakin ingin membatalkan '+nama+' ?',
+                        showCancelButton: true,
+                        confirmButtonColor: '#d33',
+                        cancelButtonColor: '#3085d6',
+                        confirmButtonText: '<i class="fa-solid fa-arrow-rotate-left"></i> Ya',
+                        cancelButtonText: 'Tidak',
+                    }).then((result) => {
+                        if (result.isConfirmed) {
+                            $.ajax({
+                                type: "POST",
+                                url: "{{ url('cancelWawancara') }}",
+                                data:{
+                                    "_token": "{{ csrf_token() }}",
+                                    id:contract_id,
+                                    noform: noform,
+                                },
+                                beforeSend: function() {
+                                    Swal.fire({
+                                        title: 'Mohon Menunggu',
+                                        html: '<center><lottie-player src="https://lottie.host/54b33864-47d1-4f30-b38c-bc2b9bdc3892/1xkjwmUkku.json"  background="transparent"  speed="1"  style="width: 400px; height: 400px;"  loop autoplay></lottie-player></center><br><h1 class="h4">Sedang menghapus data, Proses mungkin membutuhkan beberapa menit. <br><br><b class="text-danger">(Jangan menutup jendela ini, bisa mengakibatkan error)</b></h1>',
+                                        timerProgressBar: true,
+                                        showConfirmButton: false,
+                                        allowOutsideClick: false,
+                                        allowEscapeKey: false,
+                                    })
+                                },
+                                success: function (data) {
+                                    $('.datatable-wawancara').DataTable().ajax.reload();
+                                    const Toast = Swal.mixin({
+                                        toast: true,
+                                        position: "top-end",
+                                        showConfirmButton: false,
+                                        timer: 3000,
+                                        timerProgressBar: true,
+                                        didOpen: (toast) => {
+                                            toast.onmouseenter = Swal.stopTimer;
+                                            toast.onmouseleave = Swal.resumeTimer;
+                                        }
+                                    });
+                                        Toast.fire({
+                                        icon: "success",
+                                        title: "Data Lamaran : "+nama+" dikembalikan ke lamaran"
+                                    });
+                                },
+                                error: function (data) {
+                                    console.log('Error:', data.responseText);
+                                    Swal.fire({
+                                        icon: 'error',
+                                        title: 'Gagal!',
+                                        text: 'Error: '+ data.responseText,
+                                        showConfirmButton: true,
+                                    });
+                                }
+                            });
+                        }
+                    });
+                    
+                });
             });
 
         </script>

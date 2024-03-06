@@ -57,4 +57,12 @@ class DataLamaran extends Controller
         }
         return view('products.02_penerimaan.lamaran');
     }
+
+    public function destroy($id)
+    {
+        // pr_01daftarentitas::find($id)->delete();
+        DB::table('penerimaan_lamaran')->where('id', '=', $id)->delete();
+
+        return response()->json(['success' => 'Record deleted successfully.']);
+    }
 }

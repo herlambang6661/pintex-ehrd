@@ -22,14 +22,20 @@ class DataWawancara extends Controller
     public function index(Request $request)
     {
         if ($request->ajax()) {
-            $data = DB::table('penerimaan_lamaran')->where('wawancara', 1)->orderBy('id', 'desc')->get();
+            $data = DB::table('penerimaan_lamaran')
+                ->where('wawancara', 1)
+                ->where('wawancara', 1)
+                ->orderBy('id', 'desc')
+                ->get();
             return DataTables::of($data)
                 ->addIndexColumn()
                 ->addColumn('status', function ($row) {
-                    if ($row->wawancara == 1) {
-                        $ww = '<span class="badge bg-blue text-blue-fg">Sudah</span>';
+                    if ($row->diterima == 1) {
+                        $ww = '<span class="badge bg-green text-blue-fg">Diterima</span>';
+                    } elseif ($row->diterima == 2) {
+                        $ww = '<span class="badge bg-red text-orange-fg">Ditolak</span>';
                     } else {
-                        $ww = '<span class="badge bg-orange text-orange-fg">Belum</span>';
+                        $ww = '<span class="badge bg-secondary text-orange-fg">Belum</span>';
                     }
                     return $ww;
                 })
@@ -49,7 +55,9 @@ class DataWawancara extends Controller
 
                 ->addColumn('action', function ($row) {
                     $btn = ' <a href="javascript:void(0)" data-toggle="tooltip" data-item="' . $row->nik . '" data-id="' . $row->id . '" data-original-title="Delete" class="btn btn-outline-info btn-icon deleteProduct"><i class="fa-solid fa-fw fa-eye"></i></a>';
-                    $btn = $btn . ' <a href="javascript:void(0)" data-toggle="tooltip" data-noform="' . $row->nik . '" data-id="' . $row->id . '" data-original-title="Delete" class="btn btn-outline-danger btn-icon deleteContract"><i class="fa-solid fa-arrow-rotate-left"></i></a>';
+                    $btn = $btn . ' <a href="javascript:void(0)" data-toggle="tooltip" data-noform="' . $row->noformwawancara . '" data-nama="' . $row->nama . '" data-id="' . $row->id . '" data-original-title="Delete" class="btn btn-outline-warning btn-icon cancelWawancara"><i class="fa-solid fa-arrow-rotate-left"></i></a>';
+                    // $btn = $btn . ' <a href="javascript:void(0)" data-toggle="tooltip" class="btn btn-outline-green btn-icon"><i class="fa-solid fa-check"></i></a>';
+                    // $btn = $btn . ' <a href="javascript:void(0)" data-toggle="tooltip" class="btn btn-outline-red btn-icon"><i class="fa-solid fa-xmark"></i></a>';
                     return $btn;
                 })
                 ->rawColumns(['status', 'action', 'select_orders', 'ttl', 'umur'])

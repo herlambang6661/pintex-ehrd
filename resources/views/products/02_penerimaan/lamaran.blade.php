@@ -363,8 +363,8 @@
                             <div class="fetched-data-pembelian-checklist"></div>
                         </div>
                         <div class="modal-footer">
-                            <button type="submit" id="submitCheck" class="btn btn-blue mr-auto"><i class="fas fa-save" style="margin-right: 5px"></i> Proses</button>
-                            <button type="button" class="btn btn-link link-secondary" data-bs-dismiss="modal"><i class="fa-solid fa-fw fa-arrow-rotate-left"></i> Batal</button>
+                            <button type="submit" class="btn btn-blue" id="submitCheck"><i class="fas fa-save" style="margin-right: 5px"></i> Proses</button>
+                            <button type="button" class="btn btn-link link-secondary ms-auto" data-bs-dismiss="modal"><i class="fa-solid fa-fw fa-arrow-rotate-left"></i> Batal</button>
                         </div>
                     </form>
                 </div>
@@ -998,8 +998,10 @@
                                     if (password == r) {
                                         $.ajax({
                                             type: "DELETE",
-                                            url: "{{ route('getLamaran.store') }}"+'/'+id,
-                                            
+                                            url: "{{ route('getLamaran.store') }}"+'/'+contract_id,
+                                            data: {
+                                                "_token": "{{ csrf_token() }}",
+                                            },
                                             beforeSend: function() {
                                                 Swal.fire({
                                                     title: 'Mohon Menunggu',
@@ -1011,9 +1013,7 @@
                                                 })
                                             },
                                             success: function (data) {
-                                                $('.datatable-cotton').DataTable().ajax.reload();
-                                                $('.datatable-rayon').DataTable().ajax.reload();
-                                                $('.datatable-waste').DataTable().ajax.reload();
+                                                $('.datatable-lamaran').DataTable().ajax.reload();
                                                 const Toast = Swal.mixin({
                                                     toast: true,
                                                     position: "top-end",

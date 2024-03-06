@@ -31,7 +31,9 @@ return new class extends Migration
             $table->string('email')->nullable();
             $table->longText('keterangan')->nullable();
             $table->integer('wawancara')->nullable();
+            $table->integer('noformwawancara')->nullable();
             $table->integer('diterima')->nullable();
+            $table->date('tglinput');
             $table->string('dibuat')->nullable();
             $table->rememberToken();
             $table->timestamps();
