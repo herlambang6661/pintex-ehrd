@@ -170,6 +170,31 @@
                 </div>
             </div>
         </div>
+        <div class="modal modal-blur fade" id="myModalXmark" tabindex="-1" role="dialog" aria-hidden="true">
+            <div class="overlay">
+                <div class="cv-spinner">
+                    <span class="spinner"></span>
+                </div>
+            </div>
+            <div class="modal-dialog modal-xl" role="document">
+                <div class="modal-content">
+                    <form id="formCheckWawancaraX" name="formCheckWawancaraX" method="post" action="javascript:void(0)">
+                        @csrf
+                        <div class="modal-header bg-red-lt text-white">
+                            <h5 class="modal-title"><i class="fa-solid fa-user-xmark" style="margin-right: 5px"></i> Proses Kandidat yang Ditolak</h5>
+                            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                        </div>
+                        <div class="modal-body">
+                            <div class="fetched-data-wawancara-xmark"></div>
+                        </div>
+                        <div class="modal-footer">
+                            <button type="submit" id="submitCheckXmark" class="btn btn-red"><i class="fas fa-save" style="margin-right: 5px"></i> Proses</button>
+                            <button type="button" class="btn btn-link link-secondary ms-auto" data-bs-dismiss="modal"><i class="fa-solid fa-fw fa-arrow-rotate-left"></i> Batal</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
         {{-- Modal Filter --}}
         <div class="offcanvas offcanvas-blur offcanvas-end" tabindex="-1" id="offcanvasEnd-lamaran" aria-labelledby="offcanvasEndLabel">
             <div class="offcanvas-header">
@@ -319,8 +344,15 @@
                 Create Data
                 --------------------------------------------==============================================================================================================================================================
                 --------------------------------------------==============================================================================================================================================================*/
-                    
-                var tableLamaran = $('.datatable-wawancara').DataTable({
+                $('.datatable-wawancara').on('init.dt', function() {
+                    $('.checkall').attr('data-toggle', 'tooltip').attr('data-placement', 'top').attr('title', 'Tooltip on top');
+                    $('.w_filter').attr('data-toggle', 'tooltip').attr('data-placement', 'top').attr('title', 'Advance Filter');
+                    $('.w_excel').attr('data-toggle', 'tooltip').attr('data-placement', 'top').attr('title', 'Download Excel dari tabel');
+                    $('.w_back').attr('data-toggle', 'tooltip').attr('data-placement', 'top').attr('title', 'Kembalikan status Lamaran');
+                    $('.w_check').attr('data-toggle', 'tooltip').attr('data-placement', 'top').attr('title', 'Terima Pelamar');
+                    $('.w_xmark').attr('data-toggle', 'tooltip').attr('data-placement', 'top').attr('title', 'Tolak Pelamar');
+                });
+                var tableWawancara = $('.datatable-wawancara').DataTable({
                     "processing": true, //Feature control the processing indicator.
                     "serverSide": false, //Feature control DataTables' server-side processing mode.
                     "scrollX": true,
@@ -337,7 +369,7 @@
                         },
                         {
                             text: '<i class="fa-solid fa-filter" style="margin-right:5px"></i>',
-                            className: 'btn btn-blue',
+                            className: 'btn btn-blue w_filter',
                             attr: {
                                 'href': '#offcanvasEnd-lamaran',
                                 'data-bs-toggle': 'offcanvas',
@@ -348,13 +380,13 @@
                         {
                             extend: 'excelHtml5',
                             autoFilter: true,
-                            className: 'btn btn-success',
+                            className: 'btn btn-success w_excel',
                             text: '<i class="fa fa-file-excel text-white" style="margin-right:5px"></i>',
                             action: newexportaction,
                         }, 
                         {
                             text: '<i class="fa-solid fa-arrow-rotate-left"></i>',
-                            className: 'btn btn-warning',
+                            className: 'btn btn-warning w_back',
                             attr: {
                                 'href': '#offcanvasEnd-lamaran',
                                 'data-bs-toggle': 'offcanvas',
@@ -363,14 +395,14 @@
                             }
                         },
                         {
-                            className: 'btn btn-lime',
+                            className: 'btn btn-lime w_check',
                             text: '<i class="fa-solid fa-check"></i>',
                             action: function(e, node, config) {
                                 $('#myModalCheck').modal('show')
                             }
                         },
                         {
-                            className: 'btn btn-red',
+                            className: 'btn btn-red w_xmark',
                             text: '<i class="fa-solid fa-xmark"></i>',
                             action: function(e, node, config) {
                                 $('#myModalXmark').modal('show')
@@ -437,12 +469,12 @@
                 var selected = new Array();
 
                 $('#myModalCheck').on('show.bs.modal', function(e) {
-                    $("#overlay").fadeIn(300);
+                    $(".overlay").fadeIn(300);
                     itemTables = [];
                     // console.log(count);
 
-                    $.each(tableLamaran.rows('.selected').nodes(), function(index, rowId) {
-                        var rows_selected = tableLamaran.rows('.selected').data();
+                    $.each(tableWawancara.rows('.selected').nodes(), function(index, rowId) {
+                        var rows_selected = tableWawancara.rows('.selected').data();
                         itemTables.push(rows_selected[index]['id']);
                     });
                     console.log(itemTables);
@@ -467,165 +499,47 @@
                         }
                     }).done(function() {
                         setTimeout(function() {
-                            $("#overlay").fadeOut(300);
+                            $(".overlay").fadeOut(300);
                         }, 500);
                     });
                 });
-                if ($("#formLamaran").length > 0) {
-                    $("#formLamaran").validate({
-                        rules: {
-                            entitas: {
-                                required: true,
-                            },
-                            nama: {
-                                required: true,
-                            },
-                            nik: {
-                                required: true,
-                            },
-                            gender: {
-                                required: true,
-                            },
-                            tempat: {
-                                required: true,
-                            },
-                            tanggallahir: {
-                                required: true,
-                            },
-                            pendidikan: {
-                                required: true,
-                            },
-                            jurusan: {
-                                required: true,
-                            },
-                            alamat: {
-                                required: true,
-                            },
-                            agama: {
-                                required: true,
-                            },
-                            tinggi: {
-                                required: true,
-                            },
-                            berat: {
-                                required: true,
-                            },
-                            notlp: {
-                                required: true,
-                            },
-                            posisi: {
-                                required: true,
-                            },
-                        },
-                        messages: {
-                            entitas: {
-                                required: "Masukkan Entitas",
-                            },
-                            nama: {
-                                required: "Masukkan Nama Kandidat",
-                            },
-                            nik: {
-                                required: "Masukkan NIK KTP",
-                            },
-                            gender: {
-                                required: "Masukkan Gender Kandidat",
-                            },
-                            tempat: {
-                                required: "Masukkan tempat tinggal",
-                            },
-                            tanggallahir: {
-                                required: "Masukkan tanggal lahir",
-                            },
-                            pendidikan: {
-                                required: "Masukkan pendidikan",
-                            },
-                            jurusan: {
-                                required: "Masukkan jurusan",
-                            },
-                            alamat: {
-                                required: "Masukkan alamat",
-                            },
-                            agama: {
-                                required: "Masukkan agama",
-                            },
-                            tinggi: {
-                                required: "Masukkan tinggi",
-                            },
-                            berat: {
-                                required: "Masukkan berat",
-                            },
-                            notlp: {
-                                required: "Masukkan nomor telepon",
-                            },
-                            posisi: {
-                                required: "Masukkan posisi dituju",
-                            },
-                        },
+                
 
-                        submitHandler: function(form) {
-                            $.ajaxSetup({
-                                headers: {
-                                'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
-                                }
-                            });
-                            $('#submitLamaran').html('<i class="fa-solid fa-fw fa-spinner fa-spin"></i> Please Wait...');
-                            $("#submitLamaran"). attr("disabled", true);
-                            $.ajax({
-                                url: "{{url('storedataLamaran')}}",
-                                type: "POST",
-                                data: $('#formLamaran').serialize(),
-                                beforeSend: function() {
-                                    Swal.fire({
-                                        title: 'Mohon Menunggu',
-                                        html: '<center><lottie-player src="https://assets9.lottiefiles.com/private_files/lf30_al2qt2jz.json"  background="transparent"  speed="1"  style="width: 300px; height: 300px;"  loop autoplay></lottie-player></center><br><h1 class="h4">Sedang memproses data, Proses mungkin membutuhkan beberapa menit. <br><br><b class="text-danger">(Jangan menutup jendela ini, bisa mengakibatkan error)</b></h1>',
-                                        showConfirmButton: false,
-                                        timerProgressBar: true,
-                                        allowOutsideClick: false,
-                                        allowEscapeKey: false,
-                                    })
-                                },
-                                success: function( response ) {
-                                    console.log( 'Completed.' );
-                                    $('#submitLamaran').html('<svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-device-floppy" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><path d="M6 4h10l4 4v10a2 2 0 0 1 -2 2h-12a2 2 0 0 1 -2 -2v-12a2 2 0 0 1 2 -2" /><path d="M12 14m-2 0a2 2 0 1 0 4 0a2 2 0 1 0 -4 0" /><path d="M14 4l0 4l-6 0l0 -4" /></svg> Simpan');
-                                    $("#submitLamaran"). attr("disabled", false);
-                                    tableLamaran.draw();
-                                    const Toast = Swal.mixin({
-                                        toast: true,
-                                        position: "top-end",
-                                        showConfirmButton: false,
-                                        timer: 4000,
-                                        timerProgressBar: true,
-                                        didOpen: (toast) => {
-                                            toast.onmouseenter = Swal.stopTimer;
-                                            toast.onmouseleave = Swal.resumeTimer;
-                                        }
-                                    });
-                                        Toast.fire({
-                                        icon: "success",
-                                        title: response.msg,
-                                    });
-                                    document.getElementById("formLamaran").reset();
-                                    var sp = $('#selectEntitas').val();
-                                    $('#entitas').val(sp);
-                                    $('#modal-lamaran').modal('hide');
-                                },
-                                error: function (data) {
-                                    console.log('Error:', data);
-                                    // const obj = JSON.parse(data.responseJSON);
-                                    tableLamaran.draw();
-                                    Swal.fire({
-                                        icon: 'error',
-                                        title: 'Gagal Input',
-                                        html: data.responseJSON.message,
-                                        showConfirmButton: true
-                                    });
-                                    $('#submitLamaran').html('<svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-device-floppy" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><path d="M6 4h10l4 4v10a2 2 0 0 1 -2 2h-12a2 2 0 0 1 -2 -2v-12a2 2 0 0 1 2 -2" /><path d="M12 14m-2 0a2 2 0 1 0 4 0a2 2 0 1 0 -4 0" /><path d="M14 4l0 4l-6 0l0 -4" /></svg> Simpan');
-                                    $("#submitLamaran"). attr("disabled", false);
-                                }
-                            });
+                $('#myModalXmark').on('show.bs.modal', function(e) {
+                    $(".overlay").fadeIn(300);
+                    itemTables = [];
+                    // console.log(count);
+
+                    $.each(tableWawancara.rows('.selected').nodes(), function(index, rowId) {
+                        var rows_selected = tableWawancara.rows('.selected').data();
+                        itemTables.push(rows_selected[index]['id']);
+                    });
+                    console.log(itemTables);
+                    
+                    $.ajaxSetup({
+                        headers: {
+                        'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
                         }
-                    })
-                }
+                    });
+                    //menggunakan fungsi ajax untuk pengambilan data
+                    $.ajax({
+                        type: 'POST',
+                        url: '{{ url("checkWawancaraX") }}',
+                        data: {
+                            "_token": "{{ csrf_token() }}",
+                            id: itemTables,
+                            jml:itemTables.length,
+                        },
+                        success: function(data) {
+                            $('.fetched-data-wawancara-xmark').html(data); //menampilkan data ke dalam modal
+                            // alert(itemTables);
+                        }
+                    }).done(function() {
+                        setTimeout(function() {
+                            $(".overlay").fadeOut(300);
+                        }, 500);
+                    });
+                });
 
                 if ($("#formCheckWawancara").length > 0) {
                     $("#formCheckWawancara").validate({
@@ -649,7 +563,7 @@
                             $('#submitCheck').html('<i class="fa-solid fa-fw fa-spinner fa-spin"></i> Please Wait...');
                             $("#submitCheck"). attr("disabled", true);
                             $.ajax({
-                                url: "{{url('storeChecklistLamaran')}}",
+                                url: "{{url('storeChecklistWawancara')}}",
                                 type: "POST",
                                 data: $('#formCheckWawancara').serialize(),
                                 beforeSend: function() {
@@ -666,7 +580,7 @@
                                     console.log( 'Completed.' );
                                     $('#submitCheck').html('<svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-device-floppy" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><path d="M6 4h10l4 4v10a2 2 0 0 1 -2 2h-12a2 2 0 0 1 -2 -2v-12a2 2 0 0 1 2 -2" /><path d="M12 14m-2 0a2 2 0 1 0 4 0a2 2 0 1 0 -4 0" /><path d="M14 4l0 4l-6 0l0 -4" /></svg> Simpan');
                                     $("#submitCheck"). attr("disabled", false);
-                                    tableLamaran.draw();
+                                    tableWawancara.ajax.reload();
                                     const Toast = Swal.mixin({
                                         toast: true,
                                         position: "top-end",
@@ -688,7 +602,7 @@
                                 error: function (data) {
                                     console.log('Error:', data);
                                     // const obj = JSON.parse(data.responseJSON);
-                                    tableLamaran.draw();
+                                    tableWawancara.ajax.reload();
                                     Swal.fire({
                                         icon: 'error',
                                         title: 'Gagal Input',
@@ -697,6 +611,82 @@
                                     });
                                     $('#submitCheck').html('<svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-device-floppy" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><path d="M6 4h10l4 4v10a2 2 0 0 1 -2 2h-12a2 2 0 0 1 -2 -2v-12a2 2 0 0 1 2 -2" /><path d="M12 14m-2 0a2 2 0 1 0 4 0a2 2 0 1 0 -4 0" /><path d="M14 4l0 4l-6 0l0 -4" /></svg> Simpan');
                                     $("#submitCheck"). attr("disabled", false);
+                                }
+                            });
+                        }
+                    })
+                }
+
+                if ($("#formCheckWawancaraX").length > 0) {
+                    $("#formCheckWawancaraX").validate({
+                        rules: {
+                            tglwawancara: {
+                                required: true,
+                            },
+                        },
+                        messages: {
+                            tglwawancara: {
+                                required: "Masukkan Tanggal Wawancara",
+                            },
+                        },
+
+                        submitHandler: function(form) {
+                            $.ajaxSetup({
+                                headers: {
+                                'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                                }
+                            });
+                            $('#submitCheckXmark').html('<i class="fa-solid fa-fw fa-spinner fa-spin"></i> Please Wait...');
+                            $("#submitCheckXmark"). attr("disabled", true);
+                            $.ajax({
+                                url: "{{url('storeChecklistWawancara')}}",
+                                type: "POST",
+                                data: $('#formCheckWawancaraX').serialize(),
+                                beforeSend: function() {
+                                    Swal.fire({
+                                        title: 'Mohon Menunggu',
+                                        html: '<center><lottie-player src="https://lottie.host/933bb0e2-47c0-4fa6-83f9-3330b433b883/yymyeZt49h.json"  background="transparent"  speed="1"  style="width: 300px; height: 300px;"  loop autoplay></lottie-player></center><br><h1 class="h4">Sedang memproses data, Proses mungkin membutuhkan beberapa menit. <br><br><b class="text-danger">(Jangan menutup jendela ini, bisa mengakibatkan error)</b></h1>',
+                                        showConfirmButton: false,
+                                        timerProgressBar: true,
+                                        allowOutsideClick: false,
+                                        allowEscapeKey: false,
+                                    })
+                                },
+                                success: function( response ) {
+                                    console.log( 'Completed.' );
+                                    $('#submitCheckXmark').html('<svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-device-floppy" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><path d="M6 4h10l4 4v10a2 2 0 0 1 -2 2h-12a2 2 0 0 1 -2 -2v-12a2 2 0 0 1 2 -2" /><path d="M12 14m-2 0a2 2 0 1 0 4 0a2 2 0 1 0 -4 0" /><path d="M14 4l0 4l-6 0l0 -4" /></svg> Simpan');
+                                    $("#submitCheckXmark"). attr("disabled", false);
+                                    tableWawancara.ajax.reload();
+                                    const Toast = Swal.mixin({
+                                        toast: true,
+                                        position: "top-end",
+                                        showConfirmButton: false,
+                                        timer: 4000,
+                                        timerProgressBar: true,
+                                        didOpen: (toast) => {
+                                            toast.onmouseenter = Swal.stopTimer;
+                                            toast.onmouseleave = Swal.resumeTimer;
+                                        }
+                                    });
+                                        Toast.fire({
+                                        icon: "success",
+                                        title: response.msg,
+                                    });
+                                    document.getElementById("formCheckWawancaraX").reset();
+                                    $('#myModalXmark').modal('hide');
+                                },
+                                error: function (data) {
+                                    console.log('Error:', data);
+                                    // const obj = JSON.parse(data.responseJSON);
+                                    tableWawancara.ajax.reload();
+                                    Swal.fire({
+                                        icon: 'error',
+                                        title: 'Gagal Input',
+                                        html: data.responseJSON.message,
+                                        showConfirmButton: true
+                                    });
+                                    $('#submitCheckXmark').html('<svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-device-floppy" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><path d="M6 4h10l4 4v10a2 2 0 0 1 -2 2h-12a2 2 0 0 1 -2 -2v-12a2 2 0 0 1 2 -2" /><path d="M12 14m-2 0a2 2 0 1 0 4 0a2 2 0 1 0 -4 0" /><path d="M14 4l0 4l-6 0l0 -4" /></svg> Simpan');
+                                    $("#submitCheckXmark"). attr("disabled", false);
                                 }
                             });
                         }

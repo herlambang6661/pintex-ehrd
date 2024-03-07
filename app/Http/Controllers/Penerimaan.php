@@ -262,7 +262,7 @@ class Penerimaan extends Controller
                         <div class="col-lg-8 col-md-12">
                             <div class="mb-3">
                                 <label class="form-label">User <i>(Optional)</i></label>
-                                <input type="text" class="form-control" name="user" placeholder="User yang ikut mewawancarai">
+                                <input type="text" class="form-control" name="user" placeholder="User yang ikut mewawancarai" value="Kartika Dewi, ">
                             </div>
                         </div>
                     </div>';
@@ -340,7 +340,7 @@ class Penerimaan extends Controller
         return view('products/02_penerimaan.print');
     }
     // ======================== END LAMARAN ==============================================================================================
-    // ======================== START WAWANCARA ============================================================================================
+    // ======================== START WAWANCARA ==========================================================================================
 
     public function wawancara()
     {
@@ -385,7 +385,7 @@ class Penerimaan extends Controller
             echo '<div class="row">
                     <div class="col-lg-4 col-md-12">
                         <div class="mb-3">
-                            <label class="form-label">Tanggal Wawancara</label>
+                            <label class="form-label">Tanggal Pelaksanaan Wawancara</label>
                             <input type="date" class="form-control" name="tglwawancara" value="' . date("Y-m-d") . '">
                         </div>
                     </div>
@@ -411,8 +411,6 @@ class Penerimaan extends Controller
                         
                         ';
                     } else {
-                        echo  '<input type="hidden" name="idlamaran[]" value="' . $u->id . '" >';
-                        echo  '<input type="hidden" name="nama[]" value="' . $u->nama . '" >';
                         echo '
                         
                             <div class="col-md-4 col-lg-4">
@@ -425,24 +423,34 @@ class Penerimaan extends Controller
                                     <div class="card-body">
                                         <div class="mb-3">
                                             <div class="form-label">Hasil Wawancara</div>
+                                            <input type="hidden" name="id[]" value="' . $u->id . '" >
+                                            <input type="hidden" name="nama[]" value="' . $u->nama . '" >
                                             <div>
                                                 <label class="form-check">
-                                                    <input class="form-check-input" type="checkbox">
+                                                    <input class="form-check-input" type="checkbox" name="butawarna[]" value="1">
                                                     <span class="form-check-label">Buta Warna</span>
                                                 </label>
                                                 <label class="form-check">
-                                                    <input class="form-check-input" type="checkbox" checked="true">
+                                                    <input class="form-check-input" type="checkbox" name="bersikapbaik[]" checked="true" value="1">
                                                     <span class="form-check-label">Bersikap Baik</span>
                                                 </label>
                                                 <label class="form-check">
-                                                    <input class="form-check-input" type="checkbox" checked="true">
+                                                    <input class="form-check-input" type="checkbox" name="berlaricepat[]" checked="true" value="1">
                                                     <span class="form-check-label">Berlari Cepat</span>
                                                 </label>
                                                 <label class="form-check">
-                                                    <input class="form-check-input" type="checkbox" checked="true">
+                                                    <input class="form-check-input" type="checkbox" name="diterima[]" checked="true" value="1">
                                                     <span class="form-check-label"><b>Diterima Sbg Karyawan</b></span>
                                                 </label>
                                             </div>
+                                        </div>
+                                        <div class="mb-3">
+                                            <label class="form-label">Aktual Tinggi</label>
+                                            <input type="number" class="form-control" name="tinggi[]" min="100" value="' . $u->tinggi . '">
+                                        </div>
+                                        <div class="mb-3">
+                                            <label class="form-label">Aktual Berat</label>
+                                            <input type="number" class="form-control" name="berat[]" min="10" value="' . $u->berat . '">
                                         </div>
                                         <div class="mb-3">
                                             <label class="form-label">Catatan Hasil Wawancara</label>
@@ -459,5 +467,181 @@ class Penerimaan extends Controller
         }
         // return $result;
     }
-    // ======================== END WAWANCARA ==============================================================================================
+
+    public function checkWawancaraX(Request $request)
+    {
+        if (empty($request->id)) {
+            echo '<center><iframe src="https://lottie.host/embed/94d605b9-2cc4-4d11-809a-7f41357109b0/OzwBgj9bHl.json" width="300px" height="300px"></iframe></center>';
+            echo "<center>Tidak ada data yang dipilih</center>";
+        } else {
+            $jml = count($request->id);
+            echo '<div class="row">
+                    <div class="col-lg-4 col-md-12">
+                        <div class="mb-3">
+                            <label class="form-label">Tanggal Pelaksanaan Wawancara</label>
+                            <input type="date" class="form-control" name="tglwawancara" value="' . date("Y-m-d") . '">
+                        </div>
+                    </div>
+                </div>';
+            echo '<div class="row row-cards">';
+            for ($i = 0; $i < $jml; $i++) {
+                $data = DB::table('penerimaan_lamaran')->where('id', $request->id[$i])->get();
+                foreach ($data as $u) {
+                    if ($u->diterima == 1) {
+                        echo '
+                            <div class="col-md-4 col-lg-4">
+                                <div class="card shadow bg-red-lt">
+                                    <div class="card-body p-4 text-center">
+                                        <span class="avatar avatar-xl mb-3 rounded" style="background-image: url(./static/avatars/000m.jpg); width:200px; height:200px;"></span>
+                                        <h3 class="m-0 mb-1"><a href="#">' . $u->nama . '</a></h3>
+                                        <div class="text-secondary">' . $u->posisi . '</div>
+                                        <div class="mt-3">
+                                        <span class="badge bg-danger">Sudah Diterima Sebagai Karyawan</span>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        
+                        ';
+                    } else {
+                        echo '
+                        
+                            <div class="col-md-4 col-lg-4">
+                                <div class="card shadow">
+                                    <div class="card-body p-4 text-center">
+                                        <span class="avatar avatar-xl mb-3 rounded" style="background-image: url(./static/avatars/000m.jpg); width:200px; height:200px;"></span>
+                                        <h3 class="m-0 mb-1"><a href="#">' . $u->nama . '</a></h3>
+                                        <div class="text-secondary">' . $u->posisi . '</div>
+                                    </div>
+                                    <div class="card-body">
+                                        <div class="mb-3">
+                                            <div class="form-label">Hasil Wawancara</div>
+                                            <input type="hidden" name="id[]" value="' . $u->id . '" >
+                                            <input type="hidden" name="nama[]" value="' . $u->nama . '" >
+                                            <input type="hidden" name="diterima[]" value="2" >
+                                            <div>
+                                                <label class="form-check">
+                                                    <input class="form-check-input" type="checkbox" name="butawarna[]" checked="true" value="1">
+                                                    <span class="form-check-label">Buta Warna</span>
+                                                </label>
+                                                <label class="form-check">
+                                                    <input class="form-check-input" type="checkbox" name="bersikapbaik[]" value="1">
+                                                    <span class="form-check-label">Bersikap Baik</span>
+                                                </label>
+                                                <label class="form-check">
+                                                    <input class="form-check-input" type="checkbox" name="berlaricepat[]" value="1">
+                                                    <span class="form-check-label">Berlari Cepat</span>
+                                                </label>
+                                            </div>
+                                        </div>
+                                        <div class="mb-3">
+                                            <label class="form-label">Aktual Tinggi</label>
+                                            <input type="number" class="form-control" name="tinggi[]" min="100" value="' . $u->tinggi . '">
+                                        </div>
+                                        <div class="mb-3">
+                                            <label class="form-label">Aktual Berat</label>
+                                            <input type="number" class="form-control" name="berat[]" min="10" value="' . $u->berat . '">
+                                        </div>
+                                        <div class="mb-3">
+                                            <label class="form-label">Catatan Hasil Wawancara</label>
+                                            <input type="text" class="form-control" name="keterangan[]" placeholder="Keterangan Tambahan">
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        ';
+                    }
+                }
+            }
+            echo '  </div>';
+        }
+        // return $result;
+    }
+
+    public function storeChecklistWawancara(Request $request)
+    {
+        $request->validate(
+            [
+                '_token' => 'required',
+                'id' => 'required',
+            ],
+        );
+        $jml = count($request->id);
+
+        for ($i = 0; $i < $jml; $i++) {
+            $check = DB::table('penerimaan_wawancara')
+                ->where('idlamaran', $request->id[$i])
+                ->orderBy('noform', 'desc')
+                ->limit(1)
+                ->update(
+                    array(
+                        'remember_token' => $request->_token,
+                        'tglwawancara' => $request->tglwawancara,
+                        'butawarna' => isset($request->butawarna[$i]) ? $request->butawarna[$i] : 0,
+                        'sikapbaik' => isset($request->bersikapbaik[$i]) ? $request->bersikapbaik[$i] : 0,
+                        'laricepat' => isset($request->berlaricepat[$i]) ? $request->berlaricepat[$i] : 0,
+                        'keterangan' => $request->keterangan[$i],
+                        'diterima' => isset($request->diterima[$i]) ? $request->diterima[$i] : 0,
+                        'dibuat' => Auth::user()->name,
+                        'updated_at' => date('Y-m-d H:i:s'),
+                    )
+                );
+
+            DB::table('penerimaan_lamaran')
+                ->where('id', $request->id[$i])
+                ->limit(1)
+                ->update(
+                    array(
+                        'remember_token' => $request->_token,
+                        'diterima' => isset($request->diterima[$i]) ? $request->diterima[$i] : 0,
+                        'tinggi' => $request->tinggi[$i],
+                        'berat' => $request->berat[$i],
+                        'updated_at' => date('Y-m-d H:i:s'),
+                    )
+                );
+
+            $getDataLam = DB::table('penerimaan_lamaran')->where('id', $request->id[$i])->limit(1)->get();
+            foreach ($getDataLam as $l) {
+                DB::table('penerimaan_karyawan')->insert([
+                    'remember_token' => $request->_token,
+                    'entitas' => $l->entitas,
+                    'nik' => $l->nik,
+                    'nama' => $l->nama,
+                    'gender' => $l->gender,
+                    'tempat' => $l->tempat,
+                    'tgllahir' => $l->tgllahir,
+                    'pendidikan' => $l->pendidikan,
+                    'jurusan' => $l->jurusan,
+                    'alamat' => $l->alamat,
+                    'agama' => $l->agama,
+                    'tinggi' => $l->tinggi,
+                    'berat' => $l->berat,
+                    'notlp' => $l->notlp,
+                    'email' => $l->email,
+
+                    'gapok' => 100000,
+                    'status' => 'OL',
+                    'keterangan' => $l->keterangan,
+                    'tglinput' => date('Y-m-d'),
+                    'dibuat' => Auth::user()->name,
+                    'created_at' => date('Y-m-d H:i:s'),
+                ]);
+            }
+        }
+        $arr = array('msg' => 'Something goes to wrong. Please try later', 'status' => false);
+        if ($check) {
+            $arr = array('msg' => 'Data telah berhasil diproses', 'status' => true);
+        }
+        return Response()->json($arr);
+    }
+
+    // ======================== END WAWANCARA ============================================================================================
+    // ======================== START KARYAWAN =========================================================================================
+
+    public function karyawan()
+    {
+        return view('products/02_penerimaan.karyawan');
+    }
+
+    // ======================== END KARYAWAN ===========================================================================================
 }
