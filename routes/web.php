@@ -7,11 +7,12 @@ use App\Http\Controllers\Penerimaan;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Administrasi;
 use App\Http\Controllers\AuthController;
-use App\Http\Controllers\Datatables\DataKaryawan;
 use App\Http\Controllers\Datatables\DataLamaran;
+use App\Http\Controllers\Datatables\DataKaryawan;
 use App\Http\Controllers\Datatables\DataWawancara;
 use Illuminate\Contracts\Auth\Access\Authorizable;
 use SebastianBergmann\CodeCoverage\Report\Html\Dashboard;
+use App\Http\Controllers\Datatables\DataLegalitasKaryawan;
 
 /*
 |--------------------------------------------------------------------------
@@ -32,6 +33,7 @@ Route::get('/', function () {
 Route::resource('getLamaran', DataLamaran::class);
 Route::resource('getWawancara', DataWawancara::class);
 Route::resource('getKaryawan', DataKaryawan::class);
+Route::resource('getLegalitasKaryawan', DataLegalitasKaryawan::class);
 
 
 Route::controller(AuthController::class)->group(function () {
@@ -66,6 +68,7 @@ Route::controller(Penerimaan::class)->group(function () {
     Route::post('checkWawancara', 'checkWawancara');
     Route::post('checkWawancaraX', 'checkWawancaraX');
     Route::post('storeChecklistWawancara', 'storeChecklistWawancara');
+    Route::post('listKaryawan', 'listKaryawan');
 });
 
 Route::controller(Absensi::class)->group(function () {

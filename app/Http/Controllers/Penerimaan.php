@@ -643,5 +643,243 @@ class Penerimaan extends Controller
         return view('products/02_penerimaan.karyawan');
     }
 
+    public function listKaryawan(Request $request)
+    {
+        $data = DB::table('penerimaan_karyawan')->where('id', $request->id)->get();
+        foreach ($data as $u) {
+            $link = url('photo/pas/' . $u->userid);
+            $ktp = url('photo/ktp/' . $u->userid);
+            echo '
+            <div class="row">
+                <div class="col-lg-3">
+                    <div class="row">
+                        <div class="shadow" style="padding: 0px 0px 0px 0px">
+                            <div class="col-lg-12">
+                                <a data-fslightbox="gallery" href="' . $link . '.jpg">
+                                    <div class="img-responsive rounded-3 border"
+                                        style="background-image: url(' . $link . '.jpg)">
+                                    </div>
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                    <br>
+                    <div class="row">
+                        <div class="shadow" style="padding: 0px 0px 0px 0px">
+                            <div class="col-lg-12">
+                                <a data-fslightbox="gallery" href="' . $ktp . '.jpg">
+                                    <div class="img-responsive rounded-3 border"
+                                        style="background-image: url(' . $ktp . '.jpg)">
+                                    </div>
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                    <br>
+                    <div class="card shadow bg-info-lt">
+                        <div class="table-responsive">
+                            <table class="table table-sm table-vcenter card-table">
+                                <tr>
+                                    <td>Userid</td>
+                                    <td>:</td>
+                                    <td>' . $u->userid . '</td>
+                                </tr>
+                                <tr>
+                                    <td>Tanggal Masuk</td>
+                                    <td>:</td>
+                                    <td>' . $u->tglmasuk . '</td>
+                                </tr>
+                                <tr>
+                                    <td>Tanggal Aktif</td>
+                                    <td>:</td>
+                                    <td>' . $u->tglaktif . '</td>
+                                </tr>
+                                <tr>
+                                    <td>Tanggal Keluar</td>
+                                    <td>:</td>
+                                    <td>' . $u->tglkeluar . '</td>
+                                </tr>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-lg-9">
+                    <div class="card shadow bg-green-lt">
+                        <div class="card-body">
+                            <div class="row">
+                                <div class="col-lg-6">
+                                    <div class="mb-3">
+                                        <div class="row">
+                                            <div class="col">
+                                                <label class="form-label">No. Map</label>
+                                                <input type="text" class="form-control" name="" placeholder="" value="' . $u->nomap . '" style="border-color:black" readonly />
+                                            </div>
+                                            <div class="col">
+                                                <label class="form-label">STB</label>
+                                                <input type="text" class="form-control" name="" placeholder="" value="' . $u->stb . '" style="border-color:black" readonly />
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="mb-3">
+                                        <label class="form-label">KTP</label>
+                                        <input type="text" class="form-control" name="" placeholder="" value="' . $u->nik . '"
+                                            style="border-color:black" readonly />
+                                    </div>
+                                    <div class="mb-3">
+                                        <label class="form-label">Nama</label>
+                                        <input type="text" class="form-control" name="" placeholder="" value="' . $u->nama . '"
+                                            style="border-color:black" readonly />
+                                    </div>
+                                    <div class="mb-3">
+                                        <div class="row">
+                                            <div class="col">
+                                                <label class="form-label">Gender</label>
+                                                <input type="text" class="form-control" name="" placeholder="" value="' . $u->gender . '"
+                                                    style="border-color:black" readonly />
+                                            </div>
+                                            <div class="col">
+                                                <label class="form-label">Agama</label>
+                                                <input type="text" class="form-control" name="" placeholder="" value="' . $u->agama . '"
+                                                    style="border-color:black" readonly />
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="mb-3">
+                                        <div class="row">
+                                            <div class="col">
+                                                <label class="form-label">Tinggi</label>
+                                                <input type="text" class="form-control" name="" placeholder="" value="' . $u->tinggi . '"
+                                                    style="border-color:black" readonly />
+                                            </div>
+                                            <div class="col">
+                                                <label class="form-label">Berat</label>
+                                                <input type="text" class="form-control" name="" placeholder="" value="' . $u->berat . '"
+                                                    style="border-color:black" readonly />
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="mb-3">
+                                        <label class="form-label">Tempat, Tanggal Lahir</label>
+                                        <div class="row">
+                                            <div class="col">
+                                                <input type="text" class="form-control" name="" placeholder="" value="' . $u->tempat . '" style="border-color:black" readonly />
+                                            </div>
+                                            <div class="col">
+                                                <input type="text" class="form-control" name="" placeholder="" value="' . $u->tgllahir . '" style="border-color:black" readonly />
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="row">
+                                        <div class="col">
+                                            <div class="mb-3">
+                                                <label class="form-label">Pendidikan</label>
+                                                <input type="text" class="form-control" name="" placeholder="" value="' . $u->pendidikan . '" style="border-color:black" readonly />
+                                            </div>
+                                        </div>
+                                        <div class="col">
+                                            <div class="mb-3">
+                                                <label class="form-label">Jurusan</label>
+                                                <input type="text" class="form-control" name="" placeholder="" value="' . $u->jurusan . '" style="border-color:black" readonly />
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="row">
+                                        <div class="col-lg-6">
+                                            <div class="mb-3">
+                                                <label class="form-label">Telepon</label>
+                                                <input type="text" class="form-control" name="" placeholder="" value="' . $u->notlp . '" style="border-color:black" readonly />
+                                            </div>
+                                        </div>
+                                        <div class="col-lg-6">
+                                            <div class="mb-3">
+                                                <label class="form-label">Serikat</label>
+                                                <input type="text" class="form-control" name="" placeholder="" value="' . $u->serikat . '"
+                                                    style="border-color:black" readonly />
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-lg-6">
+                                    <div class="card shadow bg-info-lt">
+                                        <div class="table-responsive">
+                                            <table class="table table-vcenter card-table">
+                                                <tr>
+                                                    <td width="70px">Divisi</td>
+                                                    <td>:</td>
+                                                    <td>' . $u->divisi . '</td>
+                                                </tr>
+                                                <tr>
+                                                    <td>Jabatan</td>
+                                                    <td>:</td>
+                                                    <td>' . $u->jabatan . '</td>
+                                                </tr>
+                                                <tr>
+                                                    <td>Bagian</td>
+                                                    <td>:</td>
+                                                    <td>' . $u->bagian . '</td>
+                                                </tr>
+                                                <tr>
+                                                    <td>Grup</td>
+                                                    <td>:</td>
+                                                    <td>' . $u->grup . '</td>
+                                                </tr>
+                                                <tr>
+                                                    <td>Shift</td>
+                                                    <td>:</td>
+                                                    <td>' . $u->shift . '</td>
+                                                </tr>
+                                                <tr>
+                                                    <td>Profesi</td>
+                                                    <td>:</td>
+                                                    <td>' . $u->profesi . '</td>
+                                                </tr>
+                                                <tr>
+                                                    <td>Hari Libur</td>
+                                                    <td>:</td>
+                                                    <td>' . $u->hrlibur . '</td>
+                                                </tr>
+                                                <tr>
+                                                    <td>Setengah Hari</td>
+                                                    <td>:</td>
+                                                    <td>' . $u->sethari . '</td>
+                                                </tr>
+                                            </table>
+                                        </div>
+                                    </div>
+                                    <br>
+                                    <div class="card shadow bg-warning-lt">
+                                        <div class="card-body">
+                                            <div class="mb-3">
+                                                <label class="form-label">Surat Internal</label>
+                                                <h3>' . $u->internal . '</h3>
+                                            </div>
+                                            <div class="mb-3">
+                                                <label class="form-label">Surat Perjanjian</label>
+                                                <h3>' . $u->perjanjian . '</h3>
+                                            </div>
+                                            <div class="mb-3">
+                                                <label class="form-label">Status Karyawan</label>
+                                                <h3>' . $u->status . '</h3>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        ';
+        }
+    }
+
     // ======================== END KARYAWAN ===========================================================================================
+    // ======================== START LEGALITAS =========================================================================================
+
+    public function legalitas()
+    {
+        return view('products/02_penerimaan.legalitas');
+    }
+
+    // ======================== END LEGALITAS ===========================================================================================
 }

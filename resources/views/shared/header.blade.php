@@ -4,11 +4,11 @@
     <meta http-equiv="X-UA-Compatible" content="ie=edge"/>
     <title>EHRD - PT PINTEX (Stand Alone).</title>
     <!-- CSS files -->
-    <link href="{{ url('assets/dist/css/tabler.min.css?1684106062') }}" rel="stylesheet"/>
-    <link href="{{ url('assets/dist/css/tabler-flags.min.css?1684106062') }}" rel="stylesheet"/>
-    <link href="{{ url('assets/dist/css/tabler-payments.min.css?1684106062') }}" rel="stylesheet"/>
-    <link href="{{ url('assets/dist/css/tabler-vendors.min.css?1684106062') }}" rel="stylesheet"/>
-    <link href="{{ url('assets/dist/css/demo.min.css?1684106062') }}" rel="stylesheet"/>
+    <link href="{{ asset('assets/dist/css/tabler.min.css?1684106062') }}" rel="stylesheet"/>
+    <link href="{{ asset('assets/dist/css/tabler-flags.min.css?1684106062') }}" rel="stylesheet"/>
+    <link href="{{ asset('assets/dist/css/tabler-payments.min.css?1684106062') }}" rel="stylesheet"/>
+    <link href="{{ asset('assets/dist/css/tabler-vendors.min.css?1684106062') }}" rel="stylesheet"/>
+    <link href="{{ asset('assets/dist/css/demo.min.css?1684106062') }}" rel="stylesheet"/>
     <link href="{{ asset('assets/extentions/fontawesome/css/all.min.css') }}" rel="stylesheet">
     <link href="{{ asset('assets/extentions/select2/css/select2.min.css') }}" rel="stylesheet">
     

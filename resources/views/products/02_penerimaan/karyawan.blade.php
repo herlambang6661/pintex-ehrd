@@ -90,24 +90,31 @@
                     <!-- Page title actions -->
                     <div class="col-auto ms-auto d-print-none">
                         <div class="btn-list">
-                            <a href="#" class="btn btn-secondary d-none d-sm-inline-block" data-bs-toggle="modal" data-bs-target="#modal-lamaran" data-bs-backdrop="static" data-bs-keyboard="false">
-                                <i class="fa-solid fa-user-plus"></i>
-                                OL
-                            </a>
-                            <a href="#" class="btn btn-info d-none d-sm-inline-block" data-bs-toggle="modal" data-bs-target="#importExcel" data-bs-backdrop="static" data-bs-keyboard="false">
-                                <i class="fa-regular fa-file-excel"></i>
-                                PHL
-                            </a>
-                            <a href="#" class="btn btn-blue d-none d-sm-inline-block" data-bs-toggle="modal" data-bs-target="#importExcel" data-bs-backdrop="static" data-bs-keyboard="false">
-                                <i class="fa-regular fa-file-excel"></i>
-                                Karyawan Lain
-                            </a>
-                            <a href="#" class="btn btn-primary d-sm-none btn-icon" data-bs-toggle="modal" data-bs-target="#modal-lamaran" aria-label="Tambah Lamaran">
-                                <i class="fa-solid fa-user-plus"></i>
-                            </a>
-                            <a href="#" class="btn btn-green d-sm-none btn-icon" data-bs-toggle="modal" data-bs-target="#modal-upload" aria-label="Upload Excel">
-                                <i class="fa-regular fa-file-excel"></i>
-                            </a>
+                            
+                            <ul class="nav">
+                                <a href="#tabs-ol" class="nav-link btn bg-dark text-white d-none d-sm-inline-block" data-bs-toggle="tab" aria-selected="true" role="tab" style="margin-right: 5px" aria-label="Orientasi Lapangan">
+                                    <i class="fa-solid fa-person-chalkboard"></i>
+                                    OL
+                                </a>
+                                <a href="#tabs-phl" class="nav-link btn bg-blue text-white d-none d-sm-inline-block" data-bs-toggle="tab" aria-selected="true" role="tab" style="margin-right: 5px">
+                                    <i class="fa-solid fa-people-arrows"></i>
+                                    PHL
+                                </a>
+                                <a href="#tabs-karyawan" class="active nav-link btn bg-green text-white d-none d-sm-inline-block" data-bs-toggle="tab" aria-selected="true" role="tab">
+                                    <i class="fa-solid fa-users-viewfinder"></i>
+                                    Karyawan
+                                </a>
+                                <a href="#tabs-ol" class="btn btn-secondary d-sm-none btn-icon" data-bs-toggle="tab" aria-selected="true" role="tab" aria-label="Orientasi Lapangan" style="margin-right: 3px" >
+                                    <i class="fa-solid fa-person-chalkboard"></i>
+                                </a>
+                                <a href="#tabs-phl" class="btn btn-info d-sm-none btn-icon" data-bs-toggle="tab" aria-selected="true" role="tab" aria-label="PHL" style="margin-right: 3px" >
+                                    <i class="fa-solid fa-people-arrows"></i>
+                                </a>
+                                <a href="#tabs-karyawan" class="btn btn-blue d-sm-none btn-icon" data-bs-toggle="tab" aria-selected="true" role="tab" aria-label="Karyawan">
+                                    <i class="fa-solid fa-users-viewfinder"></i>
+                                </a>
+                            </ul>
+
                         </div>
                     </div>
                 </div>
@@ -117,34 +124,93 @@
         <div class="page-body">
             <div class="container-xl">
                 <div class="row row-deck row-cards">
-                    <div class="col-12">
-                        <div class="card card-xl border-success shadow rounded">
-                            <div class="card-stamp card-stamp-lg">
-                                <div class="card-stamp-icon bg-success">
-                                    <i class="fa-solid fa-users"></i>
+                    <div class="tab-content">
+                        <div class="tab-pane fade active show" id="tabs-karyawan" role="tabpanel">
+                            <div class="card card-xl border-success shadow rounded">
+                                <div class="card-stamp card-stamp-lg">
+                                    <div class="card-stamp-icon bg-success">
+                                        <i class="fa-solid fa-users"></i>
+                                    </div>
                                 </div>
+                                <table style="width:100%; font-family: 'Trebuchet MS', Helvetica, sans-serif;" class="display table table-vcenter card-table table-sm table-striped table-bordered table-hover text-nowrap datatable-karyawan" id="tblamaran">
+                                    <thead>
+                                        <tr class="text-center">
+                                            <th>Opsi</th>
+                                            <th>Masuk</th>
+                                            <th>STB</th>
+                                            <th>NIK</th>
+                                            <th>Nama</th>
+                                            <th>Gender</th>
+                                            <th>Status</th>
+                                            <th>No Map</th>
+                                            <th>Bagian</th>
+                                            <th>Grup</th>
+                                            <th>Profesi</th>
+                                            <th>Pendidikan</th>
+                                            <th>Jurusan</th>
+                                            <th>Sidik Jari</th>
+                                        </tr>
+                                    </thead>
+                                </table>
                             </div>
-                            <table style="width:100%; font-family: 'Trebuchet MS', Helvetica, sans-serif;" class="display table table-vcenter card-table table-sm table-striped table-bordered table-hover text-nowrap datatable-karyawan" id="tblamaran">
-                                <thead>
-                                    <tr class="text-center">
-                                        <th>Masuk</th>
-                                        <th>STB</th>
-                                        <th>NIK</th>
-                                        <th>Nama</th>
-                                        <th>Gender</th>
-                                        <th>Sidik Jari</th>
-                                        <th>Status</th>
-                                        <th>No Map</th>
-                                        <th>Bagian</th>
-                                        <th>Grup</th>
-                                        <th>Profesi</th>
-                                        <th>Pendidikan</th>
-                                        <th>Jurusan</th>
-                                        <th>Status</th>
-                                        <th>Opsi</th>
-                                    </tr>
-                                </thead>
-                            </table>
+                        </div>
+                        <div class="tab-pane fade" id="tabs-ol" role="tabpanel">
+                            <div class="card card-xl border-dark shadow rounded">
+                                <div class="card-stamp card-stamp-lg">
+                                    <div class="card-stamp-icon bg-dark">
+                                        <i class="fa-solid fa-person-chalkboard"></i>
+                                    </div>
+                                </div>
+                                <table style="width:100%; font-family: 'Trebuchet MS', Helvetica, sans-serif;" class="display table table-vcenter card-table table-sm table-striped table-bordered table-hover text-nowrap datatable-karyawan" id="tblamaran">
+                                    <thead>
+                                        <tr class="text-center">
+                                            <th>Opsi</th>
+                                            <th>Masuk</th>
+                                            <th>STB</th>
+                                            <th>NIK</th>
+                                            <th>Nama</th>
+                                            <th>Gender</th>
+                                            <th>Status</th>
+                                            <th>No Map</th>
+                                            <th>Bagian</th>
+                                            <th>Grup</th>
+                                            <th>Profesi</th>
+                                            <th>Pendidikan</th>
+                                            <th>Jurusan</th>
+                                            <th>Sidik Jari</th>
+                                        </tr>
+                                    </thead>
+                                </table>
+                            </div>
+                        </div>
+                        <div class="tab-pane fade" id="tabs-phl" role="tabpanel">
+                            <div class="card card-xl border-blue shadow rounded">
+                                <div class="card-stamp card-stamp-lg">
+                                    <div class="card-stamp-icon bg-blue">
+                                        <i class="fa-solid fa-people-arrows"></i>
+                                    </div>
+                                </div>
+                                <table style="width:100%; font-family: 'Trebuchet MS', Helvetica, sans-serif;" class="display table table-vcenter card-table table-sm table-striped table-bordered table-hover text-nowrap datatable-karyawan" id="tblamaran">
+                                    <thead>
+                                        <tr class="text-center">
+                                            <th>Opsi</th>
+                                            <th>Masuk</th>
+                                            <th>STB</th>
+                                            <th>NIK</th>
+                                            <th>Nama</th>
+                                            <th>Gender</th>
+                                            <th>Status</th>
+                                            <th>No Map</th>
+                                            <th>Bagian</th>
+                                            <th>Grup</th>
+                                            <th>Profesi</th>
+                                            <th>Pendidikan</th>
+                                            <th>Jurusan</th>
+                                            <th>Sidik Jari</th>
+                                        </tr>
+                                    </thead>
+                                </table>
+                            </div>
                         </div>
                     </div>
                 </div>
@@ -171,7 +237,7 @@
                 <div class="row">
                     <div class="col">
                         <div class="input-icon mb-2">
-                            <input name="dari" class="form-control border-primary" placeholder="Select a date" id="datepicker1" value="<?= date('Y-01-01'); ?>" />
+                            <input name="dari" class="form-control border-primary" placeholder="Select a date" id="datepicker0" value="<?= date('Y-01-01'); ?>" />
                             <span class="input-icon-addon">
                                 <svg xmlns="http://www.w3.org/2000/svg" class="icon" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
                                     <path stroke="none" d="M0 0h24v24H0z" fill="none" />
@@ -187,7 +253,7 @@
                     </div>
                     <div class="col">
                         <div class="input-icon mb-2">
-                            <input name="sampai" class="form-control border-primary" placeholder="Select a date" id="datepicker2" value="<?= date('Y-12-31'); ?>" />
+                            <input name="sampai" class="form-control border-primary" placeholder="Select a date" id="datepicker1" value="<?= date('Y-12-31'); ?>" />
                             <span class="input-icon-addon">
                                 <svg xmlns="http://www.w3.org/2000/svg" class="icon" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
                                     <path stroke="none" d="M0 0h24v24H0z" fill="none" />
@@ -263,6 +329,32 @@
         </div>
     </div>
 </div>
+{{-- Modal View --}}
+<div class="modal modal-blur fade" id="viewKaryawan" tabindex="-1" role="dialog" aria-hidden="true">
+    <div class="overlay">
+        <div class="cv-spinner">
+            <span class="spinner"></span>
+        </div>
+    </div>
+    <div class="modal-dialog modal-xl" role="document">
+        <div class="modal-content">
+            <form id="formCheckWawancara" name="formCheckWawancara" method="post" action="javascript:void(0)">
+                @csrf
+                <div class="modal-header">
+                    <h5 class="modal-title"><i class="fa-solid fa-user" style="margin-right: 5px"></i> Detail Karyawan</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <div class="fetched-data-karyawan"></div>
+                </div>
+                <div class="modal-footer">
+                    <button type="submit" id="submitCheck" class="btn btn-green"><i class="fas fa-save" style="margin-right: 5px"></i> Proses</button>
+                    <button type="button" class="btn btn-link link-secondary ms-auto" data-bs-dismiss="modal"><i class="fa-solid fa-fw fa-arrow-rotate-left"></i> Kembali</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
 <script type="text/javascript">
     /*------------------------------------------
             --------------------------------------------
@@ -329,6 +421,10 @@
             "scrollX": true,
             "scrollCollapse": true,
             "pagingType": 'full_numbers',
+            "lengthMenu": [
+                [25, 35, 40, 50, -1],
+                ['25', '35', '40', '50', 'Tampilkan Semua']
+            ],
             "dom": "<'card-header h3' B>" +
                 "<'card-body border-bottom py-3' <'row'<'col-sm-6'l><'col-sm-6'f>> >" +
                 "<'table-responsive' <'col-sm-12'tr> >" +
@@ -356,7 +452,7 @@
                 },
             ],
             "language": {
-                "lengthMenu": "Menampilkan _MENU_",
+                "lengthMenu": "Menampilkan Karyawan _MENU_",
                 "zeroRecords": "Data Tidak Ditemukan",
                 "info": "Menampilkan _START_ sampai _END_ dari _TOTAL_ total data",
                 "infoEmpty": "Data Tidak Ditemukan",
@@ -400,6 +496,13 @@
                 //     searchable: false
                 // },
                 {
+                    data: 'action',
+                    name: 'action',
+                    orderable: false,
+                    searchable: false,
+                    className: 'cuspad0 text-center'
+                },
+                {
                     data: 'tglmasuk',
                     name: 'tglmasuk',
                     className: 'cuspad0 text-center'
@@ -412,16 +515,12 @@
                 {
                     data: 'nik',
                     name: 'nik',
+                    visible: false,
                     className: 'cuspad0 text-center'
                 },
                 {
                     data: 'nama',
                     name: 'nama',
-                    className: 'cuspad0 text-center'
-                },
-                {
-                    data: 'gender',
-                    name: 'gender',
                     className: 'cuspad0 text-center'
                 },
                 {
@@ -465,32 +564,18 @@
                     className: 'cuspad0'
                 },
                 {
-                    data: 'status',
-                    name: 'status',
-                    className: 'cuspad0'
-                },
-                {
-                    data: 'action',
-                    name: 'action',
-                    orderable: false,
-                    searchable: false,
+                    data: 'gender',
+                    name: 'gender',
                     className: 'cuspad0 text-center'
                 },
             ],
 
         });
-        var selected = new Array();
 
-        $('#myModalCheck').on('show.bs.modal', function(e) {
+        $('#viewKaryawan').on('show.bs.modal', function(e) {
+            var rowid = $(e.relatedTarget).data('id');
+            console.log(rowid);
             $(".overlay").fadeIn(300);
-            itemTables = [];
-            // console.log(count);
-
-            $.each(tableWawancara.rows('.selected').nodes(), function(index, rowId) {
-                var rows_selected = tableWawancara.rows('.selected').data();
-                itemTables.push(rows_selected[index]['id']);
-            });
-            console.log(itemTables);
 
             $.ajaxSetup({
                 headers: {
@@ -500,51 +585,13 @@
             //menggunakan fungsi ajax untuk pengambilan data
             $.ajax({
                 type: 'POST',
-                url: '{{ url("checkWawancara") }}',
+                url: '{{ url("listKaryawan") }}',
                 data: {
                     "_token": "{{ csrf_token() }}",
-                    id: itemTables,
-                    jml: itemTables.length,
+                    id: rowid,
                 },
                 success: function(data) {
-                    $('.fetched-data-wawancara-checklist').html(data); //menampilkan data ke dalam modal
-                    // alert(itemTables);
-                }
-            }).done(function() {
-                setTimeout(function() {
-                    $(".overlay").fadeOut(300);
-                }, 500);
-            });
-        });
-
-
-        $('#myModalXmark').on('show.bs.modal', function(e) {
-            $(".overlay").fadeIn(300);
-            itemTables = [];
-            // console.log(count);
-
-            $.each(tableWawancara.rows('.selected').nodes(), function(index, rowId) {
-                var rows_selected = tableWawancara.rows('.selected').data();
-                itemTables.push(rows_selected[index]['id']);
-            });
-            console.log(itemTables);
-
-            $.ajaxSetup({
-                headers: {
-                    'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
-                }
-            });
-            //menggunakan fungsi ajax untuk pengambilan data
-            $.ajax({
-                type: 'POST',
-                url: '{{ url("checkWawancaraX") }}',
-                data: {
-                    "_token": "{{ csrf_token() }}",
-                    id: itemTables,
-                    jml: itemTables.length,
-                },
-                success: function(data) {
-                    $('.fetched-data-wawancara-xmark').html(data); //menampilkan data ke dalam modal
+                    $('.fetched-data-karyawan').html(data); //menampilkan data ke dalam modal
                     // alert(itemTables);
                 }
             }).done(function() {

@@ -97,6 +97,7 @@
                                         <thead>
                                             <tr class="text-center">
                                                 <th></th>
+                                                <th>Opsi</th>
                                                 <th>NIK</th>
                                                 <th>Nama</th>
                                                 <th>Gender</th>
@@ -111,7 +112,6 @@
                                                 <th>Posisi Dituju</th>
                                                 <th>Ket</th>
                                                 <th>Wawancara</th>
-                                                <th>Opsi</th>
                                             </tr>
                                         </thead>
                                     </table>
@@ -387,7 +387,8 @@
                             </div>
                         </div>
                         <div class="modal-footer">
-                            <button type="submit" class="btn btn-primary"><i class="fa-solid fa-cloud-arrow-up" style="margin-right:5px"></i> Import</button>
+                            <a href="" class="btn btn-link link-secondary">Download Contoh Excel</a>
+                            <button type="submit" class="btn btn-primary ms-auto"><i class="fa-solid fa-cloud-arrow-up" style="margin-right:5px"></i> Import</button>
                         </div>
                     </div>
                 </form>
@@ -652,10 +653,11 @@
                     ],
                     select: {
                         'style': 'multi',
-                        "selector": 'td:not(:last-child)',
+                        "selector": 'td:not(:nth-child(2))',
                     },
                     columns: [
                         {data: 'select_orders', name: 'select_orders', className:'cuspad2', orderable: false, searchable: false},
+                        {data: 'action', name: 'action', orderable: false, searchable: false, className:'cuspad0 text-center'},
                         {data: 'nik', name: 'nik', className:'cuspad0 text-center'},
                         {data: 'nama', name: 'nama', className:'cuspad0'},
                         {data: 'gender', name: 'gender', className:'cuspad0 text-center'},
@@ -670,7 +672,6 @@
                         {data: 'posisi', name: 'posisi', className:'cuspad0 text-center'},
                         {data: 'keterangan', name: 'keterangan', className:'cuspad0'},
                         {data: 'status', name: 'status', className:'cuspad0 text-center'},
-                        {data: 'action', name: 'action', orderable: false, searchable: false, className:'cuspad0 text-center'},
                     ],
                     
                 });
