@@ -32,8 +32,12 @@ class DataLegalitasKaryawan extends Controller
                 //     return '';
                 // })
 
+                ->addColumn('ttl', function ($row) {
+                    $tgl_indo = Carbon::createFromFormat('Y-m-d', $row->tglmasuk)->format('d/m/Y');
+                    return $tgl_indo;
+                })
                 ->addColumn('action', function ($row) {
-                    $btn = ' <a href="#viewKaryawan" data-bs-toggle="modal" data-toggle="tooltip" data-placement="top" title="Lihat Detail Data Karyawan" data-item="' . $row->nama . '" data-id="' . $row->id . '" class="btn btn-sm btn-info btn-icon"><i class="fa-solid fa-file-signature"></i></a>';
+                    $btn = ' <a href="legalitas/edit/' . $row->id . '" data-toggle="tooltip" data-placement="top" title="Edit Data Legalitas Karyawan" class="btn btn-sm btn-info btn-icon"><i class="fa-solid fa-file-signature"></i></a>';
                     return $btn;
                 })
                 ->rawColumns(['status', 'action', 'select_orders', 'ttl', 'umur'])

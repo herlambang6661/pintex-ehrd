@@ -506,8 +506,8 @@
                     className: 'cuspad0 text-center'
                 },
                 {
-                    data: 'tglmasuk',
-                    name: 'tglmasuk',
+                    data: 'ttl',
+                    name: 'ttl',
                     className: 'cuspad0 text-center'
                 },
                 {

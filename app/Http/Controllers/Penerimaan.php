@@ -881,5 +881,25 @@ class Penerimaan extends Controller
         return view('products/02_penerimaan.legalitas');
     }
 
+    public function legalEdit($id)
+    {
+        $data = DB::table('penerimaan_karyawan')->where('id', $id)->limit(1)->get();
+        foreach ($data as $u) {
+            $userid = $u->userid;
+        }
+        $basic = DB::table('penerimaan_legalitas')->where('userid', $userid)->where('suratjns', 'like', '%basic%')->orderBy('legalitastgl', 'asc')->get();
+        $perjanjian = DB::table('penerimaan_legalitas')->where('userid', $userid)->where('suratjns', 'like', '%perjanjian%')->orderBy('legalitastgl', 'asc')->get();
+        $intern = DB::table('penerimaan_legalitas')->where('userid', $userid)->where('suratjns', 'like', '%intern%')->orderBy('legalitastgl', 'asc')->get();
+        $status = DB::table('penerimaan_legalitas')->where('userid', $userid)->where('suratjns', 'like', '%status%')->orderBy('legalitastgl', 'asc')->get();
+
+        return view('products/02_penerimaan.legalitasEdit', [
+            'getKar' => $data,
+            'basic' => $basic,
+            'perjanjian' => $perjanjian,
+            'intern' => $intern,
+            'status' => $status,
+        ]);
+    }
+
     // ======================== END LEGALITAS ===========================================================================================
 }
