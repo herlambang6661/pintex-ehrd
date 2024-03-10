@@ -7,6 +7,7 @@ use App\Http\Controllers\Penerimaan;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Administrasi;
 use App\Http\Controllers\AuthController;
+use App\Http\Controllers\Datatables\DataOL;
 use App\Http\Controllers\Datatables\DataLamaran;
 use App\Http\Controllers\Datatables\DataKaryawan;
 use App\Http\Controllers\Datatables\DataWawancara;
@@ -33,6 +34,7 @@ Route::get('/', function () {
 Route::resource('getLamaran', DataLamaran::class);
 Route::resource('getWawancara', DataWawancara::class);
 Route::resource('getKaryawan', DataKaryawan::class);
+Route::resource('getOL', DataOL::class);
 Route::resource('getLegalitasKaryawan', DataLegalitasKaryawan::class);
 
 
