@@ -882,7 +882,10 @@ class Penerimaan extends Controller
 
     public function legalitas()
     {
-        return view('products/02_penerimaan.legalitas');
+        $basic = DB::table('daftar_surat')->where('jenissurat', '=', 'Basic')->get();
+        return view('products/02_penerimaan.legalitas', [
+            'basic' => $basic,
+        ]);
     }
 
     public function legalEdit($id)

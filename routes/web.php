@@ -8,6 +8,7 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Administrasi;
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\Datatables\DataOL;
+use App\Http\Controllers\Datatables\DataSurat;
 use App\Http\Controllers\Datatables\DataLamaran;
 use App\Http\Controllers\Datatables\DataKaryawan;
 use App\Http\Controllers\Datatables\DataWawancara;
@@ -33,6 +34,7 @@ Route::get('/', function () {
 
 // Source untuk datatables
 Route::resources([
+    'getSurat' => DataSurat::class,
     'getLamaran' => DataLamaran::class,
     'getWawancara' => DataWawancara::class,
     'getKaryawan' => DataKaryawan::class,
@@ -56,6 +58,7 @@ Route::controller(Daftar::class)->group(function () {
     Route::get('daftar/tariflembur', 'tariflembur')->name('daftar/tariflembur');
     Route::get('daftar/liburnas', 'liburnas')->name('daftar/liburnas');
     Route::get('daftar/surat', 'surat')->name('daftar/surat');
+    Route::post('storedataSurat', 'storeSurat');
     Route::get('daftar/jadwalshift', 'jadwalshift')->name('daftar/jadwalshift');
 });
 

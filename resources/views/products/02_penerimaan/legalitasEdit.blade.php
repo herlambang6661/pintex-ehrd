@@ -76,7 +76,7 @@
                         <h2 class="page-title">
                             <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-user-edit" width="24" height="24" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><path d="M8 7a4 4 0 1 0 8 0a4 4 0 0 0 -8 0" /><path d="M6 21v-2a4 4 0 0 1 4 -4h3.5" /><path d="M18.42 15.61a2.1 2.1 0 0 1 2.97 2.97l-3.39 3.42h-3v-3l3.42 -3.39z" /></svg>
                             Edit Legalitas
-                            <div id="entitasText" style="margin-left: 5px;">Loading... <i class="fa-solid fa-spinner fa-spin-pulse"></i> </div>
+                            {{-- <div id="entitasText" style="margin-left: 5px;">Loading... <i class="fa-solid fa-spinner fa-spin-pulse"></i> </div> --}}
                         </h2>
                         <div class="page-pretitle">
                             <ol class="breadcrumb" aria-label="breadcrumbs">
@@ -233,10 +233,11 @@
                             <div class="card-body">
                                 <h3 class="card-title d-flex">
                                     Basic Information
-                                    <a href="#" class="btn btn-icon btn-success btn-sm ms-auto"><i class="fa-solid fa-add"></i></a>
+                                    <button type="button" class="btn btn-icon btn-success btn-sm ms-auto" onclick="tambahBasic(); return false;"><i class="fa-solid fa-add"></i></button>
                                 </h3>
+                                <input id="idf" value="1" type="hidden">
                                 <div class="table-responsive">
-                                    <table class="table table-sm table-bordered table-striped table-hover table-vcenter text-nowrap border border-green">
+                                    <table class="table table-sm table-bordered table-striped table-hover table-vcenter text-nowrap border border-green"  id="tb_basic">
                                         <thead>
                                             <tr>
                                                 <th class="w-1"></th>
@@ -466,5 +467,111 @@
 
     $(function() {
     });
+    
+    function tambahBasic() {
+        var idf = document.getElementById("idf").value;
+
+        var tb_basic = document.getElementById("tb_basic");
+
+        var tr = document.createElement("tr");
+        tr.setAttribute("id", "btn-remove" + idf);
+
+        // Kolom 1 Hapus
+        var td = document.createElement("td");
+        td.setAttribute("align", "center");
+        td.setAttribute("class", "border border-green");
+        td.innerHTML += '<button class="btn" type="button" onclick="hapusElemen(' + idf + ');"><i class="fa-regular fa-trash-can"></i> </button>';
+        tr.appendChild(td);
+
+        // Kolom 2 Tanggal
+        var td = document.createElement("td");
+        td.setAttribute("class", "border border-green");
+        td.innerHTML += '<input type="date" class="form-control">';
+        tr.appendChild(td);
+
+        // Kolom 3 Nama Surat                            
+        var td = document.createElement("td");
+        td.setAttribute("class", "border border-green");
+        td.innerHTML += '<input type="text" value="Surat Deskripsi Pekerjaan" name="namasurat" id="namasurat_'+idf+'">';
+        tr.appendChild(td);
+
+        // Kolom 4 Tgl Aktif
+        var td = document.createElement("td");
+        td.setAttribute("class", "border border-green");
+        td.innerHTML += '<input type="date" class="form-control">';
+        tr.appendChild(td);
+
+        // Kolom 5 STB
+        var td = document.createElement("td");
+        td.setAttribute("class", "border border-green");
+        td.innerHTML += "<input type='text' name='stb[]' id='stb_" + idf + "' class='form-control  inputNone' style='text-transform: uppercase;'>";
+        tr.appendChild(td);
+
+        // Kolom 6 Divisi
+        var td = document.createElement("td");
+        td.setAttribute("class", "border border-green");
+        td.innerHTML += "<input type='text' name='divisi[]' id='divisi_" + idf + "' class='form-control  inputNone' style='text-transform: uppercase;'>";
+        tr.appendChild(td);
+
+        // Kolom 7 Bagian
+        var td = document.createElement("td");
+        td.setAttribute("class", "border border-green");
+        td.innerHTML += "<input type='text' name='bagian[]' id='bagian_" + idf + "' class='form-control  inputNone' style='text-transform: uppercase;'>";
+        tr.appendChild(td);
+
+        // Kolom 8 Jabatan
+        var td = document.createElement("td");
+        td.setAttribute("class", "border border-green");
+        td.innerHTML += "<input type='text' name='jabatan[]' id='jabatan_" + idf + "' class='form-control  inputNone' style='text-transform: uppercase;'>";
+        tr.appendChild(td);
+
+        // Kolom 9 Grup
+        var td = document.createElement("td");
+        td.setAttribute("class", "border border-green");
+        td.innerHTML += "<input type='text' name='grup[]' id='grup_" + idf + "' class='form-control  inputNone' style='text-transform: uppercase;'>";
+        tr.appendChild(td);
+
+        // Kolom 10 Shift
+        var td = document.createElement("td");
+        td.setAttribute("class", "border border-green");
+        td.innerHTML += "<input type='text' name='shift[]' id='shift_" + idf + "' class='form-control  inputNone' style='text-transform: uppercase;'>";
+        tr.appendChild(td);
+
+        // Kolom 11 Profesi
+        var td = document.createElement("td");
+        td.setAttribute("class", "border border-green");
+        td.innerHTML += "<input type='text' name='profesi[]' id='profesi_" + idf + "' class='form-control  inputNone' style='text-transform: uppercase;'>";
+        tr.appendChild(td);
+
+        // Kolom 12 Libur
+        var td = document.createElement("td");
+        td.setAttribute("class", "border border-green");
+        td.innerHTML += "<input type='text' name='libur[]' id='libur_" + idf + "' class='form-control  inputNone' style='text-transform: uppercase;'>";
+        tr.appendChild(td);
+
+        // Kolom 13 Setengah Hari
+        var td = document.createElement("td");
+        td.setAttribute("class", "border border-green");
+        td.innerHTML += "<input type='text' name='setengah[]' id='setengah_" + idf + "' class='form-control  inputNone' style='text-transform: uppercase;'>";
+        tr.appendChild(td);
+
+        // Kolom 14 Ket
+        var td = document.createElement("td");
+        td.setAttribute("class", "border border-green");
+        td.innerHTML += "<input type='text' name='keterangan[]' id='keterangan_" + idf + "' class='form-control  inputNone' style='text-transform: uppercase;'>";
+        tr.appendChild(td);
+
+        tb_basic.appendChild(tr);
+
+        idf = (idf - 1) + 2;
+        document.getElementById("idf").value = idf;
+        $(".element").select2({
+            placeholder: "Pilih Kodeproduk"
+        });
+    }
+    
+    function hapusElemen(idf) {
+        $("#btn-remove" + idf).remove();
+    }
 </script>
 @endsection
