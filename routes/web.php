@@ -14,6 +14,7 @@ use App\Http\Controllers\Datatables\DataWawancara;
 use Illuminate\Contracts\Auth\Access\Authorizable;
 use SebastianBergmann\CodeCoverage\Report\Html\Dashboard;
 use App\Http\Controllers\Datatables\DataLegalitasKaryawan;
+use App\Http\Controllers\Datatables\DataLegalitasKaryawanOl;
 
 /*
 |--------------------------------------------------------------------------
@@ -31,11 +32,14 @@ Route::get('/', function () {
 });
 
 // Source untuk datatables
-Route::resource('getLamaran', DataLamaran::class);
-Route::resource('getWawancara', DataWawancara::class);
-Route::resource('getKaryawan', DataKaryawan::class);
-Route::resource('getOL', DataOL::class);
-Route::resource('getLegalitasKaryawan', DataLegalitasKaryawan::class);
+Route::resources([
+    'getLamaran' => DataLamaran::class,
+    'getWawancara' => DataWawancara::class,
+    'getKaryawan' => DataKaryawan::class,
+    'getOL' => DataOL::class,
+    'getLegalitasKaryawan' => DataLegalitasKaryawan::class,
+    'getLegalitasKaryawanOl' => DataLegalitasKaryawanOl::class,
+]);
 
 
 Route::controller(AuthController::class)->group(function () {

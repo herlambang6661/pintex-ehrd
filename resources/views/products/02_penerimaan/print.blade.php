@@ -28,15 +28,15 @@
     </head>
 
 <?php
-setlocale(LC_TIME, 'id_ID.utf8');
+date_default_timezone_set('Asia/Jakarta');
 echo "<i>Tanggal Print : " . date('H:i:s d-m-Y')."</i>";
 ?>
 <div class="card" id='PrintPre' style="border-color: white; border-style: solid;">
     <div class="card-body" style="color: black;">
         <div class="row">
             <div class="col-md-4 text-center">
-                {{-- <img src="assets/pintex.png" class="" alt="PT. PINTEX" srcset="" width="150px"><br> --}}
-                <h3 style="margin-top:10px">PT PINTEX</h3>
+                <img src="{{ url('photo/icon/pintex.png') }}" class="" alt="PT. PINTEX" srcset="" width="150px"><br>
+                {{-- <h3 style="margin-top:10px">PT PINTEX</h3> --}}
                 <p style="font-size: 8px; margin-top:0px" class="text-center">
                     Jln. Raya Cirebon-Bandung Km.12 Plumbon-Cirebon<br>
                     Phone : 62-231-321366 (HUNTING) Faximile : 62-231-321389
@@ -44,34 +44,73 @@ echo "<i>Tanggal Print : " . date('H:i:s d-m-Y')."</i>";
             </div>
             <div class="col-md-8" style="margin-top: 30px">
                 <u class="text-center">
-                    <h2><b>Daftar Kandidat</b></h2>
+                    <h2><b>DAFTAR KEHADIRAN WAWANCARA</b></h2>
                 </u>
             </div>
         </div>
-        <hr>
-        <i>
+        <hr style="margin-top: 5px;">
+        <div class="container">
+            <i>
             <h6>Tanggal : </h6>
-            <h6>No Form : </h6>
+            <h6>No Form : {{ $noform }}</h6>
         </i>
         <br>
-        <table class="table table-sm " border="3"
-            style="font-size: 14px; height: 2px; color: black; border-color: black;text-transform: uppercase;">
+        <table class="table table-sm table-bordered text-nowrap"
+            style="color: black; border-color: black;text-transform: uppercase; font-size:11px">
             <thead class="text-black" style="border-color: black;">
-                    <th style="border-color: black;">No</th>
-                    <th style="border-color: black;">NIK</th>
-                    <th style="border-color: black;">Nama</th>
-                    <th style="border-color: black;">Pendidikan</th>
-                    <th style="border-color: black;">Jurusan</th>
-                    <th style="border-color: black;">Tinggi</th>
-                    <th style="border-color: black;">Berat</th>
-                    <th style="border-color: black;">Telp</th>
-                    <th style="border-color: black;">Keterangan</th>
+                    <th style="border-color: black;" class="text-center">No</th>
+                    <th style="border-color: black;" class="text-center">Nama</th>
+                    <th style="border-color: black;" class="text-center">Pendidikan</th>
+                    <th style="border-color: black;" class="text-center">Telp</th>
+                    <th style="border-color: black;" class="text-center">Tinggi</th>
+                    <th style="border-color: black;" class="text-center">Berat</th>
+                    <th style="border-color: black;" class="text-center">Paraf</th>
             </thead>
-            
+                <?php $i=1 ?>
+                @foreach ($getData as $key => $w)
+                <tr>
+                    <td class="text-center">{{ $i; }}</td>
+                    <td class="text-center">{{ $w->nama }}</td>
+                    <td class="text-center">{{ $w->pendidikan . ' ' . $w->jurusan }}</td>
+                    <td class="text-center">{{ $w->notlp }}</td>
+                    <td class="text-center"></td>
+                    <td class="text-center"></td>
+                    <td class="text-center"></td>
+                </tr>
+                <?php $i++ ?>
+                @endforeach
+                <tr>
+                    <td class="text-center text-white">{{ $i; }}</td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                </tr>
+                <tr>
+                    <td class="text-center text-white">{{ $i; }}</td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                </tr>
+                <tr>
+                    <td class="text-center text-white">{{ $i; }}</td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                </tr>
         </table>
         <i>*Note : </i>
         <br>
-
+        <br>
+        <br>
         <br>
         <br>
         <div class="row text-center">
@@ -95,6 +134,8 @@ echo "<i>Tanggal Print : " . date('H:i:s d-m-Y')."</i>";
                 ( .................................................. )
             </div>
         </div>
+        </div>
+        
     </div>
 </div>
 

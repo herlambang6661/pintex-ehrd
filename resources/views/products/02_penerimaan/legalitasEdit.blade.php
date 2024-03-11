@@ -204,6 +204,11 @@
                                                     <div class="table-responsive">
                                                         <table class="table table-sm table-vcenter card-table">
                                                             <tr>
+                                                                <td style="width: 180px">Status</td>
+                                                                <td>:</td>
+                                                                <td>{{ $p->status }}</td>
+                                                            </tr>
+                                                            <tr>
                                                                 <td style="width: 180px">Alamat</td>
                                                                 <td>:</td>
                                                                 <td>{{ $p->alamat }}</td>

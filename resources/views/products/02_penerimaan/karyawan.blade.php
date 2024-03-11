@@ -222,7 +222,7 @@
                                 </table>
                             </div>
                         </div>
-                        <div class="tab-pane fade" id="tabs-ol" role="tabpanel">
+                        <div class="tab-pane fade active" id="tabs-ol" role="tabpanel">
                             <div class="card card-xl border-dark shadow rounded">
                                 <div class="card-stamp card-stamp-lg">
                                     <div class="card-stamp-icon bg-dark">
@@ -648,7 +648,7 @@
             ],
 
         });
-        var tableWawancara = $('.datatable-ol').DataTable({
+        var tableOl = $('.datatable-ol').DataTable({
             "processing": true, //Feature control the processing indicator.
             "serverSide": false, //Feature control DataTables' server-side processing mode.
             "scrollX": true,

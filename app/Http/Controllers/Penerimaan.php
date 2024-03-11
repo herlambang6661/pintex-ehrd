@@ -337,7 +337,11 @@ class Penerimaan extends Controller
 
     public function printLamaran($id)
     {
-        return view('products/02_penerimaan.print');
+        $check = DB::table('penerimaan_wawancara')
+            ->join('penerimaan_lamaran', 'penerimaan_wawancara.idlamaran', '=', 'penerimaan_lamaran.id')
+            ->where('noform', $id)
+            ->get();
+        return view('products/02_penerimaan.print', ['getData' => $check, 'noform' => $id,]);
     }
     // ======================== END LAMARAN ==============================================================================================
     // ======================== START WAWANCARA ==========================================================================================
