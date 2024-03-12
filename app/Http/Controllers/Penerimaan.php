@@ -899,13 +899,255 @@ class Penerimaan extends Controller
         $intern = DB::table('penerimaan_legalitas')->where('userid', $userid)->where('suratjns', 'like', '%intern%')->orderBy('legalitastgl', 'asc')->get();
         $status = DB::table('penerimaan_legalitas')->where('userid', $userid)->where('suratjns', 'like', '%status%')->orderBy('legalitastgl', 'asc')->get();
 
+        $p_divisi = DB::table('daftar_pospekerjaan')->where('type', 'like', '%DIVISI%')->orderBy('desc', 'asc')->get();
+        $p_bagian = DB::table('daftar_pospekerjaan')->where('type', 'like', '%BAGIAN%')->orderBy('desc', 'asc')->get();
+        $p_jabatan = DB::table('daftar_pospekerjaan')->where('type', 'like', '%JABATAN%')->orderBy('desc', 'asc')->get();
+        $p_grup = DB::table('daftar_pospekerjaan')->where('type', 'like', '%GRUP%')->orderBy('desc', 'asc')->get();
+        $p_shift = DB::table('daftar_pospekerjaan')->where('type', 'like', '%SHIFT%')->orderBy('desc', 'asc')->get();
+
+        $j_perjanjian = DB::table('daftar_surat')->where('jenissurat', 'like', '%Perjanjian%')->orderBy('nmsurat', 'asc')->get();
+        $j_internal = DB::table('daftar_surat')->where('jenissurat', 'like', '%Intern%')->orderBy('nmsurat', 'asc')->get();
+        $j_status = DB::table('daftar_surat')->where('jenissurat', 'like', '%Status%')->orderBy('nmsurat', 'asc')->get();
+
         return view('products/02_penerimaan.legalitasEdit', [
             'getKar' => $data,
             'basic' => $basic,
             'perjanjian' => $perjanjian,
             'intern' => $intern,
             'status' => $status,
+            'p_divisi' => $p_divisi,
+            'p_bagian' => $p_bagian,
+            'p_jabatan' => $p_jabatan,
+            'p_grup' => $p_grup,
+            'p_shift' => $p_shift,
+            'j_perjanjian' => $j_perjanjian,
+            'j_internal' => $j_internal,
+            'j_status' => $j_status,
         ]);
+    }
+
+    public function storedataLegalitas(Request $request)
+    {
+
+        $request->validate(
+            [
+                '_token' => 'required',
+            ],
+        );
+
+        // BASIC <==========================================================================================
+
+        if ($request->tgl) {
+            $jml_basic = count($request->tgl);
+            for ($i = 0; $i < $jml_basic; $i++) {
+
+                // GET NOFORM
+                $noform = date('y') . "00000";
+                $checknoform = DB::table('schedule')->orderBy('idjob', 'desc')->limit('1')->get();
+                foreach ($checknoform as $key) {
+                    $noform = $key->idjob;
+                }
+                $y = substr($noform, 0, 2);
+                if (date('y') == $y) {
+                    $noUrut = substr($noform, 2, 5);
+                    $na = $noUrut + 1;
+                    $char = date('y');
+                    $kode = $char . sprintf("%05s", $na);
+                } else {
+                    $kode = date('y') . "00001";
+                }
+                // GET NOFORM
+
+                $check = DB::table('penerimaan_legalitas')->insert([
+                    'remember_token' => $request->_token,
+                    'suratjns' => 'BASIC',
+                    'userid' => $request->userid,
+                    'stb' => $request->stb[$i],
+                    'nama' => $request->nama,
+                    'inputtgl' => date('Y-m-d'),
+                    'legalitastgl' => $request->tgl[$i],
+                    // 'tglmasuk' => '',
+                    // 'tglaw' => '',
+                    // 'tglak' => '',
+                    'nmsurat' => $request->namasurat[$i],
+                    // 'suratket' => '',
+                    'divisi' => $request->divisi[$i],
+                    'bagian' => $request->bagian[$i],
+                    'jabatan' => $request->jabatan[$i],
+                    'grup' => $request->grup[$i],
+                    'profesi' => $request->profesi[$i],
+                    'shift' => $request->shift[$i],
+                    'hrlibur'  => $request->libur[$i],
+                    'sethari' => $request->setengah[$i],
+                    // 'sacuti' => '',
+                    'keterangan' => $request->keterangan[$i],
+                    'id_cron'    => $kode,
+                    'dibuat' => Auth::user()->name,
+                    'created_at' => date('Y-m-d H:i:s'),
+                ]);
+
+                $check = DB::table('schedule')->insert([
+                    'remember_token' => $request->_token,
+                    'entitas' => 'PINTEX',
+                    'type' => 'Basic',
+                    'title' => 'Penambahan Legalitas',
+                    'idjob' => $kode,
+                    'dbjob' => 'daftar_legalitas',
+                    'job' => 'add',
+                    'datejob' => $request->tgl[$i],
+                    'nama' => $request->nama,
+                    'idemployee' => $request->userid,
+                    'dibuat' => Auth::user()->name,
+                    'created_at' => date('Y-m-d H:i:s'),
+                ]);
+            }
+        } else {
+            $check = null;
+            $arr = array('msg' => 'Tidak Ada data yang diubah', 'status' => false);
+        }
+
+        // BASIC <==========================================================================================
+        // ADD LEGALITAS <==================================================================================
+        // ADD LEGALITAS <==================================================================================
+        // $arr = array('msg' => 'Something goes to wrong. Please try later', 'status' => false);
+        if ($check) {
+            $arr = array('msg' => 'Data telah berhasil diproses', 'status' => true);
+        }
+        return Response()->json($arr);
+    }
+
+    public function listStb(Request $request)
+    {
+        $data = DB::table('penerimaan_karyawan')
+            ->where('stb', 'like', '1' . date('y') . '%')
+            ->orderBy('stb', 'desc')
+            ->limit(1)
+            ->get();
+        $data2 = DB::table('penerimaan_karyawan')
+            ->where('stb', 'like', '2' . date('y') . '%')
+            ->orderBy('stb', 'desc')
+            ->limit(1)
+            ->get();
+        $data3 = DB::table('penerimaan_karyawan')
+            ->where('stb', 'like', '3' . date('y') . '%')
+            ->orderBy('stb', 'desc')
+            ->limit(1)
+            ->get();
+
+        echo 'Berikut Urutan STB yang dapat digunakan : <br>';
+        foreach ($data as $u) {
+            $stbnew = $u->stb + 1;
+            echo '<p>1. Awalan 1 Terakhir dipakai oleh : ' . $u->nama . ' => ' . $u->stb . '</p>';
+        }
+        foreach ($data2 as $u2) {
+            $stbnew2 = $u2->stb + 1;
+            echo '<p>2. Awalan 2 Terakhir dipakai oleh : ' . $u2->nama . ' => ' . $u2->stb . '</p>';
+        }
+        foreach ($data3 as $u3) {
+            $stbnew3 = $u3->stb + 1;
+            echo '<p>3. Awalan 3 Terakhir dipakai oleh : ' . $u3->nama . ' => ' . $u3->stb . '</p>';
+        }
+        echo '
+            <p id="myText" hidden>' . $stbnew . '</p>
+            <p id="myText2" hidden>' . $stbnew2 . '</p>
+            <p id="myText3" hidden>' . $stbnew3 . '</p>
+            <script>
+                let text = document.getElementById("myText").innerHTML;
+                let text2 = document.getElementById("myText2").innerHTML;
+                let text3 = document.getElementById("myText3").innerHTML;
+                const copyContent = async () => {
+                    try {
+                        await navigator.clipboard.writeText(text);
+                        console.log("Content copied to clipboard");
+                        $("#modal-stb").modal("hide");
+                        const Toast = Swal.mixin({
+                            toast: true,
+                            position: "top-end",
+                            showConfirmButton: false,
+                            timer: 3000,
+                            timerProgressBar: true,
+                            didOpen: (toast) => {
+                                toast.onmouseenter = Swal.stopTimer;
+                                toast.onmouseleave = Swal.resumeTimer;
+                            }
+                        });
+                        Toast.fire({
+                            icon: "success",
+                            title: "STB ' . $stbnew . ' Berhasil Disalin ke Clipboard",
+                        });
+
+                    } catch (err) {
+                        console.error("Failed to copy: ", err);
+                    }
+                }
+                const copyContent2 = async () => {
+                    try {
+                        await navigator.clipboard.writeText(text2);
+                        console.log("Content copied to clipboard");
+                        $("#modal-stb").modal("hide");
+                        const Toast = Swal.mixin({
+                            toast: true,
+                            position: "top-end",
+                            showConfirmButton: false,
+                            timer: 3000,
+                            timerProgressBar: true,
+                            didOpen: (toast) => {
+                                toast.onmouseenter = Swal.stopTimer;
+                                toast.onmouseleave = Swal.resumeTimer;
+                            }
+                        });
+                        Toast.fire({
+                            icon: "success",
+                            title: "STB ' . $stbnew2 . ' Berhasil Disalin ke Clipboard",
+                        });
+                    } catch (err) {
+                        console.error("Failed to copy: ", err);
+                    }
+                }
+                const copyContent3 = async () => {
+                    try {
+                        await navigator.clipboard.writeText(text3);
+                        console.log("Content copied to clipboard");
+                        $("#modal-stb").modal("hide");
+                        const Toast = Swal.mixin({
+                            toast: true,
+                            position: "top-end",
+                            showConfirmButton: false,
+                            timer: 3000,
+                            timerProgressBar: true,
+                            didOpen: (toast) => {
+                                toast.onmouseenter = Swal.stopTimer;
+                                toast.onmouseleave = Swal.resumeTimer;
+                            }
+                        });
+                        Toast.fire({
+                            icon: "success",
+                            title: "STB ' . $stbnew3 . ' Berhasil Disalin ke Clipboard",
+                        });
+                    } catch (err) {
+                        console.error("Failed to copy: ", err);
+                    }
+                }
+            </script>
+            <div class="row">
+                <div class="col">
+                    <div class="alert alert-important alert-success" role="alert">
+                        Nomor 1 : <h1><a href="javascript:void(0)" onclick="copyContent()">' . $stbnew . '</a></h1>
+                    </div>
+                </div>
+                <div class="col">
+                    <div class="alert alert-important alert-success" role="alert">
+                        Nomor 2 : <h1><a href="javascript:void(0)" onclick="copyContent2()">' . $stbnew2 . '</a></h1>
+                    </div>
+                </div>
+                <div class="col">
+                    <div class="alert alert-important alert-success" role="alert">
+                        Nomor3 : <h1><a href="javascript:void(0)" onclick="copyContent3()">' . $stbnew3 . '</a></h1>
+                    </div>
+                </div>
+            </div>
+            ';
+        echo '<i>*Klik STB untuk menyalin</i>';
     }
 
     // ======================== END LEGALITAS ===========================================================================================

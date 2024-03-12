@@ -34,6 +34,7 @@ return new class extends Migration
             $table->string('sethari')->nullable();
             $table->string('sacuti')->nullable();
             $table->string('keterangan')->nullable();
+            $table->string('id_cron')->nullable();
             $table->string('dibuat')->nullable();
             $table->rememberToken();
             $table->timestamps();
