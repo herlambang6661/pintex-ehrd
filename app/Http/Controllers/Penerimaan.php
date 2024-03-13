@@ -963,6 +963,7 @@ class Penerimaan extends Controller
             $jml_perjanjian = empty($request->tgl_perjanjian) ? 0 : count($request->tgl_perjanjian);
             $jml_internal = empty($request->tgl_internal) ? 0 : count($request->tgl_internal);
             $jml_status = empty($request->tgl_status) ? 0 : count($request->tgl_status);
+
             // ================================================================================== BASIC =====================================================
             for ($i = 0; $i < $jml_basic; $i++) {
                 // GET NOFORM
@@ -1083,7 +1084,6 @@ class Penerimaan extends Controller
             }
             // ================================================================================== BASIC =====================================================
 
-
             // ================================================================================== PERJANJIAN ================================================
             for ($j = 0; $j < $jml_perjanjian; $j++) {
                 // GET NOFORM
@@ -1102,7 +1102,7 @@ class Penerimaan extends Controller
                     $kode = date('y') . "00001";
                 }
                 // GET NOFORM
-                if ($request->tgl_perjanjian[$i] <= date('Y-m-d')) {
+                if ($request->tgl_perjanjian[$j] <= date('Y-m-d')) {
                     $check = DB::table('penerimaan_legalitas')->insert([
                         'remember_token' => $request->_token,
                         'suratjns' => 'PERJANJIAN',
@@ -1134,7 +1134,8 @@ class Penerimaan extends Controller
                         'dibuat' => Auth::user()->name,
                         'created_at' => date('Y-m-d H:i:s'),
                     ]);
-                    if ($request->nmperjanjian[$i] == "Perjanjian Kontrak") {
+                    if ($request->nmperjanjian[$j] == "Perjanjian Kontrak") {
+                        // tambah USERID DISINI
                         $check = DB::table('penerimaan_karyawan')
                             ->where('id', $request->iduntukphl)
                             ->limit(1)
