@@ -97,8 +97,10 @@
                 @csrf
                 <div class="container-xl">
                     @foreach ($getKar as $key => $p)
+                    <input type="hidden" name="entitas" value="PINTEX">
                     <input type="hidden" name="nama" value="{{ $p->nama }}">
-                    <input type="hidden" name="userid" value="{{ $p->userid }}">
+                    <input type="hidden" name="userid" value="{{ $p->userid ? $p->userid : '' }}">
+                    <input type="hidden" name="iduntukphl" value="{{ $iduntukphl }}">
                     <div class="row row-deck row-cards">
                         <div class="col-lg-12">
                             <div class="card">

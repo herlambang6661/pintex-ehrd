@@ -14,7 +14,7 @@ return new class extends Migration
         Schema::create('penerimaan_legalitas', function (Blueprint $table) {
             $table->id();
             $table->string('suratjns');
-            $table->string('userid');
+            $table->string('userid')->nullable();
             $table->string('stb');
             $table->string('nama');
             $table->date('inputtgl')->nullable();

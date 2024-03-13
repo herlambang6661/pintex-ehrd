@@ -923,6 +923,7 @@ class Penerimaan extends Controller
             'j_perjanjian' => $j_perjanjian,
             'j_internal' => $j_internal,
             'j_status' => $j_status,
+            'iduntukphl' => $id,
         ]);
     }
 
@@ -934,13 +935,13 @@ class Penerimaan extends Controller
                 '_token' => 'required',
             ],
         );
-
-        // BASIC <==========================================================================================
-
-        if ($request->tgl) {
+        if ($request->tgl || $request->tgl_perjanjian || $request->tgl_internal || $request->tgl_status) {
             $jml_basic = count($request->tgl);
+            $jml_perjanjian = empty($request->tgl_perjanjian) ? 0 : count($request->tgl_perjanjian);
+            $jml_internal = empty($request->tgl_internal) ? 0 : count($request->tgl_internal);
+            $jml_status = empty($request->tgl_status) ? 0 : count($request->tgl_status);
+            // ================================================================================== BASIC =====================================================
             for ($i = 0; $i < $jml_basic; $i++) {
-
                 // GET NOFORM
                 $noform = date('y') . "00000";
                 $checknoform = DB::table('schedule')->orderBy('idjob', 'desc')->limit('1')->get();
@@ -957,58 +958,168 @@ class Penerimaan extends Controller
                     $kode = date('y') . "00001";
                 }
                 // GET NOFORM
-
-                $check = DB::table('penerimaan_legalitas')->insert([
-                    'remember_token' => $request->_token,
-                    'suratjns' => 'BASIC',
-                    'userid' => $request->userid,
-                    'stb' => $request->stb[$i],
-                    'nama' => $request->nama,
-                    'inputtgl' => date('Y-m-d'),
-                    'legalitastgl' => $request->tgl[$i],
-                    // 'tglmasuk' => '',
-                    // 'tglaw' => '',
-                    // 'tglak' => '',
-                    'nmsurat' => $request->namasurat[$i],
-                    // 'suratket' => '',
-                    'divisi' => $request->divisi[$i],
-                    'bagian' => $request->bagian[$i],
-                    'jabatan' => $request->jabatan[$i],
-                    'grup' => $request->grup[$i],
-                    'profesi' => $request->profesi[$i],
-                    'shift' => $request->shift[$i],
-                    'hrlibur'  => $request->libur[$i],
-                    'sethari' => $request->setengah[$i],
-                    // 'sacuti' => '',
-                    'keterangan' => $request->keterangan[$i],
-                    'id_cron'    => $kode,
-                    'dibuat' => Auth::user()->name,
-                    'created_at' => date('Y-m-d H:i:s'),
-                ]);
-
-                $check = DB::table('schedule')->insert([
-                    'remember_token' => $request->_token,
-                    'entitas' => 'PINTEX',
-                    'type' => 'Basic',
-                    'title' => 'Penambahan Legalitas',
-                    'idjob' => $kode,
-                    'dbjob' => 'daftar_legalitas',
-                    'job' => 'add',
-                    'datejob' => $request->tgl[$i],
-                    'nama' => $request->nama,
-                    'idemployee' => $request->userid,
-                    'dibuat' => Auth::user()->name,
-                    'created_at' => date('Y-m-d H:i:s'),
-                ]);
+                // Setting date Schedule
+                if ($request->tgl[$i] <= date('Y-m-d')) {
+                    $check = DB::table('penerimaan_legalitas')->insert([
+                        'remember_token' => $request->_token,
+                        'suratjns' => 'BASIC',
+                        'userid' => $request->userid,
+                        'stb' => $request->stb[$i],
+                        'nama' => $request->nama,
+                        'inputtgl' => date('Y-m-d'),
+                        'legalitastgl' => $request->tgl[$i],
+                        'tglmasuk' => $request->tglaktif[$i],
+                        'nmsurat' => $request->namasurat[$i],
+                        'divisi' => $request->divisi[$i],
+                        'bagian' => $request->bagian[$i],
+                        'jabatan' => $request->jabatan[$i],
+                        'grup' => $request->grup[$i],
+                        'profesi' => $request->profesi[$i],
+                        'shift' => $request->shift[$i],
+                        'hrlibur'  => $request->libur[$i],
+                        'sethari' => $request->setengah[$i],
+                        'keterangan' => $request->keterangan[$i],
+                        'id_cron'    => $kode,
+                        'dibuat' => Auth::user()->name,
+                        'created_at' => date('Y-m-d H:i:s'),
+                    ]);
+                    $check = DB::table('schedule')->insert([
+                        'remember_token' => $request->_token,
+                        'entitas' => 'PINTEX',
+                        'type' => 'Basic',
+                        'title' => 'Penambahan Legalitas',
+                        'idjob' => $kode,
+                        'dbjob' => 'daftar_legalitas',
+                        'job' => 'add',
+                        'datejob' => $request->tgl[$i],
+                        'nama' => $request->nama,
+                        'idemployee' => $request->stb[$i],
+                        'dibuat' => Auth::user()->name,
+                        'created_at' => date('Y-m-d H:i:s'),
+                    ]);
+                    $check = DB::table('penerimaan_karyawan')
+                        ->where('id', $request->iduntukphl)
+                        ->limit(1)
+                        ->update([
+                            'entitas' => $request->entitas,
+                            'stb' => $request->stb[$i],
+                            'divisi' => $request->divisi[$i],
+                            'bagian' => $request->bagian[$i],
+                            'jabatan' => $request->jabatan[$i],
+                            'grup' => $request->grup[$i],
+                            'profesi' => $request->profesi[$i],
+                            'shift' => $request->shift[$i],
+                            'hrlibur'  => $request->libur[$i],
+                            'sethari' => $request->setengah[$i],
+                            'keterangan' => $request->keterangan[$i],
+                            'updated_at' => date('Y-m-d H:i:s'),
+                        ]);
+                } else {
+                    $check = DB::table('penerimaan_legalitas')->insert([
+                        'remember_token' => $request->_token,
+                        'suratjns' => 'BASIC',
+                        'userid' => $request->userid,
+                        'stb' => $request->stb[$i],
+                        'nama' => $request->nama,
+                        'inputtgl' => date('Y-m-d'),
+                        'legalitastgl' => $request->tgl[$i],
+                        // 'tglmasuk' => '',
+                        // 'tglaw' => '',
+                        // 'tglak' => '',
+                        'nmsurat' => $request->namasurat[$i],
+                        // 'suratket' => '',
+                        'divisi' => $request->divisi[$i],
+                        'bagian' => $request->bagian[$i],
+                        'jabatan' => $request->jabatan[$i],
+                        'grup' => $request->grup[$i],
+                        'profesi' => $request->profesi[$i],
+                        'shift' => $request->shift[$i],
+                        'hrlibur'  => $request->libur[$i],
+                        'sethari' => $request->setengah[$i],
+                        // 'sacuti' => '',
+                        'keterangan' => $request->keterangan[$i],
+                        'id_cron'    => $kode,
+                        'dibuat' => Auth::user()->name,
+                        'created_at' => date('Y-m-d H:i:s'),
+                    ]);
+                    $check = DB::table('schedule')->insert([
+                        'remember_token' => $request->_token,
+                        'entitas' => 'PINTEX',
+                        'type' => 'Basic',
+                        'title' => 'Penambahan Legalitas',
+                        'idjob' => $kode,
+                        'dbjob' => 'daftar_legalitas',
+                        'job' => 'add',
+                        'datejob' => $request->tgl[$i],
+                        'nama' => $request->nama,
+                        'idemployee' => $request->stb[$i],
+                        'dibuat' => Auth::user()->name,
+                        'created_at' => date('Y-m-d H:i:s'),
+                    ]);
+                }
             }
+            // ================================================================================== BASIC =====================================================
+
+
+            // ================================================================================== PERJANJIAN ================================================
+            for ($j = 0; $j < $jml_perjanjian; $j++) {
+                // GET NOFORM
+                $noform = date('y') . "00000";
+                $checknoform = DB::table('schedule')->orderBy('idjob', 'desc')->limit('1')->get();
+                foreach ($checknoform as $key) {
+                    $noform = $key->idjob;
+                }
+                $y = substr($noform, 0, 2);
+                if (date('y') == $y) {
+                    $noUrut = substr($noform, 2, 5);
+                    $na = $noUrut + 1;
+                    $char = date('y');
+                    $kode = $char . sprintf("%05s", $na);
+                } else {
+                    $kode = date('y') . "00001";
+                }
+                // GET NOFORM
+                if ($request->jml_perjanjian[$i] <= date('Y-m-d')) {
+                } else {
+                    $check = DB::table('penerimaan_legalitas')->insert([
+                        'remember_token' => $request->_token,
+                        'suratjns' => 'PERJANJIAN',
+                        'userid' => $request->userid,
+                        'stb' => $request->stb[$j],
+                        'nama' => $request->nama,
+                        'inputtgl' => date('Y-m-d'),
+                        'legalitastgl' => $request->tgl_perjanjian[$j],
+                        'tglaw' => $request->awal_perjanjian[$j],
+                        'tglak' => $request->akhir_perjanjian[$j],
+                        'nmsurat' => $request->namasurat[$j],
+                        'suratket' => $request->jenis_perjanjian[$j],
+                        'sacuti' => $request->cuti[$j],
+                        'id_cron'    => $kode,
+                        'dibuat' => Auth::user()->name,
+                        'created_at' => date('Y-m-d H:i:s'),
+                    ]);
+                    $check = DB::table('schedule')->insert([
+                        'remember_token' => $request->_token,
+                        'entitas' => 'PINTEX',
+                        'type' => 'Perjanjian',
+                        'title' => 'Penambahan Legalitas',
+                        'idjob' => $kode,
+                        'dbjob' => 'daftar_legalitas',
+                        'job' => 'add',
+                        'datejob' => $request->tgl_perjanjian[$j],
+                        'nama' => $request->nama,
+                        'idemployee' => $request->stb[$j],
+                        'dibuat' => Auth::user()->name,
+                        'created_at' => date('Y-m-d H:i:s'),
+                    ]);
+                }
+            }
+            // ================================================================================== PERJANJIAN ================================================
         } else {
             $check = null;
             $arr = array('msg' => 'Tidak Ada data yang diubah', 'status' => false);
         }
 
-        // BASIC <==========================================================================================
-        // ADD LEGALITAS <==================================================================================
-        // ADD LEGALITAS <==================================================================================
         // $arr = array('msg' => 'Something goes to wrong. Please try later', 'status' => false);
         if ($check) {
             $arr = array('msg' => 'Data telah berhasil diproses', 'status' => true);

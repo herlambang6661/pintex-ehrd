@@ -33,6 +33,7 @@ class ScheduleLegalitas extends Command
         $checkLegalitas = DB::table('penerimaan_legalitas')->where('legalitastgl', '=', date('Y-m-d'))->get();
         try {
             foreach ($checkLegalitas as $key) {
+                // ============================================================  BASIC  ============================================================
                 if ($key->suratjns == 'BASIC') {
                     DB::table('penerimaan_karyawan')
                         ->where('userid', $key->userid)
@@ -40,9 +41,6 @@ class ScheduleLegalitas extends Command
                         ->update(
                             array(
                                 'stb' => $key->stb,
-                                'tglmasuk' => $key->tglmasuk,
-                                'tglaktif' => $key->tglaw,
-                                'tglkeluar' => $key->tglak,
                                 'divisi' => $key->divisi,
                                 'bagian' => $key->bagian,
                                 'jabatan' => $key->jabatan,
@@ -55,7 +53,49 @@ class ScheduleLegalitas extends Command
                                 'updated_at' => date('Y-m-d H:i:s'),
                             )
                         );
-                    Log::info("Cron job Berhasil di jalankan " . date('Y-m-d H:i:s'));
+                    Log::info($key->suratjns . " Berhasil di jalankan ( " . $key->nmsurat . " ). USERID: " . $key->userid . " (" . $key->nama . "). IDCRON: " . $key->id_cron . ". Date: " . date('Y-m-d H:i:s'));
+                }
+                // ============================================================  PERJANJIAN  ============================================================
+                if ($key->suratjns == 'PERJANJIAN') {
+                    DB::table('penerimaan_karyawan')
+                        ->where('userid', $key->userid)
+                        ->limit(1)
+                        ->update(
+                            array(
+                                'tglaktif' => $key->tglaw,
+                                'tglkeluar' => $key->tglak,
+                                'perjanjian' => $key->suratket . "(" . $key->tglaw . " s.d. " . $key->tglak . ")",
+                                'updated_at' => date('Y-m-d H:i:s'),
+                            )
+                        );
+                    Log::info($key->suratjns . " Berhasil di jalankan ( " . $key->nmsurat . " ). USERID: " . $key->userid . " (" . $key->nama . "). IDCRON: " . $key->id_cron . ". Date: " . date('Y-m-d H:i:s'));
+                }
+                // ============================================================  INTERN  ============================================================
+                if ($key->suratjns == 'INTERN') {
+                    DB::table('penerimaan_karyawan')
+                        ->where('userid', $key->userid)
+                        ->limit(1)
+                        ->update(
+                            array(
+                                'tglinternal' => $key->legalitastgl,
+                                'internal' => $key->nmsurat . " " . $key->keterangan,
+                                'updated_at' => date('Y-m-d H:i:s'),
+                            )
+                        );
+                    Log::info($key->suratjns . " Berhasil di jalankan ( " . $key->nmsurat . " ). USERID: " . $key->userid . " (" . $key->nama . "). IDCRON: " . $key->id_cron . ". Date: " . date('Y-m-d H:i:s'));
+                }
+                // ============================================================  STATUS  ============================================================
+                if ($key->suratjns == 'STATUS') {
+                    DB::table('penerimaan_karyawan')
+                        ->where('userid', $key->userid)
+                        ->limit(1)
+                        ->update(
+                            array(
+                                'status' => $key->nmsurat . " - " . $key->legalitastgl,
+                                'updated_at' => date('Y-m-d H:i:s'),
+                            )
+                        );
+                    Log::info($key->suratjns . " Berhasil di jalankan ( " . $key->nmsurat . " ). USERID: " . $key->userid . " (" . $key->nama . "). IDCRON: " . $key->id_cron . ". Date: " . date('Y-m-d H:i:s'));
                 }
             }
         } catch (\Exception $e) {
