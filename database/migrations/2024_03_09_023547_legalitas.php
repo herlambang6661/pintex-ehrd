@@ -15,7 +15,7 @@ return new class extends Migration
             $table->id();
             $table->string('suratjns');
             $table->string('userid')->nullable();
-            $table->string('stb');
+            $table->string('stb')->nullable();
             $table->string('nama');
             $table->date('inputtgl')->nullable();
             $table->date('legalitastgl')->nullable();

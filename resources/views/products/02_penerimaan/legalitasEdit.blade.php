@@ -778,7 +778,7 @@
         // Kolom 3 Nama Surat Perjanjian
         var td = document.createElement("td");
         td.setAttribute("class", "border border-purple");
-        td.innerHTML += "<select name='nmperjanjian[]' style='width:180px;' id='nmperjanjian_" + idf + "' class='form-select' class='border border-white'>"+
+        td.innerHTML += "<select name='nmperjanjian[]' style='width:180px;' id='nmperjanjian_" + idp + "' class='form-select' class='border border-white'>"+
                             "<option value='' hidden>-- Pilih Perjanjian --</option>"+
                             "<?php foreach($j_perjanjian as $key => $w){ ?>"+
                             "<option value='<?php echo $w->nmsurat ?>'><?php echo $w->nmsurat ?></option>"+
@@ -789,7 +789,7 @@
         // Kolom 4 Jenis Surat Perjanjian
         var td = document.createElement("td");
         td.setAttribute("class", "border border-purple");
-        td.innerHTML += '<input type="text" value="" name="jenis_perjanjian[]" id="jenis_perjanjian_'+idf+'" class="border border-white">';
+        td.innerHTML += '<input type="text" value="" name="jenis_perjanjian[]" id="jenis_perjanjian_'+idp+'" class="border border-white">';
         tr.appendChild(td);
         
         // Kolom 5 Tanggal Awal Perjanjian
@@ -807,7 +807,7 @@
         // Kolom 7 Cuti
         var td = document.createElement("td");
         td.setAttribute("class", "border border-purple");
-        td.innerHTML += '<input type="text" value="" name="cuti[]" id="cuti_'+idf+'" class="border border-white">';
+        td.innerHTML += '<input type="text" value="" name="cuti[]" id="cuti_'+idp+'" class="border border-white">';
         tr.appendChild(td);
 
         tb_per.appendChild(tr);

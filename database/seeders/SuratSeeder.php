@@ -226,6 +226,16 @@ class SuratSeeder extends Seeder
             [
                 'entitas' => 'PINTEX',
                 'jenissurat' => 'Perjanjian',
+                'nmsurat' => 'Perjanjian Kerja OL',
+                'nilai' => 'OL',
+                'dibuat' => 'Admin',
+                'created_at' => date('Y-m-d H:i:s'),
+                'updated_at' => date('Y-m-d H:i:s'),
+            ],
+
+            [
+                'entitas' => 'PINTEX',
+                'jenissurat' => 'Perjanjian',
                 'nmsurat' => 'Perjanjian Kerja PHL',
                 'nilai' => 'PHL',
                 'dibuat' => 'Admin',

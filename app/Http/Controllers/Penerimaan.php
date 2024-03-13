@@ -606,10 +606,33 @@ class Penerimaan extends Controller
 
             $getDataLam = DB::table('penerimaan_lamaran')->where('id', $request->id[$i])->limit(1)->get();
             foreach ($getDataLam as $l) {
+
+                // GET PHL
+                $noform = "PHL00000";
+                $checknoform = DB::table('penerimaan_karyawan')
+                    ->where('stb', 'like', '%PHL%')
+                    ->orderBy('userid', 'desc')
+                    ->limit('1')
+                    ->get();
+                foreach ($checknoform as $key) {
+                    $noform = $key->userid;
+                }
+                $y = substr($noform, 0, 3);
+                if ($y == 'PHL') {
+                    $noUrut = substr($noform, 3, 5);
+                    $na = $noUrut + 1;
+                    $char = 'PHL';
+                    $kode = $char . sprintf("%05s", $na);
+                } else {
+                    $kode = 'PHL' . "00001";
+                }
+                // GET PHL
+
                 DB::table('penerimaan_karyawan')->insert([
                     'remember_token' => $request->_token,
                     'entitas' => $l->entitas,
                     'nik' => $l->nik,
+                    'userid' => $kode,
                     'nama' => $l->nama,
                     'gender' => $l->gender,
                     'tempat' => $l->tempat,
@@ -936,7 +959,7 @@ class Penerimaan extends Controller
             ],
         );
         if ($request->tgl || $request->tgl_perjanjian || $request->tgl_internal || $request->tgl_status) {
-            $jml_basic = count($request->tgl);
+            $jml_basic = empty($request->tgl) ? 0 : count($request->tgl);
             $jml_perjanjian = empty($request->tgl_perjanjian) ? 0 : count($request->tgl_perjanjian);
             $jml_internal = empty($request->tgl_internal) ? 0 : count($request->tgl_internal);
             $jml_status = empty($request->tgl_status) ? 0 : count($request->tgl_status);
@@ -1079,19 +1102,18 @@ class Penerimaan extends Controller
                     $kode = date('y') . "00001";
                 }
                 // GET NOFORM
-                if ($request->jml_perjanjian[$i] <= date('Y-m-d')) {
-                } else {
+                if ($request->tgl_perjanjian[$i] <= date('Y-m-d')) {
                     $check = DB::table('penerimaan_legalitas')->insert([
                         'remember_token' => $request->_token,
                         'suratjns' => 'PERJANJIAN',
                         'userid' => $request->userid,
-                        'stb' => $request->stb[$j],
+                        // 'stb' => $request->stb[$j],
                         'nama' => $request->nama,
                         'inputtgl' => date('Y-m-d'),
                         'legalitastgl' => $request->tgl_perjanjian[$j],
                         'tglaw' => $request->awal_perjanjian[$j],
                         'tglak' => $request->akhir_perjanjian[$j],
-                        'nmsurat' => $request->namasurat[$j],
+                        'nmsurat' => $request->nmperjanjian[$j],
                         'suratket' => $request->jenis_perjanjian[$j],
                         'sacuti' => $request->cuti[$j],
                         'id_cron'    => $kode,
@@ -1108,7 +1130,61 @@ class Penerimaan extends Controller
                         'job' => 'add',
                         'datejob' => $request->tgl_perjanjian[$j],
                         'nama' => $request->nama,
-                        'idemployee' => $request->stb[$j],
+                        'idemployee' => $request->userid,
+                        'dibuat' => Auth::user()->name,
+                        'created_at' => date('Y-m-d H:i:s'),
+                    ]);
+                    if ($request->nmperjanjian[$i] == "Perjanjian Kontrak") {
+                        $check = DB::table('penerimaan_karyawan')
+                            ->where('id', $request->iduntukphl)
+                            ->limit(1)
+                            ->update([
+                                'tglaktif' => $request->tglaw,
+                                'tglkeluar' => $request->tglak,
+                                'perjanjian' => $request->suratket . "(" . $request->tglaw . " s.d. " . $request->tglak . ")",
+                                'status' => 'Aktif',
+                                'updated_at' => date('Y-m-d H:i:s'),
+                            ]);
+                    } else {
+                        $check = DB::table('penerimaan_karyawan')
+                            ->where('id', $request->iduntukphl)
+                            ->limit(1)
+                            ->update([
+                                'tglaktif' => $request->tglaw,
+                                'tglkeluar' => $request->tglak,
+                                'perjanjian' => $request->suratket . "(" . $request->tglaw . " s.d. " . $request->tglak . ")",
+                                'updated_at' => date('Y-m-d H:i:s'),
+                            ]);
+                    }
+                } else {
+                    $check = DB::table('penerimaan_legalitas')->insert([
+                        'remember_token' => $request->_token,
+                        'suratjns' => 'PERJANJIAN',
+                        'userid' => $request->userid,
+                        // 'stb' => $request->stb[$j],
+                        'nama' => $request->nama,
+                        'inputtgl' => date('Y-m-d'),
+                        'legalitastgl' => $request->tgl_perjanjian[$j],
+                        'tglaw' => $request->awal_perjanjian[$j],
+                        'tglak' => $request->akhir_perjanjian[$j],
+                        'nmsurat' => $request->nmperjanjian[$j],
+                        'suratket' => $request->jenis_perjanjian[$j],
+                        'sacuti' => $request->cuti[$j],
+                        'id_cron'    => $kode,
+                        'dibuat' => Auth::user()->name,
+                        'created_at' => date('Y-m-d H:i:s'),
+                    ]);
+                    $check = DB::table('schedule')->insert([
+                        'remember_token' => $request->_token,
+                        'entitas' => 'PINTEX',
+                        'type' => 'Perjanjian',
+                        'title' => 'Penambahan Legalitas',
+                        'idjob' => $kode,
+                        'dbjob' => 'daftar_legalitas',
+                        'job' => 'add',
+                        'datejob' => $request->tgl_perjanjian[$j],
+                        'nama' => $request->nama,
+                        'idemployee' => $request->userid,
                         'dibuat' => Auth::user()->name,
                         'created_at' => date('Y-m-d H:i:s'),
                     ]);

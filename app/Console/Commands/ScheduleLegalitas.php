@@ -57,17 +57,45 @@ class ScheduleLegalitas extends Command
                 }
                 // ============================================================  PERJANJIAN  ============================================================
                 if ($key->suratjns == 'PERJANJIAN') {
-                    DB::table('penerimaan_karyawan')
-                        ->where('userid', $key->userid)
-                        ->limit(1)
-                        ->update(
-                            array(
-                                'tglaktif' => $key->tglaw,
-                                'tglkeluar' => $key->tglak,
-                                'perjanjian' => $key->suratket . "(" . $key->tglaw . " s.d. " . $key->tglak . ")",
-                                'updated_at' => date('Y-m-d H:i:s'),
-                            )
-                        );
+                    if ($key->nmsurat == 'Perjanjian Kerja PHL') {
+                        DB::table('penerimaan_karyawan')
+                            ->where('userid', $key->userid)
+                            ->limit(1)
+                            ->update(
+                                array(
+                                    'tglaktif' => $key->tglaw,
+                                    'tglkeluar' => $key->tglak,
+                                    'perjanjian' => $key->suratket . "(" . $key->tglaw . " s.d. " . $key->tglak . ")",
+                                    'status' => 'PHL',
+                                    'updated_at' => date('Y-m-d H:i:s'),
+                                )
+                            );
+                    } elseif ($key->nmsurat == 'Perjanjian Kontrak') {
+                        DB::table('penerimaan_karyawan')
+                            ->where('userid', $key->userid)
+                            ->limit(1)
+                            ->update(
+                                array(
+                                    'tglaktif' => $key->tglaw,
+                                    'tglkeluar' => $key->tglak,
+                                    'perjanjian' => $key->suratket . "(" . $key->tglaw . " s.d. " . $key->tglak . ")",
+                                    'status' => 'aktif',
+                                    'updated_at' => date('Y-m-d H:i:s'),
+                                )
+                            );
+                    } else {
+                        DB::table('penerimaan_karyawan')
+                            ->where('userid', $key->userid)
+                            ->limit(1)
+                            ->update(
+                                array(
+                                    'tglaktif' => $key->tglaw,
+                                    'tglkeluar' => $key->tglak,
+                                    'perjanjian' => $key->suratket . "(" . $key->tglaw . " s.d. " . $key->tglak . ")",
+                                    'updated_at' => date('Y-m-d H:i:s'),
+                                )
+                            );
+                    }
                     Log::info($key->suratjns . " Berhasil di jalankan ( " . $key->nmsurat . " ). USERID: " . $key->userid . " (" . $key->nama . "). IDCRON: " . $key->id_cron . ". Date: " . date('Y-m-d H:i:s'));
                 }
                 // ============================================================  INTERN  ============================================================
