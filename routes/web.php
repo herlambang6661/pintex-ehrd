@@ -28,6 +28,8 @@ use App\Http\Controllers\Datatables\DataLegalitasKaryawanOl;
 |
 */
 
+Route::get('logs', [\Rap2hpoutre\LaravelLogViewer\LogViewerController::class, 'index']);
+
 Route::get('/', function () {
     return view('login');
 });

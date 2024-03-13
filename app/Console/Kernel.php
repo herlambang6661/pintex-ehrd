@@ -17,8 +17,9 @@ class Kernel extends ConsoleKernel
     protected function schedule(Schedule $schedule): void
     {
         // $schedule->command('inspire')->hourly();
-        // $schedule->command('legalitas:cron')->everyMinute();
-
+        $schedule->command('legalitas:cron')->everyMinute();
+        // $schedule->command('legalitas:cron')->dailyAt('06:00');
+        $schedule->command('cache: clear')->daily();
     }
 
     /**
