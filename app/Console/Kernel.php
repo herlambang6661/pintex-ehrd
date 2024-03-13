@@ -16,6 +16,7 @@ class Kernel extends ConsoleKernel
 
     protected function schedule(Schedule $schedule): void
     {
+        date_default_timezone_set('Asia/Jakarta');
         // $schedule->command('inspire')->hourly();
         // $schedule->command('legalitas:cron')->everyMinute();
         $schedule->command('legalitas:cron')->dailyAt('06:00');
