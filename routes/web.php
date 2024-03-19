@@ -9,6 +9,7 @@ use App\Http\Controllers\Administrasi;
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\Datatables\DataOL;
 use App\Http\Controllers\Datatables\DataSurat;
+use App\Http\Controllers\Datatables\DataAbsensi;
 use App\Http\Controllers\Datatables\DataLamaran;
 use App\Http\Controllers\Datatables\DataKaryawan;
 use App\Http\Controllers\Datatables\DataWawancara;
@@ -43,6 +44,7 @@ Route::resources([
     'getOL' => DataOL::class,
     'getLegalitasKaryawan' => DataLegalitasKaryawan::class,
     'getLegalitasKaryawanOl' => DataLegalitasKaryawanOl::class,
+    'getAbsensi' => DataAbsensi::class,
 ]);
 
 
@@ -87,6 +89,7 @@ Route::controller(Penerimaan::class)->group(function () {
 
 Route::controller(Absensi::class)->group(function () {
     Route::get('absensi/absensi', 'absensi')->name('absensi/absensi');
+    Route::get('absensi/fingerprint', 'fingerprint')->name('absensi/fingerprint');
     Route::get('absensi/komunikasi', 'komunikasi')->name('absensi/komunikasi');
     Route::get('absensi/cuti', 'cuti')->name('absensi/cuti');
 });

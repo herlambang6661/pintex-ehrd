@@ -17,7 +17,10 @@ class Penerimaan extends Controller
     // ======================== START LAMARAN ==============================================================================================
     public function lamaran()
     {
-        return view('products/02_penerimaan.lamaran');
+        $judul = "Lamaran";
+        $penerimaan = "active";
+        $lamaran = "active";
+        return view('products/02_penerimaan.lamaran', ['judul' => $judul, 'penerimaan' => $penerimaan, 'lamaran' => $lamaran]);
     }
 
     public function storeLamaran(Request $request)
@@ -348,7 +351,10 @@ class Penerimaan extends Controller
 
     public function wawancara()
     {
-        return view('products/02_penerimaan.wawancara');
+        $judul = "Wawancara";
+        $penerimaan = "active";
+        $wawancara = "active";
+        return view('products/02_penerimaan.wawancara', ['judul' => $judul, 'penerimaan' => $penerimaan, 'wawancara' => $wawancara]);
     }
 
     public function cancelWawancara(Request $request)
@@ -608,23 +614,20 @@ class Penerimaan extends Controller
             foreach ($getDataLam as $l) {
 
                 // GET PHL
-                $noform = "PHL00000";
+                $noform = "0";
                 $checknoform = DB::table('penerimaan_karyawan')
-                    ->where('stb', 'like', '%PHL%')
+                    // ->where('stb', 'like', '%PHL%')
                     ->orderBy('userid', 'desc')
                     ->limit('1')
                     ->get();
                 foreach ($checknoform as $key) {
                     $noform = $key->userid;
                 }
-                $y = substr($noform, 0, 3);
-                if ($y == 'PHL') {
-                    $noUrut = substr($noform, 3, 5);
-                    $na = $noUrut + 1;
-                    $char = 'PHL';
-                    $kode = $char . sprintf("%05s", $na);
+                if ($noform != "0") {
+                    $na = $noform + 1;
+                    $kode = $na;
                 } else {
-                    $kode = 'PHL' . "00001";
+                    $kode = "1";
                 }
                 // GET PHL
 
@@ -667,7 +670,10 @@ class Penerimaan extends Controller
 
     public function karyawan()
     {
-        return view('products/02_penerimaan.karyawan');
+        $judul = "Karyawan";
+        $penerimaan = "active";
+        $karyawan = "active";
+        return view('products/02_penerimaan.karyawan', ['judul' => $judul, 'penerimaan' => $penerimaan, 'karyawan' => $karyawan]);
     }
 
     public function listKaryawan(Request $request)
@@ -905,9 +911,16 @@ class Penerimaan extends Controller
 
     public function legalitas()
     {
+        $judul = "Legalitas";
+        $penerimaan = "active";
+        $legalitas = "active";
+
         $basic = DB::table('daftar_surat')->where('jenissurat', '=', 'Basic')->get();
         return view('products/02_penerimaan.legalitas', [
             'basic' => $basic,
+            'judul' => $judul,
+            'penerimaan' => $penerimaan,
+            'legalitas' => $legalitas
         ]);
     }
 
