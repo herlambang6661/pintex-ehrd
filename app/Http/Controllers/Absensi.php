@@ -103,7 +103,7 @@ class Absensi extends Controller
                 <script>
                     var tb1 = $(".datatable-absensi").DataTable({
                         "processing": true, 
-                        "serverSide": true, 
+                        "serverSide": false, 
                         "scrollX": true,
                         "scrollCollapse": true,
                         "pagingType": "full_numbers",
