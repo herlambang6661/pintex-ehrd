@@ -1,3 +1,6 @@
+<link rel="stylesheet" href="https://unpkg.com/placeholder-loading/dist/css/placeholder-loading.min.css">
+
+
 @extends('layouts.app')
 @section('content')
 
@@ -67,7 +70,7 @@
                                         Data Alfa
                                     </a>
                                     <a href="#" class="btn btn-warning d-none d-sm-inline-block" data-bs-toggle="modal" data-bs-target="#importExcel" data-bs-backdrop="static" data-bs-keyboard="false">
-                                        <i class="fa-solid fa-user-slash"></i>
+                                        <svg  xmlns="http://www.w3.org/2000/svg"  width="24"  height="24"  viewBox="0 0 24 24"  fill="none"  stroke="currentColor"  stroke-width="2"  stroke-linecap="round"  stroke-linejoin="round"  class="icon icon-tabler icons-tabler-outline icon-tabler-fingerprint-off"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><path d="M18.9 7a8 8 0 0 1 1.1 5v1a6 6 0 0 0 .8 3" /><path d="M8 11c0 -.848 .264 -1.634 .713 -2.28m2.4 -1.621a4 4 0 0 1 4.887 3.901l0 1" /><path d="M12 12v1a14 14 0 0 0 2.5 8" /><path d="M8 15a18 18 0 0 0 1.8 6" /><path d="M4.9 19a22 22 0 0 1 -.9 -7v-1a8 8 0 0 1 1.854 -5.143m2.176 -1.825a8 8 0 0 1 7.97 .018" /><path d="M3 3l18 18" /></svg>
                                         Data F1F2
                                     </a>
                                     <a href="{{ url('absensi/fingerprint'); }}" class="btn btn-primary d-none d-sm-inline-block">
@@ -127,46 +130,113 @@
                                                 </div>
                                             </div>
                                             <div class="card card-xl shadow rounded">
-                                                <table style="width:100%; font-family: 'Trebuchet MS', Helvetica, sans-serif;"
-                                                    class="display table table-vcenter card-table table-sm table-striped table-bordered table-hover text-nowrap datatable-absensi" id="tblamaran">
-                                                    <thead>
-                                                        
-                                                        <?php 
-                                                            function getAllDates($startingDate, $endingDate)
-                                                            {
-                                                                $datesArray = [];
-
-                                                                $startingDate = strtotime($startingDate);
-                                                                $endingDate = strtotime($endingDate);
-                                                                    
-                                                                for ($currentDate = $startingDate; $currentDate <= $endingDate; $currentDate += (86400)) {
-                                                                    $date = date('d', $currentDate);
-                                                                    $datesArray[] = $date;
-                                                                }
-                                                        
-                                                                return $datesArray;
-                                                            }
-                                                        
-                                                            $dates = getAllDates('2024-02-16', '2024-03-15');
-                                                            
-                                                            // print_r($dates);
-                                                        
-                                                        ?>
-                                                        <tr class="text-center">
-                                                            <th>STB</th>
-                                                            <th>NAMA</th>
-                                                            @foreach ($dates as $item)
-                                                            <th style="width: 30px" class="text-center">{{ $item }}</th>
-                                                            @endforeach
-                                                        </tr>
-                                                    </thead>
-                                                </table>
+                                                <div class="card-body">
+                                                    <div class="row row-cards">
+                                                        <div class="col-sm-6 col-md-4 col-lg-2">
+                                                            <div class="mb-3">
+                                                                <label class="form-label">Tgl Awal</label>
+                                                                <input type="date" class="form-control" value="{{ date('Y-m-16') }}" id="tglaw" onchange="tb();" onkeyup="tb();">
+                                                            </div>
+                                                        </div>
+                                                        <div class="col-sm-6 col-md-4 col-lg-2">
+                                                            <div class="mb-3">
+                                                                <label class="form-label">Tgl Akhir</label>
+                                                                <input type="date" class="form-control" value="{{ date('Y-m-15',strtotime('first day of +1 month')) }}" id="tglak" onchange="tb();" onkeyup="tb();">
+                                                            </div>
+                                                        </div>
+                                                        <div class="col-sm-12 col-md-12">
+                                                            <div class="ph-item" style="display:none">
+                                                                <div class="ph-col-3">
+                                                                    <div class="ph-picture"></div>
+                                                                    <div class="ph-row">
+                                                                        <div class="ph-col-4 "></div>
+                                                                        <div class="ph-col-4"></div>
+                                                                        <div class="ph-col-2 "></div>
+                                                                        <div class="ph-col-2"></div>
+                                                                    </div>
+                                                                    <div class="ph-row">
+                                                                        <div class="ph-col-8"></div>
+                                                                        <div class="ph-col-4"></div>
+                                                                    </div>
+                                                                    <div class="ph-row">
+                                                                        <div class="ph-col-12"></div>
+                                                                    </div>
+                                                                </div>
+                                                                <div class="ph-col-3">
+                                                                    <div class="ph-picture"></div>
+                                                                    <div class="ph-row">
+                                                                        <div class="ph-col-4 "></div>
+                                                                        <div class="ph-col-4"></div>
+                                                                        <div class="ph-col-2 "></div>
+                                                                        <div class="ph-col-2"></div>
+                                                                    </div>
+                                                                    <div class="ph-row">
+                                                                        <div class="ph-col-8"></div>
+                                                                        <div class="ph-col-4"></div>
+                                                                    </div>
+                                                                    <div class="ph-row">
+                                                                        <div class="ph-col-12"></div>
+                                                                    </div>
+                                                                </div>
+                                                                <div class="ph-col-3">
+                                                                    <div class="ph-picture"></div>
+                                                                    <div class="ph-row">
+                                                                        <div class="ph-col-4 "></div>
+                                                                        <div class="ph-col-4"></div>
+                                                                        <div class="ph-col-2 "></div>
+                                                                        <div class="ph-col-2"></div>
+                                                                    </div>
+                                                                    <div class="ph-row">
+                                                                        <div class="ph-col-8"></div>
+                                                                        <div class="ph-col-4"></div>
+                                                                    </div>
+                                                                    <div class="ph-row">
+                                                                        <div class="ph-col-12"></div>
+                                                                    </div>
+                                                                </div>
+                                                                <div class="ph-col-3">
+                                                                    <div class="ph-picture"></div>
+                                                                    <div class="ph-row">
+                                                                        <div class="ph-col-4 "></div>
+                                                                        <div class="ph-col-4"></div>
+                                                                        <div class="ph-col-2 "></div>
+                                                                        <div class="ph-col-2"></div>
+                                                                    </div>
+                                                                    <div class="ph-row">
+                                                                        <div class="ph-col-8"></div>
+                                                                        <div class="ph-col-4"></div>
+                                                                    </div>
+                                                                    <div class="ph-row">
+                                                                        <div class="ph-col-12"></div>
+                                                                    </div>
+                                                                </div>
+                                                                <div class="ph-col-3">
+                                                                    <div class="ph-picture"></div>
+                                                                    <div class="ph-row">
+                                                                        <div class="ph-col-4 "></div>
+                                                                        <div class="ph-col-4"></div>
+                                                                        <div class="ph-col-2 "></div>
+                                                                        <div class="ph-col-2"></div>
+                                                                    </div>
+                                                                    <div class="ph-row">
+                                                                        <div class="ph-col-8"></div>
+                                                                        <div class="ph-col-4"></div>
+                                                                    </div>
+                                                                    <div class="ph-row">
+                                                                        <div class="ph-col-12"></div>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                    <div class="fetched-data-absensi"></div>
+                                                </div>
                                             </div>
                                         </div>
                                         <div class="tab-pane fade" id="tabs-bulan" role="tabpanel">
                                                 <div class="card-body">
                                                 <h4>Profile tab</h4>
-                                                <div>Fringilla egestas nunc quis tellus diam rhoncus ultricies tristique enim at diam, sem nunc amet, pellentesque id egestas velit sed</div>
+                                                <div>Lorem ipsum dolor sit, amet consectetur adipisicing elit. Doloribus ut, molestias, amet deleniti cumque rem recusandae, incidunt distinctio quia nobis nostrum dolorum reiciendis! Quisquam deleniti omnis dolores! Tempore, blanditiis accusantium!</div>
                                             </div>
                                         </div>
                                     </div>
@@ -272,5 +342,92 @@
                 </div>
             </div>
         </div>
+
+        <script>
+            $(function() {
+                tb();
+                
+            });
+            /*------------------------------------------
+            --------------------------------------------
+            Render DataTable
+            --------------------------------------------
+            --------------------------------------------*/
+
+            function newexportaction(e, dt, button, config) {
+                var self = this;
+                var oldStart = dt.settings()[0]._iDisplayStart;
+                dt.one('preXhr', function(e, s, data) {
+                    // Just this once, load all data from the server...
+                    data.start = 0;
+                    data.length = 2147483647;
+                    dt.one('preDraw', function(e, settings) {
+                        // Call the original action function
+                        if (button[0].className.indexOf('buttons-copy') >= 0) {
+                            $.fn.dataTable.ext.buttons.copyHtml5.action.call(self, e, dt, button, config);
+                        } else if (button[0].className.indexOf('buttons-excel') >= 0) {
+                            $.fn.dataTable.ext.buttons.excelHtml5.available(dt, config) ?
+                                $.fn.dataTable.ext.buttons.excelHtml5.action.call(self, e, dt, button, config) :
+                                $.fn.dataTable.ext.buttons.excelFlash.action.call(self, e, dt, button, config);
+                        } else if (button[0].className.indexOf('buttons-csv') >= 0) {
+                            $.fn.dataTable.ext.buttons.csvHtml5.available(dt, config) ?
+                                $.fn.dataTable.ext.buttons.csvHtml5.action.call(self, e, dt, button, config) :
+                                $.fn.dataTable.ext.buttons.csvFlash.action.call(self, e, dt, button, config);
+                        } else if (button[0].className.indexOf('buttons-pdf') >= 0) {
+                            $.fn.dataTable.ext.buttons.pdfHtml5.available(dt, config) ?
+                                $.fn.dataTable.ext.buttons.pdfHtml5.action.call(self, e, dt, button, config) :
+                                $.fn.dataTable.ext.buttons.pdfFlash.action.call(self, e, dt, button, config);
+                        } else if (button[0].className.indexOf('buttons-print') >= 0) {
+                            $.fn.dataTable.ext.buttons.print.action(e, dt, button, config);
+                        }
+                        dt.one('preXhr', function(e, s, data) {
+                            // DataTables thinks the first item displayed is index 0, but we're not drawing that.
+                            // Set the property to what it was before exporting.
+                            settings._iDisplayStart = oldStart;
+                            data.start = oldStart;
+                        });
+                        // Reload the grid with the original page. Otherwise, API functions like table.cell(this) don't work properly.
+                        setTimeout(dt.ajax.reload, 0);
+                        // Prevent rendering of the full data to the DOM
+                        return false;
+                    });
+                });
+                // Requery the server with the new one-time export settings
+                dt.ajax.reload();
+            }
+
+            function tb()
+            {
+                $(".ph-item").fadeIn(200);
+                $('.fetched-data-absensi').html('');
+                var tglaw = $('#tglaw').val();
+                var tglak = $('#tglak').val();
+
+                $.ajaxSetup({
+                    headers: {
+                        'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                    }
+                });
+                //menggunakan fungsi ajax untuk pengambilan data
+                $.ajax({
+                    type: 'POST',
+                    url: '{{ url("getabsensi") }}',
+                    data: {
+                        "_token": "{{ csrf_token() }}",
+                        'tglaw' : tglaw,
+                        'tglak' : tglak,
+                    },
+                    success: function(data) {
+                        $('.fetched-data-absensi').html(data);
+                    }
+                }).done(function() {
+                    setTimeout(function() {
+                        $(".ph-item").fadeOut(200);
+                    }, 300);
+                });
+            }
+
+        
+        </script>
 
 @endsection

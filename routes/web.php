@@ -92,6 +92,8 @@ Route::controller(Absensi::class)->group(function () {
     Route::get('absensi/fingerprint', 'fingerprint')->name('absensi/fingerprint');
     Route::get('absensi/komunikasi', 'komunikasi')->name('absensi/komunikasi');
     Route::get('absensi/cuti', 'cuti')->name('absensi/cuti');
+
+    Route::post('getabsensi', 'getabsensi')->name('getabsensi');
 });
 
 Route::controller(Administrasi::class)->group(function () {
