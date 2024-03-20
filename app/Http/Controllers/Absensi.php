@@ -41,33 +41,28 @@ class Absensi extends Controller
     public function getabsensi(Request $request)
     {
         $dataK = DB::table('penerimaan_karyawan')->select('stb', 'nama')->where('status', 'like', '%Aktif%')->orderBy('nama', 'asc')->get();
-
         $datesArray = [];
-
         $startingDate = strtotime($request->tglaw);
         $endingDate = strtotime($request->tglak);
-
         $Diff = round(abs($endingDate - $startingDate) / (60 * 60 * 24), 0);
         if ($Diff > 31) {
             echo '<div class="alert alert-danger" role="alert">
                     <div class="d-flex">
-                    <div>
-                        <svg xmlns="http://www.w3.org/2000/svg" class="icon alert-icon" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z" fill="none"></path><path d="M3 12a9 9 0 1 0 18 0a9 9 0 0 0 -18 0"></path><path d="M12 8v4"></path><path d="M12 16h.01"></path></svg>
-                    </div>
-                    <div>
-                        Tanggal tidak boleh melebihi 31 Hari
-                    </div>
+                        <div>
+                            <svg xmlns="http://www.w3.org/2000/svg" class="icon alert-icon" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z" fill="none"></path><path d="M3 12a9 9 0 1 0 18 0a9 9 0 0 0 -18 0"></path><path d="M12 8v4"></path><path d="M12 16h.01"></path></svg>
+                        </div>
+                        <div>
+                            Tanggal tidak boleh melebihi 31 Hari
+                        </div>
                     </div>
                 </div>';
         } else {
-
             for ($currentDate = $startingDate; $currentDate <= $endingDate; $currentDate += (86400)) {
                 $date = date("d", $currentDate);
                 $dateFull = date("Y-m-d", $currentDate);
                 $datesArray[] = $date;
                 $datesArrayFull[] = $dateFull;
             }
-
             echo '  
                 <div class="table-responsive">
                     <table style="width:100%; font-size:12px" class="display table  table-sm table-striped table-bordered table-hover text-nowrap datatable-absensi" id="tbabsensi">
@@ -77,7 +72,7 @@ class Absensi extends Controller
                                 <th>NAMA</th>
                                 ';
             foreach ($datesArray as $item) {
-                echo '              <th style="width: 30px" class="text-center">' . $item . '</th>';
+                echo '          <th style="width: 30px" class="text-center">' . $item . '</th>';
             }
             echo
             '
@@ -87,20 +82,21 @@ class Absensi extends Controller
                                 ';
             foreach ($dataK as $item2) {
                 echo '          <tr>
-                                    <td><b>' . $item2->stb . '</b></td>
-                                    <td><b>' . $item2->nama . '</b></td>
+                                    <th>' . $item2->stb . '</th>
+                                    <th>' . $item2->nama . '</th>
                                 ';
                 foreach ($datesArrayFull as $f) {
-                    echo '          <td style="width: 30px" class="text-center">' . $f . '</td>';
+                    // echo '          <td style="width: 30px" class="text-center">' . $f . '</td>';
+                    $dataA = DB::table('absensi_absensi')->select('sst')->where('stb', '=', $item2->stb)->where('tanggal', '=', $f)->limit(1)->get();
+                    foreach ($dataA as $key) {
+                        echo '          <td style="width: 30px" class="text-center">' . $key->sst . '</td>';
+                    }
                 }
                 echo '          </tr>';
             }
-            echo
-            '
-                        </tbody>
+            echo '      </tbody>
                     </table>
                 </div>
-
                 <script>
                     var tb1 = $(".datatable-absensi").DataTable({
                         "processing": true, 

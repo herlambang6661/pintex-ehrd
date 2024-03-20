@@ -132,17 +132,29 @@
                                             <div class="card card-xl shadow rounded">
                                                 <div class="card-body">
                                                     <div class="row row-cards">
-                                                        <div class="col-sm-6 col-md-4 col-lg-2">
-                                                            <div class="mb-3">
-                                                                <label class="form-label">Tgl Awal</label>
-                                                                <input type="date" class="form-control" value="{{ date('Y-m-16') }}" id="tglaw" onchange="tb();" onkeyup="tb();">
-                                                            </div>
-                                                        </div>
-                                                        <div class="col-sm-6 col-md-4 col-lg-2">
-                                                            <div class="mb-3">
-                                                                <label class="form-label">Tgl Akhir</label>
-                                                                <input type="date" class="form-control" value="{{ date('Y-m-15',strtotime('first day of +1 month')) }}" id="tglak" onchange="tb();" onkeyup="tb();">
-                                                            </div>
+                                                        <div class="table-responsive">
+                                                            <table class="table mb-0">
+                                                                <thead>
+                                                                    <tr>
+                                                                    <th>Tanggal Awal</th>
+                                                                    <th>Tanggal Akhir</th>
+                                                                    <th></th>
+                                                                    </tr>
+                                                                </thead>
+                                                                <tbody>
+                                                                    <tr>
+                                                                        <td>
+                                                                            <input type="date" class="form-control" value="{{ date('Y-m-16') }}" id="tglaw">
+                                                                        </td>
+                                                                        <td>
+                                                                            <input type="date" class="form-control" value="{{ date('Y-m-15',strtotime('first day of +1 month')) }}" id="tglak">
+                                                                        </td>
+                                                                        <td>
+                                                                            <button class="btn btn-primary" onclick="tb();"><i class="fa-solid fa-magnifying-glass" style="margin-right:5px"></i> Perbarui</button>
+                                                                        </td>
+                                                                    </tr>
+                                                                </tbody>
+                                                            </table>
                                                         </div>
                                                         <div class="col-sm-12 col-md-12">
                                                             <div class="ph-item" style="display:none">
@@ -345,8 +357,7 @@
 
         <script>
             $(function() {
-                tb();
-                
+                // tb();
             });
             /*------------------------------------------
             --------------------------------------------
