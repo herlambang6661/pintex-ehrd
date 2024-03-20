@@ -98,17 +98,6 @@ class Absensi extends Controller
             echo
             '
                         </tbody>
-                        <tfoot>
-                            <tr class="text-center">
-                                <th>STB</th>
-                                <th>NAMA</th>';
-            foreach ($datesArray as $item) {
-                echo '              <th style="width: 30px" class="text-center">' . $item . '</th>';
-            }
-            echo
-            '
-                            </tr>
-                        </tfoot>
                     </table>
                 </div>
 
