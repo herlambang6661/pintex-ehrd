@@ -61,7 +61,6 @@ class Absensi extends Controller
                 </div>';
         } else {
 
-
             for ($currentDate = $startingDate; $currentDate <= $endingDate; $currentDate += (86400)) {
                 $date = date("d", $currentDate);
                 $dateFull = date("Y-m-d", $currentDate);
@@ -88,14 +87,13 @@ class Absensi extends Controller
                                 ';
             foreach ($dataK as $item2) {
                 echo '          <tr>
-                                <td><b>' . $item2->stb . '</b></td>
-                                <td><b>' . $item2->nama . '</b></td>
+                                    <td><b>' . $item2->stb . '</b></td>
+                                    <td><b>' . $item2->nama . '</b></td>
                                 ';
-                foreach ($datesArrayFull as $item2) {
-                    echo '              <td style="width: 30px" class="text-center">' . $item2 . '</td>';
+                foreach ($datesArrayFull as $f) {
+                    echo '          <td style="width: 30px" class="text-center">' . $f . '</td>';
                 }
-                echo
-                '               </tr>';
+                echo '          </tr>';
             }
             echo
             '
