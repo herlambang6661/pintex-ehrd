@@ -18,6 +18,8 @@ use Illuminate\Contracts\Auth\Access\Authorizable;
 use SebastianBergmann\CodeCoverage\Report\Html\Dashboard;
 use App\Http\Controllers\Datatables\DataLegalitasKaryawan;
 use App\Http\Controllers\Datatables\DataLegalitasKaryawanOl;
+use App\Http\Controllers\Datatables\DataUserinfoODBC;
+use App\Http\Controllers\DBLokal;
 
 /*
 |--------------------------------------------------------------------------
@@ -51,6 +53,7 @@ Route::resources([
     'getLegalitasKaryawan' => DataLegalitasKaryawan::class,
     'getLegalitasKaryawanOl' => DataLegalitasKaryawanOl::class,
     'getAbsensi' => DataAbsensi::class,
+    'getUserODBC' => DataUserinfoODBC::class,
 ]);
 
 
@@ -94,7 +97,6 @@ Route::controller(Penerimaan::class)->group(function () {
 });
 
 Route::controller(Absensi::class)->group(function () {
-    Route::get('mesinfinger', 'mesinfinger')->name('mesinfinger');
 
     Route::get('absensi/absensi', 'absensi')->name('absensi/absensi');
     Route::get('absensi/fingerprint', 'fingerprint')->name('absensi/fingerprint');
@@ -102,6 +104,11 @@ Route::controller(Absensi::class)->group(function () {
     Route::get('absensi/cuti', 'cuti')->name('absensi/cuti');
 
     Route::post('getabsensi', 'getabsensi')->name('getabsensi');
+});
+
+Route::controller(DBLokal::class)->group(function () {
+    Route::get('lokal/mesinfinger', 'mesinfinger')->name('lokal/mesinfinger');
+    Route::get('lokal/daftarfinger', 'daftarfinger')->name('lokal/daftarfinger');
 });
 
 Route::controller(Administrasi::class)->group(function () {

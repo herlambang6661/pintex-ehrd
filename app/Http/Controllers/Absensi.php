@@ -151,23 +151,4 @@ class Absensi extends Controller
                 </script>';
         }
     }
-
-    public function mesinfinger()
-    {
-        $judul = "Mesin Finger";
-        $absensi = "active";
-        $list = "active";
-
-        $playlist = DB::connection('odbc')
-            ->table('USERINFO')
-            ->select('*')
-            ->get();
-
-        return view('products/03_absensi.mesinfinger', [
-            'judul' => $judul,
-            'absensi' => $absensi,
-            'list' => $list,
-            'playlist' => $playlist,
-        ]);
-    }
 }

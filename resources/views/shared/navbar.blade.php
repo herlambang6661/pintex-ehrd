@@ -6,9 +6,18 @@
     <div class="navbar-nav flex-row order-md-last">
         <div class="d-none d-md-flex">
             @if(Auth::user()->role == "admin")
-                <div class="nav-link px-0" style="margin-right: 20px">
-                    <a href="{{ url('mesinfinger') }}" class="btn btn-yellow"><i class="fa-solid fa-robot" style="margin-right: 7px; margin-bottom:3px"></i> Mesin Finger</a>
-                </div>
+                @if($_SERVER['SERVER_NAME'] == "127.0.0.1")
+                    <div class="nav-link px-0" style="margin-right: 20px">
+                        <a href="{{ url('lokal/mesinfinger') }}" class="btn btn-green"><i class="fa-solid fa-robot" style="margin-right: 7px; margin-bottom:3px"></i> Local Data</a>
+                    </div>
+                @else
+                    <div class="nav-link px-0" style="margin-right: 20px">
+                        <a href="#" class="btn btn-green disabled">
+                            <svg  xmlns="http://www.w3.org/2000/svg" style="margin-right: 7px;" width="24"  height="24"  viewBox="0 0 24 24"  fill="none"  stroke="currentColor"  stroke-width="2"  stroke-linecap="round"  stroke-linejoin="round"  class="icon icon-tabler icons-tabler-outline icon-tabler-fingerprint-off"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><path d="M18.9 7a8 8 0 0 1 1.1 5v1a6 6 0 0 0 .8 3" /><path d="M8 11c0 -.848 .264 -1.634 .713 -2.28m2.4 -1.621a4 4 0 0 1 4.887 3.901l0 1" /><path d="M12 12v1a14 14 0 0 0 2.5 8" /><path d="M8 15a18 18 0 0 0 1.8 6" /><path d="M4.9 19a22 22 0 0 1 -.9 -7v-1a8 8 0 0 1 1.854 -5.143m2.176 -1.825a8 8 0 0 1 7.97 .018" /><path d="M3 3l18 18" /></svg>
+                            <s>Mesin Finger</s>
+                        </a>
+                    </div>
+                @endif
             @endif
             <a href="?theme=dark" class="nav-link px-0 hide-theme-dark" title="Enable dark mode" data-bs-toggle="tooltip" data-bs-placement="bottom">
                 <svg xmlns="http://www.w3.org/2000/svg" class="icon" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><path d="M12 3c.132 0 .263 0 .393 0a7.5 7.5 0 0 0 7.92 12.446a9 9 0 1 1 -8.313 -12.454z" /></svg>
