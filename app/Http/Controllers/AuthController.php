@@ -108,9 +108,10 @@ class AuthController extends Controller
     {
         if (Auth::check()) {
             return view('products.dashboard');
+        } else {
+            // return view('login');
+            return redirect("login")->withSuccess('Opps! You do not have access');
         }
-
-        return redirect("login")->withSuccess('Opps! You do not have access');
     }
 
     /**
