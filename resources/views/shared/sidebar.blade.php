@@ -6,15 +6,7 @@
         </button>
         <h1 class="navbar-brand navbar-brand-autodark" style="margin-top: 5px">
             <a href="{{ url('dashboard') }}">
-                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none"
-                    stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"
-                    class="icon icon-tabler icons-tabler-outline icon-tabler-users">
-                    <path stroke="none" d="M0 0h24v24H0z" fill="none" />
-                    <path d="M9 7m-4 0a4 4 0 1 0 8 0a4 4 0 1 0 -8 0" />
-                    <path d="M3 21v-2a4 4 0 0 1 4 -4h4a4 4 0 0 1 4 4v2" />
-                    <path d="M16 3.13a4 4 0 0 1 0 7.75" />
-                    <path d="M21 21v-2a4 4 0 0 0 -3 -3.85" />
-                </svg>
+                <img src="{{ asset('ehrd32.png') }}" alt="" srcset="">
                 E-HRD
             </a>
         </h1>
@@ -252,7 +244,7 @@
                     <div class="dropdown-menu">
                         <div class="dropdown-menu-columns">
                             <div class="dropdown-menu-column">
-                                <a class="dropdown-item" href="./accordion.html">
+                                <a class="dropdown-item" href="{{ url('daftar/pos') }}">
                                     <svg xmlns="http://www.w3.org/2000/svg" style="margin-right: 10px" width="24"
                                         height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor"
                                         stroke-width="2" stroke-linecap="round" stroke-linejoin="round"

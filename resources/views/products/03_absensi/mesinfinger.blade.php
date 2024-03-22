@@ -48,12 +48,11 @@
                                 <h2 class="page-title">
                                     <svg  xmlns="http://www.w3.org/2000/svg"  class="text-red" width="24"  height="24"  viewBox="0 0 24 24"  fill="none"  stroke="currentColor"  stroke-width="2"  stroke-linecap="round"  stroke-linejoin="round"  class="icon icon-tabler icons-tabler-outline icon-tabler-fingerprint-scan"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><path d="M9 11a3 3 0 0 1 6 0c0 1.657 .612 3.082 1 4" /><path d="M12 11v1.75c-.001 1.11 .661 2.206 1 3.25" /><path d="M9 14.25c.068 .58 .358 1.186 .5 1.75" /><path d="M4 8v-2a2 2 0 0 1 2 -2h2" /><path d="M4 16v2a2 2 0 0 0 2 2h2" /><path d="M16 4h2a2 2 0 0 1 2 2v2" /><path d="M16 20h2a2 2 0 0 0 2 -2v-2" /></svg>
                                     Mesin Fingerprint
-                                    <div id="entitasText" style="margin-left: 5px;">Loading... <i class="fa-solid fa-spinner fa-spin-pulse"></i> </div>
                                 </h2>
                                 <div class="page-pretitle">
                                     <ol class="breadcrumb" aria-label="breadcrumbs">
                                         <li class="breadcrumb-item"><a href="{{ url('dashboard'); }}"><i class="fa fa-home"></i> Dashboard</a></li>
-                                        <li class="breadcrumb-item active" aria-current="page"><a href="#" class="text-red"><i class="fas fa-fingerprint"></i> Mesin Fingerprint (Restricted Area)</a></li>
+                                        <li class="breadcrumb-item active" aria-current="page"><a href="#"><i class="fas fa-fingerprint"></i> Mesin Fingerprint <i class="text-red">(Restricted Area)</i></a></li>
                                     </ol>
                                 </div>
                             </div>
@@ -147,7 +146,7 @@
                                             </div>
                                             <div class="col-md-6 col-xl-3 col-12">
                                                 <div class="card card-sm bg-success-lt">
-                                                    <a href="{{ url('lokal/daftarfinger') }}" style="text-decoration: none !important;color: inherit;">
+                                                    <a href="{{ url('lokal/rawfinger') }}" style="text-decoration: none !important;color: inherit;">
                                                         <div class="card-body">
                                                             <div class="row align-items-center">
                                                                 <div class="col-auto">

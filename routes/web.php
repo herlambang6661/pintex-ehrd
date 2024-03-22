@@ -10,18 +10,19 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Administrasi;
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\Datatables\DataOL;
+use App\Http\Controllers\Datatables\DataPos;
 use App\Http\Controllers\Datatables\DataSurat;
 use App\Http\Controllers\Datatables\DataAbsensi;
 use App\Http\Controllers\Datatables\DataLamaran;
 use App\Http\Controllers\Datatables\DataKaryawan;
 use App\Http\Controllers\Datatables\DataWawancara;
 use Illuminate\Contracts\Auth\Access\Authorizable;
+use App\Http\Controllers\Datatables\DataFingerODBC;
 use App\Http\Controllers\Datatables\DataUserinfoODBC;
 use App\Http\Controllers\Datatables\DataUserinfoMYSQL;
 use SebastianBergmann\CodeCoverage\Report\Html\Dashboard;
 use App\Http\Controllers\Datatables\DataLegalitasKaryawan;
 use App\Http\Controllers\Datatables\DataLegalitasKaryawanOl;
-use App\Http\Controllers\Datatables\DataPos;
 
 /*
 |--------------------------------------------------------------------------
@@ -58,6 +59,7 @@ Route::resources([
     'getAbsensi' => DataAbsensi::class,
     'getUserODBC' => DataUserinfoODBC::class,
     'getUserMYSQL' => DataUserinfoMYSQL::class,
+    'getFingerODBC' => DataFingerODBC::class,
 ]);
 
 
@@ -118,6 +120,7 @@ Route::controller(Absensi::class)->group(function () {
 Route::controller(DBLokal::class)->group(function () {
     Route::get('lokal/mesinfinger', 'mesinfinger')->name('lokal/mesinfinger');
     Route::get('lokal/daftarfinger', 'daftarfinger')->name('lokal/daftarfinger');
+    Route::get('lokal/rawfinger', 'rawfinger')->name('lokal/rawfinger');
 
     Route::post('syncFromAccess', 'syncFromAccess');
     Route::post('syncFromSelectedMysql', 'syncFromSelectedMysql');

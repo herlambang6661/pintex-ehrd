@@ -21,21 +21,14 @@ class DBLokal extends Controller
         $judul = "DB Lokal";
         $absensi = "active";
         $list = "active";
-
-        // $playlist = DB::connection('odbc')
-        //     ->table('USERINFO')
-        //     ->join('CHECKINOUT', 'USERINFO.USERID', '=', 'CHECKINOUT.USERID')
-        //     ->where('CHECKTIME', ["07/07/2023 00:00:00", "08/08/2023 06:00:00"])
-        //     ->select('*')
-        //     ->get();
-
         return view('products/03_absensi.mesinfinger', [
             'judul' => $judul,
             'absensi' => $absensi,
             'list' => $list,
-            // 'playlist' => $playlist,
         ]);
     }
+
+    // ==================================== DAFTAR FINGER ===================================================================
     public function daftarfinger()
     {
         $judul = "Daftar Finger";
@@ -64,79 +57,79 @@ class DBLokal extends Controller
                 ->first();
             if ($sq) {
                 // Data Ditemukan
-                DB::table('access_userinfo')
-                    ->where('USERID', $key->USERID)
-                    ->limit(1)
-                    ->update(
-                        array(
-                            'Badgenumber' => $key->Badgenumber,
-                            'SSN' => $key->SSN,
-                            'Name' => $key->Name,
-                            'Gender' => $key->Gender,
-                            'TITLE' => $key->TITLE,
-                            'PAGER' => $key->PAGER,
-                            'BIRTHDAY' => $key->BIRTHDAY,
-                            'HIREDDAY' => $key->HIREDDAY,
-                            'street' => $key->street,
-                            'CITY' => $key->CITY,
-                            'STATE' => $key->STATE,
-                            'ZIP' => $key->ZIP,
-                            'OPHONE' => $key->OPHONE,
-                            'FPHONE' => $key->FPHONE,
-                            'VERIFICATIONMETHOD' => $key->VERIFICATIONMETHOD,
-                            'DEFAULTDEPTID' => $key->DEFAULTDEPTID,
-                            'SECURITYFLAGS' => $key->SECURITYFLAGS,
-                            'ATT' => $key->ATT,
-                            'INLATE' => $key->INLATE,
-                            'OUTEARLY' => $key->OUTEARLY,
-                            'OVERTIME' => $key->OVERTIME,
-                            'SEP' => $key->SEP,
-                            'HOLIDAY' => $key->HOLIDAY,
-                            'MINZU' => $key->MINZU,
-                            'PASSWORD' => $key->PASSWORD,
-                            'LUNCHDURATION' => $key->LUNCHDURATION,
-                            'PHOTO' => $key->PHOTO,
-                            'mverifypass' => $key->mverifypass,
-                            'Notes' => $key->Notes,
-                            'privilege' => $key->privilege,
-                            'InheritDeptSch' => $key->InheritDeptSch,
-                            'InheritDeptSchClass' => $key->InheritDeptSchClass,
-                            'AutoSchPlan' => $key->AutoSchPlan,
-                            'MinAutoSchInterval' => $key->MinAutoSchInterval,
-                            'RegisterOT' => $key->RegisterOT,
-                            'InheritDeptRule' => $key->InheritDeptRule,
-                            'EMPRIVILEGE' => $key->EMPRIVILEGE,
-                            'CardNo' => $key->CardNo,
-                            'FaceGroup' => $key->FaceGroup,
-                            'AccGroup' => $key->AccGroup,
-                            'UseAccGroupTZ' => $key->UseAccGroupTZ,
-                            'VerifyCode' => $key->VerifyCode,
-                            'Expires' => $key->Expires,
-                            'ValidCount' => $key->ValidCount,
-                            'ValidTimeBegin' => $key->ValidTimeBegin,
-                            'ValidTimeEnd' => $key->ValidTimeEnd,
-                            'TimeZone1' => $key->TimeZone1,
-                            'TimeZone2' => $key->TimeZone2,
-                            'TimeZone3' => $key->TimeZone3,
-                            'IDCardNo' => $key->IDCardNo,
-                            'IDCardValidTime' => $key->IDCardValidTime,
-                            'EMail' => $key->EMail,
-                            'IDCardName' => $key->IDCardName,
-                            'IDCardBirth' => $key->IDCardBirth,
-                            'IDCardSN' => $key->IDCardSN,
-                            'IDCardDN' => $key->IDCardDN,
-                            'IDCardAddr' => $key->IDCardAddr,
-                            'IDCardNewAddr' => $key->IDCardNewAddr,
-                            'IDCardISSUER' => $key->IDCardISSUER,
-                            'IDCardGender' => $key->IDCardGender,
-                            'IDCardNation' => $key->IDCardNation,
-                            'IDCardReserve' => $key->IDCardReserve,
-                            'IDCardNotice' => $key->IDCardNotice,
-                            'IDCard_MainCard' => $key->IDCard_MainCard,
-                            'IDCard_ViceCard' => $key->IDCard_ViceCard,
-                            'FSelected' => $key->FSelected,
-                        )
-                    );
+                // DB::table('access_userinfo')
+                //     ->where('USERID', $key->USERID)
+                //     ->limit(1)
+                //     ->update(
+                //         array(
+                //             'Badgenumber' => $key->Badgenumber,
+                //             'SSN' => $key->SSN,
+                //             'Name' => $key->Name,
+                //             'Gender' => $key->Gender,
+                //             'TITLE' => $key->TITLE,
+                //             'PAGER' => $key->PAGER,
+                //             'BIRTHDAY' => $key->BIRTHDAY,
+                //             'HIREDDAY' => $key->HIREDDAY,
+                //             'street' => $key->street,
+                //             'CITY' => $key->CITY,
+                //             'STATE' => $key->STATE,
+                //             'ZIP' => $key->ZIP,
+                //             'OPHONE' => $key->OPHONE,
+                //             'FPHONE' => $key->FPHONE,
+                //             'VERIFICATIONMETHOD' => $key->VERIFICATIONMETHOD,
+                //             'DEFAULTDEPTID' => $key->DEFAULTDEPTID,
+                //             'SECURITYFLAGS' => $key->SECURITYFLAGS,
+                //             'ATT' => $key->ATT,
+                //             'INLATE' => $key->INLATE,
+                //             'OUTEARLY' => $key->OUTEARLY,
+                //             'OVERTIME' => $key->OVERTIME,
+                //             'SEP' => $key->SEP,
+                //             'HOLIDAY' => $key->HOLIDAY,
+                //             'MINZU' => $key->MINZU,
+                //             'PASSWORD' => $key->PASSWORD,
+                //             'LUNCHDURATION' => $key->LUNCHDURATION,
+                //             'PHOTO' => $key->PHOTO,
+                //             'mverifypass' => $key->mverifypass,
+                //             'Notes' => $key->Notes,
+                //             'privilege' => $key->privilege,
+                //             'InheritDeptSch' => $key->InheritDeptSch,
+                //             'InheritDeptSchClass' => $key->InheritDeptSchClass,
+                //             'AutoSchPlan' => $key->AutoSchPlan,
+                //             'MinAutoSchInterval' => $key->MinAutoSchInterval,
+                //             'RegisterOT' => $key->RegisterOT,
+                //             'InheritDeptRule' => $key->InheritDeptRule,
+                //             'EMPRIVILEGE' => $key->EMPRIVILEGE,
+                //             'CardNo' => $key->CardNo,
+                //             'FaceGroup' => $key->FaceGroup,
+                //             'AccGroup' => $key->AccGroup,
+                //             'UseAccGroupTZ' => $key->UseAccGroupTZ,
+                //             'VerifyCode' => $key->VerifyCode,
+                //             'Expires' => $key->Expires,
+                //             'ValidCount' => $key->ValidCount,
+                //             'ValidTimeBegin' => $key->ValidTimeBegin,
+                //             'ValidTimeEnd' => $key->ValidTimeEnd,
+                //             'TimeZone1' => $key->TimeZone1,
+                //             'TimeZone2' => $key->TimeZone2,
+                //             'TimeZone3' => $key->TimeZone3,
+                //             'IDCardNo' => $key->IDCardNo,
+                //             'IDCardValidTime' => $key->IDCardValidTime,
+                //             'EMail' => $key->EMail,
+                //             'IDCardName' => $key->IDCardName,
+                //             'IDCardBirth' => $key->IDCardBirth,
+                //             'IDCardSN' => $key->IDCardSN,
+                //             'IDCardDN' => $key->IDCardDN,
+                //             'IDCardAddr' => $key->IDCardAddr,
+                //             'IDCardNewAddr' => $key->IDCardNewAddr,
+                //             'IDCardISSUER' => $key->IDCardISSUER,
+                //             'IDCardGender' => $key->IDCardGender,
+                //             'IDCardNation' => $key->IDCardNation,
+                //             'IDCardReserve' => $key->IDCardReserve,
+                //             'IDCardNotice' => $key->IDCardNotice,
+                //             'IDCard_MainCard' => $key->IDCard_MainCard,
+                //             'IDCard_ViceCard' => $key->IDCard_ViceCard,
+                //             'FSelected' => $key->FSelected,
+                //         )
+                //     );
             } else {
                 // Data Tidak Ditemukan, jadi Insert data baru
                 DB::table('access_userinfo')
@@ -527,4 +520,20 @@ class DBLokal extends Controller
             }
         }
     }
+    // ==================================== DAFTAR FINGER ===================================================================
+
+    // ==================================== RAW FINGER ======================================================================
+    function rawfinger()
+    {
+        $judul = "Raw Finger";
+        $absensi = "active";
+        $list = "active";
+
+        return view('products/03_absensi.checkinout', [
+            'judul' => $judul,
+            'absensi' => $absensi,
+            'list' => $list,
+        ]);
+    }
+    // ==================================== RAW FINGER ======================================================================
 }

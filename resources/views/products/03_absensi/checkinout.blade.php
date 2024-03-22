@@ -47,19 +47,19 @@
                                 <!-- Page pre-title -->
                                 <h2 class="page-title">
                                     <svg  xmlns="http://www.w3.org/2000/svg"  class="text-red" width="24"  height="24"  viewBox="0 0 24 24"  fill="none"  stroke="currentColor"  stroke-width="2"  stroke-linecap="round"  stroke-linejoin="round"  class="icon icon-tabler icons-tabler-outline icon-tabler-fingerprint-scan"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><path d="M9 11a3 3 0 0 1 6 0c0 1.657 .612 3.082 1 4" /><path d="M12 11v1.75c-.001 1.11 .661 2.206 1 3.25" /><path d="M9 14.25c.068 .58 .358 1.186 .5 1.75" /><path d="M4 8v-2a2 2 0 0 1 2 -2h2" /><path d="M4 16v2a2 2 0 0 0 2 2h2" /><path d="M16 4h2a2 2 0 0 1 2 2v2" /><path d="M16 20h2a2 2 0 0 0 2 -2v-2" /></svg>
-                                    Daftar User Mesin Finger
+                                    Raw Fingerprint
                                 </h2>
                                 <div class="page-pretitle">
                                     <ol class="breadcrumb" aria-label="breadcrumbs">
                                         <li class="breadcrumb-item"><a href="{{ url('dashboard'); }}"><i class="fa fa-home"></i> Dashboard</a></li>
                                         <li class="breadcrumb-item"><a href="{{ url('lokal/mesinfinger') }}"><i class="fas fa-fingerprint"></i> Local</a></li>
-                                        <li class="breadcrumb-item active" aria-current="page"><a href="#"><i class="fas fa-fingerprint"></i> Daftar User <i class="text-red">(Restricted Area)</i></a></li>
+                                        <li class="breadcrumb-item active" aria-current="page"><a href="#"><i class="fas fa-fingerprint"></i> Raw Fingerprint <i class="text-red">(Restricted Area)</i></a></li>
                                     </ol>
                                 </div>
                             </div>
                             
                             <!-- Page title actions -->
-                            {{-- <div class="col-auto ms-auto d-print-none">
+                            <div class="col-auto ms-auto d-print-none">
                                 <div class="btn-list">
                                     <div class=" d-none d-sm-inline-block">
                                         <input type="date" name="" id="" class="form-control" value="{{ date('Y-m-d') }}">
@@ -69,12 +69,12 @@
                                     </div>
                                     <a href="{{ url('absensi/fingerprint') }}" class="btn btn-primary d-none d-sm-inline-block">
                                         <i class="fa-solid fa-fingerprint"></i>
-                                        Perbarui
+                                        Unduh Data Fingerprint
                                     </a>
-                                    <a href="{{ url('absensi/absensi') }}" class="btn btn-secondary d-none d-sm-inline-block">
+                                    {{-- <a href="{{ url('absensi/absensi') }}" class="btn btn-secondary d-none d-sm-inline-block">
                                         <i class="fa-solid fa-arrow-left"></i>
                                         Kembali
-                                    </a>
+                                    </a> --}}
                                     <a href="#" class="btn btn-danger d-sm-none btn-icon" data-bs-toggle="modal" data-bs-target="#modal-lamaran" aria-label="Tambah Lamaran">
                                         <i class="fa-solid fa-person-running"></i>
                                     </a>
@@ -85,7 +85,7 @@
                                         <i class="fa-solid fa-fingerprint"></i>
                                     </a>
                                 </div>
-                            </div> --}}
+                            </div>
                         </div>
                     </div>
                 </div>
@@ -126,9 +126,9 @@
                                         <thead>
                                             <tr>
                                                 <th>USERID</th>
-                                                <th>NAME</th>
-                                                <th>BADGENUMBER</th>
-                                                <th>SSN</th>
+                                                <th>CHECKTIME</th>
+                                                <th>CHECKTYPE</th>
+                                                <th>SN</th>
                                             </tr>
                                         </thead>
                                     </table>
@@ -208,10 +208,10 @@
                             text: '<i class="fa-solid fa-database"></i> Export to Xls',
                             action: newexportaction,
                         },
-                        {
-                            className: 'btn btn-dark getAllAccess',
-                            text: '<svg  xmlns="http://www.w3.org/2000/svg"  width="24"  height="24"  viewBox="0 0 24 24"  fill="none"  stroke="currentColor"  stroke-width="2"  stroke-linecap="round"  stroke-linejoin="round"  class="icon icon-tabler icons-tabler-outline icon-tabler-file-arrow-left"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><path d="M14 3v4a1 1 0 0 0 1 1h4" /><path d="M17 21h-10a2 2 0 0 1 -2 -2v-14a2 2 0 0 1 2 -2h7l5 5v11a2 2 0 0 1 -2 2z" /><path d="M15 15h-6" /><path d="M11.5 17.5l-2.5 -2.5l2.5 -2.5" /></svg> Get All Data',
-                        },
+                        // {
+                        //     className: 'btn btn-dark getAllAccess',
+                        //     text: '<svg  xmlns="http://www.w3.org/2000/svg"  width="24"  height="24"  viewBox="0 0 24 24"  fill="none"  stroke="currentColor"  stroke-width="2"  stroke-linecap="round"  stroke-linejoin="round"  class="icon icon-tabler icons-tabler-outline icon-tabler-file-arrow-left"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><path d="M14 3v4a1 1 0 0 0 1 1h4" /><path d="M17 21h-10a2 2 0 0 1 -2 -2v-14a2 2 0 0 1 2 -2h7l5 5v11a2 2 0 0 1 -2 2z" /><path d="M15 15h-6" /><path d="M11.5 17.5l-2.5 -2.5l2.5 -2.5" /></svg> Get All Data',
+                        // },
                     ],
                     "language": {
                         "lengthMenu": "Access _MENU_",
@@ -228,13 +228,13 @@
                             "previous": '<svg xmlns="http://www.w3.org/2000/svg" class="icon" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z" fill="none"></path><path d="M15 6l-6 6l6 6"></path></svg>',
                         },
                     },
-                    ajax: "{{ route('getUserODBC.index') }}",
+                    ajax: "{{ route('getFingerODBC.index') }}",
                     
                     columns: [
                         { data: 'USERID', name: 'USERID', className: 'cuspad0 text-center' },
-                        { data: 'Name', name: 'Name', className: 'cuspad0' },
-                        { data: 'Badgenumber', name: 'Badgenumber', className: 'cuspad0 cuspad1 text-center' },
-                        { data: 'SSN', name: 'SSN', className: 'cuspad0 cuspad1 text-center' },
+                        { data: 'CHECKTIME', name: 'CHECKTIME', className: 'cuspad0' },
+                        { data: 'CHECKTYPE', name: 'CHECKTYPE', className: 'cuspad0 cuspad1 text-center' },
+                        { data: 'sn', name: 'sn', className: 'cuspad0 cuspad1 text-center' },
                     ],
                     order: [[0, 'desc']],
                 });
