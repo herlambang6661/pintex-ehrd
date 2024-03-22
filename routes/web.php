@@ -17,6 +17,7 @@ use Illuminate\Contracts\Auth\Access\Authorizable;
 use SebastianBergmann\CodeCoverage\Report\Html\Dashboard;
 use App\Http\Controllers\Datatables\DataLegalitasKaryawan;
 use App\Http\Controllers\Datatables\DataLegalitasKaryawanOl;
+use App\Http\Controllers\Datatables\DataPos;
 
 /*
 |--------------------------------------------------------------------------
@@ -38,6 +39,7 @@ Route::get('/', function () {
 // Source untuk datatables
 Route::resources([
     'getSurat' => DataSurat::class,
+    'getPos'    => DataPos::class,
     'getLamaran' => DataLamaran::class,
     'getWawancara' => DataWawancara::class,
     'getKaryawan' => DataKaryawan::class,
@@ -64,10 +66,15 @@ Route::controller(Daftar::class)->group(function () {
     Route::get('daftar/surat', 'surat')->name('daftar/surat');
     Route::post('storedataSurat', 'storeSurat');
     Route::get('daftar/jadwalshift', 'jadwalshift')->name('daftar/jadwalshift');
+
+    Route::post('storedataPos', 'storePos');
+    Route::post('listPos', 'listPos');
+    Route::post('update', 'updatePos')->name('update-pos');
 });
 
 Route::controller(Penerimaan::class)->group(function () {
     Route::get('penerimaan/lamaran', 'lamaran')->name('penerimaan/lamaran');
+    Route::post('listLamaran', 'listLamaran');
     Route::get('penerimaan/wawancara', 'wawancara')->name('penerimaan/wawancara');
     Route::get('penerimaan/karyawan', 'karyawan')->name('penerimaan/karyawan');
     Route::get('penerimaan/legalitas', 'legalitas')->name('penerimaan/legalitas');

@@ -14,13 +14,13 @@
 
         td.cuspad2 {
             /* padding-top: 0.5px;
-                                padding-bottom: 0.5px;
-                                padding-right: 0.5px;
-                                padding-left: 0.5px;
-                                margin-top: 5px;
-                                margin-bottom: 5px;
-                                margin-right: 5px;
-                                margin-left: 5px; */
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                            padding-bottom: 0.5px;
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                            padding-right: 0.5px;
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                            padding-left: 0.5px;
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                            margin-top: 5px;
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                            margin-bottom: 5px;
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                            margin-right: 5px;
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                            margin-left: 5px; */
         }
 
         .unselectable {
@@ -64,9 +64,9 @@
                                     <li class="breadcrumb-item"><a href="{{ url('dashboard') }}"><i class="fa fa-home"></i>
                                             Dashboard</a></li>
                                     <li class="breadcrumb-item"><a href="#"><i class="fa-solid fa-user-pen"></i>
-                                            Penerimaan</a></li>
+                                            Daftar</a></li>
                                     <li class="breadcrumb-item active" aria-current="page"><a href="#"><i
-                                                class="fa-regular fa-envelope"></i> Lamaran</a></li>
+                                                class="fa-regular fa-envelope"></i> Pos Pekerjaan</a></li>
                                 </ol>
                             </div>
                         </div>
@@ -86,14 +86,15 @@
                                     </div>
                                 </div>
                                 <table style="width:100%; font-family: 'Trebuchet MS', Helvetica, sans-serif;"
-                                    class="display table table-vcenter card-table table-sm table-bordered table-hover text-nowrap datatable-surat"
+                                    class="display table table-vcenter card-table table-sm table-bordered table-hover text-nowrap datatable-pos"
                                     id="tblamaran">
                                     <thead>
                                         <tr class="text-center">
                                             <th>Opsi</th>
-                                            <th>Jenis Surat</th>
-                                            <th>Nama Surat</th>
-                                            <th>Nilai</th>
+                                            <th>Entitas</th>
+                                            <th>Type</th>
+                                            <th>Desc</th>
+                                            <th>Dibuat</th>
                                         </tr>
                                     </thead>
                                 </table>
@@ -106,7 +107,7 @@
                                     </h5>
                                 </div>
                                 <div class="card-body">
-                                    <form id="formSurat" name="formSurat" method="post" action="javascript:void(0)">
+                                    <form id="formPos" name="formPos" method="post" action="javascript:void(0)">
                                         @csrf
                                         <div class="card-stamp card-stamp-lg">
                                             <div class="card-stamp-icon bg-primary">
@@ -119,30 +120,18 @@
                                                 name="entitas" id="entitas" readonly>
                                         </div>
                                         <div class="mb-3">
-                                            <label class="form-label">Jenis Surat</label>
-                                            <select name="jenissurat" id="jenissurat"
-                                                class="form-select border border-dark">
-                                                <option value="" hidden>-- Pilih Jenis Surat --</option>
-                                                <option value="Basic">Basic</option>
-                                                <option value="Intern">Intern</option>
-                                                <option value="Komunikasi">Komunikasi</option>
-                                                <option value="Perjanjian">Perjanjian</option>
-                                                <option value="Status">Status</option>
-                                            </select>
+                                            <label class="form-label">Type</label>
+                                            <input type="text" class="form-control border border-dark" name="type"
+                                                id="type" placeholder="Masukkan Nama Type">
                                         </div>
                                         <div class="mb-3">
-                                            <label class="form-label">Nama Surat</label>
-                                            <input type="text" class="form-control border border-dark" name="nmsurat"
-                                                id="nmsurat" placeholder="Masukkan Nama Surat">
-                                        </div>
-                                        <div class="mb-3">
-                                            <label class="form-label">Nilai</label>
-                                            <input type="text" class="form-control border border-dark" name="nilai"
-                                                id="nilai" placeholder="Masukkan Nilai Surat">
+                                            <label class="form-label">Desc</label>
+                                            <input type="text" class="form-control border border-dark" name="desc"
+                                                id="desc" placeholder="Masukkan Nama Desc">
                                         </div>
                                         <div class="modal-footer">
                                             {{-- <a href="#" class="btn btn-link link-secondary" data-bs-dismiss="modal"><i class="fa-solid fa-fw fa-arrow-rotate-left"></i> Kembali</a> --}}
-                                            <button type="submit" id="submitSurat" class="btn btn-primary ms-auto">
+                                            <button type="submit" id="submitPos" class="btn btn-primary ms-auto">
                                                 <svg xmlns="http://www.w3.org/2000/svg"
                                                     class="icon icon-tabler icon-tabler-device-floppy" width="24"
                                                     height="24" viewBox="0 0 24 24" stroke-width="2"
@@ -172,8 +161,57 @@
         <div class="modal-dialog modal-lg" role="document">
         </div>
     </div>
+    {{-- Modal View --}}
+    <div class="modal modal-blur fade" id="modal-view-pos" tabindex="-1" role="dialog"
+        aria-labelledby="exampleModalLabel" aria-hidden="true">
+        {{-- <div class="overlay">
+     <div class="cv-spinner">
+         <span class="spinner"></span>
+     </div>
+ </div> --}}
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <form action="javascript:void(0)" method="post">
+                    @csrf
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="exampleModalLabel">Detail Pos Pekerjaan</h5>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    </div>
+                    <div class="modal-body">
 
-    <script type="text/javascript">
+                        <div class="fetched-data-pos"></div>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-primary" data-bs-dismiss="modal"><i
+                                class="fa-solid fa-arrow-rotate-left" style="margin-right:5px"></i> Close</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+    {{-- Modal edit --}}
+    <div class="modal modal-blur fade" id="modal-edit" tabindex="-1" role="dialog"
+        aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <form action="javascript:void(0)" method="post">
+                    @csrf
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="exampleModalLabel">Edit dan Update Pos Pekerjaan</h5>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    </div>
+                    <div class="modal-body">
+                        <div class="fetched-edit-pos"></div>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="submitPos" class="btn btn-primary" data-bs-dismiss="modal"><i
+                                class="fa-solid fa-pen-nib" style="margin-right:5px"></i> Update</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+    <script class="text/javascript">
         function newexportaction(e, dt, button, config) {
             var self = this;
             var oldStart = dt.settings()[0]._iDisplayStart;
@@ -224,7 +262,7 @@
             --------------------------------------------
             --------------------------------------------*/
 
-            var tableSurat = $('.datatable-surat').DataTable({
+            var tablePos = $('.datatable-pos').DataTable({
                 "processing": true, //Feature control the processing indicator.
                 "serverSide": false, //Feature control DataTables' server-side processing mode.
                 "scrollX": true,
@@ -275,7 +313,7 @@
                         "previous": '<svg xmlns="http://www.w3.org/2000/svg" class="icon" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z" fill="none"></path><path d="M15 6l-6 6l6 6"></path></svg>',
                     },
                 },
-                ajax: "{{ route('getSurat.index') }}",
+                ajax: "{{ route('getPos.index') }}",
                 columns: [{
                         data: 'action',
                         name: 'action',
@@ -284,39 +322,74 @@
                         className: 'cuspad0 text-center w-0'
                     },
                     {
-                        data: 'jenissurat',
-                        name: 'jenissurat',
+                        data: 'entitas',
+                        name: 'entitas',
                         className: 'cuspad0 text-center w-0'
                     },
                     {
-                        data: 'nmsurat',
-                        name: 'nmsurat',
+                        data: 'type',
+                        name: 'type',
                         className: 'cuspad0'
                     },
                     {
-                        data: 'nilai',
-                        name: 'nilai',
+                        data: 'desc',
+                        name: 'desc',
+                        className: 'cuspad0 text-center'
+                    },
+                    {
+                        data: 'dibuat',
+                        name: 'dibuat',
                         className: 'cuspad0 text-center'
                     },
                 ],
 
             });
 
+            var selected = new Array();
+
+            $('#modal-view-pos').on('show.bs.modal', function(e) {
+                var rowid = $(e.relatedTarget).data('id');
+                console.log(rowid);
+                $(".overlay").fadeIn(300);
+
+                $.ajaxSetup({
+                    headers: {
+                        'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                    }
+                });
+                //menggunakan fungsi ajax untuk pengambilan data
+                $.ajax({
+                    type: 'POST',
+                    url: '{{ url('listPos') }}',
+                    data: {
+                        "_token": "{{ csrf_token() }}",
+                        id: rowid,
+                    },
+                    success: function(data) {
+                        $('.fetched-data-pos').html(data); //menampilkan data ke dalam modal
+                        // alert(itemTables);
+                    }
+                }).done(function() {
+                    setTimeout(function() {
+                        $(".overlay").fadeOut(300);
+                    }, 500);
+                });
+            });
             /*------------------------------------------==============================================================================================================================================================
-            --------------------------------------------==============================================================================================================================================================
-            Create Data
-            --------------------------------------------==============================================================================================================================================================
-            --------------------------------------------==============================================================================================================================================================*/
-            if ($("#formSurat").length > 0) {
-                $("#formSurat").validate({
+                   --------------------------------------------==============================================================================================================================================================
+                   Create Data
+                   --------------------------------------------==============================================================================================================================================================
+                   --------------------------------------------==============================================================================================================================================================*/
+            if ($("#formPos").length > 0) {
+                $("#formPos").validate({
                     rules: {
                         entitas: {
                             required: true,
                         },
-                        jenissurat: {
+                        type: {
                             required: true,
                         },
-                        nmsurat: {
+                        desc: {
                             required: true,
                         },
                     },
@@ -324,11 +397,11 @@
                         entitas: {
                             required: "Masukkan Entitas",
                         },
-                        jenissurat: {
-                            required: "Masukkan Jenis Surat",
+                        type: {
+                            required: "Masukkan Type",
                         },
-                        nmsurat: {
-                            required: "Masukkan nama Surat",
+                        desc: {
+                            required: "Masukkan Desc",
                         },
                     },
 
@@ -338,13 +411,13 @@
                                 'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
                             }
                         });
-                        $('#submitSurat').html(
+                        $('#submitPos').html(
                             '<i class="fa-solid fa-fw fa-spinner fa-spin"></i> Please Wait...');
-                        $("#submitSurat").attr("disabled", true);
+                        $("#submitPos").attr("disabled", true);
                         $.ajax({
-                            url: "{{ url('storedataSurat') }}",
+                            url: "{{ url('storedataPos') }}",
                             type: "POST",
-                            data: $('#formSurat').serialize(),
+                            data: $('#formPos').serialize(),
                             beforeSend: function() {
                                 Swal.fire({
                                     title: 'Mohon Menunggu',
@@ -357,11 +430,11 @@
                             },
                             success: function(response) {
                                 console.log('Completed.');
-                                $('#submitSurat').html(
+                                $('#submitPos').html(
                                     '<svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-device-floppy" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><path d="M6 4h10l4 4v10a2 2 0 0 1 -2 2h-12a2 2 0 0 1 -2 -2v-12a2 2 0 0 1 2 -2" /><path d="M12 14m-2 0a2 2 0 1 0 4 0a2 2 0 1 0 -4 0" /><path d="M14 4l0 4l-6 0l0 -4" /></svg> Simpan'
                                 );
-                                $("#submitSurat").attr("disabled", false);
-                                tableSurat.ajax.reload();
+                                $("#submitPos").attr("disabled", false);
+                                tablePos.ajax.reload();
                                 const Toast = Swal.mixin({
                                     toast: true,
                                     position: "top-end",
@@ -377,24 +450,24 @@
                                     icon: "success",
                                     title: response.msg,
                                 });
-                                document.getElementById("formSurat").reset();
+                                document.getElementById("formPos").reset();
                                 var sp = $('#selectEntitas').val();
                                 $('#entitas').val(sp);
                             },
                             error: function(data) {
                                 console.log('Error:', data);
                                 // const obj = JSON.parse(data.responseJSON);
-                                tableSurat.ajax.reload();
+                                tablePos.ajax.reload();
                                 Swal.fire({
                                     icon: 'error',
                                     title: 'Gagal Input',
                                     html: data.responseJSON.message,
                                     showConfirmButton: true
                                 });
-                                $('#submitSurat').html(
+                                $('#submitPos').html(
                                     '<svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-device-floppy" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><path d="M6 4h10l4 4v10a2 2 0 0 1 -2 2h-12a2 2 0 0 1 -2 -2v-12a2 2 0 0 1 2 -2" /><path d="M12 14m-2 0a2 2 0 1 0 4 0a2 2 0 1 0 -4 0" /><path d="M14 4l0 4l-6 0l0 -4" /></svg> Simpan'
                                 );
-                                $("#submitSurat").attr("disabled", false);
+                                $("#submitPos").attr("disabled", false);
                             }
                         });
                     }
@@ -402,13 +475,85 @@
             }
 
             /*------------------------------------------
-            --------------------------------------------
-            Delete
-            --------------------------------------------
-            --------------------------------------------*/
-            $('body').on('click', '.deleteSurat', function() {
+               --------------------------------------------
+               Edit Update
+               --------------------------------------------
+               --------------------------------------------*/
+            $(document).on('click', '.edit-btn', function() {
+                var id = $(this).data('id');
+                var token = $(this).data('_token');
+                var entitas = $(this).data('entitas');
+                var type = $(this).data('type');
+                var desc = $(this).data('desc');
+
+                $('#modal-edit .fetched-edit-pos').html(`
+                <div class="row">
+                <div class="col-lg-11">
+                    <div class="card shadow bg-green-lt">
+                        <div class="card-body">
+                            <div class="row">
+                                <div class="col-lg-12">
+                                    <input type="hidden" name="_token" value="${token}">
+                                    <input type="hidden" name="id" value="${id}">
+                                    <div class="mb-3">
+                                        <label for="edit-entitas">Entitas</label>
+                                        <input type="text" class="form-control" id="edit-entitas" name="entitas" value="${entitas}">
+                                    </div>
+                                    <div class="mb-3">
+                                        <label for="edit-type">Type</label>
+                                         <input type="text" class="form-control" id="edit-type" name="type" value="${type}">
+                                    </div>
+                                    <div class="mb-3">
+                                        <label for="edit-desc">Description</label>
+                                        <textarea class="form-control" id="edit-desc" name="desc">${desc}</textarea>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+                `);
+            });
+
+            $(document).on('submitPos', '#modal-edit form', function(e) {
+                e.preventDefault();
+
+                var formData = $(this).serialize();
+                $.ajax({
+                    url: '{{ route('update-pos') }}',
+                    method: 'POST',
+                    data: formData,
+                    headers: {
+                        'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                    },
+                    success: function(response) {
+                        if (response.status) {
+                            alert(response.msg);
+                            $('#modal-edit').modal('hide');
+                            tablePos.ajax.reload();
+                        } else {
+                            alert(response.msg);
+                        }
+                    },
+                    error: function(xhr, status, error) {
+                        console.error(xhr.responseText);
+                        alert('Terjadi kesalahan saat mengirim data. Silakan coba lagi.');
+                    }
+                });
+            });
+
+
+
+            /*------------------------------------------
+                --------------------------------------------
+                Delete
+                --------------------------------------------
+                --------------------------------------------*/
+
+            $('body').on('click', '.deletePos', function() {
                 var contract_id = $(this).data("id");
-                var nama = $(this).data("nama");
+                var nama = $(this).data("entitas");
                 var token = $("meta[name='csrf-token']").attr("content");
                 Swal.fire({
                     icon: 'warning',
@@ -423,7 +568,7 @@
                     if (result.isConfirmed) {
                         $.ajax({
                             type: "DELETE",
-                            url: "{{ route('getSurat.store') }}" + '/' + contract_id,
+                            url: "{{ route('getPos.store') }}" + '/' + contract_id,
                             data: {
                                 "_token": "{{ csrf_token() }}",
                             },
