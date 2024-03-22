@@ -16,6 +16,7 @@ return new class extends Migration
             $table->string('entitas');
             $table->string('userid')->nullable();
             $table->string('stb')->nullable();
+            $table->index('stb');
             $table->string('nik');
             $table->string('nama');
             $table->string('gender');
