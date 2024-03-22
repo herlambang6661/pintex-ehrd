@@ -2,8 +2,10 @@
 
 use App\Http\Controllers\Daftar;
 use App\Http\Controllers\Absensi;
+use App\Http\Controllers\DBLokal;
 use App\Http\Controllers\Database;
 use App\Http\Controllers\Penerimaan;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Administrasi;
 use App\Http\Controllers\AuthController;
@@ -14,6 +16,8 @@ use App\Http\Controllers\Datatables\DataLamaran;
 use App\Http\Controllers\Datatables\DataKaryawan;
 use App\Http\Controllers\Datatables\DataWawancara;
 use Illuminate\Contracts\Auth\Access\Authorizable;
+use App\Http\Controllers\Datatables\DataUserinfoODBC;
+use App\Http\Controllers\Datatables\DataUserinfoMYSQL;
 use SebastianBergmann\CodeCoverage\Report\Html\Dashboard;
 use App\Http\Controllers\Datatables\DataLegalitasKaryawan;
 use App\Http\Controllers\Datatables\DataLegalitasKaryawanOl;
@@ -33,7 +37,12 @@ use App\Http\Controllers\Datatables\DataPos;
 Route::get('logs', [\Rap2hpoutre\LaravelLogViewer\LogViewerController::class, 'index']);
 
 Route::get('/', function () {
-    return view('login');
+    if (Auth::check()) {
+        return view('products.dashboard');
+    } else {
+        // return view('login');
+        return redirect("login")->withSuccess('Opps! You do not have access');
+    }
 });
 
 // Source untuk datatables
@@ -47,6 +56,8 @@ Route::resources([
     'getLegalitasKaryawan' => DataLegalitasKaryawan::class,
     'getLegalitasKaryawanOl' => DataLegalitasKaryawanOl::class,
     'getAbsensi' => DataAbsensi::class,
+    'getUserODBC' => DataUserinfoODBC::class,
+    'getUserMYSQL' => DataUserinfoMYSQL::class,
 ]);
 
 
@@ -95,12 +106,21 @@ Route::controller(Penerimaan::class)->group(function () {
 });
 
 Route::controller(Absensi::class)->group(function () {
+
     Route::get('absensi/absensi', 'absensi')->name('absensi/absensi');
     Route::get('absensi/fingerprint', 'fingerprint')->name('absensi/fingerprint');
     Route::get('absensi/komunikasi', 'komunikasi')->name('absensi/komunikasi');
     Route::get('absensi/cuti', 'cuti')->name('absensi/cuti');
 
     Route::post('getabsensi', 'getabsensi')->name('getabsensi');
+});
+
+Route::controller(DBLokal::class)->group(function () {
+    Route::get('lokal/mesinfinger', 'mesinfinger')->name('lokal/mesinfinger');
+    Route::get('lokal/daftarfinger', 'daftarfinger')->name('lokal/daftarfinger');
+
+    Route::post('syncFromAccess', 'syncFromAccess');
+    Route::post('syncFromSelectedMysql', 'syncFromSelectedMysql');
 });
 
 Route::controller(Administrasi::class)->group(function () {

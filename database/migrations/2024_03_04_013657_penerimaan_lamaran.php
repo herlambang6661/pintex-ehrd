@@ -16,6 +16,7 @@ return new class extends Migration
             $table->id();
             $table->string('entitas');
             $table->string('nik');
+            $table->index('nik');
             $table->string('stb')->nullable();
             $table->string('nama');
             $table->string('gender');

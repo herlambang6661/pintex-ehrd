@@ -15,6 +15,7 @@ return new class extends Migration
             $table->id();
             $table->date('tanggal');
             $table->string('userid');
+            $table->index('userid');
             $table->string('stb');
             $table->string('name');
             $table->dateTime('in')->nullable();
