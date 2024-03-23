@@ -8,7 +8,7 @@ use Yajra\DataTables\DataTables;
 use Illuminate\Routing\Controller;
 use Illuminate\Support\Facades\DB;
 
-class DataFingerODBC extends Controller
+class DataFingerMYSQL extends Controller
 {
     public function __construct()
     {
@@ -22,9 +22,8 @@ class DataFingerODBC extends Controller
     public function index(Request $request)
     {
         if ($request->ajax()) {
-
-            $data = DB::connection('odbc')
-                ->table('CHECKINOUT')
+            $data = DB::connection('mysql_local')
+                ->table('access_checkinout')
                 ->whereBetween('CHECKTIME', [date('Y-m-d') . ' 00:00:00', date('Y-m-d', strtotime(date('Y-m-d') . "+1 days")) . ' 00:00:00'])
                 // ->where('CHECKTIME', '>=', date('Y-m-d') . ' 00:00:00')
                 // ->where('CHECKTIME', '<=', date('Y-m-d', strtotime(date('Y-m-d') . "+1 days")) . ' 00:00:00')
@@ -33,15 +32,9 @@ class DataFingerODBC extends Controller
                 ->get();
             return DataTables::of($data)
                 ->addIndexColumn()
-
                 ->addColumn('select_orders', function ($row) {
                     return '';
                 })
-                // ->addColumn('action', function ($row) {
-                //     $btn = ' <a href="#viewKaryawan" data-bs-toggle="modal" data-toggle="tooltip" data-placement="top" title="Lihat Detail Data Karyawan" data-item="' . $row->nama . '" data-id="' . $row->id . '" class="btn btn-sm btn-info btn-icon"><i class="fa-solid fa-user-pen"></i></a>';
-                //     $btn = $btn . ' <a href="javascript:void(0)" data-toggle="tooltip" data-placement="top" title="Hapus Karyawan" data-noform="' . $row->id . '" data-nama="' . $row->nama . '" data-id="' . $row->id . '" class="btn btn-sm btn-red btn-icon deleteKaryawan"><i class="fa-solid fa-trash-can"></i></a>';
-                //     return $btn;
-                // })
                 ->rawColumns(['select_orders'])
                 ->make(true);
         }

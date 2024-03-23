@@ -21,10 +21,26 @@ class DBLokal extends Controller
         $judul = "DB Lokal";
         $absensi = "active";
         $list = "active";
+
+        $count_user_server = DB::table('access_userinfo')->count();
+        $count_user_local = DB::connection('mysql_local')->table('access_userinfo')->count();
+        $count_user_access = DB::connection('odbc')->table('USERINFO')->count();
+
+        $count_finger_server = DB::table('access_checkinout')->count();
+        $count_finger_local = DB::connection('mysql_local')->table('access_checkinout')->count();
+        $count_finger_access = DB::connection('odbc')->table('CHECKINOUT')->count();
+
+
         return view('products/03_absensi.mesinfinger', [
             'judul' => $judul,
             'absensi' => $absensi,
             'list' => $list,
+            'count_user_server' => $count_user_server,
+            'count_user_local' => $count_user_local,
+            'count_user_access' => $count_user_access,
+            'count_finger_server' => $count_finger_server,
+            'count_finger_local' => $count_finger_local,
+            'count_finger_access' => $count_finger_access,
         ]);
     }
 
@@ -523,7 +539,7 @@ class DBLokal extends Controller
     // ==================================== DAFTAR FINGER ===================================================================
 
     // ==================================== RAW FINGER ======================================================================
-    function rawfinger()
+    public function rawfinger()
     {
         $judul = "Raw Finger";
         $absensi = "active";
@@ -535,5 +551,126 @@ class DBLokal extends Controller
             'list' => $list,
         ]);
     }
+
+    public function syncCheckinout(Request $request)
+    {
+        $ac = DB::connection('odbc')
+            ->table('CHECKINOUT')
+            ->whereBetween('CHECKTIME', [$request->start . ' 00:00:00', date('Y-m-d', strtotime($request->end . "+1 days")) . ' 00:00:00'])
+            // ->where('CHECKTIME', '>=', $request->start . ' 00:00:00')
+            // ->where('CHECKTIME', '<=', date('Y-m-d', strtotime($request->end . "+1 days")) . ' 00:00:00')
+            ->select('*')
+            ->get();
+        foreach ($ac as $key) {
+            $sq = DB::connection('mysql_local')
+                ->table('access_checkinout')
+                ->where('USERID', '=', $key->USERID)
+                ->where('CHECKTIME', '=', $key->CHECKTIME)
+                ->select('CHECKTIME')
+                ->first();
+            if ($sq) {
+                // Data Ditemukan
+            } else {
+                // Data Tidak Ditemukan, jadi Insert data baru
+                DB::connection('mysql_local')
+                    ->table('access_checkinout')
+                    ->updateOrInsert(
+                        [
+                            'USERID' => 'USERID',
+                            'CHECKTIME' => 'CHECKTIME',
+                            'CHECKTYPE' => 'CHECKTYPE',
+                            'VERIFYCODE' => 'VERIFYCODE',
+                            'SENSORID' => 'SENSORID',
+                            'Memoinfo' => 'Memoinfo',
+                            'WorkCode' => 'WorkCode',
+                            'sn' => 'sn',
+                            'UserExtFmt' => 'UserExtFmt',
+                            'mask_flag' => 'mask_flag',
+                            'temperature' => 'temperature',
+                        ],
+                        [
+                            'USERID' => $key->USERID,
+                            'CHECKTIME' => $key->CHECKTIME,
+                            'CHECKTYPE' => $key->CHECKTYPE,
+                            'VERIFYCODE' => $key->VERIFYCODE,
+                            'SENSORID' => $key->SENSORID,
+                            'Memoinfo' => $key->Memoinfo,
+                            'WorkCode' => $key->WorkCode,
+                            'sn' => $key->sn,
+                            'UserExtFmt' => $key->UserExtFmt,
+                            'mask_flag' => $key->mask_flag,
+                            'temperature' => $key->temperature,
+                        ]
+                    );
+            }
+        }
+    }
     // ==================================== RAW FINGER ======================================================================
+
+    // ==================================== LOCAL ABSENCE ===================================================================
+    public function localabsence()
+    {
+        $judul = "Local Absence";
+        $absensi = "active";
+        $list = "active";
+
+        return view('products/03_absensi.localabsence', [
+            'judul' => $judul,
+            'absensi' => $absensi,
+            'list' => $list,
+        ]);
+    }
+
+    public function syncAbsen(Request $request)
+    {
+        $ac = DB::table('karyawan')
+            ->where('CHECKTIME', [$request->tgl . ' 00:00:00', date('Y-m-d', strtotime($request->tgl . "+1 days")) . ' 00:00:00'])
+            ->select('*')
+            ->get();
+        foreach ($ac as $key) {
+            $sq = DB::connection('mysql_local')
+                ->table('access_checkinout')
+                ->where('USERID', '=', $key->USERID)
+                ->where('CHECKTIME', '=', $key->CHECKTIME)
+                ->select('CHECKTIME')
+                ->first();
+            if ($sq) {
+                // Data Ditemukan
+            } else {
+                // Data Tidak Ditemukan, jadi Insert data baru
+                DB::connection('mysql_local')
+                    ->table('access_checkinout')
+                    ->updateOrInsert(
+                        [
+                            'USERID' => 'USERID',
+                            'CHECKTIME' => 'CHECKTIME',
+                            'CHECKTYPE' => 'CHECKTYPE',
+                            'VERIFYCODE' => 'VERIFYCODE',
+                            'SENSORID' => 'SENSORID',
+                            'Memoinfo' => 'Memoinfo',
+                            'WorkCode' => 'WorkCode',
+                            'sn' => 'sn',
+                            'UserExtFmt' => 'UserExtFmt',
+                            'mask_flag' => 'mask_flag',
+                            'temperature' => 'temperature',
+                        ],
+                        [
+                            'USERID' => $key->USERID,
+                            'CHECKTIME' => $key->CHECKTIME,
+                            'CHECKTYPE' => $key->CHECKTYPE,
+                            'VERIFYCODE' => $key->VERIFYCODE,
+                            'SENSORID' => $key->SENSORID,
+                            'Memoinfo' => $key->Memoinfo,
+                            'WorkCode' => $key->WorkCode,
+                            'sn' => $key->sn,
+                            'UserExtFmt' => $key->UserExtFmt,
+                            'mask_flag' => $key->mask_flag,
+                            'temperature' => $key->temperature,
+                        ]
+                    );
+            }
+        }
+    }
+    // ==================================== LOCAL ABSENCE ===================================================================
+
 }

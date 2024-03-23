@@ -62,28 +62,15 @@
                             <div class="col-auto ms-auto d-print-none">
                                 <div class="btn-list">
                                     <div class=" d-none d-sm-inline-block">
-                                        <input type="date" name="" id="" class="form-control" value="{{ date('Y-m-d') }}">
+                                        <input type="date" name="start" id="start" class="form-control" value="{{ date('Y-m-d') }}">
                                     </div>
                                     <div class=" d-none d-sm-inline-block">
-                                        <input type="date" name="" id="" class="form-control" value="{{ date('Y-m-d') }}">
+                                        <input type="date" name="end" id="end" class="form-control" value="{{ date('Y-m-d') }}">
                                     </div>
-                                    <a href="{{ url('absensi/fingerprint') }}" class="btn btn-primary d-none d-sm-inline-block">
+                                    <button class="btn btn-primary d-none d-sm-inline-block getcheckinout">
                                         <i class="fa-solid fa-fingerprint"></i>
                                         Unduh Data Fingerprint
-                                    </a>
-                                    {{-- <a href="{{ url('absensi/absensi') }}" class="btn btn-secondary d-none d-sm-inline-block">
-                                        <i class="fa-solid fa-arrow-left"></i>
-                                        Kembali
-                                    </a> --}}
-                                    <a href="#" class="btn btn-danger d-sm-none btn-icon" data-bs-toggle="modal" data-bs-target="#modal-lamaran" aria-label="Tambah Lamaran">
-                                        <i class="fa-solid fa-person-running"></i>
-                                    </a>
-                                    <a href="#" class="btn btn-warning d-sm-none btn-icon" data-bs-toggle="modal" data-bs-target="#modal-upload" aria-label="Upload Excel">
-                                        <i class="fa-solid fa-user-slash"></i>
-                                    </a>
-                                    <a href="#" class="btn btn-primary d-sm-none btn-icon" data-bs-toggle="modal" data-bs-target="#modal-upload" aria-label="Upload Excel">
-                                        <i class="fa-solid fa-fingerprint"></i>
-                                    </a>
+                                    </button>
                                 </div>
                             </div>
                         </div>
@@ -104,11 +91,10 @@
                                     <table style="width:100%;" class="display table table-vcenter card-table table-sm table-striped table-bordered table-hover text-nowrap datatable-daftar-mysql" id="tbdaftar">
                                         <thead>
                                             <tr>
-                                                <th></th>
                                                 <th>USERID</th>
-                                                <th>NAME</th>
-                                                <th>BADGENUMBER</th>
-                                                <th>SSN</th>
+                                                <th>CHECKTIME</th>
+                                                <th>CHECKTYPE</th>
+                                                <th>SN</th>
                                             </tr>
                                         </thead>
                                     </table>
@@ -186,9 +172,12 @@
             }
 
             $(function () {
+                var d = new Date();
+                var strDate = d.getFullYear() + "/" + (d.getMonth()+1) + "/" + d.getDate();
+                
                 var tableODBC = $('.datatable-daftar-odbc').DataTable({
                     "processing": true, //Feature control the processing indicator.
-                    "serverSide": true, //Feature control DataTables' server-side processing mode.
+                    "serverSide": false, //Feature control DataTables' server-side processing mode.
                     "scrollX": true,
                     "scrollCollapse": true,
                     "pagingType": 'full_numbers',
@@ -202,6 +191,7 @@
                     ],
                     buttons: [
                         {
+                            title: 'Data Access Checkinout (' + strDate + ')',
                             extend: 'excelHtml5',
                             autoFilter: true,
                             className: 'btn btn-red',
@@ -255,23 +245,13 @@
                     ],
                     buttons: [
                         {
+                            title: 'Data Access Checkinout Mysql (' + strDate + ')',
                             extend: 'excelHtml5',
                             autoFilter: true,
                             className: 'btn btn-blue',
                             text: '<svg  xmlns="http://www.w3.org/2000/svg"  width="24"  height="24"  viewBox="0 0 24 24"  fill="none"  stroke="currentColor"  stroke-width="2"  stroke-linecap="round"  stroke-linejoin="round"  class="icon icon-tabler icons-tabler-outline icon-tabler-brand-mysql"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><path d="M13 21c-1.427 -1.026 -3.59 -3.854 -4 -6c-.486 .77 -1.501 2 -2 2c-1.499 -.888 -.574 -3.973 0 -6c-1.596 -1.433 -2.468 -2.458 -2.5 -4c-3.35 -3.44 -.444 -5.27 2.5 -3h1c8.482 .5 6.421 8.07 9 11.5c2.295 .522 3.665 2.254 5 3.5c-2.086 -.2 -2.784 -.344 -3.5 0c.478 1.64 2.123 2.2 3.5 3" /><path d="M9 7h.01" /></svg> Export to Xls',
                             action: newexportaction,
                         },
-                        {
-                            className: 'btn btn-dark sendSelectedData',
-                            text: '<svg  xmlns="http://www.w3.org/2000/svg"  width="24"  height="24"  viewBox="0 0 24 24"  fill="none"  stroke="currentColor"  stroke-width="2"  stroke-linecap="round"  stroke-linejoin="round"  class="icon icon-tabler icons-tabler-outline icon-tabler-file-arrow-right"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><path d="M14 3v4a1 1 0 0 0 1 1h4" /><path d="M17 21h-10a2 2 0 0 1 -2 -2v-14a2 2 0 0 1 2 -2h7l5 5v11a2 2 0 0 1 -2 2z" /><path d="M9 15h6" /><path d="M12.5 17.5l2.5 -2.5l-2.5 -2.5" /></svg> Send Selected Data',
-                        },
-                        // {
-                        //     extend: 'excelHtml5',
-                        //     autoFilter: true,
-                        //     className: 'btn btn-dark',
-                        //     text: '<svg  xmlns="http://www.w3.org/2000/svg"  width="24"  height="24"  viewBox="0 0 24 24"  fill="none"  stroke="currentColor"  stroke-width="2"  stroke-linecap="round"  stroke-linejoin="round"  class="icon icon-tabler icons-tabler-outline icon-tabler-file-arrow-right"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><path d="M14 3v4a1 1 0 0 0 1 1h4" /><path d="M17 21h-10a2 2 0 0 1 -2 -2v-14a2 2 0 0 1 2 -2h7l5 5v11a2 2 0 0 1 -2 2z" /><path d="M9 15h6" /><path d="M12.5 17.5l2.5 -2.5l-2.5 -2.5" /></svg> Send All Data',
-                        //     action: newexportaction,
-                        // },
                     ],
                     "language": {
                         "lengthMenu": "Mysql _MENU_",
@@ -287,45 +267,27 @@
                             "next": '<svg xmlns="http://www.w3.org/2000/svg" class="icon" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z" fill="none"></path><path d="M9 6l6 6l-6 6"></path></svg>',
                             "previous": '<svg xmlns="http://www.w3.org/2000/svg" class="icon" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z" fill="none"></path><path d="M15 6l-6 6l6 6"></path></svg>',
                         },
-                        "select": {
-                            rows: {
-                                _: "%d Karyawan dipilih",
-                            }
-                        },
                     },
-                    ajax: "{{ route('getUserMYSQL.index') }}",
+                    ajax: "{{ route('getFingerMYSQL.index') }}",
                     
                     columns: [
-                        { data: 'select_orders', name: 'select_orders', className:'cuspad2', orderable: false, searchable: false },
                         { data: 'USERID', name: 'USERID', className: 'cuspad0 text-center' },
-                        { data: 'Name', name: 'Name', className: 'cuspad0' },
-                        { data: 'Badgenumber', name: 'Badgenumber', className: 'cuspad0 cuspad1 text-center' },
-                        { data: 'SSN', name: 'SSN', className: 'cuspad0 cuspad1 text-center' },
+                        { data: 'CHECKTIME', name: 'CHECKTIME', className: 'cuspad0' },
+                        { data: 'CHECKTYPE', name: 'CHECKTYPE', className: 'cuspad0 cuspad1 text-center' },
+                        { data: 'sn', name: 'sn', className: 'cuspad0 cuspad1 text-center' },
                     ],
-                    order: [[1, 'desc']],
-                    columnDefs: [
-                        {
-                            'targets': 0,
-                            "orderable": false,
-                            'className': 'select-checkbox',
-                            'checkboxes': {
-                                'selectRow': true
-                            },
-                        }
-                        
-                    ],
-                    select: {
-                        'style': 'multi',
-                    },
+                    order: [[0, 'desc']],
                 });
 
 
-                $('body').on('click', '.getAllAccess', function() {
+                $('body').on('click', '.getcheckinout', function() {
                     var token = $("meta[name='csrf-token']").attr("content");
+                    var start = $('#start').val();
+                    var end = $('#end').val();
                     Swal.fire({
                         icon: 'info',
-                        title: 'Get All Data',
-                        text: 'Apakah anda yakin ingin update semua data dari Database Access ?',
+                        title: 'Get Checkin Checkout',
+                        text: 'Apakah anda yakin ingin update data dari Database Access?',
                         showCancelButton: true,
                         confirmButtonColor: '#d33',
                         cancelButtonColor: '#3085d6',
@@ -335,9 +297,11 @@
                         if (result.isConfirmed) {
                             $.ajax({
                                 type: "POST",
-                                url: "{{ url('syncFromAccess') }}",
+                                url: "{{ url('syncCheckinout') }}",
                                 data: {
                                     "_token": "{{ csrf_token() }}",
+                                    'start': start,
+                                    'end': end,
                                 },
                                 beforeSend: function() {
                                     Swal.fire({
@@ -379,99 +343,6 @@
                                     });
                                     tableODBC.ajax.reload();
                                     tableMYSQL.ajax.reload();
-                                }
-                            });
-                        }
-                    });
-
-                });
-
-                $('body').on('click', '.sendSelectedData', function() {
-                    var token = $("meta[name='csrf-token']").attr("content");
-                    itemTables = [];
-
-                    $.each(tableMYSQL.rows('.selected').nodes(), function(index, rowId) {
-                        var rows_selected = tableMYSQL.rows('.selected').data();
-                        itemTables.push(rows_selected[index]['USERID']);
-                    });
-                    console.log(itemTables);
-
-                    Swal.fire({
-                        icon: 'info',
-                        title: 'Send Selected Data',
-                        text: 'Apakah anda yakin ingin update data dari MySql ke Database Access ?',
-                        showCancelButton: true,
-                        confirmButtonColor: '#d33',
-                        cancelButtonColor: '#3085d6',
-                        confirmButtonText: ' Ya',
-                        cancelButtonText: 'Tidak',
-                    }).then((result) => {
-                        if (result.isConfirmed) {
-                            $.ajax({
-                                type: "POST",
-                                url: "{{ url('syncFromSelectedMysql') }}",
-                                data: {
-                                    "_token": "{{ csrf_token() }}",
-                                    id: itemTables,
-                                    jml:itemTables.length,
-                                },
-                                beforeSend: function() {
-                                    Swal.fire({
-                                        title: 'Mohon Menunggu',
-                                        html: '<center><lottie-player src="https://lottie.host/f6ad03a7-1560-4082-8f73-eba358540a2a/jwBLWkLRwZ.json"  background="transparent"  speed="1"  style="width: 300px; height: 300px;"  loop autoplay></lottie-player></center><br><h1 class="h4">Sedang menarik data dari DB Access, Proses mungkin membutuhkan beberapa menit. <br><br><b class="text-danger">(Jangan menutup jendela ini, bisa mengakibatkan error)</b></h1>',
-                                        timerProgressBar: true,
-                                        showConfirmButton: false,
-                                        allowOutsideClick: false,
-                                        allowEscapeKey: false,
-                                    })
-                                },
-                                success: function(data) {
-                                    console.log(data.error);
-                                    tableODBC.ajax.reload();
-                                    tableMYSQL.ajax.reload();
-
-                                    if (data.status == 0) {
-                                        const Toast = Swal.mixin({
-                                            toast: true,
-                                            position: "top-end",
-                                            showConfirmButton: false,
-                                            timer: 5000,
-                                            timerProgressBar: true,
-                                            didOpen: (toast) => {
-                                                toast.onmouseenter = Swal.stopTimer;
-                                                toast.onmouseleave = Swal.resumeTimer;
-                                            }
-                                        });
-                                        Toast.fire({
-                                            icon: "error",
-                                            title: data.error
-                                        });
-                                    } else {
-                                        const Toast = Swal.mixin({
-                                            toast: true,
-                                            position: "top-end",
-                                            showConfirmButton: false,
-                                            timer: 3000,
-                                            timerProgressBar: true,
-                                            didOpen: (toast) => {
-                                                toast.onmouseenter = Swal.stopTimer;
-                                                toast.onmouseleave = Swal.resumeTimer;
-                                            }
-                                        });
-                                        Toast.fire({
-                                            icon: "success",
-                                            title: data.success
-                                        });
-                                    }
-                                },
-                                error: function(data) {
-                                    console.log('Error:', data.responseText);
-                                    Swal.fire({
-                                        icon: 'error',
-                                        title: 'Gagal!',
-                                        text: 'Error: ' + data.responseText,
-                                        showConfirmButton: true,
-                                    });
                                 }
                             });
                         }

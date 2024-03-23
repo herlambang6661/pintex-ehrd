@@ -11,7 +11,23 @@ return new class extends Migration
      */
     public function up(): void
     {
-        //
+        Schema::create('access_checkinout', function (Blueprint $table) {
+            $table->id();
+            $table->integer('USERID')->nullable();
+            $table->dateTime('CHECKTIME')->nullable();
+            $table->index('CHECKTIME');
+            $table->string('CHECKTYPE')->nullable();
+            $table->integer('VERIFYCODE')->nullable();
+            $table->string('SENSORID')->nullable();
+            $table->string('Memoinfo')->nullable();
+            $table->string('WorkCode')->nullable();
+            $table->string('sn')->nullable();
+            $table->integer('UserExtFmt')->nullable();
+            $table->integer('mask_flag')->nullable();
+            $table->integer('temperature')->nullable();
+            $table->rememberToken();
+            $table->timestamps();
+        });
     }
 
     /**
@@ -19,6 +35,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        //
+        Schema::dropIfExists('access_checkinout');
     }
 };
