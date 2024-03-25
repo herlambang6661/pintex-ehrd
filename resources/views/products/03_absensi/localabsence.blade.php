@@ -432,6 +432,7 @@
                                 url: "{{ url('syncAbsen') }}",
                                 data: {
                                     "_token": "{{ csrf_token() }}",
+                                    'tgl': tgl,
                                 },
                                 beforeSend: function() {
                                     Swal.fire({
@@ -441,9 +442,11 @@
                                         showConfirmButton: false,
                                         allowOutsideClick: false,
                                         allowEscapeKey: false,
-                                    })
+                                    });
+                                    console.log('fetch data: '+ tgl);
                                 },
                                 success: function(data) {
+                                    console.log(data);
                                     tableAbsensi.ajax.reload();
                                     const Toast = Swal.mixin({
                                         toast: true,
@@ -458,11 +461,12 @@
                                     });
                                     Toast.fire({
                                         icon: "success",
-                                        title: "Berhasil Perbarui data"
+                                        title: data.success
                                     });
                                 },
                                 error: function(data) {
-                                    console.log('Error:', data.responseText);
+                                    console.log(data);
+                                    console.log('Error:', data.error);
                                     Swal.fire({
                                         icon: 'error',
                                         title: 'Gagal!',

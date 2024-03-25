@@ -337,8 +337,8 @@
                                     console.log('Error:', data.responseText);
                                     Swal.fire({
                                         icon: 'error',
-                                        title: 'Gagal!',
-                                        text: 'Error: ' + data.responseText,
+                                        title: 'Penarikan belum selesai!',
+                                        text: 'Mohon Unduh Ulang sampai notifikasi berhasil. Detail: ' + data.responseText,
                                         showConfirmButton: true,
                                     });
                                     tableODBC.ajax.reload();
