@@ -22,6 +22,7 @@ return new class extends Migration
             $table->dateTime('out')->nullable();
             $table->integer('qj')->nullable();
             $table->integer('jis')->nullable();
+            $table->integer('qjnet')->nullable();
             $table->string('prediksiShift')->nullable();
             $table->string('hrlibur')->nullable();
             $table->string('sethari')->nullable();

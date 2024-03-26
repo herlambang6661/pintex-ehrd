@@ -80,43 +80,67 @@
                 <div class="page-body">
                     <div class="container-xl">
                         <div class="row row-deck row-cards">
-                            <div class="col-6">
+                            <div class="col-12">
                                 <div class="card card-xl border-blue shadow rounded">
                                     <div class="card-stamp card-stamp-lg">
                                         <div class="card-stamp-icon bg-blue">
                                             <svg  xmlns="http://www.w3.org/2000/svg"  width="24"  height="24"  viewBox="0 0 24 24"  fill="none"  stroke="currentColor"  stroke-width="2"  stroke-linecap="round"  stroke-linejoin="round"  class="icon icon-tabler icons-tabler-outline icon-tabler-brand-mysql"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><path d="M13 21c-1.427 -1.026 -3.59 -3.854 -4 -6c-.486 .77 -1.501 2 -2 2c-1.499 -.888 -.574 -3.973 0 -6c-1.596 -1.433 -2.468 -2.458 -2.5 -4c-3.35 -3.44 -.444 -5.27 2.5 -3h1c8.482 .5 6.421 8.07 9 11.5c2.295 .522 3.665 2.254 5 3.5c-2.086 -.2 -2.784 -.344 -3.5 0c.478 1.64 2.123 2.2 3.5 3" /><path d="M9 7h.01" /></svg>
                                         </div>
                                     </div>
-                                    
+                                        <?php
+                                            $datenow = date('Y-m-d');
+                                            $startingDate = strtotime(date('Y-m-d', strtotime($datenow . "-31 days")));
+                                            $endingDate = strtotime($datenow);
+                                            $Diff = round(abs($endingDate - $startingDate) / (60 * 60 * 24), 0);
+                                        ?>
                                     <table style="width:100%;" class="display table table-vcenter card-table table-sm table-striped table-bordered table-hover text-nowrap datatable-daftar-mysql" id="tbdaftar">
                                         <thead>
                                             <tr>
-                                                <th>USERID</th>
-                                                <th>CHECKTIME</th>
-                                                <th>CHECKTYPE</th>
-                                                <th>SN</th>
+                                                <th>#</th>
+                                                <th>1</th>
+                                                <th>2</th>
+                                                <th>3</th>
+                                                <th>4</th>
+                                                <th>5</th>
+                                                <th>6</th>
+                                                <th>7</th>
+                                                <th>8</th>
+                                                <th>9</th>
+                                                <th>10</th>
+                                                <th>11</th>
+                                                <th>12</th>
+                                                <th>13</th>
+                                                <th>14</th>
+                                                <th>15</th>
+                                                <th>16</th>
+                                                <th>17</th>
+                                                <th>18</th>
+                                                <th>19</th>
+                                                <th>20</th>
+                                                <th>21</th>
+                                                <th>22</th>
+                                                <th>23</th>
+                                                <th>24</th>
+                                                <th>25</th>
+                                                <th>26</th>
+                                                <th>27</th>
+                                                <th>28</th>
+                                                <th>29</th>
+                                                <th>30</th>
+                                                <th>31</th>
                                             </tr>
                                         </thead>
-                                    </table>
-
-                                </div>
-                            </div>
-                            <div class="col-6">
-                                <div class="card card-xl border-red shadow rounded">
-                                    <div class="card-stamp card-stamp-lg">
-                                        <div class="card-stamp-icon bg-red">
-                                            <i class="fa-solid fa-database"></i>
-                                        </div>
-                                    </div>
-                                    <table style="width:100%;" class="display table table-vcenter card-table table-sm table-striped table-bordered table-hover text-nowrap datatable-daftar-odbc" id="tbdaftar">
-                                        <thead>
+                                        <tbody>
                                             <tr>
-                                                <th>USERID</th>
-                                                <th>CHECKTIME</th>
-                                                <th>CHECKTYPE</th>
-                                                <th>SN</th>
+                                                <th>Access</th>
                                             </tr>
-                                        </thead>
+                                            <tr>
+                                                <th>Mysql Local</th>
+                                            </tr>
+                                            <tr>
+                                                <th>Cloud</th>
+                                            </tr>
+                                        </tbody>
                                     </table>
 
                                 </div>
@@ -175,109 +199,109 @@
                 var d = new Date();
                 var strDate = d.getFullYear() + "/" + (d.getMonth()+1) + "/" + d.getDate();
                 
-                var tableODBC = $('.datatable-daftar-odbc').DataTable({
-                    "processing": true, //Feature control the processing indicator.
-                    "serverSide": false, //Feature control DataTables' server-side processing mode.
-                    "scrollX": true,
-                    "scrollCollapse": true,
-                    "pagingType": 'full_numbers',
-                    "dom": "<'card-header h3' B>" +
-                        "<'card-body border-bottom py-3' <'row'<'col-sm-6'l><'col-sm-6'f>> >" +
-                        "<'table-responsive' <'col-sm-12'tr> >" +
-                        "<'card-footer' <'row'<'col-sm-8'i><'col-sm-4'p> >>",
-                    "lengthMenu": [
-                        [10, 25, 35, 40, 50, -1],
-                        ['10', '25', '35', '40', '50', 'Tampilkan Semua']
-                    ],
-                    buttons: [
-                        {
-                            title: 'Data Access Checkinout (' + strDate + ')',
-                            extend: 'excelHtml5',
-                            autoFilter: true,
-                            className: 'btn btn-red',
-                            text: '<i class="fa-solid fa-database"></i> Export to Xls',
-                            action: newexportaction,
-                        },
-                        // {
-                        //     className: 'btn btn-dark getAllAccess',
-                        //     text: '<svg  xmlns="http://www.w3.org/2000/svg"  width="24"  height="24"  viewBox="0 0 24 24"  fill="none"  stroke="currentColor"  stroke-width="2"  stroke-linecap="round"  stroke-linejoin="round"  class="icon icon-tabler icons-tabler-outline icon-tabler-file-arrow-left"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><path d="M14 3v4a1 1 0 0 0 1 1h4" /><path d="M17 21h-10a2 2 0 0 1 -2 -2v-14a2 2 0 0 1 2 -2h7l5 5v11a2 2 0 0 1 -2 2z" /><path d="M15 15h-6" /><path d="M11.5 17.5l-2.5 -2.5l2.5 -2.5" /></svg> Get All Data',
-                        // },
-                    ],
-                    "language": {
-                        "lengthMenu": "Access _MENU_",
-                        "zeroRecords": "Data Tidak Ditemukan",
-                        "info": "_START_ - _END_ (_TOTAL_)",
-                        "infoEmpty": "Data Tidak Ditemukan",
-                        "infoFiltered": "(Difilter dari _MAX_ total records)",
-                        "processing": '<div class="container container-slim py-4"><div class="text-center"><div class="mb-3"></div><div class="text-secondary mb-3">Loading Data...</div><div class="progress progress-sm"><div class="progress-bar progress-bar-indeterminate"></div></div></div></div>',
-                        "search": '<svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-search" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z" fill="none"></path><path d="M10 10m-7 0a7 7 0 1 0 14 0a7 7 0 1 0 -14 0"></path><path d="M21 21l-6 -6"></path></svg>',
-                        "paginate": {
-                            "first": '<svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-chevron-left-pipe" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z" fill="none"></path><path d="M7 6v12"></path><path d="M18 6l-6 6l6 6"></path></svg>',
-                            "last": '<svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-chevron-right-pipe" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z" fill="none"></path><path d="M6 6l6 6l-6 6"></path><path d="M17 5v13"></path></svg>',
-                            "next": '<svg xmlns="http://www.w3.org/2000/svg" class="icon" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z" fill="none"></path><path d="M9 6l6 6l-6 6"></path></svg>',
-                            "previous": '<svg xmlns="http://www.w3.org/2000/svg" class="icon" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z" fill="none"></path><path d="M15 6l-6 6l6 6"></path></svg>',
-                        },
-                    },
-                    ajax: "{{ route('getFingerODBC.index') }}",
+                // var tableODBC = $('.datatable-daftar-odbc').DataTable({
+                //     "processing": true, //Feature control the processing indicator.
+                //     "serverSide": false, //Feature control DataTables' server-side processing mode.
+                //     "scrollX": true,
+                //     "scrollCollapse": true,
+                //     "pagingType": 'full_numbers',
+                //     "dom": "<'card-header h3' B>" +
+                //         "<'card-body border-bottom py-3' <'row'<'col-sm-6'l><'col-sm-6'f>> >" +
+                //         "<'table-responsive' <'col-sm-12'tr> >" +
+                //         "<'card-footer' <'row'<'col-sm-8'i><'col-sm-4'p> >>",
+                //     "lengthMenu": [
+                //         [10, 25, 35, 40, 50, -1],
+                //         ['10', '25', '35', '40', '50', 'Tampilkan Semua']
+                //     ],
+                //     buttons: [
+                //         {
+                //             title: 'Data Access Checkinout (' + strDate + ')',
+                //             extend: 'excelHtml5',
+                //             autoFilter: true,
+                //             className: 'btn btn-red',
+                //             text: '<i class="fa-solid fa-database"></i> Export to Xls',
+                //             action: newexportaction,
+                //         },
+                //         // {
+                //         //     className: 'btn btn-dark getAllAccess',
+                //         //     text: '<svg  xmlns="http://www.w3.org/2000/svg"  width="24"  height="24"  viewBox="0 0 24 24"  fill="none"  stroke="currentColor"  stroke-width="2"  stroke-linecap="round"  stroke-linejoin="round"  class="icon icon-tabler icons-tabler-outline icon-tabler-file-arrow-left"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><path d="M14 3v4a1 1 0 0 0 1 1h4" /><path d="M17 21h-10a2 2 0 0 1 -2 -2v-14a2 2 0 0 1 2 -2h7l5 5v11a2 2 0 0 1 -2 2z" /><path d="M15 15h-6" /><path d="M11.5 17.5l-2.5 -2.5l2.5 -2.5" /></svg> Get All Data',
+                //         // },
+                //     ],
+                //     "language": {
+                //         "lengthMenu": "Access _MENU_",
+                //         "zeroRecords": "Data Tidak Ditemukan",
+                //         "info": "_START_ - _END_ (_TOTAL_)",
+                //         "infoEmpty": "Data Tidak Ditemukan",
+                //         "infoFiltered": "(Difilter dari _MAX_ total records)",
+                //         "processing": '<div class="container container-slim py-4"><div class="text-center"><div class="mb-3"></div><div class="text-secondary mb-3">Loading Data...</div><div class="progress progress-sm"><div class="progress-bar progress-bar-indeterminate"></div></div></div></div>',
+                //         "search": '<svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-search" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z" fill="none"></path><path d="M10 10m-7 0a7 7 0 1 0 14 0a7 7 0 1 0 -14 0"></path><path d="M21 21l-6 -6"></path></svg>',
+                //         "paginate": {
+                //             "first": '<svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-chevron-left-pipe" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z" fill="none"></path><path d="M7 6v12"></path><path d="M18 6l-6 6l6 6"></path></svg>',
+                //             "last": '<svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-chevron-right-pipe" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z" fill="none"></path><path d="M6 6l6 6l-6 6"></path><path d="M17 5v13"></path></svg>',
+                //             "next": '<svg xmlns="http://www.w3.org/2000/svg" class="icon" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z" fill="none"></path><path d="M9 6l6 6l-6 6"></path></svg>',
+                //             "previous": '<svg xmlns="http://www.w3.org/2000/svg" class="icon" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z" fill="none"></path><path d="M15 6l-6 6l6 6"></path></svg>',
+                //         },
+                //     },
+                //     ajax: "{{ route('getFingerODBC.index') }}",
                     
-                    columns: [
-                        { data: 'USERID', name: 'USERID', className: 'cuspad0 text-center' },
-                        { data: 'CHECKTIME', name: 'CHECKTIME', className: 'cuspad0' },
-                        { data: 'CHECKTYPE', name: 'CHECKTYPE', className: 'cuspad0 cuspad1 text-center' },
-                        { data: 'sn', name: 'sn', className: 'cuspad0 cuspad1 text-center' },
-                    ],
-                    order: [[0, 'desc']],
-                });
+                //     columns: [
+                //         { data: 'USERID', name: 'USERID', className: 'cuspad0 text-center' },
+                //         { data: 'CHECKTIME', name: 'CHECKTIME', className: 'cuspad0' },
+                //         { data: 'CHECKTYPE', name: 'CHECKTYPE', className: 'cuspad0 cuspad1 text-center' },
+                //         { data: 'sn', name: 'sn', className: 'cuspad0 cuspad1 text-center' },
+                //     ],
+                //     order: [[0, 'desc']],
+                // });
 
-                var tableMYSQL = $('.datatable-daftar-mysql').DataTable({
-                    "processing": true, //Feature control the processing indicator.
-                    "serverSide": false, //Feature control DataTables' server-side processing mode.
-                    "scrollX": true,
-                    "scrollCollapse": true,
-                    "pagingType": 'full_numbers',
-                    "dom": "<'card-header h3' B>" +
-                        "<'card-body border-bottom py-3' <'row'<'col-sm-6'l><'col-sm-6'f>> >" +
-                        "<'table-responsive' <'col-sm-12'tr> >" +
-                        "<'card-footer' <'row'<'col-sm-8'i><'col-sm-4'p> >>",
-                    "lengthMenu": [
-                        [10, 25, 35, 40, 50, -1],
-                        ['10', '25', '35', '40', '50', 'Tampilkan Semua']
-                    ],
-                    buttons: [
-                        {
-                            title: 'Data Access Checkinout Mysql (' + strDate + ')',
-                            extend: 'excelHtml5',
-                            autoFilter: true,
-                            className: 'btn btn-blue',
-                            text: '<svg  xmlns="http://www.w3.org/2000/svg"  width="24"  height="24"  viewBox="0 0 24 24"  fill="none"  stroke="currentColor"  stroke-width="2"  stroke-linecap="round"  stroke-linejoin="round"  class="icon icon-tabler icons-tabler-outline icon-tabler-brand-mysql"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><path d="M13 21c-1.427 -1.026 -3.59 -3.854 -4 -6c-.486 .77 -1.501 2 -2 2c-1.499 -.888 -.574 -3.973 0 -6c-1.596 -1.433 -2.468 -2.458 -2.5 -4c-3.35 -3.44 -.444 -5.27 2.5 -3h1c8.482 .5 6.421 8.07 9 11.5c2.295 .522 3.665 2.254 5 3.5c-2.086 -.2 -2.784 -.344 -3.5 0c.478 1.64 2.123 2.2 3.5 3" /><path d="M9 7h.01" /></svg> Export to Xls',
-                            action: newexportaction,
-                        },
-                    ],
-                    "language": {
-                        "lengthMenu": "Mysql _MENU_",
-                        "zeroRecords": "Data Tidak Ditemukan",
-                        "info": "_START_ - _END_  (_TOTAL_)",
-                        "infoEmpty": "Data Tidak Ditemukan",
-                        "infoFiltered": "(Difilter dari _MAX_ total records)",
-                        "processing": '<div class="container container-slim py-4"><div class="text-center"><div class="mb-3"></div><div class="text-secondary mb-3">Loading Data...</div><div class="progress progress-sm"><div class="progress-bar progress-bar-indeterminate"></div></div></div></div>',
-                        "search": '<svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-search" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z" fill="none"></path><path d="M10 10m-7 0a7 7 0 1 0 14 0a7 7 0 1 0 -14 0"></path><path d="M21 21l-6 -6"></path></svg>',
-                        "paginate": {
-                            "first": '<svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-chevron-left-pipe" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z" fill="none"></path><path d="M7 6v12"></path><path d="M18 6l-6 6l6 6"></path></svg>',
-                            "last": '<svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-chevron-right-pipe" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z" fill="none"></path><path d="M6 6l6 6l-6 6"></path><path d="M17 5v13"></path></svg>',
-                            "next": '<svg xmlns="http://www.w3.org/2000/svg" class="icon" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z" fill="none"></path><path d="M9 6l6 6l-6 6"></path></svg>',
-                            "previous": '<svg xmlns="http://www.w3.org/2000/svg" class="icon" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z" fill="none"></path><path d="M15 6l-6 6l6 6"></path></svg>',
-                        },
-                    },
-                    ajax: "{{ route('getFingerMYSQL.index') }}",
+                // var tableMYSQL = $('.datatable-daftar-mysql').DataTable({
+                //     "processing": true, //Feature control the processing indicator.
+                //     "serverSide": false, //Feature control DataTables' server-side processing mode.
+                //     "scrollX": true,
+                //     "scrollCollapse": true,
+                //     "pagingType": 'full_numbers',
+                //     "dom": "<'card-header h3' B>" +
+                //         "<'card-body border-bottom py-3' <'row'<'col-sm-6'l><'col-sm-6'f>> >" +
+                //         "<'table-responsive' <'col-sm-12'tr> >" +
+                //         "<'card-footer' <'row'<'col-sm-8'i><'col-sm-4'p> >>",
+                //     "lengthMenu": [
+                //         [10, 25, 35, 40, 50, -1],
+                //         ['10', '25', '35', '40', '50', 'Tampilkan Semua']
+                //     ],
+                //     buttons: [
+                //         {
+                //             title: 'Data Access Checkinout Mysql (' + strDate + ')',
+                //             extend: 'excelHtml5',
+                //             autoFilter: true,
+                //             className: 'btn btn-blue',
+                //             text: '<svg  xmlns="http://www.w3.org/2000/svg"  width="24"  height="24"  viewBox="0 0 24 24"  fill="none"  stroke="currentColor"  stroke-width="2"  stroke-linecap="round"  stroke-linejoin="round"  class="icon icon-tabler icons-tabler-outline icon-tabler-brand-mysql"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><path d="M13 21c-1.427 -1.026 -3.59 -3.854 -4 -6c-.486 .77 -1.501 2 -2 2c-1.499 -.888 -.574 -3.973 0 -6c-1.596 -1.433 -2.468 -2.458 -2.5 -4c-3.35 -3.44 -.444 -5.27 2.5 -3h1c8.482 .5 6.421 8.07 9 11.5c2.295 .522 3.665 2.254 5 3.5c-2.086 -.2 -2.784 -.344 -3.5 0c.478 1.64 2.123 2.2 3.5 3" /><path d="M9 7h.01" /></svg> Export to Xls',
+                //             action: newexportaction,
+                //         },
+                //     ],
+                //     "language": {
+                //         "lengthMenu": "Mysql _MENU_",
+                //         "zeroRecords": "Data Tidak Ditemukan",
+                //         "info": "_START_ - _END_  (_TOTAL_)",
+                //         "infoEmpty": "Data Tidak Ditemukan",
+                //         "infoFiltered": "(Difilter dari _MAX_ total records)",
+                //         "processing": '<div class="container container-slim py-4"><div class="text-center"><div class="mb-3"></div><div class="text-secondary mb-3">Loading Data...</div><div class="progress progress-sm"><div class="progress-bar progress-bar-indeterminate"></div></div></div></div>',
+                //         "search": '<svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-search" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z" fill="none"></path><path d="M10 10m-7 0a7 7 0 1 0 14 0a7 7 0 1 0 -14 0"></path><path d="M21 21l-6 -6"></path></svg>',
+                //         "paginate": {
+                //             "first": '<svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-chevron-left-pipe" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z" fill="none"></path><path d="M7 6v12"></path><path d="M18 6l-6 6l6 6"></path></svg>',
+                //             "last": '<svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-chevron-right-pipe" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z" fill="none"></path><path d="M6 6l6 6l-6 6"></path><path d="M17 5v13"></path></svg>',
+                //             "next": '<svg xmlns="http://www.w3.org/2000/svg" class="icon" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z" fill="none"></path><path d="M9 6l6 6l-6 6"></path></svg>',
+                //             "previous": '<svg xmlns="http://www.w3.org/2000/svg" class="icon" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z" fill="none"></path><path d="M15 6l-6 6l6 6"></path></svg>',
+                //         },
+                //     },
+                //     ajax: "{{ route('getFingerMYSQL.index') }}",
                     
-                    columns: [
-                        { data: 'USERID', name: 'USERID', className: 'cuspad0 text-center' },
-                        { data: 'CHECKTIME', name: 'CHECKTIME', className: 'cuspad0' },
-                        { data: 'CHECKTYPE', name: 'CHECKTYPE', className: 'cuspad0 cuspad1 text-center' },
-                        { data: 'sn', name: 'sn', className: 'cuspad0 cuspad1 text-center' },
-                    ],
-                    order: [[0, 'desc']],
-                });
+                //     columns: [
+                //         { data: 'USERID', name: 'USERID', className: 'cuspad0 text-center' },
+                //         { data: 'CHECKTIME', name: 'CHECKTIME', className: 'cuspad0' },
+                //         { data: 'CHECKTYPE', name: 'CHECKTYPE', className: 'cuspad0 cuspad1 text-center' },
+                //         { data: 'sn', name: 'sn', className: 'cuspad0 cuspad1 text-center' },
+                //     ],
+                //     order: [[0, 'desc']],
+                // });
 
 
                 $('body').on('click', '.getcheckinout', function() {
@@ -314,8 +338,8 @@
                                     })
                                 },
                                 success: function(data) {
-                                    tableODBC.ajax.reload();
-                                    tableMYSQL.ajax.reload();
+                                    // tableODBC.ajax.reload();
+                                    // tableMYSQL.ajax.reload();
 
                                     const Toast = Swal.mixin({
                                         toast: true,

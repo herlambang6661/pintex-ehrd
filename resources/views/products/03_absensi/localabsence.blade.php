@@ -112,6 +112,7 @@
                                                 <th class="text-center">Out</th>
                                                 <th class="text-center">QJ</th>
                                                 <th class="text-center">JIS</th>
+                                                <th class="text-center">QJNET</th>
                                                 <th class="text-center">SST</th>
                                             </tr>
                                         </thead>
@@ -145,7 +146,7 @@
                         <div class="row">
                             <div class="col">
                                 <div class="input-icon mb-2">
-                                    <input class="form-control border-primary dari" placeholder="Select a date" id="datepicker0" value="<?= date('Y-m-01') ?>"  />
+                                    <input class="form-control border-primary dari" placeholder="Select a date" id="datepicker0" value="<?= date('Y-m-d') ?>"  />
                                     <span class="input-icon-addon">
                                         <svg xmlns="http://www.w3.org/2000/svg" class="icon" width="24" height="24"
                                             viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none"
@@ -164,7 +165,7 @@
                             </div>
                             <div class="col">
                                 <div class="input-icon mb-2">
-                                    <input class="form-control border-primary sampai" placeholder="Select a date" id="datepicker1" value="<?= date('Y-m-31') ?>"  />
+                                    <input class="form-control border-primary sampai" placeholder="Select a date" id="datepicker1" value="<?= date('Y-m-d') ?>"  />
                                     <span class="input-icon-addon">
                                         <svg xmlns="http://www.w3.org/2000/svg" class="icon" width="24" height="24"
                                             viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none"
@@ -188,57 +189,91 @@
                             <div class="row">
                                 <div class="col-sm-6">
                                     <label class="form-check">
-                                        <input type="checkbox" class="form-check-input filter-checkbox-rayon"
-                                            name="pendidikan[]" value="IBR" checked="" id="sSmp">
+                                        <input type="checkbox" class="form-check-input jenis_kelamin" value="PRIA" checked="" id="sSmp">
                                         <span class="form-check-label">Pria</span>
                                     </label>
+                                </div>
+                                <div class="col-sm-6">
                                     <label class="form-check">
-                                        <input type="checkbox" class="form-check-input filter-checkbox-rayon"
-                                            name="pendidikan[]" value="SPV" checked="" id="sSma">
+                                        <input type="checkbox" class="form-check-input jenis_kelamin" value="WANITA" checked="" id="sSma">
                                         <span class="form-check-label">Wanita</span>
                                     </label>
                                 </div>
                             </div>
                         </div>
-                        <div class="form-label">Posisi Dituju</div>
+                        <div class="form-label">Divisi</div>
                         <div class="mb-4">
-                            <label class="form-check">
-                                <input type="checkbox" class="form-check-input" name="posisidituju[]" value="OPERATOR"
-                                    checked="" id="pOperator">
-                                <span class="form-check-label">Operator</span>
-                            </label>
-                            <label class="form-check">
-                                <input type="checkbox" class="form-check-input" name="posisidituju[]" value="PENGEMUDI"
-                                    checked="" id="pPengemudi">
-                                <span class="form-check-label">Pengemudi</span>
-                            </label>
-                            <label class="form-check">
-                                <input type="checkbox" class="form-check-input" name="posisidituju[]" value="IT"
-                                    checked="" id="pIT">
-                                <span class="form-check-label">IT</span>
-                            </label>
-                            <label class="form-check">
-                                <input type="checkbox" class="form-check-input" name="posisidituju[]" value="HRD"
-                                    checked="" id="pHRD">
-                                <span class="form-check-label">HRD</span>
-                            </label>
-                            <label class="form-check">
-                                <input type="checkbox" class="form-check-input" name="posisidituju[]" value="KEAMANAN"
-                                    checked="" id="pKeamanan">
-                                <span class="form-check-label">Keamanan</span>
-                            </label>
+                            <div class="row">
+                                <div class="col">
+                                    <label class="form-check">
+                                        <input type="checkbox" class="form-check-input divisi" value="HRD & GA" checked="" id="pOperator">
+                                        <span class="form-check-label">HRD & GA</span>
+                                    </label>
+                                </div>
+                                <div class="col">
+                                    <label class="form-check">
+                                        <input type="checkbox" class="form-check-input divisi" value="PRODUKSI" checked="" id="pPengemudi">
+                                        <span class="form-check-label">PRODUKSI</span>
+                                    </label>
+                                </div>
+                            </div>
                         </div>
-                        <div class="form-label">Tinggi Minimal</div>
+                        <div class="form-label">Bagian</div>
                         <div class="mb-4">
-                            <input type="number" min="0" max="300" class="form-control" id="tinggi">
-                        </div>
-                        <div class="form-label">Proses Wawancara</div>
-                        <div class="mb-4">
-                            <label class="form-check form-switch">
-                                <input class="form-check-input" type="checkbox">
-                                <span class="form-check-label form-check-label-on">Sudah</span>
-                                <span class="form-check-label form-check-label-off">Belum</span>
-                            </label>
+                            <div class="row">
+                                <div class="col">
+                                    <label class="form-check">
+                                        <input type="checkbox" class="form-check-input bagian" value="AKUNTING & KEUANGAN" checked="" id="pOperator">
+                                        <span class="form-check-label">AKUNTING & KEUANGAN</span>
+                                    </label>
+                                    <label class="form-check">
+                                        <input type="checkbox" class="form-check-input bagian" value="GUDANG" checked="" id="pPengemudi">
+                                        <span class="form-check-label">GUDANG</span>
+                                    </label>
+                                    <label class="form-check">
+                                        <input type="checkbox" class="form-check-input bagian" value="KEAMANAN" checked="" id="pPengemudi">
+                                        <span class="form-check-label">KEAMANAN</span>
+                                    </label>
+                                    <label class="form-check">
+                                        <input type="checkbox" class="form-check-input bagian" value="PERSONALIA" checked="" id="pPengemudi">
+                                        <span class="form-check-label">PERSONALIA</span>
+                                    </label>
+                                    <label class="form-check">
+                                        <input type="checkbox" class="form-check-input bagian" value="TFI" checked="" id="pPengemudi">
+                                        <span class="form-check-label">TFI</span>
+                                    </label>
+                                    <label class="form-check">
+                                        <input type="checkbox" class="form-check-input bagian" value="TFO" checked="" id="pPengemudi">
+                                        <span class="form-check-label">TFO</span>
+                                    </label>
+                                </div>
+                                <div class="col">
+                                    <label class="form-check">
+                                        <input type="checkbox" class="form-check-input bagian" value="TFO 1" checked="" id="pPengemudi">
+                                        <span class="form-check-label">TFO 1</span>
+                                    </label>
+                                    <label class="form-check">
+                                        <input type="checkbox" class="form-check-input bagian" value="TFO 2" checked="" id="pPengemudi">
+                                        <span class="form-check-label">TFO 2</span>
+                                    </label>
+                                    <label class="form-check">
+                                        <input type="checkbox" class="form-check-input bagian" value="UMUM" checked="" id="pPengemudi">
+                                        <span class="form-check-label">UMUM</span>
+                                    </label>
+                                    <label class="form-check">
+                                        <input type="checkbox" class="form-check-input bagian" value="UNIT 1" checked="" id="pPengemudi">
+                                        <span class="form-check-label">UNIT 1</span>
+                                    </label>
+                                    <label class="form-check">
+                                        <input type="checkbox" class="form-check-input bagian" value="UNIT 2" checked="" id="pPengemudi">
+                                        <span class="form-check-label">UNIT 2</span>
+                                    </label>
+                                    <label class="form-check">
+                                        <input type="checkbox" class="form-check-input bagian" value="WCR & WORKSHOP" checked="" id="pPengemudi">
+                                        <span class="form-check-label">WCR & WORKSHOP</span>
+                                    </label>
+                                </div>
+                            </div>
                         </div>
                         <div class="mt-5">
                             <button type="button" class="btn btn-primary w-100" onclick="syn()" id="btn-filter">Filter
@@ -403,6 +438,11 @@
                         {
                             data: 'jis',
                             name: 'jis',
+                            className: 'cuspad0 text-center'
+                        },
+                        {
+                            data: 'qjnet',
+                            name: 'qjnet',
                             className: 'cuspad0 text-center'
                         },
                         {
