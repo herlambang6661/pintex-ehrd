@@ -129,6 +129,8 @@ Route::controller(DBLokal::class)->group(function () {
     Route::post('syncFromSelectedMysql', 'syncFromSelectedMysql');
     Route::post('syncCheckinout', 'syncCheckinout');
     Route::post('syncAbsen', 'syncAbsen');
+    Route::post('uploadAbsen', 'uploadAbsen');
+    Route::post('perbaruiUploadAbsen', 'perbaruiUploadAbsen');
 });
 
 Route::controller(Administrasi::class)->group(function () {
