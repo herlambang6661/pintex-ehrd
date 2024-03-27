@@ -14,13 +14,13 @@
 
         td.cuspad2 {
             /* padding-top: 0.5px;
-                                                                                                                                                                                                                            padding-bottom: 0.5px;
-                                                                                                                                                                                                                            padding-right: 0.5px;
-                                                                                                                                                                                                                            padding-left: 0.5px;
-                                                                                                                                                                                                                            margin-top: 5px;
-                                                                                                                                                                                                                            margin-bottom: 5px;
-                                                                                                                                                                                                                            margin-right: 5px;
-                                                                                                                                                                                                                            margin-left: 5px; */
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                            padding-bottom: 0.5px;
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                            padding-right: 0.5px;
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                            padding-left: 0.5px;
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                            margin-top: 5px;
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                            margin-bottom: 5px;
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                            margin-right: 5px;
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                            margin-left: 5px; */
         }
 
         .unselectable {
@@ -55,7 +55,7 @@
                                         d="M3 7a2 2 0 0 1 2 -2h14a2 2 0 0 1 2 2v10a2 2 0 0 1 -2 2h-14a2 2 0 0 1 -2 -2v-10z" />
                                     <path d="M3 7l9 6l9 -6" />
                                 </svg>
-                                Surat-Surat
+                                {{ $judul }}
                                 <div id="entitasText" style="margin-left: 5px;">Loading... <i
                                         class="fa-solid fa-spinner fa-spin-pulse"></i> </div>
                             </h2>
@@ -64,9 +64,9 @@
                                     <li class="breadcrumb-item"><a href="{{ url('dashboard') }}"><i class="fa fa-home"></i>
                                             Dashboard</a></li>
                                     <li class="breadcrumb-item"><a href="#"><i class="fa-solid fa-user-pen"></i>
-                                            Penerimaan</a></li>
+                                            Daftar</a></li>
                                     <li class="breadcrumb-item active" aria-current="page"><a href="#"><i
-                                                class="fa-regular fa-envelope"></i> Lamaran</a></li>
+                                                class="fa-regular fa-envelope"></i> Pos Pekerjaan</a></li>
                                 </ol>
                             </div>
                         </div>
@@ -86,14 +86,16 @@
                                     </div>
                                 </div>
                                 <table style="width:100%; font-family: 'Trebuchet MS', Helvetica, sans-serif;"
-                                    class="display table table-vcenter card-table table-sm table-bordered table-hover text-nowrap datatable-surat"
+                                    class="display table table-vcenter card-table table-sm table-bordered table-hover text-nowrap datatable-lembur"
                                     id="tblamaran">
                                     <thead>
                                         <tr class="text-center">
                                             <th>Opsi</th>
-                                            <th>Jenis Surat</th>
-                                            <th>Nama Surat</th>
-                                            <th>Nilai</th>
+                                            <th>Entitas</th>
+                                            <th>Basic</th>
+                                            <th>Level</th>
+                                            <th>Kjk</th>
+                                            <th>Insidentil</th>
                                         </tr>
                                     </thead>
                                 </table>
@@ -102,11 +104,11 @@
                         <div class="col-6">
                             <div class="card card-xl border-blue-lt shadow rounded">
                                 <div class="card-header bg-primary text-white">
-                                    <h5 class="modal-title"><i class="fa-solid fa-file-circle-plus"></i> Buat surat-surat
+                                    <h5 class="modal-title"><i class="fa-solid fa-file-circle-plus"></i> Buat Tarif Lembur
                                     </h5>
                                 </div>
                                 <div class="card-body">
-                                    <form id="formSurat" name="formSurat" method="post" action="javascript:void(0)">
+                                    <form id="formLembur" name="formLembur" method="post" action="javascript:void(0)">
                                         @csrf
                                         <div class="card-stamp card-stamp-lg">
                                             <div class="card-stamp-icon bg-primary">
@@ -119,30 +121,28 @@
                                                 name="entitas" id="entitas" readonly>
                                         </div>
                                         <div class="mb-3">
-                                            <label class="form-label">Jenis Surat</label>
-                                            <select name="jenissurat" id="jenissurat"
-                                                class="form-select border border-dark">
-                                                <option value="" hidden>-- Pilih Jenis Surat --</option>
-                                                <option value="Basic">Basic</option>
-                                                <option value="Intern">Intern</option>
-                                                <option value="Komunikasi">Komunikasi</option>
-                                                <option value="Perjanjian">Perjanjian</option>
-                                                <option value="Status">Status</option>
-                                            </select>
+                                            <label class="form-label">Basic</label>
+                                            <input type="text" class="form-control border border-dark bg-secondary-lt"
+                                                name="basic" id="basic">
                                         </div>
                                         <div class="mb-3">
-                                            <label class="form-label">Nama Surat</label>
-                                            <input type="text" class="form-control border border-dark" name="nmsurat"
-                                                id="nmsurat" placeholder="Masukkan Nama Surat">
+                                            <label class="form-label">Level</label>
+                                            <input type="text" class="form-control border border-dark" name="level"
+                                                id="level" placeholder="Masukkan Nama Level">
                                         </div>
                                         <div class="mb-3">
-                                            <label class="form-label">Nilai</label>
-                                            <input type="text" class="form-control border border-dark" name="nilai"
-                                                id="nilai" placeholder="Masukkan Nilai Surat">
+                                            <label class="form-label">Kjk</label>
+                                            <input type="text" class="form-control border border-dark" name="kjk"
+                                                id="kjk" placeholder="Masukkan Nama KJK">
+                                        </div>
+                                        <div class="mb-3">
+                                            <label class="form-label">Insidentil</label>
+                                            <input type="text" class="form-control border border-dark" name="insidentil"
+                                                id="insidentil" placeholder="Masukkan Nama Insidentil">
                                         </div>
                                         <div class="modal-footer">
                                             {{-- <a href="#" class="btn btn-link link-secondary" data-bs-dismiss="modal"><i class="fa-solid fa-fw fa-arrow-rotate-left"></i> Kembali</a> --}}
-                                            <button type="submit" id="submitSurat" class="btn btn-primary ms-auto">
+                                            <button type="submit" id="submitLembur" class="btn btn-primary ms-auto">
                                                 <svg xmlns="http://www.w3.org/2000/svg"
                                                     class="icon icon-tabler icon-tabler-device-floppy" width="24"
                                                     height="24" viewBox="0 0 24 24" stroke-width="2"
@@ -167,25 +167,20 @@
             @include('shared.footer')
         </div>
     </div>
-    {{-- Modal tambah lamaran --}}
-    <div class="modal modal-blur fade" id="modal-lamaran" tabindex="-1" role="dialog" aria-hidden="true">
-        <div class="modal-dialog modal-lg" role="document">
-        </div>
-    </div>
 
     {{-- Modal View --}}
-    <div class="modal modal-blur fade" id="modal-view-surat" tabindex="-1" role="dialog"
+    <div class="modal modal-blur fade" id="modal-view-lembur" tabindex="-1" role="dialog"
         aria-labelledby="exampleModalLabel" aria-hidden="true">
         <div class="modal-dialog" role="document">
             <div class="modal-content">
                 <form action="javascript:void(0)" method="post">
                     @csrf
                     <div class="modal-header bg-secondary text-white">
-                        <h5 class="modal-title" id="exampleModalLabel">Detail Surat-surat</h5>
+                        <h5 class="modal-title" id="exampleModalLabel">Detail Pos Pekerjaan</h5>
                         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                     </div>
                     <div class="modal-body">
-                        <div class="fetched-view-surat"></div>
+                        <div class="fetched-data-lembur"></div>
                     </div>
                     <div class="modal-footer">
                         <button type="button" class="btn btn-secondary" data-bs-dismiss="modal"><i
@@ -197,25 +192,25 @@
     </div>
 
     {{-- Modal edit --}}
-    <div class="modal modal-blur fade" id="modal-edit-surat" tabindex="-1" role="dialog"
+    <div class="modal modal-blur fade" id="modal-edit-lembur" tabindex="-1" role="dialog"
         aria-labelledby="exampleModalLabel" aria-hidden="true">
         <div class="modal-dialog" role="document">
             <div class="modal-content">
                 <form action="javascript:void(0)" method="post">
                     @csrf
                     <div class="modal-header bg-success text-white">
-                        <h5 class="modal-title" id="exampleModalLabel">Edit dan Update Libur Nasional</h5>
+                        <h5 class="modal-title" id="exampleModalLabel">Edit dan Update Tarif Lembur</h5>
                         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                     </div>
                     <div class="modal-body">
-                        <div class="fetched-edit-surat"></div>
+                        <div class="fetched-edit-lembur"></div>
                     </div>
                 </form>
             </div>
         </div>
     </div>
 
-    <script type="text/javascript">
+    <script class="text/javascript">
         function newexportaction(e, dt, button, config) {
             var self = this;
             var oldStart = dt.settings()[0]._iDisplayStart;
@@ -266,7 +261,7 @@
             --------------------------------------------
             --------------------------------------------*/
 
-            var tableSurat = $('.datatable-surat').DataTable({
+            var tablePos = $('.datatable-lembur').DataTable({
                 "processing": true, //Feature control the processing indicator.
                 "serverSide": false, //Feature control DataTables' server-side processing mode.
                 "scrollX": true,
@@ -317,7 +312,7 @@
                         "previous": '<svg xmlns="http://www.w3.org/2000/svg" class="icon" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z" fill="none"></path><path d="M15 6l-6 6l6 6"></path></svg>',
                     },
                 },
-                ajax: "{{ route('getSurat.index') }}",
+                ajax: "{{ route('getLembur.index') }}",
                 columns: [{
                         data: 'action',
                         name: 'action',
@@ -326,126 +321,37 @@
                         className: 'cuspad0 text-center w-0'
                     },
                     {
-                        data: 'jenissurat',
-                        name: 'jenissurat',
+                        data: 'entitas',
+                        nane: 'entitas',
                         className: 'cuspad0 text-center w-0'
                     },
                     {
-                        data: 'nmsurat',
-                        name: 'nmsurat',
+                        data: 'basic',
+                        name: 'basic',
+                        className: 'cuspad0 text-center w-0'
+                    },
+                    {
+                        data: 'level',
+                        name: 'level',
                         className: 'cuspad0'
                     },
                     {
-                        data: 'nilai',
-                        name: 'nilai',
+                        data: 'kjk',
+                        name: 'kjk',
+                        className: 'cuspad0 text-center'
+                    },
+                    {
+                        data: 'insidentil',
+                        name: 'insidentil',
                         className: 'cuspad0 text-center'
                     },
                 ],
 
             });
 
-            /*------------------------------------------==============================================================================================================================================================
-            --------------------------------------------==============================================================================================================================================================
-            Create Data
-            --------------------------------------------==============================================================================================================================================================
-            --------------------------------------------==============================================================================================================================================================*/
-            if ($("#formSurat").length > 0) {
-                $("#formSurat").validate({
-                    rules: {
-                        entitas: {
-                            required: true,
-                        },
-                        jenissurat: {
-                            required: true,
-                        },
-                        nmsurat: {
-                            required: true,
-                        },
-                    },
-                    messages: {
-                        entitas: {
-                            required: "Masukkan Entitas",
-                        },
-                        jenissurat: {
-                            required: "Masukkan Jenis Surat",
-                        },
-                        nmsurat: {
-                            required: "Masukkan nama Surat",
-                        },
-                    },
-
-                    submitHandler: function(form) {
-                        $.ajaxSetup({
-                            headers: {
-                                'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
-                            }
-                        });
-                        $('#submitSurat').html(
-                            '<i class="fa-solid fa-fw fa-spinner fa-spin"></i> Please Wait...');
-                        $("#submitSurat").attr("disabled", true);
-                        $.ajax({
-                            url: "{{ url('storedataSurat') }}",
-                            type: "POST",
-                            data: $('#formSurat').serialize(),
-                            beforeSend: function() {
-                                Swal.fire({
-                                    title: 'Mohon Menunggu',
-                                    html: '<center><lottie-player src="https://lottie.host/933bb0e2-47c0-4fa6-83f9-3330b433b883/yymyeZt49h.json"  background="transparent"  speed="1"  style="width: 300px; height: 300px;"  loop autoplay></lottie-player></center><br><h1 class="h4">Sedang memproses data, Proses mungkin membutuhkan beberapa menit. <br><br><b class="text-danger">(Jangan menutup jendela ini, bisa mengakibatkan error)</b></h1>',
-                                    showConfirmButton: false,
-                                    timerProgressBar: true,
-                                    allowOutsideClick: false,
-                                    allowEscapeKey: false,
-                                })
-                            },
-                            success: function(response) {
-                                console.log('Completed.');
-                                $('#submitSurat').html(
-                                    '<svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-device-floppy" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><path d="M6 4h10l4 4v10a2 2 0 0 1 -2 2h-12a2 2 0 0 1 -2 -2v-12a2 2 0 0 1 2 -2" /><path d="M12 14m-2 0a2 2 0 1 0 4 0a2 2 0 1 0 -4 0" /><path d="M14 4l0 4l-6 0l0 -4" /></svg> Simpan'
-                                );
-                                $("#submitSurat").attr("disabled", false);
-                                tableSurat.ajax.reload();
-                                const Toast = Swal.mixin({
-                                    toast: true,
-                                    position: "top-end",
-                                    showConfirmButton: false,
-                                    timer: 4000,
-                                    timerProgressBar: true,
-                                    didOpen: (toast) => {
-                                        toast.onmouseenter = Swal.stopTimer;
-                                        toast.onmouseleave = Swal.resumeTimer;
-                                    }
-                                });
-                                Toast.fire({
-                                    icon: "success",
-                                    title: response.msg,
-                                });
-                                document.getElementById("formSurat").reset();
-                                var sp = $('#selectEntitas').val();
-                                $('#entitas').val(sp);
-                            },
-                            error: function(data) {
-                                console.log('Error:', data);
-                                // const obj = JSON.parse(data.responseJSON);
-                                tableSurat.ajax.reload();
-                                Swal.fire({
-                                    icon: 'error',
-                                    title: 'Gagal Input',
-                                    html: data.responseJSON.message,
-                                    showConfirmButton: true
-                                });
-                                $('#submitSurat').html(
-                                    '<svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-device-floppy" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><path d="M6 4h10l4 4v10a2 2 0 0 1 -2 2h-12a2 2 0 0 1 -2 -2v-12a2 2 0 0 1 2 -2" /><path d="M12 14m-2 0a2 2 0 1 0 4 0a2 2 0 1 0 -4 0" /><path d="M14 4l0 4l-6 0l0 -4" /></svg> Simpan'
-                                );
-                                $("#submitSurat").attr("disabled", false);
-                            }
-                        });
-                    }
-                })
-            }
-
             var selected = new Array();
 
-            $('#modal-view-surat').on('show.bs.modal', function(e) {
+            $('#modal-view-lembur').on('show.bs.modal', function(e) {
                 var rowid = $(e.relatedTarget).data('id');
                 console.log(rowid);
                 $(".overlay").fadeIn(300);
@@ -458,14 +364,13 @@
                 //menggunakan fungsi ajax untuk pengambilan data
                 $.ajax({
                     type: 'POST',
-                    url: '{{ url('detail/surat') }}',
+                    url: '{{ url('viewlembur') }}',
                     data: {
                         "_token": "{{ csrf_token() }}",
                         id: rowid,
                     },
                     success: function(data) {
-                        $('.fetched-view-surat').html(
-                            data); //menampilkan data ke dalam modal
+                        $('.fetched-data-lembur').html(data); //menampilkan data ke dalam modal
                         // alert(itemTables);
                     }
                 }).done(function() {
@@ -483,11 +388,12 @@
             $(document).on('click', '.edit-btn', function() {
                 var id = $(this).data('id');
                 var entitas = $(this).data('entitas');
-                var jenissurat = $(this).data('jenissurat');
-                var nmsurat = $(this).data('nmsurat');
-                var nilai = $(this).data('nilai');
+                var basic = $(this).data('basic');
+                var level = $(this).data('level');
+                var kjk = $(this).data('kjk');
+                var insidentil = $(this).data('insidentil');
 
-                $('#modal-edit-surat .fetched-edit-surat').html(`
+                $('#modal-edit-lembur .fetched-edit-lembur').html(`
                 <div class="card-stamp card-stamp-lg">
                             <div class="card-stamp-icon bg-primary">
                                 <i class="fa-solid fa-pen-to-square"></i>
@@ -498,20 +404,24 @@
                             <input type="text" class="form-control border border-dark" name="entitas" id="editentitas" value="${entitas}">
                         </div>
                         <div class="mb-3">
-                            <label class="form-label">Jenis Surat</label>
-                            <input type="text" class="form-control border border-dark" name="jenissurat" id="editjenissurat" value="${jenissurat}">
+                            <label class="form-label">Basic</label>
+                            <input type="text" class="form-control border border-dark" name="basic" id="editbasic"value="${basic}">
                         </div>
                         <div class="mb-3">
-                            <label class="form-label">Nama Surat</label>
-                            <input type="text" class="form-control border border-dark" name="nmsurat" id="editnmsurat" value="${nmsurat}">
+                            <label class="form-label">Level</label>
+                            <input type="text" class="form-control border border-dark" name="level" id="editlevel"value="${level}">
                         </div>
                         <div class="mb-3">
-                            <label class="form-label">Nilai</label>
-                            <input type="text" class="form-control border border-dark" name="nilai" id="editnilai" value="${nilai}">
+                            <label class="form-label">KJK</label>
+                            <input type="text" class="form-control border border-dark" name="kjk" id="editkjk" value="${kjk}">
+                        </div>
+                        <div class="mb-3">
+                            <label class="form-label">insidentil</label>
+                            <input type="text" class="form-control border border-dark" name="insidentil" id="editinsidentil"value="${insidentil}">
                         </div>
                         </div>
                         <div class="modal-footer">
-                        <button type="submit" id="submiteditsurat" class="btn btn-success" data-bs-dismiss="modal"
+                        <button type="submit" id="submiteditLembur" class="btn btn-success" data-bs-dismiss="modal"
                             data-id="${id}">
                             <i class="fa-solid fa-pen-nib" style="margin-right:5px"></i> Update
                         </button>
@@ -519,7 +429,7 @@
                 `);
             });
 
-            $(document).on('click', '#submiteditsurat', function(e) {
+            $(document).on('click', '#submiteditLembur', function(e) {
                 e.preventDefault();
 
                 var id = $(this).data('id');
@@ -529,13 +439,14 @@
                     '_token': csrfToken,
                     'id': id,
                     'entitas': $('#editentitas').val(),
-                    'jenissurat': $('#editjenissurat').val(),
-                    'nmsurat': $('#editnmsurat').val(),
-                    'nilai': $('#editnilai').val(),
+                    'basic': $('#editbasic').val(),
+                    'level': $('#editlevel').val(),
+                    'kjk': $('#editkjk').val(),
+                    'insidentil': $('#editinsidentil').val()
                 };
 
                 $.ajax({
-                    url: '{{ url('update/surat') }}',
+                    url: '{{ url('update/lembur') }}',
                     method: 'POST',
                     data: formData,
                     headers: {
@@ -550,7 +461,7 @@
                             }).then((result) => {
                                 if (result.isConfirmed) {
                                     $('#modal-edit').modal('hide');
-                                    tableSurat.ajax.reload();
+                                    tablePos.ajax.reload();
                                 }
                             });
                         } else {
@@ -572,19 +483,129 @@
                 });
             });
 
+            /*------------------------------------------==============================================================================================================================================================
+                  --------------------------------------------==============================================================================================================================================================
+                  Create Data
+                  --------------------------------------------==============================================================================================================================================================
+                  --------------------------------------------==============================================================================================================================================================*/
+            if ($("#formLembur").length > 0) {
+                $("#formLembur").validate({
+                    rules: {
+                        basic: {
+                            required: true,
+                        },
+                        level: {
+                            required: true,
+                        },
+                        kjk: {
+                            required: true,
+                        },
+                        insidentil: {
+                            required: true,
+                        },
+                    },
+                    messages: {
+                        entitas: {
+                            required: "Masukkan Entitas",
+                        },
+                        basic: {
+                            required: "Masukkan Basic",
+                        },
+                        level: {
+                            required: "Masukkan Level",
+                        },
+                        kjk: {
+                            required: "Masukkan KJK",
+                        },
+                        insidentil: {
+                            required: "Masukkan Insidentil"
+                        }
+                    },
+
+                    submitHandler: function(form) {
+                        $.ajaxSetup({
+                            headers: {
+                                'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                            }
+                        });
+                        $('#submitLembur').html(
+                            '<i class="fa-solid fa-fw fa-spinner fa-spin"></i> Please Wait...');
+                        $("#submitLembur").attr("disabled", true);
+                        $.ajax({
+                            url: "{{ url('storedataLembur') }}",
+                            type: "POST",
+                            data: $('#formLembur').serialize(),
+                            beforeSend: function() {
+                                Swal.fire({
+                                    title: 'Mohon Menunggu',
+                                    html: '<center><lottie-player src="https://lottie.host/933bb0e2-47c0-4fa6-83f9-3330b433b883/yymyeZt49h.json"  background="transparent"  speed="1"  style="width: 300px; height: 300px;"  loop autoplay></lottie-player></center><br><h1 class="h4">Sedang memproses data, Proses mungkin membutuhkan beberapa menit. <br><br><b class="text-danger">(Jangan menutup jendela ini, bisa mengakibatkan error)</b></h1>',
+                                    showConfirmButton: false,
+                                    timerProgressBar: true,
+                                    allowOutsideClick: false,
+                                    allowEscapeKey: false,
+                                })
+                            },
+                            success: function(response) {
+                                console.log('Completed.');
+                                $('#submitLembur').html(
+                                    '<svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-device-floppy" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><path d="M6 4h10l4 4v10a2 2 0 0 1 -2 2h-12a2 2 0 0 1 -2 -2v-12a2 2 0 0 1 2 -2" /><path d="M12 14m-2 0a2 2 0 1 0 4 0a2 2 0 1 0 -4 0" /><path d="M14 4l0 4l-6 0l0 -4" /></svg> Simpan'
+                                );
+                                $("#submitLembur").attr("disabled", false);
+                                tablePos.ajax.reload();
+                                const Toast = Swal.mixin({
+                                    toast: true,
+                                    position: "top-end",
+                                    showConfirmButton: false,
+                                    timer: 4000,
+                                    timerProgressBar: true,
+                                    didOpen: (toast) => {
+                                        toast.onmouseenter = Swal.stopTimer;
+                                        toast.onmouseleave = Swal.resumeTimer;
+                                    }
+                                });
+                                Toast.fire({
+                                    icon: "success",
+                                    title: response.msg,
+                                });
+                                document.getElementById("formLembur").reset();
+                                var sp = $('#selectEntitas').val();
+                                $('#entitas').val(sp);
+                            },
+                            error: function(data) {
+                                console.log('Error:', data);
+                                // const obj = JSON.parse(data.responseJSON);
+                                tablePos.ajax.reload();
+                                Swal.fire({
+                                    icon: 'error',
+                                    title: 'Gagal Input',
+                                    html: data.responseJSON.message,
+                                    showConfirmButton: true
+                                });
+                                $('#submitLembur').html(
+                                    '<svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-device-floppy" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><path d="M6 4h10l4 4v10a2 2 0 0 1 -2 2h-12a2 2 0 0 1 -2 -2v-12a2 2 0 0 1 2 -2" /><path d="M12 14m-2 0a2 2 0 1 0 4 0a2 2 0 1 0 -4 0" /><path d="M14 4l0 4l-6 0l0 -4" /></svg> Simpan'
+                                );
+                                $("#submitLembur").attr("disabled", false);
+                            }
+                        });
+                    }
+                })
+            }
+
+
             /*------------------------------------------
-            --------------------------------------------
-            Delete
-            --------------------------------------------
-            --------------------------------------------*/
-            $('body').on('click', '.deleteSurat', function() {
+                --------------------------------------------
+                Delete
+                --------------------------------------------
+                --------------------------------------------*/
+
+            $('body').on('click', '.deletePos', function() {
                 var contract_id = $(this).data("id");
-                var nama = $(this).data("nama");
+                var nama = $(this).data("basic");
                 var token = $("meta[name='csrf-token']").attr("content");
                 Swal.fire({
                     icon: 'warning',
-                    title: 'Hapus Data Lamaran',
-                    text: 'Apakah anda yakin ingin menghapus ' + nama + ' ?',
+                    title: 'Hapus Data Tarif Lembur',
+                    text: 'Apakah anda yakin ingin menghapus',
                     showCancelButton: true,
                     confirmButtonColor: '#d33',
                     cancelButtonColor: '#3085d6',
@@ -594,7 +615,7 @@
                     if (result.isConfirmed) {
                         $.ajax({
                             type: "DELETE",
-                            url: "{{ route('getSurat.store') }}" + '/' + contract_id,
+                            url: "{{ route('getLembur.store') }}" + '/' + contract_id,
                             data: {
                                 "_token": "{{ csrf_token() }}",
                             },
@@ -624,7 +645,7 @@
                                 });
                                 Toast.fire({
                                     icon: "success",
-                                    title: "Data Lamaran : " + nama +
+                                    title: "Data Lembur : " + nama +
                                         " Terhapus"
                                 });
                             },

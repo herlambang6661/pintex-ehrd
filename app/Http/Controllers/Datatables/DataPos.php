@@ -27,8 +27,10 @@ class DataPos extends Controller
             return DataTables::of($data)
                 ->addIndexColumn()
                 ->addColumn('action', function ($row) {
-                    $btn = '<a href="javascript:void(0)" data-bs-target="#modal-edit" data-bs-toggle="modal" data-id="' . $row->id . '" data-type="' . $row->type . '" data-desc="' . $row->desc . '" class="btn btn-outline-info btn-sm btn-icon edit-btn"><i class="fa-solid fa-fw fa-edit"></i></a>';
+                    $btn = '<a href="javascript:void(0)" data-bs-target="#modal-edit" data-bs-toggle="modal" data-id="' . $row->id . '" data-entitas="' . $row->entitas . '" data-type="' . $row->type . '" data-desc="' . $row->desc . '" class="btn btn-outline-info btn-sm btn-icon edit-btn"><i class="fa-solid fa-fw fa-edit"></i></a>';
+
                     $btn = $btn . ' <a href="javascript:void(0)" data-bs-toggle="modal" data-id="' . $row->id . '" data-bs-target="#modal-view-pos" class="btn btn-outline-info btn-sm btn-icon"><i class="fa-solid fa-fw fa-eye"></i></a>';
+
                     $btn = $btn . ' <a href="javascript:void(0)" data-toggle="tooltip" data-nama="' . $row->entitas . '" data-id="' . $row->id . '" data-original-title="Delete" class="btn btn-outline-danger btn-sm btn-icon deletePos"><i class="fa-solid fa-fw fa-trash-can"></i></a>';
                     return $btn;
                 })

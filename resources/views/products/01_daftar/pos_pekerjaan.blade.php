@@ -14,13 +14,13 @@
 
         td.cuspad2 {
             /* padding-top: 0.5px;
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                            padding-bottom: 0.5px;
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                            padding-right: 0.5px;
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                            padding-left: 0.5px;
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                            margin-top: 5px;
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                            margin-bottom: 5px;
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                            margin-right: 5px;
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                            margin-left: 5px; */
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                        padding-bottom: 0.5px;
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                        padding-right: 0.5px;
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                        padding-left: 0.5px;
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                        margin-top: 5px;
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                        margin-bottom: 5px;
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                        margin-right: 5px;
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                        margin-left: 5px; */
         }
 
         .unselectable {
@@ -55,7 +55,7 @@
                                         d="M3 7a2 2 0 0 1 2 -2h14a2 2 0 0 1 2 2v10a2 2 0 0 1 -2 2h-14a2 2 0 0 1 -2 -2v-10z" />
                                     <path d="M3 7l9 6l9 -6" />
                                 </svg>
-                                Surat-Surat
+                                {{ $judul }}
                                 <div id="entitasText" style="margin-left: 5px;">Loading... <i
                                         class="fa-solid fa-spinner fa-spin-pulse"></i> </div>
                             </h2>
@@ -103,7 +103,7 @@
                         <div class="col-6">
                             <div class="card card-xl border-blue-lt shadow rounded">
                                 <div class="card-header bg-primary text-white">
-                                    <h5 class="modal-title"><i class="fa-solid fa-file-circle-plus"></i> Buat surat-surat
+                                    <h5 class="modal-title"><i class="fa-solid fa-file-circle-plus"></i> Buat Pos Pekerjaan
                                     </h5>
                                 </div>
                                 <div class="card-body">
@@ -156,7 +156,7 @@
             @include('shared.footer')
         </div>
     </div>
-    {{-- Modal tambah lamaran --}}
+    {{-- Modal tambah pos --}}
     <div class="modal modal-blur fade" id="modal-lamaran" tabindex="-1" role="dialog" aria-hidden="true">
         <div class="modal-dialog modal-lg" role="document">
         </div>
@@ -173,7 +173,7 @@
             <div class="modal-content">
                 <form action="javascript:void(0)" method="post">
                     @csrf
-                    <div class="modal-header">
+                    <div class="modal-header bg-secondary text-white">
                         <h5 class="modal-title" id="exampleModalLabel">Detail Pos Pekerjaan</h5>
                         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                     </div>
@@ -182,7 +182,7 @@
                         <div class="fetched-data-pos"></div>
                     </div>
                     <div class="modal-footer">
-                        <button type="button" class="btn btn-primary" data-bs-dismiss="modal"><i
+                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal"><i
                                 class="fa-solid fa-arrow-rotate-left" style="margin-right:5px"></i> Close</button>
                     </div>
                 </form>
@@ -196,16 +196,12 @@
             <div class="modal-content">
                 <form action="javascript:void(0)" method="post">
                     @csrf
-                    <div class="modal-header">
+                    <div class="modal-header bg-success text-white">
                         <h5 class="modal-title" id="exampleModalLabel">Edit dan Update Pos Pekerjaan</h5>
                         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                     </div>
                     <div class="modal-body">
                         <div class="fetched-edit-pos"></div>
-                    </div>
-                    <div class="modal-footer">
-                        <button type="submitPos" class="btn btn-primary" data-bs-dismiss="modal"><i
-                                class="fa-solid fa-pen-nib" style="margin-right:5px"></i> Update</button>
                     </div>
                 </form>
             </div>
@@ -357,7 +353,6 @@
                         'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
                     }
                 });
-                //menggunakan fungsi ajax untuk pengambilan data
                 $.ajax({
                     type: 'POST',
                     url: '{{ url('listPos') }}',
@@ -366,8 +361,7 @@
                         id: rowid,
                     },
                     success: function(data) {
-                        $('.fetched-data-pos').html(data); //menampilkan data ke dalam modal
-                        // alert(itemTables);
+                        $('.fetched-data-pos').html(data);
                     }
                 }).done(function() {
                     setTimeout(function() {
@@ -487,41 +481,49 @@
                 var desc = $(this).data('desc');
 
                 $('#modal-edit .fetched-edit-pos').html(`
-                <div class="row">
-                <div class="col-lg-11">
-                    <div class="card shadow bg-green-lt">
-                        <div class="card-body">
-                            <div class="row">
-                                <div class="col-lg-12">
-                                    <input type="hidden" name="_token" value="${token}">
-                                    <input type="hidden" name="id" value="${id}">
-                                    <div class="mb-3">
-                                        <label for="edit-entitas">Entitas</label>
-                                        <input type="text" class="form-control" id="edit-entitas" name="entitas" value="${entitas}">
-                                    </div>
-                                    <div class="mb-3">
-                                        <label for="edit-type">Type</label>
-                                         <input type="text" class="form-control" id="edit-type" name="type" value="${type}">
-                                    </div>
-                                    <div class="mb-3">
-                                        <label for="edit-desc">Description</label>
-                                        <textarea class="form-control" id="edit-desc" name="desc">${desc}</textarea>
-                                    </div>
-                                </div>
+                <div class="card-stamp card-stamp-lg">
+                            <div class="card-stamp-icon bg-primary">
+                                <i class="fa-solid fa-pen-to-square"></i>
                             </div>
                         </div>
+                        <div class="mb-3">
+                            <label class="form-label">Entitas</label>
+                            <input type="text" class="form-control border border-dark" name="entitas" id="editentitas" value="${entitas}">
+                        </div>
+                        <div class="mb-3">
+                            <label class="form-label">Type</label>
+                            <input type="text" class="form-control border border-dark" name="type" id="edittype"value="${type}">
+                        </div>
+                        <div class="mb-3">
+                            <label class="form-label">Desc</label>
+                            <input type="text" class="form-control border border-dark" name="desc" id="editdesc"value="${desc}">
+                        </div>
+                        </div>
+                        <div class="modal-footer">
+                        <button type="submit" id="submiteditPos" class="btn btn-success" data-bs-dismiss="modal"
+                            data-id="${id}">
+                            <i class="fa-solid fa-pen-nib" style="margin-right:5px"></i> Update
+                        </button>
                     </div>
-                </div>
-            </div>
                 `);
             });
 
-            $(document).on('submitPos', '#modal-edit form', function(e) {
+            $(document).on('click', '#submiteditPos', function(e) {
                 e.preventDefault();
 
-                var formData = $(this).serialize();
+                var id = $(this).data('id');
+                var csrfToken = $('form').find('input[name="_token"]').val();
+
+                var formData = {
+                    '_token': csrfToken,
+                    'id': id,
+                    'entitas': $('#editentitas').val(),
+                    'type': $('#edittype').val(),
+                    'desc': $('#editdesc').val()
+                };
+
                 $.ajax({
-                    url: '{{ route('update-pos') }}',
+                    url: '{{ url('pos/update') }}',
                     method: 'POST',
                     data: formData,
                     headers: {
@@ -529,21 +531,34 @@
                     },
                     success: function(response) {
                         if (response.status) {
-                            alert(response.msg);
-                            $('#modal-edit').modal('hide');
-                            tablePos.ajax.reload();
+                            Swal.fire({
+                                icon: 'success',
+                                title: 'Sukses!',
+                                text: response.msg,
+                            }).then((result) => {
+                                if (result.isConfirmed) {
+                                    $('#modal-edit').modal('hide');
+                                    tablePos.ajax.reload();
+                                }
+                            });
                         } else {
-                            alert(response.msg);
+                            Swal.fire({
+                                icon: 'error',
+                                title: 'Oops...',
+                                text: response.msg,
+                            });
                         }
                     },
                     error: function(xhr, status, error) {
                         console.error(xhr.responseText);
-                        alert('Terjadi kesalahan saat mengirim data. Silakan coba lagi.');
+                        Swal.fire({
+                            icon: 'error',
+                            title: 'Gagal!',
+                            text: 'Terjadi kesalahan saat mengirim data. Silakan coba lagi.',
+                        });
                     }
                 });
             });
-
-
 
             /*------------------------------------------
                 --------------------------------------------
@@ -557,7 +572,7 @@
                 var token = $("meta[name='csrf-token']").attr("content");
                 Swal.fire({
                     icon: 'warning',
-                    title: 'Hapus Data Lamaran',
+                    title: 'Hapus Data Pos Pekerjaan',
                     text: 'Apakah anda yakin ingin menghapus ' + nama + ' ?',
                     showCancelButton: true,
                     confirmButtonColor: '#d33',
@@ -568,7 +583,8 @@
                     if (result.isConfirmed) {
                         $.ajax({
                             type: "DELETE",
-                            url: "{{ route('getPos.store') }}" + '/' + contract_id,
+                            url: "{{ route('getPos.store') }}" + '/' +
+                                contract_id,
                             data: {
                                 "_token": "{{ csrf_token() }}",
                             },
@@ -583,7 +599,8 @@
                                 })
                             },
                             success: function(data) {
-                                $('.datatable-surat').DataTable().ajax.reload();
+                                $('.datatable-surat').DataTable().ajax
+                                    .reload();
                                 const Toast = Swal.mixin({
                                     toast: true,
                                     position: "top-end",
@@ -591,14 +608,17 @@
                                     timer: 3000,
                                     timerProgressBar: true,
                                     didOpen: (toast) => {
-                                        toast.onmouseenter = Swal.stopTimer;
-                                        toast.onmouseleave = Swal
+                                        toast.onmouseenter =
+                                            Swal.stopTimer;
+                                        toast.onmouseleave =
+                                            Swal
                                             .resumeTimer;
                                     }
                                 });
                                 Toast.fire({
                                     icon: "success",
-                                    title: "Data Lamaran : " + nama +
+                                    title: "Data Pos Pekerjaan : " +
+                                        nama +
                                         " Terhapus"
                                 });
                             },
@@ -607,7 +627,8 @@
                                 Swal.fire({
                                     icon: 'error',
                                     title: 'Gagal!',
-                                    text: 'Error: ' + data.responseText,
+                                    text: 'Error: ' + data
+                                        .responseText,
                                     showConfirmButton: true,
                                 });
                             }
