@@ -88,9 +88,9 @@ class Absensi extends Controller
                 foreach ($datesArrayFull as $f) {
                     // echo '          <td style="width: 30px" class="text-center">' . $f . '</td>';
                     $dataA = DB::table('absensi_absensi')->select('sst')->where('stb', '=', $item2->stb)->where('tanggal', '=', $f)->limit(1)->get();
-                    foreach ($dataA as $key) {
-                        echo '          <td style="width: 30px" class="text-center">' . $key->sst . '</td>';
-                    }
+                }
+                foreach ($dataA as $key) {
+                    echo '          <td style="width: 30px" class="text-center">' . !empty($key->sst) ? $key->sst : ""  . '</td>';
                 }
                 echo '          </tr>';
             }

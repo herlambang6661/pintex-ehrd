@@ -131,6 +131,7 @@ Route::controller(DBLokal::class)->group(function () {
     Route::post('syncAbsen', 'syncAbsen');
     Route::post('uploadAbsen', 'uploadAbsen');
     Route::post('perbaruiUploadAbsen', 'perbaruiUploadAbsen');
+    Route::post('UploadFixedAbsen', 'UploadFixedAbsen');
 });
 
 Route::controller(Administrasi::class)->group(function () {
