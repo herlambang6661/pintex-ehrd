@@ -26,7 +26,11 @@ class DataSurat extends Controller
             return DataTables::of($data)
                 ->addIndexColumn()
                 ->addColumn('action', function ($row) {
-                    $btn = ' <a href="javascript:void(0)" data-toggle="tooltip" data-nama="' . $row->nmsurat . '" data-id="' . $row->id . '" data-original-title="Delete" class="btn btn-outline-danger btn-sm btn-icon deleteSurat"><i class="fa-solid fa-fw fa-trash-can"></i></a>';
+                    $btn = '<a href="javascript:void(0)" data-bs-target="#modal-edit-surat" data-bs-toggle="modal" data-id="' . $row->id . '" data-entitas="' . $row->entitas . '" data-jenissurat="' . $row->jenissurat . '" data-nmsurat="' . $row->nmsurat . '" data-nilai="' . $row->nilai . '" class="btn btn-outline-info btn-sm btn-icon edit-btn"><i class="fa-solid fa-fw fa-edit"></i></a>';
+
+                    $btn = $btn . ' <a href="javascript:void(0)" data-bs-toggle="modal" data-id="' . $row->id . '" data-bs-target="#modal-view-surat" class="btn btn-outline-info btn-sm btn-icon"><i class="fa-solid fa-fw fa-eye"></i></a>';
+
+                    $btn = $btn . ' <a href="javascript:void(0)" data-toggle="tooltip" data-nama="' . $row->nmsurat . '" data-id="' . $row->id . '" data-original-title="Delete" class="btn btn-outline-danger btn-sm btn-icon deleteSurat"><i class="fa-solid fa-fw fa-trash-can"></i></a>';
                     return $btn;
                 })
                 ->rawColumns(['status', 'action', 'select_orders', 'ttl', 'umur'])

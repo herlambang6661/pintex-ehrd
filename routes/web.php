@@ -19,11 +19,14 @@ use App\Http\Controllers\Datatables\DataWawancara;
 use Illuminate\Contracts\Auth\Access\Authorizable;
 use App\Http\Controllers\Datatables\DataFingerODBC;
 use App\Http\Controllers\Datatables\DataFingerMYSQL;
+use App\Http\Controllers\Datatables\DataHariLibur;
 use App\Http\Controllers\Datatables\DataUserinfoODBC;
 use App\Http\Controllers\Datatables\DataUserinfoMYSQL;
 use SebastianBergmann\CodeCoverage\Report\Html\Dashboard;
 use App\Http\Controllers\Datatables\DataLegalitasKaryawan;
 use App\Http\Controllers\Datatables\DataLegalitasKaryawanOl;
+use App\Http\Controllers\Datatables\DataShift;
+use App\Http\Controllers\Datatables\DataTarifLembur;
 
 /*
 |--------------------------------------------------------------------------
@@ -62,6 +65,9 @@ Route::resources([
     'getUserMYSQL' => DataUserinfoMYSQL::class,
     'getFingerODBC' => DataFingerODBC::class,
     'getFingerMYSQL' => DataFingerMYSQL::class,
+    'getLembur' => DataTarifLembur::class,
+    'getLibur'  => DataHariLibur::class,
+    'getshift' => DataShift::class,
 ]);
 
 
@@ -75,16 +81,36 @@ Route::controller(AuthController::class)->group(function () {
 });
 
 Route::controller(Daftar::class)->group(function () {
-    Route::get('daftar/pos', 'pos')->name('daftar/pos');
-    Route::get('daftar/tariflembur', 'tariflembur')->name('daftar/tariflembur');
-    Route::get('daftar/liburnas', 'liburnas')->name('daftar/liburnas');
-    Route::get('daftar/surat', 'surat')->name('daftar/surat');
-    Route::post('storedataSurat', 'storeSurat');
-    Route::get('daftar/jadwalshift', 'jadwalshift')->name('daftar/jadwalshift');
 
+    //Routes Pos Pekerjaan DONE
+    Route::get('daftar/pos', 'pos')->name('daftar/pos');
     Route::post('storedataPos', 'storePos');
     Route::post('listPos', 'listPos');
-    Route::post('update', 'updatePos')->name('update-pos');
+    Route::post('pos/update', 'updatePos');
+
+    //Routes Tarif Lembur DONE
+    Route::get('daftar/tariflembur', 'tariflembur')->name('daftar/tariflembur');
+    Route::post('storedataLembur', 'storelembur');
+    Route::post('viewlembur', 'lemburview');
+    Route::post('update/lembur', 'updatelembur');
+
+    //Routes libur nasional DONE
+    Route::get('daftar/liburnas', 'liburnas')->name('daftar/liburnas');
+    Route::post('storedataLibur', 'storelibur');
+    Route::post('detail/liburnas', 'liburnasview');
+    Route::post('update/liburnas', 'updateliburnas');
+
+    //routes Surat-surat DONE
+    Route::get('daftar/surat', 'surat')->name('daftar/surat');
+    Route::post('storedataSurat', 'storeSurat');
+    Route::post('update/surat', 'updatesurat');
+    Route::post('detail/surat', 'viewsurat');
+
+    //routes jadwal shif
+    Route::get('daftar/jadwalshift', 'jadwalshift')->name('daftar/jadwalshift');
+    Route::post('storedatashift', 'storeshift');
+    Route::post('viewshift', 'shiftview');
+    Route::post('shift/update', 'updateshif');
 });
 
 Route::controller(Penerimaan::class)->group(function () {

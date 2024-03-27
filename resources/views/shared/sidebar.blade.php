@@ -256,7 +256,7 @@
                                     </svg>
                                     Pos-Pekerjaan
                                 </a>
-                                <a class="dropdown-item" href="./blank.html">
+                                <a class="dropdown-item" href="{{ url('daftar/tariflembur') }}">
                                     <svg xmlns="http://www.w3.org/2000/svg" style="margin-right: 10px" width="24"
                                         height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor"
                                         stroke-width="2" stroke-linecap="round" stroke-linejoin="round"
@@ -270,7 +270,7 @@
                                     </svg>
                                     Tarif Lembur
                                 </a>
-                                <a class="dropdown-item" href="./badges.html">
+                                <a class="dropdown-item" href="{{ url('daftar/liburnas') }}">
                                     <svg xmlns="http://www.w3.org/2000/svg" style="margin-right: 10px" width="24"
                                         height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor"
                                         stroke-width="2" stroke-linecap="round" stroke-linejoin="round"
@@ -294,7 +294,7 @@
                                     </svg>
                                     Surat-Surat
                                 </a>
-                                <a class="dropdown-item" href="./colors.html">
+                                <a class="dropdown-item" href="{{ url('daftar/jadwalshift') }}">
                                     <svg xmlns="http://www.w3.org/2000/svg" style="margin-right: 10px" width="24"
                                         height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor"
                                         stroke-width="2" stroke-linecap="round" stroke-linejoin="round"
