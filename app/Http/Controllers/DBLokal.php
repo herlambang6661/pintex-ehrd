@@ -2555,8 +2555,8 @@ class DBLokal extends Controller
             $getFixed = DB::table('absensi_fixed_absensi')
                 ->where('userid', '=', $key->userid)
                 ->where('stb', '=', $key->stb)
-                ->where('month', '=', date('m'))
-                ->where('year', '=', date('Y'))
+                ->where('month', '=', $request->tglUploadFixed)
+                ->where('year', '=', $request->tahunUploadFixed)
                 ->first();
             if ($getFixed) {
                 // Data Ditemukan Skip
@@ -2570,8 +2570,8 @@ class DBLokal extends Controller
                             'userid' => $key->userid,
                             'stb' => $key->stb,
                             'name' => $key->nama,
-                            'month' => date('m'),
-                            'year' => date('Y'),
+                            'month' => $request->tglUploadFixed,
+                            'year' => $request->tahunUploadFixed,
                             'remember_token' => $key->remember_token,
                             'created_at' => date('Y-m-d H:i:s'),
                         ]
@@ -2583,15 +2583,15 @@ class DBLokal extends Controller
                     ->table('absensi_absensi')
                     ->where('userid', '=', $key->userid)
                     ->whereDay('tanggal', '=', $i)
-                    ->whereMonth('tanggal', '=', date('m'))
-                    ->whereYear('tanggal', '=', date('Y'))
+                    ->whereMonth('tanggal', '=', $request->tglUploadFixed)
+                    ->whereYear('tanggal', '=', $request->tahunUploadFixed)
                     ->select('sst')
                     ->get();
                 foreach ($gt as $value) {
                     DB::table('absensi_fixed_absensi')
                         ->where('stb', '=', $key->stb)
-                        ->where('month', '=', date('m'))
-                        ->where('year', '=', date('Y'))
+                        ->where('month', '=', $request->tglUploadFixed)
+                        ->where('year', '=', $request->tahunUploadFixed)
                         ->limit(1)
                         ->update(
                             array(
@@ -2600,37 +2600,6 @@ class DBLokal extends Controller
                         );
                 }
             }
-            //         // menemukan data
-            //         for ($i = 0; $i <= 31; $i++) {
-            //             $gt = DB::connection('mysql_local')
-            //             ->table('absensi_absensi')
-            //                 ->where('userid', '=', $key->userid)
-            //                 ->whereDay('tanggal', '=',
-            //                     $i
-            //                 )
-            //                 ->whereMonth('tanggal', '=', date('m'))
-            //                 ->whereYear('tanggal', '=', date('Y'))
-            //                 ->limit(1)
-            //                 ->get();
-            //             foreach ($gt as $value) {
-            //                 DB::table('absensi_fixed_absensi')
-            //                 ->insert(
-            //                     [
-            //                         'userid' => $value->userid,
-            //                         'stb' => $value->stb,
-            //                         'name' => $value->name,
-            //                         'month' => Carbon::parse($value->tanggal)->format('m'),
-            //                         'year' => Carbon::parse($value->tanggal)->format('Y'),
-            //                         $i =>  $value->sst,
-            //                         'remember_token' => $value->remember_token,
-            //                         'created_at' => $value->created_at,
-            //                     ]
-            //                 );
-            //             }
-            //         }
-            //     } else {
-            //         // tdk menemukan data
-            //         }
         }
     }
     // ==================================== LOCAL ABSENCE ===================================================================

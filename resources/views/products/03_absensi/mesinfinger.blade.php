@@ -14,13 +14,13 @@
 
         td.cuspad2 {
             /* padding-top: 0.5px;
-                                                                                                padding-bottom: 0.5px;
-                                                                                                padding-right: 0.5px;
-                                                                                                padding-left: 0.5px;
-                                                                                                margin-top: 5px;
-                                                                                                margin-bottom: 5px;
-                                                                                                margin-right: 5px;
-                                                                                                margin-left: 5px; */
+                                                                                                                                                                                                                                                                                                                    padding-bottom: 0.5px;
+                                                                                                                                                                                                                                                                                                                    padding-right: 0.5px;
+                                                                                                                                                                                                                                                                                                                    padding-left: 0.5px;
+                                                                                                                                                                                                                                                                                                                    margin-top: 5px;
+                                                                                                                                                                                                                                                                                                                    margin-bottom: 5px;
+                                                                                                                                                                                                                                                                                                                    margin-right: 5px;
+                                                                                                                                                                                                                                                                                                                    margin-left: 5px; */
         }
 
         .unselectable {
@@ -247,8 +247,10 @@
                                         </div>
                                         <div class="col-md-6 col-xl-3 col-12">
                                             <div class="card card-sm bg-primary-lt">
-                                                <a href="#" id="btnUploadFixed"
+
+                                                <a href="#" data-bs-toggle="modal" data-bs-target="#modal-small"
                                                     style="text-decoration: none !important;color: inherit;">
+                                                    {{-- <a href="#" id="btnUploadFixed" style="text-decoration: none !important;color: inherit;"> --}}
                                                     <div class="card-body">
                                                         <div class="row align-items-center">
                                                             <div class="col-auto">
@@ -344,6 +346,54 @@
                     </div>
                 </div>
             </div>
+            <div class="modal modal-blur fade" id="modal-small" tabindex="-1" style="display: none;"
+                aria-hidden="true">
+                <div class="modal-dialog modal-sm modal-dialog-centered" role="document">
+                    <div class="modal-content">
+                        <div class="modal-body">
+                            <div class="modal-title">Upload Data?</div>
+                            <div>Pilih Tanggal Upload.</div>
+                            <div class="row">
+                                <div class="col-sm-6 col-md-6">
+                                    <select id="tglUploadFixed" class="form-select">
+                                        <option value="<?= date('m') ?>" selected="selected">-- <?= date('F') ?> --
+                                        </option>
+                                        <option value="01">Januari</option>
+                                        <option value="02">Februari</option>
+                                        <option value="03">Maret</option>
+                                        <option value="04">April</option>
+                                        <option value="05">Mei</option>
+                                        <option value="06">Juni</option>
+                                        <option value="07">Juli</option>
+                                        <option value="08">Agustus</option>
+                                        <option value="09">September</option>
+                                        <option value="10">Oktober</option>
+                                        <option value="11">November</option>
+                                        <option value="12">Desember</option>
+                                    </select>
+                                </div>
+                                <div class="col-sm-6 col-md-6">
+                                    <select id="tahunUploadFixed" class="form-select">
+                                        <?php
+                                        $already_selected_value = date('Y');
+                                        $earliest_year = 2022;
+                                        foreach (range(date('Y'), $earliest_year) as $x) {
+                                            print '<option value="' . $x . '"' . ($x === $already_selected_value ? ' selected="selected"' : '') . '>' . $x . '</option>';
+                                        }
+                                        ?>
+                                    </select>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-link link-secondary me-auto"
+                                data-bs-dismiss="modal">Cancel</button>
+                            <button type="button" class="btn btn-blue" data-bs-dismiss="modal"
+                                id="btnUploadFixed">Upload</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
             @include('shared.footer')
             <script>
                 $('#btnUploadFixed').click(function() {
@@ -364,6 +414,8 @@
                                 url: "{{ url('UploadFixedAbsen') }}",
                                 data: {
                                     "_token": "{{ csrf_token() }}",
+                                    'tglUploadFixed': $('#tglUploadFixed').val(),
+                                    'tahunUploadFixed': $('#tahunUploadFixed').val(),
                                 },
                                 beforeSend: function() {
                                     Swal.fire({
