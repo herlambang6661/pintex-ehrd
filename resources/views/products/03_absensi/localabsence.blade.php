@@ -72,17 +72,44 @@
                     <!-- Page title actions -->
                     <div class="col-auto ms-auto d-print-none">
                                 <div class="btn-list">
-                                    <div class=" d-none d-sm-inline-block">
-                                        <input type="date" name="tgl" id="tgl" class="form-control" value="{{ date('Y-m-d') }}">
+                                    <div class="input-group d">
+                                        <div class=" d-none d-sm-inline-block">
+                                            {{-- <input type="date" name="tgl" id="tgl" class="form-control border-blue" value="{{ date('Y-m-d') }}"> --}}
+                                            
+                                            <div class="input-icon ">
+                                                <input class="form-control border-primary tgl" placeholder="Select a date" id="datepicker2" value="<?= date('Y-m-d') ?>"  />
+                                                <span class="input-icon-addon">
+                                                    <svg xmlns="http://www.w3.org/2000/svg" class="icon" width="24" height="24"
+                                                        viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none"
+                                                        stroke-linecap="round" stroke-linejoin="round">
+                                                        <path stroke="none" d="M0 0h24v24H0z" fill="none" />
+                                                        <path
+                                                            d="M4 7a2 2 0 0 1 2 -2h12a2 2 0 0 1 2 2v12a2 2 0 0 1 -2 2h-12a2 2 0 0 1 -2 -2v-12z" />
+                                                        <path d="M16 3v4" />
+                                                        <path d="M8 3v4" />
+                                                        <path d="M4 11h16" />
+                                                        <path d="M11 15h1" />
+                                                        <path d="M12 15v3" />
+                                                    </svg>
+                                                </span>
+                                            </div>
+                                        </div>
+                                        <button class="btn btn-blue d-none d-sm-inline-block" id="btnPerbarui">
+                                            <svg  xmlns="http://www.w3.org/2000/svg"  width="24"  height="24"  viewBox="0 0 24 24"  fill="none"  stroke="currentColor"  stroke-width="2"  stroke-linecap="round"  stroke-linejoin="round"  class="icon icon-tabler icons-tabler-outline icon-tabler-refresh"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><path d="M20 11a8.1 8.1 0 0 0 -15.5 -2m-.5 -4v4h4" /><path d="M4 13a8.1 8.1 0 0 0 15.5 2m.5 4v-4h-4" /></svg>
+                                            Perbarui
+                                        </button>
+                                        <button data-bs-toggle="dropdown" type="button" class="btn btn-blue dropdown-toggle dropdown-toggle-split" aria-expanded="false"></button>
+                                        <div class="dropdown-menu dropdown-menu-end" style="">
+                                            <button class="dropdown-item" id="btnUpload">
+                                                <svg  xmlns="http://www.w3.org/2000/svg" style="margin-right: 10px" width="24"  height="24"  viewBox="0 0 24 24"  fill="none"  stroke="currentColor"  stroke-width="2"  stroke-linecap="round"  stroke-linejoin="round"  class="icon icon-tabler icons-tabler-outline icon-tabler-cloud-upload"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><path d="M7 18a4.6 4.4 0 0 1 0 -9a5 4.5 0 0 1 11 2h1a3.5 3.5 0 0 1 0 7h-1" /><path d="M9 15l3 -3l3 3" /><path d="M12 12l0 9" /></svg>
+                                                Upload Cloud
+                                            </button>
+                                            <button class="dropdown-item" id="btnPerbaruiUpload">
+                                                <svg  xmlns="http://www.w3.org/2000/svg" style="margin-right: 10px" width="24"  height="24"  viewBox="0 0 24 24"  fill="none"  stroke="currentColor"  stroke-width="2"  stroke-linecap="round"  stroke-linejoin="round"  class="icon icon-tabler icons-tabler-outline icon-tabler-cloud-computing"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><path d="M6.657 16c-2.572 0 -4.657 -2.007 -4.657 -4.483c0 -2.475 2.085 -4.482 4.657 -4.482c.393 -1.762 1.794 -3.2 3.675 -3.773c1.88 -.572 3.956 -.193 5.444 1c1.488 1.19 2.162 3.007 1.77 4.769h.99c1.913 0 3.464 1.56 3.464 3.486c0 1.927 -1.551 3.487 -3.465 3.487h-11.878" /><path d="M12 16v5" /><path d="M16 16v4a1 1 0 0 0 1 1h4" /><path d="M8 16v4a1 1 0 0 1 -1 1h-4" /></svg>
+                                                Perbarui & Upload ke Cloud
+                                            </button>
+                                        </div>
                                     </div>
-                                    <button class="btn btn-info d-none d-sm-inline-block" id="btnPerbarui">
-                                        <svg  xmlns="http://www.w3.org/2000/svg"  width="24"  height="24"  viewBox="0 0 24 24"  fill="none"  stroke="currentColor"  stroke-width="2"  stroke-linecap="round"  stroke-linejoin="round"  class="icon icon-tabler icons-tabler-outline icon-tabler-refresh"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><path d="M20 11a8.1 8.1 0 0 0 -15.5 -2m-.5 -4v4h4" /><path d="M4 13a8.1 8.1 0 0 0 15.5 2m.5 4v-4h-4" /></svg>
-                                        Perbarui
-                                    </button>
-                                    <button class="btn btn-primary d-none d-sm-inline-block" id="btnPerbarui">
-                                        <svg  xmlns="http://www.w3.org/2000/svg"  width="24"  height="24"  viewBox="0 0 24 24"  fill="none"  stroke="currentColor"  stroke-width="2"  stroke-linecap="round"  stroke-linejoin="round"  class="icon icon-tabler icons-tabler-outline icon-tabler-cloud-upload"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><path d="M7 18a4.6 4.4 0 0 1 0 -9a5 4.5 0 0 1 11 2h1a3.5 3.5 0 0 1 0 7h-1" /><path d="M9 15l3 -3l3 3" /><path d="M12 12l0 9" /></svg>
-                                        Upload Finger
-                                    </button>
                                 </div>
                             </div>
                         </div>
@@ -112,6 +139,7 @@
                                                 <th class="text-center">Out</th>
                                                 <th class="text-center">QJ</th>
                                                 <th class="text-center">JIS</th>
+                                                <th class="text-center">QJNET</th>
                                                 <th class="text-center">SST</th>
                                             </tr>
                                         </thead>
@@ -145,7 +173,7 @@
                         <div class="row">
                             <div class="col">
                                 <div class="input-icon mb-2">
-                                    <input class="form-control border-primary dari" placeholder="Select a date" id="datepicker0" value="<?= date('Y-m-01') ?>"  />
+                                    <input class="form-control border-primary dari" placeholder="Select a date" id="datepicker0" value="<?= date('Y-m-d') ?>"  />
                                     <span class="input-icon-addon">
                                         <svg xmlns="http://www.w3.org/2000/svg" class="icon" width="24" height="24"
                                             viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none"
@@ -164,7 +192,7 @@
                             </div>
                             <div class="col">
                                 <div class="input-icon mb-2">
-                                    <input class="form-control border-primary sampai" placeholder="Select a date" id="datepicker1" value="<?= date('Y-m-31') ?>"  />
+                                    <input class="form-control border-primary sampai" placeholder="Select a date" id="datepicker1" value="<?= date('Y-m-d') ?>"  />
                                     <span class="input-icon-addon">
                                         <svg xmlns="http://www.w3.org/2000/svg" class="icon" width="24" height="24"
                                             viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none"
@@ -188,57 +216,91 @@
                             <div class="row">
                                 <div class="col-sm-6">
                                     <label class="form-check">
-                                        <input type="checkbox" class="form-check-input filter-checkbox-rayon"
-                                            name="pendidikan[]" value="IBR" checked="" id="sSmp">
+                                        <input type="checkbox" class="form-check-input jenis_kelamin" value="PRIA" checked="" id="sSmp">
                                         <span class="form-check-label">Pria</span>
                                     </label>
+                                </div>
+                                <div class="col-sm-6">
                                     <label class="form-check">
-                                        <input type="checkbox" class="form-check-input filter-checkbox-rayon"
-                                            name="pendidikan[]" value="SPV" checked="" id="sSma">
+                                        <input type="checkbox" class="form-check-input jenis_kelamin" value="WANITA" checked="" id="sSma">
                                         <span class="form-check-label">Wanita</span>
                                     </label>
                                 </div>
                             </div>
                         </div>
-                        <div class="form-label">Posisi Dituju</div>
+                        <div class="form-label">Divisi</div>
                         <div class="mb-4">
-                            <label class="form-check">
-                                <input type="checkbox" class="form-check-input" name="posisidituju[]" value="OPERATOR"
-                                    checked="" id="pOperator">
-                                <span class="form-check-label">Operator</span>
-                            </label>
-                            <label class="form-check">
-                                <input type="checkbox" class="form-check-input" name="posisidituju[]" value="PENGEMUDI"
-                                    checked="" id="pPengemudi">
-                                <span class="form-check-label">Pengemudi</span>
-                            </label>
-                            <label class="form-check">
-                                <input type="checkbox" class="form-check-input" name="posisidituju[]" value="IT"
-                                    checked="" id="pIT">
-                                <span class="form-check-label">IT</span>
-                            </label>
-                            <label class="form-check">
-                                <input type="checkbox" class="form-check-input" name="posisidituju[]" value="HRD"
-                                    checked="" id="pHRD">
-                                <span class="form-check-label">HRD</span>
-                            </label>
-                            <label class="form-check">
-                                <input type="checkbox" class="form-check-input" name="posisidituju[]" value="KEAMANAN"
-                                    checked="" id="pKeamanan">
-                                <span class="form-check-label">Keamanan</span>
-                            </label>
+                            <div class="row">
+                                <div class="col">
+                                    <label class="form-check">
+                                        <input type="checkbox" class="form-check-input divisi" value="HRD & GA" checked="" id="pOperator">
+                                        <span class="form-check-label">HRD & GA</span>
+                                    </label>
+                                </div>
+                                <div class="col">
+                                    <label class="form-check">
+                                        <input type="checkbox" class="form-check-input divisi" value="PRODUKSI" checked="" id="pPengemudi">
+                                        <span class="form-check-label">PRODUKSI</span>
+                                    </label>
+                                </div>
+                            </div>
                         </div>
-                        <div class="form-label">Tinggi Minimal</div>
+                        <div class="form-label">Bagian</div>
                         <div class="mb-4">
-                            <input type="number" min="0" max="300" class="form-control" id="tinggi">
-                        </div>
-                        <div class="form-label">Proses Wawancara</div>
-                        <div class="mb-4">
-                            <label class="form-check form-switch">
-                                <input class="form-check-input" type="checkbox">
-                                <span class="form-check-label form-check-label-on">Sudah</span>
-                                <span class="form-check-label form-check-label-off">Belum</span>
-                            </label>
+                            <div class="row">
+                                <div class="col">
+                                    <label class="form-check">
+                                        <input type="checkbox" class="form-check-input bagian" value="AKUNTING & KEUANGAN" checked="" id="pOperator">
+                                        <span class="form-check-label">AKUNTING & KEUANGAN</span>
+                                    </label>
+                                    <label class="form-check">
+                                        <input type="checkbox" class="form-check-input bagian" value="GUDANG" checked="" id="pPengemudi">
+                                        <span class="form-check-label">GUDANG</span>
+                                    </label>
+                                    <label class="form-check">
+                                        <input type="checkbox" class="form-check-input bagian" value="KEAMANAN" checked="" id="pPengemudi">
+                                        <span class="form-check-label">KEAMANAN</span>
+                                    </label>
+                                    <label class="form-check">
+                                        <input type="checkbox" class="form-check-input bagian" value="PERSONALIA" checked="" id="pPengemudi">
+                                        <span class="form-check-label">PERSONALIA</span>
+                                    </label>
+                                    <label class="form-check">
+                                        <input type="checkbox" class="form-check-input bagian" value="TFI" checked="" id="pPengemudi">
+                                        <span class="form-check-label">TFI</span>
+                                    </label>
+                                    <label class="form-check">
+                                        <input type="checkbox" class="form-check-input bagian" value="TFO" checked="" id="pPengemudi">
+                                        <span class="form-check-label">TFO</span>
+                                    </label>
+                                </div>
+                                <div class="col">
+                                    <label class="form-check">
+                                        <input type="checkbox" class="form-check-input bagian" value="TFO 1" checked="" id="pPengemudi">
+                                        <span class="form-check-label">TFO 1</span>
+                                    </label>
+                                    <label class="form-check">
+                                        <input type="checkbox" class="form-check-input bagian" value="TFO 2" checked="" id="pPengemudi">
+                                        <span class="form-check-label">TFO 2</span>
+                                    </label>
+                                    <label class="form-check">
+                                        <input type="checkbox" class="form-check-input bagian" value="UMUM" checked="" id="pPengemudi">
+                                        <span class="form-check-label">UMUM</span>
+                                    </label>
+                                    <label class="form-check">
+                                        <input type="checkbox" class="form-check-input bagian" value="UNIT 1" checked="" id="pPengemudi">
+                                        <span class="form-check-label">UNIT 1</span>
+                                    </label>
+                                    <label class="form-check">
+                                        <input type="checkbox" class="form-check-input bagian" value="UNIT 2" checked="" id="pPengemudi">
+                                        <span class="form-check-label">UNIT 2</span>
+                                    </label>
+                                    <label class="form-check">
+                                        <input type="checkbox" class="form-check-input bagian" value="WCR & WORKSHOP" checked="" id="pPengemudi">
+                                        <span class="form-check-label">WCR & WORKSHOP</span>
+                                    </label>
+                                </div>
+                            </div>
                         </div>
                         <div class="mt-5">
                             <button type="button" class="btn btn-primary w-100" onclick="syn()" id="btn-filter">Filter
@@ -406,6 +468,11 @@
                             className: 'cuspad0 text-center'
                         },
                         {
+                            data: 'qjnet',
+                            name: 'qjnet',
+                            className: 'cuspad0 text-center'
+                        },
+                        {
                             data: 'sst',
                             name: 'sst',
                             className: 'cuspad0 text-center'
@@ -415,7 +482,7 @@
 
                 $('#btnPerbarui').click(function(){
                     var token = $("meta[name='csrf-token']").attr("content");
-                    var tgl = $('#tgl').val();
+                    var tgl = $('.tgl').val();
                     Swal.fire({
                         icon: 'question',
                         title: 'Perbarui Data Absen',
@@ -461,7 +528,7 @@
                                     });
                                     Toast.fire({
                                         icon: "success",
-                                        title: data.success
+                                        title: "Berhasil Memperbarui data"
                                     });
                                 },
                                 error: function(data) {
@@ -479,6 +546,142 @@
                         }
                     });
                     // tableAbsensi.ajax.reload(); //just reload table
+                });
+
+                $('#btnUpload').click(function(){
+                    var token = $("meta[name='csrf-token']").attr("content");
+                    var tgl = $('.tgl').val();
+                    
+                    Swal.fire({
+                        icon: 'question',
+                        title: 'Upload Data Absen',
+                        text: 'Apakah anda yakin ingin Upload data absen tanggal ' + tgl + ' dari Lokal ke Cloud ?',
+                        showCancelButton: true,
+                        confirmButtonColor: '#d33',
+                        cancelButtonColor: '#3085d6',
+                        confirmButtonText: ' Ya',
+                        cancelButtonText: 'Tidak',
+                    }).then((result) => {
+                        if (result.isConfirmed) {
+                            $.ajax({
+                                type: "POST",
+                                url: "{{ url('uploadAbsen') }}",
+                                data: {
+                                    "_token": "{{ csrf_token() }}",
+                                    'tgl': tgl,
+                                },
+                                beforeSend: function() {
+                                    Swal.fire({
+                                        title: 'Mohon Menunggu',
+                                        html: '<center><lottie-player src="https://lottie.host/f6ad03a7-1560-4082-8f73-eba358540a2a/jwBLWkLRwZ.json"  background="transparent"  speed="1"  style="width: 300px; height: 300px;"  loop autoplay></lottie-player></center><br><h1 class="h4">Sedang Sinkronisasi data, Proses mungkin membutuhkan beberapa menit. <br><br><b class="text-danger">(Jangan menutup jendela ini, bisa mengakibatkan error)</b></h1>',
+                                        timerProgressBar: true,
+                                        showConfirmButton: false,
+                                        allowOutsideClick: false,
+                                        allowEscapeKey: false,
+                                    });
+                                    console.log('fetch data: '+ tgl);
+                                },
+                                success: function(data) {
+                                    console.log(data);
+                                    tableAbsensi.ajax.reload();
+                                    const Toast = Swal.mixin({
+                                        toast: true,
+                                        position: "top-end",
+                                        showConfirmButton: false,
+                                        timer: 3000,
+                                        timerProgressBar: true,
+                                        didOpen: (toast) => {
+                                            toast.onmouseenter = Swal.stopTimer;
+                                            toast.onmouseleave = Swal.resumeTimer;
+                                        }
+                                    });
+                                    Toast.fire({
+                                        icon: "success",
+                                        title: "Berhasil Upload ke Cloud"
+                                    });
+                                },
+                                error: function(data) {
+                                    console.log(data);
+                                    console.log('Error:', data.error);
+                                    Swal.fire({
+                                        icon: 'error',
+                                        title: 'Gagal!',
+                                        text: 'Error: ' + data.responseText,
+                                        showConfirmButton: true,
+                                    });
+                                    tableAbsensi.ajax.reload();
+                                }
+                            });
+                        }
+                    });
+                });
+
+                $('#btnPerbaruiUpload').click(function(){
+                    var token = $("meta[name='csrf-token']").attr("content");
+                    var tgl = $('.tgl').val();
+                    
+                    Swal.fire({
+                        icon: 'question',
+                        title: 'Perbarui & Upload Data Absen',
+                        text: 'Apakah anda yakin ingin Perbarui & Upload data absen tanggal ' + tgl + ' dari Lokal ke Cloud ? Proses akan membutuhkan waktu yang cukup lama, mohon bersabar.',
+                        showCancelButton: true,
+                        confirmButtonColor: '#d33',
+                        cancelButtonColor: '#3085d6',
+                        confirmButtonText: ' Ya',
+                        cancelButtonText: 'Tidak',
+                    }).then((result) => {
+                        if (result.isConfirmed) {
+                            $.ajax({
+                                type: "POST",
+                                url: "{{ url('perbaruiUploadAbsen') }}",
+                                data: {
+                                    "_token": "{{ csrf_token() }}",
+                                    'tgl': tgl,
+                                },
+                                beforeSend: function() {
+                                    Swal.fire({
+                                        title: 'Mohon Menunggu',
+                                        html: '<center><lottie-player src="https://lottie.host/f6ad03a7-1560-4082-8f73-eba358540a2a/jwBLWkLRwZ.json"  background="transparent"  speed="1"  style="width: 300px; height: 300px;"  loop autoplay></lottie-player></center><br><h1 class="h4">Sedang Sinkronisasi data, Proses mungkin membutuhkan beberapa menit. Proses akan membutuhkan waktu yang cukup lama, mohon bersabar.<br><br><b class="text-danger">(Jangan menutup jendela ini, bisa mengakibatkan error)</b></h1>',
+                                        timerProgressBar: true,
+                                        showConfirmButton: false,
+                                        allowOutsideClick: false,
+                                        allowEscapeKey: false,
+                                    });
+                                    console.log('fetch data: '+ tgl);
+                                },
+                                success: function(data) {
+                                    console.log(data);
+                                    tableAbsensi.ajax.reload();
+                                    const Toast = Swal.mixin({
+                                        toast: true,
+                                        position: "top-end",
+                                        showConfirmButton: false,
+                                        timer: 3000,
+                                        timerProgressBar: true,
+                                        didOpen: (toast) => {
+                                            toast.onmouseenter = Swal.stopTimer;
+                                            toast.onmouseleave = Swal.resumeTimer;
+                                        }
+                                    });
+                                    Toast.fire({
+                                        icon: "success",
+                                        title: "Berhasil Perbarui & Upload ke Cloud"
+                                    });
+                                },
+                                error: function(data) {
+                                    console.log(data);
+                                    console.log('Error:', data.error);
+                                    Swal.fire({
+                                        icon: 'error',
+                                        title: 'Gagal!',
+                                        text: 'Error: ' + data.responseText,
+                                        showConfirmButton: true,
+                                    });
+                                    tableAbsensi.ajax.reload();
+                                }
+                            });
+                        }
+                    });
                 });
 
             });

@@ -3,9 +3,10 @@
 namespace App\Http\Controllers;
 
 use DateTime;
+use Carbon\Carbon;
 use Illuminate\Http\Request;
-use Illuminate\Routing\Controller;
 
+use Illuminate\Routing\Controller;
 use Illuminate\Support\Facades\DB;
 use function PHPUnit\Framework\isNull;
 
@@ -626,6 +627,7 @@ class DBLokal extends Controller
     {
         $ac = DB::table('penerimaan_karyawan')
             ->where('status', 'like', '%Aktif%')
+            ->orderBy('userid', 'ASC')
             ->select('*')
             ->get();
         foreach ($ac as $key) {
@@ -656,21 +658,17 @@ class DBLokal extends Controller
                     $hari_ini = "Tidak di ketahui";
                     break;
             }
-            // if ($key->hrlibur == strtoupper($hari_ini)) {
-            //     $harilibur = 'L';
-            // } else {
-            //     $harilibur = null;
-            // }
 
-            $sq = DB::connection('mysql_local')
+            $fromLocal = DB::connection('mysql_local')
                 ->table('absensi_absensi')
                 ->where('userid', '=', $key->userid)
                 ->where('tanggal', '=', $request->tgl)
-                // ->select('*')
+                // ->limit(1)
                 ->first();
-            if ($sq) {
+            if ($fromLocal) {
                 // Data Ditemukan
-                $gt = DB::connection('mysql_local')
+                // Set date In
+                $getIn = DB::connection('mysql_local')
                     ->table('access_checkinout')
                     ->whereBetween('CHECKTIME', [$request->tgl . ' 04:00:00', date('Y-m-d', strtotime($request->tgl . "+1 days")) . ' 00:00:00'])
                     // ->whereDate('CHECKTIME', '=', $request->tgl)
@@ -678,8 +676,16 @@ class DBLokal extends Controller
                     ->where('CHECKTYPE', '=', 'I')
                     ->select('CHECKTYPE', 'CHECKTIME')
                     ->get();
-                // Set date In
-                foreach ($gt as $value) {
+                // Set date Out
+                $st = DB::connection('mysql_local')
+                    ->table('access_checkinout')
+                    ->where('USERID', '=', $key->userid)
+                    ->where('CHECKTYPE', '=', 'O')
+                    ->whereBetween('CHECKTIME', [$request->tgl . ' 07:30:00', date('Y-m-d', strtotime($request->tgl . "+1 days")) . ' 07:30:00'])
+                    ->select('CHECKTYPE', 'CHECKTIME')
+                    ->get();
+                // send in
+                foreach ($getIn as $value) {
                     ($value->CHECKTYPE == 'I') ? $in = $value->CHECKTIME : $in = null;
                     DB::connection('mysql_local')
                         ->table('absensi_absensi')
@@ -689,25 +695,16 @@ class DBLokal extends Controller
                         ->update(
                             array(
                                 'in' => $in,
-                                // 'prediksiShift' => $shift,
                             )
                         );
                 }
-                // Set date Out
-                $st = DB::connection('mysql_local')
-                    ->table('access_checkinout')
-                    ->where('USERID', '=', $key->userid)
-                    ->where('CHECKTYPE', '=', 'O')
-                    ->whereBetween('CHECKTIME', [$request->tgl . ' 07:30:00', date('Y-m-d', strtotime($request->tgl . "+1 days")) . ' 07:30:00'])
-                    // ->whereDate('CHECKTIME', '=', $request->tgl)
-                    ->select('CHECKTYPE', 'CHECKTIME')
-                    ->get();
+                // send out
                 foreach ($st as $value) {
                     ($value->CHECKTYPE == 'O') ? $out = $value->CHECKTIME : $out = null;
                     DB::connection('mysql_local')
                         ->table('absensi_absensi')
                         ->where('userid', '=', $key->userid)
-                        // ->where('tanggal', '=', $request->tgl)
+                        ->where('tanggal', '=', $request->tgl)
                         ->limit(1)
                         ->update(
                             array(
@@ -723,12 +720,24 @@ class DBLokal extends Controller
                     // ->select('*')
                     ->get();
                 foreach ($fn as $f) {
+                    $starttimestamp = strtotime($f->in);
+                    $endtimestamp = strtotime($f->out);
+                    $difference = abs($endtimestamp - $starttimestamp) / 3600;
+                    // STATUS ABSENSI
                     if ($f->hrlibur == strtoupper($hari_ini) && $f->in == null && $f->out == null) {
                         // Libur
                         DB::connection('mysql_local')
                             ->table('absensi_absensi')
-                            ->where('userid', '=', $f->userid)
-                            ->where('tanggal', '=', $request->tgl)
+                            ->where(
+                                'userid',
+                                '=',
+                                $f->userid
+                            )
+                            ->where(
+                                'tanggal',
+                                '=',
+                                $request->tgl
+                            )
                             ->limit(1)
                             ->update(
                                 array(
@@ -739,8 +748,16 @@ class DBLokal extends Controller
                         // Libur tapi dinger in tdk ada
                         DB::connection('mysql_local')
                             ->table('absensi_absensi')
-                            ->where('userid', '=', $f->userid)
-                            ->where('tanggal', '=', $request->tgl)
+                            ->where(
+                                'userid',
+                                '=',
+                                $f->userid
+                            )
+                            ->where(
+                                'tanggal',
+                                '=',
+                                $request->tgl
+                            )
                             ->limit(1)
                             ->update(
                                 array(
@@ -751,27 +768,308 @@ class DBLokal extends Controller
                         // Libur tapi dinger out tdk ada
                         DB::connection('mysql_local')
                             ->table('absensi_absensi')
-                            ->where('userid', '=', $f->userid)
-                            ->where('tanggal', '=', $request->tgl)
+                            ->where(
+                                'userid',
+                                '=',
+                                $f->userid
+                            )
+                            ->where(
+                                'tanggal',
+                                '=',
+                                $request->tgl
+                            )
                             ->limit(1)
                             ->update(
                                 array(
                                     'sst' => 'L',
                                 )
                             );
+                    } elseif ($f->in == null && $f->out == null) {
+                        DB::connection('mysql_local')
+                            ->table('absensi_absensi')
+                            ->where(
+                                'userid',
+                                '=',
+                                $f->userid
+                            )
+                            ->where(
+                                'tanggal',
+                                '=',
+                                $request->tgl
+                            )
+                            ->limit(1)
+                            ->update(
+                                array(
+                                    'sst' => 'A',
+                                )
+                            );
                     } elseif ($f->in == null || $f->out == null) {
                         DB::connection('mysql_local')
                             ->table('absensi_absensi')
-                            ->where('userid', '=', $f->userid)
-                            ->where('tanggal', '=', $request->tgl)
+                            ->where(
+                                'userid',
+                                '=',
+                                $f->userid
+                            )
+                            ->where(
+                                'tanggal',
+                                '=',
+                                $request->tgl
+                            )
                             ->limit(1)
                             ->update(
                                 array(
                                     'sst' => 'F1',
                                 )
                             );
+                    } elseif ($f->in != null && $f->out != null) {
+                        if ($f->hrlibur == strtoupper($hari_ini) &&  $difference <= 7) {
+                            // LEMBUR
+                            DB::connection('mysql_local')
+                                ->table('absensi_absensi')
+                                ->where(
+                                    'userid',
+                                    '=',
+                                    $f->userid
+                                )
+                                ->where(
+                                    'tanggal',
+                                    '=',
+                                    $request->tgl
+                                )
+                                ->limit(1)
+                                ->update(
+                                    array(
+                                        'sst' => 'L',
+                                    )
+                                );
+                        } elseif ($difference <= 4) {
+                            // IP
+                            DB::connection('mysql_local')
+                                ->table('absensi_absensi')
+                                ->where(
+                                    'userid',
+                                    '=',
+                                    $f->userid
+                                )
+                                ->where(
+                                    'tanggal',
+                                    '=',
+                                    $request->tgl
+                                )
+                                ->limit(1)
+                                ->update(
+                                    array(
+                                        'sst' => 'F2',
+                                    )
+                                );
+                        } elseif ($difference <= 7) {
+                            // PC ½ Hari
+                            if ($f->sethari == strtoupper($hari_ini)) {
+                                DB::connection('mysql_local')
+                                    ->table('absensi_absensi')
+                                    ->where(
+                                        'userid',
+                                        '=',
+                                        $f->userid
+                                    )
+                                    ->where('tanggal', '=', $request->tgl)
+                                    ->limit(1)
+                                    ->update(
+                                        array(
+                                            'sst' => 'H',
+                                        )
+                                    );
+                            } else {
+                                DB::connection('mysql_local')
+                                    ->table('absensi_absensi')
+                                    ->where(
+                                        'userid',
+                                        '=',
+                                        $f->userid
+                                    )
+                                    ->where('tanggal', '=', $request->tgl)
+                                    ->limit(1)
+                                    ->update(
+                                        array(
+                                            'sst' => '½',
+                                        )
+                                    );
+                            }
+                        } else {
+                            // H
+                            DB::connection('mysql_local')
+                                ->table('absensi_absensi')
+                                ->where(
+                                    'userid',
+                                    '=',
+                                    $f->userid
+                                )
+                                ->where(
+                                    'tanggal',
+                                    '=',
+                                    $request->tgl
+                                )
+                                ->limit(1)
+                                ->update(
+                                    array(
+                                        'sst' => 'H',
+                                    )
+                                );
+                        }
+                    }
+                    // PREDIKSI SHIFT
+                    if (Carbon::parse($f->in)->format('H:i:s') > '04:00:00' && Carbon::parse($f->in)->format('H:i:s') < '07:30:00') {
+                        // Shift 1
+                        DB::connection('mysql_local')
+                            ->table('absensi_absensi')
+                            ->where(
+                                'userid',
+                                '=',
+                                $f->userid
+                            )
+                            ->where(
+                                'tanggal',
+                                '=',
+                                $request->tgl
+                            )
+                            ->limit(1)
+                            ->update(
+                                array(
+                                    'prediksiShift' => '1',
+                                )
+                            );
+                    } elseif (
+                        Carbon::parse($f->in)->format('H:i:s') > '12:30:00' && Carbon::parse($f->in)->format('H:i:s') < '15:00:00'
+                    ) {
+                        // Shift 2
+                        DB::connection('mysql_local')
+                            ->table('absensi_absensi')
+                            ->where(
+                                'userid',
+                                '=',
+                                $f->userid
+                            )
+                            ->where(
+                                'tanggal',
+                                '=',
+                                $request->tgl
+                            )
+                            ->limit(1)
+                            ->update(
+                                array(
+                                    'prediksiShift' => '2',
+                                )
+                            );
+                    } elseif (
+                        Carbon::parse($f->in)->format('H:i:s') > '20:00:00' && Carbon::parse($f->in)->format('H:i:s') < '23:30:00'
+                    ) {
+                        // Shift 3
+                        DB::connection('mysql_local')
+                            ->table('absensi_absensi')
+                            ->where(
+                                'userid',
+                                '=',
+                                $f->userid
+                            )
+                            ->where(
+                                'tanggal',
+                                '=',
+                                $request->tgl
+                            )
+                            ->limit(1)
+                            ->update(
+                                array(
+                                    'prediksiShift' => '3',
+                                )
+                            );
+                    } elseif (
+                        Carbon::parse($f->in)->format('H:i:s') > '07:30:00' && Carbon::parse($f->in)->format('H:i:s') < '10:30:00'
+                    ) {
+                        // Shift 0
+                        DB::connection('mysql_local')
+                            ->table('absensi_absensi')
+                            ->where(
+                                'userid',
+                                '=',
+                                $f->userid
+                            )
+                            ->where(
+                                'tanggal',
+                                '=',
+                                $request->tgl
+                            )
+                            ->limit(1)
+                            ->update(
+                                array(
+                                    'prediksiShift' => '0',
+                                )
+                            );
+                    }
+                    // QJ, JIS & QJNET
+                    if ($f->in != null && $f->out != null) {
+                        DB::connection('mysql_local')
+                            ->table('absensi_absensi')
+                            ->where(
+                                'userid',
+                                '=',
+                                $f->userid
+                            )
+                            ->where(
+                                'tanggal',
+                                '=',
+                                $request->tgl
+                            )
+                            ->limit(1)
+                            ->update(
+                                array(
+                                    'qj' => $difference,
+                                )
+                            );
+
+                        if ($difference > 7) {
+                            DB::connection('mysql_local')
+                                ->table('absensi_absensi')
+                                ->where(
+                                    'userid',
+                                    '=',
+                                    $f->userid
+                                )
+                                ->where(
+                                    'tanggal',
+                                    '=',
+                                    $request->tgl
+                                )
+                                ->limit(1)
+                                ->update(
+                                    array(
+                                        'jis' => 1,
+                                        'qjnet' => $difference - 1,
+                                    )
+                                );
+                        } else {
+                            DB::connection('mysql_local')
+                                ->table('absensi_absensi')
+                                ->where(
+                                    'userid',
+                                    '=',
+                                    $f->userid
+                                )
+                                ->where(
+                                    'tanggal',
+                                    '=',
+                                    $request->tgl
+                                )
+                                ->limit(1)
+                                ->update(
+                                    array(
+                                        'qjnet' => $difference,
+                                    )
+                                );
+                        }
                     }
                 }
+                // return response()->json(['success' => 'Data ' . $request->tgl . ' - ', date("Y-m-d", strtotime($request->tgl . "+1 days")) . ' Berhasil di Update.', 'status' => 1]);
             } else {
                 // Data Tidak Ditemukan, jadi Insert data baru
                 DB::connection('mysql_local')
@@ -784,7 +1082,6 @@ class DBLokal extends Controller
                             'stb' => $key->stb,
                             'name' => $key->nama,
                             'hrlibur' => $key->hrlibur,
-                            // 'sst' => strtoupper($harilibur),
                             'sethari' => $key->sethari,
                             'created_at' => date('Y-m-d H:i:s'),
                         ]
@@ -793,7 +1090,6 @@ class DBLokal extends Controller
                 $gt = DB::connection('mysql_local')
                     ->table('access_checkinout')
                     ->whereBetween('CHECKTIME', [$request->tgl . ' 04:00:00', date('Y-m-d', strtotime($request->tgl . "+1 days")) . ' 00:00:00'])
-                    // ->whereDate('CHECKTIME', '=', $request->tgl)
                     ->where('USERID', '=', $key->userid)
                     ->where('CHECKTYPE', '=', 'I')
                     ->select('CHECKTYPE', 'CHECKTIME')
@@ -809,7 +1105,6 @@ class DBLokal extends Controller
                         ->update(
                             array(
                                 'in' => $in,
-                                // 'prediksiShift' => $shift,
                             )
                         );
                 }
@@ -819,7 +1114,6 @@ class DBLokal extends Controller
                     ->where('USERID', '=', $key->userid)
                     ->where('CHECKTYPE', '=', 'O')
                     ->whereBetween('CHECKTIME', [$request->tgl . ' 07:30:00', date('Y-m-d', strtotime($request->tgl . "+1 days")) . ' 07:30:00'])
-                    // ->whereDate('CHECKTIME', '=', $request->tgl)
                     ->select('CHECKTYPE', 'CHECKTIME')
                     ->get();
                 foreach ($st as $value) {
@@ -827,7 +1121,7 @@ class DBLokal extends Controller
                     DB::connection('mysql_local')
                         ->table('absensi_absensi')
                         ->where('userid', '=', $key->userid)
-                        // ->where('tanggal', '=', $request->tgl)
+                        ->where('tanggal', '=', $request->tgl)
                         ->limit(1)
                         ->update(
                             array(
@@ -843,12 +1137,24 @@ class DBLokal extends Controller
                     // ->select('*')
                     ->get();
                 foreach ($fn as $f) {
+                    $starttimestamp = strtotime($f->in);
+                    $endtimestamp = strtotime($f->out);
+                    $difference = abs($endtimestamp - $starttimestamp) / 3600;
+                    // STATUS ABSENSI
                     if ($f->hrlibur == strtoupper($hari_ini) && $f->in == null && $f->out == null) {
                         // Libur
                         DB::connection('mysql_local')
                             ->table('absensi_absensi')
-                            ->where('userid', '=', $f->userid)
-                            ->where('tanggal', '=', $request->tgl)
+                            ->where(
+                                'userid',
+                                '=',
+                                $f->userid
+                            )
+                            ->where(
+                                'tanggal',
+                                '=',
+                                $request->tgl
+                            )
                             ->limit(1)
                             ->update(
                                 array(
@@ -861,8 +1167,16 @@ class DBLokal extends Controller
                         // Libur tapi dinger in tdk ada
                         DB::connection('mysql_local')
                             ->table('absensi_absensi')
-                            ->where('userid', '=', $f->userid)
-                            ->where('tanggal', '=', $request->tgl)
+                            ->where(
+                                'userid',
+                                '=',
+                                $f->userid
+                            )
+                            ->where(
+                                'tanggal',
+                                '=',
+                                $request->tgl
+                            )
                             ->limit(1)
                             ->update(
                                 array(
@@ -873,26 +1187,1352 @@ class DBLokal extends Controller
                         // Libur tapi dinger out tdk ada
                         DB::connection('mysql_local')
                             ->table('absensi_absensi')
-                            ->where('userid', '=', $f->userid)
-                            ->where('tanggal', '=', $request->tgl)
+                            ->where(
+                                'userid',
+                                '=',
+                                $f->userid
+                            )
+                            ->where(
+                                'tanggal',
+                                '=',
+                                $request->tgl
+                            )
                             ->limit(1)
                             ->update(
                                 array(
                                     'sst' => 'L',
                                 )
                             );
+                    } elseif ($f->in == null && $f->out == null) {
+                        DB::connection('mysql_local')
+                            ->table('absensi_absensi')
+                            ->where(
+                                'userid',
+                                '=',
+                                $f->userid
+                            )
+                            ->where(
+                                'tanggal',
+                                '=',
+                                $request->tgl
+                            )
+                            ->limit(1)
+                            ->update(
+                                array(
+                                    'sst' => 'A',
+                                )
+                            );
                     } elseif ($f->in == null || $f->out == null) {
                         DB::connection('mysql_local')
                             ->table('absensi_absensi')
-                            ->where('userid', '=', $f->userid)
-                            ->where('tanggal', '=', $request->tgl)
+                            ->where(
+                                'userid',
+                                '=',
+                                $f->userid
+                            )
+                            ->where(
+                                'tanggal',
+                                '=',
+                                $request->tgl
+                            )
                             ->limit(1)
                             ->update(
                                 array(
                                     'sst' => 'F1',
                                 )
                             );
+                    } elseif ($f->in != null && $f->out != null) {
+                        if ($f->hrlibur == strtoupper($hari_ini) &&  $difference <= 7) {
+                            // LEMBUR
+                            DB::connection('mysql_local')
+                                ->table('absensi_absensi')
+                                ->where(
+                                    'userid',
+                                    '=',
+                                    $f->userid
+                                )
+                                ->where(
+                                    'tanggal',
+                                    '=',
+                                    $request->tgl
+                                )
+                                ->limit(1)
+                                ->update(
+                                    array(
+                                        'sst' => 'L',
+                                    )
+                                );
+                        } elseif ($difference <= 4) {
+                            // IP
+                            DB::connection('mysql_local')
+                                ->table('absensi_absensi')
+                                ->where(
+                                    'userid',
+                                    '=',
+                                    $f->userid
+                                )
+                                ->where(
+                                    'tanggal',
+                                    '=',
+                                    $request->tgl
+                                )
+                                ->limit(1)
+                                ->update(
+                                    array(
+                                        'sst' => 'F2',
+                                    )
+                                );
+                        } elseif ($difference <= 7) {
+                            // PC ½ Hari
+                            if ($f->sethari == strtoupper($hari_ini)) {
+                                DB::connection('mysql_local')
+                                    ->table('absensi_absensi')
+                                    ->where(
+                                        'userid',
+                                        '=',
+                                        $f->userid
+                                    )
+                                    ->where('tanggal', '=', $request->tgl)
+                                    ->limit(1)
+                                    ->update(
+                                        array(
+                                            'sst' => 'H',
+                                        )
+                                    );
+                            } else {
+                                DB::connection('mysql_local')
+                                    ->table('absensi_absensi')
+                                    ->where(
+                                        'userid',
+                                        '=',
+                                        $f->userid
+                                    )
+                                    ->where('tanggal', '=', $request->tgl)
+                                    ->limit(1)
+                                    ->update(
+                                        array(
+                                            'sst' => '½',
+                                        )
+                                    );
+                            }
+                        } else {
+                            // H
+                            DB::connection('mysql_local')
+                                ->table('absensi_absensi')
+                                ->where(
+                                    'userid',
+                                    '=',
+                                    $f->userid
+                                )
+                                ->where(
+                                    'tanggal',
+                                    '=',
+                                    $request->tgl
+                                )
+                                ->limit(1)
+                                ->update(
+                                    array(
+                                        'sst' => 'H',
+                                    )
+                                );
+                        }
                     }
+                    // PREDIKSI SHIFT
+                    if (Carbon::parse($f->in)->format('H:i:s') > '04:00:00' && Carbon::parse($f->in)->format('H:i:s') < '07:30:00') {
+                        // Shift 1
+                        DB::connection('mysql_local')
+                            ->table('absensi_absensi')
+                            ->where(
+                                'userid',
+                                '=',
+                                $f->userid
+                            )
+                            ->where(
+                                'tanggal',
+                                '=',
+                                $request->tgl
+                            )
+                            ->limit(1)
+                            ->update(
+                                array(
+                                    'prediksiShift' => '1',
+                                )
+                            );
+                    } elseif (
+                        Carbon::parse($f->in)->format('H:i:s') > '12:30:00' && Carbon::parse($f->in)->format('H:i:s') < '15:00:00'
+                    ) {
+                        // Shift 2
+                        DB::connection('mysql_local')
+                            ->table('absensi_absensi')
+                            ->where(
+                                'userid',
+                                '=',
+                                $f->userid
+                            )
+                            ->where(
+                                'tanggal',
+                                '=',
+                                $request->tgl
+                            )
+                            ->limit(1)
+                            ->update(
+                                array(
+                                    'prediksiShift' => '2',
+                                )
+                            );
+                    } elseif (
+                        Carbon::parse($f->in)->format('H:i:s') > '20:00:00' && Carbon::parse($f->in)->format('H:i:s') < '23:30:00'
+                    ) {
+                        // Shift 3
+                        DB::connection('mysql_local')
+                            ->table('absensi_absensi')
+                            ->where(
+                                'userid',
+                                '=',
+                                $f->userid
+                            )
+                            ->where(
+                                'tanggal',
+                                '=',
+                                $request->tgl
+                            )
+                            ->limit(1)
+                            ->update(
+                                array(
+                                    'prediksiShift' => '3',
+                                )
+                            );
+                    } elseif (
+                        Carbon::parse($f->in)->format('H:i:s') > '07:30:00' && Carbon::parse($f->in)->format('H:i:s') < '10:30:00'
+                    ) {
+                        // Shift 0
+                        DB::connection('mysql_local')
+                            ->table('absensi_absensi')
+                            ->where(
+                                'userid',
+                                '=',
+                                $f->userid
+                            )
+                            ->where(
+                                'tanggal',
+                                '=',
+                                $request->tgl
+                            )
+                            ->limit(1)
+                            ->update(
+                                array(
+                                    'prediksiShift' => '0',
+                                )
+                            );
+                    }
+                    // QJ, JIS & QJNET
+                    if ($f->in != null && $f->out != null) {
+                        DB::connection('mysql_local')
+                            ->table('absensi_absensi')
+                            ->where(
+                                'userid',
+                                '=',
+                                $f->userid
+                            )
+                            ->where(
+                                'tanggal',
+                                '=',
+                                $request->tgl
+                            )
+                            ->limit(1)
+                            ->update(
+                                array(
+                                    'qj' => $difference,
+                                )
+                            );
+
+                        if ($difference > 7) {
+                            DB::connection('mysql_local')
+                                ->table('absensi_absensi')
+                                ->where(
+                                    'userid',
+                                    '=',
+                                    $f->userid
+                                )
+                                ->where(
+                                    'tanggal',
+                                    '=',
+                                    $request->tgl
+                                )
+                                ->limit(1)
+                                ->update(
+                                    array(
+                                        'jis' => 1,
+                                        'qjnet' => $difference - 1,
+                                    )
+                                );
+                        } else {
+                            DB::connection('mysql_local')
+                                ->table('absensi_absensi')
+                                ->where(
+                                    'userid',
+                                    '=',
+                                    $f->userid
+                                )
+                                ->where(
+                                    'tanggal',
+                                    '=',
+                                    $request->tgl
+                                )
+                                ->limit(1)
+                                ->update(
+                                    array(
+                                        'qjnet' => $difference,
+                                    )
+                                );
+                        }
+                    }
+                }
+                // return response()->json(['success' => 'Data ' . $request->tgl . ' - ', date("Y-m-d", strtotime($request->tgl . "+1 days")) . ' Berhasil di Update.', 'status' => 1]);
+            }
+        }
+        // return response()->json(['success' => 'Data ' . $request->tgl . ' - ', date("Y-m-d", strtotime($request->tgl . "+1 days")) . ' Berhasil di Update.', 'status' => 1]);
+    }
+
+    public function uploadAbsen(Request $request)
+    {
+
+        $ac = DB::table('penerimaan_karyawan')
+            ->where('status', 'like', '%Aktif%')
+            ->orderBy('userid', 'ASC')
+            ->select('*')
+            ->get();
+        foreach ($ac as $key) {
+            $hari = date("D", strtotime($request->tgl));
+            switch ($hari) {
+                case 'Sun':
+                    $hari_ini = "Minggu";
+                    break;
+                case 'Mon':
+                    $hari_ini = "Senin";
+                    break;
+                case 'Tue':
+                    $hari_ini = "Selasa";
+                    break;
+                case 'Wed':
+                    $hari_ini = "Rabu";
+                    break;
+                case 'Thu':
+                    $hari_ini = "Kamis";
+                    break;
+                case 'Fri':
+                    $hari_ini = "Jumat";
+                    break;
+                case 'Sat':
+                    $hari_ini = "Sabtu";
+                    break;
+                default:
+                    $hari_ini = "Tidak di ketahui";
+                    break;
+            }
+
+            $server = DB::table('absensi_absensi')
+                ->where('userid', '=', $key->userid)
+                ->where('tanggal', '=', $request->tgl)
+                ->first();
+
+            if ($server) {
+                $getIn = DB::table('absensi_absensi')
+                    ->where('userid', '=', $key->userid)
+                    ->where('tanggal', '=', $request->tgl)
+                    ->get();
+
+                foreach ($getIn as $value) {
+                    DB::table('absensi_absensi')
+                        ->where('userid', '=', $key->userid)
+                        ->where('tanggal', '=', $request->tgl)
+                        ->limit(1)
+                        ->update(
+                            array(
+                                'tanggal' => $value->tanggal,
+                                'userid' => $value->userid,
+                                'stb' => $value->stb,
+                                'name' => $value->name,
+                                'in' => $value->in,
+                                'out' => $value->out,
+                                'qj' => $value->qj,
+                                'jis' => $value->jis,
+                                'qjnet' => $value->qjnet,
+                                'prediksiShift' => $value->prediksiShift,
+                                'hrlibur' => $value->hrlibur,
+                                'sethari' => $value->sethari,
+                                'sst' => $value->sst,
+                                'remember_token' => $value->remember_token,
+                                'created_at' => $value->created_at,
+                            )
+                        );
+                }
+            } else {
+                // Data Tidak Ditemukan, jadi Insert data baru
+                $gt = DB::connection('mysql_local')
+                    ->table('absensi_absensi')
+                    ->where('userid', '=', $key->userid)
+                    ->where('tanggal', '=', $request->tgl)
+                    ->get();
+                foreach ($gt as $value) {
+                    DB::table('absensi_absensi')
+                        ->insert(
+                            [
+                                'tanggal' => $value->tanggal,
+                                'userid' => $value->userid,
+                                'stb' => $value->stb,
+                                'name' => $value->name,
+                                'in' => $value->in,
+                                'out' => $value->out,
+                                'qj' => $value->qj,
+                                'jis' => $value->jis,
+                                'qjnet' => $value->qjnet,
+                                'prediksiShift' => $value->prediksiShift,
+                                'hrlibur' => $value->hrlibur,
+                                'sethari' => $value->sethari,
+                                'sst' => $value->sst,
+                                'remember_token' => $value->remember_token,
+                                'created_at' => $value->created_at,
+                            ]
+                        );
+                }
+            }
+        }
+    }
+
+    public function perbaruiUploadAbsen(Request $request)
+    {
+        $ac = DB::table('penerimaan_karyawan')
+            ->where('status', 'like', '%Aktif%')
+            ->select('*')
+            ->orderBy('userid', 'ASC')
+            ->get();
+        foreach ($ac as $key) {
+            $hari = date("D", strtotime($request->tgl));
+            switch ($hari) {
+                case 'Sun':
+                    $hari_ini = "Minggu";
+                    break;
+                case 'Mon':
+                    $hari_ini = "Senin";
+                    break;
+                case 'Tue':
+                    $hari_ini = "Selasa";
+                    break;
+                case 'Wed':
+                    $hari_ini = "Rabu";
+                    break;
+                case 'Thu':
+                    $hari_ini = "Kamis";
+                    break;
+                case 'Fri':
+                    $hari_ini = "Jumat";
+                    break;
+                case 'Sat':
+                    $hari_ini = "Sabtu";
+                    break;
+                default:
+                    $hari_ini = "Tidak di ketahui";
+                    break;
+            }
+
+            $fromLocal = DB::connection('mysql_local')
+                ->table('absensi_absensi')
+                ->where('userid', '=', $key->userid)
+                ->where('tanggal', '=', $request->tgl)
+                // ->limit(1)
+                ->first();
+            if ($fromLocal) {
+                // Data Ditemukan
+                // Set date In
+                $getIn = DB::connection('mysql_local')
+                    ->table('access_checkinout')
+                    ->whereBetween('CHECKTIME', [$request->tgl . ' 04:00:00', date('Y-m-d', strtotime($request->tgl . "+1 days")) . ' 00:00:00'])
+                    // ->whereDate('CHECKTIME', '=', $request->tgl)
+                    ->where('USERID', '=', $key->userid)
+                    ->where('CHECKTYPE', '=', 'I')
+                    ->select('CHECKTYPE', 'CHECKTIME')
+                    ->get();
+                // Set date Out
+                $st = DB::connection('mysql_local')
+                    ->table('access_checkinout')
+                    ->where('USERID', '=', $key->userid)
+                    ->where('CHECKTYPE', '=', 'O')
+                    ->whereBetween('CHECKTIME', [$request->tgl . ' 07:30:00', date('Y-m-d', strtotime($request->tgl . "+1 days")) . ' 07:30:00'])
+                    ->select('CHECKTYPE', 'CHECKTIME')
+                    ->get();
+                // send in
+                foreach ($getIn as $value) {
+                    ($value->CHECKTYPE == 'I') ? $in = $value->CHECKTIME : $in = null;
+                    DB::connection('mysql_local')
+                        ->table('absensi_absensi')
+                        ->where('userid', '=', $key->userid)
+                        ->where('tanggal', '=', $request->tgl)
+                        ->limit(1)
+                        ->update(
+                            array(
+                                'in' => $in,
+                            )
+                        );
+                }
+                // send out
+                foreach ($st as $value) {
+                    ($value->CHECKTYPE == 'O') ? $out = $value->CHECKTIME : $out = null;
+                    DB::connection('mysql_local')
+                        ->table('absensi_absensi')
+                        ->where('userid', '=', $key->userid)
+                        ->where('tanggal', '=', $request->tgl)
+                        ->limit(1)
+                        ->update(
+                            array(
+                                'out' => $out,
+                            )
+                        );
+                }
+                // set qj, jis, prediksiShift, sst
+                $fn = DB::connection('mysql_local')
+                    ->table('absensi_absensi')
+                    ->where('userid', '=', $key->userid)
+                    ->where('tanggal', '=', $request->tgl)
+                    // ->select('*')
+                    ->get();
+                foreach ($fn as $f) {
+                    $starttimestamp = strtotime($f->in);
+                    $endtimestamp = strtotime($f->out);
+                    $difference = abs($endtimestamp - $starttimestamp) / 3600;
+                    // STATUS ABSENSI
+                    if ($f->hrlibur == strtoupper($hari_ini) && $f->in == null && $f->out == null) {
+                        // Libur
+                        DB::connection('mysql_local')
+                            ->table('absensi_absensi')
+                            ->where(
+                                'userid',
+                                '=',
+                                $f->userid
+                            )
+                            ->where(
+                                'tanggal',
+                                '=',
+                                $request->tgl
+                            )
+                            ->limit(1)
+                            ->update(
+                                array(
+                                    'sst' => 'L',
+                                )
+                            );
+                    } elseif ($f->hrlibur == strtoupper($hari_ini) && $f->in == null) {
+                        // Libur tapi dinger in tdk ada
+                        DB::connection('mysql_local')
+                            ->table('absensi_absensi')
+                            ->where(
+                                'userid',
+                                '=',
+                                $f->userid
+                            )
+                            ->where(
+                                'tanggal',
+                                '=',
+                                $request->tgl
+                            )
+                            ->limit(1)
+                            ->update(
+                                array(
+                                    'sst' => 'L',
+                                )
+                            );
+                    } elseif ($f->hrlibur == strtoupper($hari_ini) && $f->out == null) {
+                        // Libur tapi dinger out tdk ada
+                        DB::connection('mysql_local')
+                            ->table('absensi_absensi')
+                            ->where(
+                                'userid',
+                                '=',
+                                $f->userid
+                            )
+                            ->where(
+                                'tanggal',
+                                '=',
+                                $request->tgl
+                            )
+                            ->limit(1)
+                            ->update(
+                                array(
+                                    'sst' => 'L',
+                                )
+                            );
+                    } elseif ($f->in == null && $f->out == null) {
+                        DB::connection('mysql_local')
+                            ->table('absensi_absensi')
+                            ->where(
+                                'userid',
+                                '=',
+                                $f->userid
+                            )
+                            ->where(
+                                'tanggal',
+                                '=',
+                                $request->tgl
+                            )
+                            ->limit(1)
+                            ->update(
+                                array(
+                                    'sst' => 'A',
+                                )
+                            );
+                    } elseif ($f->in == null || $f->out == null) {
+                        DB::connection('mysql_local')
+                            ->table('absensi_absensi')
+                            ->where(
+                                'userid',
+                                '=',
+                                $f->userid
+                            )
+                            ->where(
+                                'tanggal',
+                                '=',
+                                $request->tgl
+                            )
+                            ->limit(1)
+                            ->update(
+                                array(
+                                    'sst' => 'F1',
+                                )
+                            );
+                    } elseif ($f->in != null && $f->out != null) {
+                        if ($f->hrlibur == strtoupper($hari_ini) &&  $difference <= 7) {
+                            // LEMBUR
+                            DB::connection('mysql_local')
+                                ->table('absensi_absensi')
+                                ->where(
+                                    'userid',
+                                    '=',
+                                    $f->userid
+                                )
+                                ->where(
+                                    'tanggal',
+                                    '=',
+                                    $request->tgl
+                                )
+                                ->limit(1)
+                                ->update(
+                                    array(
+                                        'sst' => 'L',
+                                    )
+                                );
+                        } elseif ($difference <= 4) {
+                            // IP
+                            DB::connection('mysql_local')
+                                ->table('absensi_absensi')
+                                ->where(
+                                    'userid',
+                                    '=',
+                                    $f->userid
+                                )
+                                ->where(
+                                    'tanggal',
+                                    '=',
+                                    $request->tgl
+                                )
+                                ->limit(1)
+                                ->update(
+                                    array(
+                                        'sst' => 'F2',
+                                    )
+                                );
+                        } elseif ($difference <= 7) {
+                            // PC ½ Hari
+                            if ($f->sethari == strtoupper($hari_ini)) {
+                                DB::connection('mysql_local')
+                                    ->table('absensi_absensi')
+                                    ->where(
+                                        'userid',
+                                        '=',
+                                        $f->userid
+                                    )
+                                    ->where('tanggal', '=', $request->tgl)
+                                    ->limit(1)
+                                    ->update(
+                                        array(
+                                            'sst' => 'H',
+                                        )
+                                    );
+                            } else {
+                                DB::connection('mysql_local')
+                                    ->table('absensi_absensi')
+                                    ->where(
+                                        'userid',
+                                        '=',
+                                        $f->userid
+                                    )
+                                    ->where('tanggal', '=', $request->tgl)
+                                    ->limit(1)
+                                    ->update(
+                                        array(
+                                            'sst' => '½',
+                                        )
+                                    );
+                            }
+                        } else {
+                            // H
+                            DB::connection('mysql_local')
+                                ->table('absensi_absensi')
+                                ->where(
+                                    'userid',
+                                    '=',
+                                    $f->userid
+                                )
+                                ->where(
+                                    'tanggal',
+                                    '=',
+                                    $request->tgl
+                                )
+                                ->limit(1)
+                                ->update(
+                                    array(
+                                        'sst' => 'H',
+                                    )
+                                );
+                        }
+                    }
+                    // PREDIKSI SHIFT
+                    if (Carbon::parse($f->in)->format('H:i:s') > '04:00:00' && Carbon::parse($f->in)->format('H:i:s') < '07:30:00') {
+                        // Shift 1
+                        DB::connection('mysql_local')
+                            ->table('absensi_absensi')
+                            ->where(
+                                'userid',
+                                '=',
+                                $f->userid
+                            )
+                            ->where(
+                                'tanggal',
+                                '=',
+                                $request->tgl
+                            )
+                            ->limit(1)
+                            ->update(
+                                array(
+                                    'prediksiShift' => '1',
+                                )
+                            );
+                    } elseif (
+                        Carbon::parse($f->in)->format('H:i:s') > '12:30:00' && Carbon::parse($f->in)->format('H:i:s') < '15:00:00'
+                    ) {
+                        // Shift 2
+                        DB::connection('mysql_local')
+                            ->table('absensi_absensi')
+                            ->where(
+                                'userid',
+                                '=',
+                                $f->userid
+                            )
+                            ->where(
+                                'tanggal',
+                                '=',
+                                $request->tgl
+                            )
+                            ->limit(1)
+                            ->update(
+                                array(
+                                    'prediksiShift' => '2',
+                                )
+                            );
+                    } elseif (
+                        Carbon::parse($f->in)->format('H:i:s') > '20:00:00' && Carbon::parse($f->in)->format('H:i:s') < '23:30:00'
+                    ) {
+                        // Shift 3
+                        DB::connection('mysql_local')
+                            ->table('absensi_absensi')
+                            ->where(
+                                'userid',
+                                '=',
+                                $f->userid
+                            )
+                            ->where(
+                                'tanggal',
+                                '=',
+                                $request->tgl
+                            )
+                            ->limit(1)
+                            ->update(
+                                array(
+                                    'prediksiShift' => '3',
+                                )
+                            );
+                    } elseif (
+                        Carbon::parse($f->in)->format('H:i:s') > '07:30:00' && Carbon::parse($f->in)->format('H:i:s') < '10:30:00'
+                    ) {
+                        // Shift 0
+                        DB::connection('mysql_local')
+                            ->table('absensi_absensi')
+                            ->where(
+                                'userid',
+                                '=',
+                                $f->userid
+                            )
+                            ->where(
+                                'tanggal',
+                                '=',
+                                $request->tgl
+                            )
+                            ->limit(1)
+                            ->update(
+                                array(
+                                    'prediksiShift' => '0',
+                                )
+                            );
+                    }
+                    // QJ, JIS & QJNET
+                    if ($f->in != null && $f->out != null) {
+                        DB::connection('mysql_local')
+                            ->table('absensi_absensi')
+                            ->where(
+                                'userid',
+                                '=',
+                                $f->userid
+                            )
+                            ->where(
+                                'tanggal',
+                                '=',
+                                $request->tgl
+                            )
+                            ->limit(1)
+                            ->update(
+                                array(
+                                    'qj' => $difference,
+                                )
+                            );
+
+                        if ($difference > 7) {
+                            DB::connection('mysql_local')
+                                ->table('absensi_absensi')
+                                ->where(
+                                    'userid',
+                                    '=',
+                                    $f->userid
+                                )
+                                ->where(
+                                    'tanggal',
+                                    '=',
+                                    $request->tgl
+                                )
+                                ->limit(1)
+                                ->update(
+                                    array(
+                                        'jis' => 1,
+                                        'qjnet' => $difference - 1,
+                                    )
+                                );
+                        } else {
+                            DB::connection('mysql_local')
+                                ->table('absensi_absensi')
+                                ->where(
+                                    'userid',
+                                    '=',
+                                    $f->userid
+                                )
+                                ->where(
+                                    'tanggal',
+                                    '=',
+                                    $request->tgl
+                                )
+                                ->limit(1)
+                                ->update(
+                                    array(
+                                        'qjnet' => $difference,
+                                    )
+                                );
+                        }
+                    }
+                }
+                // return response()->json(['success' => 'Data ' . $request->tgl . ' - ', date("Y-m-d", strtotime($request->tgl . "+1 days")) . ' Berhasil di Update.', 'status' => 1]);
+            } else {
+                // Data Tidak Ditemukan, jadi Insert data baru
+                DB::connection('mysql_local')
+                    ->table('absensi_absensi')
+                    ->insert(
+                        [
+                            'remember_token' => $request->_token,
+                            'tanggal' => $request->tgl,
+                            'userid' => $key->userid,
+                            'stb' => $key->stb,
+                            'name' => $key->nama,
+                            'hrlibur' => $key->hrlibur,
+                            'sethari' => $key->sethari,
+                            'created_at' => date('Y-m-d H:i:s'),
+                        ]
+                    );
+
+                $gt = DB::connection('mysql_local')
+                    ->table('access_checkinout')
+                    ->whereBetween('CHECKTIME', [$request->tgl . ' 04:00:00', date('Y-m-d', strtotime($request->tgl . "+1 days")) . ' 00:00:00'])
+                    ->where('USERID', '=', $key->userid)
+                    ->where('CHECKTYPE', '=', 'I')
+                    ->select('CHECKTYPE', 'CHECKTIME')
+                    ->get();
+                // Set date In
+                foreach ($gt as $value) {
+                    ($value->CHECKTYPE == 'I') ? $in = $value->CHECKTIME : $in = null;
+                    DB::connection('mysql_local')
+                        ->table('absensi_absensi')
+                        ->where('userid', '=', $key->userid)
+                        ->where('tanggal', '=', $request->tgl)
+                        ->limit(1)
+                        ->update(
+                            array(
+                                'in' => $in,
+                            )
+                        );
+                }
+                // Set date Out
+                $st = DB::connection('mysql_local')
+                    ->table('access_checkinout')
+                    ->where('USERID', '=', $key->userid)
+                    ->where('CHECKTYPE', '=', 'O')
+                    ->whereBetween('CHECKTIME', [$request->tgl . ' 07:30:00', date('Y-m-d', strtotime($request->tgl . "+1 days")) . ' 07:30:00'])
+                    ->select('CHECKTYPE', 'CHECKTIME')
+                    ->get();
+                foreach ($st as $value) {
+                    ($value->CHECKTYPE == 'O') ? $out = $value->CHECKTIME : $out = null;
+                    DB::connection('mysql_local')
+                        ->table('absensi_absensi')
+                        ->where('userid', '=', $key->userid)
+                        ->where('tanggal', '=', $request->tgl)
+                        ->limit(1)
+                        ->update(
+                            array(
+                                'out' => $out,
+                            )
+                        );
+                }
+                // set qj, jis, prediksiShift, sst
+                $fn = DB::connection('mysql_local')
+                    ->table('absensi_absensi')
+                    ->where('userid', '=', $key->userid)
+                    ->where('tanggal', '=', $request->tgl)
+                    // ->select('*')
+                    ->get();
+                foreach ($fn as $f) {
+                    $starttimestamp = strtotime($f->in);
+                    $endtimestamp = strtotime($f->out);
+                    $difference = abs($endtimestamp - $starttimestamp) / 3600;
+                    // STATUS ABSENSI
+                    if ($f->hrlibur == strtoupper($hari_ini) && $f->in == null && $f->out == null) {
+                        // Libur
+                        DB::connection('mysql_local')
+                            ->table('absensi_absensi')
+                            ->where(
+                                'userid',
+                                '=',
+                                $f->userid
+                            )
+                            ->where(
+                                'tanggal',
+                                '=',
+                                $request->tgl
+                            )
+                            ->limit(1)
+                            ->update(
+                                array(
+                                    'sst' => 'L',
+                                )
+                            );
+                    } elseif (
+                        $f->hrlibur == strtoupper($hari_ini) && $f->in == null
+                    ) {
+                        // Libur tapi dinger in tdk ada
+                        DB::connection('mysql_local')
+                            ->table('absensi_absensi')
+                            ->where(
+                                'userid',
+                                '=',
+                                $f->userid
+                            )
+                            ->where(
+                                'tanggal',
+                                '=',
+                                $request->tgl
+                            )
+                            ->limit(1)
+                            ->update(
+                                array(
+                                    'sst' => 'L',
+                                )
+                            );
+                    } elseif ($f->hrlibur == strtoupper($hari_ini) && $f->out == null) {
+                        // Libur tapi dinger out tdk ada
+                        DB::connection('mysql_local')
+                            ->table('absensi_absensi')
+                            ->where(
+                                'userid',
+                                '=',
+                                $f->userid
+                            )
+                            ->where(
+                                'tanggal',
+                                '=',
+                                $request->tgl
+                            )
+                            ->limit(1)
+                            ->update(
+                                array(
+                                    'sst' => 'L',
+                                )
+                            );
+                    } elseif ($f->in == null && $f->out == null) {
+                        DB::connection('mysql_local')
+                            ->table('absensi_absensi')
+                            ->where(
+                                'userid',
+                                '=',
+                                $f->userid
+                            )
+                            ->where(
+                                'tanggal',
+                                '=',
+                                $request->tgl
+                            )
+                            ->limit(1)
+                            ->update(
+                                array(
+                                    'sst' => 'A',
+                                )
+                            );
+                    } elseif ($f->in == null || $f->out == null) {
+                        DB::connection('mysql_local')
+                            ->table('absensi_absensi')
+                            ->where(
+                                'userid',
+                                '=',
+                                $f->userid
+                            )
+                            ->where(
+                                'tanggal',
+                                '=',
+                                $request->tgl
+                            )
+                            ->limit(1)
+                            ->update(
+                                array(
+                                    'sst' => 'F1',
+                                )
+                            );
+                    } elseif ($f->in != null && $f->out != null) {
+                        if ($f->hrlibur == strtoupper($hari_ini) &&  $difference <= 7) {
+                            // LEMBUR
+                            DB::connection('mysql_local')
+                                ->table('absensi_absensi')
+                                ->where(
+                                    'userid',
+                                    '=',
+                                    $f->userid
+                                )
+                                ->where(
+                                    'tanggal',
+                                    '=',
+                                    $request->tgl
+                                )
+                                ->limit(1)
+                                ->update(
+                                    array(
+                                        'sst' => 'L',
+                                    )
+                                );
+                        } elseif ($difference <= 4) {
+                            // IP
+                            DB::connection('mysql_local')
+                                ->table('absensi_absensi')
+                                ->where(
+                                    'userid',
+                                    '=',
+                                    $f->userid
+                                )
+                                ->where(
+                                    'tanggal',
+                                    '=',
+                                    $request->tgl
+                                )
+                                ->limit(1)
+                                ->update(
+                                    array(
+                                        'sst' => 'F2',
+                                    )
+                                );
+                        } elseif ($difference <= 7) {
+                            // PC ½ Hari
+                            if ($f->sethari == strtoupper($hari_ini)) {
+                                DB::connection('mysql_local')
+                                    ->table('absensi_absensi')
+                                    ->where(
+                                        'userid',
+                                        '=',
+                                        $f->userid
+                                    )
+                                    ->where('tanggal', '=', $request->tgl)
+                                    ->limit(1)
+                                    ->update(
+                                        array(
+                                            'sst' => 'H',
+                                        )
+                                    );
+                            } else {
+                                DB::connection('mysql_local')
+                                    ->table('absensi_absensi')
+                                    ->where(
+                                        'userid',
+                                        '=',
+                                        $f->userid
+                                    )
+                                    ->where('tanggal', '=', $request->tgl)
+                                    ->limit(1)
+                                    ->update(
+                                        array(
+                                            'sst' => '½',
+                                        )
+                                    );
+                            }
+                        } else {
+                            // H
+                            DB::connection('mysql_local')
+                                ->table('absensi_absensi')
+                                ->where(
+                                    'userid',
+                                    '=',
+                                    $f->userid
+                                )
+                                ->where(
+                                    'tanggal',
+                                    '=',
+                                    $request->tgl
+                                )
+                                ->limit(1)
+                                ->update(
+                                    array(
+                                        'sst' => 'H',
+                                    )
+                                );
+                        }
+                    }
+                    // PREDIKSI SHIFT
+                    if (Carbon::parse($f->in)->format('H:i:s') > '04:00:00' && Carbon::parse($f->in)->format('H:i:s') < '07:30:00') {
+                        // Shift 1
+                        DB::connection('mysql_local')
+                            ->table('absensi_absensi')
+                            ->where(
+                                'userid',
+                                '=',
+                                $f->userid
+                            )
+                            ->where(
+                                'tanggal',
+                                '=',
+                                $request->tgl
+                            )
+                            ->limit(1)
+                            ->update(
+                                array(
+                                    'prediksiShift' => '1',
+                                )
+                            );
+                    } elseif (
+                        Carbon::parse($f->in)->format('H:i:s') > '12:30:00' && Carbon::parse($f->in)->format('H:i:s') < '15:00:00'
+                    ) {
+                        // Shift 2
+                        DB::connection('mysql_local')
+                            ->table('absensi_absensi')
+                            ->where(
+                                'userid',
+                                '=',
+                                $f->userid
+                            )
+                            ->where(
+                                'tanggal',
+                                '=',
+                                $request->tgl
+                            )
+                            ->limit(1)
+                            ->update(
+                                array(
+                                    'prediksiShift' => '2',
+                                )
+                            );
+                    } elseif (
+                        Carbon::parse($f->in)->format('H:i:s') > '20:00:00' && Carbon::parse($f->in)->format('H:i:s') < '23:30:00'
+                    ) {
+                        // Shift 3
+                        DB::connection('mysql_local')
+                            ->table('absensi_absensi')
+                            ->where(
+                                'userid',
+                                '=',
+                                $f->userid
+                            )
+                            ->where(
+                                'tanggal',
+                                '=',
+                                $request->tgl
+                            )
+                            ->limit(1)
+                            ->update(
+                                array(
+                                    'prediksiShift' => '3',
+                                )
+                            );
+                    } elseif (
+                        Carbon::parse($f->in)->format('H:i:s') > '07:30:00' && Carbon::parse($f->in)->format('H:i:s') < '10:30:00'
+                    ) {
+                        // Shift 0
+                        DB::connection('mysql_local')
+                            ->table('absensi_absensi')
+                            ->where(
+                                'userid',
+                                '=',
+                                $f->userid
+                            )
+                            ->where(
+                                'tanggal',
+                                '=',
+                                $request->tgl
+                            )
+                            ->limit(1)
+                            ->update(
+                                array(
+                                    'prediksiShift' => '0',
+                                )
+                            );
+                    }
+                    // QJ, JIS & QJNET
+                    if ($f->in != null && $f->out != null) {
+                        DB::connection('mysql_local')
+                            ->table('absensi_absensi')
+                            ->where(
+                                'userid',
+                                '=',
+                                $f->userid
+                            )
+                            ->where(
+                                'tanggal',
+                                '=',
+                                $request->tgl
+                            )
+                            ->limit(1)
+                            ->update(
+                                array(
+                                    'qj' => $difference,
+                                )
+                            );
+
+                        if ($difference > 7) {
+                            DB::connection('mysql_local')
+                                ->table('absensi_absensi')
+                                ->where(
+                                    'userid',
+                                    '=',
+                                    $f->userid
+                                )
+                                ->where(
+                                    'tanggal',
+                                    '=',
+                                    $request->tgl
+                                )
+                                ->limit(1)
+                                ->update(
+                                    array(
+                                        'jis' => 1,
+                                        'qjnet' => $difference - 1,
+                                    )
+                                );
+                        } else {
+                            DB::connection('mysql_local')
+                                ->table('absensi_absensi')
+                                ->where(
+                                    'userid',
+                                    '=',
+                                    $f->userid
+                                )
+                                ->where(
+                                    'tanggal',
+                                    '=',
+                                    $request->tgl
+                                )
+                                ->limit(1)
+                                ->update(
+                                    array(
+                                        'qjnet' => $difference,
+                                    )
+                                );
+                        }
+                    }
+                }
+                // return response()->json(['success' => 'Data ' . $request->tgl . ' - ', date("Y-m-d", strtotime($request->tgl . "+1 days")) . ' Berhasil di Update.', 'status' => 1]);
+            }
+
+
+            $server = DB::table('absensi_absensi')
+                ->where('userid', '=', $key->userid)
+                ->where('tanggal', '=', $request->tgl)
+                ->first();
+
+            if ($server) {
+                $getIn = DB::table('absensi_absensi')
+                    ->where('userid', '=', $key->userid)
+                    ->where('tanggal', '=', $request->tgl)
+                    ->get();
+
+                foreach ($getIn as $value) {
+                    DB::table('absensi_absensi')
+                        ->where('userid', '=', $key->userid)
+                        ->where('tanggal', '=', $request->tgl)
+                        ->limit(1)
+                        ->update(
+                            array(
+                                'tanggal' => $value->tanggal,
+                                'userid' => $value->userid,
+                                'stb' => $value->stb,
+                                'name' => $value->name,
+                                'in' => $value->in,
+                                'out' => $value->out,
+                                'qj' => $value->qj,
+                                'jis' => $value->jis,
+                                'qjnet' => $value->qjnet,
+                                'prediksiShift' => $value->prediksiShift,
+                                'hrlibur' => $value->hrlibur,
+                                'sethari' => $value->sethari,
+                                'sst' => $value->sst,
+                                'remember_token' => $value->remember_token,
+                                'created_at' => $value->created_at,
+                            )
+                        );
+                }
+            } else {
+                // Data Tidak Ditemukan, jadi Insert data baru
+                $gt = DB::connection('mysql_local')
+                    ->table('absensi_absensi')
+                    ->where('userid', '=', $key->userid)
+                    ->where('tanggal', '=', $request->tgl)
+                    ->get();
+                foreach ($gt as $value) {
+                    DB::table('absensi_absensi')
+                        ->insert(
+                            [
+                                'tanggal' => $value->tanggal,
+                                'userid' => $value->userid,
+                                'stb' => $value->stb,
+                                'name' => $value->name,
+                                'in' => $value->in,
+                                'out' => $value->out,
+                                'qj' => $value->qj,
+                                'jis' => $value->jis,
+                                'qjnet' => $value->qjnet,
+                                'prediksiShift' => $value->prediksiShift,
+                                'hrlibur' => $value->hrlibur,
+                                'sethari' => $value->sethari,
+                                'sst' => $value->sst,
+                                'remember_token' => $value->remember_token,
+                                'created_at' => $value->created_at,
+                            ]
+                        );
                 }
             }
         }
