@@ -32,6 +32,8 @@ class DBLokal extends Controller
         $count_finger_local = DB::connection('mysql_local')->table('access_checkinout')->count();
         $count_finger_access = DB::connection('odbc')->table('CHECKINOUT')->count();
 
+        $count_absen_server = DB::table('absensi_absensi')->count();
+        $count_absen_local = DB::connection('mysql_local')->table('absensi_absensi')->count();
 
         return view('products/03_absensi.mesinfinger', [
             'judul' => $judul,
@@ -43,6 +45,9 @@ class DBLokal extends Controller
             'count_finger_server' => $count_finger_server,
             'count_finger_local' => $count_finger_local,
             'count_finger_access' => $count_finger_access,
+            'count_absen_server' => $count_absen_server,
+            'count_absen_local' => $count_absen_local,
+            'count_absen_access' => 0,
         ]);
     }
 
@@ -2532,6 +2537,66 @@ class DBLokal extends Controller
                                 'remember_token' => $value->remember_token,
                                 'created_at' => $value->created_at,
                             ]
+                        );
+                }
+            }
+        }
+    }
+
+    public function UploadFixedAbsen(Request $request)
+    {
+
+        $getKaryawanAktif = DB::table('penerimaan_karyawan')
+            ->where('status', 'like', '%Aktif%')
+            ->select('*')
+            ->orderBy('userid', 'ASC')
+            ->get();
+        foreach ($getKaryawanAktif as $key) {
+            $getFixed = DB::table('absensi_fixed_absensi')
+                ->where('userid', '=', $key->userid)
+                ->where('stb', '=', $key->stb)
+                ->where('month', '=', $request->tglUploadFixed)
+                ->where('year', '=', $request->tahunUploadFixed)
+                ->first();
+            if ($getFixed) {
+                // Data Ditemukan Skip
+                $dtExists = 0;
+            } else {
+                // Data Tidak ditemukan, buat baru
+                $dtExists = 1;
+                DB::table('absensi_fixed_absensi')
+                    ->insert(
+                        [
+                            'userid' => $key->userid,
+                            'stb' => $key->stb,
+                            'name' => $key->nama,
+                            'month' => $request->tglUploadFixed,
+                            'year' => $request->tahunUploadFixed,
+                            'remember_token' => $key->remember_token,
+                            'created_at' => date('Y-m-d H:i:s'),
+                        ]
+                    );
+            }
+            // update data 
+            for ($i = 0; $i <= 31; $i++) {
+                $gt = DB::connection('mysql_local')
+                    ->table('absensi_absensi')
+                    ->where('userid', '=', $key->userid)
+                    ->whereDay('tanggal', '=', $i)
+                    ->whereMonth('tanggal', '=', $request->tglUploadFixed)
+                    ->whereYear('tanggal', '=', $request->tahunUploadFixed)
+                    ->select('sst')
+                    ->get();
+                foreach ($gt as $value) {
+                    DB::table('absensi_fixed_absensi')
+                        ->where('stb', '=', $key->stb)
+                        ->where('month', '=', $request->tglUploadFixed)
+                        ->where('year', '=', $request->tahunUploadFixed)
+                        ->limit(1)
+                        ->update(
+                            array(
+                                $i => $value->sst,
+                            )
                         );
                 }
             }
