@@ -71,7 +71,6 @@ Route::resources([
     'getLibur'  => DataHariLibur::class,
     'getshift' => DataShift::class,
     'getentitas' => DataEntitas::class,
-    'getAbsensiFixed' => DataFixedAbsensi::class,
 ]);
 
 
