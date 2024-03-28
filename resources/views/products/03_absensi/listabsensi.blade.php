@@ -17,13 +17,13 @@
 
         td.cuspad2 {
             /* padding-top: 0.5px;
-                                                                                                                        padding-bottom: 0.5px;
-                                                                                                                        padding-right: 0.5px;
-                                                                                                                        padding-left: 0.5px;
-                                                                                                                        margin-top: 5px;
-                                                                                                                        margin-bottom: 5px;
-                                                                                                                        margin-right: 5px;
-                                                                                                                        margin-left: 5px; */
+                                                                                                                            padding-bottom: 0.5px;
+                                                                                                                            padding-right: 0.5px;
+                                                                                                                            padding-left: 0.5px;
+                                                                                                                            margin-top: 5px;
+                                                                                                                            margin-bottom: 5px;
+                                                                                                                            margin-right: 5px;
+                                                                                                                            margin-left: 5px; */
         }
 
         .unselectable {
@@ -219,17 +219,6 @@
                                                                     </td>
                                                                 </tr>
                                                             </tbody>
-                                                        </table>
-                                                    </div>
-                                                    <div class="table-responsive">
-                                                        <table style="width:100%; font-size:12px"
-                                                            class="display table  mb-0 table-sm table-striped table-bordered table-hover text-nowrap datatable-absensi">
-                                                            <thead>
-                                                                <tr class="text-center">
-                                                                    <th>STB</th>
-                                                                    <th>NAMA</th>
-                                                                </tr>
-                                                            </thead>
                                                         </table>
                                                     </div>
                                                     <div class="col-sm-12 col-md-12">

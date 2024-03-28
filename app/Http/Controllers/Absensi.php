@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Routing\Controller;
 use Illuminate\Support\Facades\DB;
@@ -85,13 +86,6 @@ class Absensi extends Controller
                                     <th>' . $item2->stb . '</th>
                                     <th>' . $item2->nama . '</th>
                                 ';
-                foreach ($datesArrayFull as $f) {
-                    // echo '          <td style="width: 30px" class="text-center">' . $f . '</td>';
-                    $dataA = DB::table('absensi_absensi')->select('sst')->where('stb', '=', $item2->stb)->where('tanggal', '=', $f)->limit(1)->get();
-                }
-                foreach ($dataA as $key) {
-                    echo '          <td style="width: 30px" class="text-center">' . !empty($key->sst) ? $key->sst : ""  . '</td>';
-                }
                 echo '          </tr>';
             }
             echo '      </tbody>
