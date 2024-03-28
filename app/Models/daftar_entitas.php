@@ -15,6 +15,7 @@ class daftar_entitas extends Model
      *
      * @var array<int, string>
      */
+    protected $primaryKey = 'id_entitas';
     protected $fillable = [
         'singkatan',
         'nama',
