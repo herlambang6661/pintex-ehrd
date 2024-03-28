@@ -607,4 +607,96 @@ class Daftar extends Controller
 
         return Response()->json($arr);
     }
+
+    public function entitas()
+    {
+        $judul = "Daftar Entitas";
+        $Daftarentitas = "active";
+        $entitas = "active";
+        return view('products.01_daftar.daftar_entitas', [
+            'judul' => $judul,
+            'Daftarentitas' => $Daftarentitas,
+            'entitas' => $entitas,
+        ]);
+    }
+
+    public function viewentitas(Request $request)
+    {
+        $data = DB::table('daftar_entitas')->where('id', $request->id)->get();
+        foreach ($data as $l) {
+            echo '
+            <div class="card-stamp card-stamp-lg">
+                            <div class="card-stamp-icon bg-primary">
+                                <i class="fa-solid fa-pen-to-square"></i>
+                            </div>
+                        </div>
+                        <div class="mb-3">
+                            <label class="form-label">Singkatan</label>
+                            <input type="text" class="form-control border border-dark" name="singkatan" id="singkatan"
+                                placeholder="Masukkan Nama singkatan" value="' . $l->singkatan . '" readonly>
+                        </div>
+                        <div class="mb-3">
+                            <label class="form-label">Nama</label>
+                            <input type="text" class="form-control border border-dark" name="nama" id="nama"
+                                placeholder="Masukkan nama Shift" value="' . $l->nama . '" readonly>
+                        </div>
+                        <div class="mb-3">
+                            <label class="form-label">Alamat</label>
+                            <input type="text" class="form-control border border-dark" name="alamat" id="alamat"
+                                placeholder="Masukkan alamat Shift" value="' . $l->alamat . '" readonly>
+                        </div>
+                        </div>
+        ';
+        }
+    }
+
+    public function storeentitas(Request $request)
+    {
+        $request->validate(
+            [
+                'singkatan' => 'required',
+                'nama' => 'required',
+                'alamat'   => 'required',
+            ],
+        );
+
+        $check = DB::table('daftar_entitas')->insert([
+            'singkatan' => $request->singkatan,
+            'nama' => $request->nama,
+            'alamat'   => $request->alamat,
+        ]);
+        $arr = array('msg' => 'Something goes to wrong. Please try later', 'status' => false);
+        if ($check) {
+            $arr = array('msg' => 'Data: ' . $request->singkatan . ' ' . $request->nama . '' . $request->alamat . ' telah berhasil disimpan', 'status' => true);
+        }
+        return Response()->json($arr);
+    }
+
+    public function updateentitas(Request $request)
+    {
+        $request->validate([
+            'id' => 'required',
+            'singkatan' => 'required',
+            'nama' => 'required',
+            'alamat' => 'required',
+        ]);
+
+        $check = DB::table('daftar_entitas')
+            ->where('id', $request->id)
+            ->update([
+                'singkatan' => $request->singkatan,
+                'nama' => $request->nama,
+                'alamat' => $request->alamat,
+                'updated_at'    => now(),
+
+            ]);
+
+        $arr = array('msg' => 'Ada kesalahan. Silakan coba lagi nanti.', 'status' => false);
+
+        if ($check) {
+            $arr = array('msg' => 'Data berhasil diperbarui', 'status' => true);
+        }
+
+        return response()->json($arr);
+    }
 }

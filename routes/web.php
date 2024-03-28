@@ -13,6 +13,7 @@ use App\Http\Controllers\Datatables\DataOL;
 use App\Http\Controllers\Datatables\DataPos;
 use App\Http\Controllers\Datatables\DataSurat;
 use App\Http\Controllers\Datatables\DataAbsensiLocal;
+use App\Http\Controllers\Datatables\DataEntitas;
 use App\Http\Controllers\Datatables\DataLamaran;
 use App\Http\Controllers\Datatables\DataKaryawan;
 use App\Http\Controllers\Datatables\DataWawancara;
@@ -68,6 +69,7 @@ Route::resources([
     'getLembur' => DataTarifLembur::class,
     'getLibur'  => DataHariLibur::class,
     'getshift' => DataShift::class,
+    'getentitas' => DataEntitas::class,
 ]);
 
 
@@ -106,11 +108,17 @@ Route::controller(Daftar::class)->group(function () {
     Route::post('update/surat', 'updatesurat');
     Route::post('detail/surat', 'viewsurat');
 
-    //routes jadwal shif
+    //routes jadwal shif DONE
     Route::get('daftar/jadwalshift', 'jadwalshift')->name('daftar/jadwalshift');
     Route::post('storedatashift', 'storeshift');
     Route::post('viewshift', 'shiftview');
     Route::post('shift/update', 'updateshif');
+
+    //Routes daftar entitas
+    Route::get('daftar/entitas', 'entitas');
+    Route::post('detail/entitas', 'viewentitas');
+    Route::post('storedataEntitas', 'storeentitas');
+    Route::post('update/entitas', 'updateentitas');
 });
 
 Route::controller(Penerimaan::class)->group(function () {
