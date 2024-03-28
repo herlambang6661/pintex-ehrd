@@ -11,23 +11,24 @@ use App\Http\Controllers\Administrasi;
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\Datatables\DataOL;
 use App\Http\Controllers\Datatables\DataPos;
+use App\Http\Controllers\Datatables\DataShift;
 use App\Http\Controllers\Datatables\DataSurat;
-use App\Http\Controllers\Datatables\DataAbsensiLocal;
 use App\Http\Controllers\Datatables\DataEntitas;
 use App\Http\Controllers\Datatables\DataLamaran;
 use App\Http\Controllers\Datatables\DataKaryawan;
+use App\Http\Controllers\Datatables\DataHariLibur;
 use App\Http\Controllers\Datatables\DataWawancara;
 use Illuminate\Contracts\Auth\Access\Authorizable;
 use App\Http\Controllers\Datatables\DataFingerODBC;
 use App\Http\Controllers\Datatables\DataFingerMYSQL;
-use App\Http\Controllers\Datatables\DataHariLibur;
+use App\Http\Controllers\Datatables\DataTarifLembur;
+use App\Http\Controllers\Datatables\DataAbsensiLocal;
+use App\Http\Controllers\Datatables\DataFixedAbsensi;
 use App\Http\Controllers\Datatables\DataUserinfoODBC;
 use App\Http\Controllers\Datatables\DataUserinfoMYSQL;
 use SebastianBergmann\CodeCoverage\Report\Html\Dashboard;
 use App\Http\Controllers\Datatables\DataLegalitasKaryawan;
 use App\Http\Controllers\Datatables\DataLegalitasKaryawanOl;
-use App\Http\Controllers\Datatables\DataShift;
-use App\Http\Controllers\Datatables\DataTarifLembur;
 
 /*
 |--------------------------------------------------------------------------
@@ -70,6 +71,7 @@ Route::resources([
     'getLibur'  => DataHariLibur::class,
     'getshift' => DataShift::class,
     'getentitas' => DataEntitas::class,
+    'getAbsensiFixed' => DataFixedAbsensi::class,
 ]);
 
 

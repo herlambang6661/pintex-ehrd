@@ -2595,7 +2595,7 @@ class DBLokal extends Controller
                         ->limit(1)
                         ->update(
                             array(
-                                $i => $value->sst,
+                                "_" . $i => $value->sst,
                             )
                         );
                 }

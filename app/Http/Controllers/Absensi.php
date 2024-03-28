@@ -41,12 +41,10 @@ class Absensi extends Controller
 
     public function getabsensi(Request $request)
     {
-        $dataK = DB::table('penerimaan_karyawan')->select('stb', 'nama')->where('status', 'like', '%Aktif%')->orderBy('nama', 'asc')->get();
-        $datesArray = [];
-        $startingDate = strtotime($request->tglaw);
-        $endingDate = strtotime($request->tglak);
-        $Diff = round(abs($endingDate - $startingDate) / (60 * 60 * 24), 0);
-        if ($Diff > 31) {
+        // $dataF = DB::table('absensi_fixed_absensi')->where('userid', '=', '1382')->get()->toArray();
+        // print_r($dataF[0]->_01);
+        // die();
+        if (count($request->tgl) > 31) {
             echo '<div class="alert alert-danger" role="alert">
                     <div class="d-flex">
                         <div>
@@ -58,39 +56,74 @@ class Absensi extends Controller
                     </div>
                 </div>';
         } else {
-            for ($currentDate = $startingDate; $currentDate <= $endingDate; $currentDate += (86400)) {
-                $date = date("d", $currentDate);
-                $dateFull = date("Y-m-d", $currentDate);
-                $datesArray[] = $date;
-                $datesArrayFull[] = $dateFull;
-            }
-            echo '  
+            $aw = date("m", strtotime($request->aw));
+            $ak = date("m", strtotime($request->ak));
+            if ($aw == $ak) {
+                // tanggal sama
+                echo '  
                 <div class="table-responsive">
                     <table style="width:100%; font-size:12px" class="display table  table-sm table-striped table-bordered table-hover text-nowrap datatable-absensi" id="tbabsensi">
                         <thead>
                             <tr class="text-center">
                                 <th>STB</th>
-                                <th>NAMA</th>
-                                ';
-            foreach ($datesArray as $item) {
-                echo '          <th style="width: 30px" class="text-center">' . $item . '</th>';
-            }
-            echo
-            '
-                            </tr>
+                                <th>NAMA</th> ';
+                for ($i = 0; $i < count($request->tgl); $i++) {
+                    echo '          <th style="width: 30px" class="text-center">' . $request->tgl[$i] . '</th>';
+                }
+                echo '          </tr>
                         </thead>
-                        <tbody>
-                                ';
-            foreach ($dataK as $item2) {
-                echo '          <tr>
+                        <tbody>';
+                $dataK = DB::table('absensi_fixed_absensi')->where('month', '=', $aw)->get();
+                foreach ($dataK as $item2) {
+                    // $dataF = DB::table('absensi_fixed_absensi')->where('stb', '=', $item2->stb)->get();
+                    echo '          <tr>
                                     <th>' . $item2->stb . '</th>
-                                    <th>' . $item2->nama . '</th>
-                                ';
-                echo '          </tr>';
-            }
-            echo '      </tbody>
+                                    <th>' . $item2->name . '</th>';
+                    $j = 1;
+                    for ($i = 0; $i < count($request->tgl); $i++) {
+                        // print_r($dataF[$j]);
+                        echo '          <td style="width: 30px" class="text-center">' . $item2->$j . '</td>';
+                        $j++;
+                    }
+                    echo '          </tr>';
+                }
+                echo '      </tbody>
                     </table>
-                </div>
+                </div>';
+            } else {
+                // Tanggal beda
+                echo '  
+                <div class="table-responsive">
+                    <table style="width:100%; font-size:12px" class="display table  table-sm table-striped table-bordered table-hover text-nowrap datatable-absensi" id="tbabsensi">
+                        <thead>
+                            <tr class="text-center">
+                                <th>STB</th>
+                                <th>NAMA</th> ';
+                for ($i = 0; $i < count($request->tgl); $i++) {
+                    echo '          <th style="width: 30px" class="text-center">' . $request->tgl[$i] . '</th>';
+                }
+                echo '          </tr>
+                        </thead>
+                        <tbody>';
+                $dataK = DB::table('absensi_fixed_absensi')->where('month', '=', $aw)->get();
+                foreach ($dataK as $item2) {
+                    // $dataF = DB::table('absensi_fixed_absensi')->where('stb', '=', $item2->stb)->get();
+                    echo '          <tr>
+                                        <th>' . $item2->stb . '</th>
+                                        <th>' . $item2->name . '</th>';
+                    $j = 1;
+                    for ($i = 0; $i < count($request->tgl); $i++) {
+                        // print_r($dataF[$j]);
+                        echo '          <td style="width: 30px" class="text-center">' . $item2->$j . '</td>';
+                        $j++;
+                    }
+                    echo '          </tr>';
+                }
+                echo '      </tbody>
+                    </table>
+                </div>';
+            }
+            echo '
                 <script>
                     var tb1 = $(".datatable-absensi").DataTable({
                         "processing": true, 
@@ -144,5 +177,9 @@ class Absensi extends Controller
                     });
                 </script>';
         }
+    }
+
+    public function getAbsensiFixed(Request $request)
+    {
     }
 }
