@@ -17,13 +17,13 @@
 
         td.cuspad2 {
             /* padding-top: 0.5px;
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                    padding-bottom: 0.5px;
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                    padding-right: 0.5px;
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                    padding-left: 0.5px;
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                    margin-top: 5px;
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                    margin-bottom: 5px;
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                    margin-right: 5px;
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                    margin-left: 5px; */
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                            padding-bottom: 0.5px;
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                            padding-right: 0.5px;
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                            padding-left: 0.5px;
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                            margin-top: 5px;
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                            margin-bottom: 5px;
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                            margin-right: 5px;
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                            margin-left: 5px; */
         }
 
         .unselectable {
@@ -151,114 +151,112 @@
                                                             </tr>
                                                         </thead>
                                                         <tbody>
-                                                            <tr>
-                                                                <td>
-                                                                    <input type="text" name="tgl_awal"
-                                                                        class="form-control tglaw"
-                                                                        value="{{ date('Y-m-16') }}" id="datepicker0">
-                                                                </td>
-                                                                <td>
-                                                                    <input type="text" name="tgl_akhir"
-                                                                        class="form-control tglak"
-                                                                        value="{{ date('Y-m-15', strtotime('first day of +1 month')) }}"
-                                                                        id="datepicker1">
-                                                                </td>
-                                                                <td>
-                                                                    <button class="btn btn-primary" onclick="tb();"><i
-                                                                            class="fa-solid fa-magnifying-glass"
-                                                                            style="margin-right:5px"></i>
-                                                                        Perbarui</button>
-                                                                </td>
-                                                            </tr>
+                                                            <form action="{{ url('absensi/fetch') }}" method="POST">
+                                                                <tr>
+                                                                    <td>
+                                                                        <input type="text" name="tgl_awal"
+                                                                            class="form-control tglaw"
+                                                                            value="{{ date('Y-m-16') }}" id="datepicker0">
+                                                                    </td>
+                                                                    <td>
+                                                                        <input type="text" name="tgl_akhir"
+                                                                            class="form-control tglak"
+                                                                            value="{{ date('Y-m-15', strtotime('first day of +1 month')) }}"
+                                                                            id="datepicker1">
+                                                                    </td>
+                                                                    <td>
+                                                                        <button class="btn btn-primary"
+                                                                            {{-- onclick="tb();" --}}><i
+                                                                                class="fa-solid fa-magnifying-glass"
+                                                                                style="margin-right:5px"></i>
+                                                                            Perbarui</button>
+                                                                    </td>
+                                                                </tr>
+                                                            </form>
                                                         </tbody>
                                                     </table>
                                                 </div>
-                                                <div class="col-sm-12 col-md-12">
-                                                    <div class="ph-item" style="display:none">
-                                                        <div class="ph-col-3">
-                                                            <div class="ph-picture"></div>
-                                                            <div class="ph-row">
-                                                                <div class="ph-col-4 "></div>
-                                                                <div class="ph-col-4"></div>
-                                                                <div class="ph-col-2 "></div>
-                                                                <div class="ph-col-2"></div>
-                                                            </div>
-                                                            <div class="ph-row">
-                                                                <div class="ph-col-8"></div>
-                                                                <div class="ph-col-4"></div>
-                                                            </div>
-                                                            <div class="ph-row">
-                                                                <div class="ph-col-12"></div>
-                                                            </div>
-                                                        </div>
-                                                        <div class="ph-col-3">
-                                                            <div class="ph-picture"></div>
-                                                            <div class="ph-row">
-                                                                <div class="ph-col-4 "></div>
-                                                                <div class="ph-col-4"></div>
-                                                                <div class="ph-col-2 "></div>
-                                                                <div class="ph-col-2"></div>
-                                                            </div>
-                                                            <div class="ph-row">
-                                                                <div class="ph-col-8"></div>
-                                                                <div class="ph-col-4"></div>
-                                                            </div>
-                                                            <div class="ph-row">
-                                                                <div class="ph-col-12"></div>
-                                                            </div>
-                                                        </div>
-                                                        <div class="ph-col-3">
-                                                            <div class="ph-picture"></div>
-                                                            <div class="ph-row">
-                                                                <div class="ph-col-4 "></div>
-                                                                <div class="ph-col-4"></div>
-                                                                <div class="ph-col-2 "></div>
-                                                                <div class="ph-col-2"></div>
-                                                            </div>
-                                                            <div class="ph-row">
-                                                                <div class="ph-col-8"></div>
-                                                                <div class="ph-col-4"></div>
-                                                            </div>
-                                                            <div class="ph-row">
-                                                                <div class="ph-col-12"></div>
-                                                            </div>
-                                                        </div>
-                                                        <div class="ph-col-3">
-                                                            <div class="ph-picture"></div>
-                                                            <div class="ph-row">
-                                                                <div class="ph-col-4 "></div>
-                                                                <div class="ph-col-4"></div>
-                                                                <div class="ph-col-2 "></div>
-                                                                <div class="ph-col-2"></div>
-                                                            </div>
-                                                            <div class="ph-row">
-                                                                <div class="ph-col-8"></div>
-                                                                <div class="ph-col-4"></div>
-                                                            </div>
-                                                            <div class="ph-row">
-                                                                <div class="ph-col-12"></div>
-                                                            </div>
-                                                        </div>
-                                                        <div class="ph-col-3">
-                                                            <div class="ph-picture"></div>
-                                                            <div class="ph-row">
-                                                                <div class="ph-col-4 "></div>
-                                                                <div class="ph-col-4"></div>
-                                                                <div class="ph-col-2 "></div>
-                                                                <div class="ph-col-2"></div>
-                                                            </div>
-                                                            <div class="ph-row">
-                                                                <div class="ph-col-8"></div>
-                                                                <div class="ph-col-4"></div>
-                                                            </div>
-                                                            <div class="ph-row">
-                                                                <div class="ph-col-12"></div>
-                                                            </div>
-                                                        </div>
-                                                    </div>
-                                                </div>
                                             </div>
-                                            <div class="fetched-data-absensi"></div>
+                                            <table style="width:100%; font-family: 'Trebuchet MS', Helvetica, sans-serif;"
+                                                class="display table table-vcenter card-table table-sm table-striped table-bordered table-hover text-nowrap datatable-absensi"
+                                                id="tblamaran">
+                                                <thead>
+                                                    <tr>
+                                                        <td>stb</td>
+                                                        <td>nama</td>
+                                                        <td>_01</td>
+                                                        <td>_02</td>
+                                                        <td>_03</td>
+                                                        <td>_04</td>
+                                                        <td>_05</td>
+                                                        <td>_06</td>
+                                                        <td>_07</td>
+                                                        <td>_08</td>
+                                                        <td>_09</td>
+                                                        <td>_10</td>
+                                                        <td>_11</td>
+                                                        <td>_12</td>
+                                                        <td>_13</td>
+                                                        <td>_14</td>
+                                                        <td>_15</td>
+                                                        <td>_16</td>
+                                                        <td>_17</td>
+                                                        <td>_18</td>
+                                                        <td>_19</td>
+                                                        <td>_20</td>
+                                                        <td>_21</td>
+                                                        <td>_22</td>
+                                                        <td>_23</td>
+                                                        <td>_24</td>
+                                                        <td>_25</td>
+                                                        <td>_26</td>
+                                                        <td>_27</td>
+                                                        <td>_28</td>
+                                                        <td>_29</td>
+                                                        <td>_30</td>
+                                                        <td>_31</td>
+                                                    </tr>
+                                                </thead>
+                                                <tbody>
+                                                    @foreach ($listabsensi as $item)
+                                                        <tr>
+                                                            <td>{{ $item->stb }}</td>
+                                                            <td>{{ $item->nama }}</td>
+                                                            <td>{{ $item->_01 }}</td>
+                                                            <td>{{ $item->_02 }}</td>
+                                                            <td>{{ $item->_03 }}</td>
+                                                            <td>{{ $item->_04 }}</td>
+                                                            <td>{{ $item->_05 }}</td>
+                                                            <td>{{ $item->_06 }}</td>
+                                                            <td>{{ $item->_07 }}</td>
+                                                            <td>{{ $item->_08 }}</td>
+                                                            <td>{{ $item->_09 }}</td>
+                                                            <td>{{ $item->_10 }}</td>
+                                                            <td>{{ $item->_11 }}</td>
+                                                            <td>{{ $item->_12 }}</td>
+                                                            <td>{{ $item->_13 }}</td>
+                                                            <td>{{ $item->_14 }}</td>
+                                                            <td>{{ $item->_15 }}</td>
+                                                            <td>{{ $item->_16 }}</td>
+                                                            <td>{{ $item->_17 }}</td>
+                                                            <td>{{ $item->_18 }}</td>
+                                                            <td>{{ $item->_19 }}</td>
+                                                            <td>{{ $item->_20 }}</td>
+                                                            <td>{{ $item->_21 }}</td>
+                                                            <td>{{ $item->_22 }}</td>
+                                                            <td>{{ $item->_23 }}</td>
+                                                            <td>{{ $item->_24 }}</td>
+                                                            <td>{{ $item->_25 }}</td>
+                                                            <td>{{ $item->_26 }}</td>
+                                                            <td>{{ $item->_27 }}</td>
+                                                            <td>{{ $item->_28 }}</td>
+                                                            <td>{{ $item->_29 }}</td>
+                                                            <td>{{ $item->_30 }}</td>
+                                                            <td>{{ $item->_31 }}</td>
+                                                        </tr>
+                                                    @endforeach
+                                                </tbody>
+                                            </table>
                                         </div>
                                     </div>
                                 </div>
@@ -492,7 +490,7 @@
                 }
                 var aw = $('.tglaw').val();
                 var ak = $('.tglak').val();
-                console.log(tglfull);
+                console.log(month);
 
                 $(".ph-item").fadeIn(200);
                 $('.fetched-data-absensi').html('');
@@ -528,5 +526,89 @@
             }
             // Disable Error Notification
             // $.fn.dataTable.ext.errMode = 'none';
+
+            // var start = new Date("2024-03-16"); //yyyy-mm-dd
+            // var end = new Date("2024-04-15"); //yyyy-mm-dd
+
+            var tablelamaran = $('.datatable-absensi').DataTable({
+                "processing": true, //Feature control the processing indicator.
+                "serverSide": false, //Feature control DataTables' server-side processing mode.
+                "scrollX": true,
+                "scrollCollapse": true,
+                "pagingType": 'full_numbers',
+                "dom": "<'card-header h3' B>" +
+                    "<'card-body border-bottom py-3' <'row'<'col-sm-6'l><'col-sm-6'f>> >" +
+                    "<'table-responsive' <'col-sm-12'tr> >" +
+                    "<'card-footer' <'row'<'col-sm-8'i><'col-sm-4'p> >>",
+                "lengthMenu": [
+                    [25, 35, 40, 50, -1],
+                    ['25', '35', '40', '50', 'Tampilkan Semua']
+                ],
+                buttons: [{
+                        text: '<i class="fa-solid fa-filter" style="margin-right:5px"></i>',
+                        className: 'btn btn-blue',
+                        attr: {
+                            'href': '#offcanvasEnd-lamaran',
+                            'data-bs-toggle': 'offcanvas',
+                            'role': 'button',
+                            'aria-controls': 'offcanvasEnd',
+                        }
+                    },
+                    {
+                        extend: 'excelHtml5',
+                        autoFilter: true,
+                        className: 'btn btn-success',
+                        text: '<i class="fa fa-file-excel text-white" style="margin-right:5px"></i>',
+                        action: newexportaction,
+                    },
+                ],
+                "language": {
+                    "lengthMenu": "Menampilkan _MENU_",
+                    "zeroRecords": "Data Tidak Ditemukan",
+                    "info": "Menampilkan _START_ sampai _END_ dari _TOTAL_ total data",
+                    "infoEmpty": "Data Tidak Ditemukan",
+                    "infoFiltered": "(Difilter dari _MAX_ total records)",
+                    "processing": '<div class="container container-slim py-4"><div class="text-center"><div class="mb-3"></div><div class="text-secondary mb-3">Loading Data...</div><div class="progress progress-sm"><div class="progress-bar progress-bar-indeterminate"></div></div></div></div>',
+                    "search": '<svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-search" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z" fill="none"></path><path d="M10 10m-7 0a7 7 0 1 0 14 0a7 7 0 1 0 -14 0"></path><path d="M21 21l-6 -6"></path></svg>',
+                    "paginate": {
+                        "first": '<svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-chevron-left-pipe" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z" fill="none"></path><path d="M7 6v12"></path><path d="M18 6l-6 6l6 6"></path></svg>',
+                        "last": '<svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-chevron-right-pipe" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z" fill="none"></path><path d="M6 6l6 6l-6 6"></path><path d="M17 5v13"></path></svg>',
+                        "next": '<svg xmlns="http://www.w3.org/2000/svg" class="icon" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z" fill="none"></path><path d="M9 6l6 6l-6 6"></path></svg>',
+                        "previous": '<svg xmlns="http://www.w3.org/2000/svg" class="icon" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z" fill="none"></path><path d="M15 6l-6 6l6 6"></path></svg>',
+                    },
+                },
+
+                // "ajax": {
+                //     "url": "",
+                //     "data": function(data) {
+                //         data._token = "{{ csrf_token() }}";
+                //         data.bulan = 3;
+                //     }
+                // },
+
+                // columns: [{
+                //         title: 'stb',
+                //         data: 'stb',
+                //         name: 'stb',
+                //         className: 'cuspad0'
+                //     },
+                //     {
+                //         title: 'name',
+                //         data: 'name',
+                //         name: 'name',
+                //         className: 'cuspad0 cuspad1 text-center'
+                //     },
+                //     @for ($i = 0; $i < 1; $i++)
+                //         {
+                //             title: '{{ $i }}',
+                //             data: '_{{ $i == null ? '' : $i }}',
+                //             name: '_{{ $i == null ? '' : $i }}',
+                //             className: "cuspad0 cuspad1 text-center",
+                //             orderable: false,
+                //         },
+                //     @endfor
+                // ],
+
+            });
         </script>
     @endsection

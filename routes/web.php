@@ -152,6 +152,7 @@ Route::controller(Absensi::class)->group(function () {
     Route::get('absensi/cuti', 'cuti')->name('absensi/cuti');
 
     Route::post('getabsensi', 'getabsensi')->name('getabsensi');
+    // Route::post('absensi/fetch', 'fetch')->name('absensi/fetch');
 });
 
 Route::controller(DBLokal::class)->group(function () {
