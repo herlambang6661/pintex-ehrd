@@ -257,7 +257,7 @@ class Daftar extends Controller
             ],
         );
 
-        $check = DB::table('tarif_lembur')->insert([
+        $check = DB::table('daftar_tarif_lembur')->insert([
             'entitas' => $request->entitas,
             'basic' => $request->basic,
             'level' => $request->level,
@@ -273,7 +273,7 @@ class Daftar extends Controller
 
     public function lemburview(Request $request)
     {
-        $data = DB::table('tarif_lembur')->where('id', $request->id)->get();
+        $data = DB::table('daftar_tarif_lembur')->where('id', $request->id)->get();
         foreach ($data as $b) {
             echo '
             <div class="card-stamp card-stamp-lg">
@@ -328,7 +328,7 @@ class Daftar extends Controller
             'insidentil' => 'required',
         ]);
 
-        $check = DB::table('tarif_lembur')
+        $check = DB::table('daftar_tarif_lembur')
             ->where('id', $request->id)
             ->update([
                 'entitas' => $request->entitas,
@@ -374,7 +374,7 @@ class Daftar extends Controller
             ],
         );
 
-        $check = DB::table('hari_libur_nasional')->insert([
+        $check = DB::table('daftar_hari_libur_nasional')->insert([
             'entitas' => $request->entitas,
             'tanggal' => $request->tanggal,
             'libur_nasional' => $request->libur_nasional,
@@ -390,7 +390,7 @@ class Daftar extends Controller
 
     public function liburnasview(Request $request)
     {
-        $data = DB::table('hari_libur_nasional')->where('id', $request->id)->get();
+        $data = DB::table('daftar_hari_libur_nasional')->where('id', $request->id)->get();
         foreach ($data as $n) {
             echo '
             <div class="card-stamp card-stamp-lg">
@@ -442,7 +442,7 @@ class Daftar extends Controller
             'keterangan' => 'required',
         ]);
 
-        $check = DB::table('hari_libur_nasional')
+        $check = DB::table('daftar_hari_libur_nasional')
             ->where('id', $request->id)
             ->update([
                 'entitas' => $request->entitas,
@@ -451,7 +451,6 @@ class Daftar extends Controller
                 'sumber_ketentuan' => $request->sumber_ketentuan,
                 'keterangan' => $request->keterangan,
                 'updated_at'    => now(),
-
             ]);
 
         $arr = array('msg' => 'Ada kesalahan. Silakan coba lagi nanti.', 'status' => false);
@@ -489,7 +488,7 @@ class Daftar extends Controller
             'out_rest' => 'required',
         ]);
 
-        $check = DB::table('shift')->insert([
+        $check = DB::table('daftar_shift')->insert([
             'entitas' => $request->entitas,
             'shift' => $request->shift,
             'jenis' => $request->jenis,
@@ -511,7 +510,7 @@ class Daftar extends Controller
 
     public function shiftview(Request $request)
     {
-        $data = DB::table('shift')->where('id', $request->id)->get();
+        $data = DB::table('daftar_shift')->where('id', $request->id)->get();
         foreach ($data as $l) {
             echo '
             <div class="card-stamp card-stamp-lg">
@@ -585,7 +584,7 @@ class Daftar extends Controller
             'out_rest' => 'required',
         ]);
 
-        $check = DB::table('shift')
+        $check = DB::table('daftar_shift')
             ->where('id', $request->id)
             ->update([
                 'entitas' => $request->entitas,

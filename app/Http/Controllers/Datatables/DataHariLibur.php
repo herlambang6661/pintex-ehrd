@@ -23,7 +23,7 @@ class DataHariLibur extends Controller
     public function index(Request $request)
     {
         if ($request->ajax()) {
-            $data = DB::table('hari_libur_nasional')->orderBy('tanggal')->get();
+            $data = DB::table('daftar_hari_libur_nasional')->orderBy('tanggal')->get();
             return DataTables::of($data)
                 ->addIndexColumn()
                 ->addColumn('action', function ($row) {
@@ -42,7 +42,7 @@ class DataHariLibur extends Controller
 
     public function destroy($id)
     {
-        DB::table('hari_libur_nasional')->where('id', '=', $id)->delete();
+        DB::table('daftar_hari_libur_nasional')->where('id', '=', $id)->delete();
 
         return response()->json(['success' => 'Record deleted successfully.']);
     }

@@ -11,7 +11,7 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('tarif_lembur', function (Blueprint $table) {
+        Schema::create('daftar_tarif_lembur', function (Blueprint $table) {
             $table->id();
             $table->string('entitas')->nullable();
             $table->string('basic');
