@@ -1,6 +1,3 @@
-<link rel="stylesheet" href="https://unpkg.com/placeholder-loading/dist/css/placeholder-loading.min.css">
-
-
 @extends('layouts.app')
 @section('content')
     <style>
@@ -16,14 +13,7 @@
         }
 
         td.cuspad2 {
-            /* padding-top: 0.5px;
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                    padding-bottom: 0.5px;
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                    padding-right: 0.5px;
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                    padding-left: 0.5px;
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                    margin-top: 5px;
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                    margin-bottom: 5px;
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                    margin-right: 5px;
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                    margin-left: 5px; */
+            /* padding-top: 0.5px;                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                  margin-left: 5px; */
         }
 
         .unselectable {
@@ -34,6 +24,112 @@
             user-select: none;
             color: #cc0000;
             font-weight: bolder;
+        }
+
+        .overlay {
+            position: fixed;
+            top: 0;
+            z-index: 100;
+            width: 100%;
+            height: 100%;
+            display: none;
+            background: rgba(0, 0, 0, 0.6);
+        }
+
+        /* .cv-spinner {
+                                                                        height: 100%;
+                                                                        display: flex;
+                                                                        justify-content: center;
+                                                                        align-items: center;
+                                                                    }
+
+                                                                    .spinner {
+                                                                        width: 40px;
+                                                                        height: 40px;
+                                                                        border: 4px #ddd solid;
+                                                                        border-top: 4px #2e93e6 solid;
+                                                                        border-radius: 50%;
+                                                                        animation: sp-anime 0.8s infinite linear;
+                                                                    }
+
+                                                                    @keyframes sp-anime {
+                                                                        100% {
+                                                                            transform: rotate(360deg);
+                                                                        }
+                                                                    }
+
+                                                                    .is-hide {
+                                                                        display: none;
+                                                                    } */
+        .loader {
+            position: fixed;
+            z-index: 301;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            height: 200px;
+            width: 200px;
+            overflow: hidden;
+            text-align: center;
+        }
+
+        .spinner {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            z-index: 303;
+            border-radius: 100%;
+            border-left-color: transparent !important;
+            border-right-color: transparent !important;
+        }
+
+        .spinner1 {
+            width: 100px;
+            height: 100px;
+            border: 10px solid #fff;
+            animation: spin 1s linear infinite;
+        }
+
+        .spinner2 {
+            width: 70px;
+            height: 70px;
+            border: 10px solid #fff;
+            animation: negative-spin 2s linear infinite;
+        }
+
+        .spinner3 {
+            width: 40px;
+            height: 40px;
+            border: 10px solid #fff;
+            animation: spin 4s linear infinite;
+        }
+
+        @keyframes spin {
+            0% {
+                transform: translate(-50%, -50%) rotate(0deg);
+            }
+
+            100% {
+                transform: translate(-50%, -50%) rotate(360deg);
+            }
+        }
+
+        @keyframes negative-spin {
+            0% {
+                transform: translate(-50%, -50%) rotate(0deg);
+            }
+
+            100% {
+                transform: translate(-50%, -50%) rotate(-360deg);
+            }
+        }
+
+        .loader-text {
+            position: relative;
+            top: 75%;
+            color: #fff;
+            font-weight: bold;
         }
     </style>
     <div class="page">
@@ -81,13 +177,11 @@
                         <!-- Page title actions -->
                         <div class="col-auto ms-auto d-print-none">
                             <div class="btn-list">
-                                <a href="#" class="btn btn-danger d-none d-sm-inline-block" data-bs-toggle="modal"
-                                    data-bs-target="#modal-lamaran" data-bs-backdrop="static" data-bs-keyboard="false">
+                                <a href="#" class="btn btn-danger d-none d-sm-inline-block" onclick="alpha();">
                                     <i class="fa-solid fa-person-running"></i>
                                     Data Alfa
                                 </a>
-                                <a href="#" class="btn btn-warning d-none d-sm-inline-block" data-bs-toggle="modal"
-                                    data-bs-target="#importExcel" data-bs-backdrop="static" data-bs-keyboard="false">
+                                <a href="#" class="btn btn-warning d-none d-sm-inline-block" onclick="f1();">
                                     <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24"
                                         viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
                                         stroke-linecap="round" stroke-linejoin="round"
@@ -121,143 +215,132 @@
             <div class="page-body">
                 <div class="container-xl">
                     <div class="row row-deck row-cards">
-                        {{-- <div class="col-12">
-                                <div class="card card-xl border-success shadow rounded">
-                                    <div class="card-stamp card-stamp-lg">
-                                        <div class="card-stamp-icon bg-success">
-                                            <i class="fa-solid fa-users"></i>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div> --}}
                         <div class="col-md-12">
                             <div class="card card-xl shadow rounded">
-                                <div class="tab-content">
-                                    <div class="card-stamp card-stamp-lg">
-                                        <div class="card-stamp-icon bg-success">
-                                            <i class="fa-solid fa-users"></i>
+                                <div class="card card-xl shadow rounded">
+                                    <div class="card-body">
+                                        <div class="card-stamp card-stamp-lg">
+                                            <div class="card-stamp-icon bg-primary">
+                                                <i class="fa-solid fa-users"></i>
+                                            </div>
                                         </div>
-                                    </div>
-                                    <div class="card card-xl shadow rounded">
-                                        <div class="card-body">
-                                            <div class="row row-cards">
-                                                <div class="table-responsive">
-                                                    <table class=" mb-0">
-                                                        <thead>
-                                                            <tr>
-                                                                <th>Tanggal Awal</th>
-                                                                <th>Tanggal Akhir</th>
-                                                                <th></th>
-                                                            </tr>
-                                                        </thead>
-                                                        <tbody>
-                                                            <tr>
-                                                                <td>
-                                                                    <input type="text" class="form-control tglaw"
-                                                                        value="{{ date('Y-m-16') }}" id="datepicker0">
-                                                                </td>
-                                                                <td>
-                                                                    <input type="text" class="form-control tglak"
-                                                                        value="{{ date('Y-m-15', strtotime('first day of +1 month')) }}"
-                                                                        id="datepicker1">
-                                                                </td>
-                                                                <td>
-                                                                    <button class="btn btn-primary" onclick="tb();"><i
-                                                                            class="fa-solid fa-magnifying-glass"
-                                                                            style="margin-right:5px"></i>
-                                                                        Perbarui</button>
-                                                                </td>
-                                                            </tr>
-                                                        </tbody>
-                                                    </table>
-                                                </div>
-                                                <div class="col-sm-12 col-md-12">
-                                                    <div class="ph-item" style="display:none">
-                                                        <div class="ph-col-3">
-                                                            <div class="ph-picture"></div>
-                                                            <div class="ph-row">
-                                                                <div class="ph-col-4 "></div>
-                                                                <div class="ph-col-4"></div>
-                                                                <div class="ph-col-2 "></div>
-                                                                <div class="ph-col-2"></div>
-                                                            </div>
-                                                            <div class="ph-row">
-                                                                <div class="ph-col-8"></div>
-                                                                <div class="ph-col-4"></div>
-                                                            </div>
-                                                            <div class="ph-row">
-                                                                <div class="ph-col-12"></div>
-                                                            </div>
+                                        <div class="row row-cards">
+                                            <div class="table-responsive">
+                                                <table class=" mb-0">
+                                                    <thead>
+                                                        <tr>
+                                                            <th>Tanggal Awal</th>
+                                                            <th>Tanggal Akhir</th>
+                                                            <th></th>
+                                                        </tr>
+                                                    </thead>
+                                                    <tbody>
+                                                        <tr>
+                                                            <td>
+                                                                <input type="text" class="form-control tglaw"
+                                                                    value="{{ date('Y-m-16') }}" id="datepicker0">
+                                                            </td>
+                                                            <td>
+                                                                <input type="text" class="form-control tglak"
+                                                                    value="{{ date('Y-m-15', strtotime('first day of +1 month')) }}"
+                                                                    id="datepicker1">
+                                                            </td>
+                                                            <td>
+                                                                <button class="btn btn-primary" onclick="tb();"><i
+                                                                        class="fa-solid fa-magnifying-glass"
+                                                                        style="margin-right:5px"></i>
+                                                                    Perbarui</button>
+                                                            </td>
+                                                        </tr>
+                                                    </tbody>
+                                                </table>
+                                            </div>
+                                            <div class="col-sm-12 col-md-12">
+                                                <div class="ph-item" style="display:none">
+                                                    <div class="ph-col-3">
+                                                        <div class="ph-picture"></div>
+                                                        <div class="ph-row">
+                                                            <div class="ph-col-4 "></div>
+                                                            <div class="ph-col-4"></div>
+                                                            <div class="ph-col-2 "></div>
+                                                            <div class="ph-col-2"></div>
                                                         </div>
-                                                        <div class="ph-col-3">
-                                                            <div class="ph-picture"></div>
-                                                            <div class="ph-row">
-                                                                <div class="ph-col-4 "></div>
-                                                                <div class="ph-col-4"></div>
-                                                                <div class="ph-col-2 "></div>
-                                                                <div class="ph-col-2"></div>
-                                                            </div>
-                                                            <div class="ph-row">
-                                                                <div class="ph-col-8"></div>
-                                                                <div class="ph-col-4"></div>
-                                                            </div>
-                                                            <div class="ph-row">
-                                                                <div class="ph-col-12"></div>
-                                                            </div>
+                                                        <div class="ph-row">
+                                                            <div class="ph-col-8"></div>
+                                                            <div class="ph-col-4"></div>
                                                         </div>
-                                                        <div class="ph-col-3">
-                                                            <div class="ph-picture"></div>
-                                                            <div class="ph-row">
-                                                                <div class="ph-col-4 "></div>
-                                                                <div class="ph-col-4"></div>
-                                                                <div class="ph-col-2 "></div>
-                                                                <div class="ph-col-2"></div>
-                                                            </div>
-                                                            <div class="ph-row">
-                                                                <div class="ph-col-8"></div>
-                                                                <div class="ph-col-4"></div>
-                                                            </div>
-                                                            <div class="ph-row">
-                                                                <div class="ph-col-12"></div>
-                                                            </div>
+                                                        <div class="ph-row">
+                                                            <div class="ph-col-12"></div>
                                                         </div>
-                                                        <div class="ph-col-3">
-                                                            <div class="ph-picture"></div>
-                                                            <div class="ph-row">
-                                                                <div class="ph-col-4 "></div>
-                                                                <div class="ph-col-4"></div>
-                                                                <div class="ph-col-2 "></div>
-                                                                <div class="ph-col-2"></div>
-                                                            </div>
-                                                            <div class="ph-row">
-                                                                <div class="ph-col-8"></div>
-                                                                <div class="ph-col-4"></div>
-                                                            </div>
-                                                            <div class="ph-row">
-                                                                <div class="ph-col-12"></div>
-                                                            </div>
+                                                    </div>
+                                                    <div class="ph-col-3">
+                                                        <div class="ph-picture"></div>
+                                                        <div class="ph-row">
+                                                            <div class="ph-col-4 "></div>
+                                                            <div class="ph-col-4"></div>
+                                                            <div class="ph-col-2 "></div>
+                                                            <div class="ph-col-2"></div>
                                                         </div>
-                                                        <div class="ph-col-3">
-                                                            <div class="ph-picture"></div>
-                                                            <div class="ph-row">
-                                                                <div class="ph-col-4 "></div>
-                                                                <div class="ph-col-4"></div>
-                                                                <div class="ph-col-2 "></div>
-                                                                <div class="ph-col-2"></div>
-                                                            </div>
-                                                            <div class="ph-row">
-                                                                <div class="ph-col-8"></div>
-                                                                <div class="ph-col-4"></div>
-                                                            </div>
-                                                            <div class="ph-row">
-                                                                <div class="ph-col-12"></div>
-                                                            </div>
+                                                        <div class="ph-row">
+                                                            <div class="ph-col-8"></div>
+                                                            <div class="ph-col-4"></div>
+                                                        </div>
+                                                        <div class="ph-row">
+                                                            <div class="ph-col-12"></div>
+                                                        </div>
+                                                    </div>
+                                                    <div class="ph-col-3">
+                                                        <div class="ph-picture"></div>
+                                                        <div class="ph-row">
+                                                            <div class="ph-col-4 "></div>
+                                                            <div class="ph-col-4"></div>
+                                                            <div class="ph-col-2 "></div>
+                                                            <div class="ph-col-2"></div>
+                                                        </div>
+                                                        <div class="ph-row">
+                                                            <div class="ph-col-8"></div>
+                                                            <div class="ph-col-4"></div>
+                                                        </div>
+                                                        <div class="ph-row">
+                                                            <div class="ph-col-12"></div>
+                                                        </div>
+                                                    </div>
+                                                    <div class="ph-col-3">
+                                                        <div class="ph-picture"></div>
+                                                        <div class="ph-row">
+                                                            <div class="ph-col-4 "></div>
+                                                            <div class="ph-col-4"></div>
+                                                            <div class="ph-col-2 "></div>
+                                                            <div class="ph-col-2"></div>
+                                                        </div>
+                                                        <div class="ph-row">
+                                                            <div class="ph-col-8"></div>
+                                                            <div class="ph-col-4"></div>
+                                                        </div>
+                                                        <div class="ph-row">
+                                                            <div class="ph-col-12"></div>
+                                                        </div>
+                                                    </div>
+                                                    <div class="ph-col-3">
+                                                        <div class="ph-picture"></div>
+                                                        <div class="ph-row">
+                                                            <div class="ph-col-4 "></div>
+                                                            <div class="ph-col-4"></div>
+                                                            <div class="ph-col-2 "></div>
+                                                            <div class="ph-col-2"></div>
+                                                        </div>
+                                                        <div class="ph-row">
+                                                            <div class="ph-col-8"></div>
+                                                            <div class="ph-col-4"></div>
+                                                        </div>
+                                                        <div class="ph-row">
+                                                            <div class="ph-col-12"></div>
                                                         </div>
                                                     </div>
                                                 </div>
                                             </div>
-                                            <div class="fetched-data-absensi"></div>
                                         </div>
+                                        <div class="fetched-data-absensi"></div>
                                     </div>
                                 </div>
                             </div>
@@ -284,49 +367,6 @@
                     </div>
                     <form action="#" id="form-filter-items" method="get" autocomplete="off" novalidate=""
                         class="sticky-top">
-                        <div class="form-label">Tanggal Penginputan</div>
-                        <div class="row">
-                            <div class="col">
-                                <div class="input-icon mb-2">
-                                    <input name="dari" class="form-control border-primary" placeholder="Select a date"
-                                        id="datepicker2" value="<?= date('Y-01-01') ?>" />
-                                    <span class="input-icon-addon">
-                                        <svg xmlns="http://www.w3.org/2000/svg" class="icon" width="24"
-                                            height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor"
-                                            fill="none" stroke-linecap="round" stroke-linejoin="round">
-                                            <path stroke="none" d="M0 0h24v24H0z" fill="none" />
-                                            <path
-                                                d="M4 7a2 2 0 0 1 2 -2h12a2 2 0 0 1 2 2v12a2 2 0 0 1 -2 2h-12a2 2 0 0 1 -2 -2v-12z" />
-                                            <path d="M16 3v4" />
-                                            <path d="M8 3v4" />
-                                            <path d="M4 11h16" />
-                                            <path d="M11 15h1" />
-                                            <path d="M12 15v3" />
-                                        </svg>
-                                    </span>
-                                </div>
-                            </div>
-                            <div class="col">
-                                <div class="input-icon mb-2">
-                                    <input name="sampai" class="form-control border-primary" placeholder="Select a date"
-                                        id="" value="<?= date('Y-12-31') ?>" />
-                                    <span class="input-icon-addon">
-                                        <svg xmlns="http://www.w3.org/2000/svg" class="icon" width="24"
-                                            height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor"
-                                            fill="none" stroke-linecap="round" stroke-linejoin="round">
-                                            <path stroke="none" d="M0 0h24v24H0z" fill="none" />
-                                            <path
-                                                d="M4 7a2 2 0 0 1 2 -2h12a2 2 0 0 1 2 2v12a2 2 0 0 1 -2 2h-12a2 2 0 0 1 -2 -2v-12z" />
-                                            <path d="M16 3v4" />
-                                            <path d="M8 3v4" />
-                                            <path d="M4 11h16" />
-                                            <path d="M11 15h1" />
-                                            <path d="M12 15v3" />
-                                        </svg>
-                                    </span>
-                                </div>
-                            </div>
-                        </div>
                         <br>
                         <div class="form-label">Jenis Kelamin</div>
                         <div class="mb-4">
@@ -398,7 +438,36 @@
 
         <script>
             $(function() {
-                // tb();
+                $('.modal-detail-absensi').on('show.bs.modal', function(e) {
+                    var rowid = $(e.relatedTarget).data('id');
+                    var rowaw = $(e.relatedTarget).data('tglaw');
+                    var rowak = $(e.relatedTarget).data('tglak');
+                    console.log("Fetch: " + rowid);
+                    $(".overlay").fadeIn(300);
+                    $.ajaxSetup({
+                        headers: {
+                            'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                        }
+                    });
+                    $.ajax({
+                        type: 'POST',
+                        url: "{{ url('listAbsensiDetail') }}",
+                        data: {
+                            "_token": "{{ csrf_token() }}",
+                            id: rowid,
+                            tglaw: rowaw,
+                            tglak: rowak,
+                        },
+                        success: function(data) {
+                            $('.fetched-absensi-detail').html(
+                                data); //menampilkan data ke dalam modal
+                        }
+                    }).done(function() {
+                        setTimeout(function() {
+                            $(".overlay").fadeOut(300);
+                        }, 500);
+                    });
+                });
             });
             /*------------------------------------------
             --------------------------------------------
@@ -527,4 +596,31 @@
             // Disable Error Notification
             // $.fn.dataTable.ext.errMode = 'none';
         </script>
+
+        <div class="modal modal-blur fade modal-detail-absensi" tabindex="-1" style="display: none;"
+            aria-hidden="true">
+            <div class="overlay">
+                <div class="loader">
+                    <span class="spinner spinner1"></span>
+                    <span class="spinner spinner2"></span>
+                    <span class="spinner spinner3"></span>
+                    <br>
+                    <span class="loader-text">MEMUAT DATA</span>
+                </div>
+            </div>
+            <div class="modal-dialog modal-lg modal-dialog-centered" role="document">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title">Detail Absensi Karyawan</h5>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    </div>
+                    <div class="modal-body">
+                        <div class="fetched-absensi-detail"></div>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-primary" data-bs-dismiss="modal">Tutup</button>
+                    </div>
+                </div>
+            </div>
+        </div>
     @endsection

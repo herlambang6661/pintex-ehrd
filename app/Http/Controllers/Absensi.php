@@ -16,6 +16,7 @@ class Absensi extends Controller
     public function __construct()
     {
         $this->middleware('auth');
+        setlocale(LC_ALL, 'IND');
     }
 
     public function absensi()
@@ -68,26 +69,6 @@ class Absensi extends Controller
                 $day[] = $value->format('d'); // dd
                 $month[] = $value->format('m'); // mm
             }
-
-            // echo json_encode($request->tglfull[1]);
-            // die();
-
-            // get data karyawan aktif
-            // $absens = DB::table('penerimaan_karyawan')
-            //     ->select('userid', 'stb', 'nama')
-            //     ->where('status', 'like', '%Aktif%')
-            //     ->orderBy('nama', 'ASC')
-            //     ->get();
-            // $arrayName = array();
-            // foreach ($absens as $item2) {
-            //     for ($i = 0; $i < count($datesFull); $i++) {
-            //         $arrayName[] = array(
-            //             'stb' => $item2->stb,
-            //             'name' => $item2->nama,
-            //             $day[$i] => $day[$i],
-            //         );
-            //     }
-            // }
 
             for ($i = 0; $i < count($request->tglfull); $i++) {
                 $tgl1 = !empty($request->tglfull[0]) ? $request->tglfull[0] : '';
@@ -159,55 +140,89 @@ class Absensi extends Controller
                     (SELECT a.sst FROM absensi_absensi a WHERE a.userid = k.userid AND a.tanggal = '$tgl30') AS _30, 
                     (SELECT a.sst FROM absensi_absensi a WHERE a.userid = k.userid AND a.tanggal = '$tgl31') AS _31"))
                 ->where('k.status', 'like', '%Aktif%')
+                ->orderBy('k.nama', 'ASC')
                 ->get();
             echo '  
                 <div class="table-responsive">
-                    <table style="width:100%; font-size:12px" class="display table  table-sm table-striped table-bordered table-hover text-nowrap datatable-absensi" id="tbabsensi">
+                    <table style="width:100%; font-size:12px" class="display table table-sm  table-bordered table-hover text-nowrap datatable-absensi" id="tbabsensi">
                         <thead>
                             <tr class="text-center">
-                                <th>STB</th>
-                                <th>NAMA</th> ';
-            for ($i = 0; $i < count($request->tgl); $i++) {
-                echo '          <th style="width: 30px" class="text-center">' . $request->tgl[$i] . '</th>';
+                            <th>STB</th>
+                            <th>NAMA</th> ';
+            for ($i = 0; $i < 31; $i++) {
+                $SST = !empty($request->tgl[$i]) ? ($request->tgl[$i]) : '';
+                echo '          <th style="width: 30px" class="text-center">' . $SST . '</th>';
             }
             echo '          </tr>
                         </thead>
                         <tbody>';
             foreach ($results as $item2) {
+                $sst01 = ($item2->_01 == "A") ? "bg-pink text-white" : (($item2->_01 == "F1") ? "bg-warning text-white" : (($item2->_01 == "F2") ? "bg-warning text-white" : (($item2->_01 == "½") ? "bg-warning text-white" : "")));
+                $sst02 = ($item2->_02 == "A") ? "bg-pink text-white" : (($item2->_02 == "F1") ? "bg-warning text-white" : (($item2->_02 == "F2") ? "bg-warning text-white" : (($item2->_02 == "½") ? "bg-warning text-white" : "")));
+                $sst03 = ($item2->_03 == "A") ? "bg-pink text-white" : (($item2->_03 == "F1") ? "bg-warning text-white" : (($item2->_03 == "F2") ? "bg-warning text-white" : (($item2->_03 == "½") ? "bg-warning text-white" : "")));
+                $sst04 = ($item2->_04 == "A") ? "bg-pink text-white" : (($item2->_04 == "F1") ? "bg-warning text-white" : (($item2->_04 == "F2") ? "bg-warning text-white" : (($item2->_04 == "½") ? "bg-warning text-white" : "")));
+                $sst05 = ($item2->_05 == "A") ? "bg-pink text-white" : (($item2->_05 == "F1") ? "bg-warning text-white" : (($item2->_05 == "F2") ? "bg-warning text-white" : (($item2->_05 == "½") ? "bg-warning text-white" : "")));
+                $sst06 = ($item2->_06 == "A") ? "bg-pink text-white" : (($item2->_06 == "F1") ? "bg-warning text-white" : (($item2->_06 == "F2") ? "bg-warning text-white" : (($item2->_06 == "½") ? "bg-warning text-white" : "")));
+                $sst07 = ($item2->_07 == "A") ? "bg-pink text-white" : (($item2->_07 == "F1") ? "bg-warning text-white" : (($item2->_07 == "F2") ? "bg-warning text-white" : (($item2->_07 == "½") ? "bg-warning text-white" : "")));
+                $sst08 = ($item2->_08 == "A") ? "bg-pink text-white" : (($item2->_08 == "F1") ? "bg-warning text-white" : (($item2->_08 == "F2") ? "bg-warning text-white" : (($item2->_08 == "½") ? "bg-warning text-white" : "")));
+                $sst09 = ($item2->_09 == "A") ? "bg-pink text-white" : (($item2->_09 == "F1") ? "bg-warning text-white" : (($item2->_09 == "F2") ? "bg-warning text-white" : (($item2->_09 == "½") ? "bg-warning text-white" : "")));
+                $sst10 = ($item2->_10 == "A") ? "bg-pink text-white" : (($item2->_10 == "F1") ? "bg-warning text-white" : (($item2->_10 == "F2") ? "bg-warning text-white" : (($item2->_10 == "½") ? "bg-warning text-white" : "")));
+                $sst11 = ($item2->_11 == "A") ? "bg-pink text-white" : (($item2->_11 == "F1") ? "bg-warning text-white" : (($item2->_11 == "F2") ? "bg-warning text-white" : (($item2->_11 == "½") ? "bg-warning text-white" : "")));
+                $sst12 = ($item2->_12 == "A") ? "bg-pink text-white" : (($item2->_12 == "F1") ? "bg-warning text-white" : (($item2->_12 == "F2") ? "bg-warning text-white" : (($item2->_12 == "½") ? "bg-warning text-white" : "")));
+                $sst13 = ($item2->_13 == "A") ? "bg-pink text-white" : (($item2->_13 == "F1") ? "bg-warning text-white" : (($item2->_13 == "F2") ? "bg-warning text-white" : (($item2->_13 == "½") ? "bg-warning text-white" : "")));
+                $sst14 = ($item2->_14 == "A") ? "bg-pink text-white" : (($item2->_14 == "F1") ? "bg-warning text-white" : (($item2->_14 == "F2") ? "bg-warning text-white" : (($item2->_14 == "½") ? "bg-warning text-white" : "")));
+                $sst15 = ($item2->_15 == "A") ? "bg-pink text-white" : (($item2->_15 == "F1") ? "bg-warning text-white" : (($item2->_15 == "F2") ? "bg-warning text-white" : (($item2->_15 == "½") ? "bg-warning text-white" : "")));
+                $sst16 = ($item2->_16 == "A") ? "bg-pink text-white" : (($item2->_16 == "F1") ? "bg-warning text-white" : (($item2->_16 == "F2") ? "bg-warning text-white" : (($item2->_16 == "½") ? "bg-warning text-white" : "")));
+                $sst17 = ($item2->_17 == "A") ? "bg-pink text-white" : (($item2->_17 == "F1") ? "bg-warning text-white" : (($item2->_17 == "F2") ? "bg-warning text-white" : (($item2->_17 == "½") ? "bg-warning text-white" : "")));
+                $sst18 = ($item2->_18 == "A") ? "bg-pink text-white" : (($item2->_18 == "F1") ? "bg-warning text-white" : (($item2->_18 == "F2") ? "bg-warning text-white" : (($item2->_18 == "½") ? "bg-warning text-white" : "")));
+                $sst19 = ($item2->_19 == "A") ? "bg-pink text-white" : (($item2->_19 == "F1") ? "bg-warning text-white" : (($item2->_19 == "F2") ? "bg-warning text-white" : (($item2->_19 == "½") ? "bg-warning text-white" : "")));
+                $sst20 = ($item2->_20 == "A") ? "bg-pink text-white" : (($item2->_20 == "F1") ? "bg-warning text-white" : (($item2->_20 == "F2") ? "bg-warning text-white" : (($item2->_20 == "½") ? "bg-warning text-white" : "")));
+                $sst21 = ($item2->_21 == "A") ? "bg-pink text-white" : (($item2->_21 == "F1") ? "bg-warning text-white" : (($item2->_21 == "F2") ? "bg-warning text-white" : (($item2->_21 == "½") ? "bg-warning text-white" : "")));
+                $sst22 = ($item2->_22 == "A") ? "bg-pink text-white" : (($item2->_22 == "F1") ? "bg-warning text-white" : (($item2->_22 == "F2") ? "bg-warning text-white" : (($item2->_22 == "½") ? "bg-warning text-white" : "")));
+                $sst23 = ($item2->_23 == "A") ? "bg-pink text-white" : (($item2->_23 == "F1") ? "bg-warning text-white" : (($item2->_23 == "F2") ? "bg-warning text-white" : (($item2->_23 == "½") ? "bg-warning text-white" : "")));
+                $sst24 = ($item2->_24 == "A") ? "bg-pink text-white" : (($item2->_24 == "F1") ? "bg-warning text-white" : (($item2->_24 == "F2") ? "bg-warning text-white" : (($item2->_24 == "½") ? "bg-warning text-white" : "")));
+                $sst25 = ($item2->_25 == "A") ? "bg-pink text-white" : (($item2->_25 == "F1") ? "bg-warning text-white" : (($item2->_25 == "F2") ? "bg-warning text-white" : (($item2->_25 == "½") ? "bg-warning text-white" : "")));
+                $sst26 = ($item2->_26 == "A") ? "bg-pink text-white" : (($item2->_26 == "F1") ? "bg-warning text-white" : (($item2->_26 == "F2") ? "bg-warning text-white" : (($item2->_26 == "½") ? "bg-warning text-white" : "")));
+                $sst27 = ($item2->_27 == "A") ? "bg-pink text-white" : (($item2->_27 == "F1") ? "bg-warning text-white" : (($item2->_27 == "F2") ? "bg-warning text-white" : (($item2->_27 == "½") ? "bg-warning text-white" : "")));
+                $sst28 = ($item2->_28 == "A") ? "bg-pink text-white" : (($item2->_28 == "F1") ? "bg-warning text-white" : (($item2->_28 == "F2") ? "bg-warning text-white" : (($item2->_28 == "½") ? "bg-warning text-white" : "")));
+                $sst29 = ($item2->_29 == "A") ? "bg-pink text-white" : (($item2->_29 == "F1") ? "bg-warning text-white" : (($item2->_29 == "F2") ? "bg-warning text-white" : (($item2->_29 == "½") ? "bg-warning text-white" : "")));
+                $sst30 = ($item2->_30 == "A") ? "bg-pink text-white" : (($item2->_30 == "F1") ? "bg-warning text-white" : (($item2->_30 == "F2") ? "bg-warning text-white" : (($item2->_30 == "½") ? "bg-warning text-white" : "")));
+                $sst31 = ($item2->_31 == "A") ? "bg-pink text-white" : (($item2->_31 == "F1") ? "bg-warning text-white" : (($item2->_31 == "F2") ? "bg-warning text-white" : (($item2->_31 == "½") ? "bg-warning text-white" : "")));
                 echo '          <tr>
-                                        <th>' . $item2->stb . '</th>
+                                        <th>
+                                        <a href="#" data-bs-toggle="modal" data-bs-target=".modal-detail-absensi" data-id="' . $item2->stb . '" data-tglaw="' . $request->tglaw . '" data-tglak="' . $request->tglak . '" style="text-decoration: none !important;color: inherit;">' . $item2->stb . '</a></th>
                                         <th>' . $item2->nama . '</th>';
-                echo '                  <td style="width: 30px" class="text-center">' . $item2->_01 . '</td>';
-                echo '                  <td style="width: 30px" class="text-center">' . $item2->_02 . '</td>';
-                echo '                  <td style="width: 30px" class="text-center">' . $item2->_03 . '</td>';
-                echo '                  <td style="width: 30px" class="text-center">' . $item2->_04 . '</td>';
-                echo '                  <td style="width: 30px" class="text-center">' . $item2->_05 . '</td>';
-                echo '                  <td style="width: 30px" class="text-center">' . $item2->_06 . '</td>';
-                echo '                  <td style="width: 30px" class="text-center">' . $item2->_07 . '</td>';
-                echo '                  <td style="width: 30px" class="text-center">' . $item2->_08 . '</td>';
-                echo '                  <td style="width: 30px" class="text-center">' . $item2->_09 . '</td>';
-                echo '                  <td style="width: 30px" class="text-center">' . $item2->_10 . '</td>';
-                echo '                  <td style="width: 30px" class="text-center">' . $item2->_11 . '</td>';
-                echo '                  <td style="width: 30px" class="text-center">' . $item2->_12 . '</td>';
-                echo '                  <td style="width: 30px" class="text-center">' . $item2->_13 . '</td>';
-                echo '                  <td style="width: 30px" class="text-center">' . $item2->_14 . '</td>';
-                echo '                  <td style="width: 30px" class="text-center">' . $item2->_15 . '</td>';
-                echo '                  <td style="width: 30px" class="text-center">' . $item2->_16 . '</td>';
-                echo '                  <td style="width: 30px" class="text-center">' . $item2->_17 . '</td>';
-                echo '                  <td style="width: 30px" class="text-center">' . $item2->_18 . '</td>';
-                echo '                  <td style="width: 30px" class="text-center">' . $item2->_19 . '</td>';
-                echo '                  <td style="width: 30px" class="text-center">' . $item2->_20 . '</td>';
-                echo '                  <td style="width: 30px" class="text-center">' . $item2->_21 . '</td>';
-                echo '                  <td style="width: 30px" class="text-center">' . $item2->_22 . '</td>';
-                echo '                  <td style="width: 30px" class="text-center">' . $item2->_23 . '</td>';
-                echo '                  <td style="width: 30px" class="text-center">' . $item2->_24 . '</td>';
-                echo '                  <td style="width: 30px" class="text-center">' . $item2->_25 . '</td>';
-                echo '                  <td style="width: 30px" class="text-center">' . $item2->_26 . '</td>';
-                echo '                  <td style="width: 30px" class="text-center">' . $item2->_27 . '</td>';
-                echo '                  <td style="width: 30px" class="text-center">' . $item2->_28 . '</td>';
-                echo '                  <td style="width: 30px" class="text-center">' . $item2->_29 . '</td>';
-                echo '                  <td style="width: 30px" class="text-center">' . $item2->_30 . '</td>';
-                echo '                  <td style="width: 30px" class="text-center">' . $item2->_31 . '</td>';
+                echo '                  <td style="width: 30px" class="text-center ' . $sst01 . '">' . $item2->_01 . '</td>';
+                echo '                  <td style="width: 30px" class="text-center ' . $sst02 . '">' . $item2->_02 . '</td>';
+                echo '                  <td style="width: 30px" class="text-center ' . $sst03 . '">' . $item2->_03 . '</td>';
+                echo '                  <td style="width: 30px" class="text-center ' . $sst04 . '">' . $item2->_04 . '</td>';
+                echo '                  <td style="width: 30px" class="text-center ' . $sst05 . '">' . $item2->_05 . '</td>';
+                echo '                  <td style="width: 30px" class="text-center ' . $sst06 . '">' . $item2->_06 . '</td>';
+                echo '                  <td style="width: 30px" class="text-center ' . $sst07 . '">' . $item2->_07 . '</td>';
+                echo '                  <td style="width: 30px" class="text-center ' . $sst08 . '">' . $item2->_08 . '</td>';
+                echo '                  <td style="width: 30px" class="text-center ' . $sst09 . '">' . $item2->_09 . '</td>';
+                echo '                  <td style="width: 30px" class="text-center ' . $sst10 . '">' . $item2->_10 . '</td>';
+                echo '                  <td style="width: 30px" class="text-center ' . $sst11 . '">' . $item2->_11 . '</td>';
+                echo '                  <td style="width: 30px" class="text-center ' . $sst12 . '">' . $item2->_12 . '</td>';
+                echo '                  <td style="width: 30px" class="text-center ' . $sst13 . '">' . $item2->_13 . '</td>';
+                echo '                  <td style="width: 30px" class="text-center ' . $sst14 . '">' . $item2->_14 . '</td>';
+                echo '                  <td style="width: 30px" class="text-center ' . $sst15 . '">' . $item2->_15 . '</td>';
+                echo '                  <td style="width: 30px" class="text-center ' . $sst16 . '">' . $item2->_16 . '</td>';
+                echo '                  <td style="width: 30px" class="text-center ' . $sst17 . '">' . $item2->_17 . '</td>';
+                echo '                  <td style="width: 30px" class="text-center ' . $sst18 . '">' . $item2->_18 . '</td>';
+                echo '                  <td style="width: 30px" class="text-center ' . $sst19 . '">' . $item2->_19 . '</td>';
+                echo '                  <td style="width: 30px" class="text-center ' . $sst20 . '">' . $item2->_20 . '</td>';
+                echo '                  <td style="width: 30px" class="text-center ' . $sst21 . '">' . $item2->_21 . '</td>';
+                echo '                  <td style="width: 30px" class="text-center ' . $sst22 . '">' . $item2->_22 . '</td>';
+                echo '                  <td style="width: 30px" class="text-center ' . $sst23 . '">' . $item2->_23 . '</td>';
+                echo '                  <td style="width: 30px" class="text-center ' . $sst24 . '">' . $item2->_24 . '</td>';
+                echo '                  <td style="width: 30px" class="text-center ' . $sst25 . '">' . $item2->_25 . '</td>';
+                echo '                  <td style="width: 30px" class="text-center ' . $sst26 . '">' . $item2->_26 . '</td>';
+                echo '                  <td style="width: 30px" class="text-center ' . $sst27 . '">' . $item2->_27 . '</td>';
+                echo '                  <td style="width: 30px" class="text-center ' . $sst28 . '">' . $item2->_28 . '</td>';
+                echo '                  <td style="width: 30px" class="text-center ' . $sst29 . '">' . $item2->_29 . '</td>';
+                echo '                  <td style="width: 30px" class="text-center ' . $sst30 . '">' . $item2->_30 . '</td>';
+                echo '                  <td style="width: 30px" class="text-center ' . $sst31 . '">' . $item2->_31 . '</td>';
                 echo '          </tr>';
             }
             echo '   </tbody>
@@ -263,9 +278,128 @@ class Absensi extends Controller
                                 "previous": `<svg xmlns="http://www.w3.org/2000/svg" class="icon" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z" fill="none"></path><path d="M15 6l-6 6l6 6"></path></svg>`,
                             },
                         },
-                        order: [[1, "asc"]]
+                        autoWidth: false,
+                        "columnDefs": [ {
+                            "targets": "no-sort",
+                            "orderable": false,
+                        } ]
                     });
-                </script>';
+                </script>
+                ';
+        }
+    }
+
+    public function listAbsensiDetail(Request $request)
+    {
+
+        $data = DB::table('penerimaan_karyawan')->where('stb', $request->id)->get();
+        $absensi = DB::table('absensi_absensi')->where('stb', $request->id)->whereBetween('tanggal', [$request->tglaw, $request->tglak])->get();
+        foreach ($data as $u) {
+            $link = url('photo/pas/' . $u->userid);
+            echo '
+            <div class="row">
+                <div class="col-lg-5">
+                    <div class="row">
+                        <div class="shadow" style="padding: 0px 0px 0px 0px">
+                            <div class="col-lg-12">
+                                <a data-fslightbox="gallery" href="' . $link . '.jpg">
+                                    <div class="img-responsive rounded-3 border"
+                                        style="background-image: url(' . $link . '.jpg)">
+                                    </div>
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                    <br>
+                </div>
+                <div class="col-lg-7">
+                    <div class="card shadow bg-info-lt">
+                        <div class="table-responsive">
+                            <table class="table table-vcenter card-table table-sm">
+                                <tr>
+                                    <td width="150px">Divisi</td>
+                                    <td>:</td>
+                                    <td>' . $u->divisi . '</td>
+                                </tr>
+                                <tr>
+                                    <td>Jabatan</td>
+                                    <td>:</td>
+                                    <td>' . $u->jabatan . '</td>
+                                </tr>
+                                <tr>
+                                    <td>Bagian</td>
+                                    <td>:</td>
+                                    <td>' . $u->bagian . '</td>
+                                </tr>
+                                <tr>
+                                    <td>Grup</td>
+                                    <td>:</td>
+                                    <td>' . $u->grup . '</td>
+                                </tr>
+                                <tr>
+                                    <td>Shift</td>
+                                    <td>:</td>
+                                    <td>' . $u->shift . '</td>
+                                </tr>
+                                <tr>
+                                    <td>Profesi</td>
+                                    <td>:</td>
+                                    <td>' . $u->profesi . '</td>
+                                </tr>
+                                <tr>
+                                    <td>Hari Libur</td>
+                                    <td>:</td>
+                                    <td>' . $u->hrlibur . '</td>
+                                </tr>
+                                <tr>
+                                    <td>Setengah Hari</td>
+                                    <td>:</td>
+                                    <td>' . $u->sethari . '</td>
+                                </tr>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <br>
+            <div class="row">
+                <div class="col-lg-12">
+                    <div class="card shadow">
+                        <div class="table-responsive">
+                            <table class="table table-vcenter card-table table-sm text-nowrap table-bordered table-hover " style="width:100%; font-size:12px">
+                                <thead>
+                                    <tr class="text-center">
+                                        <td>Tanggal</td>
+                                        <td>Hari</td>
+                                        <td>Masuk</td>
+                                        <td>Keluar</td>
+                                        <td>QJAM</td>
+                                        <td>ISH</td>
+                                        <td>JK</td>
+                                        <td>ST</td>
+                                    </tr>
+                                </thead>
+                                ';
+            foreach ($absensi as $key) {
+                echo '
+                                <tr class="text-center">
+                                    <td>' . $key->tanggal . '</td>
+                                    <td>' . strtoupper(Carbon::parse($key->tanggal)->formatLocalized('%A')) . '</td>
+                                    <td>' . Carbon::parse($key->in)->format('H:i:s') . '</td>
+                                    <td>' . Carbon::parse($key->out)->format('H:i:s') . '</td>
+                                    <td>' . $key->qj . '</td>
+                                    <td>' . $key->jis . '</td>
+                                    <td>' . $key->qjnet . '</td>
+                                    <td>' . $key->sst . '</td>
+                                </tr>';
+            }
+            echo '
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        ';
         }
     }
 }
