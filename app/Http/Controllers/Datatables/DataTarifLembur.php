@@ -22,7 +22,7 @@ class DataTarifLembur extends Controller
     public function index(Request $request)
     {
         if ($request->ajax()) {
-            $data = DB::table('tarif_lembur')->orderBy('basic')->get();
+            $data = DB::table('daftar_tarif_lembur')->orderBy('basic')->get();
             return DataTables::of($data)
                 ->addIndexColumn()
                 ->addColumn('action', function ($row) {
@@ -41,7 +41,7 @@ class DataTarifLembur extends Controller
 
     public function destroy($id)
     {
-        DB::table('tarif_lembur')->where('id', '=', $id)->delete();
+        DB::table('daftar_tarif_lembur')->where('id', '=', $id)->delete();
 
         return response()->json(['success' => 'Record deleted successfully.']);
     }

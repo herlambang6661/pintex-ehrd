@@ -85,7 +85,7 @@ class TarifLemburSeeder extends Seeder
         ];
 
         foreach ($user as $key => $value) {
-            DB::table('tarif_lembur')->insert($value);
+            DB::table('daftar_tarif_lembur')->insert($value);
         }
     }
 }

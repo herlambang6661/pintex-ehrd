@@ -23,7 +23,7 @@ class Harilibur extends Seeder
             ],
         ];
         foreach ($user as $key => $value) {
-            DB::table('hari_libur_nasional')->insert($value);
+            DB::table('daftar_hari_libur_nasional')->insert($value);
         }
     }
 }

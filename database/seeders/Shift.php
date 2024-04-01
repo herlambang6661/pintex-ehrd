@@ -56,7 +56,7 @@ class Shift extends Seeder
             ],
         ];
         foreach ($user as $key => $value) {
-            DB::table('shift')->insert($value);
+            DB::table('daftar_shift')->insert($value);
         }
     }
 }

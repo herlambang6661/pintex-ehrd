@@ -11,7 +11,7 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('hari_libur_nasional', function (Blueprint $table) {
+        Schema::create('daftar_hari_libur_nasional', function (Blueprint $table) {
             $table->id();
             $table->string('entitas')->nullable();
             $table->date('tanggal')->nullable();
