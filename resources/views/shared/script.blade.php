@@ -13,7 +13,8 @@
 <script src="{{ asset('assets/extentions/jquery.validate.min.js') }}"></script>
 <!-- Datatables -->
 <script src="{{ asset('assets/extentions/datatables/datatables.min.js') }}"></script>
-<link href="{{ asset('assets/extentions/datatables/DataTables-1.13.4/css/dataTables.bootstrap5.css') }}" rel="stylesheet">
+<link href="{{ asset('assets/extentions/datatables/DataTables-1.13.4/css/dataTables.bootstrap5.css') }}"
+    rel="stylesheet">
 <link href="{{ asset('assets/extentions/datatables/Buttons-2.3.4/css/buttons.bootstrap5.min.css') }}" rel="stylesheet">
 <script src="{{ asset('assets/extentions/datatables/jquery.dataTables.min.js') }}"></script>
 <script src="{{ asset('assets/extentions/datatables/DataTables-1.13.4/js/dataTables.bootstrap5.js') }}"></script>
@@ -30,7 +31,7 @@
 <script src="https://unpkg.com/@lottiefiles/lottie-player@latest/dist/lottie-player.js"></script>
 
 <script type="text/javascript">
-    $(function () {
+    $(function() {
         $('#entitasText').html($('#selectEntitas').val());
         $('#entitas').val($('#selectEntitas').val());
         $('#selectEntitas').on('keydown keyup load change hover', function() {
@@ -43,7 +44,7 @@
 </script>
 <script>
     // @formatter:off
-    document.addEventListener("DOMContentLoaded", function () {
+    document.addEventListener("DOMContentLoaded", function() {
         window.Litepicker && (new Litepicker({
             element: document.getElementById('datepicker0'),
             buttonText: {

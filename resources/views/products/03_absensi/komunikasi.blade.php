@@ -37,30 +37,30 @@
         }
 
         /* .cv-spinner {
-                                                                                                                                                                                                                height: 100%;
-                                                                                                                                                                                                                display: flex;
-                                                                                                                                                                                                                justify-content: center;
-                                                                                                                                                                                                                align-items: center;
-                                                                                                                                                                                                            }
+                                                                                                                                                                                                                                                                                                        height: 100%;
+                                                                                                                                                                                                                                                                                                        display: flex;
+                                                                                                                                                                                                                                                                                                        justify-content: center;
+                                                                                                                                                                                                                                                                                                        align-items: center;
+                                                                                                                                                                                                                                                                                                    }
 
-                                                                                                                                                                                                            .spinner {
-                                                                                                                                                                                                                width: 40px;
-                                                                                                                                                                                                                height: 40px;
-                                                                                                                                                                                                                border: 4px #ddd solid;
-                                                                                                                                                                                                                border-top: 4px #2e93e6 solid;
-                                                                                                                                                                                                                border-radius: 50%;
-                                                                                                                                                                                                                animation: sp-anime 0.8s infinite linear;
-                                                                                                                                                                                                            }
+                                                                                                                                                                                                                                                                                                    .spinner {
+                                                                                                                                                                                                                                                                                                        width: 40px;
+                                                                                                                                                                                                                                                                                                        height: 40px;
+                                                                                                                                                                                                                                                                                                        border: 4px #ddd solid;
+                                                                                                                                                                                                                                                                                                        border-top: 4px #2e93e6 solid;
+                                                                                                                                                                                                                                                                                                        border-radius: 50%;
+                                                                                                                                                                                                                                                                                                        animation: sp-anime 0.8s infinite linear;
+                                                                                                                                                                                                                                                                                                    }
 
-                                                                                                                                                                                                            @keyframes sp-anime {
-                                                                                                                                                                                                                100% {
-                                                                                                                                                                                                                    transform: rotate(360deg);
-                                                                                                                                                                                                                }
-                                                                                                                                                                                                            }
+                                                                                                                                                                                                                                                                                                    @keyframes sp-anime {
+                                                                                                                                                                                                                                                                                                        100% {
+                                                                                                                                                                                                                                                                                                            transform: rotate(360deg);
+                                                                                                                                                                                                                                                                                                        }
+                                                                                                                                                                                                                                                                                                    }
 
-                                                                                                                                                                                                            .is-hide {
-                                                                                                                                                                                                                display: none;
-                                                                                                                                                                                                            } */
+                                                                                                                                                                                                                                                                                                    .is-hide {
+                                                                                                                                                                                                                                                                                                        display: none;
+                                                                                                                                                                                                                                                                                                    } */
         .loader {
             position: fixed;
             z-index: 301;
@@ -146,17 +146,16 @@
                         <div class="col">
                             <!-- Page pre-title -->
                             <h2 class="page-title">
-                                <svg xmlns="http://www.w3.org/2000/svg" style="margin-right: 10px" width="24"
-                                    height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
-                                    stroke-linecap="round" stroke-linejoin="round"
-                                    class="icon icon-tabler icons-tabler-outline icon-tabler-id">
+                                <svg xmlns="http://www.w3.org/2000/svg" style="margin-right:10px"
+                                    class="icon icon-tabler icon-tabler-mail-fast" width="24" height="24"
+                                    viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" fill="none"
+                                    stroke-linecap="round" stroke-linejoin="round">
                                     <path stroke="none" d="M0 0h24v24H0z" fill="none" />
+                                    <path d="M3 7h3" />
+                                    <path d="M3 11h2" />
                                     <path
-                                        d="M3 4m0 3a3 3 0 0 1 3 -3h12a3 3 0 0 1 3 3v10a3 3 0 0 1 -3 3h-12a3 3 0 0 1 -3 -3z" />
-                                    <path d="M9 10m-2 0a2 2 0 1 0 4 0a2 2 0 1 0 -4 0" />
-                                    <path d="M15 8l2 0" />
-                                    <path d="M15 12l2 0" />
-                                    <path d="M7 16l10 0" />
+                                        d="M9.02 8.801l-.6 6a2 2 0 0 0 1.99 2.199h7.98a2 2 0 0 0 1.99 -1.801l.6 -6a2 2 0 0 0 -1.99 -2.199h-7.98a2 2 0 0 0 -1.99 1.801z" />
+                                    <path d="M9.8 7.5l2.982 3.28a3 3 0 0 0 4.238 .202l3.28 -2.982" />
                                 </svg>
                                 Surat Komunikasi
                                 <div id="entitasText" style="margin-left: 5px;">Loading... <i
@@ -304,10 +303,10 @@
                                                                 id="datepicker1">
                                                         </td>
                                                         <td>
-                                                            <button class="btn btn-primary" onclick="tb();"><i
+                                                            <button class="btn btn-primary" onclick="findByDate();"><i
                                                                     class="fa-solid fa-magnifying-glass"
                                                                     style="margin-right:5px"></i>
-                                                                Perbarui</button>
+                                                                Cari Data</button>
                                                         </td>
                                                     </tr>
                                                 </tbody>
@@ -397,6 +396,8 @@
                                                 </div>
                                             </div>
                                         </div>
+                                        <br>
+                                        <div class="fetched-data-absensi"></div>
                                     </div>
                                 </div>
                             </div>
@@ -573,55 +574,14 @@
                 dt.ajax.reload();
             }
 
-            Date.prototype.addDays = function(days) {
-                var dat = new Date(this.valueOf())
-                dat.setDate(dat.getDate() + days);
-                return dat;
-            }
-
-            function getDates(startDate, stopDate) {
-                var dateArray = new Array();
-                var currentDate = startDate;
-                while (currentDate <= stopDate) {
-                    dateArray.push(currentDate)
-                    currentDate = currentDate.addDays(1);
-                }
-                return dateArray;
-            }
-
-            function monthDiff(d1, d2) {
-                var months;
-                months = (d2.getFullYear() - d1.getFullYear()) * 12;
-                months -= d1.getMonth();
-                months += d2.getMonth();
-                return months <= 0 ? 0 : months;
-            }
-
-            function tb() {
-                var tglfull = [];
-                const days = [];
-                const month = [];
-                var dateArray = getDates(new Date($('.tglaw').val()), (new Date($('.tglak').val())));
-                var monthArray = monthDiff(new Date($('.tglaw').val()), (new Date($('.tglak').val())));
-
-                for (i = 0; i < dateArray.length; i++) {
-                    days.push(dateArray[i].getDate());
-                }
-                for (i = 0; i < dateArray.length; i++) {
-                    var dateString = new Date(dateArray[i].getTime() - (dateArray[i].getTimezoneOffset() * 60000))
-                        .toISOString()
-                        .split("T")[0];
-                    tglfull.push(dateString);
-                }
-                var aw = $('.tglaw').val();
-                var ak = $('.tglak').val();
-                console.log(aw);
+            function findByDate() {
+                var entitas = $('#selectEntitas').val();
+                var dateStart = $('.tglaw').val();
+                var dateEnd = $('.tglak').val();
+                console.log("Fetch: " + dateStart + " -> " + dateEnd + " entitas: " + entitas);
 
                 $(".ph-item").fadeIn(200);
                 $('.fetched-data-absensi').html('');
-                // var tglaw = $('.tglaw').val();
-                // var tglak = $('.tglak').val();
-
                 $.ajaxSetup({
                     headers: {
                         'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
@@ -630,15 +590,12 @@
                 //menggunakan fungsi ajax untuk pengambilan data
                 $.ajax({
                     type: 'POST',
-                    url: "{{ url('getabsensi') }}",
+                    url: "{{ url('getalpha') }}",
                     data: {
                         "_token": "{{ csrf_token() }}",
-                        'tglfull': tglfull,
-                        'tgl': days,
-                        'aw': aw,
-                        'ak': ak,
-                        'tglaw': $('.tglaw').val(),
-                        'tglak': $('.tglak').val(),
+                        'tglaw': dateStart,
+                        'tglak': dateEnd,
+                        'entitas': entitas,
                     },
                     success: function(data) {
                         $('.fetched-data-absensi').html(data);
@@ -649,8 +606,6 @@
                     }, 300);
                 });
             }
-            // Disable Error Notification
-            // $.fn.dataTable.ext.errMode = 'none';
         </script>
 
         <div class="modal modal-blur fade modal-detail-absensi" tabindex="-1" style="display: none;"
