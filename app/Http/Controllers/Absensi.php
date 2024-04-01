@@ -264,7 +264,7 @@ class Absensi extends Controller
                             },
                         ],
                         "language": {
-                            "lengthMenu": "Menampilkan Karyawan _MENU_",
+                            "lengthMenu": "Menampilkan _MENU_",
                             "zeroRecords": "Data Tidak Ditemukan",
                             "info": "Menampilkan _START_ sampai _END_ dari _TOTAL_ total data",
                             "infoEmpty": "Data Tidak Ditemukan",
@@ -401,5 +401,18 @@ class Absensi extends Controller
             </div>
         ';
         }
+    }
+
+    public function komunikasi()
+    {
+        $judul = "Surat Komunikasi";
+        $absensi = "active";
+        $komunikasi = "active";
+
+        return view('products/03_absensi.komunikasi', [
+            'judul' => $judul,
+            'absensi' => $absensi,
+            'komunikasi' => $komunikasi
+        ]);
     }
 }
