@@ -158,7 +158,7 @@
                             <div class="card-header">
                                 <ul class="nav nav-tabs card-header-tabs" data-bs-toggle="tabs" role="tablist">
                                     <li class="nav-item" role="presentation">
-                                        <a href="#tabs-home-3" class="nav-link" data-bs-toggle="tab" aria-selected="false"
+                                        <a href="#tab-list" class="nav-link" data-bs-toggle="tab" aria-selected="false"
                                             role="tab" tabindex="-1">
                                             <svg xmlns="http://www.w3.org/2000/svg" style="margin-right:5px" width="24"
                                                 height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor"
@@ -175,7 +175,7 @@
                                             List Surat</a>
                                     </li>
                                     <li class="nav-item" role="presentation">
-                                        <a href="#tabs-home-3" class="nav-link active" data-bs-toggle="tab"
+                                        <a href="#tab-create-new" class="nav-link active" data-bs-toggle="tab"
                                             aria-selected="false" role="tab" tabindex="-1">
                                             <svg xmlns="http://www.w3.org/2000/svg" style="margin-right:5px" width="24"
                                                 height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor"
@@ -191,7 +191,7 @@
                                             Buat Surat Baru</a>
                                     </li>
                                     <li class="nav-item" role="presentation">
-                                        <a href="#tabs-profile-3" class="nav-link" data-bs-toggle="tab" aria-selected="true"
+                                        <a href="#tab-by-date" class="nav-link" data-bs-toggle="tab" aria-selected="true"
                                             role="tab">
                                             <svg xmlns="http://www.w3.org/2000/svg" style="margin-right:5px" width="24"
                                                 height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor"
@@ -231,7 +231,9 @@
                             </div>
                             <div class="card-body">
                                 <div class="tab-content">
-                                    <div class="tab-pane active show" id="tabs-home-3" role="tabpanel">
+                                    <div class="tab-pane active" id="tab-list" role="tabpanel">
+                                    </div>
+                                    <div class="tab-pane active show" id="tab-create-new" role="tabpanel">
                                         <div class="row">
                                             <div class="col">
                                                 <input id="idf" value="1" type="hidden" />
@@ -544,7 +546,7 @@
                                             </div>
                                         </div>
                                     </div>
-                                    <div class="tab-pane" id="tabs-profile-3" role="tabpanel">
+                                    <div class="tab-pane" id="tab-by-date" role="tabpanel">
                                         <div class="card-stamp card-stamp-lg">
                                             <div class="card-stamp-icon bg-primary">
                                                 <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24"
@@ -692,20 +694,27 @@
                 @include('shared.footer')
             </div>
         </div>
-        {{-- Modal --}}
-        <div class="modal modal-blur fade" id="modal-large" tabindex="-1" style="display: none;" aria-hidden="true">
-            <div class="modal-dialog modal-lg modal-dialog-centered" role="document">
+    </div>
+
+    {{-- Modal --}}
+    <div class="modal modal-blur fade" id="modal-large" tabindex="-1" style="display: none;" aria-hidden="true">
+        <div class="modal-dialog modal-lg modal-dialog-centered" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title">List STB</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
                 <div class="modal-body">
                     <table class="table table-striped table-bordered table-hover text-nowrap datatable-karyawan">
                     </table>
                 </div>
                 <div class="modal-footer">
-                    <button type="button" class="btn btn-primary" data-bs-dismiss="modal">OK</button>
+                    {{-- <button type="button" class="btn me-auto" data-bs-dismiss="modal">Close</button> --}}
+                    <button type="button" class="btn btn-primary" data-bs-dismiss="modal">Kembali</button>
                 </div>
             </div>
         </div>
     </div>
-
     <script>
         $(function() {
             var tableWawancara = $('.datatable-karyawan').DataTable({
