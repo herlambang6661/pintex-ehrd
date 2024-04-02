@@ -5,8 +5,10 @@
             <span class="navbar-toggler-icon"></span>
         </button>
         <h1 class="navbar-brand navbar-brand-autodark" style="margin-top: 5px">
-            <a href="{{ url('dashboard') }}">
-                <img src="{{ asset('ehrd32.png') }}" alt="" srcset="">
+            <a href="{{ url('dashboard') }}" style="margin-right: 5px">
+                <img src="{{ asset('hrd32.png') }}" alt="" srcset="">
+            </a>
+            <a href="{{ url('dashboard') }}" style="margin-top: 3px">
                 E-HRD
             </a>
         </h1>
