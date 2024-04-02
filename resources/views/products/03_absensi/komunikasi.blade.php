@@ -36,31 +36,6 @@
             background: rgba(0, 0, 0, 0.6);
         }
 
-        /* .cv-spinner {
-                                                                                                                                                                                                                                                                                                        height: 100%;
-                                                                                                                                                                                                                                                                                                        display: flex;
-                                                                                                                                                                                                                                                                                                        justify-content: center;
-                                                                                                                                                                                                                                                                                                        align-items: center;
-                                                                                                                                                                                                                                                                                                    }
-
-                                                                                                                                                                                                                                                                                                    .spinner {
-                                                                                                                                                                                                                                                                                                        width: 40px;
-                                                                                                                                                                                                                                                                                                        height: 40px;
-                                                                                                                                                                                                                                                                                                        border: 4px #ddd solid;
-                                                                                                                                                                                                                                                                                                        border-top: 4px #2e93e6 solid;
-                                                                                                                                                                                                                                                                                                        border-radius: 50%;
-                                                                                                                                                                                                                                                                                                        animation: sp-anime 0.8s infinite linear;
-                                                                                                                                                                                                                                                                                                    }
-
-                                                                                                                                                                                                                                                                                                    @keyframes sp-anime {
-                                                                                                                                                                                                                                                                                                        100% {
-                                                                                                                                                                                                                                                                                                            transform: rotate(360deg);
-                                                                                                                                                                                                                                                                                                        }
-                                                                                                                                                                                                                                                                                                    }
-
-                                                                                                                                                                                                                                                                                                    .is-hide {
-                                                                                                                                                                                                                                                                                                        display: none;
-                                                                                                                                                                                                                                                                                                    } */
         .loader {
             position: fixed;
             z-index: 301;
@@ -238,24 +213,334 @@
                                             </svg>
                                             Berdasarkan Absensi</a>
                                     </li>
+                                    <li class="nav-item ms-auto" role="presentation">
+                                        <a href="#" class="nav-link" data-bs-toggle="modal" title="Cari STB"
+                                            data-bs-target="#modal-large">
+                                            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24"
+                                                viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                                                stroke-width="2" stroke-linecap="round" stroke-linejoin="round"
+                                                class="icon icon-tabler icons-tabler-outline icon-tabler-search">
+                                                <path stroke="none" d="M0 0h24v24H0z" fill="none" />
+                                                <path d="M10 10m-7 0a7 7 0 1 0 14 0a7 7 0 1 0 -14 0" />
+                                                <path d="M21 21l-6 -6" />
+                                            </svg>
+                                            STB
+                                        </a>
+                                    </li>
                                 </ul>
                             </div>
                             <div class="card-body">
                                 <div class="tab-content">
                                     <div class="tab-pane active show" id="tabs-home-3" role="tabpanel">
-                                        <div class="card-stamp card-stamp-lg">
-                                            <div class="card-stamp-icon bg-primary">
-                                                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24"
-                                                    viewBox="0 0 24 24" fill="none" stroke="currentColor"
-                                                    stroke-width="2" stroke-linecap="round" stroke-linejoin="round"
-                                                    class="icon icon-tabler icons-tabler-outline icon-tabler-mail-plus">
-                                                    <path stroke="none" d="M0 0h24v24H0z" fill="none" />
-                                                    <path
-                                                        d="M12 19h-7a2 2 0 0 1 -2 -2v-10a2 2 0 0 1 2 -2h14a2 2 0 0 1 2 2v5.5" />
-                                                    <path d="M16 19h6" />
-                                                    <path d="M19 16v6" />
-                                                    <path d="M3 7l9 6l9 -6" />
-                                                </svg>
+                                        <div class="row">
+                                            <div class="col">
+                                                <input id="idf" value="1" type="hidden" />
+                                                <div class="row row-cards">
+                                                    <div class="col-12">
+                                                        <form class="card shadow rounded" id="formKomunikasi"
+                                                            name="formKomunikasi" method="post"
+                                                            action="javascript:void(0)">
+                                                            <div class="card-stamp card-stamp-lg">
+                                                                <div class="card-stamp-icon bg-primary">
+                                                                    <svg xmlns="http://www.w3.org/2000/svg" width="24"
+                                                                        height="24" viewBox="0 0 24 24" fill="none"
+                                                                        stroke="currentColor" stroke-width="2"
+                                                                        stroke-linecap="round" stroke-linejoin="round"
+                                                                        class="icon icon-tabler icons-tabler-outline icon-tabler-mail-plus">
+                                                                        <path stroke="none" d="M0 0h24v24H0z"
+                                                                            fill="none" />
+                                                                        <path
+                                                                            d="M12 19h-7a2 2 0 0 1 -2 -2v-10a2 2 0 0 1 2 -2h14a2 2 0 0 1 2 2v5.5" />
+                                                                        <path d="M16 19h6" />
+                                                                        <path d="M19 16v6" />
+                                                                        <path d="M3 7l9 6l9 -6" />
+                                                                    </svg>
+                                                                </div>
+                                                            </div>
+                                                            @csrf
+                                                            <div class="card-body">
+                                                                <h3 class="card-title">Pilih Surat Komunikasi</h3>
+                                                                <div class="row g-2 align-items-center">
+                                                                    <div class="col-6 col-sm-4 col-md-2 col-xl ">
+                                                                        <a href="#"
+                                                                            class="btn btn-outline-primary w-100 shadow rounded"
+                                                                            onclick="tambahItem('C'); return false;">
+                                                                            <svg xmlns="http://www.w3.org/2000/svg"
+                                                                                width="24" height="24"
+                                                                                viewBox="0 0 24 24" fill="none"
+                                                                                stroke="currentColor" stroke-width="2"
+                                                                                stroke-linecap="round"
+                                                                                stroke-linejoin="round"
+                                                                                class="icon icon-tabler icons-tabler-outline icon-tabler-mail-plus">
+                                                                                <path stroke="none" d="M0 0h24v24H0z"
+                                                                                    fill="none" />
+                                                                                <path
+                                                                                    d="M12 19h-7a2 2 0 0 1 -2 -2v-10a2 2 0 0 1 2 -2h14a2 2 0 0 1 2 2v5.5" />
+                                                                                <path d="M16 19h6" />
+                                                                                <path d="M19 16v6" />
+                                                                                <path d="M3 7l9 6l9 -6" />
+                                                                            </svg>
+                                                                            Surat Cuti
+                                                                        </a>
+                                                                    </div>
+                                                                    <div class="col-6 col-sm-4 col-md-2 col-xl ">
+                                                                        <a href="#"
+                                                                            class="btn btn-outline-info w-100 shadow rounded"
+                                                                            onclick="tambahItem('S'); return false;">
+                                                                            <svg xmlns="http://www.w3.org/2000/svg"
+                                                                                width="24" height="24"
+                                                                                viewBox="0 0 24 24" fill="none"
+                                                                                stroke="currentColor" stroke-width="2"
+                                                                                stroke-linecap="round"
+                                                                                stroke-linejoin="round"
+                                                                                class="icon icon-tabler icons-tabler-outline icon-tabler-ambulance">
+                                                                                <path stroke="none" d="M0 0h24v24H0z"
+                                                                                    fill="none" />
+                                                                                <path
+                                                                                    d="M7 17m-2 0a2 2 0 1 0 4 0a2 2 0 1 0 -4 0" />
+                                                                                <path
+                                                                                    d="M17 17m-2 0a2 2 0 1 0 4 0a2 2 0 1 0 -4 0" />
+                                                                                <path
+                                                                                    d="M5 17h-2v-11a1 1 0 0 1 1 -1h9v12m-4 0h6m4 0h2v-6h-8m0 -5h5l3 5" />
+                                                                                <path d="M6 10h4m-2 -2v4" />
+                                                                            </svg>
+                                                                            Surat Sakit
+                                                                        </a>
+                                                                    </div>
+                                                                    <div class="col-6 col-sm-4 col-md-2 col-xl ">
+                                                                        <a href="#"
+                                                                            class="btn btn-outline-success w-100 shadow rounded"
+                                                                            onclick="tambahItem('CK'); return false;">
+                                                                            <svg xmlns="http://www.w3.org/2000/svg"
+                                                                                width="24" height="24"
+                                                                                viewBox="0 0 24 24" fill="none"
+                                                                                stroke="currentColor" stroke-width="2"
+                                                                                stroke-linecap="round"
+                                                                                stroke-linejoin="round"
+                                                                                class="icon icon-tabler icons-tabler-outline icon-tabler-user-bolt">
+                                                                                <path stroke="none" d="M0 0h24v24H0z"
+                                                                                    fill="none" />
+                                                                                <path
+                                                                                    d="M8 7a4 4 0 1 0 8 0a4 4 0 0 0 -8 0" />
+                                                                                <path
+                                                                                    d="M6 21v-2a4 4 0 0 1 4 -4h4c.267 0 .529 .026 .781 .076" />
+                                                                                <path d="M19 16l-2 3h4l-2 3" />
+                                                                            </svg>
+                                                                            Surat Cuti Khusus
+                                                                        </a>
+                                                                    </div>
+                                                                    <div class="col-6 col-sm-4 col-md-2 col-xl ">
+                                                                        <a href="#"
+                                                                            class="btn btn-outline-warning w-100 shadow rounded"
+                                                                            onclick="tambahItem('I'); return false;">
+                                                                            <svg xmlns="http://www.w3.org/2000/svg"
+                                                                                width="24" height="24"
+                                                                                viewBox="0 0 24 24" fill="none"
+                                                                                stroke="currentColor" stroke-width="2"
+                                                                                stroke-linecap="round"
+                                                                                stroke-linejoin="round"
+                                                                                class="icon icon-tabler icons-tabler-outline icon-tabler-user-exclamation">
+                                                                                <path stroke="none" d="M0 0h24v24H0z"
+                                                                                    fill="none" />
+                                                                                <path
+                                                                                    d="M8 7a4 4 0 1 0 8 0a4 4 0 0 0 -8 0" />
+                                                                                <path
+                                                                                    d="M6 21v-2a4 4 0 0 1 4 -4h4c.348 0 .686 .045 1.008 .128" />
+                                                                                <path d="M19 16v3" />
+                                                                                <path d="M19 22v.01" />
+                                                                            </svg>
+                                                                            Surat IP
+                                                                        </a>
+                                                                    </div>
+                                                                </div>
+                                                                <div class="row g-2 align-items-center">
+                                                                    <div class="col-6 col-sm-4 col-md-2 col-xl py-3">
+                                                                        <a href="#"
+                                                                            class="btn btn-outline-cyan w-100 shadow rounded"
+                                                                            onclick="tambahItem('½'); return false;">
+                                                                            <svg xmlns="http://www.w3.org/2000/svg"
+                                                                                width="24" height="24"
+                                                                                viewBox="0 0 24 24" fill="none"
+                                                                                stroke="currentColor" stroke-width="2"
+                                                                                stroke-linecap="round"
+                                                                                stroke-linejoin="round"
+                                                                                class="icon icon-tabler icons-tabler-outline icon-tabler-logout">
+                                                                                <path stroke="none" d="M0 0h24v24H0z"
+                                                                                    fill="none" />
+                                                                                <path
+                                                                                    d="M14 8v-2a2 2 0 0 0 -2 -2h-7a2 2 0 0 0 -2 2v12a2 2 0 0 0 2 2h7a2 2 0 0 0 2 -2v-2" />
+                                                                                <path d="M9 12h12l-3 -3" />
+                                                                                <path d="M18 15l3 -3" />
+                                                                            </svg>
+                                                                            Surat PC
+                                                                        </a>
+                                                                    </div>
+                                                                    <div class="col-6 col-sm-4 col-md-2 col-xl py-3">
+                                                                        <a href="#"
+                                                                            class="btn btn-outline-purple w-100 shadow rounded"
+                                                                            onclick="tambahItem('L'); return false;">
+                                                                            <svg xmlns="http://www.w3.org/2000/svg"
+                                                                                width="24" height="24"
+                                                                                viewBox="0 0 24 24" fill="none"
+                                                                                stroke="currentColor" stroke-width="2"
+                                                                                stroke-linecap="round"
+                                                                                stroke-linejoin="round"
+                                                                                class="icon icon-tabler icons-tabler-outline icon-tabler-mail-heart">
+                                                                                <path stroke="none" d="M0 0h24v24H0z"
+                                                                                    fill="none" />
+                                                                                <path
+                                                                                    d="M10.5 19h-5.5a2 2 0 0 1 -2 -2v-10a2 2 0 0 1 2 -2h14a2 2 0 0 1 2 2v4" />
+                                                                                <path
+                                                                                    d="M3 7l9 6l2.983 -1.989l6.017 -4.011" />
+                                                                                <path
+                                                                                    d="M18 22l3.35 -3.284a2.143 2.143 0 0 0 .005 -3.071a2.242 2.242 0 0 0 -3.129 -.006l-.224 .22l-.223 -.22a2.242 2.242 0 0 0 -3.128 -.006a2.143 2.143 0 0 0 -.006 3.071l3.355 3.296z" />
+                                                                            </svg>
+                                                                            Surat Libur KJK
+                                                                        </a>
+                                                                    </div>
+                                                                    <div class="col-6 col-sm-4 col-md-2 col-xl py-3">
+                                                                        <a href="#"
+                                                                            class="btn btn-outline-red w-100 shadow rounded"
+                                                                            onclick="tambahItem('A'); return false;">
+                                                                            <svg xmlns="http://www.w3.org/2000/svg"
+                                                                                width="24" height="24"
+                                                                                viewBox="0 0 24 24" fill="none"
+                                                                                stroke="currentColor" stroke-width="2"
+                                                                                stroke-linecap="round"
+                                                                                stroke-linejoin="round"
+                                                                                class="icon icon-tabler icons-tabler-outline icon-tabler-ban">
+                                                                                <path stroke="none" d="M0 0h24v24H0z"
+                                                                                    fill="none" />
+                                                                                <path
+                                                                                    d="M12 12m-9 0a9 9 0 1 0 18 0a9 9 0 1 0 -18 0" />
+                                                                                <path d="M5.7 5.7l12.6 12.6" />
+                                                                            </svg>
+                                                                            Ket. Alpa
+                                                                        </a>
+                                                                    </div>
+                                                                    <div class="col-6 col-sm-4 col-md-2 col-xl py-3">
+                                                                        <a href="#"
+                                                                            class="btn btn-outline-teal w-100 shadow rounded"
+                                                                            onclick="tambahItem('GL'); return false;">
+                                                                            <svg xmlns="http://www.w3.org/2000/svg"
+                                                                                width="24" height="24"
+                                                                                viewBox="0 0 24 24" fill="none"
+                                                                                stroke="currentColor" stroke-width="2"
+                                                                                stroke-linecap="round"
+                                                                                stroke-linejoin="round"
+                                                                                class="icon icon-tabler icons-tabler-outline icon-tabler-a-b-2">
+                                                                                <path stroke="none" d="M0 0h24v24H0z"
+                                                                                    fill="none" />
+                                                                                <path
+                                                                                    d="M16 21h3c.81 0 1.48 -.67 1.48 -1.48l.02 -.02c0 -.82 -.69 -1.5 -1.5 -1.5h-3v3z" />
+                                                                                <path
+                                                                                    d="M16 15h2.5c.84 -.01 1.5 .66 1.5 1.5s-.66 1.5 -1.5 1.5h-2.5v-3z" />
+                                                                                <path
+                                                                                    d="M4 9v-4c0 -1.036 .895 -2 2 -2s2 .964 2 2v4" />
+                                                                                <path
+                                                                                    d="M2.99 11.98a9 9 0 0 0 9 9m9 -9a9 9 0 0 0 -9 -9" />
+                                                                                <path d="M8 7h-4" />
+                                                                            </svg>
+                                                                            Geser Libur
+                                                                        </a>
+                                                                    </div>
+                                                                </div>
+                                                                <div class="row row-cards">
+                                                                    <div class="col-md-3">
+                                                                        <div class="">
+                                                                            <div class="mb-3">
+                                                                                <label class="form-label">Tanggal</label>
+                                                                                <input type="date"
+                                                                                    class="form-control shadow rounded"
+                                                                                    name="tanggalform"
+                                                                                    style="border-color: black"
+                                                                                    value="{{ date('Y-m-d') }}">
+                                                                            </div>
+                                                                        </div>
+                                                                        <div class="col-md-12">
+                                                                            <div class="mb-3">
+                                                                                <label class="form-label">Dibuat</label>
+                                                                                <input type="text"
+                                                                                    class="form-control shadow rounded"
+                                                                                    name="dibuat"
+                                                                                    style="border-color: black"
+                                                                                    placeholder="User" readonly
+                                                                                    value="{{ Auth::user()->name }}">
+                                                                            </div>
+                                                                        </div>
+                                                                    </div>
+                                                                    <div class="col-md-9">
+                                                                        <div class="">
+                                                                            <div class="mb-3 mb-0">
+                                                                                <label class="form-label">Keterangan
+                                                                                    Tambahan</label>
+                                                                                <div class="border-success shadow rounded">
+                                                                                    <textarea class="content" name="keterangantambahan"></textarea>
+                                                                                </div>
+                                                                            </div>
+                                                                        </div>
+                                                                    </div>
+                                                                    <div class="col-12">
+                                                                        <table
+                                                                            class="display table table-sm table-bordered text-nowrap border-dark shadow rounded"
+                                                                            id="table-tambah-komunikasi"
+                                                                            onkeydown="return event.key != 'Enter';">
+                                                                            <thead>
+                                                                                <tr class="text-center">
+                                                                                    <th style="width: 50px">
+                                                                                        <svg xmlns="http://www.w3.org/2000/svg"
+                                                                                            width="24" height="24"
+                                                                                            viewBox="0 0 24 24"
+                                                                                            fill="none"
+                                                                                            stroke="currentColor"
+                                                                                            stroke-width="2"
+                                                                                            stroke-linecap="round"
+                                                                                            stroke-linejoin="round"
+                                                                                            class="icon icon-tabler icons-tabler-outline icon-tabler-trash">
+                                                                                            <path stroke="none"
+                                                                                                d="M0 0h24v24H0z"
+                                                                                                fill="none" />
+                                                                                            <path d="M4 7l16 0" />
+                                                                                            <path d="M10 11l0 6" />
+                                                                                            <path d="M14 11l0 6" />
+                                                                                            <path
+                                                                                                d="M5 7l1 12a2 2 0 0 0 2 2h8a2 2 0 0 0 2 -2l1 -12" />
+                                                                                            <path
+                                                                                                d="M9 7v-3a1 1 0 0 1 1 -1h4a1 1 0 0 1 1 1v3" />
+                                                                                        </svg>
+                                                                                    </th>
+                                                                                    <th>SST</th>
+                                                                                    <th>STB</th>
+                                                                                    <th>NAMA</th>
+                                                                                    <th>KETERANGAN</th>
+                                                                                </tr>
+                                                                            </thead>
+                                                                        </table>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                            <div class="card-footer text-end">
+                                                                <button type="submit" class="btn btn-primary"
+                                                                    id="btnSubmitKomunikasi">
+                                                                    <svg xmlns="http://www.w3.org/2000/svg" width="24"
+                                                                        height="24" viewBox="0 0 24 24" fill="none"
+                                                                        stroke="currentColor" stroke-width="2"
+                                                                        stroke-linecap="round" stroke-linejoin="round"
+                                                                        class="icon icon-tabler icons-tabler-outline icon-tabler-device-floppy">
+                                                                        <path stroke="none" d="M0 0h24v24H0z"
+                                                                            fill="none" />
+                                                                        <path
+                                                                            d="M6 4h10l4 4v10a2 2 0 0 1 -2 2h-12a2 2 0 0 1 -2 -2v-12a2 2 0 0 1 2 -2" />
+                                                                        <path
+                                                                            d="M12 14m-2 0a2 2 0 1 0 4 0a2 2 0 1 0 -4 0" />
+                                                                        <path d="M14 4l0 4l-6 0l0 -4" />
+                                                                    </svg>
+                                                                    Simpan
+                                                                </button>
+                                                            </div>
+                                                        </form>
+                                                    </div>
+                                                </div>
                                             </div>
                                         </div>
                                     </div>
@@ -407,231 +692,508 @@
                 @include('shared.footer')
             </div>
         </div>
-        {{-- Modal Filter --}}
-        <div class="offcanvas offcanvas-blur offcanvas-end" tabindex="-1" id="offcanvasEnd-lamaran"
-            aria-labelledby="offcanvasEndLabel">
-            <div class="offcanvas-header">
-                <h2 class="offcanvas-title" id="offcanvasEndLabel">Saring Data Absensi</h2>
-                <button type="button" class="btn-close text-reset" data-bs-dismiss="offcanvas"
-                    aria-label="Close"></button>
-            </div>
-            <div class="offcanvas-body">
-                <div>
-                    <div class="card-stamp card-stamp-lg">
-                        <div class="card-stamp-icon bg-blue">
-                            <i class="fa-solid fa-users"></i>
-                        </div>
-                    </div>
-                    <form action="#" id="form-filter-items" method="get" autocomplete="off" novalidate=""
-                        class="sticky-top">
-                        <br>
-                        <div class="form-label">Jenis Kelamin</div>
-                        <div class="mb-4">
-                            <div class="row">
-                                <div class="col-sm-6">
-                                    <label class="form-check">
-                                        <input type="checkbox" class="form-check-input filter-checkbox-rayon"
-                                            name="pendidikan[]" value="IBR" checked="" id="sSmp">
-                                        <span class="form-check-label">Pria</span>
-                                    </label>
-                                    <label class="form-check">
-                                        <input type="checkbox" class="form-check-input filter-checkbox-rayon"
-                                            name="pendidikan[]" value="SPV" checked="" id="sSma">
-                                        <span class="form-check-label">Wanita</span>
-                                    </label>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="form-label">Posisi Dituju</div>
-                        <div class="mb-4">
-                            <label class="form-check">
-                                <input type="checkbox" class="form-check-input" name="posisidituju[]" value="OPERATOR"
-                                    checked="" id="pOperator">
-                                <span class="form-check-label">Operator</span>
-                            </label>
-                            <label class="form-check">
-                                <input type="checkbox" class="form-check-input" name="posisidituju[]" value="PENGEMUDI"
-                                    checked="" id="pPengemudi">
-                                <span class="form-check-label">Pengemudi</span>
-                            </label>
-                            <label class="form-check">
-                                <input type="checkbox" class="form-check-input" name="posisidituju[]" value="IT"
-                                    checked="" id="pIT">
-                                <span class="form-check-label">IT</span>
-                            </label>
-                            <label class="form-check">
-                                <input type="checkbox" class="form-check-input" name="posisidituju[]" value="HRD"
-                                    checked="" id="pHRD">
-                                <span class="form-check-label">HRD</span>
-                            </label>
-                            <label class="form-check">
-                                <input type="checkbox" class="form-check-input" name="posisidituju[]" value="KEAMANAN"
-                                    checked="" id="pKeamanan">
-                                <span class="form-check-label">Keamanan</span>
-                            </label>
-                        </div>
-                        <div class="form-label">Tinggi Minimal</div>
-                        <div class="mb-4">
-                            <input type="number" min="0" max="300" class="form-control" id="tinggi">
-                        </div>
-                        <div class="form-label">Proses Wawancara</div>
-                        <div class="mb-4">
-                            <label class="form-check form-switch">
-                                <input class="form-check-input" type="checkbox">
-                                <span class="form-check-label form-check-label-on">Sudah</span>
-                                <span class="form-check-label form-check-label-off">Belum</span>
-                            </label>
-                        </div>
-                        <div class="mt-5">
-                            <button type="button" class="btn btn-primary w-100" id="btn-filter">Filter
-                                Data</button> <br>
-                            <button type="button" class="btn btn-link w-100" id="btn-reset-items">Reset to
-                                defaults</button>
-                        </div>
-                    </form>
+        {{-- Modal --}}
+        <div class="modal modal-blur fade" id="modal-large" tabindex="-1" style="display: none;" aria-hidden="true">
+            <div class="modal-dialog modal-lg modal-dialog-centered" role="document">
+                <div class="modal-body">
+                    <table class="table table-striped table-bordered table-hover text-nowrap datatable-karyawan">
+                    </table>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-primary" data-bs-dismiss="modal">OK</button>
                 </div>
             </div>
         </div>
+    </div>
 
-        <script>
-            $(function() {
-                $('.modal-detail-absensi').on('show.bs.modal', function(e) {
-                    var rowid = $(e.relatedTarget).data('id');
-                    var rowaw = $(e.relatedTarget).data('tglaw');
-                    var rowak = $(e.relatedTarget).data('tglak');
-                    console.log("Fetch: " + rowid);
-                    $(".overlay").fadeIn(300);
-                    $.ajaxSetup({
-                        headers: {
-                            'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
-                        }
-                    });
-                    $.ajax({
-                        type: 'POST',
-                        url: "{{ url('listAbsensiDetail') }}",
-                        data: {
-                            "_token": "{{ csrf_token() }}",
-                            id: rowid,
-                            tglaw: rowaw,
-                            tglak: rowak,
+    <script>
+        $(function() {
+            var tableWawancara = $('.datatable-karyawan').DataTable({
+                "processing": true, //Feature control the processing indicator.
+                "serverSide": false, //Feature control DataTables' server-side processing mode.
+                "scrollX": true,
+                "scrollCollapse": true,
+                "pagingType": 'full_numbers',
+                "lengthMenu": [
+                    [10, 25, 35, 40, 50, -1],
+                    ['10', '25', '35', '40', '50', 'Tampilkan Semua']
+                ],
+                "dom": "<'card-body border-bottom py-3' <'row'<'col-sm-6'l><'col-sm-6'f>> >" +
+                    "<'table-responsive' <'col-sm-12'tr> >" +
+                    "<'card-footer' <'row'<'col-sm-8'i><'col-sm-4'p> >>",
+                "language": {
+                    "lengthMenu": "Menampilkan STB _MENU_",
+                    "zeroRecords": "Data Tidak Ditemukan",
+                    "info": "Menampilkan _START_ sampai _END_ dari _TOTAL_ total data",
+                    "infoEmpty": "Data Tidak Ditemukan",
+                    "infoFiltered": "(Difilter dari _MAX_ total records)",
+                    "processing": '<div class="container container-slim py-4"><div class="text-center"><div class="mb-3"></div><div class="text-secondary mb-3">Loading Data...</div><div class="progress progress-sm"><div class="progress-bar progress-bar-indeterminate"></div></div></div></div>',
+                    "search": '<svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-search" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z" fill="none"></path><path d="M10 10m-7 0a7 7 0 1 0 14 0a7 7 0 1 0 -14 0"></path><path d="M21 21l-6 -6"></path></svg>',
+                    "paginate": {
+                        "first": '<svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-chevron-left-pipe" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z" fill="none"></path><path d="M7 6v12"></path><path d="M18 6l-6 6l6 6"></path></svg>',
+                        "last": '<svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-chevron-right-pipe" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z" fill="none"></path><path d="M6 6l6 6l-6 6"></path><path d="M17 5v13"></path></svg>',
+                        "next": '<svg xmlns="http://www.w3.org/2000/svg" class="icon" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z" fill="none"></path><path d="M9 6l6 6l-6 6"></path></svg>',
+                        "previous": '<svg xmlns="http://www.w3.org/2000/svg" class="icon" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z" fill="none"></path><path d="M15 6l-6 6l6 6"></path></svg>',
+                    },
+                },
+                ajax: "{{ route('getKaryawan.index') }}",
+                autoWidth: false,
+                columns: [
+
+                    {
+                        title: 'STB',
+                        data: 'stb',
+                        name: 'stb',
+                        className: 'cuspad0'
+                    },
+                    {
+                        title: 'Nama',
+                        data: 'nama',
+                        name: 'nama',
+                        className: 'cuspad0 text-center'
+                    },
+                    {
+                        title: 'Bagian',
+                        data: 'bagian',
+                        name: 'bagian',
+                        className: 'cuspad0 text-center'
+                    },
+                    {
+                        title: 'Grup',
+                        data: 'grup',
+                        name: 'grup',
+                        className: 'cuspad0 text-center'
+                    },
+                ],
+
+            });
+
+            if ($("#formKomunikasi").length > 0) {
+                $("#formKomunikasi").validate({
+                    rules: {
+                        tanggalform: {
+                            required: true,
                         },
-                        success: function(data) {
-                            $('.fetched-absensi-detail').html(
-                                data); //menampilkan data ke dalam modal
-                        }
-                    }).done(function() {
-                        setTimeout(function() {
-                            $(".overlay").fadeOut(300);
-                        }, 500);
+                        dibuat: {
+                            required: true,
+                        },
+                    },
+                    messages: {
+                        tanggalform: {
+                            required: "Masukkan Tanggal",
+                        },
+                        dibuat: {
+                            required: "Nama Pembuat tidak boleh kosong",
+                        },
+                    },
+
+                    submitHandler: function(form) {
+                        $.ajaxSetup({
+                            headers: {
+                                'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                            }
+                        });
+                        $('#btnSubmitKomunikasi').html(
+                            '<i class="fa-solid fa-fw fa-spinner fa-spin"></i> Please Wait...');
+                        $("#btnSubmitKomunikasi").attr("disabled", true);
+                        $.ajax({
+                            url: "{{ url('storedataKomunikasi') }}",
+                            type: "POST",
+                            data: $('#formKomunikasi').serialize(),
+                            beforeSend: function() {
+                                Swal.fire({
+                                    title: 'Mohon Menunggu',
+                                    html: '<center><lottie-player src="https://lottie.host/933bb0e2-47c0-4fa6-83f9-3330b433b883/yymyeZt49h.json"  background="transparent"  speed="1"  style="width: 300px; height: 300px;"  loop autoplay></lottie-player></center><br><h1 class="h4">Sedang memproses data, Proses mungkin membutuhkan beberapa menit. <br><br><b class="text-danger">(Jangan menutup jendela ini, bisa mengakibatkan error)</b></h1>',
+                                    showConfirmButton: false,
+                                    timerProgressBar: true,
+                                    allowOutsideClick: false,
+                                    allowEscapeKey: false,
+                                })
+                            },
+                            success: function(response) {
+                                console.log('Completed.');
+                                $('#btnSubmitKomunikasi').html(
+                                    '<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="icon icon-tabler icons-tabler-outline icon-tabler-device-floppy"> <path stroke="none" d="M0 0h24v24H0z" fill="none" /> <path d="M6 4h10l4 4v10a2 2 0 0 1 -2 2h-12a2 2 0 0 1 -2 -2v-12a2 2 0 0 1 2 -2" /> <path d="M12 14m-2 0a2 2 0 1 0 4 0a2 2 0 1 0 -4 0" /> <path d="M14 4l0 4l-6 0l0 -4" /> </svg> Simpan'
+                                );
+                                $("#btnSubmitKomunikasi").attr("disabled", false);
+                                // tableLamaran.ajax.reload();
+                                const Toast = Swal.mixin({
+                                    toast: true,
+                                    position: "top-end",
+                                    showConfirmButton: false,
+                                    timer: 4000,
+                                    timerProgressBar: true,
+                                    didOpen: (toast) => {
+                                        toast.onmouseenter = Swal.stopTimer;
+                                        toast.onmouseleave = Swal.resumeTimer;
+                                    }
+                                });
+                                Toast.fire({
+                                    icon: "success",
+                                    title: response.msg,
+                                });
+                                document.getElementById("formKomunikasi").reset();
+                            },
+                            error: function(data) {
+                                console.log('Error:', data);
+                                // const obj = JSON.parse(data.responseJSON);
+                                // tableLamaran.ajax.reload();
+                                Swal.fire({
+                                    icon: 'error',
+                                    title: 'Gagal Input',
+                                    html: data.responseJSON.message,
+                                    showConfirmButton: true
+                                });
+                                $('#btnSubmitKomunikasi').html(
+                                    '<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="icon icon-tabler icons-tabler-outline icon-tabler-device-floppy"> <path stroke="none" d="M0 0h24v24H0z" fill="none" /> <path d="M6 4h10l4 4v10a2 2 0 0 1 -2 2h-12a2 2 0 0 1 -2 -2v-12a2 2 0 0 1 2 -2" /> <path d="M12 14m-2 0a2 2 0 1 0 4 0a2 2 0 1 0 -4 0" /> <path d="M14 4l0 4l-6 0l0 -4" /> </svg> Simpan'
+                                );
+                                $("#btnSubmitKomunikasi").attr("disabled", false);
+                            }
+                        });
+                    }
+                })
+            }
+        });
+
+        function newexportaction(e, dt, button, config) {
+            var self = this;
+            var oldStart = dt.settings()[0]._iDisplayStart;
+            dt.one('preXhr', function(e, s, data) {
+                // Just this once, load all data from the server...
+                data.start = 0;
+                data.length = 2147483647;
+                dt.one('preDraw', function(e, settings) {
+                    // Call the original action function
+                    if (button[0].className.indexOf('buttons-copy') >= 0) {
+                        $.fn.dataTable.ext.buttons.copyHtml5.action.call(self, e, dt, button, config);
+                    } else if (button[0].className.indexOf('buttons-excel') >= 0) {
+                        $.fn.dataTable.ext.buttons.excelHtml5.available(dt, config) ?
+                            $.fn.dataTable.ext.buttons.excelHtml5.action.call(self, e, dt, button, config) :
+                            $.fn.dataTable.ext.buttons.excelFlash.action.call(self, e, dt, button, config);
+                    } else if (button[0].className.indexOf('buttons-csv') >= 0) {
+                        $.fn.dataTable.ext.buttons.csvHtml5.available(dt, config) ?
+                            $.fn.dataTable.ext.buttons.csvHtml5.action.call(self, e, dt, button, config) :
+                            $.fn.dataTable.ext.buttons.csvFlash.action.call(self, e, dt, button, config);
+                    } else if (button[0].className.indexOf('buttons-pdf') >= 0) {
+                        $.fn.dataTable.ext.buttons.pdfHtml5.available(dt, config) ?
+                            $.fn.dataTable.ext.buttons.pdfHtml5.action.call(self, e, dt, button, config) :
+                            $.fn.dataTable.ext.buttons.pdfFlash.action.call(self, e, dt, button, config);
+                    } else if (button[0].className.indexOf('buttons-print') >= 0) {
+                        $.fn.dataTable.ext.buttons.print.action(e, dt, button, config);
+                    }
+                    dt.one('preXhr', function(e, s, data) {
+                        // DataTables thinks the first item displayed is index 0, but we're not drawing that.
+                        // Set the property to what it was before exporting.
+                        settings._iDisplayStart = oldStart;
+                        data.start = oldStart;
                     });
+                    // Reload the grid with the original page. Otherwise, API functions like table.cell(this) don't work properly.
+                    setTimeout(dt.ajax.reload, 0);
+                    // Prevent rendering of the full data to the DOM
+                    return false;
                 });
             });
-            /*------------------------------------------
-            --------------------------------------------
-            Render DataTable
-            --------------------------------------------
-            --------------------------------------------*/
+            // Requery the server with the new one-time export settings
+            dt.ajax.reload();
+        }
 
-            function newexportaction(e, dt, button, config) {
-                var self = this;
-                var oldStart = dt.settings()[0]._iDisplayStart;
-                dt.one('preXhr', function(e, s, data) {
-                    // Just this once, load all data from the server...
-                    data.start = 0;
-                    data.length = 2147483647;
-                    dt.one('preDraw', function(e, settings) {
-                        // Call the original action function
-                        if (button[0].className.indexOf('buttons-copy') >= 0) {
-                            $.fn.dataTable.ext.buttons.copyHtml5.action.call(self, e, dt, button, config);
-                        } else if (button[0].className.indexOf('buttons-excel') >= 0) {
-                            $.fn.dataTable.ext.buttons.excelHtml5.available(dt, config) ?
-                                $.fn.dataTable.ext.buttons.excelHtml5.action.call(self, e, dt, button, config) :
-                                $.fn.dataTable.ext.buttons.excelFlash.action.call(self, e, dt, button, config);
-                        } else if (button[0].className.indexOf('buttons-csv') >= 0) {
-                            $.fn.dataTable.ext.buttons.csvHtml5.available(dt, config) ?
-                                $.fn.dataTable.ext.buttons.csvHtml5.action.call(self, e, dt, button, config) :
-                                $.fn.dataTable.ext.buttons.csvFlash.action.call(self, e, dt, button, config);
-                        } else if (button[0].className.indexOf('buttons-pdf') >= 0) {
-                            $.fn.dataTable.ext.buttons.pdfHtml5.available(dt, config) ?
-                                $.fn.dataTable.ext.buttons.pdfHtml5.action.call(self, e, dt, button, config) :
-                                $.fn.dataTable.ext.buttons.pdfFlash.action.call(self, e, dt, button, config);
-                        } else if (button[0].className.indexOf('buttons-print') >= 0) {
-                            $.fn.dataTable.ext.buttons.print.action(e, dt, button, config);
-                        }
-                        dt.one('preXhr', function(e, s, data) {
-                            // DataTables thinks the first item displayed is index 0, but we're not drawing that.
-                            // Set the property to what it was before exporting.
-                            settings._iDisplayStart = oldStart;
-                            data.start = oldStart;
-                        });
-                        // Reload the grid with the original page. Otherwise, API functions like table.cell(this) don't work properly.
-                        setTimeout(dt.ajax.reload, 0);
-                        // Prevent rendering of the full data to the DOM
-                        return false;
-                    });
-                });
-                // Requery the server with the new one-time export settings
-                dt.ajax.reload();
+        function findByDate() {
+            var entitas = $('#selectEntitas').val();
+            var dateStart = $('.tglaw').val();
+            var dateEnd = $('.tglak').val();
+            console.log("Fetch: " + dateStart + " -> " + dateEnd + " entitas: " + entitas);
+
+            $(".ph-item").fadeIn(200);
+            $('.fetched-data-absensi').html('');
+            $.ajaxSetup({
+                headers: {
+                    'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                }
+            });
+            //menggunakan fungsi ajax untuk pengambilan data
+            $.ajax({
+                type: 'POST',
+                url: "{{ url('getalphabydate') }}",
+                data: {
+                    "_token": "{{ csrf_token() }}",
+                    'tglaw': dateStart,
+                    'tglak': dateEnd,
+                    'entitas': entitas,
+                },
+                success: function(data) {
+                    $('.fetched-data-absensi').html(data);
+                }
+            }).done(function() {
+                setTimeout(function() {
+                    $(".ph-item").fadeOut(200);
+                }, 300);
+            });
+        }
+
+        function tambahItem(sst) {
+            var idf = document.getElementById("idf").value;
+            var detail_transaksi = document.getElementById("table-tambah-komunikasi");
+            var tr = document.createElement("tr");
+            tr.setAttribute("id", "btn-remove-item" + idf);
+            // Kolom 1 Hapus
+            var td = document.createElement("td");
+            td.setAttribute("align", "center");
+            td.innerHTML +=
+                '<a href="javascript:void(0)" class="btn btn-red w-100 btn-icon bg-red btn-sm" onclick="hapusElemen(' +
+                idf +
+                ');"><i class="fas fa-trash-can"></i> </a>';
+            tr.appendChild(td);
+            // Kolom 2 SST
+            var td = document.createElement("td");
+            td.setAttribute("align", "center");
+            td.innerHTML += sst;
+            td.innerHTML += '<input type="hidden" name="sst[]" value="' + sst + '">';
+            td.innerHTML += '<input type="hidden" name="userid[]" id="userid' + idf + '">';
+            tr.appendChild(td);
+            // Kolom 3 STB
+            var td = document.createElement("td");
+            td.setAttribute("style", "width:100px");
+            td.innerHTML += '<input type="text" name="stb[]" id="stb' + idf + '" class="form-control" onchange="fetchKar(' +
+                idf + ')" onkeydown = "if (event.keyCode == 13)  fetchKar(' + idf + ')">';
+            tr.appendChild(td);
+            // Kolom 4 NAMA
+            var td = document.createElement("td");
+            td.setAttribute("style", "width:300px");
+            td.innerHTML += '<input type="text" name="nama[]" id="nama' + idf + '" class="form-control" readonly>';
+            tr.appendChild(td);
+
+            // Kolom 5 KETERANGAN
+            var td = document.createElement("td");
+            if (sst == "C") {
+                td.innerHTML += '<input type="hidden" name="suratid[]" value="Formulir Permohonan Cuti">';
+                td.innerHTML += '<input type="text" name="keterangan[]" class="form-control" value="KEPERLUAN KELUARGA">';
+            } else if (sst == "CK") {
+                td.innerHTML += '<input type="hidden" name="suratid[]" value="Permohonan Cuti Khusus">';
+                td.innerHTML += '<input type="text" name="keterangan[]" class="form-control" value="CK: ">';
+            } else if (sst == "A") {
+                td.innerHTML += '<input type="hidden" name="suratid[]" value="Keputusan-Mgr. Alpa">';
+                td.innerHTML += '<input type="text" name="keterangan[]" class="form-control" value="KETERANGAN ALPA">';
+            } else if (sst == "GL") {
+                td.innerHTML += '<input type="hidden" name="suratid[]" value="Surat Geser/Tukar Libur">';
+                td.innerHTML += '<input type="text" name="keterangan[]" class="form-control" value="GESER LIBUR DENGAN: ">';
+            } else if (sst == "L") {
+                td.innerHTML += '<input type="hidden" name="suratid[]" value="Keputusan-Mgr. Libur">';
+                td.innerHTML += '<input type="text" name="keterangan[]" class="form-control" value="AMBIL LIBUR KJK">';
+            } else if (sst == "S") {
+                td.innerHTML += '<input type="text" name="keterangan[]" class="form-control" value="">';
+                td.innerHTML += '<input type="hidden" name="suratid[]" value="Formulir Izin Tidak Masuk Karena Sakit">';
+            } else if (sst == "I") {
+                td.innerHTML += '<input type="text" name="keterangan[]" class="form-control" value="">';
+                td.innerHTML += '<input type="hidden" name="suratid[]" value="Keputusan-Mgr. Izin">';
+            } else if (sst == "½") {
+                td.innerHTML += '<input type="text" name="keterangan[]" class="form-control" value="">';
+                td.innerHTML += '<input type="hidden" name="suratid[]" value="Surat Izin Setengah Hari">';
             }
+            tr.appendChild(td);
+            detail_transaksi.appendChild(tr);
 
-            function findByDate() {
-                var entitas = $('#selectEntitas').val();
-                var dateStart = $('.tglaw').val();
-                var dateEnd = $('.tglak').val();
-                console.log("Fetch: " + dateStart + " -> " + dateEnd + " entitas: " + entitas);
+            idf = (idf - 1) + 2;
+            document.getElementById("idf").value = idf;
+        }
 
-                $(".ph-item").fadeIn(200);
-                $('.fetched-data-absensi').html('');
-                $.ajaxSetup({
-                    headers: {
-                        'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+        function hapusElemen(idf) {
+            $("#btn-remove-item" + idf).remove();
+        }
+
+        function fetchKar(params) {
+            var stb = $("#stb" + params).val();
+            console.log(stb);
+            $.ajaxSetup({
+                headers: {
+                    'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                }
+            });
+            //menggunakan fungsi ajax untuk pengambilan data
+            $('#nama' + params).attr("readonly", true);
+            $('#nama' + params).val('Mengambil data...');
+            $.ajax({
+                type: 'POST',
+                url: "{{ url('getalpha') }}",
+                data: {
+                    "_token": "{{ csrf_token() }}",
+                    'stb': stb,
+                    // 'entitas': entitas,
+                },
+                success: function(data) {
+                    if (data.success = 'Data Ditemukan') {
+                        $('#nama' + params).attr("readonly", true);
+                        $('#nama' + params).val(data.result);
+                        $('#userid' + params).val(data.userid);
+                    } else {
+                        $('#nama' + params).attr("readonly", true);
+                        $('#nama' + params).val(data.error);
                     }
-                });
-                //menggunakan fungsi ajax untuk pengambilan data
-                $.ajax({
-                    type: 'POST',
-                    url: "{{ url('getalpha') }}",
-                    data: {
-                        "_token": "{{ csrf_token() }}",
-                        'tglaw': dateStart,
-                        'tglak': dateEnd,
-                        'entitas': entitas,
-                    },
-                    success: function(data) {
-                        $('.fetched-data-absensi').html(data);
-                    }
-                }).done(function() {
-                    setTimeout(function() {
-                        $(".ph-item").fadeOut(200);
-                    }, 300);
-                });
-            }
-        </script>
+                    console.log(data);
+                    // $('#nama' + params).html(data);
+                },
+                error: function(data) {
+                    console.log(data);
+                    $('#nama' + params).attr("readonly", false);
+                    $('#nama' + params).val('STB Tdk Ditemukan');
+                }
+            })
+        }
 
-        <div class="modal modal-blur fade modal-detail-absensi" tabindex="-1" style="display: none;"
-            aria-hidden="true">
-            <div class="overlay">
-                <div class="loader">
-                    <span class="spinner spinner1"></span>
-                    <span class="spinner spinner2"></span>
-                    <span class="spinner spinner3"></span>
-                    <br>
-                    <span class="loader-text">MEMUAT DATA</span>
-                </div>
-            </div>
-            <div class="modal-dialog modal-lg modal-dialog-centered" role="document">
-                <div class="modal-content">
-                    <div class="modal-header">
-                        <h5 class="modal-title">Detail Absensi Karyawan</h5>
-                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                    </div>
-                    <div class="modal-body">
-                        <div class="fetched-absensi-detail"></div>
-                    </div>
-                    <div class="modal-footer">
-                        <button type="button" class="btn btn-primary" data-bs-dismiss="modal">Tutup</button>
-                    </div>
-                </div>
-            </div>
-        </div>
-    @endsection
+        $('.content').richText({
+
+            // text formatting
+            bold: true,
+            italic: true,
+            underline: true,
+
+            // text alignment
+            leftAlign: true,
+            centerAlign: true,
+            rightAlign: true,
+            justify: true,
+
+            // lists
+            ol: true,
+            ul: true,
+
+            // title
+            heading: true,
+
+            // fonts
+            fonts: true,
+            fontList: ["Arial",
+                "Arial Black",
+                "Comic Sans MS",
+                "Courier New",
+                "Geneva",
+                "Georgia",
+                "Helvetica",
+                "Impact",
+                "Lucida Console",
+                "Tahoma",
+                "Times New Roman",
+                "Verdana"
+            ],
+            fontColor: true,
+            backgroundColor: false,
+            fontSize: true,
+
+            // uploads
+            imageUpload: false,
+            fileUpload: false,
+
+
+            // link
+            urls: false,
+
+            // tables
+            table: true,
+
+            // code
+            removeStyles: false,
+            code: false,
+
+            // colors
+            colors: [],
+
+            // dropdowns
+            fileHTML: '',
+            imageHTML: '',
+
+            // translations
+            translations: {
+                'title': 'Title',
+                'white': 'White',
+                'black': 'Black',
+                'brown': 'Brown',
+                'beige': 'Beige',
+                'darkBlue': 'Dark Blue',
+                'blue': 'Blue',
+                'lightBlue': 'Light Blue',
+                'darkRed': 'Dark Red',
+                'red': 'Red',
+                'darkGreen': 'Dark Green',
+                'green': 'Green',
+                'purple': 'Purple',
+                'darkTurquois': 'Dark Turquois',
+                'turquois': 'Turquois',
+                'darkOrange': 'Dark Orange',
+                'orange': 'Orange',
+                'yellow': 'Yellow',
+                'imageURL': 'Image URL',
+                'fileURL': 'File URL',
+                'linkText': 'Link text',
+                'url': 'URL',
+                'size': 'Size',
+                'responsive': '<a href="https://www.jqueryscript.net/tags.php?/Responsive/">Responsive</a>',
+                'text': 'Text',
+                'openIn': 'Open in',
+                'sameTab': 'Same tab',
+                'newTab': 'New tab',
+                'align': 'Align',
+                'left': 'Left',
+                'justify': 'Justify',
+                'center': 'Center',
+                'right': 'Right',
+                'rows': 'Rows',
+                'columns': 'Columns',
+                'add': 'Add',
+                'pleaseEnterURL': 'Please enter an URL',
+                'videoURLnotSupported': 'Video URL not supported',
+                'pleaseSelectImage': 'Please select an image',
+                'pleaseSelectFile': 'Please select a file',
+                'bold': 'Bold',
+                'italic': 'Italic',
+                'underline': 'Underline',
+                'alignLeft': 'Align left',
+                'alignCenter': 'Align centered',
+                'alignRight': 'Align right',
+                'addOrderedList': 'Ordered list',
+                'addUnorderedList': 'Unordered list',
+                'addHeading': 'Heading/title',
+                'addFont': 'Font',
+                'addFontColor': 'Font color',
+                'addBackgroundColor': 'Background color',
+                'addFontSize': 'Font size',
+                'addImage': 'Add image',
+                'addVideo': 'Add video',
+                'addFile': 'Add file',
+                'addURL': 'Add URL',
+                'addTable': 'Add table',
+                'removeStyles': 'Remove styles',
+                'code': 'Show HTML code',
+                'undo': 'Undo',
+                'redo': 'Redo',
+                'save': 'Save',
+                'close': 'Close'
+            },
+
+            // privacy
+            youtubeCookies: false,
+
+            // preview
+            preview: false,
+
+            // placeholder
+            placeholder: 'Keterangan tambahan bila diperlukan',
+
+            // dev settings
+            useSingleQuotes: false,
+            height: 150,
+            heightPercentage: 0,
+            adaptiveHeight: false,
+            id: "",
+            class: "",
+            useParagraph: false,
+            maxlength: 0,
+            maxlengthIncludeHTML: false,
+            callback: undefined,
+            useTabForNext: false,
+            save: false,
+            saveCallback: undefined,
+            saveOnBlur: 0,
+            undoRedo: true
+
+        });
+    </script>
+@endsection

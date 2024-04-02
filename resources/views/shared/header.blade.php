@@ -14,7 +14,8 @@
     <link href="{{ asset('assets/extentions/select2/css/select2.min.css') }}" rel="stylesheet">
 
     <link href="{{ asset('assets/extentions/datatables/Select-1.6.0/css/select.bulma.min.css') }}" rel="stylesheet">
-    <link rel="stylesheet" href="https://unpkg.com/placeholder-loading/dist/css/placeholder-loading.min.css">
+    <link href="{{ asset('assets/extentions/placeholder/placeholder-loading.min.css') }}" rel="stylesheet">
+    <link href="{{ asset('assets/extentions/richtext/richtext.min.css') }}" rel="stylesheet">
     <style>
         @import url('https://rsms.me/inter/inter.css');
 

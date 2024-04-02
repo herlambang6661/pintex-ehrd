@@ -154,6 +154,8 @@ Route::controller(Absensi::class)->group(function () {
     Route::post('getabsensi', 'getabsensi')->name('getabsensi');
     Route::post('listAbsensiDetail', 'listAbsensiDetail');
     Route::post('getalpha', 'getalpha')->name('getalpha');
+    Route::post('getalphabydate', 'getalphabydate')->name('getalphabydate');
+    Route::post('storedataKomunikasi', 'storeKomunikasi');
 });
 
 Route::controller(DBLokal::class)->group(function () {

@@ -10,6 +10,8 @@ use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Routing\Controller;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Artisan;
 
 class Absensi extends Controller
 {
@@ -418,6 +420,25 @@ class Absensi extends Controller
 
     function getalpha(Request $request)
     {
+        Artisan::call('cache:clear');
+        $stb = $request->stb;
+
+        $data = DB::table('penerimaan_karyawan')
+            ->select('userid', 'stb', 'nama')
+            ->where('status', 'like', '%aktif%')
+            ->where('stb', $stb)
+            ->get();
+        if ($data->isNotEmpty()) {
+            foreach ($data as $k) {
+                return ['success' => 'Data Ditemukan', 'stat' => true, 'result' => $k->nama, 'userid' => $k->userid];
+            }
+        } else {
+            return ['error' => 'Data Tidak Ditemukan', 'stat' => false];
+        }
+    }
+
+    function getalphabydate(Request $request)
+    {
         $aw = $request->tglaw;
         $ak = $request->tglak;
 
@@ -525,5 +546,67 @@ class Absensi extends Controller
                     });
                 </script>
             ';
+    }
+
+    function storeKomunikasi(Request $request)
+    {
+
+        $request->validate(
+            [
+                'nama' => 'required|array|min:1',
+                'tanggalform' => 'required',
+                'dibuat' => 'required',
+            ],
+            [
+                "nama.*"  => [
+                    'required',
+                ]
+            ]
+        );
+
+        $noform = date('y') . "0000";
+        // // GET NOFORM
+        $checknoform = DB::table('absensi_komunikasi')->orderBy('noform', 'desc')->limit('1')->get();
+        foreach ($checknoform as $key) {
+            $noform = $key->noform;
+        }
+        $y = substr($noform, 1, 2);
+        if (date('y') == $y) {
+            $noUrut = substr($noform, 3, 4);
+            $na = $noUrut + 1;
+            $char = date('y');
+            $kodeSurat = "K" . $char . sprintf("%04s", $na);
+        } else {
+            $kodeSurat = "K" . date('y') . "0001";
+        }
+
+        $check = DB::table('absensi_komunikasi')->insert([
+            'entitas' => 'PINTEX',
+            'noform' => $kodeSurat,
+            'tanggal' => $request->tanggalform,
+            'dibuat' => $request->dibuat,
+            'keteranganform' => $request->keteranganform,
+            'created_at' => date('Y-m-d H:i:s'),
+        ]);
+        for ($i = 0; $i < count($request->userid); $i++) {
+            $checkitm = DB::table('absensi_komunikasiitm')->insert([
+                'entitas' => 'PINTEX',
+                'noform' => $kodeSurat,
+                'tanggal' => $request->tanggalform,
+                'userid' => $request->userid[$i],
+                'nama' => $request->nama[$i],
+                'suratid' => $request->suratid[$i],
+                'sst' => $request->sst[$i],
+                'keterangan' => $request->keterangan[$i],
+                'dibuat' => $request->dibuat,
+                'created_at' => date('Y-m-d H:i:s'),
+            ]);
+        }
+
+        $arr = array('msg' => 'Something goes to wrong. Please try later', 'status' => false);
+        if ($check) {
+            $arr = array('msg' => 'Data Komunikasi telah berhasil disimpan.', 'status' => true);
+        }
+        return Response()->json($arr);
     }
 }
