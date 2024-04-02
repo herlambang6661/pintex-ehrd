@@ -158,8 +158,8 @@
                             <div class="card-header">
                                 <ul class="nav nav-tabs card-header-tabs" data-bs-toggle="tabs" role="tablist">
                                     <li class="nav-item" role="presentation">
-                                        <a href="#tab-list" class="nav-link" data-bs-toggle="tab" aria-selected="false"
-                                            role="tab" tabindex="-1">
+                                        <a href="#tab-list-komunikasi" class="nav-link active" data-bs-toggle="tab"
+                                            aria-selected="false" role="tab" tabindex="-1">
                                             <svg xmlns="http://www.w3.org/2000/svg" style="margin-right:5px" width="24"
                                                 height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor"
                                                 stroke-width="2" stroke-linecap="round" stroke-linejoin="round"
@@ -175,7 +175,7 @@
                                             List Surat</a>
                                     </li>
                                     <li class="nav-item" role="presentation">
-                                        <a href="#tab-create-new" class="nav-link active" data-bs-toggle="tab"
+                                        <a href="#tab-create-new" class="nav-link" data-bs-toggle="tab"
                                             aria-selected="false" role="tab" tabindex="-1">
                                             <svg xmlns="http://www.w3.org/2000/svg" style="margin-right:5px" width="24"
                                                 height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor"
@@ -231,14 +231,183 @@
                             </div>
                             <div class="card-body">
                                 <div class="tab-content">
-                                    <div class="tab-pane active" id="tab-list" role="tabpanel">
+                                    <div class="tab-pane active show" id="tab-list-komunikasi" role="tabpanel">
+                                        <table style="width: 100%"
+                                            class="table table-striped table-bordered table-hover text-nowrap datatable-list-komunikasi">
+                                        </table>
                                     </div>
-                                    <div class="tab-pane active show" id="tab-create-new" role="tabpanel">
+                                    <div class="tab-pane" id="tab-create-new" role="tabpanel">
                                         <div class="row">
                                             <div class="col">
                                                 <input id="idf" value="1" type="hidden" />
                                                 <div class="row row-cards">
                                                     <div class="col-12">
+                                                        <h3 class="card-title">Pilih Surat Komunikasi</h3>
+                                                        <div class="row g-2 align-items-center">
+                                                            <div class="col-6 col-sm-4 col-md-2 col-xl ">
+                                                                <a href="#"
+                                                                    class="btn btn-outline-primary w-100 shadow rounded"
+                                                                    onclick="tambahItem('C'); return false;">
+                                                                    <svg xmlns="http://www.w3.org/2000/svg" width="24"
+                                                                        height="24" viewBox="0 0 24 24" fill="none"
+                                                                        stroke="currentColor" stroke-width="2"
+                                                                        stroke-linecap="round" stroke-linejoin="round"
+                                                                        class="icon icon-tabler icons-tabler-outline icon-tabler-mail-plus">
+                                                                        <path stroke="none" d="M0 0h24v24H0z"
+                                                                            fill="none" />
+                                                                        <path
+                                                                            d="M12 19h-7a2 2 0 0 1 -2 -2v-10a2 2 0 0 1 2 -2h14a2 2 0 0 1 2 2v5.5" />
+                                                                        <path d="M16 19h6" />
+                                                                        <path d="M19 16v6" />
+                                                                        <path d="M3 7l9 6l9 -6" />
+                                                                    </svg>
+                                                                    Surat Cuti
+                                                                </a>
+                                                            </div>
+                                                            <div class="col-6 col-sm-4 col-md-2 col-xl ">
+                                                                <a href="#"
+                                                                    class="btn btn-outline-info w-100 shadow rounded"
+                                                                    onclick="tambahItem('S'); return false;">
+                                                                    <svg xmlns="http://www.w3.org/2000/svg" width="24"
+                                                                        height="24" viewBox="0 0 24 24" fill="none"
+                                                                        stroke="currentColor" stroke-width="2"
+                                                                        stroke-linecap="round" stroke-linejoin="round"
+                                                                        class="icon icon-tabler icons-tabler-outline icon-tabler-ambulance">
+                                                                        <path stroke="none" d="M0 0h24v24H0z"
+                                                                            fill="none" />
+                                                                        <path d="M7 17m-2 0a2 2 0 1 0 4 0a2 2 0 1 0 -4 0" />
+                                                                        <path
+                                                                            d="M17 17m-2 0a2 2 0 1 0 4 0a2 2 0 1 0 -4 0" />
+                                                                        <path
+                                                                            d="M5 17h-2v-11a1 1 0 0 1 1 -1h9v12m-4 0h6m4 0h2v-6h-8m0 -5h5l3 5" />
+                                                                        <path d="M6 10h4m-2 -2v4" />
+                                                                    </svg>
+                                                                    Surat Sakit
+                                                                </a>
+                                                            </div>
+                                                            <div class="col-6 col-sm-4 col-md-2 col-xl ">
+                                                                <a href="#"
+                                                                    class="btn btn-outline-success w-100 shadow rounded"
+                                                                    onclick="tambahItem('CK'); return false;">
+                                                                    <svg xmlns="http://www.w3.org/2000/svg" width="24"
+                                                                        height="24" viewBox="0 0 24 24" fill="none"
+                                                                        stroke="currentColor" stroke-width="2"
+                                                                        stroke-linecap="round" stroke-linejoin="round"
+                                                                        class="icon icon-tabler icons-tabler-outline icon-tabler-user-bolt">
+                                                                        <path stroke="none" d="M0 0h24v24H0z"
+                                                                            fill="none" />
+                                                                        <path d="M8 7a4 4 0 1 0 8 0a4 4 0 0 0 -8 0" />
+                                                                        <path
+                                                                            d="M6 21v-2a4 4 0 0 1 4 -4h4c.267 0 .529 .026 .781 .076" />
+                                                                        <path d="M19 16l-2 3h4l-2 3" />
+                                                                    </svg>
+                                                                    Surat Cuti Khusus
+                                                                </a>
+                                                            </div>
+                                                            <div class="col-6 col-sm-4 col-md-2 col-xl ">
+                                                                <a href="#"
+                                                                    class="btn btn-outline-warning w-100 shadow rounded"
+                                                                    onclick="tambahItem('I'); return false;">
+                                                                    <svg xmlns="http://www.w3.org/2000/svg" width="24"
+                                                                        height="24" viewBox="0 0 24 24" fill="none"
+                                                                        stroke="currentColor" stroke-width="2"
+                                                                        stroke-linecap="round" stroke-linejoin="round"
+                                                                        class="icon icon-tabler icons-tabler-outline icon-tabler-user-exclamation">
+                                                                        <path stroke="none" d="M0 0h24v24H0z"
+                                                                            fill="none" />
+                                                                        <path d="M8 7a4 4 0 1 0 8 0a4 4 0 0 0 -8 0" />
+                                                                        <path
+                                                                            d="M6 21v-2a4 4 0 0 1 4 -4h4c.348 0 .686 .045 1.008 .128" />
+                                                                        <path d="M19 16v3" />
+                                                                        <path d="M19 22v.01" />
+                                                                    </svg>
+                                                                    Surat IP
+                                                                </a>
+                                                            </div>
+                                                        </div>
+                                                        <div class="row g-2 align-items-center">
+                                                            <div class="col-6 col-sm-4 col-md-2 col-xl py-3">
+                                                                <a href="#"
+                                                                    class="btn btn-outline-cyan w-100 shadow rounded"
+                                                                    onclick="tambahItem('½'); return false;">
+                                                                    <svg xmlns="http://www.w3.org/2000/svg" width="24"
+                                                                        height="24" viewBox="0 0 24 24" fill="none"
+                                                                        stroke="currentColor" stroke-width="2"
+                                                                        stroke-linecap="round" stroke-linejoin="round"
+                                                                        class="icon icon-tabler icons-tabler-outline icon-tabler-logout">
+                                                                        <path stroke="none" d="M0 0h24v24H0z"
+                                                                            fill="none" />
+                                                                        <path
+                                                                            d="M14 8v-2a2 2 0 0 0 -2 -2h-7a2 2 0 0 0 -2 2v12a2 2 0 0 0 2 2h7a2 2 0 0 0 2 -2v-2" />
+                                                                        <path d="M9 12h12l-3 -3" />
+                                                                        <path d="M18 15l3 -3" />
+                                                                    </svg>
+                                                                    Surat PC
+                                                                </a>
+                                                            </div>
+                                                            <div class="col-6 col-sm-4 col-md-2 col-xl py-3">
+                                                                <a href="#"
+                                                                    class="btn btn-outline-purple w-100 shadow rounded"
+                                                                    onclick="tambahItem('L'); return false;">
+                                                                    <svg xmlns="http://www.w3.org/2000/svg" width="24"
+                                                                        height="24" viewBox="0 0 24 24" fill="none"
+                                                                        stroke="currentColor" stroke-width="2"
+                                                                        stroke-linecap="round" stroke-linejoin="round"
+                                                                        class="icon icon-tabler icons-tabler-outline icon-tabler-mail-heart">
+                                                                        <path stroke="none" d="M0 0h24v24H0z"
+                                                                            fill="none" />
+                                                                        <path
+                                                                            d="M10.5 19h-5.5a2 2 0 0 1 -2 -2v-10a2 2 0 0 1 2 -2h14a2 2 0 0 1 2 2v4" />
+                                                                        <path d="M3 7l9 6l2.983 -1.989l6.017 -4.011" />
+                                                                        <path
+                                                                            d="M18 22l3.35 -3.284a2.143 2.143 0 0 0 .005 -3.071a2.242 2.242 0 0 0 -3.129 -.006l-.224 .22l-.223 -.22a2.242 2.242 0 0 0 -3.128 -.006a2.143 2.143 0 0 0 -.006 3.071l3.355 3.296z" />
+                                                                    </svg>
+                                                                    Surat Libur KJK
+                                                                </a>
+                                                            </div>
+                                                            <div class="col-6 col-sm-4 col-md-2 col-xl py-3">
+                                                                <a href="#"
+                                                                    class="btn btn-outline-red w-100 shadow rounded"
+                                                                    onclick="tambahItem('A'); return false;">
+                                                                    <svg xmlns="http://www.w3.org/2000/svg" width="24"
+                                                                        height="24" viewBox="0 0 24 24" fill="none"
+                                                                        stroke="currentColor" stroke-width="2"
+                                                                        stroke-linecap="round" stroke-linejoin="round"
+                                                                        class="icon icon-tabler icons-tabler-outline icon-tabler-ban">
+                                                                        <path stroke="none" d="M0 0h24v24H0z"
+                                                                            fill="none" />
+                                                                        <path
+                                                                            d="M12 12m-9 0a9 9 0 1 0 18 0a9 9 0 1 0 -18 0" />
+                                                                        <path d="M5.7 5.7l12.6 12.6" />
+                                                                    </svg>
+                                                                    Ket. Alpa
+                                                                </a>
+                                                            </div>
+                                                            <div class="col-6 col-sm-4 col-md-2 col-xl py-3">
+                                                                <a href="#"
+                                                                    class="btn btn-outline-teal w-100 shadow rounded"
+                                                                    onclick="tambahItem('GL'); return false;">
+                                                                    <svg xmlns="http://www.w3.org/2000/svg" width="24"
+                                                                        height="24" viewBox="0 0 24 24" fill="none"
+                                                                        stroke="currentColor" stroke-width="2"
+                                                                        stroke-linecap="round" stroke-linejoin="round"
+                                                                        class="icon icon-tabler icons-tabler-outline icon-tabler-a-b-2">
+                                                                        <path stroke="none" d="M0 0h24v24H0z"
+                                                                            fill="none" />
+                                                                        <path
+                                                                            d="M16 21h3c.81 0 1.48 -.67 1.48 -1.48l.02 -.02c0 -.82 -.69 -1.5 -1.5 -1.5h-3v3z" />
+                                                                        <path
+                                                                            d="M16 15h2.5c.84 -.01 1.5 .66 1.5 1.5s-.66 1.5 -1.5 1.5h-2.5v-3z" />
+                                                                        <path
+                                                                            d="M4 9v-4c0 -1.036 .895 -2 2 -2s2 .964 2 2v4" />
+                                                                        <path
+                                                                            d="M2.99 11.98a9 9 0 0 0 9 9m9 -9a9 9 0 0 0 -9 -9" />
+                                                                        <path d="M8 7h-4" />
+                                                                    </svg>
+                                                                    Geser Libur
+                                                                </a>
+                                                            </div>
+                                                        </div>
                                                         <form class="card shadow rounded" id="formKomunikasi"
                                                             name="formKomunikasi" method="post"
                                                             action="javascript:void(0)">
@@ -259,199 +428,15 @@
                                                                     </svg>
                                                                 </div>
                                                             </div>
+
                                                             @csrf
                                                             <div class="card-body">
-                                                                <h3 class="card-title">Pilih Surat Komunikasi</h3>
-                                                                <div class="row g-2 align-items-center">
-                                                                    <div class="col-6 col-sm-4 col-md-2 col-xl ">
-                                                                        <a href="#"
-                                                                            class="btn btn-outline-primary w-100 shadow rounded"
-                                                                            onclick="tambahItem('C'); return false;">
-                                                                            <svg xmlns="http://www.w3.org/2000/svg"
-                                                                                width="24" height="24"
-                                                                                viewBox="0 0 24 24" fill="none"
-                                                                                stroke="currentColor" stroke-width="2"
-                                                                                stroke-linecap="round"
-                                                                                stroke-linejoin="round"
-                                                                                class="icon icon-tabler icons-tabler-outline icon-tabler-mail-plus">
-                                                                                <path stroke="none" d="M0 0h24v24H0z"
-                                                                                    fill="none" />
-                                                                                <path
-                                                                                    d="M12 19h-7a2 2 0 0 1 -2 -2v-10a2 2 0 0 1 2 -2h14a2 2 0 0 1 2 2v5.5" />
-                                                                                <path d="M16 19h6" />
-                                                                                <path d="M19 16v6" />
-                                                                                <path d="M3 7l9 6l9 -6" />
-                                                                            </svg>
-                                                                            Surat Cuti
-                                                                        </a>
-                                                                    </div>
-                                                                    <div class="col-6 col-sm-4 col-md-2 col-xl ">
-                                                                        <a href="#"
-                                                                            class="btn btn-outline-info w-100 shadow rounded"
-                                                                            onclick="tambahItem('S'); return false;">
-                                                                            <svg xmlns="http://www.w3.org/2000/svg"
-                                                                                width="24" height="24"
-                                                                                viewBox="0 0 24 24" fill="none"
-                                                                                stroke="currentColor" stroke-width="2"
-                                                                                stroke-linecap="round"
-                                                                                stroke-linejoin="round"
-                                                                                class="icon icon-tabler icons-tabler-outline icon-tabler-ambulance">
-                                                                                <path stroke="none" d="M0 0h24v24H0z"
-                                                                                    fill="none" />
-                                                                                <path
-                                                                                    d="M7 17m-2 0a2 2 0 1 0 4 0a2 2 0 1 0 -4 0" />
-                                                                                <path
-                                                                                    d="M17 17m-2 0a2 2 0 1 0 4 0a2 2 0 1 0 -4 0" />
-                                                                                <path
-                                                                                    d="M5 17h-2v-11a1 1 0 0 1 1 -1h9v12m-4 0h6m4 0h2v-6h-8m0 -5h5l3 5" />
-                                                                                <path d="M6 10h4m-2 -2v4" />
-                                                                            </svg>
-                                                                            Surat Sakit
-                                                                        </a>
-                                                                    </div>
-                                                                    <div class="col-6 col-sm-4 col-md-2 col-xl ">
-                                                                        <a href="#"
-                                                                            class="btn btn-outline-success w-100 shadow rounded"
-                                                                            onclick="tambahItem('CK'); return false;">
-                                                                            <svg xmlns="http://www.w3.org/2000/svg"
-                                                                                width="24" height="24"
-                                                                                viewBox="0 0 24 24" fill="none"
-                                                                                stroke="currentColor" stroke-width="2"
-                                                                                stroke-linecap="round"
-                                                                                stroke-linejoin="round"
-                                                                                class="icon icon-tabler icons-tabler-outline icon-tabler-user-bolt">
-                                                                                <path stroke="none" d="M0 0h24v24H0z"
-                                                                                    fill="none" />
-                                                                                <path
-                                                                                    d="M8 7a4 4 0 1 0 8 0a4 4 0 0 0 -8 0" />
-                                                                                <path
-                                                                                    d="M6 21v-2a4 4 0 0 1 4 -4h4c.267 0 .529 .026 .781 .076" />
-                                                                                <path d="M19 16l-2 3h4l-2 3" />
-                                                                            </svg>
-                                                                            Surat Cuti Khusus
-                                                                        </a>
-                                                                    </div>
-                                                                    <div class="col-6 col-sm-4 col-md-2 col-xl ">
-                                                                        <a href="#"
-                                                                            class="btn btn-outline-warning w-100 shadow rounded"
-                                                                            onclick="tambahItem('I'); return false;">
-                                                                            <svg xmlns="http://www.w3.org/2000/svg"
-                                                                                width="24" height="24"
-                                                                                viewBox="0 0 24 24" fill="none"
-                                                                                stroke="currentColor" stroke-width="2"
-                                                                                stroke-linecap="round"
-                                                                                stroke-linejoin="round"
-                                                                                class="icon icon-tabler icons-tabler-outline icon-tabler-user-exclamation">
-                                                                                <path stroke="none" d="M0 0h24v24H0z"
-                                                                                    fill="none" />
-                                                                                <path
-                                                                                    d="M8 7a4 4 0 1 0 8 0a4 4 0 0 0 -8 0" />
-                                                                                <path
-                                                                                    d="M6 21v-2a4 4 0 0 1 4 -4h4c.348 0 .686 .045 1.008 .128" />
-                                                                                <path d="M19 16v3" />
-                                                                                <path d="M19 22v.01" />
-                                                                            </svg>
-                                                                            Surat IP
-                                                                        </a>
-                                                                    </div>
-                                                                </div>
-                                                                <div class="row g-2 align-items-center">
-                                                                    <div class="col-6 col-sm-4 col-md-2 col-xl py-3">
-                                                                        <a href="#"
-                                                                            class="btn btn-outline-cyan w-100 shadow rounded"
-                                                                            onclick="tambahItem('½'); return false;">
-                                                                            <svg xmlns="http://www.w3.org/2000/svg"
-                                                                                width="24" height="24"
-                                                                                viewBox="0 0 24 24" fill="none"
-                                                                                stroke="currentColor" stroke-width="2"
-                                                                                stroke-linecap="round"
-                                                                                stroke-linejoin="round"
-                                                                                class="icon icon-tabler icons-tabler-outline icon-tabler-logout">
-                                                                                <path stroke="none" d="M0 0h24v24H0z"
-                                                                                    fill="none" />
-                                                                                <path
-                                                                                    d="M14 8v-2a2 2 0 0 0 -2 -2h-7a2 2 0 0 0 -2 2v12a2 2 0 0 0 2 2h7a2 2 0 0 0 2 -2v-2" />
-                                                                                <path d="M9 12h12l-3 -3" />
-                                                                                <path d="M18 15l3 -3" />
-                                                                            </svg>
-                                                                            Surat PC
-                                                                        </a>
-                                                                    </div>
-                                                                    <div class="col-6 col-sm-4 col-md-2 col-xl py-3">
-                                                                        <a href="#"
-                                                                            class="btn btn-outline-purple w-100 shadow rounded"
-                                                                            onclick="tambahItem('L'); return false;">
-                                                                            <svg xmlns="http://www.w3.org/2000/svg"
-                                                                                width="24" height="24"
-                                                                                viewBox="0 0 24 24" fill="none"
-                                                                                stroke="currentColor" stroke-width="2"
-                                                                                stroke-linecap="round"
-                                                                                stroke-linejoin="round"
-                                                                                class="icon icon-tabler icons-tabler-outline icon-tabler-mail-heart">
-                                                                                <path stroke="none" d="M0 0h24v24H0z"
-                                                                                    fill="none" />
-                                                                                <path
-                                                                                    d="M10.5 19h-5.5a2 2 0 0 1 -2 -2v-10a2 2 0 0 1 2 -2h14a2 2 0 0 1 2 2v4" />
-                                                                                <path
-                                                                                    d="M3 7l9 6l2.983 -1.989l6.017 -4.011" />
-                                                                                <path
-                                                                                    d="M18 22l3.35 -3.284a2.143 2.143 0 0 0 .005 -3.071a2.242 2.242 0 0 0 -3.129 -.006l-.224 .22l-.223 -.22a2.242 2.242 0 0 0 -3.128 -.006a2.143 2.143 0 0 0 -.006 3.071l3.355 3.296z" />
-                                                                            </svg>
-                                                                            Surat Libur KJK
-                                                                        </a>
-                                                                    </div>
-                                                                    <div class="col-6 col-sm-4 col-md-2 col-xl py-3">
-                                                                        <a href="#"
-                                                                            class="btn btn-outline-red w-100 shadow rounded"
-                                                                            onclick="tambahItem('A'); return false;">
-                                                                            <svg xmlns="http://www.w3.org/2000/svg"
-                                                                                width="24" height="24"
-                                                                                viewBox="0 0 24 24" fill="none"
-                                                                                stroke="currentColor" stroke-width="2"
-                                                                                stroke-linecap="round"
-                                                                                stroke-linejoin="round"
-                                                                                class="icon icon-tabler icons-tabler-outline icon-tabler-ban">
-                                                                                <path stroke="none" d="M0 0h24v24H0z"
-                                                                                    fill="none" />
-                                                                                <path
-                                                                                    d="M12 12m-9 0a9 9 0 1 0 18 0a9 9 0 1 0 -18 0" />
-                                                                                <path d="M5.7 5.7l12.6 12.6" />
-                                                                            </svg>
-                                                                            Ket. Alpa
-                                                                        </a>
-                                                                    </div>
-                                                                    <div class="col-6 col-sm-4 col-md-2 col-xl py-3">
-                                                                        <a href="#"
-                                                                            class="btn btn-outline-teal w-100 shadow rounded"
-                                                                            onclick="tambahItem('GL'); return false;">
-                                                                            <svg xmlns="http://www.w3.org/2000/svg"
-                                                                                width="24" height="24"
-                                                                                viewBox="0 0 24 24" fill="none"
-                                                                                stroke="currentColor" stroke-width="2"
-                                                                                stroke-linecap="round"
-                                                                                stroke-linejoin="round"
-                                                                                class="icon icon-tabler icons-tabler-outline icon-tabler-a-b-2">
-                                                                                <path stroke="none" d="M0 0h24v24H0z"
-                                                                                    fill="none" />
-                                                                                <path
-                                                                                    d="M16 21h3c.81 0 1.48 -.67 1.48 -1.48l.02 -.02c0 -.82 -.69 -1.5 -1.5 -1.5h-3v3z" />
-                                                                                <path
-                                                                                    d="M16 15h2.5c.84 -.01 1.5 .66 1.5 1.5s-.66 1.5 -1.5 1.5h-2.5v-3z" />
-                                                                                <path
-                                                                                    d="M4 9v-4c0 -1.036 .895 -2 2 -2s2 .964 2 2v4" />
-                                                                                <path
-                                                                                    d="M2.99 11.98a9 9 0 0 0 9 9m9 -9a9 9 0 0 0 -9 -9" />
-                                                                                <path d="M8 7h-4" />
-                                                                            </svg>
-                                                                            Geser Libur
-                                                                        </a>
-                                                                    </div>
-                                                                </div>
                                                                 <div class="row row-cards">
                                                                     <div class="col-md-3">
                                                                         <div class="">
                                                                             <div class="mb-3">
-                                                                                <label class="form-label">Tanggal</label>
+                                                                                <label class="form-label">Tanggal
+                                                                                    Formulir</label>
                                                                                 <input type="date"
                                                                                     class="form-control shadow rounded"
                                                                                     name="tanggalform"
@@ -512,6 +497,7 @@
                                                                                         </svg>
                                                                                     </th>
                                                                                     <th>SST</th>
+                                                                                    <th>Tanggal Surat</th>
                                                                                     <th>STB</th>
                                                                                     <th>NAMA</th>
                                                                                     <th>KETERANGAN</th>
@@ -717,7 +703,7 @@
     </div>
     <script>
         $(function() {
-            var tableWawancara = $('.datatable-karyawan').DataTable({
+            var tableKaryawan = $('.datatable-karyawan').DataTable({
                 "processing": true, //Feature control the processing indicator.
                 "serverSide": false, //Feature control DataTables' server-side processing mode.
                 "scrollX": true,
@@ -777,6 +763,78 @@
 
             });
 
+            var tableKomunikasi = $('.datatable-list-komunikasi').DataTable({
+                "processing": true, //Feature control the processing indicator.
+                "serverSide": false, //Feature control DataTables' server-side processing mode.
+                "scrollX": true,
+                "scrollCollapse": true,
+                "pagingType": 'full_numbers',
+                "lengthMenu": [
+                    [10, 25, 35, 40, 50, -1],
+                    ['10', '25', '35', '40', '50', 'Tampilkan Semua']
+                ],
+                "dom": "<'card-body border-bottom py-3' <'row'<'col-sm-6'l><'col-sm-6'f>> >" +
+                    "<'table-responsive' <'col-sm-12'tr> >" +
+                    "<'card-footer' <'row'<'col-sm-8'i><'col-sm-4'p> >>",
+                "language": {
+                    "lengthMenu": "Menampilkan _MENU_",
+                    "zeroRecords": "Data Tidak Ditemukan",
+                    "info": "Menampilkan _START_ sampai _END_ dari _TOTAL_ total data",
+                    "infoEmpty": "Data Tidak Ditemukan",
+                    "infoFiltered": "(Difilter dari _MAX_ total records)",
+                    "processing": '<div class="container container-slim py-4"><div class="text-center"><div class="mb-3"></div><div class="text-secondary mb-3">Loading Data...</div><div class="progress progress-sm"><div class="progress-bar progress-bar-indeterminate"></div></div></div></div>',
+                    "search": '<svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-search" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z" fill="none"></path><path d="M10 10m-7 0a7 7 0 1 0 14 0a7 7 0 1 0 -14 0"></path><path d="M21 21l-6 -6"></path></svg>',
+                    "paginate": {
+                        "first": '<svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-chevron-left-pipe" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z" fill="none"></path><path d="M7 6v12"></path><path d="M18 6l-6 6l6 6"></path></svg>',
+                        "last": '<svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-chevron-right-pipe" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z" fill="none"></path><path d="M6 6l6 6l-6 6"></path><path d="M17 5v13"></path></svg>',
+                        "next": '<svg xmlns="http://www.w3.org/2000/svg" class="icon" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z" fill="none"></path><path d="M9 6l6 6l-6 6"></path></svg>',
+                        "previous": '<svg xmlns="http://www.w3.org/2000/svg" class="icon" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z" fill="none"></path><path d="M15 6l-6 6l6 6"></path></svg>',
+                    },
+                },
+                ajax: "{{ route('getListKomunikasi.index') }}",
+                autoWidth: true,
+                columns: [
+
+                    {
+                        title: 'Noform',
+                        data: 'noform',
+                        name: 'noform',
+                        className: 'cuspad0'
+                    },
+                    {
+                        title: 'Tanggal',
+                        data: 'tanggal',
+                        name: 'tanggal',
+                        className: 'cuspad0 text-center'
+                    },
+                    {
+                        title: 'Nama',
+                        data: 'nama',
+                        name: 'nama',
+                        className: 'cuspad0 text-center'
+                    },
+                    {
+                        title: 'Surat',
+                        data: 'suratid',
+                        name: 'suratid',
+                        className: 'cuspad0 text-center'
+                    },
+                    {
+                        title: 'Status',
+                        data: 'sst',
+                        name: 'sst',
+                        className: 'cuspad0 text-center'
+                    },
+                    {
+                        title: 'Keterangan',
+                        data: 'keterangan',
+                        name: 'keterangan',
+                        className: 'cuspad0 text-center'
+                    },
+                ],
+
+            });
+
             if ($("#formKomunikasi").length > 0) {
                 $("#formKomunikasi").validate({
                     rules: {
@@ -825,7 +883,7 @@
                                     '<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="icon icon-tabler icons-tabler-outline icon-tabler-device-floppy"> <path stroke="none" d="M0 0h24v24H0z" fill="none" /> <path d="M6 4h10l4 4v10a2 2 0 0 1 -2 2h-12a2 2 0 0 1 -2 -2v-12a2 2 0 0 1 2 -2" /> <path d="M12 14m-2 0a2 2 0 1 0 4 0a2 2 0 1 0 -4 0" /> <path d="M14 4l0 4l-6 0l0 -4" /> </svg> Simpan'
                                 );
                                 $("#btnSubmitKomunikasi").attr("disabled", false);
-                                // tableLamaran.ajax.reload();
+                                tableKomunikasi.ajax.reload();
                                 const Toast = Swal.mixin({
                                     toast: true,
                                     position: "top-end",
@@ -846,7 +904,7 @@
                             error: function(data) {
                                 console.log('Error:', data);
                                 // const obj = JSON.parse(data.responseJSON);
-                                // tableLamaran.ajax.reload();
+                                tableKomunikasi.ajax.reload();
                                 Swal.fire({
                                     icon: 'error',
                                     title: 'Gagal Input',
@@ -940,6 +998,7 @@
         }
 
         function tambahItem(sst) {
+
             var idf = document.getElementById("idf").value;
             var detail_transaksi = document.getElementById("table-tambah-komunikasi");
             var tr = document.createElement("tr");
@@ -959,19 +1018,25 @@
             td.innerHTML += '<input type="hidden" name="sst[]" value="' + sst + '">';
             td.innerHTML += '<input type="hidden" name="userid[]" id="userid' + idf + '">';
             tr.appendChild(td);
-            // Kolom 3 STB
+            // Kolom 3 TANGGAL
+            var td = document.createElement("td");
+            td.setAttribute("style", "width:100px");
+            td.innerHTML += '<input type="date" name="tanggalitm[]" id="tanggalitm' + idf +
+                '" class="form-control" value="<?= date('Y-m-d') ?>">';
+            tr.appendChild(td);
+            // Kolom 4 STB
             var td = document.createElement("td");
             td.setAttribute("style", "width:100px");
             td.innerHTML += '<input type="text" name="stb[]" id="stb' + idf + '" class="form-control" onchange="fetchKar(' +
-                idf + ')" onkeydown = "if (event.keyCode == 13)  fetchKar(' + idf + ')">';
+                idf + ', `' + sst + '`)" onkeydown = "if (event.keyCode == 13)  fetchKar(' + idf + ', `' + sst + '`)">';
             tr.appendChild(td);
-            // Kolom 4 NAMA
+            // Kolom 5 NAMA
             var td = document.createElement("td");
             td.setAttribute("style", "width:300px");
             td.innerHTML += '<input type="text" name="nama[]" id="nama' + idf + '" class="form-control" readonly>';
             tr.appendChild(td);
 
-            // Kolom 5 KETERANGAN
+            // Kolom 6 KETERANGAN
             var td = document.createElement("td");
             if (sst == "C") {
                 td.innerHTML += '<input type="hidden" name="suratid[]" value="Formulir Permohonan Cuti">';
@@ -1009,7 +1074,7 @@
             $("#btn-remove-item" + idf).remove();
         }
 
-        function fetchKar(params) {
+        function fetchKar(params, sst) {
             var stb = $("#stb" + params).val();
             console.log(stb);
             $.ajaxSetup({
@@ -1026,13 +1091,34 @@
                 data: {
                     "_token": "{{ csrf_token() }}",
                     'stb': stb,
+                    'sst': sst,
                     // 'entitas': entitas,
                 },
                 success: function(data) {
                     if (data.success = 'Data Ditemukan') {
-                        $('#nama' + params).attr("readonly", true);
-                        $('#nama' + params).val(data.result);
-                        $('#userid' + params).val(data.userid);
+                        if (sst == "C") {
+                            var finalcuti = data.sisacuti - data.cutidikomunikasi;
+                            if (finalcuti > 0) {
+                                $('#nama' + params).attr("readonly", true);
+                                $('#nama' + params).val(data.result);
+                                $('#userid' + params).val(data.userid);
+                            } else {
+                                // alert("Karyawan tidak memiliki cuti");
+                                Swal.fire({
+                                    icon: 'error',
+                                    title: 'Tidak dapat di proses',
+                                    html: data.result + ' tidak memiliki cuti',
+                                    showConfirmButton: true
+                                });
+                                $('#stb' + params).val('');
+                                $('#nama' + params).val('');
+                                $('#userid' + params).val('');
+                            }
+                        } else {
+                            $('#nama' + params).attr("readonly", true);
+                            $('#nama' + params).val(data.result);
+                            $('#userid' + params).val(data.userid);
+                        }
                     } else {
                         $('#nama' + params).attr("readonly", true);
                         $('#nama' + params).val(data.error);

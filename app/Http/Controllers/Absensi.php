@@ -422,18 +422,41 @@ class Absensi extends Controller
     {
         Artisan::call('cache:clear');
         $stb = $request->stb;
-
-        $data = DB::table('penerimaan_karyawan')
-            ->select('userid', 'stb', 'nama')
-            ->where('status', 'like', '%aktif%')
-            ->where('stb', $stb)
-            ->get();
-        if ($data->isNotEmpty()) {
-            foreach ($data as $k) {
-                return ['success' => 'Data Ditemukan', 'stat' => true, 'result' => $k->nama, 'userid' => $k->userid];
+        $sst = $request->sst;
+        if ($sst == "C") {
+            $data = DB::table('penerimaan_karyawan as k')
+                // ->select('k.userid', 'k.stb', 'k.nama')
+                ->select(DB::raw(
+                    "k.userid, k.stb, k.nama, 
+                    (SELECT SUM(l.sacuti) FROM penerimaan_legalitas l WHERE l.userid = k.userid AND l.tglaw <= '" . date('Y-m-d') . "' ) AS sacuti,
+                    (SELECT tglaw FROM penerimaan_legalitas l WHERE l.userid = k.userid ORDER BY tglaw DESC LIMIT 1 ) AS tglawal,
+                    (SELECT tglak FROM penerimaan_legalitas l WHERE l.userid = k.userid ORDER BY tglaw DESC LIMIT 1 ) AS tglakhir,
+                    (SELECT COUNT(o.sst) FROM absensi_komunikasiitm o WHERE k.userid = o.userid AND o.tanggal >= tglawal AND o.tanggal <= tglakhir ) AS cutiterpakai
+                    "
+                ))
+                ->where('k.status', 'like', '%aktif%')
+                ->where('k.stb', $stb)
+                ->get();
+            if ($data->isNotEmpty()) {
+                foreach ($data as $k) {
+                    return ['success' => 'Data Ditemukan', 'stat' => true, 'result' => $k->nama, 'userid' => $k->userid, 'sisacuti' => $k->sacuti, 'cutidikomunikasi' => $k->cutiterpakai];
+                }
+            } else {
+                return ['error' => 'Data Tidak Ditemukan', 'stat' => false];
             }
         } else {
-            return ['error' => 'Data Tidak Ditemukan', 'stat' => false];
+            $data = DB::table('penerimaan_karyawan as k')
+                ->select('k.userid', 'k.stb', 'k.nama')
+                ->where('k.status', 'like', '%aktif%')
+                ->where('k.stb', $stb)
+                ->get();
+            if ($data->isNotEmpty()) {
+                foreach ($data as $k) {
+                    return ['success' => 'Data Ditemukan', 'stat' => true, 'result' => $k->nama, 'userid' => $k->userid];
+                }
+            } else {
+                return ['error' => 'Data Tidak Ditemukan', 'stat' => false];
+            }
         }
     }
 
@@ -592,7 +615,7 @@ class Absensi extends Controller
             $checkitm = DB::table('absensi_komunikasiitm')->insert([
                 'entitas' => 'PINTEX',
                 'noform' => $kodeSurat,
-                'tanggal' => $request->tanggalform,
+                'tanggal' => $request->tanggalitm[$i],
                 'userid' => $request->userid[$i],
                 'nama' => $request->nama[$i],
                 'suratid' => $request->suratid[$i],

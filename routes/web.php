@@ -20,6 +20,7 @@ use App\Http\Controllers\Datatables\DataHariLibur;
 use App\Http\Controllers\Datatables\DataWawancara;
 use Illuminate\Contracts\Auth\Access\Authorizable;
 use App\Http\Controllers\Datatables\DataFingerODBC;
+use App\Http\Controllers\Datatables\DataKomunikasi;
 use App\Http\Controllers\Datatables\DataFingerMYSQL;
 use App\Http\Controllers\Datatables\DataTarifLembur;
 use App\Http\Controllers\Datatables\DataAbsensiLocal;
@@ -71,6 +72,7 @@ Route::resources([
     'getLibur'  => DataHariLibur::class,
     'getshift' => DataShift::class,
     'getentitas' => DataEntitas::class,
+    'getListKomunikasi' => DataKomunikasi::class,
 ]);
 
 
