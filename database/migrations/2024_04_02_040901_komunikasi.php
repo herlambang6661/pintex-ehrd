@@ -30,6 +30,7 @@ return new class extends Migration
             $table->string('nama')->nullable();
             $table->string('suratid')->nullable();
             $table->string('sst')->nullable();
+            $table->string('statussurat')->nullable();
             $table->string('keterangan')->nullable();
             $table->string('dibuat')->nullable();
             $table->timestamps();

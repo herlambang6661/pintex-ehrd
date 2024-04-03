@@ -796,6 +796,13 @@
                 columns: [
 
                     {
+                        title: 'Opsi',
+                        data: 'action',
+                        name: 'action',
+                        className: 'cuspad0 text-center'
+                    },
+
+                    {
                         title: 'Noform',
                         data: 'noform',
                         name: 'noform',
@@ -829,6 +836,12 @@
                         title: 'Keterangan',
                         data: 'keterangan',
                         name: 'keterangan',
+                        className: 'cuspad0 text-center'
+                    },
+                    {
+                        title: 'Status Surat',
+                        data: 'statussurat',
+                        name: 'statussurat',
                         className: 'cuspad0 text-center'
                     },
                 ],

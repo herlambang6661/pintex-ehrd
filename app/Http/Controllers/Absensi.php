@@ -622,6 +622,7 @@ class Absensi extends Controller
                 'sst' => $request->sst[$i],
                 'keterangan' => $request->keterangan[$i],
                 'dibuat' => $request->dibuat,
+                'statussurat' => "PENGAJUAN",
                 'created_at' => date('Y-m-d H:i:s'),
             ]);
         }
@@ -631,5 +632,19 @@ class Absensi extends Controller
             $arr = array('msg' => 'Data Komunikasi telah berhasil disimpan.', 'status' => true);
         }
         return Response()->json($arr);
+    }
+
+    function printSurat($id)
+    {
+        $check = DB::table('absensi_komunikasi')
+            ->where('noform', $id)
+            ->get();
+
+        $checkitm = DB::table('absensi_komunikasiitm AS k')
+            ->select('k.tanggal', 's.stb', 'k.nama', 'k.suratid', 'k.sst', 'k.keterangan')
+            ->join('penerimaan_karyawan AS s', 's.userid', '=', 'k.userid')
+            ->where('noform', $id)
+            ->get();
+        return view('products/03_absensi.print', ['getData' => $check, 'getDataItm' => $checkitm, 'noform' => $id,]);
     }
 }
