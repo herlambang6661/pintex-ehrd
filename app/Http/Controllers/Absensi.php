@@ -647,4 +647,160 @@ class Absensi extends Controller
             ->get();
         return view('products/03_absensi.print', ['getData' => $check, 'getDataItm' => $checkitm, 'noform' => $id,]);
     }
+
+    function checkAccKomunikasi(Request $request)
+    {
+        if (empty($request->id)) {
+            echo '<div class="modal-body text-center py-4">';
+            echo '<center><iframe src="https://lottie.host/embed/94d605b9-2cc4-4d11-809a-7f41357109b0/OzwBgj9bHl.json" width="300px" height="300px"></iframe></center>';
+            echo "<center>Tidak ada data yang dipilih</center>";
+            echo '</div>';
+        } else {
+            $jml = count($request->id);
+            echo '
+                        <div class="modal-body text-center py-4">
+                            <svg xmlns="http://www.w3.org/2000/svg" class="icon mb-2 text-green icon-lg" width="24"
+                                height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none"
+                                stroke-linecap="round" stroke-linejoin="round">
+                                <path stroke="none" d="M0 0h24v24H0z" fill="none"></path>
+                                <path d="M12 12m-9 0a9 9 0 1 0 18 0a9 9 0 1 0 -18 0"></path>
+                                <path d="M9 12l2 2l4 -4"></path>
+                            </svg>
+                            <h3>PENERIMAAN SURAT KOMUNIKASI</h3>
+                            <div class="card">
+                                <div class="table-responsive">
+                                    <table class="table table-vcenter card-table table-striped">
+                                        <thead>
+                                            <tr>
+                                                <th>No</th>
+                                                <th>STB</th>
+                                                <th>Nama</th>
+                                                <th>Tanggal</th>
+                                                <th>Surat</th>
+                                                <th>Sst</th>
+                                                <th>Keterangan</th>
+                                                <th>Dibuat</th>
+                                                <th>ACC</th>
+                                                <th>Keterangan ACC</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+            ';
+            $j = 1;
+            for ($i = 0; $i < $jml; $i++) {
+                $data = DB::table('absensi_komunikasiitm as o')->select('o.id', 'o.userid', 'o.nama', 'k.stb', 'o.tanggal', 'o.suratid', 'o.sst', 'o.keterangan', 'o.dibuat')->join('penerimaan_karyawan as k', 'k.userid', '=', 'o.userid')->where('o.id', $request->id[$i])->get();
+                foreach ($data as $u) {
+                    echo '
+                                            <input type="hidden" name="id[]" value="' . $request->id[$i] . '">
+                                            <input type="hidden" name="tanggal[]" value="' . $u->tanggal . '">
+                                            <input type="hidden" name="userid[]" value="' . $u->userid . '">
+                                            <input type="hidden" name="chgsst[]" value="' . $u->sst . '">
+                                            <tr>
+                                                <td>' . $j . '</td>
+                                                <td>' . $u->stb . '</td>
+                                                <td>' . $u->nama . '</td>
+                                                <td>' . Carbon::parse($u->tanggal)->format('d/m/Y') . '</td>
+                                                <td>' . $u->suratid . '</td>
+                                                <td>' . $u->sst . '</td>
+                                                <td>' . $u->keterangan . '</td>
+                                                <td>' . $u->dibuat . '</td>
+                                                <td>
+                                                    <svg  xmlns="http://www.w3.org/2000/svg"  width="24"  height="24"  viewBox="0 0 24 24"  fill="none"  stroke="#0ca12a"  stroke-width="2"  stroke-linecap="round"  stroke-linejoin="round"  class="icon icon-tabler icons-tabler-outline icon-tabler-circle-check"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><path d="M12 12m-9 0a9 9 0 1 0 18 0a9 9 0 1 0 -18 0" /><path d="M9 12l2 2l4 -4" /></svg>
+                                                </td>
+                                                <td><input type="text" name="ket_acc[]" class="form-control"></td>
+                                            </tr>
+                    ';
+                }
+                $j++;
+            }
+            echo '
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="modal-footer">
+                            <div class="w-100">
+                                <div class="row">
+                                    <div class="col">
+                                        <button type="button" class="btn w-100" data-bs-dismiss="modal">
+                                            <svg  xmlns="http://www.w3.org/2000/svg"  width="24"  height="24"  viewBox="0 0 24 24"  fill="none"  stroke="currentColor"  stroke-width="2"  stroke-linecap="round"  stroke-linejoin="round"  class="icon icon-tabler icons-tabler-outline icon-tabler-arrow-back-up"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><path d="M9 14l-4 -4l4 -4" /><path d="M5 10h11a4 4 0 1 1 0 8h-1" /></svg>
+                                            Kembali
+                                        </button>
+                                    </div>
+                                    <div class="col">
+                                        <button type="submit" class="btn btn-success w-100" data-bs-dismiss="modal">
+                                            <svg  xmlns="http://www.w3.org/2000/svg"  width="24"  height="24"  viewBox="0 0 24 24"  fill="none"  stroke="currentColor"  stroke-width="2"  stroke-linecap="round"  stroke-linejoin="round"  class="icon icon-tabler icons-tabler-outline icon-tabler-checklist"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><path d="M9.615 20h-2.615a2 2 0 0 1 -2 -2v-12a2 2 0 0 1 2 -2h8a2 2 0 0 1 2 2v8" /><path d="M14 19l2 2l4 -4" /><path d="M9 8h4" /><path d="M9 12h2" /></svg>
+                                            Proses Surat Komunikasi
+                                        </button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+            ';
+        }
+        // return $result;
+    }
+
+    function storeKomunikasiAcc(Request $request)
+    {
+        $request->validate(
+            [
+                '_token' => 'required',
+            ],
+        );
+        for ($i = 0; $i < count($request->id); $i++) {
+            // if ($request->tanggal[$i] >= date('Y-m-d')) {
+            //     echo $request->tanggal[$i];
+            //     echo 'lebih masuk cron';
+            // } else {
+            //     echo $request->tanggal[$i];
+            //     echo 'kurang eksekusi';
+            // }
+            // die();
+            if ($request->tanggal[$i] >= date('Y-m-d')) {
+                // Jika tidak maka akan langsung di eksekusi
+                $update = DB::table('absensi_komunikasiitm')
+                    ->where('id', '=', $request->id[$i])
+                    ->update(
+                        array(
+                            'statussurat' => 'DITERIMA',
+                            'updated_at' => date('Y-m-d H:i:s'),
+                            'cron' => '0',
+                        )
+                    );
+            } else {
+                // jika tanggal komunikasi lebih dari hari ini maka masuk schedule
+                $update = DB::table('absensi_komunikasiitm')
+                    ->where('id', '=', $request->id[$i])
+                    ->update(
+                        array(
+                            'statussurat' => 'DITERIMA',
+                            'updated_at' => date('Y-m-d H:i:s'),
+                            'cron' => '1',
+                        )
+                    );
+
+                $updateabsensi = DB::table('absensi_absensi')
+                    ->where(
+                        'userid',
+                        '=',
+                        $request->userid[$i]
+                    )
+                    ->where('tanggal', '=', $request->tanggal[$i])
+                    ->update(
+                        array(
+                            'sst' => $request->chgsst[$i],
+                            'updated_at' => date('Y-m-d H:i:s'),
+                        )
+                    );
+            }
+        }
+
+        $arr = array('msg' => 'Something goes to wrong. Please try later', 'status' => false);
+        if ($update) {
+            $arr = array('msg' => 'Data telah berhasil diproses', 'status' => true);
+        }
+        return Response()->json($arr);
+    }
 }

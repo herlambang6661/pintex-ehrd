@@ -31,7 +31,9 @@ return new class extends Migration
             $table->string('suratid')->nullable();
             $table->string('sst')->nullable();
             $table->string('statussurat')->nullable();
+            $table->string('ket_acc')->nullable();
             $table->string('keterangan')->nullable();
+            $table->integer('cron')->nullable();
             $table->string('dibuat')->nullable();
             $table->timestamps();
         });

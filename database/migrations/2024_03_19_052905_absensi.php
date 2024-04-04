@@ -27,6 +27,7 @@ return new class extends Migration
             $table->string('hrlibur')->nullable();
             $table->string('sethari')->nullable();
             $table->string('sst')->nullable();
+            $table->string('raw_sst')->nullable();
             $table->rememberToken();
             $table->timestamps();
         });

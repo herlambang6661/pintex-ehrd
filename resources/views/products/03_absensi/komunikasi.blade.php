@@ -160,10 +160,27 @@
                                     <li class="nav-item" role="presentation">
                                         <a href="#tab-list-komunikasi" class="nav-link active" data-bs-toggle="tab"
                                             aria-selected="false" role="tab" tabindex="-1">
+                                            <svg xmlns="http://www.w3.org/2000/svg" width="24" style="margin-right: 5px"
+                                                height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                                                stroke-width="2" stroke-linecap="round" stroke-linejoin="round"
+                                                class="icon icon-tabler icons-tabler-outline icon-tabler-list text-blue">
+                                                <path stroke="none" d="M0 0h24v24H0z" fill="none" />
+                                                <path d="M9 6l11 0" />
+                                                <path d="M9 12l11 0" />
+                                                <path d="M9 18l11 0" />
+                                                <path d="M5 6l0 .01" />
+                                                <path d="M5 12l0 .01" />
+                                                <path d="M5 18l0 .01" />
+                                            </svg>
+                                            List Surat</a>
+                                    </li>
+                                    <li class="nav-item" role="presentation">
+                                        <a href="#tab-acc-komunikasi" class="nav-link" data-bs-toggle="tab"
+                                            aria-selected="false" role="tab" tabindex="-1">
                                             <svg xmlns="http://www.w3.org/2000/svg" style="margin-right:5px" width="24"
                                                 height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor"
                                                 stroke-width="2" stroke-linecap="round" stroke-linejoin="round"
-                                                class="icon icon-tabler icons-tabler-outline icon-tabler-list-check">
+                                                class="icon icon-tabler icons-tabler-outline icon-tabler-list-check text-green">
                                                 <path stroke="none" d="M0 0h24v24H0z" fill="none" />
                                                 <path d="M3.5 5.5l1.5 1.5l2.5 -2.5" />
                                                 <path d="M3.5 11.5l1.5 1.5l2.5 -2.5" />
@@ -172,7 +189,8 @@
                                                 <path d="M11 12l9 0" />
                                                 <path d="M11 18l9 0" />
                                             </svg>
-                                            List Surat</a>
+                                            Acc Surat Komunikasi
+                                        </a>
                                     </li>
                                     <li class="nav-item" role="presentation">
                                         <a href="#tab-create-new" class="nav-link" data-bs-toggle="tab"
@@ -180,7 +198,7 @@
                                             <svg xmlns="http://www.w3.org/2000/svg" style="margin-right:5px" width="24"
                                                 height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor"
                                                 stroke-width="2" stroke-linecap="round" stroke-linejoin="round"
-                                                class="icon icon-tabler icons-tabler-outline icon-tabler-mail-plus">
+                                                class="icon icon-tabler icons-tabler-outline icon-tabler-mail-plus text-purple">
                                                 <path stroke="none" d="M0 0h24v24H0z" fill="none" />
                                                 <path
                                                     d="M12 19h-7a2 2 0 0 1 -2 -2v-10a2 2 0 0 1 2 -2h14a2 2 0 0 1 2 2v5.5" />
@@ -188,15 +206,16 @@
                                                 <path d="M19 16v6" />
                                                 <path d="M3 7l9 6l9 -6" />
                                             </svg>
-                                            Buat Surat Baru</a>
+                                            Buat Formulir Komunikasi</a>
                                     </li>
                                     <li class="nav-item" role="presentation">
-                                        <a href="#tab-by-date" class="nav-link" data-bs-toggle="tab" aria-selected="true"
-                                            role="tab">
-                                            <svg xmlns="http://www.w3.org/2000/svg" style="margin-right:5px" width="24"
-                                                height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor"
-                                                stroke-width="2" stroke-linecap="round" stroke-linejoin="round"
-                                                class="icon icon-tabler icons-tabler-outline icon-tabler-calendar-month">
+                                        <a href="#tab-by-date" class="nav-link" data-bs-toggle="tab"
+                                            aria-selected="true" role="tab">
+                                            <svg xmlns="http://www.w3.org/2000/svg" style="margin-right:5px"
+                                                width="24" height="24" viewBox="0 0 24 24" fill="none"
+                                                stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                                                stroke-linejoin="round"
+                                                class="icon icon-tabler icons-tabler-outline icon-tabler-calendar-month text-pink">
                                                 <path stroke="none" d="M0 0h24v24H0z" fill="none" />
                                                 <path
                                                     d="M4 7a2 2 0 0 1 2 -2h12a2 2 0 0 1 2 2v12a2 2 0 0 1 -2 2h-12a2 2 0 0 1 -2 -2v-12z" />
@@ -219,7 +238,7 @@
                                             <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24"
                                                 viewBox="0 0 24 24" fill="none" stroke="currentColor"
                                                 stroke-width="2" stroke-linecap="round" stroke-linejoin="round"
-                                                class="icon icon-tabler icons-tabler-outline icon-tabler-search">
+                                                class="icon icon-tabler icons-tabler-outline icon-tabler-search text-teal">
                                                 <path stroke="none" d="M0 0h24v24H0z" fill="none" />
                                                 <path d="M10 10m-7 0a7 7 0 1 0 14 0a7 7 0 1 0 -14 0" />
                                                 <path d="M21 21l-6 -6" />
@@ -234,6 +253,11 @@
                                     <div class="tab-pane active show" id="tab-list-komunikasi" role="tabpanel">
                                         <table style="width: 100%"
                                             class="table table-striped table-bordered table-hover text-nowrap datatable-list-komunikasi">
+                                        </table>
+                                    </div>
+                                    <div class="tab-pane" id="tab-acc-komunikasi" role="tabpanel">
+                                        <table style="width: 100%"
+                                            class="table table-striped table-bordered table-hover text-nowrap datatable-acc-komunikasi">
                                         </table>
                                     </div>
                                     <div class="tab-pane" id="tab-create-new" role="tabpanel">
@@ -437,7 +461,7 @@
                                                                             <div class="mb-3">
                                                                                 <label class="form-label">Tanggal
                                                                                     Formulir</label>
-                                                                                <input type="date"
+                                                                                <input type="text" id="datepicker2"
                                                                                     class="form-control shadow rounded"
                                                                                     name="tanggalform"
                                                                                     style="border-color: black"
@@ -701,6 +725,28 @@
             </div>
         </div>
     </div>
+    <div class="modal modal-blur fade" id="myModalCheck" tabindex="-1" style="display: none;" aria-hidden="true">
+        <div class="overlay">
+            <div class="loader">
+                <span class="spinner spinner1"></span>
+                <span class="spinner spinner2"></span>
+                <span class="spinner spinner3"></span>
+                <br>
+                <span class="loader-text">MEMUAT DATA</span>
+            </div>
+        </div>
+        <div class="modal-dialog modal-xl modal-dialog-centered" role="document">
+            <div class="modal-content">
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                <div class="modal-status bg-success"></div>
+                <form method="POST" action="storeAcc">
+                    @csrf
+                    <input type="hidden" name="_token" value="{{ csrf_token() }}" />
+                    <div class="resultChecklist"></div>
+                </form>
+            </div>
+        </div>
+    </div>
     <script>
         $(function() {
             var tableKaryawan = $('.datatable-karyawan').DataTable({
@@ -773,9 +819,30 @@
                     [10, 25, 35, 40, 50, -1],
                     ['10', '25', '35', '40', '50', 'Tampilkan Semua']
                 ],
-                "dom": "<'card-body border-bottom py-3' <'row'<'col-sm-6'l><'col-sm-6'f>> >" +
+                "dom": "<'card-header h3' B>" +
+                    "<'card-body border-bottom py-3' <'row'<'col-sm-6'l><'col-sm-6'f>> >" +
                     "<'table-responsive' <'col-sm-12'tr> >" +
                     "<'card-footer' <'row'<'col-sm-8'i><'col-sm-4'p> >>",
+                buttons: [
+
+                    {
+                        text: '<i class="fa-solid fa-filter" style="margin-right:5px"></i>',
+                        className: 'btn btn-blue',
+                        attr: {
+                            'href': '#offcanvasEnd-lamaran',
+                            'data-bs-toggle': 'offcanvas',
+                            'role': 'button',
+                            'aria-controls': 'offcanvasEnd',
+                        }
+                    },
+                    {
+                        extend: 'excelHtml5',
+                        autoFilter: true,
+                        className: 'btn btn-cyan',
+                        text: '<i class="fa fa-file-excel text-white" style="margin-right:5px"></i>',
+                        action: newexportaction,
+                    },
+                ],
                 "language": {
                     "lengthMenu": "Menampilkan _MENU_",
                     "zeroRecords": "Data Tidak Ditemukan",
@@ -846,6 +913,143 @@
                     },
                 ],
 
+            });
+
+            var tableAccKomunikasi = $('.datatable-acc-komunikasi').DataTable({
+                "processing": true, //Feature control the processing indicator.
+                "serverSide": false, //Feature control DataTables' server-side processing mode.
+                "scrollX": false,
+                "scrollCollapse": true,
+                "pagingType": 'full_numbers',
+                "lengthMenu": [
+                    [10, 25, 35, 40, 50, -1],
+                    ['10', '25', '35', '40', '50', 'Tampilkan Semua']
+                ],
+
+                "dom": "<'card-header h3' B>" +
+                    "<'card-body border-bottom py-3' <'row'<'col-sm-6'l><'col-sm-6'f>> >" +
+                    "<'table-responsive' <'col-sm-12'tr> >" +
+                    "<'card-footer' <'row'<'col-sm-8'i><'col-sm-4'p> >>",
+                buttons: [
+
+                    {
+                        text: '<i class="fa-solid fa-filter" style="margin-right:5px"></i>',
+                        className: 'btn btn-blue',
+                        attr: {
+                            'href': '#offcanvasEnd-lamaran',
+                            'data-bs-toggle': 'offcanvas',
+                            'role': 'button',
+                            'aria-controls': 'offcanvasEnd',
+                        }
+                    },
+                    {
+                        extend: 'excelHtml5',
+                        autoFilter: true,
+                        className: 'btn btn-cyan',
+                        text: '<i class="fa fa-file-excel text-white" style="margin-right:5px"></i>',
+                        action: newexportaction,
+                    },
+                    {
+                        className: 'btn btn-green',
+                        text: '<i class="fa-solid fa-check"></i>',
+                        action: function(e, node, config) {
+                            $('#myModalCheck').modal('show')
+                        }
+                    },
+                    {
+                        className: 'btn btn-red',
+                        text: '<i class="fa-solid fa-ban"></i>',
+                        action: function(e, node, config) {
+                            $('#myModalBan').modal('show')
+                        }
+                    },
+                ],
+                "language": {
+                    "lengthMenu": "Menampilkan _MENU_",
+                    "zeroRecords": "Data Tidak Ditemukan",
+                    "info": "Menampilkan _START_ sampai _END_ dari _TOTAL_ total data",
+                    "infoEmpty": "Data Tidak Ditemukan",
+                    "infoFiltered": "(Difilter dari _MAX_ total records)",
+                    "processing": '<div class="container container-slim py-4"><div class="text-center"><div class="mb-3"></div><div class="text-secondary mb-3">Loading Data...</div><div class="progress progress-sm"><div class="progress-bar progress-bar-indeterminate"></div></div></div></div>',
+                    "search": '<svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-search" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z" fill="none"></path><path d="M10 10m-7 0a7 7 0 1 0 14 0a7 7 0 1 0 -14 0"></path><path d="M21 21l-6 -6"></path></svg>',
+                    "paginate": {
+                        "first": '<svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-chevron-left-pipe" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z" fill="none"></path><path d="M7 6v12"></path><path d="M18 6l-6 6l6 6"></path></svg>',
+                        "last": '<svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-chevron-right-pipe" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z" fill="none"></path><path d="M6 6l6 6l-6 6"></path><path d="M17 5v13"></path></svg>',
+                        "next": '<svg xmlns="http://www.w3.org/2000/svg" class="icon" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z" fill="none"></path><path d="M9 6l6 6l-6 6"></path></svg>',
+                        "previous": '<svg xmlns="http://www.w3.org/2000/svg" class="icon" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z" fill="none"></path><path d="M15 6l-6 6l6 6"></path></svg>',
+                    },
+                    "select": {
+                        rows: {
+                            _: "%d kandidat dipilih",
+                            0: "Pilih item dan tekan tombol Proses data untuk memproses Acc",
+                        }
+                    },
+                },
+                ajax: "{{ route('getAccKomunikasi.index') }}",
+                autoWidth: false,
+                select: {
+                    'style': 'multi',
+                },
+                columnDefs: [{
+                        'targets': 0,
+                        // "orderable": false,
+                        'className': 'select-checkbox',
+                        'checkboxes': {
+                            'selectRow': true
+                        },
+                    }
+
+                ],
+                columns: [{
+                        data: 'select_orders',
+                        name: 'select_orders',
+                        className: 'cuspad2',
+                        orderable: false,
+                        searchable: false,
+                    },
+                    {
+                        title: 'Noform',
+                        data: 'noform',
+                        name: 'noform',
+                        // className: 'cuspad0'
+                    },
+                    {
+                        title: 'Tanggal',
+                        data: 'tanggal',
+                        name: 'tanggal',
+                        // className: 'cuspad0 text-center'
+                    },
+                    {
+                        title: 'Nama',
+                        data: 'nama',
+                        name: 'nama',
+                        // className: 'cuspad0 text-center'
+                    },
+                    {
+                        title: 'Surat',
+                        data: 'suratid',
+                        name: 'suratid',
+                        // className: 'cuspad0 text-center'
+                    },
+                    {
+                        title: 'Status',
+                        data: 'sst',
+                        name: 'sst',
+                        // className: 'cuspad0 text-center'
+                    },
+                    {
+                        title: 'Keterangan',
+                        data: 'keterangan',
+                        name: 'keterangan',
+                        // className: 'cuspad0 text-center'
+                    },
+                    {
+                        title: 'Status Surat',
+                        data: 'statussurat',
+                        name: 'statussurat',
+                        // className: 'cuspad0 text-center'
+                    },
+                ],
             });
 
             if ($("#formKomunikasi").length > 0) {
@@ -933,6 +1137,41 @@
                     }
                 })
             }
+
+            $('#myModalCheck').on('show.bs.modal', function(e) {
+                $(".overlay").fadeIn(300);
+                itemTables = [];
+                // console.log(count);
+
+                $.each(tableAccKomunikasi.rows('.selected').nodes(), function(index, rowId) {
+                    var rows_selected = tableAccKomunikasi.rows('.selected').data();
+                    itemTables.push(rows_selected[index]['id']);
+                });
+                console.log(itemTables);
+
+                $.ajaxSetup({
+                    headers: {
+                        'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                    }
+                });
+                //menggunakan fungsi ajax untuk pengambilan data
+                $.ajax({
+                    type: 'POST',
+                    url: '{{ url('checkAccKomunikasi') }}',
+                    data: {
+                        "_token": "{{ csrf_token() }}",
+                        id: itemTables,
+                        jml: itemTables.length,
+                    },
+                    success: function(data) {
+                        $('.resultChecklist').html(data);
+                    }
+                }).done(function() {
+                    setTimeout(function() {
+                        $(".overlay").fadeOut(300);
+                    }, 500);
+                });
+            });
         });
 
         function newexportaction(e, dt, button, config) {

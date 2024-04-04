@@ -26,6 +26,7 @@ use App\Http\Controllers\Datatables\DataTarifLembur;
 use App\Http\Controllers\Datatables\DataAbsensiLocal;
 use App\Http\Controllers\Datatables\DataFixedAbsensi;
 use App\Http\Controllers\Datatables\DataUserinfoODBC;
+use App\Http\Controllers\Datatables\DataACCKomunikasi;
 use App\Http\Controllers\Datatables\DataUserinfoMYSQL;
 use SebastianBergmann\CodeCoverage\Report\Html\Dashboard;
 use App\Http\Controllers\Datatables\DataLegalitasKaryawan;
@@ -73,6 +74,7 @@ Route::resources([
     'getshift' => DataShift::class,
     'getentitas' => DataEntitas::class,
     'getListKomunikasi' => DataKomunikasi::class,
+    'getAccKomunikasi' => DataACCKomunikasi::class,
 ]);
 
 
@@ -160,6 +162,8 @@ Route::controller(Absensi::class)->group(function () {
     Route::post('storedataKomunikasi', 'storeKomunikasi');
 
     Route::get('absensi/komunikasi/printKomunikasi/{id}', 'printSurat')->name('absensi/komunikasi/printKomunikasi/{id}');
+    Route::post('checkAccKomunikasi', 'checkAccKomunikasi');
+    Route::post('absensi/storeAcc', 'storeKomunikasiAcc')->name('absensi/storeAcc');
 });
 
 Route::controller(DBLokal::class)->group(function () {

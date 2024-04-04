@@ -747,6 +747,7 @@ class DBLokal extends Controller
                             ->update(
                                 array(
                                     'sst' => 'L',
+                                    'raw_sst' => 'L',
                                 )
                             );
                     } elseif ($f->hrlibur == strtoupper($hari_ini) && $f->in == null) {
@@ -767,6 +768,7 @@ class DBLokal extends Controller
                             ->update(
                                 array(
                                     'sst' => 'L',
+                                    'raw_sst' => 'L',
                                 )
                             );
                     } elseif ($f->hrlibur == strtoupper($hari_ini) && $f->out == null) {
@@ -787,6 +789,7 @@ class DBLokal extends Controller
                             ->update(
                                 array(
                                     'sst' => 'L',
+                                    'raw_sst' => 'L',
                                 )
                             );
                     } elseif ($f->in == null && $f->out == null) {
@@ -806,6 +809,7 @@ class DBLokal extends Controller
                             ->update(
                                 array(
                                     'sst' => 'A',
+                                    'raw_sst' => 'A',
                                 )
                             );
                     } elseif ($f->in == null || $f->out == null) {
@@ -825,6 +829,7 @@ class DBLokal extends Controller
                             ->update(
                                 array(
                                     'sst' => 'F1',
+                                    'raw_sst' => 'F1',
                                 )
                             );
                     } elseif ($f->in != null && $f->out != null) {
@@ -846,6 +851,7 @@ class DBLokal extends Controller
                                 ->update(
                                     array(
                                         'sst' => 'L',
+                                        'raw_sst' => 'L',
                                     )
                                 );
                         } elseif ($difference <= 4) {
@@ -866,6 +872,7 @@ class DBLokal extends Controller
                                 ->update(
                                     array(
                                         'sst' => 'F2',
+                                        'raw_sst' => 'F2',
                                     )
                                 );
                         } elseif ($difference <= 7) {
@@ -883,6 +890,7 @@ class DBLokal extends Controller
                                     ->update(
                                         array(
                                             'sst' => 'H',
+                                            'raw_sst' => 'H',
                                         )
                                     );
                             } else {
@@ -898,6 +906,7 @@ class DBLokal extends Controller
                                     ->update(
                                         array(
                                             'sst' => '½',
+                                            'raw_sst' => '½',
                                         )
                                     );
                             }
@@ -919,6 +928,7 @@ class DBLokal extends Controller
                                 ->update(
                                     array(
                                         'sst' => 'H',
+                                        'raw_sst' => 'H',
                                     )
                                 );
                         }
@@ -1164,6 +1174,7 @@ class DBLokal extends Controller
                             ->update(
                                 array(
                                     'sst' => 'L',
+                                    'raw_sst' => 'L',
                                 )
                             );
                     } elseif (
@@ -1186,6 +1197,7 @@ class DBLokal extends Controller
                             ->update(
                                 array(
                                     'sst' => 'L',
+                                    'raw_sst' => 'L',
                                 )
                             );
                     } elseif ($f->hrlibur == strtoupper($hari_ini) && $f->out == null) {
@@ -1206,6 +1218,7 @@ class DBLokal extends Controller
                             ->update(
                                 array(
                                     'sst' => 'L',
+                                    'raw_sst' => 'L',
                                 )
                             );
                     } elseif ($f->in == null && $f->out == null) {
@@ -1225,6 +1238,7 @@ class DBLokal extends Controller
                             ->update(
                                 array(
                                     'sst' => 'A',
+                                    'raw_sst' => 'A',
                                 )
                             );
                     } elseif ($f->in == null || $f->out == null) {
@@ -1244,6 +1258,7 @@ class DBLokal extends Controller
                             ->update(
                                 array(
                                     'sst' => 'F1',
+                                    'raw_sst' => 'F1',
                                 )
                             );
                     } elseif ($f->in != null && $f->out != null) {
@@ -1265,6 +1280,7 @@ class DBLokal extends Controller
                                 ->update(
                                     array(
                                         'sst' => 'L',
+                                        'raw_sst' => 'L',
                                     )
                                 );
                         } elseif ($difference <= 4) {
@@ -1285,6 +1301,7 @@ class DBLokal extends Controller
                                 ->update(
                                     array(
                                         'sst' => 'F2',
+                                        'raw_sst' => 'F2',
                                     )
                                 );
                         } elseif ($difference <= 7) {
@@ -1302,6 +1319,7 @@ class DBLokal extends Controller
                                     ->update(
                                         array(
                                             'sst' => 'H',
+                                            'raw_sst' => 'H',
                                         )
                                     );
                             } else {
@@ -1317,6 +1335,7 @@ class DBLokal extends Controller
                                     ->update(
                                         array(
                                             'sst' => '½',
+                                            'raw_sst' => '½',
                                         )
                                     );
                             }
@@ -1338,6 +1357,7 @@ class DBLokal extends Controller
                                 ->update(
                                     array(
                                         'sst' => 'H',
+                                        'raw_sst' => 'H',
                                     )
                                 );
                         }
@@ -1567,6 +1587,7 @@ class DBLokal extends Controller
                                 'hrlibur' => $value->hrlibur,
                                 'sethari' => $value->sethari,
                                 'sst' => $value->sst,
+                                'raw_sst' => $value->raw_sst,
                                 'remember_token' => $value->remember_token,
                                 'created_at' => $value->created_at,
                             )
@@ -1596,6 +1617,7 @@ class DBLokal extends Controller
                                 'hrlibur' => $value->hrlibur,
                                 'sethari' => $value->sethari,
                                 'sst' => $value->sst,
+                                'raw_sst' => $value->raw_sst,
                                 'remember_token' => $value->remember_token,
                                 'created_at' => $value->created_at,
                             ]
@@ -1724,6 +1746,7 @@ class DBLokal extends Controller
                             ->update(
                                 array(
                                     'sst' => 'L',
+                                    'raw_sst' => 'L',
                                 )
                             );
                     } elseif ($f->hrlibur == strtoupper($hari_ini) && $f->in == null) {
@@ -1744,6 +1767,7 @@ class DBLokal extends Controller
                             ->update(
                                 array(
                                     'sst' => 'L',
+                                    'raw_sst' => 'L',
                                 )
                             );
                     } elseif ($f->hrlibur == strtoupper($hari_ini) && $f->out == null) {
@@ -1764,6 +1788,7 @@ class DBLokal extends Controller
                             ->update(
                                 array(
                                     'sst' => 'L',
+                                    'raw_sst' => 'L',
                                 )
                             );
                     } elseif ($f->in == null && $f->out == null) {
@@ -1783,6 +1808,7 @@ class DBLokal extends Controller
                             ->update(
                                 array(
                                     'sst' => 'A',
+                                    'raw_sst' => 'A',
                                 )
                             );
                     } elseif ($f->in == null || $f->out == null) {
@@ -1802,6 +1828,7 @@ class DBLokal extends Controller
                             ->update(
                                 array(
                                     'sst' => 'F1',
+                                    'raw_sst' => 'F1',
                                 )
                             );
                     } elseif ($f->in != null && $f->out != null) {
@@ -1823,6 +1850,7 @@ class DBLokal extends Controller
                                 ->update(
                                     array(
                                         'sst' => 'L',
+                                        'raw_sst' => 'L',
                                     )
                                 );
                         } elseif ($difference <= 4) {
@@ -1843,6 +1871,7 @@ class DBLokal extends Controller
                                 ->update(
                                     array(
                                         'sst' => 'F2',
+                                        'raw_sst' => 'F2',
                                     )
                                 );
                         } elseif ($difference <= 7) {
@@ -1860,6 +1889,7 @@ class DBLokal extends Controller
                                     ->update(
                                         array(
                                             'sst' => 'H',
+                                            'raw_sst' => 'H',
                                         )
                                     );
                             } else {
@@ -1875,6 +1905,7 @@ class DBLokal extends Controller
                                     ->update(
                                         array(
                                             'sst' => '½',
+                                            'raw_sst' => '½',
                                         )
                                     );
                             }
@@ -1896,6 +1927,7 @@ class DBLokal extends Controller
                                 ->update(
                                     array(
                                         'sst' => 'H',
+                                        'raw_sst' => 'H',
                                     )
                                 );
                         }
@@ -2141,6 +2173,7 @@ class DBLokal extends Controller
                             ->update(
                                 array(
                                     'sst' => 'L',
+                                    'raw_sst' => 'L',
                                 )
                             );
                     } elseif (
@@ -2163,6 +2196,7 @@ class DBLokal extends Controller
                             ->update(
                                 array(
                                     'sst' => 'L',
+                                    'raw_sst' => 'L',
                                 )
                             );
                     } elseif ($f->hrlibur == strtoupper($hari_ini) && $f->out == null) {
@@ -2183,6 +2217,7 @@ class DBLokal extends Controller
                             ->update(
                                 array(
                                     'sst' => 'L',
+                                    'raw_sst' => 'L',
                                 )
                             );
                     } elseif ($f->in == null && $f->out == null) {
@@ -2202,6 +2237,7 @@ class DBLokal extends Controller
                             ->update(
                                 array(
                                     'sst' => 'A',
+                                    'raw_sst' => 'A',
                                 )
                             );
                     } elseif ($f->in == null || $f->out == null) {
@@ -2221,6 +2257,7 @@ class DBLokal extends Controller
                             ->update(
                                 array(
                                     'sst' => 'F1',
+                                    'raw_sst' => 'F1',
                                 )
                             );
                     } elseif ($f->in != null && $f->out != null) {
@@ -2242,6 +2279,7 @@ class DBLokal extends Controller
                                 ->update(
                                     array(
                                         'sst' => 'L',
+                                        'raw_sst' => 'L',
                                     )
                                 );
                         } elseif ($difference <= 4) {
@@ -2262,6 +2300,7 @@ class DBLokal extends Controller
                                 ->update(
                                     array(
                                         'sst' => 'F2',
+                                        'raw_sst' => 'F2',
                                     )
                                 );
                         } elseif ($difference <= 7) {
@@ -2279,6 +2318,7 @@ class DBLokal extends Controller
                                     ->update(
                                         array(
                                             'sst' => 'H',
+                                            'raw_sst' => 'H',
                                         )
                                     );
                             } else {
@@ -2294,6 +2334,7 @@ class DBLokal extends Controller
                                     ->update(
                                         array(
                                             'sst' => '½',
+                                            'raw_sst' => '½',
                                         )
                                     );
                             }
@@ -2315,6 +2356,7 @@ class DBLokal extends Controller
                                 ->update(
                                     array(
                                         'sst' => 'H',
+                                        'raw_sst' => 'H',
                                     )
                                 );
                         }
@@ -2505,6 +2547,7 @@ class DBLokal extends Controller
                                 'hrlibur' => $value->hrlibur,
                                 'sethari' => $value->sethari,
                                 'sst' => $value->sst,
+                                'raw_sst' => $value->raw_sst,
                                 'remember_token' => $value->remember_token,
                                 'created_at' => $value->created_at,
                             )
@@ -2534,6 +2577,7 @@ class DBLokal extends Controller
                                 'hrlibur' => $value->hrlibur,
                                 'sethari' => $value->sethari,
                                 'sst' => $value->sst,
+                                'raw_sst' => $value->raw_sst,
                                 'remember_token' => $value->remember_token,
                                 'created_at' => $value->created_at,
                             ]

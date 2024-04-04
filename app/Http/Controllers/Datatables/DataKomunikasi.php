@@ -30,9 +30,6 @@ class DataKomunikasi extends Controller
                 ->get();
             return DataTables::of($data)
                 ->addIndexColumn()
-                // ->editColumn('select_orders', function ($row) {
-                //     return '';
-                // })
 
                 ->addColumn('tanggal', function ($row) {
                     $tgl = Carbon::parse($row->tanggal)->format('d/m/Y');
@@ -49,9 +46,14 @@ class DataKomunikasi extends Controller
                 })
 
                 ->addColumn('action', function ($row) {
-                    $btn = ' <a href="komunikasi/printKomunikasi/' . $row->noform . '" data-toggle="tooltip" data-placement="top" title="Print Surat Komunikasi" data-id="' . $row->id . '" class="btn btn-sm btn-info btn-icon"><i class="fa-solid fa-print"></i></a>';
-                    $btn = $btn . ' <a href="javascript:void(0)" data-toggle="tooltip" data-placement="top" title="Hapus Karyawan" data-noform="' . $row->id . '" data-id="' . $row->id . '" class="btn btn-sm btn-red btn-icon deleteKaryawan"><i class="fa-solid fa-trash-can"></i></a>';
-                    return $btn;
+                    if ($row->statussurat == "PENGAJUAN") {
+                        $btn = ' <a href="komunikasi/printKomunikasi/' . $row->noform . '" target="_blank" data-toggle="tooltip" data-placement="top" title="Print Surat Komunikasi" data-id="' . $row->id . '" class="btn btn-sm btn-info btn-icon"><i class="fa-solid fa-print"></i></a>';
+                        $btn = $btn . ' <a href="javascript:void(0)" data-toggle="tooltip" data-placement="top" title="Hapus Karyawan" data-noform="' . $row->id . '" data-id="' . $row->id . '" class="btn btn-sm btn-red btn-icon deleteKaryawan"><i class="fa-solid fa-trash-can"></i></a>';
+                        return $btn;
+                    } else {
+                        $btn = ' <a href="komunikasi/printKomunikasi/' . $row->noform . '" target="_blank" data-toggle="tooltip" data-placement="top" title="Print Surat Komunikasi" data-id="' . $row->id . '" class="btn btn-sm btn-info btn-icon"><i class="fa-solid fa-print"></i></a>';
+                        return $btn;
+                    }
                 })
                 ->rawColumns(['action', 'statussurat'])
                 ->make(true);

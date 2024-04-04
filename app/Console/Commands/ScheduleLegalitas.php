@@ -22,7 +22,7 @@ class ScheduleLegalitas extends Command
      *
      * @var string
      */
-    protected $description = 'Command description';
+    protected $description = 'Command ini akan menjalankan legalitas';
 
     /**
      * Execute the console command.
