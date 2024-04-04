@@ -383,16 +383,19 @@ class Absensi extends Controller
                                 </thead>
                                 ';
             foreach ($absensi as $key) {
+                $setIn = !empty($key->in) ? Carbon::parse($key->in)->format('H:i:s') : '';
+                $setout = !empty($key->out) ? Carbon::parse($key->out)->format('H:i:s') : '';
+                $sstnm = $key->sst == 'A' ? 'text-red' : '';
                 echo '
                                 <tr class="text-center">
                                     <td>' . $key->tanggal . '</td>
                                     <td>' . strtoupper(Carbon::parse($key->tanggal)->formatLocalized('%A')) . '</td>
-                                    <td>' . Carbon::parse($key->in)->format('H:i:s') . '</td>
-                                    <td>' . Carbon::parse($key->out)->format('H:i:s') . '</td>
+                                    <td>' . $setIn . '</td>
+                                    <td>' . $setout . '</td>
                                     <td>' . $key->qj . '</td>
                                     <td>' . $key->jis . '</td>
                                     <td>' . $key->qjnet . '</td>
-                                    <td>' . $key->sst . '</td>
+                                    <td class="' . $sstnm . '">' . $key->sst . '</td>
                                 </tr>';
             }
             echo '

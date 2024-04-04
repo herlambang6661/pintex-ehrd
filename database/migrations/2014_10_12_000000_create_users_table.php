@@ -16,9 +16,10 @@ return new class extends Migration
             $table->string('name');
             $table->string('username');
             $table->string('password');
-            $table->string('role');
+            $table->string('role'); // ADMIN, HRD, OPERATOR
             $table->string('phone')->nullable();
             $table->string('email')->nullable();
+            $table->string('admin')->nullable(); // ALL, SATU, DUA, GUDANG, TFI
             $table->rememberToken();
             $table->timestamps();
         });
