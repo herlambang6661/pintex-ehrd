@@ -22,6 +22,7 @@ return new class extends Migration
             $table->string('gender');
             $table->string('tempat');
             $table->date('tgllahir');
+            $table->string('sekolah')->nullable();
             $table->string('pendidikan');
             $table->string('jurusan')->nullable();
             $table->longText('alamat')->nullable();

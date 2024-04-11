@@ -362,7 +362,7 @@ class Penerimaan extends Controller
                 <div class="col-4">
                     <div class="card">
                         <div class="card-header">
-                            DATA DIRI
+                            <strong>Data Diri</strong>
                         </div>
                         <div class="table-responsive">
                             <table class="table table-vcenter card-table table-striped">
@@ -415,7 +415,7 @@ class Penerimaan extends Controller
                 <div class="col-4">
                     <div class="card">
                         <div class="card-header">
-                            Riwayat Pendidikan
+                            <strong>Riwayat Pendidikan</strong>
                         </div>
                         <div class="table-responsive">
                             <table class="table table-vcenter card-table table-striped">
@@ -423,22 +423,17 @@ class Penerimaan extends Controller
                                     <tr>
                                         <td>Asal Sekolah</td>
                                         <td class="text-secondary">:</td>
-                                        <td class="text-secondary">' . $l->nik . '</td>
+                                        <td class="text-secondary">' . $l->pendidikan . '</td>
                                     </tr>
                                     <tr>
                                         <td>Pendidikan</td>
                                         <td class="text-secondary">:</td>
-                                        <td class="text-secondary">' . $l->nama . '</td>
+                                        <td class="text-secondary">' . $l->pendidikan . '</td>
                                     </tr>
                                     <tr>
                                         <td>Jurusan</td>
                                         <td class="text-secondary">:</td>
-                                        <td class="text-secondary">' . $l->gender . '</td>
-                                    </tr>
-                                    <tr>
-                                        <td>Tempat, Tanggal Lahir</td>
-                                        <td class="text-secondary">:</td>
-                                        <td class="text-secondary">' . $l->tempat . ', ' . Carbon::parse($l->tgllahir)->format('d/m/Y') . '</td>
+                                        <td class="text-secondary">' . $l->jurusan . '</td>
                                     </tr>
                                 </tbody>
                             </table>
@@ -450,7 +445,7 @@ class Penerimaan extends Controller
                         <div class="col-12 mb-3">
                             <div class="card">
                                 <div class="card-header">
-                                    Kontak yang dapat dihubungi
+                                    <strong>Kontak yang dapat dihubungi</strong>
                                 </div>
                                 <div class="table-responsive">
                                     <table class="table table-vcenter card-table table-striped">
@@ -458,18 +453,17 @@ class Penerimaan extends Controller
                                             <tr>
                                                 <td>No Tlp / Whatsapp</td>
                                                 <td class="text-secondary">:</td>
-                                                <td class="text-secondary">' . $l->nik . '</td>
+                                                <td class="text-secondary">' . $l->notlp . '</td>
                                             </tr>
                                             <tr>
                                                 <td>Email</td>
                                                 <td class="text-secondary">:</td>
-                                                <td class="text-secondary">' . $l->nama . '</td>
+                                                <td class="text-secondary">' . $l->email . '</td>
                                             </tr>
                                         </tbody>
                                     </table>
                                 </div>
                             </div>
-                            
                         </div>
                         <div class="col-12">
                             <div class="card">
