@@ -1,11 +1,29 @@
 # E-HRD Online PT Plumbon International Textile
 
-## Module
-### Daftar :
--
-### Penerimaan :
+## Module on this Applications
+### Daftar
+- Pos Pekerjaan
+- Tarif Lembur
+- Hari Libur Nasional
+- Surat-surat
+- Jadwal Shift
+- Daftar Entitas
+### Penerimaan
+- Lamaran
+- Wawancara
+- Karyawan
+- Legalitas
+### Absensi
+- List Absensi
+- Surat Komunikasi
+- Aktivitas Cuti
+### Administrasi (On Progress)
+### Database
+- Schedule Job
+- Logs
+- Pengguna Aplikasi
 
-# This Application Using :
+## This Application Using :
 
 <p align="center"><a href="https://laravel.com" target="_blank"><img src="https://raw.githubusercontent.com/laravel/art/master/logo-lockup/5%20SVG/2%20CMYK/1%20Full%20Color/laravel-logolockup-cmyk-red.svg" width="400" alt="Laravel Logo"></a></p>
 
