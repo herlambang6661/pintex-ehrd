@@ -223,7 +223,7 @@
                         </span>
                     </a>
                 </li>
-                <li class="nav-item dropdown">
+                <li class="nav-item dropdown {{ !empty($daftar) ? $daftar : '' }}">
                     <a class="nav-link dropdown-toggle" href="#navbar-base" data-bs-toggle="dropdown"
                         data-bs-auto-close="false" role="button" aria-expanded="false">
                         <span
@@ -243,7 +243,7 @@
                             Daftar
                         </span>
                     </a>
-                    <div class="dropdown-menu">
+                    <div class="dropdown-menu {{ !empty($daftar) ? 'show' : '' }}">
                         <div class="dropdown-menu-columns">
                             <div class="dropdown-menu-column">
                                 <a class="dropdown-item" href="{{ url('daftar/pos') }}">
@@ -342,7 +342,8 @@
                                     </svg>
                                     Users
                                 </a>
-                                <a class="dropdown-item" href="{{ url('daftar/loker') }}">
+                                <a class="dropdown-item {{ !empty($loker) ? $loker : '' }}"
+                                    href="{{ url('daftar/loker') }}">
                                     <svg xmlns="http://www.w3.org/2000/svg" style="margin-right: 10px" width="24"
                                         height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor"
                                         stroke-width="2" stroke-linecap="round" stroke-linejoin="round"

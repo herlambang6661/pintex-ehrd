@@ -54,7 +54,7 @@ Route::get('/', function () {
     }
 });
 
-// Source untuk datatables
+// Modules Source untuk datatables
 Route::resources([
     'getSurat' => DataSurat::class,
     'getPos'    => DataPos::class,
@@ -77,7 +77,7 @@ Route::resources([
     'getAccKomunikasi' => DataACCKomunikasi::class,
 ]);
 
-
+// Modules Auth
 Route::controller(AuthController::class)->group(function () {
     Route::get('login', 'index')->name('login');
     Route::post('post-login', 'postLogin')->name('login.post');
@@ -87,6 +87,7 @@ Route::controller(AuthController::class)->group(function () {
     Route::get('logout', 'logout')->name('logout');
 });
 
+// Modules Daftar
 Route::controller(Daftar::class)->group(function () {
 
     //Routes Pos Pekerjaan DONE
@@ -124,8 +125,13 @@ Route::controller(Daftar::class)->group(function () {
     Route::post('detail/entitas', 'viewentitas');
     Route::post('storedataEntitas', 'storeentitas');
     Route::post('update/entitas', 'updateentitas');
+
+    // Routes Lowongan Pekerjaan
+    Route::get('daftar/loker', 'loker');
+    Route::post('storeDataLoker', 'storeLoker');
 });
 
+// Modules Penerimaan
 Route::controller(Penerimaan::class)->group(function () {
     Route::get('penerimaan/lamaran', 'lamaran')->name('penerimaan/lamaran');
     Route::post('listLamaran', 'listLamaran');
@@ -148,6 +154,7 @@ Route::controller(Penerimaan::class)->group(function () {
     Route::post('storedataLegalitas', 'storedataLegalitas');
 });
 
+// Modules Absensi
 Route::controller(Absensi::class)->group(function () {
 
     Route::get('absensi/absensi', 'absensi')->name('absensi/absensi');
@@ -166,6 +173,7 @@ Route::controller(Absensi::class)->group(function () {
     Route::post('absensi/storeAcc', 'storeKomunikasiAcc')->name('absensi/storeAcc');
 });
 
+// Modules Penarikan Data Mesin Fingerprint
 Route::controller(DBLokal::class)->group(function () {
     Route::get('lokal/mesinfinger', 'mesinfinger')->name('lokal/mesinfinger');
     Route::get('lokal/daftarfinger', 'daftarfinger')->name('lokal/daftarfinger');
@@ -181,6 +189,7 @@ Route::controller(DBLokal::class)->group(function () {
     Route::post('UploadFixedAbsen', 'UploadFixedAbsen');
 });
 
+// Modules Administrasi
 Route::controller(Administrasi::class)->group(function () {
     Route::get('administrasi/payroll', 'payroll')->name('administrasi/payroll');
     Route::get('administrasi/terlambat', 'terlambat')->name('administrasi/terlambat');
@@ -189,6 +198,7 @@ Route::controller(Administrasi::class)->group(function () {
     Route::get('administrasi/lembur', 'lembur')->name('administrasi/lembur');
 });
 
+// Modules Database
 Route::controller(Database::class)->group(function () {
     Route::get('database/lokasi', 'lokasi')->name('database/lokasi');
     Route::get('database/sink', 'sink')->name('database/sink');
