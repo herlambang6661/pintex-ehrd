@@ -145,6 +145,7 @@ Route::controller(Penerimaan::class)->group(function () {
     Route::post('checkLamaran', 'checkLamaran');
     Route::post('storeChecklistLamaran', 'storeChecklistLamaran');
     Route::post('cancelWawancara', 'cancelWawancara');
+    Route::post('prosesWawancara', 'prosesWawancara');
     Route::post('checkWawancara', 'checkWawancara');
     Route::post('checkWawancaraX', 'checkWawancaraX');
     Route::post('storeChecklistWawancara', 'storeChecklistWawancara');

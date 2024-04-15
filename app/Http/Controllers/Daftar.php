@@ -357,8 +357,8 @@ class Daftar extends Controller
         $libur = "active";
         return view('products.01_daftar.hari_libur_nasional', [
             'judul' => $judul,
-            'Harilibur' => $Harilibur,
-            'libur' => $libur
+            'daftar' => $Harilibur,
+            'libur' => $libur,
         ]);
     }
 

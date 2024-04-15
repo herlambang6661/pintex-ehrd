@@ -533,6 +533,109 @@ class Penerimaan extends Controller
         return Response()->json($arr);
     }
 
+    public function prosesWawancara(Request $request)
+    {
+        if (empty($request->id)) {
+            echo '<center><iframe src="https://lottie.host/embed/94d605b9-2cc4-4d11-809a-7f41357109b0/OzwBgj9bHl.json" width="300px" height="300px"></iframe></center>';
+            echo "<center>Tidak ada data yang dipilih</center>";
+        } else {
+            $jml = count($request->id);
+            echo '<div class="row">
+                    <div class="col-lg-4 col-md-12">
+                        <div class="mb-3">
+                            <label class="form-label">Tanggal Pelaksanaan Wawancara</label>
+                            <input type="date" class="form-control" name="tglwawancara" value="' . date("Y-m-d") . '">
+                        </div>
+                    </div>
+                </div>';
+            echo '<div class="row row-cards text-center">
+                    <div class="col-lg-12">
+                        <div class="card">
+                        <div class="table-responsive">
+                            <table class="table table-vcenter card-table">
+                            <thead class="text-center">
+                                <tr>
+                                    <th>Nama</th>
+                                    <th class="w-1">Tinggi</th>
+                                    <th class="w-1">Berat</th>
+                                    <th>Opsi Cepat</th>
+                                    <th class="w-1">Buta Warna</th>
+                                    <th class="w-1">Mata Minus</th>
+                                    <th class="w-1">Bersikap Baik</th>
+                                    <th class="w-1">Jalan Cepat</th>
+                                    <th class="w-1"></th>
+                                </tr>
+                            </thead>
+                            <tbody>';
+            for ($i = 0; $i < $jml; $i++) {
+                $data = DB::table('penerimaan_lamaran')->where('id', $request->id[$i])->get();
+                foreach ($data as $u) {
+                    if ($u->diterima == 1) {
+                        echo '
+                            <div class="col-md-4 col-lg-12">
+                                <div class="card shadow bg-red-lt">
+                                    <div class="card-body p-4 text-center">
+                                        <span class="avatar avatar-xl mb-3 rounded" style="background-image: url(./static/avatars/000m.jpg); width:200px; height:200px;"></span>
+                                        <h3 class="m-0 mb-1"><a href="#">' . $u->nama . '</a></h3>
+                                        <div class="text-secondary">' . $u->posisi . '</div>
+                                        <div class="mt-3">
+                                        <span class="badge bg-danger">Sudah Diterima Sebagai Karyawan</span>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        
+                        ';
+                    } else {
+                        echo '
+                                <tr>
+                                    <td>' . $u->nama . '</td>
+                                    <td><input style="width:40px" value="' . $u->tinggi . '"></td>
+                                    <td><input style="width:50px" value="' . $u->berat . '"></td>
+                                    <td>
+                                        <div class="form-selectgroup">
+                                        <label class="form-selectgroup-item bg-green-lt">
+                                            <input type="radio" name="icons-' . $request->id[$i] . '" value="home" class="form-selectgroup-input" checked="">
+                                            <span class="form-selectgroup-label text-success">
+                                                <i class="fa-solid fa-check"></i>
+                                            </span>
+                                        </label>
+                                        <label class="form-selectgroup-item bg-red-lt">
+                                            <input type="radio" name="icons-' . $request->id[$i] . '" value="user" class="form-selectgroup-input">
+                                            <span class="form-selectgroup-label text-warning">
+                                                <i class="fa-solid fa-xmark"></i>
+                                            </span>
+                                        </label>    
+                                        </div>
+                                    </td>
+                                    <td class="text-center">
+                                        <input class="form-check-input" type="checkbox">
+                                    </td>
+                                    <td>
+                                        <input class="form-check-input" type="checkbox">
+                                    </td>
+                                    <td>
+                                        <input class="form-check-input" type="checkbox">
+                                    </td>
+                                    <td>
+                                        <input class="form-check-input" type="checkbox">
+                                    </td>
+                                    <td><span class="badge bg-green text-green-fg">Diterima</span></td>
+                                </tr>
+                        ';
+                    }
+                }
+            }
+            echo '              </tbody>
+                            </table>
+                        </div>
+                        </div>
+                    </div>
+                </div>';
+        }
+        // return $result;
+    }
+
     public function checkWawancara(Request $request)
     {
         if (empty($request->id)) {
