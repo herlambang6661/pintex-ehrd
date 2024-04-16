@@ -551,22 +551,23 @@ class Penerimaan extends Controller
             echo '<div class="row row-cards text-center">
                     <div class="col-lg-12">
                         <div class="card">
-                        <div class="table-responsive">
-                            <table class="table table-vcenter card-table">
-                            <thead class="text-center">
-                                <tr>
-                                    <th>Nama</th>
-                                    <th class="w-1">Tinggi</th>
-                                    <th class="w-1">Berat</th>
-                                    <th>Opsi Cepat</th>
-                                    <th class="w-1">Buta Warna</th>
-                                    <th class="w-1">Mata Minus</th>
-                                    <th class="w-1">Bersikap Baik</th>
-                                    <th class="w-1">Jalan Cepat</th>
-                                    <th class="w-1"></th>
-                                </tr>
-                            </thead>
-                            <tbody>';
+                            <div class="">
+                                <table class="table table-vcenter card-table table-sm table-striped table-hover">
+                                    <thead class="text-center">
+                                        <tr>
+                                            <th class="w-8">Opsi Cepat</th>
+                                            <th>Nama</th>
+                                            <th class="w-1">Tinggi</th>
+                                            <th class="w-1">Berat</th>
+                                            <th class="w-1">Buta Warna</th>
+                                            <th class="w-1">Mata Minus</th>
+                                            <th class="w-1">Bersikap Baik</th>
+                                            <th class="w-1">Jalan Cepat</th>
+                                            <th class="w-1"></th>
+                                            <th class="w-8">Status</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>';
             for ($i = 0; $i < $jml; $i++) {
                 $data = DB::table('penerimaan_lamaran')->where('id', $request->id[$i])->get();
                 foreach ($data as $u) {
@@ -589,49 +590,139 @@ class Penerimaan extends Controller
                     } else {
                         echo '
                                 <tr>
-                                    <td>' . $u->nama . '</td>
-                                    <td><input style="width:40px" value="' . $u->tinggi . '"></td>
-                                    <td><input style="width:50px" value="' . $u->berat . '"></td>
+                                    <input type="hidden" id="gender' . $request->id[$i] . '" value="' . strtoupper($u->gender) . '">
                                     <td>
                                         <div class="form-selectgroup">
                                         <label class="form-selectgroup-item bg-green-lt">
-                                            <input type="radio" name="icons-' . $request->id[$i] . '" value="home" class="form-selectgroup-input" checked="">
+                                            <input type="radio" name="icons-' . $request->id[$i] . '" id="iconv-' . $request->id[$i] . '" value="check" class="form-selectgroup-input" checked onclick="status(' . $request->id[$i] . ', 1)">
                                             <span class="form-selectgroup-label text-success">
                                                 <i class="fa-solid fa-check"></i>
                                             </span>
                                         </label>
                                         <label class="form-selectgroup-item bg-red-lt">
-                                            <input type="radio" name="icons-' . $request->id[$i] . '" value="user" class="form-selectgroup-input">
+                                            <input type="radio" name="icons-' . $request->id[$i] . '" id="iconx-' . $request->id[$i] . '" value="xmark" class="form-selectgroup-input" onclick="status(' . $request->id[$i] . ', 0)">
                                             <span class="form-selectgroup-label text-warning">
                                                 <i class="fa-solid fa-xmark"></i>
                                             </span>
                                         </label>    
                                         </div>
                                     </td>
+                                    <td>' . $u->nama . '</td>
+                                    <td><input type="number" name="tinggi[]" id="tinggi' . $request->id[$i] . '" class="form-control" style="width:70px" value="' . $u->tinggi . '" onchange="fetchKar(' . $request->id[$i] . ')" onkeydown = "if (event.keyCode == 13)  fetchKar(' . $request->id[$i] . ')"></td>
+                                    <td><input type="number" name="berat[]" class="form-control" style="width:70px" value="' . $u->berat . '"></td>
                                     <td class="text-center">
-                                        <input class="form-check-input" type="checkbox">
+                                        <input name="butawarna[]" id="butawarna' . $request->id[$i] . '" class="form-check-input" type="checkbox">
                                     </td>
                                     <td>
-                                        <input class="form-check-input" type="checkbox">
+                                        <input name="mataminus[]" id="mataminus' . $request->id[$i] . '" class="form-check-input" type="checkbox">
                                     </td>
                                     <td>
-                                        <input class="form-check-input" type="checkbox">
+                                        <input name="sikapbaik[]" id="sikapbaik' . $request->id[$i] . '" class="form-check-input" type="checkbox" checked="true">
                                     </td>
                                     <td>
-                                        <input class="form-check-input" type="checkbox">
+                                        <input name="jalancepat[]" id="jalancepat' . $request->id[$i] . '" class="form-check-input" type="checkbox" checked="true">
                                     </td>
-                                    <td><span class="badge bg-green text-green-fg">Diterima</span></td>
+                                    <td><span id="status' . $request->id[$i] . '" class="badge bg-green">Diterima</span></td>
+                                    <td>
+                                        <select class="form-select">
+                                            <option>OL</option>
+                                            <option>PHL</option>
+                                            <option>Kontrak</option>
+                                        </select>
+                                    </td>
                                 </tr>
                         ';
                     }
                 }
+                echo '
+                    
+                                <script>
+                                    function fetchKar(params){
+                                        var tinggi = $("#tinggi" + params).val();
+                                        var gender = $("#gender" + params).val();
+                                        if(gender=="PRIA"){
+                                            if(tinggi < 160){
+                                                document.getElementById("status"+ params).innerHTML = "Ditolak";
+                                                $("#status"+ params).removeClass("bg-green").addClass("bg-red");
+                                                $("#iconv-" + params).removeAttr("checked");
+                                                $("#iconx-" + params).attr("checked", true);
+                                            } else {
+                                                document.getElementById("status"+ params).innerHTML = "Diterima";
+                                                $("#status"+ params).removeClass("bg-red").addClass("bg-green");
+                                                $("#iconx-" + params).removeAttr("checked");
+                                                $("#iconv-" + params).attr("checked", true);
+                                            }
+                                        } else if(gender=="WANITA"){
+                                            if(tinggi < 155){
+                                                document.getElementById("status"+ params).innerHTML = "Ditolak";
+                                                $("#status"+ params).removeClass("bg-green").addClass("bg-red");
+                                            } else {
+                                                document.getElementById("status"+ params).innerHTML = "Diterima";
+                                                $("#status"+ params).removeClass("bg-red").addClass("bg-green");
+                                            }
+                                        }
+                                    }
+
+                                    function status(params, val){
+                                        var gender = $("#gender" + params).val();
+                                        var tinggi = $("#tinggi" + params).val();
+                                        if(gender=="PRIA"){
+                                            if(val == 1 && tinggi >= 160){
+                                                document.getElementById("status"+ params).innerHTML = "Diterima";
+                                                $("#iconx-" + params).removeAttr("checked");
+                                                $("#iconv-" + params).attr("checked", true);
+                                                $("#status"+ params).removeClass("bg-red").addClass("bg-green");
+                                                
+                                                $("#butawarna" + params).attr("checked", false);
+                                                $("#mataminus" + params).attr("checked", false);
+                                                $("#sikapbaik" + params).attr("checked", true);
+                                                $("#jalancepat" + params).attr("checked", true);
+                                            } else if(val == 0){
+                                                document.getElementById("status"+ params).innerHTML = "Ditolak";
+                                                $("#iconv-" + params).removeAttr("checked");
+                                                $("#iconx-" + params).attr("checked", true);
+                                                $("#status"+ params).removeClass("bg-green").addClass("bg-red");
+                                                
+                                                $("#butawarna" + params).attr("checked", true);
+                                                $("#mataminus" + params).attr("checked", true);
+                                                $("#sikapbaik" + params).attr("checked", false);
+                                                $("#jalancepat" + params).attr("checked", false);
+                                            }
+                                        } else if(gender=="WANITA"){
+                                            if(val == 1 && tinggi >= 155){
+                                                document.getElementById("status"+ params).innerHTML = "Diterima";
+                                                $("#iconx-" + params).removeAttr("checked");
+                                                $("#iconv-" + params).attr("checked", true);
+                                                $("#status"+ params).removeClass("bg-red").addClass("bg-green");
+                                                
+                                                $("#butawarna" + params).attr("checked", false);
+                                                $("#mataminus" + params).attr("checked", false);
+                                                $("#sikapbaik" + params).attr("checked", true);
+                                                $("#jalancepat" + params).attr("checked", true);
+                                            } else if(val == 0){
+                                                document.getElementById("status"+ params).innerHTML = "Ditolak";
+                                                $("#iconv-" + params).removeAttr("checked");
+                                                $("#iconx-" + params).attr("checked", true);
+                                                $("#status"+ params).removeClass("bg-green").addClass("bg-red");
+                                                
+                                                $("#butawarna" + params).attr("checked", true);
+                                                $("#mataminus" + params).attr("checked", true);
+                                                $("#sikapbaik" + params).attr("checked", false);
+                                                $("#jalancepat" + params).attr("checked", false);
+                                            }
+                                        }
+                                    }
+                                
+                                </script>
+                ';
             }
-            echo '              </tbody>
-                            </table>
-                        </div>
+            echo '                  </tbody>
+                                </table>
+                            </div>
                         </div>
                     </div>
-                </div>';
+                </div>
+                ';
         }
         // return $result;
     }
