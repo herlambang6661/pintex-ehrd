@@ -355,7 +355,12 @@ class Daftar extends Controller
         $judul = "Hari Libur Nasional";
         $Harilibur = "active";
         $libur = "active";
-        return view('products.01_daftar.hari_libur_nasional', [
+        // return view('products.01_daftar.hari_libur_nasional', [
+        //     'judul' => $judul,
+        //     'daftar' => $Harilibur,
+        //     'libur' => $libur,
+        // ]);
+        return view('products.01_daftar.hari_libur_nasional_new', [
             'judul' => $judul,
             'daftar' => $Harilibur,
             'libur' => $libur,
@@ -431,36 +436,92 @@ class Daftar extends Controller
         }
     }
 
-    public function updateliburnas(Request $request)
+    public function generateLiburNasional(Request $request)
     {
-        $request->validate([
-            'id' => 'required',
-            'entitas' => 'required',
-            'tanggal' => 'required',
-            'libur_nasional' => 'required',
-            'sumber_ketentuan' => 'required',
-            'keterangan' => 'required',
-        ]);
-
-        $check = DB::table('daftar_hari_libur_nasional')
-            ->where('id', $request->id)
-            ->update([
-                'entitas' => $request->entitas,
-                'tanggal' => $request->tanggal,
-                'libur_nasional' => $request->libur_nasional,
-                'sumber_ketentuan' => $request->sumber_ketentuan,
-                'keterangan' => $request->keterangan,
-                'updated_at'    => now(),
-            ]);
-
-        $arr = array('msg' => 'Ada kesalahan. Silakan coba lagi nanti.', 'status' => false);
-
-        if ($check) {
-            $arr = array('msg' => 'Data: ' . $request->entitas . ' ' . $request->tanggal . ' ' . $request->libur_nasional . ' ' . $request->sumber_ketentuan . ' ' . $request->keterangan . ' berhasil diperbarui', 'status' => true);
+        $arrayLiburNas = array(
+            array("id" => 1, "text" => "Tahun Baru Masehi",),
+            array("id" => 2, "text" => "Isra Mi’raj Nabi Muhammad SAW",),
+            array("id" => 3, "text" => "Tahun Baru Imlek",),
+            array("id" => 4, "text" => "Hari Suci Nyepi Tahun Baru Saka",),
+            array("id" => 5, "text" => "Wafat Isa Almasih",),
+            array("id" => 6, "text" => "Hari Paskah",),
+            array("id" => 7, "text" => "Hari Raya Idul Fitri",),
+            array("id" => 8, "text" => "Hari Buruh Internasional",),
+            array("id" => 9, "text" => "Kenaikan Isa Almasih",),
+            array("id" => 10, "text" => "Hari Raya Waisak",),
+            array("id" => 11, "text" => "Hari Lahir Pancasila",),
+            array("id" => 12, "text" => "Hari Raya Idul Adha",),
+            array("id" => 13, "text" => "Tahun Baru Islam",),
+            array("id" => 14, "text" => "Hari Kemerdekaan RI",),
+            array("id" => 15, "text" => "Maulid Nabi Muhammad SAW",),
+            array("id" => 16, "text" => "Hari Raya Natal",),
+            array("id" => 17, "text" => "Cuti Bersama Tahun Baru Imlek",),
+            array("id" => 18, "text" => "Cuti Bersama Hari Suci Nyepi Tahun Baru Saka",),
+            array("id" => 19, "text" => "Cuti Bersama Idul Fitri",),
+            array("id" => 20, "text" => "Cuti Bersama Kenaikan Isa Al Masih",),
+            array("id" => 21, "text" => "Cuti Bersama Hari Raya Waisak",),
+            array("id" => 22, "text" => "Cuti Bersama Idul Adha",),
+            array("id" => 23, "text" => "Cuti Bersama Hari Raya Natal",),
+        );
+        // print_r($arrayLiburNas);
+        // die();
+        $idn = 1;
+        for ($i = 0; $i < count($arrayLiburNas); $i++) {
+            $check = DB::table('daftar_hari_libur_nasional')
+                ->where('id_libur', $idn)
+                ->where('tahun', $request->year)
+                ->first();
+            if (!$check) {
+                DB::table('daftar_hari_libur_nasional')
+                    ->insert(
+                        [
+                            'entitas' => 'PINTEX',
+                            'tahun' => $request->year,
+                            'id_libur' => $arrayLiburNas[$i]['id'],
+                            'libur_nasional' => $arrayLiburNas[$i]['text'],
+                            'sumber_ketentuan' => 'PEMERINTAH',
+                            // 'keterangan' => '',
+                            'created_at' => date('Y-m-d H:i:s'),
+                        ]
+                    );
+            }
+            $idn++;
         }
+        $arr = array('msg' => 'Data ' . $request->year . ' Berhasil di Generate Ulang.', 'status' => true);
 
         return response()->json($arr);
     }
+
+    // public function updateliburnas(Request $request)
+    // {
+    //     $request->validate([
+    //         'id' => 'required',
+    //         'entitas' => 'required',
+    //         'tanggal' => 'required',
+    //         'libur_nasional' => 'required',
+    //         'sumber_ketentuan' => 'required',
+    //         'keterangan' => 'required',
+    //     ]);
+
+    //     $check = DB::table('daftar_hari_libur_nasional')
+    //         ->where('id', $request->id)
+    //         ->update([
+    //             'entitas' => $request->entitas,
+    //             'tanggal' => $request->tanggal,
+    //             'libur_nasional' => $request->libur_nasional,
+    //             'sumber_ketentuan' => $request->sumber_ketentuan,
+    //             'keterangan' => $request->keterangan,
+    //             'updated_at'    => now(),
+    //         ]);
+
+    //     $arr = array('msg' => 'Ada kesalahan. Silakan coba lagi nanti.', 'status' => false);
+
+    //     if ($check) {
+    //         $arr = array('msg' => 'Data: ' . $request->entitas . ' ' . $request->tanggal . ' ' . $request->libur_nasional . ' ' . $request->sumber_ketentuan . ' ' . $request->keterangan . ' berhasil diperbarui', 'status' => true);
+    //     }
+
+    //     return response()->json($arr);
+    // }
 
     //Shift
     public function jadwalshift()

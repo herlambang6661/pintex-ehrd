@@ -106,7 +106,9 @@ Route::controller(Daftar::class)->group(function () {
     Route::get('daftar/liburnas', 'liburnas')->name('daftar/liburnas');
     Route::post('storedataLibur', 'storelibur');
     Route::post('detail/liburnas', 'liburnasview');
-    Route::post('update/liburnas', 'updateliburnas');
+    // Route::post('update/liburnas', 'updateliburnas');
+    Route::post('generateYear', 'generateLiburNasional');
+
 
     //routes Surat-surat DONE
     Route::get('daftar/surat', 'surat')->name('daftar/surat');

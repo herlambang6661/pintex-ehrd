@@ -675,7 +675,7 @@ class DBLokal extends Controller
                 // Set date In
                 $getIn = DB::connection('mysql_local')
                     ->table('access_checkinout')
-                    ->whereBetween('CHECKTIME', [$request->tgl . ' 04:00:00', date('Y-m-d', strtotime($request->tgl . "+1 days")) . ' 00:00:00'])
+                    ->whereBetween('CHECKTIME', [$request->tgl . ' 04:00:00', date('Y-m-d', strtotime($request->tgl . "+1 days")) . ' 23:59:59'])
                     // ->whereDate('CHECKTIME', '=', $request->tgl)
                     ->where('USERID', '=', $key->userid)
                     ->where('CHECKTYPE', '=', 'I')
