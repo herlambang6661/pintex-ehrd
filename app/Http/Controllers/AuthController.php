@@ -107,7 +107,11 @@ class AuthController extends Controller
     public function dashboard()
     {
         if (Auth::check()) {
-            return view('products.dashboard');
+            $judul = "Dashboard";
+
+            return view('products.dashboard', [
+                'judul' => $judul,
+            ]);
         } else {
             // return view('login');
             return redirect("login")->withSuccess('Opps! You do not have access');

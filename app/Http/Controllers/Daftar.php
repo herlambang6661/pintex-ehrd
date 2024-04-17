@@ -357,8 +357,8 @@ class Daftar extends Controller
         $libur = "active";
         return view('products.01_daftar.hari_libur_nasional', [
             'judul' => $judul,
-            'Harilibur' => $Harilibur,
-            'libur' => $libur
+            'daftar' => $Harilibur,
+            'libur' => $libur,
         ]);
     }
 
@@ -697,5 +697,50 @@ class Daftar extends Controller
         }
 
         return response()->json($arr);
+    }
+
+    public function loker()
+    {
+        $judul = "Lowongan Pekerjaan";
+        $daftar = "active";
+        $loker = "active";
+
+        return view('products/01_daftar.loker', [
+            'judul' => $judul,
+            'daftar' => $daftar,
+            'loker' => $loker,
+        ]);
+    }
+
+    public function storeLoker(Request $request)
+    {
+        $request->validate(
+            [
+                '_token' => 'required',
+                'entitas' => 'required',
+                'posisi' => 'required|unique:penerimaan_lamaran,nik',
+                'tanggal_buka' => 'required',
+                'tanggal_tutup' => 'required',
+                // 'deskripsi' => 'required',
+                // 'persyaratan' => 'required',
+            ],
+            // [
+            //     'nik.unique' => 'Nomor NIK: ' . $request->nik . ' sudah ada, Cek kembali inputan anda',
+            // ]
+        );
+
+        $check = DB::connection('mysql_karir')->table('tb_posisi_lamaran')->insert([
+            'posisi' => $request->posisi,
+            'tanggal_buka' => $request->tanggal_buka,
+            'tanggal_tutup' => $request->tanggal_tutup,
+            'deskripsi' => $request->deskripsi,
+            'persyaratan' => $request->persyaratan,
+            'created_at' => date('Y-m-d H:i:s'),
+        ]);
+        $arr = array('msg' => 'Something goes to wrong. Please try later', 'status' => false);
+        if ($check) {
+            $arr = array('msg' => 'Data: ' . $request->posisi . ' telah berhasil disimpan', 'status' => true);
+        }
+        return Response()->json($arr);
     }
 }

@@ -223,7 +223,7 @@
                         </span>
                     </a>
                 </li>
-                <li class="nav-item dropdown">
+                <li class="nav-item dropdown {{ !empty($daftar) ? $daftar : '' }}">
                     <a class="nav-link dropdown-toggle" href="#navbar-base" data-bs-toggle="dropdown"
                         data-bs-auto-close="false" role="button" aria-expanded="false">
                         <span
@@ -243,7 +243,7 @@
                             Daftar
                         </span>
                     </a>
-                    <div class="dropdown-menu">
+                    <div class="dropdown-menu {{ !empty($daftar) ? 'show' : '' }}">
                         <div class="dropdown-menu-columns">
                             <div class="dropdown-menu-column">
                                 <a class="dropdown-item" href="{{ url('daftar/pos') }}">
@@ -272,7 +272,8 @@
                                     </svg>
                                     Tarif Lembur
                                 </a>
-                                <a class="dropdown-item" href="{{ url('daftar/liburnas') }}">
+                                <a class="dropdown-item {{ !empty($libur) ? $libur : '' }}"
+                                    href="{{ url('daftar/liburnas') }}">
                                     <svg xmlns="http://www.w3.org/2000/svg" style="margin-right: 10px" width="24"
                                         height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor"
                                         stroke-width="2" stroke-linecap="round" stroke-linejoin="round"
@@ -330,6 +331,32 @@
                                         <path d="M20.733 20l1.3 .75" />
                                     </svg>
                                     Daftar Entitas
+                                </a>
+                                <a class="dropdown-item" href="{{ url('daftar/users') }}">
+                                    <svg xmlns="http://www.w3.org/2000/svg" style="margin-right: 10px" width="24"
+                                        height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                                        stroke-width="2" stroke-linecap="round" stroke-linejoin="round"
+                                        class="icon icon-tabler icons-tabler-outline icon-tabler-user">
+                                        <path stroke="none" d="M0 0h24v24H0z" fill="none" />
+                                        <path d="M8 7a4 4 0 1 0 8 0a4 4 0 0 0 -8 0" />
+                                        <path d="M6 21v-2a4 4 0 0 1 4 -4h4a4 4 0 0 1 4 4v2" />
+                                    </svg>
+                                    Users
+                                </a>
+                                <a class="dropdown-item {{ !empty($loker) ? $loker : '' }}"
+                                    href="{{ url('daftar/loker') }}">
+                                    <svg xmlns="http://www.w3.org/2000/svg" style="margin-right: 10px" width="24"
+                                        height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                                        stroke-width="2" stroke-linecap="round" stroke-linejoin="round"
+                                        class="icon icon-tabler icons-tabler-outline icon-tabler-briefcase">
+                                        <path stroke="none" d="M0 0h24v24H0z" fill="none" />
+                                        <path
+                                            d="M3 7m0 2a2 2 0 0 1 2 -2h14a2 2 0 0 1 2 2v9a2 2 0 0 1 -2 2h-14a2 2 0 0 1 -2 -2z" />
+                                        <path d="M8 7v-2a2 2 0 0 1 2 -2h4a2 2 0 0 1 2 2v2" />
+                                        <path d="M12 12l0 .01" />
+                                        <path d="M3 13a20 20 0 0 0 18 0" />
+                                    </svg>
+                                    Lowongan Pekerjaan
                                 </a>
                             </div>
                         </div>

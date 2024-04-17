@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Routing\Controller;
 use Illuminate\Support\Facades\DB;
@@ -358,131 +359,139 @@ class Penerimaan extends Controller
         foreach ($data as $l) {
             echo '
             <div class="row">
-                <div class="col-lg-9">
-                    <div class="card shadow bg-green-lt">
-                        <div class="card-body">
-                            <div class="row">
-                                <div class="col-lg-6">
-                                    <div class="mb-3">
-                                        <div class="row">
-                                            <div class="col">
-                                                <label class="form-label">No. Map</label>
-                                                <input type="text" class="form-control" name="" placeholder="" value="' . $l->entitas . '" style="border-color:black" readonly />
-                                            </div>
-                                            <div class="col">
-                                                <label class="form-label">STB</label>
-                                                <input type="text" class="form-control" name="" placeholder="" value="' . $l->nik . '" style="border-color:black" readonly />
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <div class="mb-3">
-                                        <label class="form-label">KTP</label>
-                                        <input type="text" class="form-control" name="" placeholder="" value="' . $l->nama . '"
-                                            style="border-color:black" readonly />
-                                    </div>
-                                    <div class="mb-3">
-                                        <label class="form-label">Nama</label>
-                                        <input type="text" class="form-control" name="" placeholder="" value="' . $l->gender . '"
-                                            style="border-color:black" readonly />
-                                    </div>
-                                    <div class="mb-3">
-                                        <div class="row">
-                                            <div class="col">
-                                                <label class="form-label">Gender</label>
-                                                <input type="text" class="form-control" name="" placeholder="" value="' . $l->tempat . '"
-                                                    style="border-color:black" readonly />
-                                            </div>
-                                            <div class="col">
-                                                <label class="form-label">Agama</label>
-                                                <input type="text" class="form-control" name="" placeholder="" value="' . $l->tgllahir . '"
-                                                    style="border-color:black" readonly />
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <div class="mb-3">
-                                        <div class="row">
-                                            <div class="col">
-                                                <label class="form-label">Tinggi</label>
-                                                <input type="text" class="form-control" name="" placeholder="" value="' . $l->pendidikan . '"
-                                                    style="border-color:black" readonly />
-                                            </div>
-                                            <div class="col">
-                                                <label class="form-label">Berat</label>
-                                                <input type="text" class="form-control" name="" placeholder="" value="' . $l->jurusan . '"
-                                                    style="border-color:black" readonly />
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <div class="mb-3">
-                                        <label class="form-label">Tempat, Tanggal Lahir</label>
-                                        <div class="row">
-                                            <div class="col">
-                                                <input type="text" class="form-control" name="" placeholder="" value="' . $l->alamat . '" style="border-color:black" readonly />
-                                            </div>
-                                            <div class="col">
-                                                <input type="text" class="form-control" name="" placeholder="" value="' . $l->agama . '" style="border-color:black" readonly />
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <div class="row">
-                                        <div class="col">
-                                            <div class="mb-3">
-                                                <label class="form-label">Pendidikan</label>
-                                                <input type="text" class="form-control" name="" placeholder="" value="' . $l->tinggi . '" style="border-color:black" readonly />
-                                            </div>
-                                        </div>
-                                        <div class="col">
-                                            <div class="mb-3">
-                                                <label class="form-label">Jurusan</label>
-                                                <input type="text" class="form-control" name="" placeholder="" value="' . $l->berat . '" style="border-color:black" readonly />
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <div class="row">
-                                        <div class="col-lg-6">
-                                            <div class="mb-3">
-                                                <label class="form-label">Telepon</label>
-                                                <input type="text" class="form-control" name="" placeholder="" value="' . $l->notlp . '" style="border-color:black" readonly />
-                                            </div>
-                                        </div>
-                                        <div class="col-lg-6">
-                                            <div class="mb-3">
-                                                <label class="form-label">Serikat</label>
-                                                <input type="text" class="form-control" name="" placeholder="" value="' . $l->posisi . '"
-                                                    style="border-color:black" readonly />
-                                            </div>
-                                        </div>
-                                    </div>
+                <div class="col-4">
+                    <div class="card">
+                        <div class="card-header">
+                            <strong>Data Diri</strong>
+                        </div>
+                        <div class="table-responsive">
+                            <table class="table table-vcenter card-table table-striped">
+                                <tbody>
+                                    <tr>
+                                        <td>NIK</td>
+                                        <td class="text-secondary">:</td>
+                                        <td class="text-secondary">' . $l->nik . '</td>
+                                    </tr>
+                                    <tr>
+                                        <td>Nama</td>
+                                        <td class="text-secondary">:</td>
+                                        <td class="text-secondary">' . $l->nama . '</td>
+                                    </tr>
+                                    <tr>
+                                        <td>Gender</td>
+                                        <td class="text-secondary">:</td>
+                                        <td class="text-secondary">' . $l->gender . '</td>
+                                    </tr>
+                                    <tr>
+                                        <td>Tempat, Tanggal Lahir</td>
+                                        <td class="text-secondary">:</td>
+                                        <td class="text-secondary">' . $l->tempat . ', ' . Carbon::parse($l->tgllahir)->format('d/m/Y') . '</td>
+                                    </tr>
+                                    <tr>
+                                        <td>Alamat</td>
+                                        <td class="text-secondary">:</td>
+                                        <td class="text-secondary">' . $l->alamat . '</td>
+                                    </tr>
+                                    <tr>
+                                        <td>Agama</td>
+                                        <td class="text-secondary">:</td>
+                                        <td class="text-secondary">' . $l->agama . '</td>
+                                    </tr>
+                                    <tr>
+                                        <td>Tinggi Badan</td>
+                                        <td class="text-secondary">:</td>
+                                        <td class="text-secondary">' . $l->tinggi . '</td>
+                                    </tr>
+                                    <tr>
+                                        <td>Berat Badan</td>
+                                        <td class="text-secondary">:</td>
+                                        <td class="text-secondary">' . $l->berat . '</td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-4">
+                    <div class="card">
+                        <div class="card-header">
+                            <strong>Riwayat Pendidikan</strong>
+                        </div>
+                        <div class="table-responsive">
+                            <table class="table table-vcenter card-table table-striped">
+                                <tbody>
+                                    <tr>
+                                        <td>Asal Sekolah</td>
+                                        <td class="text-secondary">:</td>
+                                        <td class="text-secondary">' . $l->pendidikan . '</td>
+                                    </tr>
+                                    <tr>
+                                        <td>Pendidikan</td>
+                                        <td class="text-secondary">:</td>
+                                        <td class="text-secondary">' . $l->pendidikan . '</td>
+                                    </tr>
+                                    <tr>
+                                        <td>Jurusan</td>
+                                        <td class="text-secondary">:</td>
+                                        <td class="text-secondary">' . $l->jurusan . '</td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-4">
+                    <div class="row">
+                        <div class="col-12 mb-3">
+                            <div class="card">
+                                <div class="card-header">
+                                    <strong>Kontak yang dapat dihubungi</strong>
                                 </div>
-                                <div class="col-lg-6">
-                                    <div class="card shadow bg-info-lt">
-                                        <div class="table-responsive">
-                                            <table class="table table-vcenter card-table">
-                                                <tr>
-                                                    <td width="70px">Email</td>
-                                                    <td>:</td>
-                                                    <td>' . $l->email . '</td>
-                                                </tr>
-                                                <tr>
-                                                    <td>Keterangan</td>
-                                                    <td>:</td>
-                                                    <td>' . $l->keterangan . '</td>
-                                                </tr>
-                                                <tr>
-                                                    <td>Dibuat</td>
-                                                    <td>:</td>
-                                                    <td>' . $l->dibuat . '</td>
-                                                </tr>
-                                            </table>
-                                        </div>
-                                    </div>
+                                <div class="table-responsive">
+                                    <table class="table table-vcenter card-table table-striped">
+                                        <tbody>
+                                            <tr>
+                                                <td>No Tlp / Whatsapp</td>
+                                                <td class="text-secondary">:</td>
+                                                <td class="text-secondary">' . $l->notlp . '</td>
+                                            </tr>
+                                            <tr>
+                                                <td>Email</td>
+                                                <td class="text-secondary">:</td>
+                                                <td class="text-secondary">' . $l->email . '</td>
+                                            </tr>
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-12">
+                            <div class="card">
+                                <div class="card-header">
+                                    Dokumen
+                                </div>
+                                <div class="table-responsive">
+                                    <table class="table table-vcenter card-table table-striped">
+                                        <tbody>
+                                            <tr>
+                                                <td>No Tlp / Whatsapp</td>
+                                                <td class="text-secondary">:</td>
+                                                <td class="text-secondary">' . $l->nik . '</td>
+                                            </tr>
+                                            <tr>
+                                                <td>Email</td>
+                                                <td class="text-secondary">:</td>
+                                                <td class="text-secondary">' . $l->nama . '</td>
+                                            </tr>
+                                        </tbody>
+                                    </table>
                                 </div>
                             </div>
                         </div>
                     </div>
                 </div>
             </div>
-        ';
+            ';
         }
     }
     // ======================== END LAMARAN ==============================================================================================
@@ -522,6 +531,109 @@ class Penerimaan extends Controller
             $arr = array('msg' => 'Data telah berhasil dikembalikan ke lamaran', 'status' => true);
         }
         return Response()->json($arr);
+    }
+
+    public function prosesWawancara(Request $request)
+    {
+        if (empty($request->id)) {
+            echo '<center><iframe src="https://lottie.host/embed/94d605b9-2cc4-4d11-809a-7f41357109b0/OzwBgj9bHl.json" width="300px" height="300px"></iframe></center>';
+            echo "<center>Tidak ada data yang dipilih</center>";
+        } else {
+            $jml = count($request->id);
+            echo '<div class="row">
+                    <div class="col-lg-4 col-md-12">
+                        <div class="mb-3">
+                            <label class="form-label">Tanggal Pelaksanaan Wawancara</label>
+                            <input type="date" class="form-control" name="tglwawancara" value="' . date("Y-m-d") . '">
+                        </div>
+                    </div>
+                </div>';
+            echo '<div class="row row-cards text-center">
+                    <div class="col-lg-12">
+                        <div class="card">
+                        <div class="table-responsive">
+                            <table class="table table-vcenter card-table">
+                            <thead class="text-center">
+                                <tr>
+                                    <th>Nama</th>
+                                    <th class="w-1">Tinggi</th>
+                                    <th class="w-1">Berat</th>
+                                    <th>Opsi Cepat</th>
+                                    <th class="w-1">Buta Warna</th>
+                                    <th class="w-1">Mata Minus</th>
+                                    <th class="w-1">Bersikap Baik</th>
+                                    <th class="w-1">Jalan Cepat</th>
+                                    <th class="w-1"></th>
+                                </tr>
+                            </thead>
+                            <tbody>';
+            for ($i = 0; $i < $jml; $i++) {
+                $data = DB::table('penerimaan_lamaran')->where('id', $request->id[$i])->get();
+                foreach ($data as $u) {
+                    if ($u->diterima == 1) {
+                        echo '
+                            <div class="col-md-4 col-lg-12">
+                                <div class="card shadow bg-red-lt">
+                                    <div class="card-body p-4 text-center">
+                                        <span class="avatar avatar-xl mb-3 rounded" style="background-image: url(./static/avatars/000m.jpg); width:200px; height:200px;"></span>
+                                        <h3 class="m-0 mb-1"><a href="#">' . $u->nama . '</a></h3>
+                                        <div class="text-secondary">' . $u->posisi . '</div>
+                                        <div class="mt-3">
+                                        <span class="badge bg-danger">Sudah Diterima Sebagai Karyawan</span>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        
+                        ';
+                    } else {
+                        echo '
+                                <tr>
+                                    <td>' . $u->nama . '</td>
+                                    <td><input style="width:40px" value="' . $u->tinggi . '"></td>
+                                    <td><input style="width:50px" value="' . $u->berat . '"></td>
+                                    <td>
+                                        <div class="form-selectgroup">
+                                        <label class="form-selectgroup-item bg-green-lt">
+                                            <input type="radio" name="icons-' . $request->id[$i] . '" value="home" class="form-selectgroup-input" checked="">
+                                            <span class="form-selectgroup-label text-success">
+                                                <i class="fa-solid fa-check"></i>
+                                            </span>
+                                        </label>
+                                        <label class="form-selectgroup-item bg-red-lt">
+                                            <input type="radio" name="icons-' . $request->id[$i] . '" value="user" class="form-selectgroup-input">
+                                            <span class="form-selectgroup-label text-warning">
+                                                <i class="fa-solid fa-xmark"></i>
+                                            </span>
+                                        </label>    
+                                        </div>
+                                    </td>
+                                    <td class="text-center">
+                                        <input class="form-check-input" type="checkbox">
+                                    </td>
+                                    <td>
+                                        <input class="form-check-input" type="checkbox">
+                                    </td>
+                                    <td>
+                                        <input class="form-check-input" type="checkbox">
+                                    </td>
+                                    <td>
+                                        <input class="form-check-input" type="checkbox">
+                                    </td>
+                                    <td><span class="badge bg-green text-green-fg">Diterima</span></td>
+                                </tr>
+                        ';
+                    }
+                }
+            }
+            echo '              </tbody>
+                            </table>
+                        </div>
+                        </div>
+                    </div>
+                </div>';
+        }
+        // return $result;
     }
 
     public function checkWawancara(Request $request)
