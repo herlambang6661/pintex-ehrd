@@ -49,7 +49,7 @@ class DataLamaran extends Controller
 
                 ->addColumn('action', function ($row) {
                     $btn = ' <a href="javascript:void(0)" data-bs-toggle="modal" data-id="' . $row->id . '" data-bs-target="#modal-view" class="btn btn-outline-info btn-sm btn-icon"><i class="fa-solid fa-fw fa-eye"></i></a>';
-                    $btn = $btn . ' <a href="javascript:void(0)" data-toggle="tooltip" data-nama="' . $row->nama . '" data-id="' . $row->id . '" data-wawancara="' . $row->wawancara . '" data-original-title="Delete" class="btn btn-outline-danger btn-sm btn-icon deleteLamaran"><i class="fa-solid fa-fw fa-trash-can"></i></a>';
+                    // $btn = $btn . ' <a href="javascript:void(0)" data-toggle="tooltip" data-nama="' . $row->nama . '" data-id="' . $row->id . '" data-wawancara="' . $row->wawancara . '" data-original-title="Delete" class="btn btn-outline-danger btn-sm btn-icon deleteLamaran"><i class="fa-solid fa-fw fa-trash-can"></i></a>';
                     return $btn;
                 })
                 ->rawColumns(['status', 'action', 'select_orders', 'ttl', 'umur'])
