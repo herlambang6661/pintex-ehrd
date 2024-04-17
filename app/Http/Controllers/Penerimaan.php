@@ -1024,6 +1024,7 @@ class Penerimaan extends Controller
         foreach ($data as $u) {
             $link = url('photo/pas/' . $u->userid);
             $ktp = url('photo/ktp/' . $u->userid);
+            $tgkeluar = !empty($u->tglkeluar) ? Carbon::parse($u->tglkeluar)->format('d/m/Y') : "";
             echo '
             <div class="row">
                 <div class="col-lg-3">
@@ -1053,7 +1054,7 @@ class Penerimaan extends Controller
                     <br>
                     <div class="card shadow bg-info-lt">
                         <div class="table-responsive">
-                            <table class="table table-sm table-vcenter card-table">
+                            <table class="table table-sm table-vcenter card-table table-sm">
                                 <tr>
                                     <td>Userid</td>
                                     <td>:</td>
@@ -1062,24 +1063,24 @@ class Penerimaan extends Controller
                                 <tr>
                                     <td>Tanggal Masuk</td>
                                     <td>:</td>
-                                    <td>' . $u->tglmasuk . '</td>
+                                    <td>' . Carbon::parse($u->tglmasuk)->format('d/m/Y') . '</td>
                                 </tr>
                                 <tr>
                                     <td>Tanggal Aktif</td>
                                     <td>:</td>
-                                    <td>' . $u->tglaktif . '</td>
+                                    <td>' . Carbon::parse($u->tglaktif)->format('d/m/Y') . '</td>
                                 </tr>
                                 <tr>
                                     <td>Tanggal Keluar</td>
                                     <td>:</td>
-                                    <td>' . $u->tglkeluar . '</td>
+                                    <td>' . $tgkeluar . '</td>
                                 </tr>
                             </table>
                         </div>
                     </div>
                 </div>
                 <div class="col-lg-9">
-                    <div class="card shadow bg-green-lt">
+                    <div class="card shadow ">
                         <div class="card-body">
                             <div class="row">
                                 <div class="col-lg-6">
@@ -1087,35 +1088,35 @@ class Penerimaan extends Controller
                                         <div class="row">
                                             <div class="col">
                                                 <label class="form-label">No. Map</label>
-                                                <input type="text" class="form-control" name="" placeholder="" value="' . $u->nomap . '" style="border-color:black" readonly />
+                                                <input type="text" class="form-control" name="" placeholder="" value="' . $u->nomap . '" style="border-color:black"  />
                                             </div>
                                             <div class="col">
                                                 <label class="form-label">STB</label>
-                                                <input type="text" class="form-control" name="" placeholder="" value="' . $u->stb . '" style="border-color:black" readonly />
+                                                <input type="text" class="form-control" name="" placeholder="" value="' . $u->stb . '" style="border-color:black"  />
                                             </div>
                                         </div>
                                     </div>
                                     <div class="mb-3">
                                         <label class="form-label">KTP</label>
                                         <input type="text" class="form-control" name="" placeholder="" value="' . $u->nik . '"
-                                            style="border-color:black" readonly />
+                                            style="border-color:black"  />
                                     </div>
                                     <div class="mb-3">
                                         <label class="form-label">Nama</label>
                                         <input type="text" class="form-control" name="" placeholder="" value="' . $u->nama . '"
-                                            style="border-color:black" readonly />
+                                            style="border-color:black"  />
                                     </div>
                                     <div class="mb-3">
                                         <div class="row">
                                             <div class="col">
                                                 <label class="form-label">Gender</label>
                                                 <input type="text" class="form-control" name="" placeholder="" value="' . $u->gender . '"
-                                                    style="border-color:black" readonly />
+                                                    style="border-color:black"  />
                                             </div>
                                             <div class="col">
                                                 <label class="form-label">Agama</label>
                                                 <input type="text" class="form-control" name="" placeholder="" value="' . $u->agama . '"
-                                                    style="border-color:black" readonly />
+                                                    style="border-color:black"  />
                                             </div>
                                         </div>
                                     </div>
@@ -1124,12 +1125,12 @@ class Penerimaan extends Controller
                                             <div class="col">
                                                 <label class="form-label">Tinggi</label>
                                                 <input type="text" class="form-control" name="" placeholder="" value="' . $u->tinggi . '"
-                                                    style="border-color:black" readonly />
+                                                    style="border-color:black"  />
                                             </div>
                                             <div class="col">
                                                 <label class="form-label">Berat</label>
                                                 <input type="text" class="form-control" name="" placeholder="" value="' . $u->berat . '"
-                                                    style="border-color:black" readonly />
+                                                    style="border-color:black"  />
                                             </div>
                                         </div>
                                     </div>
@@ -1137,10 +1138,10 @@ class Penerimaan extends Controller
                                         <label class="form-label">Tempat, Tanggal Lahir</label>
                                         <div class="row">
                                             <div class="col">
-                                                <input type="text" class="form-control" name="" placeholder="" value="' . $u->tempat . '" style="border-color:black" readonly />
+                                                <input type="text" class="form-control" name="" placeholder="" value="' . $u->tempat . '" style="border-color:black"  />
                                             </div>
                                             <div class="col">
-                                                <input type="text" class="form-control" name="" placeholder="" value="' . $u->tgllahir . '" style="border-color:black" readonly />
+                                                <input type="text" class="form-control" name="" placeholder="" value="' . $u->tgllahir . '" style="border-color:black"  />
                                             </div>
                                         </div>
                                     </div>
@@ -1148,13 +1149,13 @@ class Penerimaan extends Controller
                                         <div class="col">
                                             <div class="mb-3">
                                                 <label class="form-label">Pendidikan</label>
-                                                <input type="text" class="form-control" name="" placeholder="" value="' . $u->pendidikan . '" style="border-color:black" readonly />
+                                                <input type="text" class="form-control" name="" placeholder="" value="' . $u->pendidikan . '" style="border-color:black"  />
                                             </div>
                                         </div>
                                         <div class="col">
                                             <div class="mb-3">
                                                 <label class="form-label">Jurusan</label>
-                                                <input type="text" class="form-control" name="" placeholder="" value="' . $u->jurusan . '" style="border-color:black" readonly />
+                                                <input type="text" class="form-control" name="" placeholder="" value="' . $u->jurusan . '" style="border-color:black"  />
                                             </div>
                                         </div>
                                     </div>
@@ -1162,14 +1163,14 @@ class Penerimaan extends Controller
                                         <div class="col-lg-6">
                                             <div class="mb-3">
                                                 <label class="form-label">Telepon</label>
-                                                <input type="text" class="form-control" name="" placeholder="" value="' . $u->notlp . '" style="border-color:black" readonly />
+                                                <input type="text" class="form-control" name="" placeholder="" value="' . $u->notlp . '" style="border-color:black"  />
                                             </div>
                                         </div>
                                         <div class="col-lg-6">
                                             <div class="mb-3">
                                                 <label class="form-label">Serikat</label>
                                                 <input type="text" class="form-control" name="" placeholder="" value="' . $u->serikat . '"
-                                                    style="border-color:black" readonly />
+                                                    style="border-color:black"  />
                                             </div>
                                         </div>
                                     </div>
@@ -1177,7 +1178,7 @@ class Penerimaan extends Controller
                                 <div class="col-lg-6">
                                     <div class="card shadow bg-info-lt">
                                         <div class="table-responsive">
-                                            <table class="table table-vcenter card-table">
+                                            <table class="table table-vcenter card-table table-sm">
                                                 <tr>
                                                     <td width="70px">Divisi</td>
                                                     <td>:</td>
@@ -1209,12 +1210,12 @@ class Penerimaan extends Controller
                                                     <td>' . $u->profesi . '</td>
                                                 </tr>
                                                 <tr>
-                                                    <td>Hari Libur</td>
+                                                    <td>Libur</td>
                                                     <td>:</td>
                                                     <td>' . $u->hrlibur . '</td>
                                                 </tr>
                                                 <tr>
-                                                    <td>Setengah Hari</td>
+                                                    <td>½ Hari</td>
                                                     <td>:</td>
                                                     <td>' . $u->sethari . '</td>
                                                 </tr>

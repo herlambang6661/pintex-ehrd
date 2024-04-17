@@ -30,6 +30,7 @@
 <script src="{{ asset('assets/extentions/select2/js/select2.full.min.js') }}" defer></script>
 <script src="https://unpkg.com/@lottiefiles/lottie-player@latest/dist/lottie-player.js"></script>
 <script src="{{ asset('assets/extentions/richtext/jquery.richtext.min.js') }}"></script>
+<script src="{{ asset('assets/extentions/jquery.mask.js') }}"></script>
 
 <script type="text/javascript">
     $(function() {
@@ -69,4 +70,8 @@
         }));
     });
     // @formatter:on
+
+    $(document).ready(function() {
+        $('.formattahun').mask('0000');
+    });
 </script>

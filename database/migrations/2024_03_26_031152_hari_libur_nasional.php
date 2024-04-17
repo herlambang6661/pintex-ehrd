@@ -15,6 +15,8 @@ return new class extends Migration
             $table->id();
             $table->string('entitas')->nullable();
             $table->date('tanggal')->nullable();
+            $table->string('tahun')->nullable();
+            $table->integer('id_nasional')->nullable();
             $table->string('libur_nasional')->nullable();
             $table->string('sumber_ketentuan')->nullable();
             $table->string('keterangan')->nullable();

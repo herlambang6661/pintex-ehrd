@@ -14,13 +14,13 @@
 
         td.cuspad2 {
             /* padding-top: 0.5px;
-                    padding-bottom: 0.5px;
-                    padding-right: 0.5px;
-                    padding-left: 0.5px;
-                    margin-top: 5px;
-                    margin-bottom: 5px;
-                    margin-right: 5px;
-                    margin-left: 5px; */
+                        padding-bottom: 0.5px;
+                        padding-right: 0.5px;
+                        padding-left: 0.5px;
+                        margin-top: 5px;
+                        margin-bottom: 5px;
+                        margin-right: 5px;
+                        margin-left: 5px; */
         }
 
         .overlay {
@@ -34,30 +34,30 @@
         }
 
         /* .cv-spinner {
-            height: 100%;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-        }
-
-        .spinner {
-            width: 40px;
-            height: 40px;
-            border: 4px #ddd solid;
-            border-top: 4px #2e93e6 solid;
-            border-radius: 50%;
-            animation: sp-anime 0.8s infinite linear;
-        }
-
-        @keyframes sp-anime {
-            100% {
-                transform: rotate(360deg);
+                height: 100%;
+                display: flex;
+                justify-content: center;
+                align-items: center;
             }
-        }
 
-        .is-hide {
-            display: none;
-        } */
+            .spinner {
+                width: 40px;
+                height: 40px;
+                border: 4px #ddd solid;
+                border-top: 4px #2e93e6 solid;
+                border-radius: 50%;
+                animation: sp-anime 0.8s infinite linear;
+            }
+
+            @keyframes sp-anime {
+                100% {
+                    transform: rotate(360deg);
+                }
+            }
+
+            .is-hide {
+                display: none;
+            } */
         .loader {
             position: fixed;
             z-index: 301;
@@ -473,7 +473,7 @@
                     </div>
                     <div class="modal-footer">
                         <button type="submit" id="submitCheck" class="btn btn-green"><i class="fas fa-save"
-                                style="margin-right: 5px"></i> Proses</button>
+                                style="margin-right: 5px"></i> Simpan Perubahan</button>
                         <button type="button" class="btn btn-link link-secondary ms-auto" data-bs-dismiss="modal"><i
                                 class="fa-solid fa-fw fa-arrow-rotate-left"></i> Kembali</button>
                     </div>
@@ -483,10 +483,10 @@
     </div>
     <script type="text/javascript">
         /*------------------------------------------
-                --------------------------------------------
-                Render DataTable
-                --------------------------------------------
-                --------------------------------------------*/
+                    --------------------------------------------
+                    Render DataTable
+                    --------------------------------------------
+                    --------------------------------------------*/
 
         function newexportaction(e, dt, button, config) {
             var self = this;
@@ -848,7 +848,7 @@
                     },
                     success: function(data) {
                         $('.fetched-data-karyawan').html(
-                        data); //menampilkan data ke dalam modal
+                            data); //menampilkan data ke dalam modal
                         // alert(itemTables);
                     }
                 }).done(function() {
@@ -898,7 +898,7 @@
                                 console.log('Completed.');
                                 $('#submitCheck').html(
                                     '<svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-device-floppy" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><path d="M6 4h10l4 4v10a2 2 0 0 1 -2 2h-12a2 2 0 0 1 -2 -2v-12a2 2 0 0 1 2 -2" /><path d="M12 14m-2 0a2 2 0 1 0 4 0a2 2 0 1 0 -4 0" /><path d="M14 4l0 4l-6 0l0 -4" /></svg> Simpan'
-                                    );
+                                );
                                 $("#submitCheck").attr("disabled", false);
                                 tableWawancara.ajax.reload();
                                 const Toast = Swal.mixin({
@@ -931,7 +931,7 @@
                                 });
                                 $('#submitCheck').html(
                                     '<svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-device-floppy" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><path d="M6 4h10l4 4v10a2 2 0 0 1 -2 2h-12a2 2 0 0 1 -2 -2v-12a2 2 0 0 1 2 -2" /><path d="M12 14m-2 0a2 2 0 1 0 4 0a2 2 0 1 0 -4 0" /><path d="M14 4l0 4l-6 0l0 -4" /></svg> Simpan'
-                                    );
+                                );
                                 $("#submitCheck").attr("disabled", false);
                             }
                         });
@@ -979,7 +979,7 @@
                                 console.log('Completed.');
                                 $('#submitCheckXmark').html(
                                     '<svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-device-floppy" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><path d="M6 4h10l4 4v10a2 2 0 0 1 -2 2h-12a2 2 0 0 1 -2 -2v-12a2 2 0 0 1 2 -2" /><path d="M12 14m-2 0a2 2 0 1 0 4 0a2 2 0 1 0 -4 0" /><path d="M14 4l0 4l-6 0l0 -4" /></svg> Simpan'
-                                    );
+                                );
                                 $("#submitCheckXmark").attr("disabled", false);
                                 tableWawancara.ajax.reload();
                                 const Toast = Swal.mixin({
@@ -1012,7 +1012,7 @@
                                 });
                                 $('#submitCheckXmark').html(
                                     '<svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-device-floppy" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><path d="M6 4h10l4 4v10a2 2 0 0 1 -2 2h-12a2 2 0 0 1 -2 -2v-12a2 2 0 0 1 2 -2" /><path d="M12 14m-2 0a2 2 0 1 0 4 0a2 2 0 1 0 -4 0" /><path d="M14 4l0 4l-6 0l0 -4" /></svg> Simpan'
-                                    );
+                                );
                                 $("#submitCheckXmark").attr("disabled", false);
                             }
                         });
