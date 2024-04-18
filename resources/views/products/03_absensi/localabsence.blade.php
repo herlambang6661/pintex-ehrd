@@ -14,13 +14,13 @@
 
         td.cuspad2 {
             /* padding-top: 0.5px;
-                        padding-bottom: 0.5px;
-                        padding-right: 0.5px;
-                        padding-left: 0.5px;
-                        margin-top: 5px;
-                        margin-bottom: 5px;
-                        margin-right: 5px;
-                        margin-left: 5px; */
+                            padding-bottom: 0.5px;
+                            padding-right: 0.5px;
+                            padding-left: 0.5px;
+                            margin-top: 5px;
+                            margin-bottom: 5px;
+                            margin-right: 5px;
+                            margin-left: 5px; */
         }
 
         .unselectable {
@@ -83,7 +83,7 @@
                                         {{-- <input type="date" name="tgl" id="tgl" class="form-control border-blue" value="{{ date('Y-m-d') }}"> --}}
 
                                         <div class="input-icon ">
-                                            <input type="date" class="form-control border-primary tgl"
+                                            <input class="form-control border-primary tgl" id="datepicker2"
                                                 placeholder="Select a date" value="<?= date('Y-m-d') ?>" />
                                             <span class="input-icon-addon">
                                                 <svg xmlns="http://www.w3.org/2000/svg" class="icon" width="24"

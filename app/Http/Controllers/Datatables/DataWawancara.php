@@ -55,7 +55,7 @@ class DataWawancara extends Controller
 
                 ->addColumn('action', function ($row) {
                     $btn = ' <a href="javascript:void(0)" data-toggle="tooltip" data-item="' . $row->nik . '" data-id="' . $row->id . '" data-original-title="Delete" class="btn btn-sm btn-outline-info btn-icon deleteProduct"><i class="fa-solid fa-fw fa-eye"></i></a>';
-                    $btn = $btn . ' <a href="javascript:void(0)" data-toggle="tooltip" data-noform="' . $row->noformwawancara . '" data-nama="' . $row->nama . '" data-id="' . $row->id . '" data-original-title="Delete" class="btn btn-sm btn-outline-warning btn-icon cancelWawancara"><i class="fa-solid fa-arrow-rotate-left"></i></a>';
+                    // $btn = $btn . ' <a href="javascript:void(0)" data-toggle="tooltip" data-noform="' . $row->noformwawancara . '" data-nama="' . $row->nama . '" data-id="' . $row->id . '" data-original-title="Delete" class="btn btn-sm btn-outline-warning btn-icon cancelWawancara"><i class="fa-solid fa-arrow-rotate-left"></i></a>';
                     // $btn = $btn . ' <a href="javascript:void(0)" data-toggle="tooltip" class="btn btn-outline-green btn-icon"><i class="fa-solid fa-check"></i></a>';
                     // $btn = $btn . ' <a href="javascript:void(0)" data-toggle="tooltip" class="btn btn-outline-red btn-icon"><i class="fa-solid fa-xmark"></i></a>';
                     return $btn;

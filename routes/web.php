@@ -151,6 +151,7 @@ Route::controller(Penerimaan::class)->group(function () {
     Route::post('checkWawancara', 'checkWawancara');
     Route::post('checkWawancaraX', 'checkWawancaraX');
     Route::post('storeChecklistWawancara', 'storeChecklistWawancara');
+    Route::post('storeHasilWawancara', 'storeHasilWawancara');
     Route::post('listKaryawan', 'listKaryawan');
     Route::post('listStb', 'listStb');
     Route::get('penerimaan/legalitas/edit/{id}', 'legalEdit')->name('penerimaan/legalitas/edit/{id}');

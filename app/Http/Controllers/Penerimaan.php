@@ -548,26 +548,211 @@ class Penerimaan extends Controller
                         </div>
                     </div>
                 </div>';
-            echo '<div class="row row-cards text-center">
-                    <div class="col-lg-12">
-                        <div class="card">
-                            <div class="">
-                                <table class="table table-vcenter card-table table-sm table-striped table-hover">
-                                    <thead class="text-center">
-                                        <tr>
-                                            <th class="w-8">Opsi Cepat</th>
-                                            <th>Nama</th>
-                                            <th class="w-1">Tinggi</th>
-                                            <th class="w-1">Berat</th>
-                                            <th class="w-1">Buta Warna</th>
-                                            <th class="w-1">Mata Minus</th>
-                                            <th class="w-1">Bersikap Baik</th>
-                                            <th class="w-1">Jalan Cepat</th>
-                                            <th class="w-1"></th>
-                                            <th class="w-8">Status</th>
-                                        </tr>
-                                    </thead>
-                                    <tbody>';
+            // echo '<div class="row row-cards text-center">
+            //         <div class="col-lg-12">
+            //             <div class="table-responsive" style="height:350px">
+            //                 <div class="border border-dark shadow">
+            //                     <table class="table table-vcenter card-table table-sm table-striped table-hover">
+            //                         <thead class="text-center border border-dark">
+            //                             <tr>
+            //                                 <th class="w-8">Opsi Cepat</th>
+            //                                 <th>Nama</th>
+            //                                 <th class="w-1">Tinggi</th>
+            //                                 <th class="w-1">Berat</th>
+            //                                 <th class="w-1">Buta Warna</th>
+            //                                 <th class="w-1">Mata Minus</th>
+            //                                 <th class="w-1">Bersikap Baik</th>
+            //                                 <th class="w-1">Jalan Cepat</th>
+            //                                 <th class="w-1"></th>
+            //                                 <th class="w-8">Status</th>
+            //                             </tr>
+            //                         </thead>
+            //                         <tbody class="border border-dark">';
+            // for ($i = 0; $i < $jml; $i++) {
+            //     $data = DB::table('penerimaan_lamaran')->where('id', $request->id[$i])->get();
+            //     foreach ($data as $u) {
+            //         if ($u->diterima == 1) {
+            //             echo '
+            //                 <div class="col-md-4 col-lg-12">
+            //                     <div class="card shadow bg-red-lt">
+            //                         <div class="card-body p-4 text-center">
+            //                             <span class="avatar avatar-xl mb-3 rounded" style="background-image: url(./static/avatars/000m.jpg); width:200px; height:200px;"></span>
+            //                             <h3 class="m-0 mb-1"><a href="#">' . $u->nama . '</a></h3>
+            //                             <div class="text-secondary">' . $u->posisi . '</div>
+            //                             <div class="mt-3">
+            //                             <span class="badge bg-danger">Sudah Diterima Sebagai Karyawan</span>
+            //                             </div>
+            //                         </div>
+            //                     </div>
+            //                 </div>
+            //             ';
+            //         } else {
+            //             // input hidden
+            //             echo '
+            //                             <input type="hidden" id="gender' . $request->id[$i] . '" value="' . strtoupper($u->gender) . '">
+            //                             <input type="hidden" name="idlamaran[]" value="' . $u->id . '">
+            //                             <input type="hidden" name="entitas[]" value="' . $u->entitas . '">
+            //                             <input type="hidden" name="nik[]" value="' . $u->nik . '">
+            //                             <input type="hidden" name="nama[]" value="' . $u->nama . '">
+            //                             <input type="hidden" name="gender[]" value="' . $u->gender . '">
+            //                             <input type="hidden" name="tempat[]" value="' . $u->tempat . '">
+            //                             <input type="hidden" name="tgllahir[]" value="' . $u->tgllahir . '">
+            //                             <input type="hidden" name="sekolah[]" value="' . $u->sekolah . '">
+            //                             <input type="hidden" name="pendidikan[]" value="' . $u->pendidikan . '">
+            //                             <input type="hidden" name="jurusan[]" value="' . $u->jurusan . '">
+            //                             <input type="hidden" name="alamat[]" value="' . $u->alamat . '">
+            //                             <input type="hidden" name="agama[]" value="' . $u->agama . '">
+            //                             <input type="hidden" name="notlp[]" value="' . $u->notlp . '">
+            //                             <input type="hidden" name="posisi[]" value="' . $u->posisi . '">
+            //                             <input type="hidden" name="email[]" value="' . $u->email . '">
+            //                             <input type="hidden" name="keterangan[]" value="' . $u->keterangan . '">
+            //                             <input type="hidden" name="wawancara[]" value="' . $u->wawancara . '">
+            //                             <input type="hidden" name="noformwawancara[]" value="' . $u->noformwawancara . '">
+            //                             <input type="hidden" name="sst[]" id="sst' . $request->id[$i] . '" value="1">
+            //             ';
+            //             echo '
+            //                             <tr>
+            //                                 <td>
+            //                                     <div class="form-selectgroup">
+            //                                         <label class="form-selectgroup-item bg-green-lt">
+            //                                             <input type="radio" name="icons-' . $request->id[$i] . '" id="iconv-' . $request->id[$i] . '" value="check" class="form-selectgroup-input" checked onclick="status(' . $request->id[$i] . ', 1)">
+            //                                             <span class="form-selectgroup-label text-success">
+            //                                                 <i class="fa-solid fa-check"></i>
+            //                                             </span>
+            //                                         </label>
+            //                                         <label class="form-selectgroup-item bg-red-lt">
+            //                                             <input type="radio" name="icons-' . $request->id[$i] . '" id="iconx-' . $request->id[$i] . '" value="xmark" class="form-selectgroup-input" onclick="status(' . $request->id[$i] . ', 0)">
+            //                                             <span class="form-selectgroup-label text-warning">
+            //                                                 <i class="fa-solid fa-xmark"></i>
+            //                                             </span>
+            //                                         </label>    
+            //                                     </div>
+            //                                 </td>
+            //                                 <td>' . $u->nama . '</td>
+            //                                 <td><input type="number" name="tinggi[]" id="tinggi' . $request->id[$i] . '" class="form-control" style="width:70px" value="' . $u->tinggi . '" onchange="fetchKar(' . $request->id[$i] . ')" onkeydown = "if (event.keyCode == 13)  fetchKar(' . $request->id[$i] . ')"></td>
+            //                                 <td><input type="number" name="berat[]" class="form-control" style="width:70px" value="' . $u->berat . '"></td>
+            //                                 <td class="text-center">
+            //                                     <input name="butawarna[]" id="butawarna' . $request->id[$i] . '" class="form-check-input" type="checkbox">
+            //                                 </td>
+            //                                 <td>
+            //                                     <input name="mataminus[]" id="mataminus' . $request->id[$i] . '" class="form-check-input" type="checkbox">
+            //                                 </td>
+            //                                 <td>
+            //                                     <input name="sikapbaik[]" id="sikapbaik' . $request->id[$i] . '" class="form-check-input" type="checkbox" checked="true">
+            //                                 </td>
+            //                                 <td>
+            //                                     <input name="jalancepat[]" id="jalancepat' . $request->id[$i] . '" class="form-check-input" type="checkbox" checked="true">
+            //                                 </td>
+            //                                 <td><span id="status' . $request->id[$i] . '" class="badge bg-green">Diterima</span></td>
+            //                                 <td>
+            //                                     <select class="form-select" name="diterimasebagai[]">
+            //                                         <option>OL</option>
+            //                                         <option>PHL</option>
+            //                                         <option>Kontrak</option>
+            //                                     </select>
+            //                                 </td>
+            //                             </tr>
+            //             ';
+            //         }
+            //     }
+            //     echo '
+
+            //                             <script>
+            //                                 function fetchKar(params){
+            //                                     var tinggi = $("#tinggi" + params).val();
+            //                                     var gender = $("#gender" + params).val();
+            //                                     if(gender=="PRIA"){
+            //                                         if(tinggi < 160){
+            //                                             document.getElementById("status"+ params).innerHTML = "Ditolak";
+            //                                             $("#status"+ params).removeClass("bg-green").addClass("bg-red");
+            //                                             $("#iconv-" + params).removeAttr("checked");
+            //                                             $("#iconx-" + params).attr("checked", true);
+            //                                             $("#sst" + params).val("0");
+            //                                         } else {
+            //                                             document.getElementById("status"+ params).innerHTML = "Diterima";
+            //                                             $("#status"+ params).removeClass("bg-red").addClass("bg-green");
+            //                                             $("#iconx-" + params).removeAttr("checked");
+            //                                             $("#iconv-" + params).attr("checked", true);
+            //                                             $("#sst" + params).val("1");
+            //                                         }
+            //                                     } else if(gender=="WANITA"){
+            //                                         if(tinggi < 155){
+            //                                             document.getElementById("status"+ params).innerHTML = "Ditolak";
+            //                                             $("#status"+ params).removeClass("bg-green").addClass("bg-red");
+            //                                             $("#sst" + params).val("0");
+            //                                         } else {
+            //                                             document.getElementById("status"+ params).innerHTML = "Diterima";
+            //                                             $("#status"+ params).removeClass("bg-red").addClass("bg-green");
+            //                                             $("#sst" + params).val("1");
+            //                                         }
+            //                                     }
+            //                                 }
+
+            //                                 function status(params, val){
+            //                                     var gender = $("#gender" + params).val();
+            //                                     var tinggi = $("#tinggi" + params).val();
+            //                                     if(gender=="PRIA"){
+            //                                         if(val == 1 && tinggi >= 160){
+            //                                             document.getElementById("status"+ params).innerHTML = "Diterima";
+            //                                             $("#iconx-" + params).removeAttr("checked");
+            //                                             $("#iconv-" + params).attr("checked", true);
+            //                                             $("#status"+ params).removeClass("bg-red").addClass("bg-green");
+            //                                             $("#sst" + params).val("1");
+
+            //                                             $("#butawarna" + params).attr("checked", false);
+            //                                             $("#mataminus" + params).attr("checked", false);
+            //                                             $("#sikapbaik" + params).attr("checked", true);
+            //                                             $("#jalancepat" + params).attr("checked", true);
+            //                                         } else if(val == 0){
+            //                                             document.getElementById("status"+ params).innerHTML = "Ditolak";
+            //                                             $("#iconv-" + params).removeAttr("checked");
+            //                                             $("#iconx-" + params).attr("checked", true);
+            //                                             $("#status"+ params).removeClass("bg-green").addClass("bg-red");
+            //                                             $("#sst" + params).val("0");
+
+            //                                             $("#butawarna" + params).attr("checked", true);
+            //                                             $("#mataminus" + params).attr("checked", true);
+            //                                             $("#sikapbaik" + params).attr("checked", false);
+            //                                             $("#jalancepat" + params).attr("checked", false);
+            //                                         }
+            //                                     } else if(gender=="WANITA"){
+            //                                         if(val == 1 && tinggi >= 155){
+            //                                             document.getElementById("status"+ params).innerHTML = "Diterima";
+            //                                             $("#iconx-" + params).removeAttr("checked");
+            //                                             $("#iconv-" + params).attr("checked", true);
+            //                                             $("#status"+ params).removeClass("bg-red").addClass("bg-green");
+            //                                             $("#sst" + params).val("1");
+
+            //                                             $("#butawarna" + params).attr("checked", false);
+            //                                             $("#mataminus" + params).attr("checked", false);
+            //                                             $("#sikapbaik" + params).attr("checked", true);
+            //                                             $("#jalancepat" + params).attr("checked", true);
+            //                                         } else if(val == 0){
+            //                                             document.getElementById("status"+ params).innerHTML = "Ditolak";
+            //                                             $("#iconv-" + params).removeAttr("checked");
+            //                                             $("#iconx-" + params).attr("checked", true);
+            //                                             $("#status"+ params).removeClass("bg-green").addClass("bg-red");
+            //                                             $("#sst" + params).val("0");
+
+            //                                             $("#butawarna" + params).attr("checked", true);
+            //                                             $("#mataminus" + params).attr("checked", true);
+            //                                             $("#sikapbaik" + params).attr("checked", false);
+            //                                             $("#jalancepat" + params).attr("checked", false);
+            //                                         }
+            //                                     }
+            //                                 }
+
+            //                             </script>
+            //     ';
+            // }
+            // echo '                  </tbody>
+            //                     </table>
+            //                 </div>
+            //             </div>
+            //         </div>
+            //     </div>
+            //     ';
+
             for ($i = 0; $i < $jml; $i++) {
                 $data = DB::table('penerimaan_lamaran')->where('id', $request->id[$i])->get();
                 foreach ($data as $u) {
@@ -585,144 +770,197 @@ class Penerimaan extends Controller
                                     </div>
                                 </div>
                             </div>
-                        
                         ';
                     } else {
+                        // input hidden
                         echo '
-                                <tr>
-                                    <input type="hidden" id="gender' . $request->id[$i] . '" value="' . strtoupper($u->gender) . '">
-                                    <td>
-                                        <div class="form-selectgroup">
-                                        <label class="form-selectgroup-item bg-green-lt">
-                                            <input type="radio" name="icons-' . $request->id[$i] . '" id="iconv-' . $request->id[$i] . '" value="check" class="form-selectgroup-input" checked onclick="status(' . $request->id[$i] . ', 1)">
-                                            <span class="form-selectgroup-label text-success">
-                                                <i class="fa-solid fa-check"></i>
-                                            </span>
-                                        </label>
-                                        <label class="form-selectgroup-item bg-red-lt">
-                                            <input type="radio" name="icons-' . $request->id[$i] . '" id="iconx-' . $request->id[$i] . '" value="xmark" class="form-selectgroup-input" onclick="status(' . $request->id[$i] . ', 0)">
-                                            <span class="form-selectgroup-label text-warning">
-                                                <i class="fa-solid fa-xmark"></i>
-                                            </span>
-                                        </label>    
-                                        </div>
-                                    </td>
-                                    <td>' . $u->nama . '</td>
-                                    <td><input type="number" name="tinggi[]" id="tinggi' . $request->id[$i] . '" class="form-control" style="width:70px" value="' . $u->tinggi . '" onchange="fetchKar(' . $request->id[$i] . ')" onkeydown = "if (event.keyCode == 13)  fetchKar(' . $request->id[$i] . ')"></td>
-                                    <td><input type="number" name="berat[]" class="form-control" style="width:70px" value="' . $u->berat . '"></td>
-                                    <td class="text-center">
-                                        <input name="butawarna[]" id="butawarna' . $request->id[$i] . '" class="form-check-input" type="checkbox">
-                                    </td>
-                                    <td>
-                                        <input name="mataminus[]" id="mataminus' . $request->id[$i] . '" class="form-check-input" type="checkbox">
-                                    </td>
-                                    <td>
-                                        <input name="sikapbaik[]" id="sikapbaik' . $request->id[$i] . '" class="form-check-input" type="checkbox" checked="true">
-                                    </td>
-                                    <td>
-                                        <input name="jalancepat[]" id="jalancepat' . $request->id[$i] . '" class="form-check-input" type="checkbox" checked="true">
-                                    </td>
-                                    <td><span id="status' . $request->id[$i] . '" class="badge bg-green">Diterima</span></td>
-                                    <td>
-                                        <select class="form-select">
-                                            <option>OL</option>
-                                            <option>PHL</option>
-                                            <option>Kontrak</option>
-                                        </select>
-                                    </td>
-                                </tr>
+                            <input type="hidden" id="gender' . $request->id[$i] . '" value="' . strtoupper($u->gender) . '">
+                            <input type="hidden" name="idlamaran[]" value="' . $u->id . '">
+                            <input type="hidden" name="entitas[]" value="' . $u->entitas . '">
+                            <input type="hidden" name="nik[]" value="' . $u->nik . '">
+                            <input type="hidden" name="nama[]" value="' . $u->nama . '">
+                            <input type="hidden" name="gender[]" value="' . $u->gender . '">
+                            <input type="hidden" name="tempat[]" value="' . $u->tempat . '">
+                            <input type="hidden" name="tgllahir[]" value="' . $u->tgllahir . '">
+                            <input type="hidden" name="sekolah[]" value="' . $u->sekolah . '">
+                            <input type="hidden" name="pendidikan[]" value="' . $u->pendidikan . '">
+                            <input type="hidden" name="jurusan[]" value="' . $u->jurusan . '">
+                            <input type="hidden" name="alamat[]" value="' . $u->alamat . '">
+                            <input type="hidden" name="agama[]" value="' . $u->agama . '">
+                            <input type="hidden" name="notlp[]" value="' . $u->notlp . '">
+                            <input type="hidden" name="posisi[]" value="' . $u->posisi . '">
+                            <input type="hidden" name="email[]" value="' . $u->email . '">
+                            <input type="hidden" name="keterangan[]" value="' . $u->keterangan . '">
+                            <input type="hidden" name="wawancara[]" value="' . $u->wawancara . '">
+                            <input type="hidden" name="noformwawancara[]" value="' . $u->noformwawancara . '">
+                            <input type="hidden" name="sst[]" id="sst' . $request->id[$i] . '" value="1">
+                        ';
+                        echo '
+                            <div class="row row-cards">
+                                <div class="card mb-2 shadow" style="border-color:' . '#' . str_pad(dechex(rand(0x000000, 0xFFFFFF)), 6, 0, STR_PAD_LEFT) . '">
+                                    <div class="card-header">
+                                        <h3 class="card-title">' . $u->nama . '</h3>
+                                    </div>
+                                    <div class="ribbon ribbon-top bg-green">
+                                        <i class="fa-solid fa-user-check"></i>
+                                    </div>
+                                    <div class="table-responsive">
+                                        <table class="table table-vcenter card-table">
+                                            <thead>
+                                                <tr>
+                                                    <th class="w-8">Opsi Cepat</th>
+                                                    <th class="w-1">Tinggi</th>
+                                                    <th class="w-1">Berat</th>
+                                                    <th class="w-1">Buta Warna</th>
+                                                    <th class="w-1">Mata Minus</th>
+                                                    <th class="w-1">Bersikap Baik</th>
+                                                    <th class="w-1">Jalan Cepat</th>
+                                                    <th class="w-1"></th>
+                                                    <th class="w-8">Penempatan</th>
+                                                    <th class="w-8">Tanggal</th>
+                                                </tr>
+                                            </thead>
+                                            <tbody>
+                                                <tr>
+                                                    <td>
+                                                        <div class="form-selectgroup">
+                                                            <label class="form-selectgroup-item bg-green-lt">
+                                                                <input type="radio" name="icons-' . $request->id[$i] . '" id="iconv-' . $request->id[$i] . '" value="check" class="form-selectgroup-input" checked onclick="status(' . $request->id[$i] . ', 1)">
+                                                                <span class="form-selectgroup-label text-success">
+                                                                    <i class="fa-solid fa-check"></i>
+                                                                </span>
+                                                            </label>
+                                                            <label class="form-selectgroup-item bg-red-lt">
+                                                                <input type="radio" name="icons-' . $request->id[$i] . '" id="iconx-' . $request->id[$i] . '" value="xmark" class="form-selectgroup-input" onclick="status(' . $request->id[$i] . ', 0)">
+                                                                <span class="form-selectgroup-label text-warning">
+                                                                    <i class="fa-solid fa-xmark"></i>
+                                                                </span>
+                                                            </label>    
+                                                        </div>
+                                                    </td>
+                                                    <td><input type="number" name="tinggi[]" id="tinggi' . $request->id[$i] . '" class="form-control" style="width:70px" value="' . $u->tinggi . '" onchange="fetchKar(' . $request->id[$i] . ')" onkeydown = "if (event.keyCode == 13)  fetchKar(' . $request->id[$i] . ')"></td>
+                                                    <td><input type="number" name="berat[]" class="form-control" style="width:70px" value="' . $u->berat . '"></td>
+                                                    <td class="text-center">
+                                                        <input name="butawarna[]" id="butawarna' . $request->id[$i] . '" class="form-check-input" type="checkbox">
+                                                    </td>
+                                                    <td>
+                                                        <input name="mataminus[]" id="mataminus' . $request->id[$i] . '" class="form-check-input" type="checkbox">
+                                                    </td>
+                                                    <td>
+                                                        <input name="sikapbaik[]" id="sikapbaik' . $request->id[$i] . '" class="form-check-input" type="checkbox" checked="true">
+                                                    </td>
+                                                    <td>
+                                                        <input name="jalancepat[]" id="jalancepat' . $request->id[$i] . '" class="form-check-input" type="checkbox" checked="true">
+                                                    </td>
+                                                    <td><span id="status' . $request->id[$i] . '" class="badge bg-green">Diterima</span></td>
+                                                    <td>
+                                                        <select class="form-select" name="diterimasebagai[]">
+                                                            <option>OL</option>
+                                                            <option>PHL</option>
+                                                            <option>Kontrak</option>
+                                                        </select>
+                                                    </td>
+                                                </tr>
+                                            </tbody>
+                                        </table>
+                                    </div>
+                                </div>
+                            </div>
+                                        
+                        ';
+
+                        echo '
+
+                                                <script>
+                                                    function fetchKar(params){
+                                                        var tinggi = $("#tinggi" + params).val();
+                                                        var gender = $("#gender" + params).val();
+                                                        if(gender=="PRIA"){
+                                                            if(tinggi < 160){
+                                                                document.getElementById("status"+ params).innerHTML = "Ditolak";
+                                                                $("#status"+ params).removeClass("bg-green").addClass("bg-red");
+                                                                $("#iconv-" + params).removeAttr("checked");
+                                                                $("#iconx-" + params).attr("checked", true);
+                                                                $("#sst" + params).val("0");
+                                                            } else {
+                                                                document.getElementById("status"+ params).innerHTML = "Diterima";
+                                                                $("#status"+ params).removeClass("bg-red").addClass("bg-green");
+                                                                $("#iconx-" + params).removeAttr("checked");
+                                                                $("#iconv-" + params).attr("checked", true);
+                                                                $("#sst" + params).val("1");
+                                                            }
+                                                        } else if(gender=="WANITA"){
+                                                            if(tinggi < 155){
+                                                                document.getElementById("status"+ params).innerHTML = "Ditolak";
+                                                                $("#status"+ params).removeClass("bg-green").addClass("bg-red");
+                                                                $("#sst" + params).val("0");
+                                                            } else {
+                                                                document.getElementById("status"+ params).innerHTML = "Diterima";
+                                                                $("#status"+ params).removeClass("bg-red").addClass("bg-green");
+                                                                $("#sst" + params).val("1");
+                                                            }
+                                                        }
+                                                    }
+
+                                                    function status(params, val){
+                                                        var gender = $("#gender" + params).val();
+                                                        var tinggi = $("#tinggi" + params).val();
+                                                        if(gender=="PRIA"){
+                                                            if(val == 1 && tinggi >= 160){
+                                                                document.getElementById("status"+ params).innerHTML = "Diterima";
+                                                                $("#iconx-" + params).removeAttr("checked");
+                                                                $("#iconv-" + params).attr("checked", true);
+                                                                $("#status"+ params).removeClass("bg-red").addClass("bg-green");
+                                                                $("#sst" + params).val("1");
+
+                                                                $("#butawarna" + params).attr("checked", false);
+                                                                $("#mataminus" + params).attr("checked", false);
+                                                                $("#sikapbaik" + params).attr("checked", true);
+                                                                $("#jalancepat" + params).attr("checked", true);
+                                                            } else if(val == 0){
+                                                                document.getElementById("status"+ params).innerHTML = "Ditolak";
+                                                                $("#iconv-" + params).removeAttr("checked");
+                                                                $("#iconx-" + params).attr("checked", true);
+                                                                $("#status"+ params).removeClass("bg-green").addClass("bg-red");
+                                                                $("#sst" + params).val("0");
+
+                                                                $("#butawarna" + params).attr("checked", true);
+                                                                $("#mataminus" + params).attr("checked", true);
+                                                                $("#sikapbaik" + params).attr("checked", false);
+                                                                $("#jalancepat" + params).attr("checked", false);
+                                                            }
+                                                        } else if(gender=="WANITA"){
+                                                            if(val == 1 && tinggi >= 155){
+                                                                document.getElementById("status"+ params).innerHTML = "Diterima";
+                                                                $("#iconx-" + params).removeAttr("checked");
+                                                                $("#iconv-" + params).attr("checked", true);
+                                                                $("#status"+ params).removeClass("bg-red").addClass("bg-green");
+                                                                $("#sst" + params).val("1");
+
+                                                                $("#butawarna" + params).attr("checked", false);
+                                                                $("#mataminus" + params).attr("checked", false);
+                                                                $("#sikapbaik" + params).attr("checked", true);
+                                                                $("#jalancepat" + params).attr("checked", true);
+                                                            } else if(val == 0){
+                                                                document.getElementById("status"+ params).innerHTML = "Ditolak";
+                                                                $("#iconv-" + params).removeAttr("checked");
+                                                                $("#iconx-" + params).attr("checked", true);
+                                                                $("#status"+ params).removeClass("bg-green").addClass("bg-red");
+                                                                $("#sst" + params).val("0");
+
+                                                                $("#butawarna" + params).attr("checked", true);
+                                                                $("#mataminus" + params).attr("checked", true);
+                                                                $("#sikapbaik" + params).attr("checked", false);
+                                                                $("#jalancepat" + params).attr("checked", false);
+                                                            }
+                                                        }
+                                                    }
+
+                                                </script>
                         ';
                     }
                 }
-                echo '
-                    
-                                <script>
-                                    function fetchKar(params){
-                                        var tinggi = $("#tinggi" + params).val();
-                                        var gender = $("#gender" + params).val();
-                                        if(gender=="PRIA"){
-                                            if(tinggi < 160){
-                                                document.getElementById("status"+ params).innerHTML = "Ditolak";
-                                                $("#status"+ params).removeClass("bg-green").addClass("bg-red");
-                                                $("#iconv-" + params).removeAttr("checked");
-                                                $("#iconx-" + params).attr("checked", true);
-                                            } else {
-                                                document.getElementById("status"+ params).innerHTML = "Diterima";
-                                                $("#status"+ params).removeClass("bg-red").addClass("bg-green");
-                                                $("#iconx-" + params).removeAttr("checked");
-                                                $("#iconv-" + params).attr("checked", true);
-                                            }
-                                        } else if(gender=="WANITA"){
-                                            if(tinggi < 155){
-                                                document.getElementById("status"+ params).innerHTML = "Ditolak";
-                                                $("#status"+ params).removeClass("bg-green").addClass("bg-red");
-                                            } else {
-                                                document.getElementById("status"+ params).innerHTML = "Diterima";
-                                                $("#status"+ params).removeClass("bg-red").addClass("bg-green");
-                                            }
-                                        }
-                                    }
-
-                                    function status(params, val){
-                                        var gender = $("#gender" + params).val();
-                                        var tinggi = $("#tinggi" + params).val();
-                                        if(gender=="PRIA"){
-                                            if(val == 1 && tinggi >= 160){
-                                                document.getElementById("status"+ params).innerHTML = "Diterima";
-                                                $("#iconx-" + params).removeAttr("checked");
-                                                $("#iconv-" + params).attr("checked", true);
-                                                $("#status"+ params).removeClass("bg-red").addClass("bg-green");
-                                                
-                                                $("#butawarna" + params).attr("checked", false);
-                                                $("#mataminus" + params).attr("checked", false);
-                                                $("#sikapbaik" + params).attr("checked", true);
-                                                $("#jalancepat" + params).attr("checked", true);
-                                            } else if(val == 0){
-                                                document.getElementById("status"+ params).innerHTML = "Ditolak";
-                                                $("#iconv-" + params).removeAttr("checked");
-                                                $("#iconx-" + params).attr("checked", true);
-                                                $("#status"+ params).removeClass("bg-green").addClass("bg-red");
-                                                
-                                                $("#butawarna" + params).attr("checked", true);
-                                                $("#mataminus" + params).attr("checked", true);
-                                                $("#sikapbaik" + params).attr("checked", false);
-                                                $("#jalancepat" + params).attr("checked", false);
-                                            }
-                                        } else if(gender=="WANITA"){
-                                            if(val == 1 && tinggi >= 155){
-                                                document.getElementById("status"+ params).innerHTML = "Diterima";
-                                                $("#iconx-" + params).removeAttr("checked");
-                                                $("#iconv-" + params).attr("checked", true);
-                                                $("#status"+ params).removeClass("bg-red").addClass("bg-green");
-                                                
-                                                $("#butawarna" + params).attr("checked", false);
-                                                $("#mataminus" + params).attr("checked", false);
-                                                $("#sikapbaik" + params).attr("checked", true);
-                                                $("#jalancepat" + params).attr("checked", true);
-                                            } else if(val == 0){
-                                                document.getElementById("status"+ params).innerHTML = "Ditolak";
-                                                $("#iconv-" + params).removeAttr("checked");
-                                                $("#iconx-" + params).attr("checked", true);
-                                                $("#status"+ params).removeClass("bg-green").addClass("bg-red");
-                                                
-                                                $("#butawarna" + params).attr("checked", true);
-                                                $("#mataminus" + params).attr("checked", true);
-                                                $("#sikapbaik" + params).attr("checked", false);
-                                                $("#jalancepat" + params).attr("checked", false);
-                                            }
-                                        }
-                                    }
-                                
-                                </script>
-                ';
             }
-            echo '                  </tbody>
-                                </table>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                ';
         }
         // return $result;
     }
@@ -1004,6 +1242,105 @@ class Penerimaan extends Controller
         if ($check) {
             $arr = array('msg' => 'Data telah berhasil diproses', 'status' => true);
         }
+        return Response()->json($arr);
+    }
+
+    public function storeHasilWawancara(Request $request)
+    {
+        $request->validate(
+            [
+                '_token' => 'required',
+                'idlamaran' => 'required',
+            ],
+        );
+        $jml = count($request->idlamaran);
+
+        for ($i = 0; $i < $jml; $i++) {
+            $check = DB::table('penerimaan_wawancara')
+                ->where('idlamaran', $request->idlamaran[$i])
+                ->orderBy('noform', 'desc')
+                ->limit(1)
+                ->update(
+                    array(
+                        'remember_token' => $request->_token,
+                        'tglwawancara' => $request->tglwawancara,
+                        'butawarna' => isset($request->butawarna[$i]) ? 1 : 0,
+                        'mataminus' => isset($request->mataminus[$i]) ? 1 : 0,
+                        'sikapbaik' => isset($request->sikapbaik[$i]) ? 1 : 0,
+                        'jalancepat' => isset($request->jalancepat[$i]) ? 1 : 0,
+                        'keterangan' => $request->keterangan[$i],
+                        'diterima' => $request->sst[$i],
+                        'dibuat' => Auth::user()->name,
+                        'updated_at' => date('Y-m-d H:i:s'),
+                    )
+                );
+
+            DB::table('penerimaan_lamaran')
+                ->where('id', $request->idlamaran[$i])
+                ->limit(1)
+                ->update(
+                    array(
+                        'remember_token' => $request->_token,
+                        'diterima' => $request->sst[$i],
+                        'tinggi' => $request->tinggi[$i],
+                        'berat' => $request->berat[$i],
+                        'updated_at' => date('Y-m-d H:i:s'),
+                    )
+                );
+
+            $getDataLam = DB::table('penerimaan_lamaran')->where('id', $request->idlamaran[$i])->limit(1)->get();
+            foreach ($getDataLam as $l) {
+
+                // GET PHL
+                $noform = "0";
+                $checknoform = DB::table('penerimaan_karyawan')
+                    // ->where('stb', 'like', '%PHL%')
+                    ->orderBy('userid', 'desc')
+                    ->limit('1')
+                    ->get();
+                foreach ($checknoform as $key) {
+                    $noform = $key->userid;
+                }
+                if ($noform != "0") {
+                    $na = $noform + 1;
+                    $kode = $na;
+                } else {
+                    $kode = "1";
+                }
+                // GET PHL
+
+                DB::table('penerimaan_karyawan')->insert([
+                    'remember_token' => $request->_token,
+                    'entitas' => $l->entitas,
+                    'nik' => $l->nik,
+                    'userid' => $kode,
+                    'nama' => $l->nama,
+                    'gender' => $l->gender,
+                    'tempat' => $l->tempat,
+                    'tgllahir' => $l->tgllahir,
+                    'pendidikan' => $l->pendidikan,
+                    'jurusan' => $l->jurusan,
+                    'alamat' => $l->alamat,
+                    'agama' => $l->agama,
+                    'tinggi' => $l->tinggi,
+                    'berat' => $l->berat,
+                    'notlp' => $l->notlp,
+                    'email' => $l->email,
+
+                    'gapok' => 100000,
+                    'status' => 'OL',
+                    'keterangan' => $l->keterangan,
+                    'tglinput' => date('Y-m-d'),
+                    'dibuat' => Auth::user()->name,
+                    'created_at' => date('Y-m-d H:i:s'),
+                ]);
+            }
+        }
+        // $arr = array('msg' => 'Something goes to wrong. Please try later', 'status' => false);
+        $arr = array('msg' => 'Data telah berhasil diproses', 'status' => true);
+        // if ($check) {
+        //     $arr = array('msg' => 'Data telah berhasil diproses', 'status' => true);
+        // }
         return Response()->json($arr);
     }
 

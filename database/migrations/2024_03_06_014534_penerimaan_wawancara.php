@@ -20,8 +20,9 @@ return new class extends Migration
             $table->string('user')->nullable();
             $table->integer('diterima')->nullable();
             $table->integer('butawarna')->nullable();
+            $table->integer('mataminus')->nullable();
             $table->integer('sikapbaik')->nullable();
-            $table->integer('laricepat')->nullable();
+            $table->integer('jalancepat')->nullable();
             $table->longText('keterangan')->nullable();
             $table->string('dibuat')->nullable();
             $table->rememberToken();
