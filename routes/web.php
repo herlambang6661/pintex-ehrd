@@ -11,6 +11,7 @@ use App\Http\Controllers\Administrasi;
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\Datatables\DataOL;
 use App\Http\Controllers\Datatables\DataPos;
+use App\Http\Controllers\Datatables\DataLoker;
 use App\Http\Controllers\Datatables\DataShift;
 use App\Http\Controllers\Datatables\DataSurat;
 use App\Http\Controllers\Datatables\DataEntitas;
@@ -75,6 +76,7 @@ Route::resources([
     'getentitas' => DataEntitas::class,
     'getListKomunikasi' => DataKomunikasi::class,
     'getAccKomunikasi' => DataACCKomunikasi::class,
+    'getLoker' => DataLoker::class,
 ]);
 
 // Modules Auth

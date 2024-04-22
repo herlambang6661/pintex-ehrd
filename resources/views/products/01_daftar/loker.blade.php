@@ -14,13 +14,13 @@
 
         td.cuspad2 {
             /* padding-top: 0.5px;
-                                                                                                                                                                                                                                                                                                                                        padding-bottom: 0.5px;
-                                                                                                                                                                                                                                                                                                                                        padding-right: 0.5px;
-                                                                                                                                                                                                                                                                                                                                        padding-left: 0.5px;
-                                                                                                                                                                                                                                                                                                                                        margin-top: 5px;
-                                                                                                                                                                                                                                                                                                                                        margin-bottom: 5px;
-                                                                                                                                                                                                                                                                                                                                        margin-right: 5px;
-                                                                                                                                                                                                                                                                                                                                        margin-left: 5px; */
+                                                                                                                                                                                                                                                                                                                                                            padding-bottom: 0.5px;
+                                                                                                                                                                                                                                                                                                                                                            padding-right: 0.5px;
+                                                                                                                                                                                                                                                                                                                                                            padding-left: 0.5px;
+                                                                                                                                                                                                                                                                                                                                                            margin-top: 5px;
+                                                                                                                                                                                                                                                                                                                                                            margin-bottom: 5px;
+                                                                                                                                                                                                                                                                                                                                                            margin-right: 5px;
+                                                                                                                                                                                                                                                                                                                                                            margin-left: 5px; */
         }
 
         .overlay {
@@ -34,30 +34,30 @@
         }
 
         /* .cv-spinner {
-                                                                                                                                                                                                                                                                                                                                height: 100%;
-                                                                                                                                                                                                                                                                                                                                display: flex;
-                                                                                                                                                                                                                                                                                                                                justify-content: center;
-                                                                                                                                                                                                                                                                                                                                align-items: center;
-                                                                                                                                                                                                                                                                                                                            }
+                                                                                                                                                                                                                                                                                                                                                    height: 100%;
+                                                                                                                                                                                                                                                                                                                                                    display: flex;
+                                                                                                                                                                                                                                                                                                                                                    justify-content: center;
+                                                                                                                                                                                                                                                                                                                                                    align-items: center;
+                                                                                                                                                                                                                                                                                                                                                }
 
-                                                                                                                                                                                                                                                                                                                            .spinner {
-                                                                                                                                                                                                                                                                                                                                width: 40px;
-                                                                                                                                                                                                                                                                                                                                height: 40px;
-                                                                                                                                                                                                                                                                                                                                border: 4px #ddd solid;
-                                                                                                                                                                                                                                                                                                                                border-top: 4px #2e93e6 solid;
-                                                                                                                                                                                                                                                                                                                                border-radius: 50%;
-                                                                                                                                                                                                                                                                                                                                animation: sp-anime 0.8s infinite linear;
-                                                                                                                                                                                                                                                                                                                            }
+                                                                                                                                                                                                                                                                                                                                                .spinner {
+                                                                                                                                                                                                                                                                                                                                                    width: 40px;
+                                                                                                                                                                                                                                                                                                                                                    height: 40px;
+                                                                                                                                                                                                                                                                                                                                                    border: 4px #ddd solid;
+                                                                                                                                                                                                                                                                                                                                                    border-top: 4px #2e93e6 solid;
+                                                                                                                                                                                                                                                                                                                                                    border-radius: 50%;
+                                                                                                                                                                                                                                                                                                                                                    animation: sp-anime 0.8s infinite linear;
+                                                                                                                                                                                                                                                                                                                                                }
 
-                                                                                                                                                                                                                                                                                                                            @keyframes sp-anime {
-                                                                                                                                                                                                                                                                                                                                100% {
-                                                                                                                                                                                                                                                                                                                                    transform: rotate(360deg);
-                                                                                                                                                                                                                                                                                                                                }
-                                                                                                                                                                                                                                                                                                                            }
+                                                                                                                                                                                                                                                                                                                                                @keyframes sp-anime {
+                                                                                                                                                                                                                                                                                                                                                    100% {
+                                                                                                                                                                                                                                                                                                                                                        transform: rotate(360deg);
+                                                                                                                                                                                                                                                                                                                                                    }
+                                                                                                                                                                                                                                                                                                                                                }
 
-                                                                                                                                                                                                                                                                                                                            .is-hide {
-                                                                                                                                                                                                                                                                                                                                display: none;
-                                                                                                                                                                                                                                                                                                                            } */
+                                                                                                                                                                                                                                                                                                                                                .is-hide {
+                                                                                                                                                                                                                                                                                                                                                    display: none;
+                                                                                                                                                                                                                                                                                                                                                } */
         .loader {
             position: fixed;
             z-index: 301;
@@ -215,24 +215,6 @@
                                     <table style="width:100%; font-family: 'Trebuchet MS', Helvetica, sans-serif;"
                                         class="display table table-vcenter card-table table-sm table-striped table-bordered table-hover text-nowrap datatable-karyawan"
                                         id="tbkaryawan">
-                                        <thead>
-                                            <tr class="text-center">
-                                                <th>Opsi</th>
-                                                <th>Masuk</th>
-                                                <th>STB</th>
-                                                <th>NIK</th>
-                                                <th>Nama</th>
-                                                <th>Gender</th>
-                                                <th>Status</th>
-                                                <th>No Map</th>
-                                                <th>Bagian</th>
-                                                <th>Grup</th>
-                                                <th>Profesi</th>
-                                                <th>Pendidikan</th>
-                                                <th>Jurusan</th>
-                                                <th>Sidik Jari</th>
-                                            </tr>
-                                        </thead>
                                     </table>
                                 </div>
                             </div>
@@ -466,10 +448,10 @@
     </div>
     <script type="text/javascript">
         /*------------------------------------------
-                                                                    --------------------------------------------
-                                                                    Render DataTable
-                                                                    --------------------------------------------
-                                                                    --------------------------------------------*/
+                                                                                        --------------------------------------------
+                                                                                        Render DataTable
+                                                                                        --------------------------------------------
+                                                                                        --------------------------------------------*/
 
         function newexportaction(e, dt, button, config) {
             var self = this;
@@ -584,7 +566,7 @@
                     //     }
                     // },
                 },
-                ajax: "{{ route('getKaryawan.index') }}",
+                ajax: "{{ route('getLoker.index') }}",
                 // columnDefs: [{
                 //         'targets': 0,
                 //         "orderable": false,
@@ -599,15 +581,8 @@
                 //     'style': 'multi',
                 //     "selector": 'td:not(:last-child)',
                 // },
-                columns: [
-                    // {
-                    //     data: 'select_orders',
-                    //     name: 'select_orders',
-                    //     className: 'cuspad2',
-                    //     orderable: false,
-                    //     searchable: false
-                    // },
-                    {
+                columns: [{
+                        title: 'Opsi',
                         data: 'action',
                         name: 'action',
                         orderable: false,
@@ -615,69 +590,21 @@
                         className: 'cuspad0 text-center'
                     },
                     {
-                        data: 'tglmasuk',
-                        name: 'tglmasuk',
+                        title: 'Posisi',
+                        data: 'posisi',
+                        name: 'posisi',
                         className: 'cuspad0 text-center'
                     },
                     {
-                        data: 'stb',
-                        name: 'stb',
-                        className: 'cuspad0'
-                    },
-                    {
-                        data: 'nik',
-                        name: 'nik',
-                        visible: false,
+                        title: 'Tgl Buka',
+                        data: 'tanggal_buka',
+                        name: 'tanggal_buka',
                         className: 'cuspad0 text-center'
                     },
                     {
-                        data: 'nama',
-                        name: 'nama',
-                        className: 'cuspad0 text-center'
-                    },
-                    {
-                        data: 'gender',
-                        name: 'gender',
-                        className: 'cuspad0 text-center'
-                    },
-                    {
-                        data: 'status',
-                        name: 'status',
-                        className: 'cuspad0 text-center'
-                    },
-                    {
-                        data: 'nomap',
-                        name: 'nomap',
-                        className: 'cuspad0 text-center'
-                    },
-                    {
-                        data: 'bagian',
-                        name: 'bagian',
-                        className: 'cuspad0 text-center'
-                    },
-                    {
-                        data: 'grup',
-                        name: 'grup',
-                        className: 'cuspad0 text-center'
-                    },
-                    {
-                        data: 'profesi',
-                        name: 'profesi',
-                        className: 'cuspad0 text-center'
-                    },
-                    {
-                        data: 'pendidikan',
-                        name: 'pendidikan',
-                        className: 'cuspad0 text-center'
-                    },
-                    {
-                        data: 'jurusan',
-                        name: 'jurusan',
-                        className: 'cuspad0'
-                    },
-                    {
-                        data: 'gender',
-                        name: 'gender',
+                        title: 'Tgl Tutup',
+                        data: 'tanggal_tutup',
+                        name: 'tanggal_tutup',
                         className: 'cuspad0 text-center'
                     },
                 ],

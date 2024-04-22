@@ -379,6 +379,7 @@ class Absensi extends Controller
                                         <td>ISH</td>
                                         <td>JK</td>
                                         <td>ST</td>
+                                        <td>Keterangan</td>
                                     </tr>
                                 </thead>
                                 ';
@@ -386,6 +387,7 @@ class Absensi extends Controller
                 $setIn = !empty($key->in) ? Carbon::parse($key->in)->format('H:i:s') : '';
                 $setout = !empty($key->out) ? Carbon::parse($key->out)->format('H:i:s') : '';
                 $sstnm = $key->sst == 'A' ? 'text-red' : '';
+
                 echo '
                                 <tr class="text-center">
                                     <td>' . $key->tanggal . '</td>
