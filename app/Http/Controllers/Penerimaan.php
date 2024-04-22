@@ -758,15 +758,29 @@ class Penerimaan extends Controller
                 foreach ($data as $u) {
                     if ($u->diterima == 1) {
                         echo '
-                            <div class="col-md-4 col-lg-12">
-                                <div class="card shadow bg-red-lt">
-                                    <div class="card-body p-4 text-center">
-                                        <span class="avatar avatar-xl mb-3 rounded" style="background-image: url(./static/avatars/000m.jpg); width:200px; height:200px;"></span>
-                                        <h3 class="m-0 mb-1"><a href="#">' . $u->nama . '</a></h3>
-                                        <div class="text-secondary">' . $u->posisi . '</div>
-                                        <div class="mt-3">
-                                        <span class="badge bg-danger">Sudah Diterima Sebagai Karyawan</span>
-                                        </div>
+
+                            <div class="row row-cards">
+                                <div class="card mb-2 shadow" style="border-color:red">
+                                    <div class="card-header">
+                                        <h3 class="card-title">' . $u->nama . '</h3>
+                                    </div>
+                                    <div class="ribbon ribbon-top bg-red">
+                                        <i class="fa-solid fa-user-shield"></i>
+                                    </div>
+                                    <div class="table-responsive">
+                                        <table class="table table-vcenter card-table">
+                                            <thead>
+                                                <tr>
+                                                    <th class="w-8">Keterangan</th>
+                                                    
+                                                </tr>
+                                            </thead>
+                                            <tbody>
+                                                <tr>
+                                                    <td>Sudah Diterima menjadi karyawan</td>
+                                                </tr>
+                                            </tbody>
+                                        </table>
                                     </div>
                                 </div>
                             </div>
@@ -801,7 +815,7 @@ class Penerimaan extends Controller
                                     <div class="card-header">
                                         <h3 class="card-title">' . $u->nama . '</h3>
                                     </div>
-                                    <div class="ribbon ribbon-top bg-green">
+                                    <div class="ribbon ribbon-top bg-green" id="stts' . $request->id[$i] . '">
                                         <i class="fa-solid fa-user-check"></i>
                                     </div>
                                     <div class="table-responsive">
@@ -817,7 +831,7 @@ class Penerimaan extends Controller
                                                     <th class="w-1">Jalan Cepat</th>
                                                     <th class="w-1"></th>
                                                     <th class="w-8">Penempatan</th>
-                                                    <th class="w-8">Tanggal</th>
+                                                    <th class="text-center">Tanggal</th>
                                                 </tr>
                                             </thead>
                                             <tbody>
@@ -855,10 +869,18 @@ class Penerimaan extends Controller
                                                     <td><span id="status' . $request->id[$i] . '" class="badge bg-green">Diterima</span></td>
                                                     <td>
                                                         <select class="form-select" name="diterimasebagai[]">
-                                                            <option>OL</option>
-                                                            <option>PHL</option>
-                                                            <option>Kontrak</option>
+                                                            <option value="OL">OL</option>
+                                                            <option value="PHL">PHL</option>
+                                                            <option value="Kontrak">Kontrak</option>
                                                         </select>
+                                                    </td>
+                                                    <td class="text-center">
+                                                            <div class="col-6">
+                                                                <input type="date" name="dari[]" class=""  value="' . date('Y-m-d', strtotime(date('Y-m-d') . ' +1 day')) . '">
+                                                            </div>
+                                                            <div class="col-6">
+                                                                <input type="date" name="ke[]" class=""  value="' . date('Y-m-d', strtotime(date('Y-m-d') . ' +3 month')) . '">
+                                                            </div>
                                                     </td>
                                                 </tr>
                                             </tbody>
@@ -871,92 +893,126 @@ class Penerimaan extends Controller
 
                         echo '
 
-                                                <script>
-                                                    function fetchKar(params){
-                                                        var tinggi = $("#tinggi" + params).val();
-                                                        var gender = $("#gender" + params).val();
-                                                        if(gender=="PRIA"){
-                                                            if(tinggi < 160){
-                                                                document.getElementById("status"+ params).innerHTML = "Ditolak";
-                                                                $("#status"+ params).removeClass("bg-green").addClass("bg-red");
-                                                                $("#iconv-" + params).removeAttr("checked");
-                                                                $("#iconx-" + params).attr("checked", true);
-                                                                $("#sst" + params).val("0");
-                                                            } else {
-                                                                document.getElementById("status"+ params).innerHTML = "Diterima";
-                                                                $("#status"+ params).removeClass("bg-red").addClass("bg-green");
-                                                                $("#iconx-" + params).removeAttr("checked");
-                                                                $("#iconv-" + params).attr("checked", true);
-                                                                $("#sst" + params).val("1");
-                                                            }
-                                                        } else if(gender=="WANITA"){
-                                                            if(tinggi < 155){
-                                                                document.getElementById("status"+ params).innerHTML = "Ditolak";
-                                                                $("#status"+ params).removeClass("bg-green").addClass("bg-red");
-                                                                $("#sst" + params).val("0");
-                                                            } else {
-                                                                document.getElementById("status"+ params).innerHTML = "Diterima";
-                                                                $("#status"+ params).removeClass("bg-red").addClass("bg-green");
-                                                                $("#sst" + params).val("1");
-                                                            }
-                                                        }
-                                                    }
+                            <script>
+                                function fetchKar(params){
+                                    var tinggi = $("#tinggi" + params).val();
+                                    var gender = $("#gender" + params).val();
+                                    if(gender=="PRIA"){
+                                        if(tinggi < 160){
+                                            document.getElementById("status"+ params).innerHTML = "Ditolak";
+                                            $("#status"+ params).removeClass("bg-green").addClass("bg-red");
+                                            $("#iconv-" + params).removeAttr("checked");
+                                            $("#iconx-" + params).attr("checked", true);
+                                            $("#sst" + params).val("0");
+                                            $("#stts" + params).html(`<i class="fa-solid fa-user-xmark"></i>`);
+                                            $("#stts" + params).removeClass("bg-green");
+                                            $("#stts" + params).removeClass("bg-red");
+                                            $("#stts" + params).addClass("bg-red");
+                                        } else {
+                                            document.getElementById("status"+ params).innerHTML = "Diterima";
+                                            $("#status"+ params).removeClass("bg-red").addClass("bg-green");
+                                            $("#iconx-" + params).removeAttr("checked");
+                                            $("#iconv-" + params).attr("checked", true);
+                                            $("#sst" + params).val("1");
+                                            $("#stts" + params).html(`<i class="fa-solid fa-user-check"></i>`);
+                                            $("#stts" + params).removeClass("bg-green");
+                                            $("#stts" + params).removeClass("bg-red");
+                                            $("#stts" + params).addClass("bg-green");
+                                        }
+                                    } else if(gender=="WANITA"){
+                                        if(tinggi < 155){
+                                            document.getElementById("status"+ params).innerHTML = "Ditolak";
+                                            $("#status"+ params).removeClass("bg-green").addClass("bg-red");
+                                            $("#sst" + params).val("0");
+                                            $("#stts" + params).html(`<i class="fa-solid fa-user-xmark"></i>`);
+                                            $("#stts" + params).removeClass("bg-green");
+                                            $("#stts" + params).removeClass("bg-red");
+                                            $("#stts" + params).addClass("bg-red");
+                                        } else {
+                                            document.getElementById("status"+ params).innerHTML = "Diterima";
+                                            $("#status"+ params).removeClass("bg-red").addClass("bg-green");
+                                            $("#sst" + params).val("1");
+                                            $("#stts" + params).html(`<i class="fa-solid fa-user-check"></i>`);
+                                            $("#stts" + params).removeClass("bg-green");
+                                            $("#stts" + params).removeClass("bg-red");
+                                            $("#stts" + params).addClass("bg-green");
+                                        }
+                                    }
+                                }
 
-                                                    function status(params, val){
-                                                        var gender = $("#gender" + params).val();
-                                                        var tinggi = $("#tinggi" + params).val();
-                                                        if(gender=="PRIA"){
-                                                            if(val == 1 && tinggi >= 160){
-                                                                document.getElementById("status"+ params).innerHTML = "Diterima";
-                                                                $("#iconx-" + params).removeAttr("checked");
-                                                                $("#iconv-" + params).attr("checked", true);
-                                                                $("#status"+ params).removeClass("bg-red").addClass("bg-green");
-                                                                $("#sst" + params).val("1");
+                                function status(params, val){
+                                    var gender = $("#gender" + params).val();
+                                    var tinggi = $("#tinggi" + params).val();
+                                    if(gender=="PRIA"){
+                                        if(val == 1 && tinggi >= 160){
+                                            document.getElementById("status"+ params).innerHTML = "Diterima";
+                                            $("#iconx-" + params).removeAttr("checked");
+                                            $("#iconv-" + params).attr("checked", true);
+                                            $("#status"+ params).removeClass("bg-red").addClass("bg-green");
+                                            $("#sst" + params).val("1");
+                                            $("#stts" + params).html(`<i class="fa-solid fa-user-check"></i>`);
+                                            $("#stts" + params).removeClass("bg-green");
+                                            $("#stts" + params).removeClass("bg-red");
+                                            $("#stts" + params).addClass("bg-green");
 
-                                                                $("#butawarna" + params).attr("checked", false);
-                                                                $("#mataminus" + params).attr("checked", false);
-                                                                $("#sikapbaik" + params).attr("checked", true);
-                                                                $("#jalancepat" + params).attr("checked", true);
-                                                            } else if(val == 0){
-                                                                document.getElementById("status"+ params).innerHTML = "Ditolak";
-                                                                $("#iconv-" + params).removeAttr("checked");
-                                                                $("#iconx-" + params).attr("checked", true);
-                                                                $("#status"+ params).removeClass("bg-green").addClass("bg-red");
-                                                                $("#sst" + params).val("0");
+                                            $("#stts" + params).html(`<i class="fa-solid fa-user-check"></i>`);
 
-                                                                $("#butawarna" + params).attr("checked", true);
-                                                                $("#mataminus" + params).attr("checked", true);
-                                                                $("#sikapbaik" + params).attr("checked", false);
-                                                                $("#jalancepat" + params).attr("checked", false);
-                                                            }
-                                                        } else if(gender=="WANITA"){
-                                                            if(val == 1 && tinggi >= 155){
-                                                                document.getElementById("status"+ params).innerHTML = "Diterima";
-                                                                $("#iconx-" + params).removeAttr("checked");
-                                                                $("#iconv-" + params).attr("checked", true);
-                                                                $("#status"+ params).removeClass("bg-red").addClass("bg-green");
-                                                                $("#sst" + params).val("1");
+                                            $("#butawarna" + params).attr("checked", false);
+                                            $("#mataminus" + params).attr("checked", false);
+                                            $("#sikapbaik" + params).attr("checked", true);
+                                            $("#jalancepat" + params).attr("checked", true);
+                                        } else if(val == 0){
+                                            document.getElementById("status"+ params).innerHTML = "Ditolak";
+                                            $("#iconv-" + params).removeAttr("checked");
+                                            $("#iconx-" + params).attr("checked", true);
+                                            $("#status"+ params).removeClass("bg-green").addClass("bg-red");
+                                            $("#sst" + params).val("0");
+                                            $("#stts" + params).html(`<i class="fa-solid fa-user-xmark"></i>`);
+                                            $("#stts" + params).removeClass("bg-green");
+                                            $("#stts" + params).removeClass("bg-red");
+                                            $("#stts" + params).addClass("bg-red");
 
-                                                                $("#butawarna" + params).attr("checked", false);
-                                                                $("#mataminus" + params).attr("checked", false);
-                                                                $("#sikapbaik" + params).attr("checked", true);
-                                                                $("#jalancepat" + params).attr("checked", true);
-                                                            } else if(val == 0){
-                                                                document.getElementById("status"+ params).innerHTML = "Ditolak";
-                                                                $("#iconv-" + params).removeAttr("checked");
-                                                                $("#iconx-" + params).attr("checked", true);
-                                                                $("#status"+ params).removeClass("bg-green").addClass("bg-red");
-                                                                $("#sst" + params).val("0");
+                                            $("#butawarna" + params).attr("checked", true);
+                                            $("#mataminus" + params).attr("checked", true);
+                                            $("#sikapbaik" + params).attr("checked", false);
+                                            $("#jalancepat" + params).attr("checked", false);
+                                        }
+                                    } else if(gender=="WANITA"){
+                                        if(val == 1 && tinggi >= 155){
+                                            document.getElementById("status"+ params).innerHTML = "Diterima";
+                                            $("#iconx-" + params).removeAttr("checked");
+                                            $("#iconv-" + params).attr("checked", true);
+                                            $("#status"+ params).removeClass("bg-red").addClass("bg-green");
+                                            $("#sst" + params).val("1");
+                                            $("#stts" + params).html(`<i class="fa-solid fa-user-check"></i>`);
+                                            $("#stts" + params).removeClass("bg-green");
+                                            $("#stts" + params).removeClass("bg-red");
+                                            $("#stts" + params).addClass("bg-green");
 
-                                                                $("#butawarna" + params).attr("checked", true);
-                                                                $("#mataminus" + params).attr("checked", true);
-                                                                $("#sikapbaik" + params).attr("checked", false);
-                                                                $("#jalancepat" + params).attr("checked", false);
-                                                            }
-                                                        }
-                                                    }
+                                            $("#butawarna" + params).attr("checked", false);
+                                            $("#mataminus" + params).attr("checked", false);
+                                            $("#sikapbaik" + params).attr("checked", true);
+                                            $("#jalancepat" + params).attr("checked", true);
+                                        } else if(val == 0){
+                                            document.getElementById("status"+ params).innerHTML = "Ditolak";
+                                            $("#iconv-" + params).removeAttr("checked");
+                                            $("#iconx-" + params).attr("checked", true);
+                                            $("#status"+ params).removeClass("bg-green").addClass("bg-red");
+                                            $("#sst" + params).val("0");
+                                            $("#stts" + params).html(`<i class="fa-solid fa-user-xmark"></i>`);
+                                            $("#stts" + params).removeClass("bg-green");
+                                            $("#stts" + params).removeClass("bg-red");
+                                            $("#stts" + params).addClass("bg-red");
 
-                                                </script>
+                                            $("#butawarna" + params).attr("checked", true);
+                                            $("#mataminus" + params).attr("checked", true);
+                                            $("#sikapbaik" + params).attr("checked", false);
+                                            $("#jalancepat" + params).attr("checked", false);
+                                        }
+                                    }
+                                }
+
+                            </script>
                         ';
                     }
                 }
@@ -1309,6 +1365,25 @@ class Penerimaan extends Controller
                 }
                 // GET PHL
 
+
+                $statusditerima = null;
+                if ($request->diterimasebagai[$i] == "OL") {
+                    $statusditerima = "OL";
+                    $perjanjian = 'OL (' . Carbon::parse($request->dari[$i])->format('d/m/Y') . ' s.d. ' . Carbon::parse($request->ke[$i])->format('d/m/Y') . ')';
+                    $nmsurat = "Perjanjian Kerja OL";
+                    $suratket = "OL";
+                } elseif ($request->diterimasebagai[$i] == "PHL") {
+                    $statusditerima = "PHL";
+                    $perjanjian = 'PHL (' . Carbon::parse($request->dari[$i])->format('d/m/Y') . ' s.d. ' . Carbon::parse($request->ke[$i])->format('d/m/Y') . ')';
+                    $nmsurat = "Perjanjian Kerja PHL";
+                    $suratket = "PHL";
+                } elseif ($request->diterimasebagai[$i] == "Kontrak") {
+                    $statusditerima = "Aktif";
+                    $perjanjian = 'Kontrak I (' . Carbon::parse($request->dari[$i])->format('d/m/Y') . ' s.d. ' . Carbon::parse($request->ke[$i])->format('d/m/Y') . ')';
+                    $nmsurat = "Perjanjian Kontrak";
+                    $suratket = "Kontrak I";
+                }
+                // Add into table karyawan
                 DB::table('penerimaan_karyawan')->insert([
                     'remember_token' => $request->_token,
                     'entitas' => $l->entitas,
@@ -1326,11 +1401,28 @@ class Penerimaan extends Controller
                     'berat' => $l->berat,
                     'notlp' => $l->notlp,
                     'email' => $l->email,
-
+                    'tglmasuk' => $request->dari[$i],
+                    'tglaktif' => $request->dari[$i],
+                    'perjanjian' => $perjanjian,
                     'gapok' => 100000,
-                    'status' => 'OL',
+                    'status' => $statusditerima,
                     'keterangan' => $l->keterangan,
                     'tglinput' => date('Y-m-d'),
+                    'dibuat' => Auth::user()->name,
+                    'created_at' => date('Y-m-d H:i:s'),
+                ]);
+                // Add Legalitas
+                DB::table('penerimaan_legalitas')->insert([
+                    "suratjns" => "PERJANJIAN",
+                    "userid" => $kode,
+                    "nama" => $l->nama,
+                    "inputtgl" => date('Y-m-d'),
+                    "legalitastgl" => $request->dari[$i],
+                    "tglmasuk" => $request->dari[$i],
+                    "tglaw" => $request->dari[$i],
+                    "tglak" => $request->ke[$i],
+                    "nmsurat" => $nmsurat,
+                    "suratket" => $suratket,
                     'dibuat' => Auth::user()->name,
                     'created_at' => date('Y-m-d H:i:s'),
                 ]);
