@@ -358,6 +358,21 @@
                                     </svg>
                                     Lowongan Pekerjaan
                                 </a>
+                                <a class="dropdown-item {{ !empty($upah) ? $upah : '' }}"
+                                    href="{{ url('daftar/upah') }}">
+                                    <svg xmlns="http://www.w3.org/2000/svg" style="margin-right: 10px" width="24"
+                                        height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                                        stroke-width="2" stroke-linecap="round" stroke-linejoin="round"
+                                        class="icon icon-tabler icons-tabler-outline icon-tabler-premium-rights">
+                                        <path stroke="none" d="M0 0h24v24H0z" fill="none" />
+                                        <path d="M12 12m-9 0a9 9 0 1 0 18 0a9 9 0 1 0 -18 0" />
+                                        <path
+                                            d="M13.867 9.75c-.246 -.48 -.708 -.769 -1.2 -.75h-1.334c-.736 0 -1.333 .67 -1.333 1.5c0 .827 .597 1.499 1.333 1.499h1.334c.736 0 1.333 .671 1.333 1.5c0 .828 -.597 1.499 -1.333 1.499h-1.334c-.492 .019 -.954 -.27 -1.2 -.75" />
+                                        <path d="M12 7v2" />
+                                        <path d="M12 15v2" />
+                                    </svg>
+                                    Upah
+                                </a>
                             </div>
                         </div>
                     </div>
@@ -534,7 +549,7 @@
                         </div>
                     </div>
                 </li>
-                <li class="nav-item dropdown">
+                <li class="nav-item dropdown {{ !empty($administrasi) ? 'show' : '' }}">
                     <a class="nav-link dropdown-toggle" href="#navbar-layout" data-bs-toggle="dropdown"
                         data-bs-auto-close="false" role="button" aria-expanded="true">
                         <span class="nav-link-icon d-md-none d-lg-inline-block">
@@ -555,24 +570,20 @@
                             Administrasi
                         </span>
                     </a>
-                    <div class="dropdown-menu">
+                    <div class="dropdown-menu {{ !empty($payroll) ? 'show' : '' }}">
                         <div class="dropdown-menu-columns">
                             <div class="dropdown-menu-column">
-                                <a class="dropdown-item" href="./layout-horizontal.html">
-                                    <svg xmlns="http://www.w3.org/2000/svg" style="margin-right: 10px"
-                                        class="icon icon-tabler icon-tabler-home-cog" width="24" height="24"
-                                        viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" fill="none"
-                                        stroke-linecap="round" stroke-linejoin="round">
+                                <a class="dropdown-item" href="{{ url('administrasi/payroll') }}">
+                                    <svg xmlns="http://www.w3.org/2000/svg" style="margin-right: 10px" width="24"
+                                        height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                                        stroke-width="2" stroke-linecap="round" stroke-linejoin="round"
+                                        class="icon icon-tabler icons-tabler-outline icon-tabler-file-dollar">
                                         <path stroke="none" d="M0 0h24v24H0z" fill="none" />
-                                        <path d="M9 21v-6a2 2 0 0 1 2 -2h1.6" />
-                                        <path d="M20 11l-8 -8l-9 9h2v7a2 2 0 0 0 2 2h4.159" />
-                                        <path d="M18 18m-2 0a2 2 0 1 0 4 0a2 2 0 1 0 -4 0" />
-                                        <path d="M18 14.5v1.5" />
-                                        <path d="M18 20v1.5" />
-                                        <path d="M21.032 16.25l-1.299 .75" />
-                                        <path d="M16.27 19l-1.3 .75" />
-                                        <path d="M14.97 16.25l1.3 .75" />
-                                        <path d="M19.733 19l1.3 .75" />
+                                        <path d="M14 3v4a1 1 0 0 0 1 1h4" />
+                                        <path
+                                            d="M17 21h-10a2 2 0 0 1 -2 -2v-14a2 2 0 0 1 2 -2h7l5 5v11a2 2 0 0 1 -2 2z" />
+                                        <path d="M14 11h-2.5a1.5 1.5 0 0 0 0 3h1a1.5 1.5 0 0 1 0 3h-2.5" />
+                                        <path d="M12 17v1m0 -8v1" />
                                     </svg>
                                     Payroll
                                 </a>

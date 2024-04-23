@@ -202,6 +202,9 @@ Route::controller(Administrasi::class)->group(function () {
     Route::get('administrasi/bpjs', 'bpjs')->name('administrasi/bpjs');
     Route::get('administrasi/kupon', 'kupon')->name('administrasi/kupon');
     Route::get('administrasi/lembur', 'lembur')->name('administrasi/lembur');
+
+    Route::post('getpayroll', 'getpayroll')->name('getpayroll');
+    Route::post('generatePayroll', 'generatePayroll')->name('generatePayroll');
 });
 
 // Modules Database
