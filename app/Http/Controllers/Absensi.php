@@ -155,7 +155,8 @@ class Absensi extends Controller
                 $SST = !empty($request->tgl[$i]) ? ($request->tgl[$i]) : '';
                 echo '          <th style="width: 30px" class="text-center">' . $SST . '</th>';
             }
-            echo '          </tr>
+            echo '              
+                            </tr>
                         </thead>
                         <tbody>';
             foreach ($results as $item2) {
@@ -295,7 +296,16 @@ class Absensi extends Controller
     {
 
         $data = DB::table('penerimaan_karyawan')->where('stb', $request->id)->get();
-        $absensi = DB::table('absensi_absensi')->where('stb', $request->id)->whereBetween('tanggal', [$request->tglaw, $request->tglak])->get();
+        $absensi = DB::table('absensi_absensi AS a')
+            ->select('a.tanggal', 'a.in', 'a.out', 'a.qj', 'a.jis', 'a.qjnet', 'a.sst', 'b.keterangan')
+            ->leftJoin('absensi_komunikasiitm AS b', function ($join) {
+                $join->on('a.userid', '=', 'b.userid');
+                $join->on('a.tanggal', '=', 'b.tanggal');
+            })
+            ->where('a.stb', $request->id)
+            ->whereBetween('a.tanggal', [$request->tglaw, $request->tglak])
+            ->orderBy('a.tanggal', 'asc')
+            ->get();
         foreach ($data as $u) {
             $link = url('photo/pas/' . $u->userid);
             echo '
@@ -389,16 +399,20 @@ class Absensi extends Controller
                 $sstnm = $key->sst == 'A' ? 'text-red' : '';
 
                 echo '
-                                <tr class="text-center">
-                                    <td>' . $key->tanggal . '</td>
-                                    <td>' . strtoupper(Carbon::parse($key->tanggal)->formatLocalized('%A')) . '</td>
-                                    <td>' . $setIn . '</td>
-                                    <td>' . $setout . '</td>
-                                    <td>' . $key->qj . '</td>
-                                    <td>' . $key->jis . '</td>
-                                    <td>' . $key->qjnet . '</td>
-                                    <td class="' . $sstnm . '">' . $key->sst . '</td>
-                                </tr>';
+                                <tbody>
+                                    <tr class="text-center">
+                                        <td>' . $key->tanggal . '</td>
+                                        <td>' . strtoupper(Carbon::parse($key->tanggal)->formatLocalized('%A')) . '</td>
+                                        <td>' . $setIn . '</td>
+                                        <td>' . $setout . '</td>
+                                        <td>' . $key->qj . '</td>
+                                        <td>' . $key->jis . '</td>
+                                        <td>' . $key->qjnet . '</td>
+                                        <td class="' . $sstnm . '">' . $key->sst . '</td>
+                                        <td>' . $key->keterangan . '</td>
+                                    </tr>
+                                </tbody>
+                                ';
             }
             echo '
                             </table>
