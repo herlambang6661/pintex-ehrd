@@ -31,7 +31,7 @@ class Administrasi extends Controller
 
         echo '  
                 <div class="table-responsive">
-                    <table style="width:100%; font-size:12px" class="display table table-sm  table-bordered table-hover text-nowrap datatable-absensi" id="tbabsensi">
+                    <table style="width:100%; font-size:12px" class="display table table-sm  table-bordered table-hover text-nowrap datatable-payroll" id="tbabsensi">
                         <thead>
                             <tr class="text-center">
                                 <th>STB</th>

@@ -16,6 +16,7 @@ use App\Http\Controllers\Datatables\DataShift;
 use App\Http\Controllers\Datatables\DataSurat;
 use App\Http\Controllers\Datatables\DataEntitas;
 use App\Http\Controllers\Datatables\DataLamaran;
+use App\Http\Controllers\Datatables\DataPayroll;
 use App\Http\Controllers\Datatables\DataKaryawan;
 use App\Http\Controllers\Datatables\DataHariLibur;
 use App\Http\Controllers\Datatables\DataWawancara;
@@ -77,6 +78,7 @@ Route::resources([
     'getListKomunikasi' => DataKomunikasi::class,
     'getAccKomunikasi' => DataACCKomunikasi::class,
     'getLoker' => DataLoker::class,
+    'getPayroll' => DataPayroll::class,
 ]);
 
 // Modules Auth

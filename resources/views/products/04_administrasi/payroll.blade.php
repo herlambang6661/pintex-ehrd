@@ -13,7 +13,8 @@
         }
 
         td.cuspad2 {
-            /* padding-top: 0.5px;                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                  margin-left: 5px; */
+            padding-top: 0.5px;
+            margin-left: 5px;
         }
 
         .unselectable {
@@ -37,30 +38,30 @@
         }
 
         /* .cv-spinner {
-                                                                                                                                                                                                                                                                                                                                                                                                                    height: 100%;
-                                                                                                                                                                                                                                                                                                                                                                                                                    display: flex;
-                                                                                                                                                                                                                                                                                                                                                                                                                    justify-content: center;
-                                                                                                                                                                                                                                                                                                                                                                                                                    align-items: center;
-                                                                                                                                                                                                                                                                                                                                                                                                                }
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                height: 100%;
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                display: flex;
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                justify-content: center;
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                align-items: center;
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                            }
 
-                                                                                                                                                                                                                                                                                                                                                                                                                .spinner {
-                                                                                                                                                                                                                                                                                                                                                                                                                    width: 40px;
-                                                                                                                                                                                                                                                                                                                                                                                                                    height: 40px;
-                                                                                                                                                                                                                                                                                                                                                                                                                    border: 4px #ddd solid;
-                                                                                                                                                                                                                                                                                                                                                                                                                    border-top: 4px #2e93e6 solid;
-                                                                                                                                                                                                                                                                                                                                                                                                                    border-radius: 50%;
-                                                                                                                                                                                                                                                                                                                                                                                                                    animation: sp-anime 0.8s infinite linear;
-                                                                                                                                                                                                                                                                                                                                                                                                                }
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                            .spinner {
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                width: 40px;
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                height: 40px;
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                border: 4px #ddd solid;
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                border-top: 4px #2e93e6 solid;
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                border-radius: 50%;
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                animation: sp-anime 0.8s infinite linear;
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                            }
 
-                                                                                                                                                                                                                                                                                                                                                                                                                @keyframes sp-anime {
-                                                                                                                                                                                                                                                                                                                                                                                                                    100% {
-                                                                                                                                                                                                                                                                                                                                                                                                                        transform: rotate(360deg);
-                                                                                                                                                                                                                                                                                                                                                                                                                    }
-                                                                                                                                                                                                                                                                                                                                                                                                                }
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                            @keyframes sp-anime {
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                100% {
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                    transform: rotate(360deg);
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                }
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                            }
 
-                                                                                                                                                                                                                                                                                                                                                                                                                .is-hide {
-                                                                                                                                                                                                                                                                                                                                                                                                                    display: none;
-                                                                                                                                                                                                                                                                                                                                                                                                                } */
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                            .is-hide {
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                display: none;
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                            } */
         .loader {
             position: fixed;
             z-index: 301;
@@ -157,8 +158,9 @@
                                     <path d="M12 17v1m0 -8v1" />
                                 </svg>
                                 Payroll
-                                <div id="entitasText" style="margin-left: 5px;">Loading... <i
-                                        class="fa-solid fa-spinner fa-spin-pulse"></i> </div>
+                                <div id="entitasText" style="margin-left: 5px;">Loading...
+                                    <i class="fa-solid fa-spinner fa-spin-pulse"></i>
+                                </div>
                             </h2>
                             <div class="page-pretitle">
                                 <ol class="breadcrumb" aria-label="breadcrumbs">
@@ -167,7 +169,9 @@
                                     <li class="breadcrumb-item"><a href="#"><i class="fa-solid fa-calendar-days"></i>
                                             Administrasi</a></li>
                                     <li class="breadcrumb-item active" aria-current="page"><a href="#"><i
-                                                class="fa-solid fa-file-invoice-dollar"></i> Payroll</a></li>
+                                                class="fa-solid fa-file-invoice-dollar"></i> Payroll
+                                            <i class="text-danger"> (Restricted Area).</i>
+                                        </a></li>
                                 </ol>
                             </div>
                         </div>
@@ -224,7 +228,7 @@
                                         </div>
                                         <div class="row row-cards">
                                             <div class="col-sm-12 col-md-12 col-lg-5">
-                                                <label class="form-label">Periode Gaji</label>
+                                                <label class="form-label">Periode Gaji </label>
                                                 <div class="input-group">
                                                     <select name="bulan" id="bulan"
                                                         class="form-select border border-primary">
@@ -273,7 +277,7 @@
                                                                 {{ $i }}</option>
                                                         @endfor
                                                     </select>
-                                                    <button class="btn btn-primary " onclick="tb();"><i
+                                                    <button class="btn btn-primary " onclick="syn();"><i
                                                             class="fa-solid fa-magnifying-glass"
                                                             style="margin-right:5px"></i>
                                                         Perbarui</button>
@@ -430,7 +434,12 @@
                                             </div>
                                         </div>
                                         <div class="setStatus"></div>
-                                        <div class="fetched-data-absensi"></div>
+                                        <div class="table-responsive">
+                                            <table style="width:100%; font-size:13px"
+                                                class="display table table-sm  table-bordered table-hover text-nowrap datatable-payroll"
+                                                id="tbabsensi">
+                                            </table>
+                                        </div>
                                     </div>
                                 </div>
                             </div>
@@ -444,7 +453,7 @@
         <div class="offcanvas offcanvas-blur offcanvas-end" tabindex="-1" id="offcanvasEnd-lamaran"
             aria-labelledby="offcanvasEndLabel">
             <div class="offcanvas-header">
-                <h2 class="offcanvas-title" id="offcanvasEndLabel">Saring Data Absensi</h2>
+                <h2 class="offcanvas-title" id="offcanvasEndLabel">Saring Data Payroll</h2>
                 <button type="button" class="btn-close text-reset" data-bs-dismiss="offcanvas"
                     aria-label="Close"></button>
             </div>
@@ -458,7 +467,7 @@
                     <form action="#" id="form-filter-items" method="get" autocomplete="off" novalidate=""
                         class="sticky-top">
                         <br>
-                        <div class="form-label">Jenis Kelamin</div>
+                        <div class="form-label">Level</div>
                         <div class="mb-4">
                             <div class="row">
                                 <div class="col-sm-6">
@@ -522,6 +531,68 @@
                                 defaults</button>
                         </div>
                     </form>
+                </div>
+            </div>
+        </div>
+        <div class="modal modal-blur fade" id="modal-tambahan" tabindex="-1" style="display: none;"
+            aria-hidden="true">
+            <div class="modal-dialog modal-lg modal-dialog-centered modal-dialog-scrollable" role="document">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title">Large modal</h5>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    </div>
+                    <div class="modal-body">
+                        Lorem ipsum dolor sit amet, consectetur adipisicing elit. Adipisci animi beatae delectus deleniti
+                        dolorem eveniet facere fuga iste nemo nesciunt nihil odio perspiciatis, quia quis reprehenderit sit
+                        tempora totam unde.
+                        Lorem ipsum dolor sit amet, consectetur adipisicing elit. Adipisci animi beatae delectus deleniti
+                        dolorem eveniet facere fuga iste nemo nesciunt nihil odio perspiciatis, quia quis reprehenderit sit
+                        tempora totam unde.
+                        Lorem ipsum dolor sit amet, consectetur adipisicing elit. Adipisci animi beatae delectus deleniti
+                        dolorem eveniet facere fuga iste nemo nesciunt nihil odio perspiciatis, quia quis reprehenderit sit
+                        tempora totam unde.
+                        Lorem ipsum dolor sit amet, consectetur adipisicing elit. Adipisci animi beatae delectus deleniti
+                        dolorem eveniet facere fuga iste nemo nesciunt nihil odio perspiciatis, quia quis reprehenderit sit
+                        tempora totam unde.
+                        Lorem ipsum dolor sit amet, consectetur adipisicing elit. Adipisci animi beatae delectus deleniti
+                        dolorem eveniet facere fuga iste nemo nesciunt nihil odio perspiciatis, quia quis reprehenderit sit
+                        tempora totam unde.
+                        Lorem ipsum dolor sit amet, consectetur adipisicing elit. Adipisci animi beatae delectus deleniti
+                        dolorem eveniet facere fuga iste nemo nesciunt nihil odio perspiciatis, quia quis reprehenderit sit
+                        tempora totam unde.
+                        Lorem ipsum dolor sit amet, consectetur adipisicing elit. Adipisci animi beatae delectus deleniti
+                        dolorem eveniet facere fuga iste nemo nesciunt nihil odio perspiciatis, quia quis reprehenderit sit
+                        tempora totam unde.
+                        Lorem ipsum dolor sit amet, consectetur adipisicing elit. Adipisci animi beatae delectus deleniti
+                        dolorem eveniet facere fuga iste nemo nesciunt nihil odio perspiciatis, quia quis reprehenderit sit
+                        tempora totam unde.
+                        Lorem ipsum dolor sit amet, consectetur adipisicing elit. Adipisci animi beatae delectus deleniti
+                        dolorem eveniet facere fuga iste nemo nesciunt nihil odio perspiciatis, quia quis reprehenderit sit
+                        tempora totam unde.
+                        Lorem ipsum dolor sit amet, consectetur adipisicing elit. Adipisci animi beatae delectus deleniti
+                        dolorem eveniet facere fuga iste nemo nesciunt nihil odio perspiciatis, quia quis reprehenderit sit
+                        tempora totam unde.
+                        Lorem ipsum dolor sit amet, consectetur adipisicing elit. Adipisci animi beatae delectus deleniti
+                        dolorem eveniet facere fuga iste nemo nesciunt nihil odio perspiciatis, quia quis reprehenderit sit
+                        tempora totam unde.
+                        Lorem ipsum dolor sit amet, consectetur adipisicing elit. Adipisci animi beatae delectus deleniti
+                        dolorem eveniet facere fuga iste nemo nesciunt nihil odio perspiciatis, quia quis reprehenderit sit
+                        tempora totam unde.
+                        Lorem ipsum dolor sit amet, consectetur adipisicing elit. Adipisci animi beatae delectus deleniti
+                        dolorem eveniet facere fuga iste nemo nesciunt nihil odio perspiciatis, quia quis reprehenderit sit
+                        tempora totam unde.
+                        Lorem ipsum dolor sit amet, consectetur adipisicing elit. Adipisci animi beatae delectus deleniti
+                        dolorem eveniet facere fuga iste nemo nesciunt nihil odio perspiciatis, quia quis reprehenderit sit
+                        tempora totam unde.
+                        Lorem ipsum dolor sit amet, consectetur adipisicing elit. Adipisci animi beatae delectus deleniti
+                        dolorem eveniet facere fuga iste nemo nesciunt nihil odio perspiciatis, quia quis reprehenderit sit
+                        tempora totam unde.
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn me-auto" data-bs-dismiss="modal">Close</button>
+                        <button type="button" class="btn btn-primary" data-bs-dismiss="modal">Save changes</button>
+                    </div>
                 </div>
             </div>
         </div>
@@ -607,10 +678,218 @@
                 dt.ajax.reload();
             }
 
+            var tablePayroll;
+            var d = new Date();
+            var strDate = d.getFullYear() + "/" + (d.getMonth() + 1) + "/" + d.getDate();
+            $(function() {
+                var token = $("meta[name='csrf-token']").attr("content");
+
+                tablePayroll = $('.datatable-payroll').DataTable({
+                    "processing": true, //Feature control the processing indicator.
+                    "serverSide": false, //Feature control DataTables' server-side processing mode.
+                    "scrollX": true,
+                    "scrollCollapse": true,
+                    "pagingType": 'full_numbers',
+                    "dom": "<'card-header h3' B>" +
+                        "<'card-body border-bottom py-3' <'row'<'col-sm-6'l><'col-sm-6'f>> >" +
+                        "<'table-responsive' <'col-sm-12'tr> >" +
+                        "<'card-footer' <'row'<'col-sm-8'i><'col-sm-4'p> >>",
+                    "lengthMenu": [
+                        [10, 25, 35, 40, 50, -1],
+                        ['10', '25', '35', '40', '50', 'Tampilkan Semua']
+                    ],
+                    buttons: [{
+                            text: '<svg  xmlns="http://www.w3.org/2000/svg"  width="24"  height="24"  viewBox="0 0 24 24"  fill="none"  stroke="currentColor"  stroke-width="2"  stroke-linecap="round"  stroke-linejoin="round"  class="icon icon-tabler icons-tabler-outline icon-tabler-filter"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><path d="M4 4h16v2.172a2 2 0 0 1 -.586 1.414l-4.414 4.414v7l-6 2v-8.5l-4.48 -4.928a2 2 0 0 1 -.52 -1.345v-2.227z" /></svg> Filter',
+                            className: 'btn btn-blue',
+                            attr: {
+                                'href': '#offcanvasEnd-lamaran',
+                                'data-bs-toggle': 'offcanvas',
+                                'role': 'button',
+                                'aria-controls': 'offcanvasEnd',
+                            }
+                        },
+                        {
+                            extend: 'excelHtml5',
+                            autoFilter: true,
+                            className: 'btn btn-success',
+                            text: '<svg  xmlns="http://www.w3.org/2000/svg"  width="24"  height="24"  viewBox="0 0 24 24"  fill="none"  stroke="currentColor"  stroke-width="2"  stroke-linecap="round"  stroke-linejoin="round"  class="icon icon-tabler icons-tabler-outline icon-tabler-table"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><path d="M3 5a2 2 0 0 1 2 -2h14a2 2 0 0 1 2 2v14a2 2 0 0 1 -2 2h-14a2 2 0 0 1 -2 -2v-14z" /><path d="M3 10h18" /><path d="M10 3v18" /></svg> Download Excel',
+                            action: newexportaction,
+                        },
+                        {
+                            text: '<svg  xmlns="http://www.w3.org/2000/svg"  width="24"  height="24"  viewBox="0 0 24 24"  fill="none"  stroke="currentColor"  stroke-width="2"  stroke-linecap="round"  stroke-linejoin="round"  class="icon icon-tabler icons-tabler-outline icon-tabler-ticket"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><path d="M15 5l0 2" /><path d="M15 11l0 2" /><path d="M15 17l0 2" /><path d="M5 5h14a2 2 0 0 1 2 2v3a2 2 0 0 0 0 4v3a2 2 0 0 1 -2 2h-14a2 2 0 0 1 -2 -2v-3a2 2 0 0 0 0 -4v-3a2 2 0 0 1 2 -2" /></svg> Slip Gaji',
+                            className: 'btn btn-orange',
+                            attr: {
+                                'href': '#offcanvasEnd-lamaran',
+                                'data-bs-toggle': 'offcanvas',
+                                'role': 'button',
+                                'aria-controls': 'offcanvasEnd',
+                            }
+                        },
+                        {
+                            text: '<svg  xmlns="http://www.w3.org/2000/svg"  width="24"  height="24"  viewBox="0 0 24 24"  fill="none"  stroke="currentColor"  stroke-width="2"  stroke-linecap="round"  stroke-linejoin="round"  class="icon icon-tabler icons-tabler-outline icon-tabler-chart-histogram"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><path d="M3 3v18h18" /><path d="M20 18v3" /><path d="M16 16v5" /><path d="M12 13v8" /><path d="M8 16v5" /><path d="M3 11c6 0 5 -5 9 -5s3 5 9 5" /></svg> Rekap',
+                            className: 'btn btn-dark',
+                            attr: {
+                                'href': '#offcanvasEnd-lamaran',
+                                'data-bs-toggle': 'offcanvas',
+                                'role': 'button',
+                                'aria-controls': 'offcanvasEnd',
+                            }
+                        },
+                        {
+                            text: '<svg  xmlns="http://www.w3.org/2000/svg"  width="24"  height="24"  viewBox="0 0 24 24"  fill="none"  stroke="currentColor"  stroke-width="2"  stroke-linecap="round"  stroke-linejoin="round"  class="icon icon-tabler icons-tabler-outline icon-tabler-plus-minus"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><path d="M4 7h6" /><path d="M7 4v6" /><path d="M20 18h-6" /><path d="M5 19l14 -14" /></svg> Tambahan / Potongan',
+                            className: 'btn btn-red',
+                            attr: {
+                                'href': '#modal-tambahan',
+                                'data-bs-toggle': 'modal',
+                            }
+                        },
+                    ],
+                    "language": {
+                        "lengthMenu": "Menampilkan _MENU_",
+                        "zeroRecords": "Data Tidak Ditemukan",
+                        "info": "Menampilkan _START_ sampai _END_ dari _TOTAL_ total data",
+                        "infoEmpty": "Data Tidak Ditemukan",
+                        "infoFiltered": "(Difilter dari _MAX_ total records)",
+                        "processing": '<div class="container container-slim py-4"><div class="text-center"><div class="mb-3"></div><div class="text-secondary mb-3">Loading Data...</div><div class="progress progress-sm"><div class="progress-bar progress-bar-indeterminate"></div></div></div></div>',
+                        "search": '<svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-search" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z" fill="none"></path><path d="M10 10m-7 0a7 7 0 1 0 14 0a7 7 0 1 0 -14 0"></path><path d="M21 21l-6 -6"></path></svg>',
+                        "paginate": {
+                            "first": '<svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-chevron-left-pipe" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z" fill="none"></path><path d="M7 6v12"></path><path d="M18 6l-6 6l6 6"></path></svg>',
+                            "last": '<svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-chevron-right-pipe" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z" fill="none"></path><path d="M6 6l6 6l-6 6"></path><path d="M17 5v13"></path></svg>',
+                            "next": '<svg xmlns="http://www.w3.org/2000/svg" class="icon" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z" fill="none"></path><path d="M9 6l6 6l-6 6"></path></svg>',
+                            "previous": '<svg xmlns="http://www.w3.org/2000/svg" class="icon" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z" fill="none"></path><path d="M15 6l-6 6l6 6"></path></svg>',
+                        },
+                        "decimal": ",",
+                        "thousands": ".",
+                        "select": {
+                            rows: {
+                                _: "%d karyawan dipilih",
+                                0: "Pilih item dan tekan tombol Proses data untuk memproses",
+                            }
+                        },
+                    },
+                    // ajax: "{{ route('getAbsensiLocal.index') }}",
+
+                    "ajax": {
+                        "url": "{{ route('getPayroll.index') }}",
+                        "data": function(data) {
+                            data._token = "{{ csrf_token() }}";
+                            data.bulan = $('#bulan').val();
+                            data.tahun = $('#tahun').val();
+                        }
+                    },
+                    columnDefs: [{
+                            'targets': 0,
+                            "orderable": false,
+                            'className': 'select-checkbox',
+                            'checkboxes': {
+                                'selectRow': true
+                            },
+                        }
+
+                    ],
+                    select: {
+                        'style': 'multi',
+                        "selector": 'td:not(:nth-child(2))',
+                    },
+                    columns: [{
+                            title: '',
+                            data: 'select_orders',
+                            name: 'select_orders',
+                            className: 'cuspad2',
+                            orderable: false,
+                            searchable: false
+                        }, {
+                            title: 'STB',
+                            data: 'stb',
+                            name: 'stb',
+                            className: 'cuspad0 text-center'
+                        },
+                        {
+                            title: 'Nama',
+                            data: 'nama',
+                            name: 'nama',
+                            className: 'cuspad0'
+                        },
+                        {
+                            title: 'Gaji',
+                            data: 'gapok',
+                            render: $.fn.dataTable.render.number('.', ',', 0, ''),
+                            name: 'gapok',
+                            className: 'cuspad0 text-center text-green'
+                        },
+                        {
+                            title: 'Prestasi',
+                            data: 'prestasi',
+                            name: 'prestasi',
+                            render: $.fn.dataTable.render.number('.', ',', 0, ''),
+                            className: 'cuspad0 text-center text-green'
+                        },
+                        {
+                            title: 'T.Jabatan',
+                            data: 'tjabat',
+                            name: 'tjabat',
+                            render: $.fn.dataTable.render.number('.', ',', 0, ''),
+                            className: 'cuspad0 text-center text-green'
+                        },
+                        {
+                            title: 'Gaji Bruto',
+                            data: 'gbruto',
+                            render: $.fn.dataTable.render.number('.', ',', 0, ''),
+                            name: 'gbruto',
+                            className: 'cuspad0 text-center text-green'
+                        },
+                        {
+                            title: 'Pot. Bpjs',
+                            data: 'potbpjs',
+                            name: 'potbpjs',
+                            render: $.fn.dataTable.render.number('.', ',', 0, ''),
+                            className: 'cuspad0 text-center text-red'
+                        },
+                        {
+                            title: 'Pot. Lain',
+                            data: 'potlain',
+                            name: 'potlain',
+                            render: $.fn.dataTable.render.number('.', ',', 0, ''),
+                            className: 'cuspad0 text-center text-red'
+                        },
+                        {
+                            title: 'Gaji Netto',
+                            data: 'gnetto',
+                            name: 'gnetto',
+                            render: $.fn.dataTable.render.number('.', ',', 0, ''),
+                            className: 'cuspad0 text-center text-green'
+                        },
+                        {
+                            title: 'Pembulatan',
+                            data: 'pembulatan',
+                            name: 'pembulatan',
+                            render: $.fn.dataTable.render.number('.', ',', 0, ''),
+                            className: 'cuspad0 text-center'
+                        },
+                        {
+                            title: 'Bank',
+                            data: 'bank',
+                            name: 'bank',
+                            className: 'cuspad0 text-center'
+                        },
+                        {
+                            title: 'No. Rekening',
+                            data: 'rekening',
+                            name: 'rekening',
+                            className: 'cuspad0 text-center'
+                        },
+                    ],
+                });
+
+            });
+
+            function syn() {
+                tablePayroll.ajax.reload();
+            }
+
             function tb() {
                 var bln = $('#bulan').val();
                 var thn = $('#tahun').val();
-
                 console.log('Mengambil bulan: ' + bln + '. tahun: ' + thn);
 
                 $(".spinnerLoading").fadeIn(200);
