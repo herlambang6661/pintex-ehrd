@@ -19,11 +19,46 @@ class Administrasi extends Controller
         $administrasi = "active";
         $payroll = "active";
 
+        $gapok = DB::table('daftar_upah')
+            ->where('jenis', '=', 'gapok')
+            ->get();
+
+        foreach ($gapok as $k) {
+            $pkumr = $k->id;
+            $nominal = $k->nominal;
+        }
+
         return view('products/04_administrasi.payroll', [
             'judul' => $judul,
             'administrasi' => $administrasi,
-            'payroll' => $payroll
+            'payroll' => $payroll,
+            'nominal' => $nominal,
+            'pkumr' => $pkumr,
         ]);
+    }
+
+    public function updateumr(Request $request)
+    {
+        if ($request->ajax()) {
+            DB::table('daftar_upah')
+                ->where('id', $request->id)
+                ->limit(1)
+                ->update(
+                    array(
+                        'nominal' => $request->value,
+                        'updated_at' => date('Y-m-d H:i:s'),
+                    )
+                );
+            DB::table('penerimaan_karyawan')
+                ->where('status', 'LIKE', '%Aktif%')
+                ->update(
+                    array(
+                        'gapok' => $request->value,
+                        'updated_at' => date('Y-m-d H:i:s'),
+                    )
+                );
+            return response()->json(['success' => true]);
+        }
     }
 
     public function getpayroll(Request $request)

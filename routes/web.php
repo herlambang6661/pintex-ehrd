@@ -207,10 +207,11 @@ Route::controller(Administrasi::class)->group(function () {
 
     Route::post('getpayroll', 'getpayroll')->name('getpayroll');
     Route::post('generatePayroll', 'generatePayroll')->name('generatePayroll');
+    Route::post('generatePayroll', 'generatePayroll')->name('generatePayroll');
+    Route::post('/umr/update', 'updateumr')->name('/umr/update');
 });
 
 // Modules Database
 Route::controller(Database::class)->group(function () {
     Route::get('database/lokasi', 'lokasi')->name('database/lokasi');
-    Route::get('database/sink', 'sink')->name('database/sink');
 });
