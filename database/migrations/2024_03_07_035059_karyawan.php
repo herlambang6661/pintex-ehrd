@@ -59,6 +59,7 @@ return new class extends Migration
             $table->integer('bpjs_jht')->nullable();
             $table->integer('bpjs_ks')->nullable();
             $table->integer('bpjs_ksAdd')->nullable();
+            $table->string('faskes_bpjs')->nullable();
             $table->string('keterangan')->nullable();
             $table->date('tglinput')->nullable();
             $table->string('dibuat')->nullable();

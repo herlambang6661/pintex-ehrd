@@ -570,10 +570,11 @@
                             Administrasi
                         </span>
                     </a>
-                    <div class="dropdown-menu {{ !empty($payroll) ? 'show' : '' }}">
+                    <div class="dropdown-menu {{ !empty($administrasi) ? 'show' : '' }}">
                         <div class="dropdown-menu-columns">
                             <div class="dropdown-menu-column">
-                                <a class="dropdown-item" href="{{ url('administrasi/payroll') }}">
+                                <a class="dropdown-item {{ !empty($payroll) ? 'show' : '' }}"
+                                    href="{{ url('administrasi/payroll') }}">
                                     <svg xmlns="http://www.w3.org/2000/svg" style="margin-right: 10px" width="24"
                                         height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor"
                                         stroke-width="2" stroke-linecap="round" stroke-linejoin="round"
@@ -600,7 +601,20 @@
                                     </svg>
                                     Karyawan Terlambat
                                 </a>
-                                <a class="dropdown-item" href="./layout-vertical.html">
+                                <a class="dropdown-item" href="{{ url('administrasi/bpjs') }}">
+                                    <svg xmlns="http://www.w3.org/2000/svg" style="margin-right: 10px" width="24"
+                                        height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                                        stroke-width="2" stroke-linecap="round" stroke-linejoin="round"
+                                        class="icon icon-tabler icons-tabler-outline icon-tabler-ambulance">
+                                        <path stroke="none" d="M0 0h24v24H0z" fill="none" />
+                                        <path d="M7 17m-2 0a2 2 0 1 0 4 0a2 2 0 1 0 -4 0" />
+                                        <path d="M17 17m-2 0a2 2 0 1 0 4 0a2 2 0 1 0 -4 0" />
+                                        <path d="M5 17h-2v-11a1 1 0 0 1 1 -1h9v12m-4 0h6m4 0h2v-6h-8m0 -5h5l3 5" />
+                                        <path d="M6 10h4m-2 -2v4" />
+                                    </svg>
+                                    BPJS
+                                </a>
+                                <a class="dropdown-item" href="./layout-vertical-transparent.html">
                                     <svg xmlns="http://www.w3.org/2000/svg" style="margin-right: 10px"
                                         class="icon icon-tabler icon-tabler-qrcode" width="24" height="24"
                                         viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" fill="none"
@@ -621,19 +635,6 @@
                                         <path d="M14 20l3 0" />
                                         <path d="M17 17l3 0" />
                                         <path d="M20 17l0 3" />
-                                    </svg>
-                                    BPJS
-                                </a>
-                                <a class="dropdown-item" href="./layout-vertical-transparent.html">
-                                    <svg xmlns="http://www.w3.org/2000/svg" style="margin-right: 10px"
-                                        class="icon icon-tabler icon-tabler-book-upload" width="24"
-                                        height="24" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor"
-                                        fill="none" stroke-linecap="round" stroke-linejoin="round">
-                                        <path stroke="none" d="M0 0h24v24H0z" fill="none" />
-                                        <path d="M14 20h-8a2 2 0 0 1 -2 -2v-12a2 2 0 0 1 2 -2h12v5" />
-                                        <path d="M11 16h-5a2 2 0 0 0 -2 2" />
-                                        <path d="M15 16l3 -3l3 3" />
-                                        <path d="M18 13v9" />
                                     </svg>
                                     Kupon
                                 </a>

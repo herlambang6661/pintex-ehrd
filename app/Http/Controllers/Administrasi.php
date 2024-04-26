@@ -84,9 +84,9 @@ class Administrasi extends Controller
 
     public function generatePayroll(Request $request)
     {
-        // set periode
+        // set periode gaji
         $periode = substr($request->tahun, -2) . "" . $request->bulan;
-        // get karyawan yang aktif
+        // get karyawan hanya yang aktif
         $karyawanAktif = DB::table('penerimaan_karyawan')
             ->where('status', 'LIKE', '%Aktif%')
             ->orderBy('userid', 'asc')
@@ -99,6 +99,11 @@ class Administrasi extends Controller
                 ->where('periode', '=', $periode)
                 ->first();
             // menemukan karyawan sesuai, update
+            $hadir = $this->absensi('H', $key->userid, date("Y-m-d", strtotime($request->tahun . '-' . $request->bulan . '-16' . "-1 month")), $request->tahun . '-' . $request->bulan . '-15');
+            $sakit = $this->absensi('S', $key->userid, date("Y-m-d", strtotime($request->tahun . '-' . $request->bulan . '-16' . "-1 month")), $request->tahun . '-' . $request->bulan . '-15');
+            $izin = $this->absensi('I', $key->userid, date("Y-m-d", strtotime($request->tahun . '-' . $request->bulan . '-16' . "-1 month")), $request->tahun . '-' . $request->bulan . '-15');
+            $alpha = $this->absensi('A', $key->userid, date("Y-m-d", strtotime($request->tahun . '-' . $request->bulan . '-16' . "-1 month")), $request->tahun . '-' . $request->bulan . '-15');
+
             if ($cekUpdateKaryawan) {
                 DB::table('administrasi_payroll')
                     ->where('userid', '=', $key->userid)
@@ -122,6 +127,10 @@ class Administrasi extends Controller
                             'gapok' => $key->gapok,
                             'bank' => $key->banknm,
                             'rekening' => $key->bankrek,
+                            'H' => $hadir,
+                            'S' => $sakit,
+                            'I' => $izin,
+                            'A' => $alpha,
                             'potongan_infaq' => '-5000',
                             'updated_at' => date('Y-m-d H:i:s'),
                         )
@@ -148,12 +157,57 @@ class Administrasi extends Controller
                             'gapok' => $key->gapok,
                             'bank' => $key->banknm,
                             'rekening' => $key->bankrek,
+                            'H' => $hadir,
+                            'S' => $sakit,
+                            'I' => $izin,
+                            'A' => $alpha,
                             'potongan_infaq' => '-5000',
                             'updated_at' => date('Y-m-d H:i:s'),
                         )
                     );
             }
+
+            // $karyawanPayroll = DB::table('administrasi_payroll')->where('userid', '=', $key->userid)->where('periode', '=', $periode)->get();
+            // foreach ($karyawanPayroll as $p) {
+            //     $absensi = DB::table('absensi_absensi')
+            //         ->select(DB::raw("
+            //             SUM(IF(sst = 'H', 1, 0)) as Hadir,
+            //             SUM(IF(sst = 'S', 1, 0)) as Sakit,
+            //             SUM(IF(sst = 'I', 1, 0)) as Izin,
+            //             SUM(IF(sst = 'A', 1, 0)) as Alpha
+            //         "))
+            //         ->where('stb', '=', $key->stb)
+            //         ->whereBetween('tanggal', [$p->dari, $p->sampai])
+            //         ->get();
+            //     foreach ($absensi as $a) {
+            //         DB::table('administrasi_payroll')
+            //             ->where('id', '=', $p->id)
+            //             ->limit(1)
+            //             ->update(
+            //                 array(
+            //                     'H' => $a->Hadir,
+            //                     'S' => $a->Sakit,
+            //                     'I' => $a->Izin,
+            //                     'A' => $a->Alpha,
+            //                 )
+            //             );
+            //     }
+            // }
         }
+    }
+
+    private function absensi($params, $userid, $start, $end)
+    {
+        $absensi = DB::table('absensi_absensi')
+            ->select(DB::raw("SUM(IF(sst = '$params', 1, 0)) as Result"))
+            ->where('userid', '=', $userid)
+            ->whereBetween('tanggal', [$start, $end])
+            ->get();
+        foreach ($absensi as $a) {
+            $result = $a->Result;
+        }
+
+        return $result;
     }
 
     public function importPayroll(Request $request)
@@ -193,5 +247,30 @@ class Administrasi extends Controller
         $file_name = 'Contoh Format Upload Tambahan dan Potongan Payroll.xlsx';
 
         return response()->download($file_path, $file_name);
+    }
+
+
+    public function bpjs()
+    {
+        $judul = "BPJS";
+        $administrasi = "active";
+        $bpjs = "active";
+
+        $gapok = DB::table('daftar_upah')
+            ->where('jenis', '=', 'gapok')
+            ->get();
+
+        foreach ($gapok as $k) {
+            $pkumr = $k->id;
+            $nominal = $k->nominal;
+        }
+
+        return view('products/04_administrasi.bpjs', [
+            'judul' => $judul,
+            'administrasi' => $administrasi,
+            'bpjs' => $bpjs,
+            'nominal' => $nominal,
+            'pkumr' => $pkumr,
+        ]);
     }
 }
