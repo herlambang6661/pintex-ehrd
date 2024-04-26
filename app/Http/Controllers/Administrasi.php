@@ -5,6 +5,9 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use Illuminate\Routing\Controller;
 use Illuminate\Support\Facades\DB;
+use App\Imports\ImportExcelPayroll;
+use Illuminate\Support\Facades\Session;
+use Maatwebsite\Excel\Facades\Excel as ExcelM;
 
 class Administrasi extends Controller
 {
@@ -151,5 +154,44 @@ class Administrasi extends Controller
                     );
             }
         }
+    }
+
+    public function importPayroll(Request $request)
+    {
+        // validasi
+        $request->validate(
+            [
+                '_token' => 'required',
+                'file' => 'required|mimes:csv,xls,xlsx',
+            ],
+        );
+
+        // menangkap file excel
+        $file = $request->file('file');
+
+        // membuat nama file unik
+        $nama_file = 'Periode-' . $request->periode . '_upload-' . date('Ymd') . $file->getClientOriginalName();
+
+        // upload ke folder file_siswa di dalam folder public
+        $file->move('file_excel', $nama_file);
+
+        // import data
+        // ExcelM::import(new ImportExcelTest, public_path('/file_excel/' . $nama_file));
+        $folder = public_path('file_excel/' . $nama_file);
+        ExcelM::import(new ImportExcelPayroll, $folder);
+
+        // notifikasi dengan session
+        Session::flash('success', 'Data Payroll Berhasil Diimport!');
+
+        // alihkan halaman kembali
+        return redirect()->back()->with('success', 'Data Payroll Berhasil Diimport!');
+    }
+
+    public function exportPayroll()
+    {
+        $file_path = public_path('file_excel/ContohUploadPayroll.xlsx');
+        $file_name = 'Contoh Format Upload Tambahan dan Potongan Payroll.xlsx';
+
+        return response()->download($file_path, $file_name);
     }
 }

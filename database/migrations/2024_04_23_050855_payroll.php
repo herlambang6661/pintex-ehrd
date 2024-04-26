@@ -41,6 +41,7 @@ return new class extends Migration
             $table->integer('pot_bpjs_jht')->nullable();
             $table->integer('pot_bpjs_jp')->nullable();
             $table->integer('pot_bpjs_ks')->nullable();
+            $table->integer('H')->nullable();
             $table->integer('S')->nullable();
             $table->integer('I')->nullable();
             $table->integer('A')->nullable();
