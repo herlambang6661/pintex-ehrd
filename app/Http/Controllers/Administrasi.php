@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Routing\Controller;
 use Illuminate\Support\Facades\DB;
@@ -272,5 +273,94 @@ class Administrasi extends Controller
             'nominal' => $nominal,
             'pkumr' => $pkumr,
         ]);
+    }
+
+    public function listBPJSKaryawan(Request $request)
+    {
+        $data = DB::table('penerimaan_karyawan')->where('id', $request->id)->get();
+        foreach ($data as $u) {
+            $jkk = !empty($u->bpjs_jkk) ? 'checked=""' : "";
+            $jkm = !empty($u->bpjs_jkm) ? 'checked=""' : "";
+            $jp = !empty($u->bpjs_jp) ? 'checked=""' : "";
+            $jht = !empty($u->bpjs_jht) ? 'checked=""' : "";
+            $ks = !empty($u->bpjs_ks) ? 'checked=""' : "";
+            echo '
+                    <table class="table text-center">
+                        <tbody>
+                            <tr>
+                                <th>' . $u->nama . ' <br> ( ' . $u->nik . ' )</th>
+                            </tr>
+                        </tbody>
+                    </table>
+                    <div class="divide-y">
+                        <div>
+                            <label class="row">
+                                <span class="col">Jaminan Kecelakaan Kerja (JKK)</span>
+                                <span class="col-auto">
+                                <label class="form-check form-check-single form-switch">
+                                    <input class="form-check-input" type="checkbox" ' . $jkk . '>
+                                </label>
+                                </span>
+                            </label>
+                        </div>
+                        <div>
+                            <label class="row">
+                                <span class="col">Jaminan Kematian (JKM)</span>
+                                <span class="col-auto">
+                                <label class="form-check form-check-single form-switch">
+                                    <input class="form-check-input" type="checkbox" ' . $jkm . '>
+                                </label>
+                                </span>
+                            </label>
+                        </div>
+                        <div>
+                            <label class="row">
+                                <span class="col">Jaminan Pensiun (JP)</span>
+                                <span class="col-auto">
+                                <label class="form-check form-check-single form-switch">
+                                    <input class="form-check-input" type="checkbox" ' . $jp . '>
+                                </label>
+                                </span>
+                            </label>
+                        </div>
+                        <div>
+                            <label class="row">
+                                <span class="col">Jaminan Hari Tua (JHT)</span>
+                                <span class="col-auto">
+                                <label class="form-check form-check-single form-switch">
+                                    <input class="form-check-input" type="checkbox" ' . $jht . '>
+                                </label>
+                                </span>
+                            </label>
+                        </div>
+                        <div>
+                            <label class="row">
+                                <span class="col">BPJS Kesehatan</span>
+                                <span class="col-auto">
+                                <label class="form-check form-check-single form-switch">
+                                    <input class="form-check-input" type="checkbox" ' . $ks . '>
+                                </label>
+                                </span>
+                            </label>
+                        </div>
+                        <div>
+                            <label class="row">
+                                <span class="col">Tanggungan</span>
+                                <span class="col-auto">
+                                    <input class="form-control" type="number" value="' . $u->bpjs_ksAdd . '" min="0">
+                                </span>
+                            </label>
+                        </div>
+                        <div>
+                            <label class="row">
+                                <span class="col">Fasilitas Kesehatan</span>
+                                <span class="col-auto">
+                                    <input class="form-control" type="text">
+                                </span>
+                            </label>
+                        </div>
+                    </div>
+            ';
+        }
     }
 }
