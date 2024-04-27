@@ -3,9 +3,11 @@
 namespace App\Http\Controllers;
 
 use DateTime;
+use DatePeriod;
+use DateInterval;
+
 use Carbon\Carbon;
 use Illuminate\Http\Request;
-
 use Illuminate\Routing\Controller;
 use Illuminate\Support\Facades\DB;
 use function PHPUnit\Framework\isNull;
@@ -2642,6 +2644,137 @@ class DBLokal extends Controller
                                 "_" . $i => $value->sst,
                             )
                         );
+                }
+            }
+        }
+    }
+
+    public function perbaruiUploadAbsenBulan(Request $request)
+    {
+
+        // Declare two dates
+        $Date1 = date("Y-m", strtotime($request->tgl)) . '-01';
+        $Date2 = date("Y-m", strtotime($request->tgl)) . '-' . date('t');
+
+        // Declare an empty array
+        $array = [];
+
+        // Use strtotime function
+        $Variable1 = strtotime($Date1);
+        $Variable2 = strtotime($Date2);
+
+        // Use for loop to store dates into array
+        // 86400 sec = 24 hrs = 60*60*24 = 1 day
+        for ($currentDate = $Variable1; $currentDate <= $Variable2; $currentDate += 86400) {
+            $Store = date('Y-m-d', $currentDate);
+            $array[] = $Store;
+        }
+        // Display the dates in array format
+        foreach ($array as $tanggalArray) {
+            $ac = DB::table('penerimaan_karyawan')
+                ->where('status', 'like', '%Aktif%')
+                ->select('*')
+                ->orderBy('userid', 'ASC')
+                ->get();
+            foreach ($ac as $key) {
+                $hari = date("D", strtotime($tanggalArray));
+                switch ($hari) {
+                    case 'Sun':
+                        $hari_ini = "Minggu";
+                        break;
+                    case 'Mon':
+                        $hari_ini = "Senin";
+                        break;
+                    case 'Tue':
+                        $hari_ini = "Selasa";
+                        break;
+                    case 'Wed':
+                        $hari_ini = "Rabu";
+                        break;
+                    case 'Thu':
+                        $hari_ini = "Kamis";
+                        break;
+                    case 'Fri':
+                        $hari_ini = "Jumat";
+                        break;
+                    case 'Sat':
+                        $hari_ini = "Sabtu";
+                        break;
+                    default:
+                        $hari_ini = "Tidak di ketahui";
+                        break;
+                }
+
+                $server = DB::table('absensi_absensi')
+                    ->where('userid', '=', $key->userid)
+                    ->where(
+                        'tanggal',
+                        '=',
+                        $tanggalArray
+                    )
+                    ->first();
+
+                if ($server) {
+                    $getIn = DB::table('absensi_absensi')
+                        ->where('userid', '=', $key->userid)
+                        ->where('tanggal', '=', $tanggalArray)
+                        ->get();
+
+                    foreach ($getIn as $value) {
+                        DB::table('absensi_absensi')
+                            ->where('userid', '=', $key->userid)
+                            ->where('tanggal', '=', $tanggalArray)
+                            ->limit(1)
+                            ->update(
+                                array(
+                                    'tanggal' => $value->tanggal,
+                                    'userid' => $value->userid,
+                                    'stb' => $value->stb,
+                                    'name' => $value->name,
+                                    'in' => $value->in,
+                                    'out' => $value->out,
+                                    'qj' => $value->qj,
+                                    'jis' => $value->jis,
+                                    'qjnet' => $value->qjnet,
+                                    'prediksiShift' => $value->prediksiShift,
+                                    'hrlibur' => $value->hrlibur,
+                                    'sethari' => $value->sethari,
+                                    // 'sst' => $value->sst,
+                                    'raw_sst' => $value->raw_sst,
+                                    'remember_token' => $value->remember_token,
+                                    'created_at' => $value->created_at,
+                                )
+                            );
+                    }
+                } else {
+                    // Data Tidak Ditemukan, jadi Insert data baru
+                    $gt = DB::table('absensi_absensi')
+                        ->where('userid', '=', $key->userid)
+                        ->where('tanggal', '=', $tanggalArray)
+                        ->get();
+                    foreach ($gt as $value) {
+                        DB::table('absensi_absensi')
+                            ->insert(
+                                [
+                                    'tanggal' => $value->tanggal,
+                                    'userid' => $value->userid,
+                                    'stb' => $value->stb,
+                                    'name' => $value->name,
+                                    'in' => $value->in,
+                                    'out' => $value->out,
+                                    'qj' => $value->qj,
+                                    'jis' => $value->jis,
+                                    'qjnet' => $value->qjnet,
+                                    'prediksiShift' => $value->prediksiShift,
+                                    'hrlibur' => $value->hrlibur,
+                                    'sethari' => $value->sethari,
+                                    'sst' => $value->sst,
+                                    'raw_sst' => $value->raw_sst,
+                                    'remember_token' => $value->remember_token,
+                                    'created_at' => $value->created_at,
+                                ]
+                            );
+                    }
                 }
             }
         }

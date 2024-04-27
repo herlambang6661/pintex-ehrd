@@ -37,30 +37,30 @@
         }
 
         /* .cv-spinner {
-                                                                        height: 100%;
-                                                                        display: flex;
-                                                                        justify-content: center;
-                                                                        align-items: center;
-                                                                    }
-
-                                                                    .spinner {
-                                                                        width: 40px;
-                                                                        height: 40px;
-                                                                        border: 4px #ddd solid;
-                                                                        border-top: 4px #2e93e6 solid;
-                                                                        border-radius: 50%;
-                                                                        animation: sp-anime 0.8s infinite linear;
-                                                                    }
-
-                                                                    @keyframes sp-anime {
-                                                                        100% {
-                                                                            transform: rotate(360deg);
+                                                                            height: 100%;
+                                                                            display: flex;
+                                                                            justify-content: center;
+                                                                            align-items: center;
                                                                         }
-                                                                    }
 
-                                                                    .is-hide {
-                                                                        display: none;
-                                                                    } */
+                                                                        .spinner {
+                                                                            width: 40px;
+                                                                            height: 40px;
+                                                                            border: 4px #ddd solid;
+                                                                            border-top: 4px #2e93e6 solid;
+                                                                            border-radius: 50%;
+                                                                            animation: sp-anime 0.8s infinite linear;
+                                                                        }
+
+                                                                        @keyframes sp-anime {
+                                                                            100% {
+                                                                                transform: rotate(360deg);
+                                                                            }
+                                                                        }
+
+                                                                        .is-hide {
+                                                                            display: none;
+                                                                        } */
         .loader {
             position: fixed;
             z-index: 301;
@@ -608,7 +608,7 @@
                     <span class="loader-text">MEMUAT DATA</span>
                 </div>
             </div>
-            <div class="modal-dialog modal-lg modal-dialog-centered" role="document">
+            <div class="modal-dialog modal-lg modal-dialog-centered modal-dialog-scrollable" role="document">
                 <div class="modal-content">
                     <div class="modal-header">
                         <h5 class="modal-title">Detail Absensi Karyawan</h5>
