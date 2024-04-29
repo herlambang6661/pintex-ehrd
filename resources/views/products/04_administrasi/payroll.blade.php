@@ -188,7 +188,7 @@
                                     <tr>
                                         <td>UMR</td>
                                         <td>:</td>
-                                        <td><a href="" class="editable" data-type="text" data-name="nominal"
+                                        <td><a href="" class="editable" data-type="text" data-name="{{ $pkumr }}"
                                                 data-pk="{{ $pkumr }}">{{ $nominal }}</a></td>
                                     </tr>
                                 </table>

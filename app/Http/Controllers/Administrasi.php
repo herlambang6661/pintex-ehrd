@@ -45,7 +45,7 @@ class Administrasi extends Controller
     {
         if ($request->ajax()) {
             DB::table('daftar_upah')
-                ->where('id', $request->id)
+                ->where('id', $request->name)
                 ->limit(1)
                 ->update(
                     array(
@@ -256,21 +256,62 @@ class Administrasi extends Controller
         $administrasi = "active";
         $bpjs = "active";
 
-        $gapok = DB::table('daftar_upah')
-            ->where('jenis', '=', 'gapok')
+        $bpjs_jkk = DB::table('daftar_upah')
+            ->where('jenis', '=', 'bpjs_jkk')
+            ->get();
+        $bpjs_jkm = DB::table('daftar_upah')
+            ->where('jenis', '=', 'bpjs_jkm')
+            ->get();
+        $bpjs_jp = DB::table('daftar_upah')
+            ->where('jenis', '=', 'bpjs_jp')
+            ->get();
+        $bpjs_jht = DB::table('daftar_upah')
+            ->where('jenis', '=', 'bpjs_jht')
+            ->get();
+        $bpjs_ks = DB::table('daftar_upah')
+            ->where('jenis', '=', 'bpjs_ks')
             ->get();
 
-        foreach ($gapok as $k) {
-            $pkumr = $k->id;
-            $nominal = $k->nominal;
+        foreach ($bpjs_jkk as $k) {
+            $pkbpjs_jkk = $k->id;
+            $nobpjs_jkk = $k->nominal;
+        }
+        foreach ($bpjs_jkm as $l) {
+            $pkbpjs_jkm = $l->id;
+            $nobpjs_jkm = $l->nominal;
+        }
+        foreach ($bpjs_jp as $m) {
+            $pkbpjs_jp = $m->id;
+            $nobpjs_jp = $m->nominal;
+        }
+        foreach ($bpjs_jht as $n) {
+            $pkbpjs_jht = $n->id;
+            $nobpjs_jht = $n->nominal;
+        }
+        foreach ($bpjs_ks as $o) {
+            $pkbpjs_ks = $o->id;
+            $nobpjs_ks = $o->nominal;
         }
 
         return view('products/04_administrasi.bpjs', [
             'judul' => $judul,
             'administrasi' => $administrasi,
             'bpjs' => $bpjs,
-            'nominal' => $nominal,
-            'pkumr' => $pkumr,
+
+            'pkbpjs_jkk' => $pkbpjs_jkk,
+            'nobpjs_jkk' => $nobpjs_jkk,
+
+            'pkbpjs_jkm' => $pkbpjs_jkm,
+            'nobpjs_jkm' => $nobpjs_jkm,
+
+            'pkbpjs_jp' => $pkbpjs_jp,
+            'nobpjs_jp' => $nobpjs_jp,
+
+            'pkbpjs_jht' => $pkbpjs_jht,
+            'nobpjs_jht' => $nobpjs_jht,
+
+            'pkbpjs_ks' => $pkbpjs_ks,
+            'nobpjs_ks' => $nobpjs_ks,
         ]);
     }
 
@@ -490,5 +531,28 @@ class Administrasi extends Controller
                     <button type="button" class="btn me-auto" data-bs-dismiss="modal">Tutup</button>
                 </div>
             ';
+    }
+
+    public function updateUpahBpjs(Request $request)
+    {
+        if ($request->ajax()) {
+            DB::table('daftar_upah')
+                ->where('id', $request->name)
+                ->update(
+                    array(
+                        'nominal' => $request->value,
+                        'updated_at' => date('Y-m-d H:i:s'),
+                    )
+                );
+            // DB::table('penerimaan_karyawan')
+            // ->where('status', 'LIKE', '%Aktif%')
+            // ->update(
+            //     array(
+            //         'gapok' => $request->value,
+            //         'updated_at' => date('Y-m-d H:i:s'),
+            //     )
+            // );
+            return response()->json(['success' => true]);
+        }
     }
 }

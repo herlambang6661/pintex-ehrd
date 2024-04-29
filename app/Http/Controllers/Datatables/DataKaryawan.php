@@ -35,11 +35,32 @@ class DataKaryawan extends Controller
                     return $btn;
                 })
 
+                ->addColumn('bpjs_jkk', function ($row) {
+                    $btn = ($row->bpjs_jkk == "1") ? '<i class="fa-solid fa-check text-success"></i>' : '<i class="fa fa-xmark"></i>';
+                    return $btn;
+                })
+                ->addColumn('bpjs_jkm', function ($row) {
+                    $btn = ($row->bpjs_jkm == "1") ? '<i class="fa-solid fa-check text-success"></i>' : '<i class="fa fa-xmark"></i>';
+                    return $btn;
+                })
+                ->addColumn('bpjs_jp', function ($row) {
+                    $btn = ($row->bpjs_jp == "1") ? '<i class="fa-solid fa-check text-success"></i>' : '<i class="fa fa-xmark"></i>';
+                    return $btn;
+                })
+                ->addColumn('bpjs_jht', function ($row) {
+                    $btn = ($row->bpjs_jht == "1") ? '<i class="fa-solid fa-check text-success"></i>' : '<i class="fa fa-xmark"></i>';
+                    return $btn;
+                })
+                ->addColumn('bpjs_ks', function ($row) {
+                    $btn = ($row->bpjs_ks == "1") ? '<i class="fa-solid fa-check text-success"></i>' : '<i class="fa fa-xmark"></i>';
+                    return $btn;
+                })
+
                 ->addColumn('actionBPJS', function ($row) {
                     $btn = ' <a href="#editBPJS" data-bs-toggle="modal" data-toggle="tooltip" data-placement="top" title="Lihat Detail Data BPJS Karyawan" data-item="' . $row->nama . '" data-id="' . $row->id . '" class="btn btn-sm btn-info btn-icon"><i class="fa-solid fa-user-pen"></i></a>';
                     return $btn;
                 })
-                ->rawColumns(['status', 'action', 'actionBPJS', 'select_orders', 'ttl', 'umur'])
+                ->rawColumns(['status', 'action', 'actionBPJS', 'select_orders', 'ttl', 'umur', 'bpjs_jkk', 'bpjs_jkm', 'bpjs_jp', 'bpjs_jht', 'bpjs_ks',])
                 ->make(true);
         }
         return view('products.02_penerimaan.wawancara');

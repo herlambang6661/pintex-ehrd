@@ -215,6 +215,8 @@ Route::controller(Administrasi::class)->group(function () {
     Route::post('listBPJSKaryawan', 'listBPJSKaryawan');
     Route::post('pos/update', 'updatePos');
     Route::post('updateBPJS', 'updateBPJS');
+
+    Route::post('bpjsupdate', 'updateUpahBpjs')->name('bpjsupdate');
 });
 
 // Modules Database
