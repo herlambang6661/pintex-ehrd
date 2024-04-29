@@ -250,7 +250,6 @@ class Administrasi extends Controller
         return response()->download($file_path, $file_name);
     }
 
-
     public function bpjs()
     {
         $judul = "BPJS";
@@ -285,9 +284,47 @@ class Administrasi extends Controller
             $jht = !empty($u->bpjs_jht) ? 'checked=""' : "";
             $ks = !empty($u->bpjs_ks) ? 'checked=""' : "";
             echo '
+                    <script>
+                        $("#jkk").on("change", function() {
+                            if ($(this).is(":checked")) {
+                                $(this).attr("value", "1");
+                            } else {
+                                $(this).attr("value", "0");
+                            }
+                        });
+                        $("#jkm").on("change", function() {
+                            if ($(this).is(":checked")) {
+                                $(this).attr("value", "1");
+                            } else {
+                                $(this).attr("value", "0");
+                            }
+                        });
+                        $("#jp").on("change", function() {
+                            if ($(this).is(":checked")) {
+                                $(this).attr("value", "1");
+                            } else {
+                                $(this).attr("value", "0");
+                            }
+                        });
+                        $("#jht").on("change", function() {
+                            if ($(this).is(":checked")) {
+                                $(this).attr("value", "1");
+                            } else {
+                                $(this).attr("value", "0");
+                            }
+                        });
+                        $("#ks").on("change", function() {
+                            if ($(this).is(":checked")) {
+                                $(this).attr("value", "1");
+                            } else {
+                                $(this).attr("value", "0");
+                            }
+                        });
+                    </script>
                     <table class="table text-center">
                         <tbody>
                             <tr>
+                                <input type="hidden" name="id" value="' . $u->id . '">
                                 <th>' . $u->nama . ' <br> ( ' . $u->nik . ' )</th>
                             </tr>
                         </tbody>
@@ -297,9 +334,9 @@ class Administrasi extends Controller
                             <label class="row">
                                 <span class="col">Jaminan Kecelakaan Kerja (JKK)</span>
                                 <span class="col-auto">
-                                <label class="form-check form-check-single form-switch">
-                                    <input class="form-check-input" type="checkbox" ' . $jkk . '>
-                                </label>
+                                    <label class="form-check form-check-single form-switch">
+                                        <input class="form-check-input" type="checkbox" ' . $jkk . ' id="jkk" value="' . $u->bpjs_jkk . '" name="jkk">
+                                    </label>
                                 </span>
                             </label>
                         </div>
@@ -308,7 +345,7 @@ class Administrasi extends Controller
                                 <span class="col">Jaminan Kematian (JKM)</span>
                                 <span class="col-auto">
                                 <label class="form-check form-check-single form-switch">
-                                    <input class="form-check-input" type="checkbox" ' . $jkm . '>
+                                    <input class="form-check-input" type="checkbox" ' . $jkm . ' id="jkm" value="' . $u->bpjs_jkm . '" name="jkm">
                                 </label>
                                 </span>
                             </label>
@@ -318,7 +355,7 @@ class Administrasi extends Controller
                                 <span class="col">Jaminan Pensiun (JP)</span>
                                 <span class="col-auto">
                                 <label class="form-check form-check-single form-switch">
-                                    <input class="form-check-input" type="checkbox" ' . $jp . '>
+                                    <input class="form-check-input" type="checkbox" ' . $jp . ' id="jp" value="' . $u->bpjs_jp . '" name="jp">
                                 </label>
                                 </span>
                             </label>
@@ -328,7 +365,7 @@ class Administrasi extends Controller
                                 <span class="col">Jaminan Hari Tua (JHT)</span>
                                 <span class="col-auto">
                                 <label class="form-check form-check-single form-switch">
-                                    <input class="form-check-input" type="checkbox" ' . $jht . '>
+                                    <input class="form-check-input" type="checkbox" ' . $jht . ' id="jht" value="' . $u->bpjs_jht . '" name="jht">
                                 </label>
                                 </span>
                             </label>
@@ -338,7 +375,7 @@ class Administrasi extends Controller
                                 <span class="col">BPJS Kesehatan</span>
                                 <span class="col-auto">
                                 <label class="form-check form-check-single form-switch">
-                                    <input class="form-check-input" type="checkbox" ' . $ks . '>
+                                    <input class="form-check-input" type="checkbox" ' . $ks . ' id="ks" value="' . $u->bpjs_ks . '" name="ks">
                                 </label>
                                 </span>
                             </label>
@@ -347,7 +384,7 @@ class Administrasi extends Controller
                             <label class="row">
                                 <span class="col">Tanggungan</span>
                                 <span class="col-auto">
-                                    <input class="form-control" type="number" value="' . $u->bpjs_ksAdd . '" min="0">
+                                    <input class="form-control" type="number" value="' . $u->bpjs_ksAdd . '" min="0" name="ksadd">
                                 </span>
                             </label>
                         </div>
@@ -355,12 +392,40 @@ class Administrasi extends Controller
                             <label class="row">
                                 <span class="col">Fasilitas Kesehatan</span>
                                 <span class="col-auto">
-                                    <input class="form-control" type="text">
+                                    <input class="form-control" type="text" name="faskes" value="' . $u->faskes_bpjs . '">
                                 </span>
                             </label>
                         </div>
                     </div>
             ';
+        }
+    }
+
+    public function updateBPJS(Request $request)
+    {
+        $jkk = ($request->jkk == "1") ? $request->jkk : '0';
+        $jkm = ($request->jkm == "1") ? $request->jkm : '0';
+        $jp = ($request->jp == "1") ? $request->jp : '0';
+        $jht = ($request->jht == "1") ? $request->jht : '0';
+        $ks = ($request->ks == "1") ? $request->ks : '0';
+        $ksadd = ($request->ksadd == "1") ? $request->ksadd : '0';
+        if ($request->ajax()) {
+            DB::table('penerimaan_karyawan')
+                ->where('id', $request->id)
+                ->limit(1)
+                ->update(
+                    array(
+                        'bpjs_jkk' => $jkk,
+                        'bpjs_jkm' => $jkm,
+                        'bpjs_jp' => $jp,
+                        'bpjs_jht' => $jht,
+                        'bpjs_ks' => $ks,
+                        'bpjs_ksAdd' => $ksadd,
+                        'faskes_bpjs' => $request->faskes,
+                        'updated_at' => date('Y-m-d H:i:s'),
+                    )
+                );
+            return response()->json(['success' => true]);
         }
     }
 
