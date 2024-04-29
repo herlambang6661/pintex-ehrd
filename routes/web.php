@@ -210,9 +210,11 @@ Route::controller(Administrasi::class)->group(function () {
     Route::post('generatePayroll', 'generatePayroll')->name('generatePayroll');
     Route::post('generatePayroll', 'generatePayroll')->name('generatePayroll');
     Route::post('/umr/update', 'updateumr')->name('/umr/update');
+    Route::post('/karyawan/update', 'updatelevelkaryawan')->name('/karyawan/update');
     Route::get('/payroll/export_excel', 'exportPayroll')->name('/payroll/export_excel');
     Route::post('/payroll/import_excel', 'importPayroll')->name('/payroll/import_excel');
     Route::post('listBPJSKaryawan', 'listBPJSKaryawan');
+    Route::post('rekapPayroll', 'rekapPayroll');
 });
 
 // Modules Database

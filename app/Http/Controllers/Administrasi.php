@@ -363,4 +363,67 @@ class Administrasi extends Controller
             ';
         }
     }
+
+    public function rekapPayroll(Request $request)
+    {
+        $bulan = array(
+            1 =>   'Januari',
+            'Februari',
+            'Maret',
+            'April',
+            'Mei',
+            'Juni',
+            'Juli',
+            'Agustus',
+            'September',
+            'Oktober',
+            'November',
+            'Desember'
+        );
+        echo '
+                <div class="card">
+                    <div class="card-header">
+                        <h5 class="modal-title">Rekap Payroll Periode ' . $bulan[(int)$request->bulan] . ', ' . $request->tahun . '</h5>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    </div>
+                    <div class="table-responsive">
+                        <table class="table card-table table-vcenter text-nowrap datatable">
+                            <thead>
+                                <tr>
+                                    <th>Grup</th>
+                                    <th>Jml Karyawan</th>
+                                    <th>Gaji Bruto</th>
+                                    <th>Koperasi</th>
+                                    <th>Infaq</th>
+                                    <th>Lainnya</th>
+                                    <th>BPJS TK</th>
+                                    <th>BPJS Kesehatan</th>
+                                    <th>Absensi</th>
+                                    <th>Total Potongan</th>
+                                    <th>Gaji Netto</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <th>Grup</th>
+                                    <th>Jml Karyawan</th>
+                                    <th>Gaji Bruto</th>
+                                    <th>Koperasi</th>
+                                    <th>Infaq</th>
+                                    <th>Lainnya</th>
+                                    <th>BPJS TK</th>
+                                    <th>BPJS Kesehatan</th>
+                                    <th>Absensi</th>
+                                    <th>Total Potongan</th>
+                                    <th>Gaji Netto</th>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn me-auto" data-bs-dismiss="modal">Tutup</button>
+                </div>
+            ';
+    }
 }
