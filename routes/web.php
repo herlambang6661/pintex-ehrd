@@ -19,6 +19,7 @@ use App\Http\Controllers\Datatables\DataLamaran;
 use App\Http\Controllers\Datatables\DataPayroll;
 use App\Http\Controllers\Datatables\DataKaryawan;
 use App\Http\Controllers\Datatables\DataHariLibur;
+use App\Http\Controllers\Datatables\DataTerlambat;
 use App\Http\Controllers\Datatables\DataWawancara;
 use Illuminate\Contracts\Auth\Access\Authorizable;
 use App\Http\Controllers\Datatables\DataFingerODBC;
@@ -79,6 +80,7 @@ Route::resources([
     'getAccKomunikasi' => DataACCKomunikasi::class,
     'getLoker' => DataLoker::class,
     'getPayroll' => DataPayroll::class,
+    'getTerlambat' => DataTerlambat::class,
 ]);
 
 // Modules Auth
@@ -206,16 +208,15 @@ Route::controller(Administrasi::class)->group(function () {
     Route::get('administrasi/kupon', 'kupon')->name('administrasi/kupon');
     Route::get('administrasi/lembur', 'lembur')->name('administrasi/lembur');
 
+    Route::get('/payroll/export_excel', 'exportPayroll')->name('/payroll/export_excel');
     Route::post('getpayroll', 'getpayroll')->name('getpayroll');
     Route::post('generatePayroll', 'generatePayroll')->name('generatePayroll');
     Route::post('generatePayroll', 'generatePayroll')->name('generatePayroll');
     Route::post('/umr/update', 'updateumr')->name('/umr/update');
-    Route::get('/payroll/export_excel', 'exportPayroll')->name('/payroll/export_excel');
     Route::post('/payroll/import_excel', 'importPayroll')->name('/payroll/import_excel');
     Route::post('listBPJSKaryawan', 'listBPJSKaryawan');
     Route::post('pos/update', 'updatePos');
     Route::post('updateBPJS', 'updateBPJS');
-
     Route::post('bpjsupdate', 'updateUpahBpjs')->name('bpjsupdate');
 });
 

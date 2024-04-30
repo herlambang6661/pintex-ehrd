@@ -555,4 +555,17 @@ class Administrasi extends Controller
             return response()->json(['success' => true]);
         }
     }
+
+    public function terlambat()
+    {
+        $judul = "Keterlambatan";
+        $administrasi = "active";
+        $terlambat = "active";
+
+        return view('products/04_administrasi.terlambat', [
+            'judul' => $judul,
+            'administrasi' => $administrasi,
+            'terlambat' => $terlambat,
+        ]);
+    }
 }
