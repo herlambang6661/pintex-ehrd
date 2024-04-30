@@ -1508,164 +1508,117 @@ class Penerimaan extends Controller
                         </div>
                     </div>
                 </div>
-                <div class="col-lg-9">
+                <div class="col-lg-5">
                     <div class="card shadow ">
                         <div class="card-body">
                             <div class="row">
-                                <div class="col-lg-6">
-                                    <div class="mb-3">
-                                        <div class="row">
-                                            <div class="col">
-                                                <label class="form-label">No. Map</label>
-                                                <input type="text" class="form-control" name="" placeholder="" value="' . $u->nomap . '" style="border-color:black"  />
-                                            </div>
-                                            <div class="col">
-                                                <label class="form-label">STB</label>
-                                                <input type="text" class="form-control" name="" placeholder="" value="' . $u->stb . '" style="border-color:black"  />
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <div class="mb-3">
-                                        <label class="form-label">KTP</label>
-                                        <input type="text" class="form-control" name="" placeholder="" value="' . $u->nik . '"
-                                            style="border-color:black"  />
-                                    </div>
-                                    <div class="mb-3">
-                                        <label class="form-label">Nama</label>
-                                        <input type="text" class="form-control" name="" placeholder="" value="' . $u->nama . '"
-                                            style="border-color:black"  />
-                                    </div>
-                                    <div class="mb-3">
-                                        <div class="row">
-                                            <div class="col">
-                                                <label class="form-label">Gender</label>
-                                                <input type="text" class="form-control" name="" placeholder="" value="' . $u->gender . '"
-                                                    style="border-color:black"  />
-                                            </div>
-                                            <div class="col">
-                                                <label class="form-label">Agama</label>
-                                                <input type="text" class="form-control" name="" placeholder="" value="' . $u->agama . '"
-                                                    style="border-color:black"  />
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <div class="mb-3">
-                                        <div class="row">
-                                            <div class="col">
-                                                <label class="form-label">Tinggi</label>
-                                                <input type="text" class="form-control" name="" placeholder="" value="' . $u->tinggi . '"
-                                                    style="border-color:black"  />
-                                            </div>
-                                            <div class="col">
-                                                <label class="form-label">Berat</label>
-                                                <input type="text" class="form-control" name="" placeholder="" value="' . $u->berat . '"
-                                                    style="border-color:black"  />
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <div class="mb-3">
-                                        <label class="form-label">Tempat, Tanggal Lahir</label>
-                                        <div class="row">
-                                            <div class="col">
-                                                <input type="text" class="form-control" name="" placeholder="" value="' . $u->tempat . '" style="border-color:black"  />
-                                            </div>
-                                            <div class="col">
-                                                <input type="text" class="form-control" name="" placeholder="" value="' . $u->tgllahir . '" style="border-color:black"  />
-                                            </div>
-                                        </div>
-                                    </div>
+                                <div class="mb-3">
                                     <div class="row">
                                         <div class="col">
-                                            <div class="mb-3">
-                                                <label class="form-label">Pendidikan</label>
-                                                <input type="text" class="form-control" name="" placeholder="" value="' . $u->pendidikan . '" style="border-color:black"  />
-                                            </div>
+                                            <label class="form-label">No. Map</label>
+                                            <input type="hidden" name="id" placeholder="" value="' . $u->id . '" />
+                                            <input type="text" class="form-control" name="nomap" placeholder="" value="' . $u->nomap . '" style="border-color:black"  />
                                         </div>
                                         <div class="col">
-                                            <div class="mb-3">
-                                                <label class="form-label">Jurusan</label>
-                                                <input type="text" class="form-control" name="" placeholder="" value="' . $u->jurusan . '" style="border-color:black"  />
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <div class="row">
-                                        <div class="col-lg-6">
-                                            <div class="mb-3">
-                                                <label class="form-label">Telepon</label>
-                                                <input type="text" class="form-control" name="" placeholder="" value="' . $u->notlp . '" style="border-color:black"  />
-                                            </div>
-                                        </div>
-                                        <div class="col-lg-6">
-                                            <div class="mb-3">
-                                                <label class="form-label">Serikat</label>
-                                                <input type="text" class="form-control" name="" placeholder="" value="' . $u->serikat . '"
-                                                    style="border-color:black"  />
-                                            </div>
+                                            <label class="form-label">STB</label>
+                                            <input type="text" class="form-control" placeholder="" value="' . $u->stb . '" style="border-color:black" disabled readonly />
                                         </div>
                                     </div>
                                 </div>
-                                <div class="col-lg-6">
-                                    <div class="card shadow bg-info-lt">
-                                        <div class="table-responsive">
-                                            <table class="table table-vcenter card-table table-sm">
-                                                <tr>
-                                                    <td width="70px">Divisi</td>
-                                                    <td>:</td>
-                                                    <td>' . $u->divisi . '</td>
-                                                </tr>
-                                                <tr>
-                                                    <td>Jabatan</td>
-                                                    <td>:</td>
-                                                    <td>' . $u->jabatan . '</td>
-                                                </tr>
-                                                <tr>
-                                                    <td>Bagian</td>
-                                                    <td>:</td>
-                                                    <td>' . $u->bagian . '</td>
-                                                </tr>
-                                                <tr>
-                                                    <td>Grup</td>
-                                                    <td>:</td>
-                                                    <td>' . $u->grup . '</td>
-                                                </tr>
-                                                <tr>
-                                                    <td>Shift</td>
-                                                    <td>:</td>
-                                                    <td>' . $u->shift . '</td>
-                                                </tr>
-                                                <tr>
-                                                    <td>Profesi</td>
-                                                    <td>:</td>
-                                                    <td>' . $u->profesi . '</td>
-                                                </tr>
-                                                <tr>
-                                                    <td>Libur</td>
-                                                    <td>:</td>
-                                                    <td>' . $u->hrlibur . '</td>
-                                                </tr>
-                                                <tr>
-                                                    <td>½ Hari</td>
-                                                    <td>:</td>
-                                                    <td>' . $u->sethari . '</td>
-                                                </tr>
-                                            </table>
+                                <div class="mb-3">
+                                    <label class="form-label">KTP</label>
+                                    <input type="text" class="form-control" name="nik" placeholder="" value="' . $u->nik . '"
+                                        style="border-color:black"  />
+                                </div>
+                                <div class="mb-3">
+                                    <label class="form-label">Nama</label>
+                                    <input type="text" class="form-control" name="nama" placeholder="" value="' . $u->nama . '"
+                                        style="border-color:black"  />
+                                </div>
+                                <div class="mb-3">
+                                    <div class="row">
+                                        <div class="col">
+                                            <label class="form-label">Gender</label>
+                                            <select name="gender" id="gender" class="form-select border-dark">
+                                                <option value="' . $u->gender . '" hidden>-- ' . $u->gender . ' --</option>
+                                                <option value="PRIA">Pria</option>
+                                                <option value="WANITA">Wanita</option>
+                                            </select>
+                                        </div>
+                                        <div class="col">
+                                            <label class="form-label">Agama</label>
+                                            <select name="agama" id="agama" class="form-select border-dark">
+                                                <option value="' . $u->agama . '" hidden>-- ' . $u->agama . ' --</option>
+                                                <option value="Islam">Islam</option>
+                                                <option value="Kristen">Kristen</option>
+                                                <option value="Katolik">Katolik</option>
+                                                <option value="Hindu">Hindu</option>
+                                                <option value="Buddha">Buddha</option>
+                                                <option value="Khonghucu">Khonghucu</option>
+                                            </select>
                                         </div>
                                     </div>
-                                    <br>
-                                    <div class="card shadow bg-warning-lt">
-                                        <div class="card-body">
-                                            <div class="mb-3">
-                                                <label class="form-label">Surat Internal</label>
-                                                <h3>' . $u->internal . '</h3>
-                                            </div>
-                                            <div class="mb-3">
-                                                <label class="form-label">Surat Perjanjian</label>
-                                                <h3>' . $u->perjanjian . '</h3>
-                                            </div>
-                                            <div class="mb-3">
-                                                <label class="form-label">Status Karyawan</label>
-                                                <h3>' . $u->status . '</h3>
-                                            </div>
+                                </div>
+                                <div class="mb-3">
+                                    <div class="row">
+                                        <div class="col">
+                                            <label class="form-label">Tinggi</label>
+                                            <input type="text" class="form-control" name="tinggi" placeholder="" value="' . $u->tinggi . '"
+                                                style="border-color:black"  />
+                                        </div>
+                                        <div class="col">
+                                            <label class="form-label">Berat</label>
+                                            <input type="text" class="form-control" name="berat" placeholder="" value="' . $u->berat . '"
+                                                style="border-color:black"  />
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="mb-3">
+                                    <label class="form-label">Tempat, Tanggal Lahir</label>
+                                    <div class="row">
+                                        <div class="col">
+                                            <input type="text" class="form-control" name="tempat" placeholder="" value="' . $u->tempat . '" style="border-color:black"  />
+                                        </div>
+                                        <div class="col">
+                                            <input type="text" class="form-control" name="tgllahir" placeholder="" value="' . $u->tgllahir . '" style="border-color:black" id="datepicker3" />
+                                            <script>
+                                                window.Litepicker && (new Litepicker({
+                                                    element: document.getElementById("datepicker3"),
+                                                    buttonText: {
+                                                        previousMonth: `<svg xmlns="http://www.w3.org/2000/svg" class="icon" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><path d="M15 6l-6 6l6 6" /></svg>`,
+                                                        nextMonth: `<svg xmlns="http://www.w3.org/2000/svg" class="icon" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><path d="M9 6l6 6l-6 6" /></svg>`,
+                                                    },
+                                                }));
+                                            </script>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col">
+                                        <div class="mb-3">
+                                            <label class="form-label">Pendidikan</label>
+                                            <input type="text" class="form-control" name="pendidikan" placeholder="" value="' . $u->pendidikan . '" style="border-color:black"  />
+                                        </div>
+                                    </div>
+                                    <div class="col">
+                                        <div class="mb-3">
+                                            <label class="form-label">Jurusan</label>
+                                            <input type="text" class="form-control" name="jurusan" placeholder="" value="' . $u->jurusan . '" style="border-color:black"  />
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-lg-6">
+                                        <div class="mb-3">
+                                            <label class="form-label">Telepon</label>
+                                            <input type="text" class="form-control" name="notlp" placeholder="" value="' . $u->notlp . '" style="border-color:black"  />
+                                        </div>
+                                    </div>
+                                    <div class="col-lg-6">
+                                        <div class="mb-3">
+                                            <label class="form-label">Serikat</label>
+                                            <input type="text" class="form-control" name="serikat" placeholder="" value="' . $u->serikat . '"
+                                                style="border-color:black"  />
                                         </div>
                                     </div>
                                 </div>
@@ -1673,9 +1626,110 @@ class Penerimaan extends Controller
                         </div>
                     </div>
                 </div>
+                <div class="col-lg-4">
+                    <div class="card shadow bg-info-lt">
+                        <div class="table-responsive">
+                            <table class="table table-vcenter card-table table-sm">
+                                <tr>
+                                    <td width="70px">Divisi</td>
+                                    <td>:</td>
+                                    <td>' . $u->divisi . '</td>
+                                </tr>
+                                <tr>
+                                    <td>Jabatan</td>
+                                    <td>:</td>
+                                    <td>' . $u->jabatan . '</td>
+                                </tr>
+                                <tr>
+                                    <td>Bagian</td>
+                                    <td>:</td>
+                                    <td>' . $u->bagian . '</td>
+                                </tr>
+                                <tr>
+                                    <td>Grup</td>
+                                    <td>:</td>
+                                    <td>' . $u->grup . '</td>
+                                </tr>
+                                <tr>
+                                    <td>Shift</td>
+                                    <td>:</td>
+                                    <td>' . $u->shift . '</td>
+                                </tr>
+                                <tr>
+                                    <td>Profesi</td>
+                                    <td>:</td>
+                                    <td>' . $u->profesi . '</td>
+                                </tr>
+                                <tr>
+                                    <td>Libur</td>
+                                    <td>:</td>
+                                    <td>' . $u->hrlibur . '</td>
+                                </tr>
+                                <tr>
+                                    <td>½ Hari</td>
+                                    <td>:</td>
+                                    <td>' . $u->sethari . '</td>
+                                </tr>
+                            </table>
+                        </div>
+                    </div>
+                    <br>
+                    <div class="card shadow bg-warning-lt">
+                        <div class="card-body">
+                            <div class="mb-3">
+                                <label class="form-label">Surat Internal</label>
+                                <h3>' . $u->internal . '</h3>
+                            </div>
+                            <div class="mb-3">
+                                <label class="form-label">Surat Perjanjian</label>
+                                <h3>' . $u->perjanjian . '</h3>
+                            </div>
+                            <div class="mb-3">
+                                <label class="form-label">Status Karyawan</label>
+                                <h3>' . $u->status . '</h3>
+                            </div>
+                        </div>
+                    </div>
+                </div>
             </div>
         ';
         }
+    }
+
+    public function storeUpdateKaryawan(Request $request)
+    {
+        $request->validate(
+            [
+                '_token' => 'required',
+            ],
+        );
+
+        $check = DB::table('penerimaan_karyawan')
+            ->where('id', $request->id)
+            ->limit(1)
+            ->update(
+                array(
+                    'nomap' => $request->nomap,
+                    'nik' => $request->nik,
+                    'nama' => $request->nama,
+                    'gender' => $request->gender,
+                    'agama' => $request->agama,
+                    'tinggi' => $request->tinggi,
+                    'berat' => $request->berat,
+                    'tempat' => $request->tempat,
+                    'tgllahir' => $request->tgllahir,
+                    'pendidikan' => $request->pendidikan,
+                    'jurusan' => $request->jurusan,
+                    'notlp' => $request->notlp,
+                    'serikat' => $request->serikat,
+                    'updated_at' => date('Y-m-d H:i:s'),
+                )
+            );
+        $arr = array('msg' => 'Something goes to wrong. Please try later', 'status' => false);
+        if ($check) {
+            $arr = array('msg' => 'Data: ' . $request->nama . ' telah berhasil disimpan', 'status' => true);
+        }
+        return Response()->json($arr);
     }
 
     // ======================== END KARYAWAN ===========================================================================================

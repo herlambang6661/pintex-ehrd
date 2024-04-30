@@ -164,6 +164,7 @@ Route::controller(Penerimaan::class)->group(function () {
     Route::post('listStb', 'listStb');
     Route::get('penerimaan/legalitas/edit/{id}', 'legalEdit')->name('penerimaan/legalitas/edit/{id}');
     Route::post('storedataLegalitas', 'storedataLegalitas');
+    Route::post('storeUpdateKaryawan', 'storeUpdateKaryawan');
 });
 
 // Modules Absensi
