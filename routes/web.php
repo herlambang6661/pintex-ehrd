@@ -181,6 +181,7 @@ Route::controller(Absensi::class)->group(function () {
     Route::get('absensi/komunikasi/printKomunikasi/{id}', 'printSurat')->name('absensi/komunikasi/printKomunikasi/{id}');
     Route::post('checkAccKomunikasi', 'checkAccKomunikasi');
     Route::post('absensi/storeAcc', 'storeKomunikasiAcc')->name('absensi/storeAcc');
+    Route::get('cek', 'cek')->name('cek');
 });
 
 // Modules Penarikan Data Mesin Fingerprint

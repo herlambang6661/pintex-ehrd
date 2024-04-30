@@ -12,7 +12,11 @@ use Illuminate\Support\Facades\Validator;
 
 class AuthController extends Controller
 {
-
+    protected $Dblocal;
+    public function __construct(DBLokal $Dblocal)
+    {
+        $this->Dblocal = $Dblocal;
+    }
     /**
      * Write code on Method
      *
@@ -53,6 +57,9 @@ class AuthController extends Controller
             ]);
         } else {
             if (Auth::attempt($request->only(["username", "password"]))) {
+
+                // $this->Dblocal->perbaruiUploadAbsen($request->user());
+
                 return response()->json([
                     "status" => true,
                     "redirect" => url("dashboard")
