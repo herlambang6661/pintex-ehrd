@@ -37,30 +37,30 @@
         }
 
         /* .cv-spinner {
-                                                                            height: 100%;
-                                                                            display: flex;
-                                                                            justify-content: center;
-                                                                            align-items: center;
-                                                                        }
+                                                                                                                                                    height: 100%;
+                                                                                                                                                    display: flex;
+                                                                                                                                                    justify-content: center;
+                                                                                                                                                    align-items: center;
+                                                                                                                                                }
 
-                                                                        .spinner {
-                                                                            width: 40px;
-                                                                            height: 40px;
-                                                                            border: 4px #ddd solid;
-                                                                            border-top: 4px #2e93e6 solid;
-                                                                            border-radius: 50%;
-                                                                            animation: sp-anime 0.8s infinite linear;
-                                                                        }
+                                                                                                                                                .spinner {
+                                                                                                                                                    width: 40px;
+                                                                                                                                                    height: 40px;
+                                                                                                                                                    border: 4px #ddd solid;
+                                                                                                                                                    border-top: 4px #2e93e6 solid;
+                                                                                                                                                    border-radius: 50%;
+                                                                                                                                                    animation: sp-anime 0.8s infinite linear;
+                                                                                                                                                }
 
-                                                                        @keyframes sp-anime {
-                                                                            100% {
-                                                                                transform: rotate(360deg);
-                                                                            }
-                                                                        }
+                                                                                                                                                @keyframes sp-anime {
+                                                                                                                                                    100% {
+                                                                                                                                                        transform: rotate(360deg);
+                                                                                                                                                    }
+                                                                                                                                                }
 
-                                                                        .is-hide {
-                                                                            display: none;
-                                                                        } */
+                                                                                                                                                .is-hide {
+                                                                                                                                                    display: none;
+                                                                                                                                                } */
         .loader {
             position: fixed;
             z-index: 301;
@@ -367,63 +367,100 @@
                     </div>
                     <form action="#" id="form-filter-items" method="get" autocomplete="off" novalidate=""
                         class="sticky-top">
-                        <br>
-                        <div class="form-label">Jenis Kelamin</div>
+                        <div class="form-label">Bagian</div>
+                        <div class="mb-4">
+                            <div class="row">
+                                <div class="col-sm-12">
+                                    <select name="bagian" id="bagian" class="form-select">
+                                        <option value="ALL">SEMUA</option>
+                                        <option value="AKUNTING & KEUANGAN">AKUNTING & KEUANGAN</option>
+                                        <option value="GUDANG">GUDANG</option>
+                                        <option value="KEAMANAN">KEAMANAN</option>
+                                        <option value="KEBERSIHAN">KEBERSIHAN</option>
+                                        <option value="PERSONALIA">PERSONALIA</option>
+                                        <option value="TFI">TFI</option>
+                                        <option value="TFO">TFO</option>
+                                        <option value="UMUM">UMUM</option>
+                                        <option value="UNIT 1">UNIT 1</option>
+                                        <option value="UNIT 2">UNIT 2</option>
+                                        <option value="WCR & WORKSHOP">WCR & WORKSHOP</option>
+                                    </select>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="form-label">Grup</div>
                         <div class="mb-4">
                             <div class="row">
                                 <div class="col-sm-6">
                                     <label class="form-check">
-                                        <input type="checkbox" class="form-check-input filter-checkbox-rayon"
-                                            name="pendidikan[]" value="IBR" checked="" id="sSmp">
-                                        <span class="form-check-label">Pria</span>
+                                        <input type="checkbox" class="form-check-input" name="grup[]" value="A"
+                                            checked="" id="gA">
+                                        <span class="form-check-label">A</span>
                                     </label>
                                     <label class="form-check">
-                                        <input type="checkbox" class="form-check-input filter-checkbox-rayon"
-                                            name="pendidikan[]" value="SPV" checked="" id="sSma">
-                                        <span class="form-check-label">Wanita</span>
+                                        <input type="checkbox" class="form-check-input" name="grup[]" value="B"
+                                            checked="" id="gB">
+                                        <span class="form-check-label">B</span>
+                                    </label>
+                                    <label class="form-check">
+                                        <input type="checkbox" class="form-check-input" name="grup[]" value="C"
+                                            checked="" id="gC">
+                                        <span class="form-check-label">C</span>
+                                    </label>
+                                    <label class="form-check">
+                                        <input type="checkbox" class="form-check-input" name="grup[]" value="NON GRUP"
+                                            checked="" id="gN">
+                                        <span class="form-check-label">NON GRUP</span>
+                                    </label>
+                                </div>
+                                <div class="col-sm-6">
+                                    <label class="form-check">
+                                        <input type="checkbox" class="form-check-input" name="grup[]" value="MTC"
+                                            checked="" id="gM">
+                                        <span class="form-check-label">MTC</span>
+                                    </label>
+                                    <label class="form-check">
+                                        <input type="checkbox" class="form-check-input" name="grup[]" value="OPD"
+                                            checked="" id="gO">
+                                        <span class="form-check-label">OPD</span>
+                                    </label>
+                                    <label class="form-check">
+                                        <input type="checkbox" class="form-check-input" name="grup[]" value="PPC/QC"
+                                            checked="" id="gP">
+                                        <span class="form-check-label">PPC/QC</span>
+                                    </label>
+                                    <label class="form-check">
+                                        <input type="checkbox" class="form-check-input" name="grup[]" value="B"
+                                            checked="" id="gB">
+                                        <span class="form-check-label">B</span>
                                     </label>
                                 </div>
                             </div>
                         </div>
-                        <div class="form-label">Posisi Dituju</div>
+                        <div class="form-label">Gender</div>
                         <div class="mb-4">
                             <label class="form-check">
-                                <input type="checkbox" class="form-check-input" name="posisidituju[]" value="OPERATOR"
-                                    checked="" id="pOperator">
-                                <span class="form-check-label">Operator</span>
+                                <input type="checkbox" class="form-check-input" name="gender[]" value="PRIA"
+                                    checked="" id="gPria">
+                                <span class="form-check-label">Pria</span>
                             </label>
                             <label class="form-check">
-                                <input type="checkbox" class="form-check-input" name="posisidituju[]" value="PENGEMUDI"
-                                    checked="" id="pPengemudi">
-                                <span class="form-check-label">Pengemudi</span>
-                            </label>
-                            <label class="form-check">
-                                <input type="checkbox" class="form-check-input" name="posisidituju[]" value="IT"
-                                    checked="" id="pIT">
-                                <span class="form-check-label">IT</span>
-                            </label>
-                            <label class="form-check">
-                                <input type="checkbox" class="form-check-input" name="posisidituju[]" value="HRD"
-                                    checked="" id="pHRD">
-                                <span class="form-check-label">HRD</span>
-                            </label>
-                            <label class="form-check">
-                                <input type="checkbox" class="form-check-input" name="posisidituju[]" value="KEAMANAN"
-                                    checked="" id="pKeamanan">
-                                <span class="form-check-label">Keamanan</span>
+                                <input type="checkbox" class="form-check-input" name="gender[]" value="WANITA"
+                                    checked="" id="gWanita">
+                                <span class="form-check-label">Wanita</span>
                             </label>
                         </div>
-                        <div class="form-label">Tinggi Minimal</div>
+                        <div class="form-label">Status</div>
                         <div class="mb-4">
-                            <input type="number" min="0" max="300" class="form-control" id="tinggi">
-                        </div>
-                        <div class="form-label">Proses Wawancara</div>
-                        <div class="mb-4">
-                            <label class="form-check form-switch">
-                                <input class="form-check-input" type="checkbox">
-                                <span class="form-check-label form-check-label-on">Sudah</span>
-                                <span class="form-check-label form-check-label-off">Belum</span>
-                            </label>
+                            <div class="row">
+                                <div class="col-sm-12">
+                                    <select name="status" id="status" class="form-select">
+                                        <option value="Semua">Semua</option>
+                                        <option value="Aktif">Aktif</option>
+                                        <option value="Non Aktif">Non Aktif</option>
+                                    </select>
+                                </div>
+                            </div>
                         </div>
                         <div class="mt-5">
                             <button type="button" class="btn btn-primary w-100" id="btn-filter">Filter

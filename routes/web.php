@@ -110,10 +110,12 @@ Route::controller(Daftar::class)->group(function () {
 
     //Routes libur nasional DONE
     Route::get('daftar/liburnas', 'liburnas')->name('daftar/liburnas');
+    Route::post('getLibur', 'getLibur')->name('getLibur');
     Route::post('storedataLibur', 'storelibur');
     Route::post('detail/liburnas', 'liburnasview');
     // Route::post('update/liburnas', 'updateliburnas');
     Route::post('generateYear', 'generateLiburNasional');
+    Route::post('/liburnas/update', 'updatelibur')->name('/liburnas/update');
 
 
     //routes Surat-surat DONE

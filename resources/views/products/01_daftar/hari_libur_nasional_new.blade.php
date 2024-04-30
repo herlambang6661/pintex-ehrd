@@ -14,13 +14,13 @@
 
         td.cuspad2 {
             /* padding-top: 0.5px;
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                            padding-bottom: 0.5px;
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                            padding-right: 0.5px;
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                            padding-left: 0.5px;
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                            margin-top: 5px;
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                            margin-bottom: 5px;
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                            margin-right: 5px;
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                            margin-left: 5px; */
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                            padding-bottom: 0.5px;
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                            padding-right: 0.5px;
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                            padding-left: 0.5px;
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                            margin-top: 5px;
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                            margin-bottom: 5px;
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                            margin-right: 5px;
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                            margin-left: 5px; */
         }
 
         .unselectable {
@@ -95,8 +95,9 @@
                                                     <input type="number" id="selectYear" min="2000" max="9999"
                                                         step="1" value="{{ date('Y') }}"
                                                         class="form-control formattahun">
-                                                    <button type="button" class="btn btn-blue" id="btnView"><i
-                                                            class="fa-regular fa-eye fa-fw" style="margin-right:5px"></i>
+                                                    <button type="button" class="btn btn-blue" id="btnView"
+                                                        onclick="tb();"><i class="fa-regular fa-eye fa-fw"
+                                                            style="margin-right:5px"></i>
                                                         Lihat</button>
                                                     <button data-bs-toggle="dropdown" type="button"
                                                         class="btn btn-blue dropdown-toggle dropdown-toggle-split"
@@ -121,21 +122,93 @@
                                         </div>
                                     </div>
                                 </div>
-                                <table style="width:100%; font-family: 'Trebuchet MS', Helvetica, sans-serif;"
-                                    class="display table table-vcenter card-table table-sm table-bordered table-hover text-nowrap datatable-libur"
-                                    id="tblamaran">
-                                    <thead>
-                                        <tr class="text-center">
-                                            <th>Opsi</th>
-                                            <th>Entitas</th>
-                                            <th>Tanggal</th>
-                                            <th>Tahun</th>
-                                            <th>Libur Nasional</th>
-                                            <th>Sumber Ketentuan</th>
-                                            <th>Keterangan</th>
-                                        </tr>
-                                    </thead>
-                                </table>
+                                <div class="fetched-data-liburnas"></div>
+
+                                <div class="col-sm-12 col-md-12">
+                                    <div class="ph-item" style="display:none">
+                                        <div class="ph-col-3">
+                                            <div class="ph-picture"></div>
+                                            <div class="ph-row">
+                                                <div class="ph-col-4 "></div>
+                                                <div class="ph-col-4"></div>
+                                                <div class="ph-col-2 "></div>
+                                                <div class="ph-col-2"></div>
+                                            </div>
+                                            <div class="ph-row">
+                                                <div class="ph-col-8"></div>
+                                                <div class="ph-col-4"></div>
+                                            </div>
+                                            <div class="ph-row">
+                                                <div class="ph-col-12"></div>
+                                            </div>
+                                        </div>
+                                        <div class="ph-col-3">
+                                            <div class="ph-picture"></div>
+                                            <div class="ph-row">
+                                                <div class="ph-col-4 "></div>
+                                                <div class="ph-col-4"></div>
+                                                <div class="ph-col-2 "></div>
+                                                <div class="ph-col-2"></div>
+                                            </div>
+                                            <div class="ph-row">
+                                                <div class="ph-col-8"></div>
+                                                <div class="ph-col-4"></div>
+                                            </div>
+                                            <div class="ph-row">
+                                                <div class="ph-col-12"></div>
+                                            </div>
+                                        </div>
+                                        <div class="ph-col-3">
+                                            <div class="ph-picture"></div>
+                                            <div class="ph-row">
+                                                <div class="ph-col-4 "></div>
+                                                <div class="ph-col-4"></div>
+                                                <div class="ph-col-2 "></div>
+                                                <div class="ph-col-2"></div>
+                                            </div>
+                                            <div class="ph-row">
+                                                <div class="ph-col-8"></div>
+                                                <div class="ph-col-4"></div>
+                                            </div>
+                                            <div class="ph-row">
+                                                <div class="ph-col-12"></div>
+                                            </div>
+                                        </div>
+                                        <div class="ph-col-3">
+                                            <div class="ph-picture"></div>
+                                            <div class="ph-row">
+                                                <div class="ph-col-4 "></div>
+                                                <div class="ph-col-4"></div>
+                                                <div class="ph-col-2 "></div>
+                                                <div class="ph-col-2"></div>
+                                            </div>
+                                            <div class="ph-row">
+                                                <div class="ph-col-8"></div>
+                                                <div class="ph-col-4"></div>
+                                            </div>
+                                            <div class="ph-row">
+                                                <div class="ph-col-12"></div>
+                                            </div>
+                                        </div>
+                                        <div class="ph-col-3">
+                                            <div class="ph-picture"></div>
+                                            <div class="ph-row">
+                                                <div class="ph-col-4 "></div>
+                                                <div class="ph-col-4"></div>
+                                                <div class="ph-col-2 "></div>
+                                                <div class="ph-col-2"></div>
+                                            </div>
+                                            <div class="ph-row">
+                                                <div class="ph-col-8"></div>
+                                                <div class="ph-col-4"></div>
+                                            </div>
+                                            <div class="ph-row">
+                                                <div class="ph-col-12"></div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+
                             </div>
                         </div>
                     </div>
@@ -152,95 +225,94 @@
             Render DataTable
             --------------------------------------------
             --------------------------------------------*/
+            // var tablePos = $('.datatable-libur').DataTable({
+            //     "processing": true, //Feature control the processing indicator.
+            //     "serverSide": false, //Feature control DataTables' server-side processing mode.
+            //     "scrollX": false,
+            //     "scrollCollapse": true,
+            //     "pagingType": 'full_numbers',
+            //     "lengthMenu": [
+            //         [-1, 25, 35, 40, 50, ],
+            //         ['Tampilkan Semua', '25', '35', '40', '50', ]
+            //     ],
+            //     "dom": "" +
+            //         "<'card-body border-bottom py-3' <'row'<'col-sm-6'l><'col-sm-6'f>> >" +
+            //         "<'table-responsive' <'col-sm-12'tr> >" +
+            //         "<'card-footer' <'row'<'col-sm-8'i><'col-sm-4'p> >>",
+            //     "language": {
+            //         "lengthMenu": "Menampilkan _MENU_",
+            //         "zeroRecords": "Data Tidak Ditemukan",
+            //         "info": "Menampilkan _START_ sampai _END_ dari _TOTAL_ total data",
+            //         "infoEmpty": "Data Tidak Ditemukan",
+            //         "infoFiltered": "(Difilter dari _MAX_ total records)",
+            //         "processing": '<div class="container container-slim py-4"><div class="text-center"><div class="mb-3"></div><div class="text-secondary mb-3">Loading Data...</div><div class="progress progress-sm"><div class="progress-bar progress-bar-indeterminate"></div></div></div></div>',
+            //         "search": '<svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-search" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z" fill="none"></path><path d="M10 10m-7 0a7 7 0 1 0 14 0a7 7 0 1 0 -14 0"></path><path d="M21 21l-6 -6"></path></svg>',
+            //         "paginate": {
+            //             "first": '<svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-chevron-left-pipe" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z" fill="none"></path><path d="M7 6v12"></path><path d="M18 6l-6 6l6 6"></path></svg>',
+            //             "last": '<svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-chevron-right-pipe" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z" fill="none"></path><path d="M6 6l6 6l-6 6"></path><path d="M17 5v13"></path></svg>',
+            //             "next": '<svg xmlns="http://www.w3.org/2000/svg" class="icon" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z" fill="none"></path><path d="M9 6l6 6l-6 6"></path></svg>',
+            //             "previous": '<svg xmlns="http://www.w3.org/2000/svg" class="icon" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z" fill="none"></path><path d="M15 6l-6 6l6 6"></path></svg>',
+            //         },
+            //     },
+            //     // ajax: "{{ route('getLibur.index') }}",
+            //     "ajax": {
+            //         "url": "{{ route('getLibur.index') }}",
+            //         "data": function(data) {
+            //             data._token = "{{ csrf_token() }}";
+            //             data.tahun = $('#selectYear').val();
+            //         }
+            //     },
+            //     columns: [{
+            //             data: 'action',
+            //             name: 'action',
+            //             orderable: false,
+            //             searchable: false,
+            //             className: 'cuspad0 text-center w-0'
+            //         },
+            //         {
+            //             data: 'entitas',
+            //             name: 'entitas',
+            //             className: 'cuspad0 text-center w-0'
+            //         },
+            //         {
+            //             title: "Tanggal",
+            //             data: "tanggal",
+            //             render: function(data, type, row) {
+            //                 return '<input class="form-control" id="tanggal' + row.id +
+            //                     '" name="tanggal' + row.id + '" type="date"  value = ' +
+            //                     row.tanggal + '  >';
+            //             }
+            //         },
+            //         {
+            //             data: 'tahun',
+            //             name: 'tahun',
+            //             className: 'cuspad0 text-center w-0'
+            //         },
+            //         {
+            //             title: "Libur",
+            //             data: 'libur_nasional',
+            //         },
+            //         {
+            //             title: "Sumber",
+            //             data: 'sumber_ketentuan',
+            //             render: function(data, type, row) {
+            //                 return '<input class="form-control" id="sumber_ketentuan' + row.id +
+            //                     '" name="sumber_ketentuan' + row.id + '" type="text"  value = "' +
+            //                     row.sumber_ketentuan + '" >';
+            //             }
+            //         },
+            //         {
+            //             title: "Keterangan",
+            //             data: 'keterangan',
+            //             render: function(data, type, row) {
+            //                 return '<input class="form-control" id="keterangan' + row.id +
+            //                     '" name="keterangan' + row.id + '" type="text"  value="' +
+            //                     row.keterangan + '">';
+            //             }
+            //         },
+            //     ],
 
-            var tablePos = $('.datatable-libur').DataTable({
-                "processing": true, //Feature control the processing indicator.
-                "serverSide": false, //Feature control DataTables' server-side processing mode.
-                "scrollX": false,
-                "scrollCollapse": true,
-                "pagingType": 'full_numbers',
-                "lengthMenu": [
-                    [-1, 25, 35, 40, 50, ],
-                    ['Tampilkan Semua', '25', '35', '40', '50', ]
-                ],
-                "dom": "" +
-                    "<'card-body border-bottom py-3' <'row'<'col-sm-6'l><'col-sm-6'f>> >" +
-                    "<'table-responsive' <'col-sm-12'tr> >" +
-                    "<'card-footer' <'row'<'col-sm-8'i><'col-sm-4'p> >>",
-                "language": {
-                    "lengthMenu": "Menampilkan _MENU_",
-                    "zeroRecords": "Data Tidak Ditemukan",
-                    "info": "Menampilkan _START_ sampai _END_ dari _TOTAL_ total data",
-                    "infoEmpty": "Data Tidak Ditemukan",
-                    "infoFiltered": "(Difilter dari _MAX_ total records)",
-                    "processing": '<div class="container container-slim py-4"><div class="text-center"><div class="mb-3"></div><div class="text-secondary mb-3">Loading Data...</div><div class="progress progress-sm"><div class="progress-bar progress-bar-indeterminate"></div></div></div></div>',
-                    "search": '<svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-search" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z" fill="none"></path><path d="M10 10m-7 0a7 7 0 1 0 14 0a7 7 0 1 0 -14 0"></path><path d="M21 21l-6 -6"></path></svg>',
-                    "paginate": {
-                        "first": '<svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-chevron-left-pipe" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z" fill="none"></path><path d="M7 6v12"></path><path d="M18 6l-6 6l6 6"></path></svg>',
-                        "last": '<svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-chevron-right-pipe" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z" fill="none"></path><path d="M6 6l6 6l-6 6"></path><path d="M17 5v13"></path></svg>',
-                        "next": '<svg xmlns="http://www.w3.org/2000/svg" class="icon" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z" fill="none"></path><path d="M9 6l6 6l-6 6"></path></svg>',
-                        "previous": '<svg xmlns="http://www.w3.org/2000/svg" class="icon" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z" fill="none"></path><path d="M15 6l-6 6l6 6"></path></svg>',
-                    },
-                },
-                // ajax: "{{ route('getLibur.index') }}",
-                "ajax": {
-                    "url": "{{ route('getLibur.index') }}",
-                    "data": function(data) {
-                        data._token = "{{ csrf_token() }}";
-                        data.tahun = $('#selectYear').val();
-                    }
-                },
-                columns: [{
-                        data: 'action',
-                        name: 'action',
-                        orderable: false,
-                        searchable: false,
-                        className: 'cuspad0 text-center w-0'
-                    },
-                    {
-                        data: 'entitas',
-                        name: 'entitas',
-                        className: 'cuspad0 text-center w-0'
-                    },
-                    {
-                        title: "Tanggal",
-                        data: "tanggal",
-                        render: function(data, type, row) {
-                            return '<input class="form-control" id="tanggal' + row.id +
-                                '" name="tanggal' + row.id + '" type="date"  value = ' +
-                                row.tanggal + '  >';
-                        }
-                    },
-                    {
-                        data: 'tahun',
-                        name: 'tahun',
-                        className: 'cuspad0 text-center w-0'
-                    },
-                    {
-                        title: "Libur",
-                        data: 'libur_nasional',
-                    },
-                    {
-                        title: "Sumber",
-                        data: 'sumber_ketentuan',
-                        render: function(data, type, row) {
-                            return '<input class="form-control" id="sumber_ketentuan' + row.id +
-                                '" name="sumber_ketentuan' + row.id + '" type="text"  value = "' +
-                                row.sumber_ketentuan + '" >';
-                        }
-                    },
-                    {
-                        title: "Keterangan",
-                        data: 'keterangan',
-                        render: function(data, type, row) {
-                            return '<input class="form-control" id="keterangan' + row.id +
-                                '" name="keterangan' + row.id + '" type="text"  value="' +
-                                row.keterangan + '">';
-                        }
-                    },
-                ],
-
-            });
+            // });
 
             $('#btnView').click(function() { //button filter event click
                 tablePos.ajax.reload(); //just reload table
@@ -414,5 +486,35 @@
                 })
             }
         });
+
+        function tb() {
+            var thn = $('#selectYear').val();
+            console.log('set: ' + thn);
+
+            $(".ph-item").fadeIn(200);
+            $('.fetched-data-liburnas').html('');
+
+            $.ajaxSetup({
+                headers: {
+                    'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                }
+            });
+            //menggunakan fungsi ajax untuk pengambilan data
+            $.ajax({
+                type: 'POST',
+                url: "{{ url('getLibur') }}",
+                data: {
+                    "_token": "{{ csrf_token() }}",
+                    'thn': thn,
+                },
+                success: function(data) {
+                    $('.fetched-data-liburnas').html(data);
+                }
+            }).done(function() {
+                setTimeout(function() {
+                    $(".ph-item").fadeOut(200);
+                }, 300);
+            });
+        }
     </script>
 @endsection
