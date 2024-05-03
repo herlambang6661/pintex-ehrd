@@ -53,6 +53,19 @@ class DBLokal extends Controller
         ]);
     }
 
+    public function loading()
+    {
+        $judul = "DB Lokal";
+        $absensi = "active";
+        $list = "active";
+
+        return view('products/loaderlocal', [
+            'judul' => $judul,
+            'absensi' => $absensi,
+            'list' => $list,
+        ]);
+    }
+
     // ==================================== DAFTAR FINGER ===================================================================
     public function daftarfinger()
     {

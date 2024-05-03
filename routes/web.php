@@ -201,6 +201,7 @@ Route::controller(DBLokal::class)->group(function () {
     Route::post('perbaruiUploadAbsen', 'perbaruiUploadAbsen');
     Route::post('UploadFixedAbsen', 'UploadFixedAbsen');
     Route::post('perbaruiUploadAbsenBulan', 'perbaruiUploadAbsenBulan');
+    Route::get('loaderlocal', 'loading');
 });
 
 // Modules Administrasi
