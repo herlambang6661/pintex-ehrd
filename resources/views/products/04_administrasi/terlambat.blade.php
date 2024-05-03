@@ -595,6 +595,12 @@
                             className: 'cuspad0 text-center'
                         },
                         {
+                            title: 'Status',
+                            data: 'sst',
+                            name: 'sst',
+                            className: 'cuspad0 text-center'
+                        },
+                        {
                             title: 'Keterlambatan',
                             data: 'keteranganAbsen',
                             name: 'keteranganAbsen',

@@ -43,6 +43,7 @@ class DataTerlambat extends Controller
                     absensi_absensi.`name`, 
                     absensi_absensi.`shift`, 
                     absensi_absensi.`grup`, 
+                    absensi_absensi.`sst`, 
                     DATE_FORMAT(`in`, "%H:%i:%s") as `in`,
                     DATE_FORMAT(`out`, "%H:%i:%s") as `out`,
                     absensi_absensi.bagian,
