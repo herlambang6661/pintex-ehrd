@@ -34,6 +34,8 @@ use App\Http\Controllers\Datatables\DataUserinfoMYSQL;
 use SebastianBergmann\CodeCoverage\Report\Html\Dashboard;
 use App\Http\Controllers\Datatables\DataLegalitasKaryawan;
 use App\Http\Controllers\Datatables\DataLegalitasKaryawanOl;
+use App\Http\Controllers\Datatables\DataPengguna;
+use App\Http\Controllers\Datatables\DataUpah;
 
 /*
 |--------------------------------------------------------------------------
@@ -81,6 +83,8 @@ Route::resources([
     'getLoker' => DataLoker::class,
     'getPayroll' => DataPayroll::class,
     'getTerlambat' => DataTerlambat::class,
+    'getUpah' => DataUpah::class,
+    'getPengguna' => DataPengguna::class,
 ]);
 
 // Modules Auth
@@ -137,6 +141,10 @@ Route::controller(Daftar::class)->group(function () {
     // Routes Lowongan Pekerjaan
     Route::get('daftar/loker', 'loker');
     Route::post('storeDataLoker', 'storeLoker');
+
+    //Routes data upah
+    Route::get('daftar/upah', 'upah');
+    Route::post('update/upah', 'updateupah');
 });
 
 // Modules Penerimaan
@@ -223,4 +231,9 @@ Route::controller(Administrasi::class)->group(function () {
 // Modules Database
 Route::controller(Database::class)->group(function () {
     Route::get('database/lokasi', 'lokasi')->name('database/lokasi');
+
+    //data pengguna
+    Route::get('database/pengguna', 'pengguna');
+    Route::post('store/pengguna', 'store');
+    Route::post('update/pengguna', 'update');
 });

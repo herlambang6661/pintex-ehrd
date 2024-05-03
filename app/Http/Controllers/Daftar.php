@@ -804,4 +804,43 @@ class Daftar extends Controller
         }
         return Response()->json($arr);
     }
+
+    //upah
+    public function upah()
+    {
+        $judul = "Data Upah";
+        $daftar = "active";
+        $upah = "active";
+
+        return view('products.01_daftar.upah', [
+            'judul' => $judul,
+            'daftar' => $daftar,
+            'upah' => $upah,
+        ]);
+    }
+
+    public function updateupah(Request $request)
+    {
+        $request->validate([
+            'id' => 'required',
+            'jenis' => 'required',
+            'nominal' => 'required',
+        ]);
+
+        $check = DB::table('daftar_upah')
+            ->where('id', $request->id)
+            ->update([
+                'jenis' => $request->jenis,
+                'nominal' => $request->nominal,
+                'updated_at'    => now(),
+            ]);
+
+        $arr = array('msg' => 'Ada kesalahan. Silakan coba lagi nanti.', 'status' => false);
+
+        if ($check) {
+            $arr = array('msg' => 'Data berhasil diperbarui', 'status' => true);
+        }
+
+        return response()->json($arr);
+    }
 }
