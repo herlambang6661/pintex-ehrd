@@ -371,6 +371,7 @@ class Daftar extends Controller
     {
         $absen = DB::table('daftar_hari_libur_nasional')
             ->where('tahun', $request->thn)
+            ->orderBy('libur_nasional')
             ->get();
         echo '
             <table style="width:100%; font-family: "Trebuchet MS", Helvetica, sans-serif;"
