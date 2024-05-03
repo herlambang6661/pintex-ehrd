@@ -590,6 +590,28 @@ class Absensi extends Controller
             ';
     }
 
+    private function getBetweenDates($startDate, $endDate)
+    {
+        $array = array();
+        $interval = new DateInterval('P1D');
+
+        $realEnd = new DateTime($endDate);
+        $realEnd->add($interval);
+
+        $period = new DatePeriod(new DateTime($startDate), $interval, $realEnd);
+
+        foreach ($period as $date) {
+            $array[] = $date->format('Y-m-d');
+        }
+
+        return $array;
+    }
+
+    function cek()
+    {
+        print_r($this->getBetweenDates('2019-01-01', "2019-01-05"));
+    }
+
     function storeKomunikasi(Request $request)
     {
 
@@ -631,19 +653,24 @@ class Absensi extends Controller
             'created_at' => date('Y-m-d H:i:s'),
         ]);
         for ($i = 0; $i < count($request->userid); $i++) {
-            $checkitm = DB::table('absensi_komunikasiitm')->insert([
-                'entitas' => 'PINTEX',
-                'noform' => $kodeSurat,
-                'tanggal' => $request->tanggalitm[$i],
-                'userid' => $request->userid[$i],
-                'nama' => $request->nama[$i],
-                'suratid' => $request->suratid[$i],
-                'sst' => $request->sst[$i],
-                'keterangan' => $request->keterangan[$i],
-                'dibuat' => $request->dibuat,
-                'statussurat' => "PENGAJUAN",
-                'created_at' => date('Y-m-d H:i:s'),
-            ]);
+
+            $tanggalArray = $this->getBetweenDates($request->tanggalitm[$i], $request->tanggalitm2[$i]);
+
+            for ($j = 0; $j < count($tanggalArray); $j++) {
+                $checkitm = DB::table('absensi_komunikasiitm')->insert([
+                    'entitas' => 'PINTEX',
+                    'noform' => $kodeSurat,
+                    'tanggal' => $tanggalArray[$j],
+                    'userid' => $request->userid[$i],
+                    'nama' => $request->nama[$i],
+                    'suratid' => $request->suratid[$i],
+                    'sst' => $request->sst[$i],
+                    'keterangan' => $request->keterangan[$i],
+                    'dibuat' => $request->dibuat,
+                    'statussurat' => "PENGAJUAN",
+                    'created_at' => date('Y-m-d H:i:s'),
+                ]);
+            }
         }
 
         $arr = array('msg' => 'Something goes to wrong. Please try later', 'status' => false);
@@ -678,23 +705,16 @@ class Absensi extends Controller
             $jml = count($request->id);
             echo '
                         <div class="modal-body text-center py-4">
-                            <svg xmlns="http://www.w3.org/2000/svg" class="icon mb-2 text-green icon-lg" width="24"
-                                height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none"
-                                stroke-linecap="round" stroke-linejoin="round">
-                                <path stroke="none" d="M0 0h24v24H0z" fill="none"></path>
-                                <path d="M12 12m-9 0a9 9 0 1 0 18 0a9 9 0 1 0 -18 0"></path>
-                                <path d="M9 12l2 2l4 -4"></path>
-                            </svg>
+                            <svg  xmlns="http://www.w3.org/2000/svg"  width="24"  height="24"  viewBox="0 0 24 24"  fill="none"  stroke="currentColor"  stroke-width="2"  stroke-linecap="round"  stroke-linejoin="round" class="icon icon-tabler icons-tabler-outline icon-tabler-messages mb-2 text-green icon-lg"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><path d="M21 14l-3 -3h-7a1 1 0 0 1 -1 -1v-6a1 1 0 0 1 1 -1h9a1 1 0 0 1 1 1v10" /><path d="M14 15v2a1 1 0 0 1 -1 1h-7l-3 3v-10a1 1 0 0 1 1 -1h2" /></svg>
                             <h3>PENERIMAAN SURAT KOMUNIKASI</h3>
-                            <div class="card">
                                 <div class="table-responsive">
-                                    <table class="table table-vcenter card-table table-striped">
+                                    <table class="table table-sm table-vcenter table-bordered">
                                         <thead>
                                             <tr>
                                                 <th>No</th>
+                                                <th>Tanggal</th>
                                                 <th>STB</th>
                                                 <th>Nama</th>
-                                                <th>Tanggal</th>
                                                 <th>Surat</th>
                                                 <th>Sst</th>
                                                 <th>Keterangan</th>
@@ -716,17 +736,20 @@ class Absensi extends Controller
                                             <input type="hidden" name="chgsst[]" value="' . $u->sst . '">
                                             <tr>
                                                 <td>' . $j . '</td>
+                                                <td>' . Carbon::parse($u->tanggal)->format('d/m/Y') . '</td>
                                                 <td>' . $u->stb . '</td>
                                                 <td>' . $u->nama . '</td>
-                                                <td>' . Carbon::parse($u->tanggal)->format('d/m/Y') . '</td>
                                                 <td>' . $u->suratid . '</td>
                                                 <td>' . $u->sst . '</td>
                                                 <td>' . $u->keterangan . '</td>
                                                 <td>' . $u->dibuat . '</td>
                                                 <td>
-                                                    <svg  xmlns="http://www.w3.org/2000/svg"  width="24"  height="24"  viewBox="0 0 24 24"  fill="none"  stroke="#0ca12a"  stroke-width="2"  stroke-linecap="round"  stroke-linejoin="round"  class="icon icon-tabler icons-tabler-outline icon-tabler-circle-check"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><path d="M12 12m-9 0a9 9 0 1 0 18 0a9 9 0 1 0 -18 0" /><path d="M9 12l2 2l4 -4" /></svg>
+                                                    <select name="acc[]" class="form-select form-select-sm">
+                                                        <option>ACC</option>
+                                                        <option>KOREKSI</option>
+                                                    </select>
                                                 </td>
-                                                <td><input type="text" name="ket_acc[]" class="form-control"></td>
+                                                <td><input type="text" name="ket_acc[]" class="form-control form-control-sm"></td>
                                             </tr>
                     ';
                 }
@@ -736,7 +759,6 @@ class Absensi extends Controller
                                         </tbody>
                                     </table>
                                 </div>
-                            </div>
                         </div>
                         <div class="modal-footer">
                             <div class="w-100">

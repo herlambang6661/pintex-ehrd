@@ -12,7 +12,11 @@ use Illuminate\Support\Facades\Validator;
 
 class AuthController extends Controller
 {
-
+    protected $Dblocal;
+    public function __construct(DBLokal $Dblocal)
+    {
+        $this->Dblocal = $Dblocal;
+    }
     /**
      * Write code on Method
      *
@@ -53,10 +57,21 @@ class AuthController extends Controller
             ]);
         } else {
             if (Auth::attempt($request->only(["username", "password"]))) {
-                return response()->json([
-                    "status" => true,
-                    "redirect" => url("dashboard")
-                ]);
+                if ($_SERVER['SERVER_NAME'] == "127.0.0.1") {
+                    try {
+                        return response()->json([
+                            "status" => true,
+                            "redirect" => url("loaderlocal")
+                        ]);
+                    } catch (\Throwable $th) {
+                        return view('products.dashboard');
+                    }
+                } else {
+                    return response()->json([
+                        "status" => true,
+                        "redirect" => url("dashboard")
+                    ]);
+                }
             } else {
                 return response()->json([
                     "status" => false,

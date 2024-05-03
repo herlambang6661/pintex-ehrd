@@ -367,6 +367,80 @@ class Daftar extends Controller
         ]);
     }
 
+    public function getLibur(Request $request)
+    {
+        $absen = DB::table('daftar_hari_libur_nasional')
+            ->where('tahun', $request->thn)
+            ->orderBy('libur_nasional')
+            ->get();
+        echo '
+            <table style="width:100%; font-family: "Trebuchet MS", Helvetica, sans-serif;"
+                class="display table table-vcenter card-table table-sm table-bordered table-hover text-nowrap datatable-libur"
+                id="tblamaran">
+                <thead>
+                    <tr class="text-center">
+                        <th>Opsi</th>
+                        <th>Tanggal</th>
+                        <th>Tahun</th>
+                        <th>Libur Nasional</th>
+                        <th>Sumber Ketentuan</th>
+                        <th>Keterangan</th>
+                    </tr>
+                </thead>';
+        foreach ($absen as $key) {
+            echo '<body>
+                    <tr>
+                        <td class="text-center"><button class="btn btn-danger btn-icon" />
+                            <svg  xmlns="http://www.w3.org/2000/svg"  width="24"  height="24"  viewBox="0 0 24 24"  fill="none"  stroke="currentColor"  stroke-width="2"  stroke-linecap="round"  stroke-linejoin="round"  class="icon icon-tabler icons-tabler-outline icon-tabler-trash"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><path d="M4 7l16 0" /><path d="M10 11l0 6" /><path d="M14 11l0 6" /><path d="M5 7l1 12a2 2 0 0 0 2 2h8a2 2 0 0 0 2 -2l1 -12" /><path d="M9 7v-3a1 1 0 0 1 1 -1h4a1 1 0 0 1 1 1v3" /></svg>
+                        </td>
+                        <td class="text-center">
+                            <a href="" class="editable" data-type="text" data-viewformat="yyyy-mm-dd" data-name="' . $key->id . '" data-pk="' . $key->id . '">' . $key->tanggal . '</a>
+                        </td>
+                        <td class="text-center">' . $key->tahun . '</td>
+                        <td>' . $key->libur_nasional . '</td>
+                        <td class="text-center">' . $key->sumber_ketentuan . '</td>
+                        <td class="text-center">' . $key->keterangan . '</td>
+                    </tr>
+                </body>
+            ';
+        }
+        echo '</table>';
+        echo '
+            
+                <script>
+                    $.fn.editable.defaults.mode = "inline";
+
+                    $.ajaxSetup({
+                        headers: {
+                            "X-CSRF-TOKEN": "' . csrf_token() . '"
+                        }
+                    });
+
+                    $(".editable").editable({
+                        url: "/liburnas/update",
+                        type: "date",
+                        pk: 1,
+                    });
+                </script>
+        ';
+    }
+
+    public function updatelibur(Request $request)
+    {
+        if ($request->ajax()) {
+            DB::table('daftar_hari_libur_nasional')
+                ->where('id', $request->name)
+                ->limit(1)
+                ->update(
+                    array(
+                        'tanggal' => $request->value,
+                        'updated_at' => date('Y-m-d H:i:s'),
+                    )
+                );
+            return response()->json(['success' => true]);
+        }
+    }
+
     public function storelibur(Request $request)
     {
         $request->validate(

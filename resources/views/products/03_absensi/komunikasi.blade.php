@@ -735,10 +735,9 @@
                 <span class="loader-text">MEMUAT DATA</span>
             </div>
         </div>
-        <div class="modal-dialog modal-xl modal-dialog-centered" role="document">
+        <div class="modal-dialog modal-full-width  modal-dialog-centered" role="document">
             <div class="modal-content">
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                <div class="modal-status bg-success"></div>
                 <form method="POST" action="storeAcc">
                     @csrf
                     <input type="hidden" name="_token" value="{{ csrf_token() }}" />
@@ -945,22 +944,15 @@
                     {
                         extend: 'excelHtml5',
                         autoFilter: true,
-                        className: 'btn btn-cyan',
+                        className: 'btn btn-green',
                         text: '<i class="fa fa-file-excel text-white" style="margin-right:5px"></i>',
                         action: newexportaction,
                     },
                     {
-                        className: 'btn btn-green',
-                        text: '<i class="fa-solid fa-check"></i>',
+                        className: 'btn btn-blue',
+                        text: 'Proses Surat Komunikasi',
                         action: function(e, node, config) {
                             $('#myModalCheck').modal('show')
-                        }
-                    },
-                    {
-                        className: 'btn btn-red',
-                        text: '<i class="fa-solid fa-ban"></i>',
-                        action: function(e, node, config) {
-                            $('#myModalBan').modal('show')
                         }
                     },
                 ],
@@ -1259,7 +1251,7 @@
             var td = document.createElement("td");
             td.setAttribute("align", "center");
             td.innerHTML +=
-                '<a href="javascript:void(0)" class="btn btn-red w-100 btn-icon bg-red btn-sm" onclick="hapusElemen(' +
+                '<a href="javascript:void(0)" class="btn btn-red w-100 h-100 btn-icon bg-red btn-sm" onclick="hapusElemen(' +
                 idf +
                 ');"><i class="fas fa-trash-can"></i> </a>';
             tr.appendChild(td);
@@ -1272,9 +1264,21 @@
             tr.appendChild(td);
             // Kolom 3 TANGGAL
             var td = document.createElement("td");
-            td.setAttribute("style", "width:100px");
-            td.innerHTML += '<input type="date" name="tanggalitm[]" id="tanggalitm' + idf +
-                '" class="form-control" value="<?= date('Y-m-d') ?>">';
+            td.setAttribute("style", "width:250px");
+            if (sst == "½") {
+                td.innerHTML += '<input type="date" style="width:100px" name="tanggalitm[]" id="tanggalitm' + idf +
+                    '" class="form-control border border-dark" value="<?= date('Y-m-d') ?>">';
+            } else if (sst == "GL") {
+                td.innerHTML += '<input type="date" style="width:100px" name="tanggalitm[]" id="tanggalitm' + idf +
+                    '" class="form-control border border-dark" value="<?= date('Y-m-d') ?>">';
+            } else {
+                td.innerHTML +=
+                    '<div class="row"><div class="col"><input type="date" style="width:120px" name="tanggalitm[]" id="tanggalitm' +
+                    idf +
+                    '" class="form-control border border-dark" value="<?= date('Y-m-d') ?>"></div><div class="col"><input type="date" name="tanggalitm2[]" style="width:120px" id="tanggalitm' +
+                    idf +
+                    '" class="form-control border border-dark" value="<?= date('Y-m-d') ?>"></div></div>';
+            }
             tr.appendChild(td);
             // Kolom 4 STB
             var td = document.createElement("td");
