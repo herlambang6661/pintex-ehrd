@@ -1704,7 +1704,7 @@ class DBLokal extends Controller
                     ->table('access_checkinout')
                     ->where('USERID', '=', $key->userid)
                     ->where('CHECKTYPE', '=', 'O')
-                    ->whereBetween('CHECKTIME', [$request->tgl . ' 07:30:00', date('Y-m-d', strtotime($request->tgl . "+1 days")) . ' 07:30:00'])
+                    ->whereBetween('CHECKTIME', [$request->tgl . ' 07:30:00', date('Y-m-d', strtotime($request->tgl . "+1 days")) . ' 08:30:00'])
                     ->select('CHECKTYPE', 'CHECKTIME')
                     ->get();
                 // send in
@@ -1769,7 +1769,7 @@ class DBLokal extends Controller
                                 )
                             );
                     } elseif ($f->hrlibur == strtoupper($hari_ini) && $f->in == null) {
-                        // Libur tapi dinger in tdk ada
+                        // Libur tapi finger in tdk ada
                         DB::connection('mysql_local')
                             ->table('absensi_absensi')
                             ->where(
@@ -1790,7 +1790,7 @@ class DBLokal extends Controller
                                 )
                             );
                     } elseif ($f->hrlibur == strtoupper($hari_ini) && $f->out == null) {
-                        // Libur tapi dinger out tdk ada
+                        // Libur tapi finger out tdk ada
                         DB::connection('mysql_local')
                             ->table('absensi_absensi')
                             ->where(
@@ -1811,6 +1811,7 @@ class DBLokal extends Controller
                                 )
                             );
                     } elseif ($f->in == null && $f->out == null) {
+                        // tidak ada finger sama sekali
                         DB::connection('mysql_local')
                             ->table('absensi_absensi')
                             ->where(
@@ -1831,6 +1832,7 @@ class DBLokal extends Controller
                                 )
                             );
                     } elseif ($f->in == null || $f->out == null) {
+                        // tidak ada finger di salah satu (masuk atau keluar)
                         DB::connection('mysql_local')
                             ->table('absensi_absensi')
                             ->where(
@@ -1894,7 +1896,7 @@ class DBLokal extends Controller
                                     )
                                 );
                         } elseif ($difference <= 7) {
-                            // PC ½ Hari
+                            // Jadwal ½ Hari
                             if ($f->sethari == strtoupper($hari_ini)) {
                                 DB::connection('mysql_local')
                                     ->table('absensi_absensi')
@@ -1912,6 +1914,7 @@ class DBLokal extends Controller
                                         )
                                     );
                             } else {
+                                // PC ½ Hari
                                 DB::connection('mysql_local')
                                     ->table('absensi_absensi')
                                     ->where(
@@ -2116,6 +2119,10 @@ class DBLokal extends Controller
                             'name' => $key->nama,
                             'hrlibur' => $key->hrlibur,
                             'sethari' => $key->sethari,
+                            'grup' => $key->grup,
+                            'shift' => $key->shift,
+                            'bagian' => $key->bagian,
+                            'keteranganLibur' => $key->keterangan,
                             'created_at' => date('Y-m-d H:i:s'),
                         ]
                     );
@@ -2146,7 +2153,7 @@ class DBLokal extends Controller
                     ->table('access_checkinout')
                     ->where('USERID', '=', $key->userid)
                     ->where('CHECKTYPE', '=', 'O')
-                    ->whereBetween('CHECKTIME', [$request->tgl . ' 07:30:00', date('Y-m-d', strtotime($request->tgl . "+1 days")) . ' 07:30:00'])
+                    ->whereBetween('CHECKTIME', [$request->tgl . ' 07:30:00', date('Y-m-d', strtotime($request->tgl . "+1 days")) . ' 08:30:00'])
                     ->select('CHECKTYPE', 'CHECKTIME')
                     ->get();
                 foreach ($st as $value) {
@@ -2534,7 +2541,6 @@ class DBLokal extends Controller
                 // return response()->json(['success' => 'Data ' . $request->tgl . ' - ', date("Y-m-d", strtotime($request->tgl . "+1 days")) . ' Berhasil di Update.', 'status' => 1]);
             }
 
-
             $server = DB::table('absensi_absensi')
                 ->where('userid', '=', $key->userid)
                 ->where('tanggal', '=', $request->tgl)
@@ -2567,6 +2573,10 @@ class DBLokal extends Controller
                                 'sethari' => $value->sethari,
                                 'sst' => $value->sst,
                                 'raw_sst' => $value->raw_sst,
+                                'grup' => $value->grup,
+                                'shift' => $value->shift,
+                                'bagian' => $value->bagian,
+                                'keteranganLibur' => $value->keteranganLibur,
                                 'remember_token' => $value->remember_token,
                                 'created_at' => $value->created_at,
                             )
@@ -2597,6 +2607,10 @@ class DBLokal extends Controller
                                 'sethari' => $value->sethari,
                                 'sst' => $value->sst,
                                 'raw_sst' => $value->raw_sst,
+                                'grup' => $value->grup,
+                                'shift' => $value->shift,
+                                'bagian' => $value->bagian,
+                                'keteranganLibur' => $value->keteranganLibur,
                                 'remember_token' => $value->remember_token,
                                 'created_at' => $value->created_at,
                             ]

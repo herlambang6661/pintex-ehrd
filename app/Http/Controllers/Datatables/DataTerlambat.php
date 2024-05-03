@@ -21,46 +21,33 @@ class DataTerlambat extends Controller
      */
     public function index(Request $request)
     {
-
-        $startingDate = strtotime($request->dari);
-        $endingDate = strtotime($request->sampai);
-        $Diff = round(abs($endingDate - $startingDate) / (60 * 60 * 24), 0);
-        if ($Diff > 31) {
-            return response()->json(['error' => 'Tanggal Tidak boleh melebihi 31.']);
+        // Set Dari tanggal
+        if ($request->dari) {
+            $dari = $request->dari;
         } else {
-            if ($request->dari) {
-                $dari = $request->dari;
-            } else {
-                $dari = date('Y-m-d');
-            }
-            if ($request->sampai) {
-                $sampai = $request->sampai;
-            } else {
-                $sampai = date('Y-m-d');
-            }
-            if ($request->ajax()) {
-                $data = DB::table('absensi_absensi')
-                    ->whereBetween('tanggal', [$dari, $sampai])
-                    ->orderBy('name', 'asc')->get();
-
-                return DataTables::of($data)
-                    ->addIndexColumn()
-                    ->addColumn('action', function ($row) {
-                        $btn = ' <a href="javascript:void(0)" data-bs-toggle="modal" data-bs-target="#modal-view" class="btn btn-outline-info btn-sm btn-icon"><i class="fa-solid fa-fw fa-eye"></i></a>';
-                        return $btn;
-                    })
-                    ->rawColumns(['action',])
-                    ->make(true);
-                return view($data);
-            }
+            $dari = date('Y-m-d');
         }
-    }
+        // Set Sampai tanggal
+        if ($request->sampai) {
+            $sampai = $request->sampai;
+        } else {
+            $sampai = date('Y-m-d');
+        }
+        // jika request ajax, ambil data
+        if ($request->ajax()) {
+            $data = DB::table('absensi_absensi')
+                ->whereBetween('tanggal', [$dari, $sampai])
+                ->orderBy('name', 'asc')->get();
 
-    public function destroy($id)
-    {
-        // pr_01daftarentitas::find($id)->delete();
-        DB::table('penerimaan_absensi')->where('id', '=', $id)->delete();
-
-        return response()->json(['success' => 'Record deleted successfully.']);
+            return DataTables::of($data)
+                ->addIndexColumn()
+                ->addColumn('action', function ($row) {
+                    $btn = ' <a href="javascript:void(0)" data-bs-toggle="modal" data-bs-target="#modal-view" class="btn btn-outline-info btn-sm btn-icon"><i class="fa-solid fa-fw fa-eye"></i></a>';
+                    return $btn;
+                })
+                ->rawColumns(['action',])
+                ->make(true);
+            return view($data);
+        }
     }
 }

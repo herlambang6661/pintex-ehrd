@@ -28,6 +28,10 @@ return new class extends Migration
             $table->string('sethari')->nullable();
             $table->string('sst')->nullable();
             $table->string('raw_sst')->nullable();
+            $table->string('grup')->nullable();
+            $table->string('shift')->nullable();
+            $table->string('bagian')->nullable();
+            $table->string('keteranganLibur')->nullable();
             $table->rememberToken();
             $table->timestamps();
         });
