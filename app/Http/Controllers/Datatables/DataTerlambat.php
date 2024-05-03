@@ -36,6 +36,30 @@ class DataTerlambat extends Controller
         // jika request ajax, ambil data
         if ($request->ajax()) {
             $data = DB::table('absensi_absensi')
+                ->select(DB::raw('
+                    absensi_absensi.id, 
+                    absensi_absensi.tanggal, 
+                    absensi_absensi.stb, 
+                    absensi_absensi.`name`, 
+                    absensi_absensi.`shift`, 
+                    absensi_absensi.`grup`, 
+                    DATE_FORMAT(`in`, "%H:%i:%s") as `in`,
+                    DATE_FORMAT(`out`, "%H:%i:%s") as `out`,
+                    absensi_absensi.bagian,
+                    (
+                    CASE 
+                        WHEN DATE_FORMAT(`in`, "%H:%i:%s") > "06:45:00" AND DATE_FORMAT(`in`, "%H:%i:%s") < "07:30:00" AND absensi_absensi.`shift` = "SHIFT" AND absensi_absensi.`bagian` = "KEAMANAN" THEN "TERLAMBAT"
+                        WHEN DATE_FORMAT(`in`, "%H:%i:%s") > "14:45:00" AND DATE_FORMAT(`in`, "%H:%i:%s") < "15:30:00" AND absensi_absensi.`shift` = "SHIFT" AND absensi_absensi.`bagian` = "KEAMANAN" THEN "TERLAMBAT"
+                        WHEN DATE_FORMAT(`in`, "%H:%i:%s") > "22:45:00" AND DATE_FORMAT(`in`, "%H:%i:%s") < "23:30:00" AND absensi_absensi.`shift` = "SHIFT" AND absensi_absensi.`bagian` = "KEAMANAN" THEN "TERLAMBAT"
+                        WHEN DATE_FORMAT(`in`, "%H:%i:%s") > "07:45:00" AND DATE_FORMAT(`in`, "%H:%i:%s") < "08:30:00" AND absensi_absensi.`shift` = "NON SHIFT" AND absensi_absensi.`bagian` = "KEAMANAN" THEN "TERLAMBAT"
+                                
+                        WHEN DATE_FORMAT(`in`, "%H:%i:%s") > "06:45:00" AND DATE_FORMAT(`in`, "%H:%i:%s") < "07:30:00" AND absensi_absensi.`shift` = "SHIFT" THEN "TERLAMBAT"
+                        WHEN DATE_FORMAT(`in`, "%H:%i:%s") > "14:45:00" AND DATE_FORMAT(`in`, "%H:%i:%s") < "15:30:00" AND absensi_absensi.`shift` = "SHIFT" THEN "TERLAMBAT"
+                        WHEN DATE_FORMAT(`in`, "%H:%i:%s") > "22:45:00" AND DATE_FORMAT(`in`, "%H:%i:%s") < "23:30:00" AND absensi_absensi.`shift` = "SHIFT" THEN "TERLAMBAT"
+                        WHEN DATE_FORMAT(`in`, "%H:%i:%s") > "07:45:00" AND DATE_FORMAT(`in`, "%H:%i:%s") < "08:30:00" AND absensi_absensi.`shift` = "NON SHIFT" THEN "TERLAMBAT"
+                        ELSE null
+                    END) AS keteranganAbsen
+                '))
                 ->whereBetween('tanggal', [$dari, $sampai])
                 ->orderBy('name', 'asc')->get();
 
