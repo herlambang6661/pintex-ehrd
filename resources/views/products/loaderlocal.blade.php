@@ -91,7 +91,12 @@
                 },
                 error: function(data) {
                     console.log('Error:', data.responseText);
-                    $('.stt').text('Error : ' + data.responseText);
+                    $('.stt').text(
+                        'Driver ODBC Access tidak ditemukan, beralih ke Dashboard tanpa syncronisasi'
+                    );
+                    setTimeout(function() {
+                        window.location.href = '/dashboard';
+                    }, 4000);
                     // console.log(data);
                     // console.log('Error:', data.error);
                     // Swal.fire({
