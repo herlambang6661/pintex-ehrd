@@ -9,6 +9,7 @@ use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Session;
 use Illuminate\Support\Facades\Validator;
+use Illuminate\Support\Facades\DB;
 
 class AuthController extends Controller
 {
@@ -64,6 +65,7 @@ class AuthController extends Controller
                             "redirect" => url("loaderlocal")
                         ]);
                     } catch (\Throwable $th) {
+
                         return view('products.dashboard');
                     }
                 } else {
@@ -123,9 +125,13 @@ class AuthController extends Controller
     {
         if (Auth::check()) {
             $judul = "Dashboard";
+            $countKaryawan = DB::table('penerimaan_karyawan')->where('status', 'like', '%Aktif%')->count();
+            $countKomunikasi = DB::table('absensi_komunikasiitm')->count();
 
             return view('products.dashboard', [
                 'judul' => $judul,
+                'karyawan' => $countKaryawan,
+                'komunikasi' => $countKomunikasi,
             ]);
         } else {
             // return view('login');
