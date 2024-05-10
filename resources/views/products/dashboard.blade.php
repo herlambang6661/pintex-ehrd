@@ -118,7 +118,7 @@
                                                 Karyawan Aktif
                                             </div>
                                             <div class="text-secondary">
-                                                32 item
+                                                {{ $karyawan }}
                                             </div>
                                         </div>
                                     </div>
@@ -148,7 +148,7 @@
                                                 Surat Komunikasi
                                             </div>
                                             <div class="text-secondary">
-                                                16 item
+                                                {{ number_format($komunikasi, 0, ',', '.') }}
                                             </div>
                                         </div>
                                     </div>
