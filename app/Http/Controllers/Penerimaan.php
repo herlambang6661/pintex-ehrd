@@ -2169,7 +2169,7 @@ class Penerimaan extends Controller
                 </div>
                 <div class="col">
                     <div class="alert alert-important alert-success" role="alert">
-                        Nomor3 : <h1><a href="javascript:void(0)" onclick="copyContent3()">' . $stbnew3 . '</a></h1>
+                        Nomor 3 : <h1><a href="javascript:void(0)" onclick="copyContent3()">' . $stbnew3 . '</a></h1>
                     </div>
                 </div>
             </div>
