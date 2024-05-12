@@ -2177,5 +2177,291 @@ class Penerimaan extends Controller
         echo '<i>*Klik STB untuk menyalin</i>';
     }
 
+    public function addModal(Request $request)
+    {
+        $karyawan = DB::table('penerimaan_karyawan')->where('userid', $request->id)->first();
+        $divisi = DB::table('daftar_pospekerjaan')->where('type', '=', 'DIVISI')->get();
+        $bagian = DB::table('daftar_pospekerjaan')->where('type', '=', 'BAGIAN')->get();
+        $jabatan = DB::table('daftar_pospekerjaan')->where('type', '=', 'JABATAN')->get();
+        $grup = DB::table('daftar_pospekerjaan')->where('type', '=', 'GRUP')->get();
+        $shift = DB::table('daftar_pospekerjaan')->where('type', '=', 'SHIFT')->get();
+
+        $hari = array("SENIN", "SELASA", "RABU", "KAMIS", "JUMAT", "SABTU", "MINGGU");
+
+        $perjanjian = DB::table('daftar_surat')->where('jenissurat', '=', 'Perjanjian')->get();
+        $intern = DB::table('daftar_surat')->where('jenissurat', '=', 'Intern')->get();
+        $status = DB::table('daftar_surat')->where('jenissurat', '=', 'Status')->get();
+
+        if ($request->idtipe == "basic") {
+            echo '
+                <div class="modal-body">
+                    <div class="row">
+                        <div class="col-lg-6">
+                            <div class="mb-3">
+                            <label class="form-label">Nama Karyawan</label>
+                            <input type="text" class="form-control" value="' . $karyawan->nama . '" disabled>
+                            </div>
+                        </div>
+                        <div class="col-lg-6">
+                            <div class="mb-3">
+                            <label class="form-label">Nama Surat</label>
+                            <input type="text" class="form-control" value="Surat Deskripsi Pekerjaan" disabled>
+                            </div>
+                        </div>
+                    </div>
+                    <input type="hidden" name="suratjns" value="BASIC">
+                    <input type="hidden" name="userid" value="' . $request->id . '">
+                    <table class="table table-sm table-borderless">
+                        <tr>
+                            <td style="padding-top: 12px;width:130px">Tanggal Input</td>
+                            <td style="padding-top: 12px">:</td>
+                            <td><input type="date" id="datepicker0" class="form-control" value="' . date("Y-m-d") . '"></td>
+                        </tr>
+                        <tr>
+                            <td style="padding-top: 12px">Tanggal Aktif</td>
+                            <td style="padding-top: 12px">:</td>
+                            <td><input type="date" id="datepicker1" class="form-control" value="' . date("Y-m-d") . '"></td>
+                        </tr>
+                        <tr>
+                            <td style="padding-top: 12px">STB</td>
+                            <td style="padding-top: 12px">:</td>
+                            <td><input type="text" class="form-control" placeholder="Masukkan STB Karyawan"></td>
+                        </tr>
+                        <tr>
+                            <td style="padding-top: 12px">Divisi</td>
+                            <td style="padding-top: 12px">:</td>
+                            <td>
+                                <select name="" id="" class="form-select">
+                                <option hidden value="">-- Pilih Divisi --</option>';
+            foreach ($divisi as $d) {
+                echo            '<option value="' . $d->desc . '">' . $d->desc . '</option>';
+            }
+            echo
+            '</select>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td style="padding-top: 12px">Bagian</td>
+                            <td style="padding-top: 12px">:</td>
+                            <td>
+                                <select name="" id="" class="form-select">
+                                <option hidden value="">-- Pilih Bagian --</option>';
+            foreach ($bagian as $b) {
+                echo            '<option value="' . $b->desc . '">' . $b->desc . '</option>';
+            }
+            echo
+            '</select>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td style="padding-top: 12px">Jabatan</td>
+                            <td style="padding-top: 12px">:</td>
+                            <td>
+                                <select name="" id="" class="form-select">
+                                <option hidden value="">-- Pilih Jabatan --</option>';
+            foreach ($jabatan as $j) {
+                echo            '<option value="' . $j->desc . '">' . $j->desc . '</option>';
+            }
+            echo
+            '</select>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td style="padding-top: 12px">Grup</td>
+                            <td style="padding-top: 12px">:</td>
+                            <td>
+                                <select name="" id="" class="form-select">
+                                <option hidden value="">-- Pilih Grup --</option>';
+            foreach ($grup as $g) {
+                echo            '<option value="' . $g->desc . '">' . $g->desc . '</option>';
+            }
+            echo
+            '</select>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td style="padding-top: 12px">Jenis Shift</td>
+                            <td style="padding-top: 12px">:</td>
+                            <td>
+                                <select name="" id="" class="form-select">
+                                <option hidden value="">-- Jenis Shift --</option>';
+            foreach ($shift as $s) {
+                echo            '<option value="' . $s->desc . '">' . $s->desc . '</option>';
+            }
+            echo                '</select>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td style="padding-top: 12px">Profesi</td>
+                            <td style="padding-top: 12px">:</td>
+                            <td><input type="text" class="form-control" placeholder="Profesi Karyawan"></td>
+                        </tr>
+                        <tr>
+                            <td style="padding-top: 12px">Hari Libur</td>
+                            <td style="padding-top: 12px">:</td>
+                            <td>
+                                <select name="" id="" class="form-select">
+                                <option hidden value="">-- Hari Libur --</option>';
+            foreach ($hari as $h => $v) {
+                echo            '<option value="' . $v . '">' . $v . '</option>';
+            }
+            echo
+            '</select>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td style="padding-top: 12px">½ Hari</td>
+                            <td style="padding-top: 12px">:</td>
+                            <td>
+                                <select name="" id="" class="form-select">
+                                <option hidden value="">-- ½ Hari --</option>';
+            foreach ($hari as $h => $v) {
+                echo            '<option value="' . $v . '">' . $v . '</option>';
+            }
+            echo                '</select>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td style="padding-top: 12px">Keterangan</td>
+                            <td style="padding-top: 12px">:</td>
+                            <td><input type="text" class="form-control" placeholder="Masukkan Keterangan tambahan contoh: libur=SENIN,SELASA,KAMIS"></td>
+                        </tr>
+                    </table>
+                </div>
+            ';
+        } elseif ($request->idtipe == "perjanjian") {
+            echo '<input type="hidden" name="suratjns" value="PERJANJIAN">';
+            echo '<input type="hidden" name="userid" value="' . $request->id . '">';
+            echo
+            '
+                <div class="modal-body">
+                    <div class="row">
+                        <div class="col-lg-12">
+                            <div class="mb-3">
+                            <label class="form-label">Nama Karyawan</label>
+                            <input type="text" class="form-control" value="' . $karyawan->nama .
+                '" disabled>
+                            </div>
+                        </div>
+                        <div class="col-lg-6">
+                            <div class="mb-3">
+                            <label class="form-label">Nama Surat</label>
+                                <select name="" id="" class="form-select">
+                                <option hidden value="">-- Pilih Nama Surat --</option>';
+            foreach ($perjanjian as $pe) {
+                echo            '<option value="' . $pe->nmsurat . '">' . $pe->nmsurat . '</option>';
+            }
+            echo                '</select>
+                            </div>
+                        </div>
+                        <div class="col-lg-6">
+                            <div class="mb-3">
+                            <label class="form-label">Jenis Surat</label>
+                            <input type="text" class="form-control" placeholder="Masukkan Jenis Surat">
+                            </div>
+                        </div>
+                    </div>
+                    <table class="table table-sm table-borderless">
+                        <tr>
+                            <td style="padding-top: 12px;width:130px">Tanggal Input</td>
+                            <td style="padding-top: 12px">:</td>
+                            <td><input type="date" class="form-control" value="' . date("Y-m-d") . '"></td>
+                        </tr>
+                        <tr>
+                            <td style="padding-top: 12px">Tanggal Awal</td>
+                            <td style="padding-top: 12px">:</td>
+                            <td><input type="date" class="form-control" value="' . date("Y-m-d") . '"></td>
+                        </tr>
+                        <tr>
+                            <td style="padding-top: 12px">Tanggal Akhir</td>
+                            <td style="padding-top: 12px">:</td>
+                            <td><input type="date" class="form-control" value="' . date("Y-m-d") . '"></td>
+                        </tr>
+                        <tr>
+                            <td style="padding-top: 12px">Cuti</td>
+                            <td style="padding-top: 12px">:</td>
+                            <td><input type="number" min="0" class="form-control" placeholder="Cuti"></td>
+                        </tr>
+                    </table>
+                </div>
+            ';
+        } elseif ($request->idtipe == "intern") {
+            echo '<input type="hidden" name="suratjns" value="INTERN">';
+            echo '<input type="hidden" name="userid" value="' . $request->id . '">';
+            echo
+            '
+                <div class="modal-body">
+                    <div class="row">
+                        <div class="col-lg-12">
+                            <div class="mb-3">
+                            <label class="form-label">Nama Karyawan</label>
+                            <input type="text" class="form-control" value="' . $karyawan->nama .
+                '" disabled>
+                            </div>
+                        </div>
+                        <div class="col-lg-12">
+                            <div class="mb-3">
+                            <label class="form-label">Nama Surat</label>
+                                <select name="" id="" class="form-select">
+                                <option hidden value="">-- Pilih Nama Surat --</option>';
+            foreach ($intern as $in) {
+                echo            '<option value="' . $in->nmsurat . '">' . $in->nmsurat . '</option>';
+            }
+            echo                '</select>
+                            </div>
+                        </div>
+                    </div>
+                    <table class="table table-sm table-borderless">
+                        <tr>
+                            <td style="padding-top: 12px;width:130px">Tanggal Internal</td>
+                            <td style="padding-top: 12px">:</td>
+                            <td><input type="date" class="form-control" value="' . date("Y-m-d") . '"></td>
+                        </tr>
+                        <tr>
+                            <td style="padding-top: 12px">Keterangan</td>
+                            <td style="padding-top: 12px">:</td>
+                            <td><input type="text" class="form-control" placeholder="Masukkan Keterangan"></td>
+                        </tr>
+                    </table>
+                </div>
+            ';
+        } elseif ($request->idtipe == "status") {
+            echo '<input type="hidden" name="suratjns" value="STATUS">';
+            echo '<input type="hidden" name="userid" value="' . $request->id . '">';
+            echo
+            '
+                <div class="modal-body">
+                    <div class="row">
+                        <div class="col-lg-12">
+                            <div class="mb-3">
+                            <label class="form-label">Nama Karyawan</label>
+                            <input type="text" class="form-control" value="' . $karyawan->nama .
+                '" disabled>
+                            </div>
+                        </div>
+                        <div class="col-lg-12">
+                            <div class="mb-3">
+                            <label class="form-label">Nama Surat</label>
+                                <select name="" id="" class="form-select">
+                                <option hidden value="">-- Pilih Nama Surat --</option>';
+            foreach ($status as $st) {
+                echo            '<option value="' . $st->nmsurat . '">' . $st->nmsurat . '</option>';
+            }
+            echo                '</select>
+                            </div>
+                        </div>
+                    </div>
+                    <table class="table table-sm table-borderless">
+                        <tr>
+                            <td style="padding-top: 12px;width:130px">Tanggal Status</td>
+                            <td style="padding-top: 12px">:</td>
+                            <td><input type="date" class="form-control" value="' . date("Y-m-d") . '"></td>
+                        </tr>
+                    </table>
+                </div>
+            ';
+        }
+    }
+
     // ======================== END LEGALITAS ===========================================================================================
 }
