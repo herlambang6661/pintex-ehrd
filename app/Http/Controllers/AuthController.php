@@ -2,14 +2,15 @@
 
 namespace App\Http\Controllers;
 
+use Carbon\Carbon;
 use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Routing\Controller;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Session;
 use Illuminate\Support\Facades\Validator;
-use Illuminate\Support\Facades\DB;
 
 class AuthController extends Controller
 {
@@ -128,14 +129,20 @@ class AuthController extends Controller
             $countLamaran = DB::table('penerimaan_lamaran')->count();
             $countKaryawan = DB::table('penerimaan_karyawan')->where('status', 'like', '%Aktif%')->count();
             $countKomunikasi = DB::table('absensi_komunikasiitm')->count();
+            $absensi = DB::table('absensi_absensi')->orderBy('tanggal', 'desc')->limit('1')->get();
             $kontrak = DB::table('penerimaan_legalitas')->where('nmsurat', 'Perjanjian Kontrak')->where('tglak', '>', date('Y-m-d'))->orderBy('tglak', 'asc')->limit('50')->get();
             $sp = DB::table('penerimaan_legalitas')->where('nmsurat', 'Surat Peringatan (SP)')->where('legalitastgl', '>=', now()->subMonths(6))->orderBy('legalitastgl', 'desc')->limit('50')->get();
+
+            foreach ($absensi as $ab) {
+                $absen = Carbon::parse($ab->tanggal)->format('d-m-Y');
+            }
 
             return view('products.dashboard', [
                 'judul' => $judul,
                 'lamaran' => $countLamaran,
                 'karyawan' => $countKaryawan,
                 'komunikasi' => $countKomunikasi,
+                'absen' => $absen,
                 'kontrak' => $kontrak,
                 'sp' => $sp,
             ]);
