@@ -125,13 +125,19 @@ class AuthController extends Controller
     {
         if (Auth::check()) {
             $judul = "Dashboard";
+            $countLamaran = DB::table('penerimaan_lamaran')->count();
             $countKaryawan = DB::table('penerimaan_karyawan')->where('status', 'like', '%Aktif%')->count();
             $countKomunikasi = DB::table('absensi_komunikasiitm')->count();
+            $kontrak = DB::table('penerimaan_legalitas')->where('nmsurat', 'Perjanjian Kontrak')->where('tglak', '>', date('Y-m-d'))->orderBy('tglak', 'asc')->limit('50')->get();
+            $sp = DB::table('penerimaan_legalitas')->where('nmsurat', 'Surat Peringatan (SP)')->where('legalitastgl', '>=', now()->subMonths(6))->orderBy('legalitastgl', 'desc')->limit('50')->get();
 
             return view('products.dashboard', [
                 'judul' => $judul,
+                'lamaran' => $countLamaran,
                 'karyawan' => $countKaryawan,
                 'komunikasi' => $countKomunikasi,
+                'kontrak' => $kontrak,
+                'sp' => $sp,
             ]);
         } else {
             // return view('login');
