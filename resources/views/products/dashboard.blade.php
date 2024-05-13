@@ -26,7 +26,7 @@
             <!-- Page body -->
             <div class="page-body">
                 <div class="container-xl">
-                    <div class="row row-deck row-cards">
+                    <div class="row row-deck row-cards mb-2">
                         <div class="card card-sm">
                             <div class="card-stamp card-stamp-lg">
                                 <div class="card-stamp-icon bg-primary">
@@ -68,17 +68,16 @@
                                 <div class="card-body">
                                     <div class="row align-items-center">
                                         <div class="col-auto">
-                                            <span
-                                                class="bg-primary text-white avatar"><!-- Download SVG icon from http://tabler-icons.io/i/currency-dollar -->
+                                            <span class="bg-primary text-white avatar">
                                                 <svg xmlns="http://www.w3.org/2000/svg" class="icon" width="24"
-                                                    height="24" viewBox="0 0 24 24" stroke-width="2"
-                                                    stroke="currentColor" fill="none" stroke-linecap="round"
-                                                    stroke-linejoin="round">
-                                                    <path stroke="none" d="M0 0h24v24H0z" fill="none"></path>
-                                                    <path
-                                                        d="M16.7 8a3 3 0 0 0 -2.7 -2h-4a3 3 0 0 0 0 6h4a3 3 0 0 1 0 6h-4a3 3 0 0 1 -2.7 -2">
-                                                    </path>
-                                                    <path d="M12 3v3m0 12v3"></path>
+                                                    height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                                                    stroke-width="2" stroke-linecap="round" stroke-linejoin="round"
+                                                    class="icon icon-tabler icons-tabler-outline icon-tabler-friends">
+                                                    <path stroke="none" d="M0 0h24v24H0z" fill="none" />
+                                                    <path d="M7 5m-2 0a2 2 0 1 0 4 0a2 2 0 1 0 -4 0" />
+                                                    <path d="M5 22v-5l-1 -1v-4a1 1 0 0 1 1 -1h4a1 1 0 0 1 1 1v4l-1 1v5" />
+                                                    <path d="M17 5m-2 0a2 2 0 1 0 4 0a2 2 0 1 0 -4 0" />
+                                                    <path d="M15 22v-4h-2l2 -6a1 1 0 0 1 1 -1h2a1 1 0 0 1 1 1l2 6h-2v4" />
                                                 </svg>
                                             </span>
                                         </div>
@@ -87,7 +86,7 @@
                                                 Recruitment
                                             </div>
                                             <div class="text-secondary">
-                                                12 item
+                                                {{ number_format($lamaran, 0, ',', '.') }} kandidat
                                             </div>
                                         </div>
                                     </div>
@@ -99,17 +98,16 @@
                                 <div class="card-body">
                                     <div class="row align-items-center">
                                         <div class="col-auto">
-                                            <span
-                                                class="bg-green text-white avatar"><!-- Download SVG icon from http://tabler-icons.io/i/shopping-cart -->
+                                            <span class="bg-green text-white avatar">
                                                 <svg xmlns="http://www.w3.org/2000/svg" class="icon" width="24"
-                                                    height="24" viewBox="0 0 24 24" stroke-width="2"
-                                                    stroke="currentColor" fill="none" stroke-linecap="round"
-                                                    stroke-linejoin="round">
-                                                    <path stroke="none" d="M0 0h24v24H0z" fill="none"></path>
-                                                    <path d="M6 19m-2 0a2 2 0 1 0 4 0a2 2 0 1 0 -4 0"></path>
-                                                    <path d="M17 19m-2 0a2 2 0 1 0 4 0a2 2 0 1 0 -4 0"></path>
-                                                    <path d="M17 17h-11v-14h-2"></path>
-                                                    <path d="M6 5l14 1l-1 7h-13"></path>
+                                                    height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                                                    stroke-width="2" stroke-linecap="round" stroke-linejoin="round"
+                                                    class="icon icon-tabler icons-tabler-outline icon-tabler-user-star">
+                                                    <path stroke="none" d="M0 0h24v24H0z" fill="none" />
+                                                    <path d="M8 7a4 4 0 1 0 8 0a4 4 0 0 0 -8 0" />
+                                                    <path d="M6 21v-2a4 4 0 0 1 4 -4h.5" />
+                                                    <path
+                                                        d="M17.8 20.817l-2.172 1.138a.392 .392 0 0 1 -.568 -.41l.415 -2.411l-1.757 -1.707a.389 .389 0 0 1 .217 -.665l2.428 -.352l1.086 -2.193a.392 .392 0 0 1 .702 0l1.086 2.193l2.428 .352a.39 .39 0 0 1 .217 .665l-1.757 1.707l.414 2.41a.39 .39 0 0 1 -.567 .411l-2.172 -1.138z" />
                                                 </svg>
                                             </span>
                                         </div>
@@ -118,7 +116,7 @@
                                                 Karyawan Aktif
                                             </div>
                                             <div class="text-secondary">
-                                                32 item
+                                                {{ number_format($karyawan, 0, ',', '.') }} orang
                                             </div>
                                         </div>
                                     </div>
@@ -130,16 +128,18 @@
                                 <div class="card-body">
                                     <div class="row align-items-center">
                                         <div class="col-auto">
-                                            <span
-                                                class="bg-twitter text-white avatar"><!-- Download SVG icon from http://tabler-icons.io/i/brand-twitter -->
+                                            <span class="bg-twitter text-white avatar">
                                                 <svg xmlns="http://www.w3.org/2000/svg" class="icon" width="24"
-                                                    height="24" viewBox="0 0 24 24" stroke-width="2"
-                                                    stroke="currentColor" fill="none" stroke-linecap="round"
-                                                    stroke-linejoin="round">
-                                                    <path stroke="none" d="M0 0h24v24H0z" fill="none"></path>
+                                                    height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                                                    stroke-width="2" stroke-linecap="round" stroke-linejoin="round"
+                                                    class="icon icon-tabler icons-tabler-outline icon-tabler-message-share">
+                                                    <path stroke="none" d="M0 0h24v24H0z" fill="none" />
+                                                    <path d="M8 9h8" />
+                                                    <path d="M8 13h6" />
                                                     <path
-                                                        d="M22 4.01c-1 .49 -1.98 .689 -3 .99c-1.121 -1.265 -2.783 -1.335 -4.38 -.737s-2.643 2.06 -2.62 3.737v1c-3.245 .083 -6.135 -1.395 -8 -4c0 0 -4.182 7.433 4 11c-1.872 1.247 -3.739 2.088 -6 2c3.308 1.803 6.913 2.423 10.034 1.517c3.58 -1.04 6.522 -3.723 7.651 -7.742a13.84 13.84 0 0 0 .497 -3.753c0 -.249 1.51 -2.772 1.818 -4.013z">
-                                                    </path>
+                                                        d="M13 18l-5 3v-3h-2a3 3 0 0 1 -3 -3v-8a3 3 0 0 1 3 -3h12a3 3 0 0 1 3 3v6" />
+                                                    <path d="M16 22l5 -5" />
+                                                    <path d="M21 21.5v-4.5h-4.5" />
                                                 </svg>
                                             </span>
                                         </div>
@@ -148,7 +148,7 @@
                                                 Surat Komunikasi
                                             </div>
                                             <div class="text-secondary">
-                                                16 item
+                                                {{ number_format($komunikasi, 0, ',', '.') }} surat
                                             </div>
                                         </div>
                                     </div>
@@ -160,25 +160,147 @@
                                 <div class="card-body">
                                     <div class="row align-items-center">
                                         <div class="col-auto">
-                                            <span
-                                                class="bg-facebook text-white avatar"><!-- Download SVG icon from http://tabler-icons.io/i/brand-facebook -->
+                                            <span class="bg-facebook text-white avatar">
                                                 <svg xmlns="http://www.w3.org/2000/svg" class="icon" width="24"
-                                                    height="24" viewBox="0 0 24 24" stroke-width="2"
-                                                    stroke="currentColor" fill="none" stroke-linecap="round"
-                                                    stroke-linejoin="round">
-                                                    <path stroke="none" d="M0 0h24v24H0z" fill="none"></path>
+                                                    height="24" viewBox="0 0 24 24" fill="none"
+                                                    stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                                                    stroke-linejoin="round"
+                                                    class="icon icon-tabler icons-tabler-outline icon-tabler-calendar-event">
+                                                    <path stroke="none" d="M0 0h24v24H0z" fill="none" />
                                                     <path
-                                                        d="M7 10v4h3v7h4v-7h3l1 -4h-4v-2a1 1 0 0 1 1 -1h3v-4h-3a5 5 0 0 0 -5 5v2h-3">
-                                                    </path>
+                                                        d="M4 5m0 2a2 2 0 0 1 2 -2h12a2 2 0 0 1 2 2v12a2 2 0 0 1 -2 2h-12a2 2 0 0 1 -2 -2z" />
+                                                    <path d="M16 3l0 4" />
+                                                    <path d="M8 3l0 4" />
+                                                    <path d="M4 11l16 0" />
+                                                    <path d="M8 15h2v2h-2z" />
                                                 </svg>
                                             </span>
                                         </div>
                                         <div class="col">
                                             <div class="font-weight-medium">
-                                                Aktif
+                                                Tanggal Absensi Terakhir
                                             </div>
                                             <div class="text-secondary">
-                                                21 item
+                                                {{ $absen }}
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row row-deck row-cards">
+                        <div class="col-sm-12 col-lg-6">
+                            <div class="card bg-blue-lt" style="height: 28rem">
+                                <div class="card-header border-0">
+                                    <div class="card-title"><i class="fa-solid fa-file-signature"></i> Kontrak Akan
+                                        Berakhir</div>
+                                </div>
+                                <div class="card-body card-body-scrollable card-body-scrollable-shadow">
+                                    <div class="divide-y">
+                                        @foreach ($kontrak as $item)
+                                            <div>
+                                                <div class="row">
+                                                    <div class="col-auto">
+                                                        <span class="avatar"
+                                                            style="background-image: url({{ url('photo/pas/' . $item->userid) }}.jpg)"></span>
+                                                    </div>
+                                                    <div class="col">
+                                                        <div class="text-truncate">
+                                                            <strong>{{ $item->nama }}</strong> {{ $item->nmsurat }} :
+                                                            <strong>{{ $item->suratket }}</strong>.
+                                                        </div>
+                                                        <div class="text-secondary">
+                                                            <i class="fa-solid fa-calendar-days"
+                                                                style="margin-right: 3px"></i>
+                                                            {{ \Carbon\Carbon::parse($item->tglak)->format('d-m-Y') }}
+                                                            <i class="fa-solid fa-circle-right"
+                                                                style="margin-left: 10px;margin-right: 3px"></i>
+                                                            {{ \Carbon\Carbon::parse($item->tglak)->diffForHumans() }}
+                                                        </div>
+                                                    </div>
+                                                    <div class="col-auto align-self-center">
+                                                        <div class="badge bg-primary"></div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        @endforeach
+                                        <div>
+                                            <div class="row">
+                                                <div class="col">
+                                                    <div class="text-truncate" style="text-align: right;">
+                                                        Lihat Semuanya
+                                                        <svg xmlns="http://www.w3.org/2000/svg" width="24"
+                                                            height="24" viewBox="0 0 24 24" fill="none"
+                                                            stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                                                            stroke-linejoin="round"
+                                                            class="icon icon-tabler icons-tabler-outline icon-tabler-arrow-right">
+                                                            <path stroke="none" d="M0 0h24v24H0z" fill="none" />
+                                                            <path d="M5 12l14 0" />
+                                                            <path d="M13 18l6 -6" />
+                                                            <path d="M13 6l6 6" />
+                                                        </svg>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="col-sm-12 col-lg-6">
+                            <div class="card bg-red-lt" style="height: 28rem">
+                                <div class="card-header border-0">
+                                    <div class="card-title"><i class="fa-solid fa-triangle-exclamation"></i> Surat
+                                        Peringatan</div>
+                                </div>
+                                <div class="card-body card-body-scrollable card-body-scrollable-shadow">
+                                    <div class="divide-y">
+                                        @foreach ($sp as $itemsp)
+                                            <div>
+                                                <div class="row">
+                                                    <div class="col-auto">
+                                                        <span class="avatar"
+                                                            style="background-image: url({{ url('photo/pas/' . $itemsp->userid) }}.jpg)"></span>
+                                                    </div>
+                                                    <div class="col">
+                                                        <div class="text-truncate">
+                                                            <strong>{{ $itemsp->nama }}</strong> :
+                                                            <strong>{{ $itemsp->keterangan }}</strong>.
+                                                        </div>
+                                                        <div class="text-secondary">
+                                                            <i class="fa-solid fa-calendar-days"
+                                                                style="margin-right: 3px"></i>
+                                                            {{ \Carbon\Carbon::parse($itemsp->legalitastgl)->format('d-m-Y') }}
+                                                            <i class="fa-solid fa-circle-right"
+                                                                style="margin-left: 10px;margin-right: 3px"></i>
+                                                            {{ \Carbon\Carbon::parse($itemsp->legalitastgl)->diffForHumans() }}
+                                                        </div>
+                                                    </div>
+                                                    <div class="col-auto align-self-center">
+                                                        <div class="badge bg-primary"></div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        @endforeach
+                                        <div>
+                                            <div class="row">
+                                                <div class="col">
+                                                    <div class="text-truncate" style="text-align: right;">
+                                                        Lihat Semuanya
+                                                        <svg xmlns="http://www.w3.org/2000/svg" width="24"
+                                                            height="24" viewBox="0 0 24 24" fill="none"
+                                                            stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                                                            stroke-linejoin="round"
+                                                            class="icon icon-tabler icons-tabler-outline icon-tabler-arrow-right">
+                                                            <path stroke="none" d="M0 0h24v24H0z" fill="none" />
+                                                            <path d="M5 12l14 0" />
+                                                            <path d="M13 18l6 -6" />
+                                                            <path d="M13 6l6 6" />
+                                                        </svg>
+                                                    </div>
+                                                </div>
                                             </div>
                                         </div>
                                     </div>

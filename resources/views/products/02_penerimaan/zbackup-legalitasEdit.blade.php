@@ -14,13 +14,13 @@
 
         td.cuspad2 {
             /* padding-top: 0.5px;
-                                                                                                                                                                                                                                                                                                                                                                                            padding-bottom: 0.5px;
-                                                                                                                                                                                                                                                                                                                                                                                            padding-right: 0.5px;
-                                                                                                                                                                                                                                                                                                                                                                                            padding-left: 0.5px;
-                                                                                                                                                                                                                                                                                                                                                                                            margin-top: 5px;
-                                                                                                                                                                                                                                                                                                                                                                                            margin-bottom: 5px;
-                                                                                                                                                                                                                                                                                                                                                                                            margin-right: 5px;
-                                                                                                                                                                                                                                                                                                                                                                                            margin-left: 5px; */
+                                                                        padding-bottom: 0.5px;
+                                                                        padding-right: 0.5px;
+                                                                        padding-left: 0.5px;
+                                                                        margin-top: 5px;
+                                                                        margin-bottom: 5px;
+                                                                        margin-right: 5px;
+                                                                        margin-left: 5px; */
         }
 
         .overlay {
@@ -107,25 +107,10 @@
                     @csrf
                     <div class="container-xl">
                         @foreach ($getKar as $key => $p)
-                            <?php
-                            $useridkar = $p->userid;
-                            ?>
                             <input type="hidden" name="entitas" value="PINTEX">
                             <input type="hidden" name="nama" value="{{ $p->nama }}">
                             <input type="hidden" name="userid" value="{{ $p->userid ? $p->userid : '' }}">
                             <input type="hidden" name="iduntukphl" value="{{ $iduntukphl }}">
-                            <script>
-                                // let customDate = new Date(2222, 3, 8);
-                                // let strDate = customDate.toLocaleDateString();
-                                // let format = strDate
-                                //     .replace("04", "MM")
-                                //     .replace("4", "M")
-                                //     .replace("08", "dd")
-                                //     .replace("8", "d")
-                                //     .replace("2222", "yyyy")
-                                //     .replace("22", "yy");
-                                // alert(format);
-                            </script>
                             <div class="row row-deck row-cards">
                                 <div class="col-lg-12">
                                     <div class="card">
@@ -275,10 +260,11 @@
                                                         class="btn btn-secondary btn-sm"><i
                                                             class="fa-solid fa-arrow-up-9-1"
                                                             style="margin-right: 5px"></i> STB Terakhir</a>
-                                                    <button type="button"
-                                                        class="btn btn-icon btn-success btn-sm btn-addModal"
-                                                        data-id="{{ $useridkar }}" data-idtipe="basic"
-                                                        data-tipe="Basic Information">
+                                                    <button type="button" class="btn btn-icon btn-success btn-sm"
+                                                        onclick="tambahBasic(); return false;"><i
+                                                            class="fa-solid fa-add"></i></button>
+                                                    <button type="button" class="btn btn-icon btn-success btn-sm"
+                                                        onclick="tambahModal('basic'); return false;">
                                                         <i class="fa-solid fa-add"></i>
                                                     </button>
                                                 </div>
@@ -353,11 +339,9 @@
                                                     <h3 class="card-title d-flex">
                                                         Perjanjian
                                                         <button type="button"
-                                                            class="btn btn-icon btn-purple btn-sm ms-auto btn-addModal"
-                                                            data-id="{{ $useridkar }}" data-idtipe="perjanjian"
-                                                            data-tipe="Perjanjian">
-                                                            <i class="fa-solid fa-add"></i>
-                                                        </button>
+                                                            class="btn btn-icon btn-sm btn-purple ms-auto"
+                                                            onclick="tambahPerjanjian(); return false;"><i
+                                                                class="fa-solid fa-add"></i></button>
                                                     </h3>
                                                     <input id="idp" value="1" type="hidden">
                                                     <div class="table-responsive">
@@ -414,11 +398,9 @@
                                                     <h3 class="card-title d-flex">
                                                         Internal
                                                         <button type="button"
-                                                            class="btn btn-icon btn-teal btn-sm ms-auto btn-addModal"
-                                                            data-id="{{ $useridkar }}" data-idtipe="intern"
-                                                            data-tipe="Internal">
-                                                            <i class="fa-solid fa-add"></i>
-                                                        </button>
+                                                            class="btn btn-teal btn-icon btn-sm ms-auto"
+                                                            onclick="tambahInternal(); return false;"><i
+                                                                class="fa-solid fa-add"></i></button>
                                                     </h3>
                                                     <input id="idi" value="1" type="hidden">
                                                     <div class="table-responsive">
@@ -471,12 +453,9 @@
                                         <div class="card-body">
                                             <h3 class="card-title d-flex">
                                                 Status
-                                                <button type="button"
-                                                    class="btn btn-icon btn-pink btn-sm ms-auto btn-addModal"
-                                                    data-id="{{ $useridkar }}" data-idtipe="status"
-                                                    data-tipe="Status">
-                                                    <i class="fa-solid fa-add"></i>
-                                                </button>
+                                                <button type="button" class="btn btn-pink btn-icon btn-sm ms-auto"
+                                                    onclick="tambahStatus(); return false;"><i
+                                                        class="fa-solid fa-add"></i></button>
                                             </h3>
                                             <input id="ids" value="1" type="hidden">
                                             <div class="table-responsive">
@@ -514,10 +493,10 @@
                                 </div>
                             </div>
                             <br>
-                            {{-- <button class="btn btn-blue" id="simpanLegalitas"><i class="fa-solid fa-floppy-disk"
-                                    style="margin-right: 5px"></i> Simpan</button> --}}
+                            <button class="btn btn-blue" id="simpanLegalitas"><i class="fa-solid fa-floppy-disk"
+                                    style="margin-right: 5px"></i> Simpan</button>
                             <a href="{{ url('penerimaan/legalitas') }}" class="btn btn-secondary"><i
-                                    class="fa-solid fa-arrow-left" style="margin-right: 5px"></i> Kembali</a>
+                                    class="fa-solid fa-arrow-left" style="margin-right: 5px"></i> Batal & Kembali</a>
                         @endforeach
                     </div>
                 </form>
@@ -548,24 +527,21 @@
             </div>
         </div>
     </div>
-    <div class="modal modal-blur fade" id="modal-add-legalitas" tabindex="-1" style="display: none;"
-        aria-hidden="true">
-        <div class="overlay">
-            <div class="cv-spinner">
-                <span class="spinner"></span>
-            </div>
-        </div>
+    <div class="modal modal-blur fade" id="modal-large" tabindex="-1" style="display: none;" aria-hidden="true">
         <div class="modal-dialog modal-lg modal-dialog-centered" role="document">
             <div class="modal-content">
                 <div class="modal-header">
-                    <h5 class="modal-title modal-judul-legalitas"></h5>
+                    <h5 class="modal-title">Large modal</h5>
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
-                <div class="modal-isi-legalitas">
+                <div class="modal-body">
+                    Lorem ipsum dolor sit amet, consectetur adipisicing elit. Adipisci animi beatae delectus deleniti
+                    dolorem eveniet facere fuga iste nemo nesciunt nihil odio perspiciatis, quia quis reprehenderit sit
+                    tempora totam unde.
                 </div>
                 <div class="modal-footer">
-                    <button type="button" class="btn me-auto" data-bs-dismiss="modal">Batal</button>
-                    <button type="button" class="btn btn-primary" data-bs-dismiss="modal">Simpan Data</button>
+                    <button type="button" class="btn me-auto" data-bs-dismiss="modal">Close</button>
+                    <button type="button" class="btn btn-primary" data-bs-dismiss="modal">Save changes</button>
                 </div>
             </div>
         </div>
@@ -573,6 +549,48 @@
     {{-- Modal --}}
     <script type="text/javascript">
         var tglhariini = '<?php echo date('Y-m-d'); ?>';
+
+        function newexportaction(e, dt, button, config) {
+            var self = this;
+            var oldStart = dt.settings()[0]._iDisplayStart;
+            dt.one('preXhr', function(e, s, data) {
+                // Just this once, load all data from the server...
+                data.start = 0;
+                data.length = 2147483647;
+                dt.one('preDraw', function(e, settings) {
+                    // Call the original action function
+                    if (button[0].className.indexOf('buttons-copy') >= 0) {
+                        $.fn.dataTable.ext.buttons.copyHtml5.action.call(self, e, dt, button, config);
+                    } else if (button[0].className.indexOf('buttons-excel') >= 0) {
+                        $.fn.dataTable.ext.buttons.excelHtml5.available(dt, config) ?
+                            $.fn.dataTable.ext.buttons.excelHtml5.action.call(self, e, dt, button, config) :
+                            $.fn.dataTable.ext.buttons.excelFlash.action.call(self, e, dt, button, config);
+                    } else if (button[0].className.indexOf('buttons-csv') >= 0) {
+                        $.fn.dataTable.ext.buttons.csvHtml5.available(dt, config) ?
+                            $.fn.dataTable.ext.buttons.csvHtml5.action.call(self, e, dt, button, config) :
+                            $.fn.dataTable.ext.buttons.csvFlash.action.call(self, e, dt, button, config);
+                    } else if (button[0].className.indexOf('buttons-pdf') >= 0) {
+                        $.fn.dataTable.ext.buttons.pdfHtml5.available(dt, config) ?
+                            $.fn.dataTable.ext.buttons.pdfHtml5.action.call(self, e, dt, button, config) :
+                            $.fn.dataTable.ext.buttons.pdfFlash.action.call(self, e, dt, button, config);
+                    } else if (button[0].className.indexOf('buttons-print') >= 0) {
+                        $.fn.dataTable.ext.buttons.print.action(e, dt, button, config);
+                    }
+                    dt.one('preXhr', function(e, s, data) {
+                        // DataTables thinks the first item displayed is index 0, but we're not drawing that.
+                        // Set the property to what it was before exporting.
+                        settings._iDisplayStart = oldStart;
+                        data.start = oldStart;
+                    });
+                    // Reload the grid with the original page. Otherwise, API functions like table.cell(this) don't work properly.
+                    setTimeout(dt.ajax.reload, 0);
+                    // Prevent rendering of the full data to the DOM
+                    return false;
+                });
+            });
+            // Requery the server with the new one-time export settings
+            dt.ajax.reload();
+        }
 
         $(function() {
             $('#modal-stb').on('show.bs.modal', function(e) {
@@ -687,366 +705,354 @@
                     }
                 })
             }
-
-            $('.btn-addModal').click(function() {
-                $('.modal-isi-legalitas').html('');
-                $(".overlay").fadeIn(300);
-                var id = $(this).data("id");
-                var tipe = $(this).data("tipe");
-                var idtipe = $(this).data("idtipe");
-
-                $.ajaxSetup({
-                    headers: {
-                        'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
-                    }
-                });
-                $.ajax({
-                    type: "POST",
-                    url: "{{ url('addModal') }}",
-                    data: {
-                        "_token": "{{ csrf_token() }}",
-                        "id": id,
-                        "idtipe": idtipe,
-                    },
-                    success: function(res) {
-                        $('.modal-judul-legalitas').html(
-                            '<div class="badge bg-primary" style="margin-right:10px"></div> Tambah ' +
-                            tipe + " Baru");
-                        $('.modal-isi-legalitas').html(res);
-                        // show modal
-                        $('#modal-add-legalitas').modal('show');
-
-                    },
-                    error: function(request, status, error) {
-                        console.log("ajax call went wrong:" + request.responseText);
-                    }
-                }).done(function() {
-                    setTimeout(function() {
-                        $(".overlay").fadeOut(300);
-                    }, 500);
-                });
-            });
         });
 
-        // function tambahBasic() {
-        //     var idf = document.getElementById("idf").value;
 
-        //     var tb_basic = document.getElementById("tb_basic");
+        function tambahModal(params) {
+            $('#modal-large').modal('show');
+            $(".overlay").fadeIn(300);
 
-        //     var tr = document.createElement("tr");
-        //     tr.setAttribute("id", "btn-remove" + idf);
+            $.ajaxSetup({
+                headers: {
+                    'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                }
+            });
+            //menggunakan fungsi ajax untuk pengambilan data
+            $.ajax({
+                type: 'POST',
+                url: '{{ url('listStb') }}',
+                data: {
+                    "_token": "{{ csrf_token() }}",
+                },
+                success: function(data) {
+                    $('.fetched-data-stb').html(data); //menampilkan data ke dalam modal
+                }
+            }).done(function() {
+                setTimeout(function() {
+                    $(".overlay").fadeOut(300);
+                }, 500);
+            });
+        }
 
-        //     // Kolom 1 Hapus
-        //     var td = document.createElement("td");
-        //     td.setAttribute("align", "center");
-        //     td.setAttribute("class", "border border-green w-0");
-        //     td.innerHTML += '<button class="btn" type="button" onclick="hapusElemen(' + idf +
-        //         ');"><i class="fa-regular fa-trash-can"></i> </button>';
-        //     tr.appendChild(td);
+        function tambahBasic() {
+            var idf = document.getElementById("idf").value;
 
-        //     // Kolom 2 Tanggal
-        //     var td = document.createElement("td");
-        //     td.setAttribute("class", "border border-green w-0");
-        //     td.innerHTML += '<input type="date" style="width:110px;" value="' + tglhariini + '" name="tgl[]" id="tgl_' +
-        //         idf + '">';
-        //     tr.appendChild(td);
+            var tb_basic = document.getElementById("tb_basic");
 
-        //     // Kolom 3 Nama Surat                            
-        //     var td = document.createElement("td");
-        //     td.setAttribute("class", "border border-green");
-        //     td.innerHTML +=
-        //         '<input type="text" style="width:180px;" value="Surat Deskripsi Pekerjaan" name="namasurat[]" id="namasurat_' +
-        //         idf + '">';
-        //     tr.appendChild(td);
+            var tr = document.createElement("tr");
+            tr.setAttribute("id", "btn-remove" + idf);
 
-        //     // Kolom 4 Tgl Aktif
-        //     var td = document.createElement("td");
-        //     td.setAttribute("class", "border border-green");
-        //     td.innerHTML += '<input type="date" style="width:110px;" value="' + tglhariini +
-        //         '" name="tglaktif[]" id="tglaktif_' + idf + '">';
-        //     tr.appendChild(td);
+            // Kolom 1 Hapus
+            var td = document.createElement("td");
+            td.setAttribute("align", "center");
+            td.setAttribute("class", "border border-green w-0");
+            td.innerHTML += '<button class="btn" type="button" onclick="hapusElemen(' + idf +
+                ');"><i class="fa-regular fa-trash-can"></i> </button>';
+            tr.appendChild(td);
 
-        //     // Kolom 5 STB
-        //     var td = document.createElement("td");
-        //     td.setAttribute("class", "border border-green");
-        //     td.innerHTML += "<input type='text' name='stb[]' id='stb_" + idf +
-        //         "' class=' inputNone' style='width:60px;text-transform: uppercase;'>";
-        //     tr.appendChild(td);
+            // Kolom 2 Tanggal
+            var td = document.createElement("td");
+            td.setAttribute("class", "border border-green w-0");
+            td.innerHTML += '<input type="date" style="width:110px;" value="' + tglhariini + '" name="tgl[]" id="tgl_' +
+                idf + '">';
+            tr.appendChild(td);
 
-        //     // Kolom 6 Divisi
-        //     var td = document.createElement("td");
-        //     td.setAttribute("class", "border border-green");
-        //     // td.innerHTML += "<input type='text' name='divisi[]' id='divisi_" + idf + "' class='form-control  inputNone' style='text-transform: uppercase;'>";
-        //     td.innerHTML += "<select name='divisi[]' id='divisi_" + idf + "'>" +
-        //         "<option value='' hidden>-- Pilih Divisi --</option>" +
-        //         "<?php foreach($p_divisi as $key => $w){ ?>" +
-        //         "<option value='<?php echo $w->desc; ?>'><?php echo $w->desc; ?></option>" +
-        //         "<?php } ?>" +
-        //         "</select>";
-        //     tr.appendChild(td);
+            // Kolom 3 Nama Surat                            
+            var td = document.createElement("td");
+            td.setAttribute("class", "border border-green");
+            td.innerHTML +=
+                '<input type="text" style="width:180px;" value="Surat Deskripsi Pekerjaan" name="namasurat[]" id="namasurat_' +
+                idf + '">';
+            tr.appendChild(td);
 
-        //     // Kolom 7 Bagian
-        //     var td = document.createElement("td");
-        //     td.setAttribute("class", "border border-green");
-        //     td.innerHTML += "<select name='bagian[]' id='bagian_" + idf + "'>" +
-        //         "<option value='' hidden>-- Pilih Bagian --</option>" +
-        //         "<?php foreach($p_bagian as $key => $w){ ?>" +
-        //         "<option value='<?php echo $w->desc; ?>'><?php echo $w->desc; ?></option>" +
-        //         "<?php } ?>" +
-        //         "</select>";
-        //     tr.appendChild(td);
+            // Kolom 4 Tgl Aktif
+            var td = document.createElement("td");
+            td.setAttribute("class", "border border-green");
+            td.innerHTML += '<input type="date" style="width:110px;" value="' + tglhariini +
+                '" name="tglaktif[]" id="tglaktif_' + idf + '">';
+            tr.appendChild(td);
 
-        //     // Kolom 8 Jabatan
-        //     var td = document.createElement("td");
-        //     td.setAttribute("class", "border border-green");
-        //     td.innerHTML += "<select name='jabatan[]' id='jabatan_" + idf + "'>" +
-        //         "<option value='' hidden>-- Pilih Jabatan --</option>" +
-        //         "<?php foreach($p_jabatan as $key => $w){ ?>" +
-        //         "<option value='<?php echo $w->desc; ?>'><?php echo $w->desc; ?></option>" +
-        //         "<?php } ?>" +
-        //         "</select>";
-        //     tr.appendChild(td);
+            // Kolom 5 STB
+            var td = document.createElement("td");
+            td.setAttribute("class", "border border-green");
+            td.innerHTML += "<input type='text' name='stb[]' id='stb_" + idf +
+                "' class=' inputNone' style='width:60px;text-transform: uppercase;'>";
+            tr.appendChild(td);
 
-        //     // Kolom 9 Grup
-        //     var td = document.createElement("td");
-        //     td.setAttribute("class", "border border-green");
-        //     td.innerHTML += "<select name='grup[]' id='grup_" + idf + "'>" +
-        //         "<option value='' hidden>-- Pilih Grup --</option>" +
-        //         "<?php foreach($p_grup as $key => $w){ ?>" +
-        //         "<option value='<?php echo $w->desc; ?>'><?php echo $w->desc; ?></option>" +
-        //         "<?php } ?>" +
-        //         "</select>";
-        //     tr.appendChild(td);
+            // Kolom 6 Divisi
+            var td = document.createElement("td");
+            td.setAttribute("class", "border border-green");
+            // td.innerHTML += "<input type='text' name='divisi[]' id='divisi_" + idf + "' class='form-control  inputNone' style='text-transform: uppercase;'>";
+            td.innerHTML += "<select name='divisi[]' id='divisi_" + idf + "'>" +
+                "<option value='' hidden>-- Pilih Divisi --</option>" +
+                "<?php foreach($p_divisi as $key => $w){ ?>" +
+                "<option value='<?php echo $w->desc; ?>'><?php echo $w->desc; ?></option>" +
+                "<?php } ?>" +
+                "</select>";
+            tr.appendChild(td);
 
-        //     // Kolom 10 Shift
-        //     var td = document.createElement("td");
-        //     td.setAttribute("class", "border border-green");
-        //     td.innerHTML += "<select name='shift[]' id='shift_" + idf + "'>" +
-        //         "<option value='' hidden>-- Pilih Shift --</option>" +
-        //         "<?php foreach($p_shift as $key => $w){ ?>" +
-        //         "<option value='<?php echo $w->desc; ?>'><?php echo $w->desc; ?></option>" +
-        //         "<?php } ?>" +
-        //         "</select>";
-        //     tr.appendChild(td);
+            // Kolom 7 Bagian
+            var td = document.createElement("td");
+            td.setAttribute("class", "border border-green");
+            td.innerHTML += "<select name='bagian[]' id='bagian_" + idf + "'>" +
+                "<option value='' hidden>-- Pilih Bagian --</option>" +
+                "<?php foreach($p_bagian as $key => $w){ ?>" +
+                "<option value='<?php echo $w->desc; ?>'><?php echo $w->desc; ?></option>" +
+                "<?php } ?>" +
+                "</select>";
+            tr.appendChild(td);
 
-        //     // Kolom 11 Profesi
-        //     var td = document.createElement("td");
-        //     td.setAttribute("class", "border border-green");
-        //     td.innerHTML += "<input type='text' name='profesi[]' id='profesi_" + idf +
-        //         "' style='text-transform: uppercase;'>";
-        //     tr.appendChild(td);
+            // Kolom 8 Jabatan
+            var td = document.createElement("td");
+            td.setAttribute("class", "border border-green");
+            td.innerHTML += "<select name='jabatan[]' id='jabatan_" + idf + "'>" +
+                "<option value='' hidden>-- Pilih Jabatan --</option>" +
+                "<?php foreach($p_jabatan as $key => $w){ ?>" +
+                "<option value='<?php echo $w->desc; ?>'><?php echo $w->desc; ?></option>" +
+                "<?php } ?>" +
+                "</select>";
+            tr.appendChild(td);
 
-        //     // Kolom 12 Libur
-        //     var td = document.createElement("td");
-        //     td.setAttribute("class", "border border-green");
-        //     td.innerHTML += "<select name='libur[]' id='libur_" + idf + "'>" +
-        //         "<option value='' hidden>-- Pilih Libur --</option>" +
-        //         "<option value='SENIN'>SENIN</option>" +
-        //         "<option value='SELASA'>SELASA</option>" +
-        //         "<option value='RABU'>RABU</option>" +
-        //         "<option value='KAMIS'>KAMIS</option>" +
-        //         "<option value='JUMAT'>JUMAT</option>" +
-        //         "<option value='SABTU'>SABTU</option>" +
-        //         "<option value='MINGGU'>MINGGU</option>" +
-        //         "</select>";
-        //     tr.appendChild(td);
+            // Kolom 9 Grup
+            var td = document.createElement("td");
+            td.setAttribute("class", "border border-green");
+            td.innerHTML += "<select name='grup[]' id='grup_" + idf + "'>" +
+                "<option value='' hidden>-- Pilih Grup --</option>" +
+                "<?php foreach($p_grup as $key => $w){ ?>" +
+                "<option value='<?php echo $w->desc; ?>'><?php echo $w->desc; ?></option>" +
+                "<?php } ?>" +
+                "</select>";
+            tr.appendChild(td);
 
-        //     // Kolom 13 Setengah Hari
-        //     var td = document.createElement("td");
-        //     td.setAttribute("class", "border border-green");
-        //     td.innerHTML += "<select name='setengah[]' id='setengah_" + idf + "'>" +
-        //         "<option value='' hidden>-- Pilih ½ HARI --</option>" +
-        //         "<option value='SENIN'>SENIN</option>" +
-        //         "<option value='SELASA'>SELASA</option>" +
-        //         "<option value='RABU'>RABU</option>" +
-        //         "<option value='KAMIS'>KAMIS</option>" +
-        //         "<option value='JUMAT'>JUMAT</option>" +
-        //         "<option value='SABTU'>SABTU</option>" +
-        //         "<option value='MINGGU'>MINGGU</option>" +
-        //         "</select>";
-        //     tr.appendChild(td);
+            // Kolom 10 Shift
+            var td = document.createElement("td");
+            td.setAttribute("class", "border border-green");
+            td.innerHTML += "<select name='shift[]' id='shift_" + idf + "'>" +
+                "<option value='' hidden>-- Pilih Shift --</option>" +
+                "<?php foreach($p_shift as $key => $w){ ?>" +
+                "<option value='<?php echo $w->desc; ?>'><?php echo $w->desc; ?></option>" +
+                "<?php } ?>" +
+                "</select>";
+            tr.appendChild(td);
 
-        //     // Kolom 14 Ket
-        //     var td = document.createElement("td");
-        //     td.setAttribute("class", "border border-green");
-        //     td.innerHTML += "<input type='text' name='keterangan[]' id='keterangan_" + idf +
-        //         "' style='text-transform: uppercase;'>";
-        //     tr.appendChild(td);
+            // Kolom 11 Profesi
+            var td = document.createElement("td");
+            td.setAttribute("class", "border border-green");
+            td.innerHTML += "<input type='text' name='profesi[]' id='profesi_" + idf +
+                "' style='text-transform: uppercase;'>";
+            tr.appendChild(td);
 
-        //     tb_basic.appendChild(tr);
+            // Kolom 12 Libur
+            var td = document.createElement("td");
+            td.setAttribute("class", "border border-green");
+            td.innerHTML += "<select name='libur[]' id='libur_" + idf + "'>" +
+                "<option value='' hidden>-- Pilih Libur --</option>" +
+                "<option value='SENIN'>SENIN</option>" +
+                "<option value='SELASA'>SELASA</option>" +
+                "<option value='RABU'>RABU</option>" +
+                "<option value='KAMIS'>KAMIS</option>" +
+                "<option value='JUMAT'>JUMAT</option>" +
+                "<option value='SABTU'>SABTU</option>" +
+                "<option value='MINGGU'>MINGGU</option>" +
+                "</select>";
+            tr.appendChild(td);
 
-        //     idf = (idf - 1) + 2;
-        //     document.getElementById("idf").value = idf;
-        //     $(".element").select2({
-        //         placeholder: "Pilih Kodeproduk"
-        //     });
-        // }
+            // Kolom 13 Setengah Hari
+            var td = document.createElement("td");
+            td.setAttribute("class", "border border-green");
+            td.innerHTML += "<select name='setengah[]' id='setengah_" + idf + "'>" +
+                "<option value='' hidden>-- Pilih ½ HARI --</option>" +
+                "<option value='SENIN'>SENIN</option>" +
+                "<option value='SELASA'>SELASA</option>" +
+                "<option value='RABU'>RABU</option>" +
+                "<option value='KAMIS'>KAMIS</option>" +
+                "<option value='JUMAT'>JUMAT</option>" +
+                "<option value='SABTU'>SABTU</option>" +
+                "<option value='MINGGU'>MINGGU</option>" +
+                "</select>";
+            tr.appendChild(td);
 
-        // function tambahPerjanjian() {
-        //     var idp = document.getElementById("idp").value;
+            // Kolom 14 Ket
+            var td = document.createElement("td");
+            td.setAttribute("class", "border border-green");
+            td.innerHTML += "<input type='text' name='keterangan[]' id='keterangan_" + idf +
+                "' style='text-transform: uppercase;'>";
+            tr.appendChild(td);
 
-        //     var tb_per = document.getElementById("tb_per");
-        //     var tr = document.createElement("tr");
-        //     tr.setAttribute("id", "remove-perjanjian" + idp);
+            tb_basic.appendChild(tr);
 
-        //     // Kolom 1 Hapus
-        //     var td = document.createElement("td");
-        //     td.setAttribute("class", "text-center border border-purple w-0");
-        //     td.innerHTML += '<button class="btn" type="button" onclick="hapusPerjanjian(' + idp +
-        //         ');"><i class="fa-regular fa-trash-can"></i> </button>';
-        //     tr.appendChild(td);
+            idf = (idf - 1) + 2;
+            document.getElementById("idf").value = idf;
+            $(".element").select2({
+                placeholder: "Pilih Kodeproduk"
+            });
+        }
 
-        //     // Kolom 2 Tanggal Perjanjian
-        //     var td = document.createElement("td");
-        //     td.setAttribute("class", "border border-purple");
-        //     td.innerHTML += '<input type="date" style="width:100%" value="' + tglhariini +
-        //         '" name="tgl_perjanjian[]" id="tgl_perjanjian_' + idp + '" class="border border-white">';
-        //     tr.appendChild(td);
+        function tambahPerjanjian() {
+            var idp = document.getElementById("idp").value;
 
-        //     // Kolom 3 Nama Surat Perjanjian
-        //     var td = document.createElement("td");
-        //     td.setAttribute("class", "border border-purple");
-        //     td.innerHTML += "<select name='nmperjanjian[]' style='width:180px;' id='nmperjanjian_" + idp +
-        //         "' class='form-select' class='border border-white'>" +
-        //         "<option value='' hidden>-- Pilih Perjanjian --</option>" +
-        //         "<?php foreach($j_perjanjian as $key => $w){ ?>" +
-        //         "<option value='<?php echo $w->nmsurat; ?>'><?php echo $w->nmsurat; ?></option>" +
-        //         "<?php } ?>" +
-        //         "</select>";
-        //     tr.appendChild(td);
+            var tb_per = document.getElementById("tb_per");
+            var tr = document.createElement("tr");
+            tr.setAttribute("id", "remove-perjanjian" + idp);
 
-        //     // Kolom 4 Jenis Surat Perjanjian
-        //     var td = document.createElement("td");
-        //     td.setAttribute("class", "border border-purple");
-        //     td.innerHTML += '<input type="text" value="" name="jenis_perjanjian[]" id="jenis_perjanjian_' + idp +
-        //         '" class="border border-white">';
-        //     tr.appendChild(td);
+            // Kolom 1 Hapus
+            var td = document.createElement("td");
+            td.setAttribute("class", "text-center border border-purple w-0");
+            td.innerHTML += '<button class="btn" type="button" onclick="hapusPerjanjian(' + idp +
+                ');"><i class="fa-regular fa-trash-can"></i> </button>';
+            tr.appendChild(td);
 
-        //     // Kolom 5 Tanggal Awal Perjanjian
-        //     var td = document.createElement("td");
-        //     td.setAttribute("class", "border border-purple");
-        //     td.innerHTML += '<input type="date" style="width:100%" value="' + tglhariini +
-        //         '" name="awal_perjanjian[]" id="awal_perjanjian_' + idp + '" class="border border-white">';
-        //     tr.appendChild(td);
+            // Kolom 2 Tanggal Perjanjian
+            var td = document.createElement("td");
+            td.setAttribute("class", "border border-purple");
+            td.innerHTML += '<input type="date" style="width:100%" value="' + tglhariini +
+                '" name="tgl_perjanjian[]" id="tgl_perjanjian_' + idp + '" class="border border-white">';
+            tr.appendChild(td);
 
-        //     // Kolom 6 Tanggal Akhir Perjanjian
-        //     var td = document.createElement("td");
-        //     td.setAttribute("class", "border border-purple");
-        //     td.innerHTML += '<input type="date" style="width:100%" value="' + tglhariini +
-        //         '" name="akhir_perjanjian[]" id="akhir_perjanjian_' + idp + '" class="border border-white">';
-        //     tr.appendChild(td);
+            // Kolom 3 Nama Surat Perjanjian
+            var td = document.createElement("td");
+            td.setAttribute("class", "border border-purple");
+            td.innerHTML += "<select name='nmperjanjian[]' style='width:180px;' id='nmperjanjian_" + idp +
+                "' class='form-select' class='border border-white'>" +
+                "<option value='' hidden>-- Pilih Perjanjian --</option>" +
+                "<?php foreach($j_perjanjian as $key => $w){ ?>" +
+                "<option value='<?php echo $w->nmsurat; ?>'><?php echo $w->nmsurat; ?></option>" +
+                "<?php } ?>" +
+                "</select>";
+            tr.appendChild(td);
 
-        //     // Kolom 7 Cuti
-        //     var td = document.createElement("td");
-        //     td.setAttribute("class", "border border-purple");
-        //     td.innerHTML += '<input type="text" value="" name="cuti[]" id="cuti_' + idp + '" class="border border-white">';
-        //     tr.appendChild(td);
+            // Kolom 4 Jenis Surat Perjanjian
+            var td = document.createElement("td");
+            td.setAttribute("class", "border border-purple");
+            td.innerHTML += '<input type="text" value="" name="jenis_perjanjian[]" id="jenis_perjanjian_' + idp +
+                '" class="border border-white">';
+            tr.appendChild(td);
 
-        //     tb_per.appendChild(tr);
+            // Kolom 5 Tanggal Awal Perjanjian
+            var td = document.createElement("td");
+            td.setAttribute("class", "border border-purple");
+            td.innerHTML += '<input type="date" style="width:100%" value="' + tglhariini +
+                '" name="awal_perjanjian[]" id="awal_perjanjian_' + idp + '" class="border border-white">';
+            tr.appendChild(td);
 
-        //     idp = (idp - 1) + 2;
-        //     document.getElementById("idp").value = idp;
-        // }
+            // Kolom 6 Tanggal Akhir Perjanjian
+            var td = document.createElement("td");
+            td.setAttribute("class", "border border-purple");
+            td.innerHTML += '<input type="date" style="width:100%" value="' + tglhariini +
+                '" name="akhir_perjanjian[]" id="akhir_perjanjian_' + idp + '" class="border border-white">';
+            tr.appendChild(td);
 
-        // function tambahInternal() {
-        //     var idi = document.getElementById("idi").value;
+            // Kolom 7 Cuti
+            var td = document.createElement("td");
+            td.setAttribute("class", "border border-purple");
+            td.innerHTML += '<input type="text" value="" name="cuti[]" id="cuti_' + idp + '" class="border border-white">';
+            tr.appendChild(td);
 
-        //     var tb_int = document.getElementById("tb_int");
-        //     var tr = document.createElement("tr");
-        //     tr.setAttribute("id", "remove-internal" + idi);
+            tb_per.appendChild(tr);
 
-        //     // Kolom 1 Hapus
-        //     var td = document.createElement("td");
-        //     td.setAttribute("class", "text-center border border-teal w-0");
-        //     td.innerHTML += '<button class="btn" type="button" onclick="hapusInternal(' + idi +
-        //         ');"><i class="fa-regular fa-trash-can"></i> </button>';
-        //     tr.appendChild(td);
+            idp = (idp - 1) + 2;
+            document.getElementById("idp").value = idp;
+        }
 
-        //     // Kolom 2 Tanggal Internal
-        //     var td = document.createElement("td");
-        //     td.setAttribute("class", "border border-teal");
-        //     td.innerHTML += '<input type="date" style="width:100%" value="' + tglhariini +
-        //         '" name="tgl_internal[]" id="tgl_internal_' + idi + '" class="border border-white">';
-        //     tr.appendChild(td);
+        function tambahInternal() {
+            var idi = document.getElementById("idi").value;
 
-        //     // Kolom 3 Nama Surat Internal
-        //     var td = document.createElement("td");
-        //     td.setAttribute("class", "border border-teal");
-        //     td.innerHTML += "<select name='nminternal[]' style='width:100%;' id='nminternal_" + idi +
-        //         "' class='form-select' class='border border-white'>" +
-        //         "<option value='' hidden>-- Pilih Internal --</option>" +
-        //         "<?php foreach($j_internal as $key => $w){ ?>" +
-        //         "<option value='<?php echo $w->nmsurat; ?>'><?php echo $w->nmsurat; ?></option>" +
-        //         "<?php } ?>" +
-        //         "</select>";
-        //     tr.appendChild(td);
+            var tb_int = document.getElementById("tb_int");
+            var tr = document.createElement("tr");
+            tr.setAttribute("id", "remove-internal" + idi);
 
-        //     // Kolom 4 Keterangan 
-        //     var td = document.createElement("td");
-        //     td.setAttribute("class", "border border-teal");
-        //     td.innerHTML += '<input type="text" style="width:100%;" name="keterangan_internal[]" id="keterangan_internal_' +
-        //         idi + '" class="border border-white">';
-        //     tr.appendChild(td);
+            // Kolom 1 Hapus
+            var td = document.createElement("td");
+            td.setAttribute("class", "text-center border border-teal w-0");
+            td.innerHTML += '<button class="btn" type="button" onclick="hapusInternal(' + idi +
+                ');"><i class="fa-regular fa-trash-can"></i> </button>';
+            tr.appendChild(td);
 
-        //     tb_int.appendChild(tr);
+            // Kolom 2 Tanggal Internal
+            var td = document.createElement("td");
+            td.setAttribute("class", "border border-teal");
+            td.innerHTML += '<input type="date" style="width:100%" value="' + tglhariini +
+                '" name="tgl_internal[]" id="tgl_internal_' + idi + '" class="border border-white">';
+            tr.appendChild(td);
 
-        //     idi = (idi - 1) + 2;
-        //     document.getElementById("idi").value = idi;
-        // }
+            // Kolom 3 Nama Surat Internal
+            var td = document.createElement("td");
+            td.setAttribute("class", "border border-teal");
+            td.innerHTML += "<select name='nminternal[]' style='width:100%;' id='nminternal_" + idi +
+                "' class='form-select' class='border border-white'>" +
+                "<option value='' hidden>-- Pilih Internal --</option>" +
+                "<?php foreach($j_internal as $key => $w){ ?>" +
+                "<option value='<?php echo $w->nmsurat; ?>'><?php echo $w->nmsurat; ?></option>" +
+                "<?php } ?>" +
+                "</select>";
+            tr.appendChild(td);
 
-        // function tambahStatus() {
-        //     var ids = document.getElementById("ids").value;
+            // Kolom 4 Keterangan 
+            var td = document.createElement("td");
+            td.setAttribute("class", "border border-teal");
+            td.innerHTML += '<input type="text" style="width:100%;" name="keterangan_internal[]" id="keterangan_internal_' +
+                idi + '" class="border border-white">';
+            tr.appendChild(td);
 
-        //     var tb_stt = document.getElementById("tb_stt");
-        //     var tr = document.createElement("tr");
-        //     tr.setAttribute("id", "remove-status" + ids);
+            tb_int.appendChild(tr);
 
-        //     // Kolom 1 Hapus
-        //     var td = document.createElement("td");
-        //     td.setAttribute("class", "text-center border border-pink w-0");
-        //     td.innerHTML += '<button class="btn" type="button" onclick="hapusStatus(' + ids +
-        //         ');"><i class="fa-regular fa-trash-can"></i> </button>';
-        //     tr.appendChild(td);
+            idi = (idi - 1) + 2;
+            document.getElementById("idi").value = idi;
+        }
 
-        //     // Kolom 2 Tanggal Internal
-        //     var td = document.createElement("td");
-        //     td.setAttribute("class", "border border-pink");
-        //     td.innerHTML += '<input type="date" style="width:100%" value="' + tglhariini +
-        //         '" name="tgl_status[]" id="tgl_status_' + ids + '" class="border border-white">';
-        //     tr.appendChild(td);
+        function tambahStatus() {
+            var ids = document.getElementById("ids").value;
 
-        //     // Kolom 3 Nama Surat Internal
-        //     var td = document.createElement("td");
-        //     td.setAttribute("class", "border border-pink");
-        //     td.innerHTML += "<select name='nmstatus[]' style='width:100%;' id='nmstatus_" + ids +
-        //         "' class='form-select' class='border border-white'>" +
-        //         "<option value='' hidden>-- Pilih Status --</option>" +
-        //         "<?php foreach($j_status as $key => $w){ ?>" +
-        //         "<option value='<?php echo $w->nmsurat; ?>'><?php echo $w->nmsurat; ?></option>" +
-        //         "<?php } ?>" +
-        //         "</select>";
-        //     tr.appendChild(td);
+            var tb_stt = document.getElementById("tb_stt");
+            var tr = document.createElement("tr");
+            tr.setAttribute("id", "remove-status" + ids);
 
-        //     tb_stt.appendChild(tr);
+            // Kolom 1 Hapus
+            var td = document.createElement("td");
+            td.setAttribute("class", "text-center border border-pink w-0");
+            td.innerHTML += '<button class="btn" type="button" onclick="hapusStatus(' + ids +
+                ');"><i class="fa-regular fa-trash-can"></i> </button>';
+            tr.appendChild(td);
 
-        //     ids = (ids - 1) + 2;
-        //     document.getElementById("ids").value = ids;
-        // }
+            // Kolom 2 Tanggal Internal
+            var td = document.createElement("td");
+            td.setAttribute("class", "border border-pink");
+            td.innerHTML += '<input type="date" style="width:100%" value="' + tglhariini +
+                '" name="tgl_status[]" id="tgl_status_' + ids + '" class="border border-white">';
+            tr.appendChild(td);
 
-        // function hapusElemen(idf) {
-        //     $("#btn-remove" + idf).remove();
-        // }
+            // Kolom 3 Nama Surat Internal
+            var td = document.createElement("td");
+            td.setAttribute("class", "border border-pink");
+            td.innerHTML += "<select name='nmstatus[]' style='width:100%;' id='nmstatus_" + ids +
+                "' class='form-select' class='border border-white'>" +
+                "<option value='' hidden>-- Pilih Status --</option>" +
+                "<?php foreach($j_status as $key => $w){ ?>" +
+                "<option value='<?php echo $w->nmsurat; ?>'><?php echo $w->nmsurat; ?></option>" +
+                "<?php } ?>" +
+                "</select>";
+            tr.appendChild(td);
 
-        // function hapusPerjanjian(idp) {
-        //     $("#remove-perjanjian" + idp).remove();
-        // }
+            tb_stt.appendChild(tr);
 
-        // function hapusInternal(idi) {
-        //     $("#remove-internal" + idi).remove();
-        // }
+            ids = (ids - 1) + 2;
+            document.getElementById("ids").value = ids;
+        }
 
-        // function hapusStatus(ids) {
-        //     $("#remove-status" + ids).remove();
-        // }
+        function hapusElemen(idf) {
+            $("#btn-remove" + idf).remove();
+        }
+
+        function hapusPerjanjian(idp) {
+            $("#remove-perjanjian" + idp).remove();
+        }
+
+        function hapusInternal(idi) {
+            $("#remove-internal" + idi).remove();
+        }
+
+        function hapusStatus(ids) {
+            $("#remove-status" + ids).remove();
+        }
     </script>
 @endsection
