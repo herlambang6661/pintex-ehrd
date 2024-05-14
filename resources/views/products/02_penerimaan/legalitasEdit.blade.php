@@ -14,13 +14,13 @@
 
         td.cuspad2 {
             /* padding-top: 0.5px;
-                                                                                                                                                                                                                                                                                                                                                                                            padding-bottom: 0.5px;
-                                                                                                                                                                                                                                                                                                                                                                                            padding-right: 0.5px;
-                                                                                                                                                                                                                                                                                                                                                                                            padding-left: 0.5px;
-                                                                                                                                                                                                                                                                                                                                                                                            margin-top: 5px;
-                                                                                                                                                                                                                                                                                                                                                                                            margin-bottom: 5px;
-                                                                                                                                                                                                                                                                                                                                                                                            margin-right: 5px;
-                                                                                                                                                                                                                                                                                                                                                                                            margin-left: 5px; */
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                        padding-bottom: 0.5px;
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                        padding-right: 0.5px;
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                        padding-left: 0.5px;
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                        margin-top: 5px;
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                        margin-bottom: 5px;
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                        margin-right: 5px;
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                        margin-left: 5px; */
         }
 
         .overlay {
@@ -103,424 +103,420 @@
             </div>
             <!-- Page body -->
             <div class="page-body">
-                <form id="formLegalitas" name="formLegalitas" method="post" action="javascript:void(0)">
-                    @csrf
-                    <div class="container-xl">
-                        @foreach ($getKar as $key => $p)
-                            <?php
-                            $useridkar = $p->userid;
-                            ?>
-                            <input type="hidden" name="entitas" value="PINTEX">
-                            <input type="hidden" name="nama" value="{{ $p->nama }}">
-                            <input type="hidden" name="userid" value="{{ $p->userid ? $p->userid : '' }}">
-                            <input type="hidden" name="iduntukphl" value="{{ $iduntukphl }}">
-                            <script>
-                                // let customDate = new Date(2222, 3, 8);
-                                // let strDate = customDate.toLocaleDateString();
-                                // let format = strDate
-                                //     .replace("04", "MM")
-                                //     .replace("4", "M")
-                                //     .replace("08", "dd")
-                                //     .replace("8", "d")
-                                //     .replace("2222", "yyyy")
-                                //     .replace("22", "yy");
-                                // alert(format);
-                            </script>
-                            <div class="row row-deck row-cards">
-                                <div class="col-lg-12">
-                                    <div class="card">
-                                        <div class="row row-0">
-                                            <div class="col-3">
-                                                @if (file_exists('photo/pas/' . $p->userid . '.jpg'))
-                                                    <img src="{{ url('photo/pas/' . $p->userid) }}.jpg"
-                                                        class="w-100 h-100 object-cover card-img-start" alt="Employee">
-                                                @else
-                                                    <iframe width="300px" height="300px"
-                                                        style="margin-right: 10px;margin-left: 20px; "
-                                                        src="https://lottie.host/embed/7ba0a25d-390d-49e4-bc83-6302d068ecf0/MI4KmGgBfI.json"></iframe>
-                                                    <input type="file" class="form-control"
-                                                        style="margin-bottom: 10px;margin-left: 10px; ">
-                                                @endif
-                                            </div>
-                                            <div class="col">
-                                                <div class="card-body">
-                                                    <h3 class="card-title d-flex">
-                                                        Data Karyawan
-                                                        <b class="ms-auto">
-                                                            Rekening : {{ $p->bankrek }}
-                                                        </b>
-                                                    </h3>
-                                                    <div class="row row-1" style="margin-bottom: 10px">
-                                                        <div class="col">
-                                                            <div class="card shadow bg-info-lt">
-                                                                <div class="table-responsive">
-                                                                    <table class="table table-sm table-vcenter card-table">
-                                                                        <tr>
-                                                                            <td>Nama</td>
-                                                                            <td>:</td>
-                                                                            <td><b>{{ $p->nama }}</b></td>
-                                                                        </tr>
-                                                                        <tr>
-                                                                            <td style="width: 180px">Userid</td>
-                                                                            <td>:</td>
-                                                                            <td>{{ $p->userid }}</td>
-                                                                        </tr>
-                                                                        <tr>
-                                                                            <td>KTP</td>
-                                                                            <td>:</td>
-                                                                            <td>{{ $p->nik }}</td>
-                                                                        </tr>
-                                                                        <tr>
-                                                                            <td>Gender</td>
-                                                                            <td>:</td>
-                                                                            <td>{{ $p->gender }}</td>
-                                                                        </tr>
-                                                                        <tr>
-                                                                            <td>Tempat Tanggal Lahir</td>
-                                                                            <td>:</td>
-                                                                            <td>{{ $p->tempat . ', ' . date('d/m/Y', strtotime($p->tgllahir)) }}
-                                                                            </td>
-                                                                        </tr>
-                                                                        <tr>
-                                                                            <td>Pendidikan</td>
-                                                                            <td>:</td>
-                                                                            <td>{{ $p->pendidikan . ' ' . $p->jurusan }}
-                                                                            </td>
-                                                                        </tr>
-                                                                    </table>
-                                                                </div>
+                {{-- <form id="formLegalitas" name="formLegalitas" method="post" action="javascript:void(0)"> --}}
+                @csrf
+                <div class="container-xl">
+                    @foreach ($getKar as $key => $p)
+                        <?php
+                        $useridkar = $p->userid;
+                        ?>
+                        <input type="hidden" name="entitas" value="PINTEX">
+                        <input type="hidden" name="nama" value="{{ $p->nama }}">
+                        <input type="hidden" name="userid" value="{{ $p->userid ? $p->userid : '' }}">
+                        <input type="hidden" name="iduntukphl" value="{{ $iduntukphl }}">
+                        <script>
+                            // let customDate = new Date(2222, 3, 8);
+                            // let strDate = customDate.toLocaleDateString();
+                            // let format = strDate
+                            //     .replace("04", "MM")
+                            //     .replace("4", "M")
+                            //     .replace("08", "dd")
+                            //     .replace("8", "d")
+                            //     .replace("2222", "yyyy")
+                            //     .replace("22", "yy");
+                            // alert(format);
+                        </script>
+                        <div class="row row-deck row-cards">
+                            <div class="col-lg-12">
+                                <div class="card">
+                                    <div class="row row-0">
+                                        <div class="col-3">
+                                            @if (file_exists('photo/pas/' . $p->userid . '.jpg'))
+                                                <img src="{{ url('photo/pas/' . $p->userid) }}.jpg"
+                                                    class="w-100 h-100 object-cover card-img-start" alt="Employee">
+                                            @else
+                                                <iframe width="300px" height="300px"
+                                                    style="margin-right: 10px;margin-left: 20px; "
+                                                    src="https://lottie.host/embed/7ba0a25d-390d-49e4-bc83-6302d068ecf0/MI4KmGgBfI.json"></iframe>
+                                                <input type="file" class="form-control"
+                                                    style="margin-bottom: 10px;margin-left: 10px; ">
+                                            @endif
+                                        </div>
+                                        <div class="col">
+                                            <div class="card-body">
+                                                <h3 class="card-title d-flex">
+                                                    Data Karyawan
+                                                    <b class="ms-auto">
+                                                        Rekening : {{ $p->bankrek }}
+                                                    </b>
+                                                </h3>
+                                                <div class="row row-1" style="margin-bottom: 10px">
+                                                    <div class="col">
+                                                        <div class="card shadow bg-info-lt">
+                                                            <div class="table-responsive">
+                                                                <table class="table table-sm table-vcenter card-table">
+                                                                    <tr>
+                                                                        <td>Nama</td>
+                                                                        <td>:</td>
+                                                                        <td><b>{{ $p->nama }}</b></td>
+                                                                    </tr>
+                                                                    <tr>
+                                                                        <td style="width: 180px">Userid</td>
+                                                                        <td>:</td>
+                                                                        <td>{{ $p->userid }}</td>
+                                                                    </tr>
+                                                                    <tr>
+                                                                        <td>KTP</td>
+                                                                        <td>:</td>
+                                                                        <td>{{ $p->nik }}</td>
+                                                                    </tr>
+                                                                    <tr>
+                                                                        <td>Gender</td>
+                                                                        <td>:</td>
+                                                                        <td>{{ $p->gender }}</td>
+                                                                    </tr>
+                                                                    <tr>
+                                                                        <td>Tempat Tanggal Lahir</td>
+                                                                        <td>:</td>
+                                                                        <td>{{ $p->tempat . ', ' . date('d/m/Y', strtotime($p->tgllahir)) }}
+                                                                        </td>
+                                                                    </tr>
+                                                                    <tr>
+                                                                        <td>Pendidikan</td>
+                                                                        <td>:</td>
+                                                                        <td>{{ $p->pendidikan . ' ' . $p->jurusan }}
+                                                                        </td>
+                                                                    </tr>
+                                                                </table>
                                                             </div>
                                                         </div>
-                                                        <div class="col">
-                                                            <div class="card shadow bg-pink-lt">
-                                                                <div class="table-responsive">
-                                                                    <table class="table table-sm">
-                                                                        <tr>
-                                                                            <td style="width: 120px">Entitas</td>
-                                                                            <td>:</td>
-                                                                            <td>{{ $p->entitas }}</td>
-                                                                        </tr>
-                                                                        <tr>
-                                                                            <td>Nomor Map</td>
-                                                                            <td>:</td>
-                                                                            <td>{{ $p->nomap }}</td>
-                                                                        </tr>
-                                                                        <tr>
-                                                                            <td>Agama</td>
-                                                                            <td>:</td>
-                                                                            <td>{{ $p->agama }}</td>
-                                                                        </tr>
-                                                                        <tr>
-                                                                            <td>Tinggi Badan</td>
-                                                                            <td>:</td>
-                                                                            <td>{{ $p->tinggi }}</td>
-                                                                        </tr>
-                                                                        <tr>
-                                                                            <td>Berat Badan</td>
-                                                                            <td>:</td>
-                                                                            <td>{{ $p->berat }}</td>
-                                                                        </tr>
-                                                                        <tr>
-                                                                            <td>Nomor Telepon</td>
-                                                                            <td>:</td>
-                                                                            <td>{{ $p->notlp }}</td>
-                                                                        </tr>
-                                                                        {{-- <tr>
+                                                    </div>
+                                                    <div class="col">
+                                                        <div class="card shadow bg-pink-lt">
+                                                            <div class="table-responsive">
+                                                                <table class="table table-sm">
+                                                                    <tr>
+                                                                        <td style="width: 120px">Entitas</td>
+                                                                        <td>:</td>
+                                                                        <td>{{ $p->entitas }}</td>
+                                                                    </tr>
+                                                                    <tr>
+                                                                        <td>Nomor Map</td>
+                                                                        <td>:</td>
+                                                                        <td>{{ $p->nomap }}</td>
+                                                                    </tr>
+                                                                    <tr>
+                                                                        <td>Agama</td>
+                                                                        <td>:</td>
+                                                                        <td>{{ $p->agama }}</td>
+                                                                    </tr>
+                                                                    <tr>
+                                                                        <td>Tinggi Badan</td>
+                                                                        <td>:</td>
+                                                                        <td>{{ $p->tinggi }}</td>
+                                                                    </tr>
+                                                                    <tr>
+                                                                        <td>Berat Badan</td>
+                                                                        <td>:</td>
+                                                                        <td>{{ $p->berat }}</td>
+                                                                    </tr>
+                                                                    <tr>
+                                                                        <td>Nomor Telepon</td>
+                                                                        <td>:</td>
+                                                                        <td>{{ $p->notlp }}</td>
+                                                                    </tr>
+                                                                    {{-- <tr>
                                                                     <td>Alamat</td>
                                                                     <td>:</td>
                                                                     <td>{{ $p->alamat }}</td>
                                                                 </tr> --}}
-                                                                    </table>
-                                                                </div>
-                                                            </div>
-                                                        </div>
-                                                    </div>
-                                                    <div class="row row-1">
-                                                        <div class="col">
-                                                            <div class="card shadow bg-warning-lt">
-                                                                <div class="table-responsive">
-                                                                    <table class="table table-sm table-vcenter card-table">
-                                                                        <tr>
-                                                                            <td style="width: 180px">Status</td>
-                                                                            <td>:</td>
-                                                                            <td>{{ $p->status }}</td>
-                                                                        </tr>
-                                                                        <tr>
-                                                                            <td style="width: 180px">Alamat</td>
-                                                                            <td>:</td>
-                                                                            <td>{{ $p->alamat }}</td>
-                                                                        </tr>
-                                                                    </table>
-                                                                </div>
+                                                                </table>
                                                             </div>
                                                         </div>
                                                     </div>
                                                 </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="col-lg-12">
-                                    <div class="card card-xl border-success shadow rounded">
-                                        <div class="card-stamp card-stamp-lg">
-                                            <div class="card-stamp-icon bg-success">
-                                                <i class="fa-regular fa-address-card"></i>
-                                            </div>
-                                        </div>
-                                        <div class="card-body">
-                                            <h3 class="card-title d-flex">
-                                                Basic Information
-                                                <div class=" ms-auto">
-                                                    <a href="#" data-bs-toggle="modal" data-bs-target="#modal-stb"
-                                                        class="btn btn-secondary btn-sm"><i
-                                                            class="fa-solid fa-arrow-up-9-1"
-                                                            style="margin-right: 5px"></i> STB Terakhir</a>
-                                                    <button type="button"
-                                                        class="btn btn-icon btn-success btn-sm btn-addModal"
-                                                        data-id="{{ $useridkar }}" data-idtipe="basic"
-                                                        data-tipe="Basic Information">
-                                                        <i class="fa-solid fa-add"></i>
-                                                    </button>
-                                                </div>
-                                            </h3>
-                                            <input id="idf" value="1" type="hidden">
-                                            <div class="table-responsive">
-                                                <table
-                                                    class="table table-sm table-bordered table-striped table-hover table-vcenter text-nowrap border border-green"
-                                                    id="tb_basic">
-                                                    <thead>
-                                                        <tr>
-                                                            <th class="w-1"></th>
-                                                            <th class="text-center">Tanggal</th>
-                                                            <th class="text-center">Nama Surat</th>
-                                                            <th class="text-center">Tgl Aktif</th>
-                                                            <th class="text-center">STB</th>
-                                                            <th class="text-center">Divisi</th>
-                                                            <th class="text-center">Bagian</th>
-                                                            <th class="text-center">Jabatan</th>
-                                                            <th class="text-center">Grup</th>
-                                                            <th class="text-center">Jns. Shift</th>
-                                                            <th class="text-center">Profesi</th>
-                                                            <th class="text-center">Libur</th>
-                                                            <th class="text-center">½ Hari</th>
-                                                            <th class="text-center">Keterangan</th>
-                                                        </tr>
-                                                    </thead>
-                                                    <tbody>
-                                                        @foreach ($basic as $bas => $b)
-                                                            <tr>
-                                                                <td class="text-center" style="padding: 2px 2px 2px 2px">
-                                                                    <a href="#"
-                                                                        class="btn btn-sm btn-info btn-icon"><i
-                                                                            class="fa-solid fa-edit"></i></a>
-                                                                    <a href="#"
-                                                                        class="btn btn-sm btn-danger btn-icon"><i
-                                                                            class="fa-solid fa-trash-can"></i></a>
-                                                                </td>
-                                                                <td class="text-end">
-                                                                    {{ date('d/m/Y', strtotime($b->legalitastgl)) }}</td>
-                                                                <td>{{ $b->nmsurat }}</td>
-                                                                <td class="text-end">
-                                                                    {{ date('d/m/Y', strtotime($b->tglmasuk)) }}</td>
-                                                                <td>{{ $b->stb }}</td>
-                                                                <td>{{ $b->divisi }}</td>
-                                                                <td>{{ $b->bagian }}</td>
-                                                                <td>{{ $b->jabatan }}</td>
-                                                                <td>{{ $b->grup }}</td>
-                                                                <td>{{ $b->shift }}</td>
-                                                                <td>{{ $b->profesi }}</td>
-                                                                <td>{{ $b->hrlibur }}</td>
-                                                                <td>{{ $b->sethari }}</td>
-                                                                <td>{{ $b->keterangan }}</td>
-                                                            </tr>
-                                                        @endforeach
-                                                    </tbody>
-                                                </table>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="col-lg-8">
-                                    <div class="row row-deck row-cards">
-                                        <div class="col-lg-12">
-                                            <div class="card card-xl border-purple shadow rounded">
-                                                <div class="card-stamp card-stamp-lg">
-                                                    <div class="card-stamp-icon bg-purple">
-                                                        <i class="fa-solid fa-users"></i>
-                                                    </div>
-                                                </div>
-                                                <div class="card-body">
-                                                    <h3 class="card-title d-flex">
-                                                        Perjanjian
-                                                        <button type="button"
-                                                            class="btn btn-icon btn-purple btn-sm ms-auto btn-addModal"
-                                                            data-id="{{ $useridkar }}" data-idtipe="perjanjian"
-                                                            data-tipe="Perjanjian">
-                                                            <i class="fa-solid fa-add"></i>
-                                                        </button>
-                                                    </h3>
-                                                    <input id="idp" value="1" type="hidden">
-                                                    <div class="table-responsive">
-                                                        <table
-                                                            class="table table-sm table-hover table-bordered table-vcenter card-table text-nowrap border border-purple"
-                                                            id="tb_per">
-                                                            <thead>
-                                                                <tr>
-                                                                    <th class="w-1"></th>
-                                                                    <th class="text-center">Tanggal</th>
-                                                                    <th class="text-center">Nama Surat</th>
-                                                                    <th class="text-center">Jenis Surat</th>
-                                                                    <th class="text-center">Awal</th>
-                                                                    <th class="text-center">Akhir</th>
-                                                                    <th class="text-center">Cuti</th>
-                                                                </tr>
-                                                            </thead>
-                                                            <tbody>
-                                                                @foreach ($perjanjian as $per => $p)
+                                                <div class="row row-1">
+                                                    <div class="col">
+                                                        <div class="card shadow bg-warning-lt">
+                                                            <div class="table-responsive">
+                                                                <table class="table table-sm table-vcenter card-table">
                                                                     <tr>
-                                                                        <td class="text-center"
-                                                                            style="padding: 2px 2px 2px 2px">
-                                                                            <a href="#"
-                                                                                class="btn btn-sm btn-info btn-icon"><i
-                                                                                    class="fa-solid fa-edit"></i></a>
-                                                                            <a href="#"
-                                                                                class="btn btn-sm btn-danger btn-icon"><i
-                                                                                    class="fa-solid fa-trash-can"></i></a>
-                                                                        </td>
-                                                                        <td class="text-end">
-                                                                            {{ date('d/m/Y', strtotime($p->legalitastgl)) }}
-                                                                        </td>
-                                                                        <td>{{ $p->nmsurat }}</td>
-                                                                        <td>{{ $p->suratket }}</td>
-                                                                        <td>{{ date('d/m/Y', strtotime($p->tglaw)) }}</td>
-                                                                        <td>{{ date('d/m/Y', strtotime($p->tglak)) }}</td>
-                                                                        <td>{{ $p->sacuti }}</td>
+                                                                        <td style="width: 180px">Status</td>
+                                                                        <td>:</td>
+                                                                        <td>{{ $p->status }}</td>
                                                                     </tr>
-                                                                @endforeach
-                                                            </tbody>
-                                                        </table>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </div>
-                                        <div class="col-lg-12">
-                                            <div class="card card-xl border-teal shadow rounded">
-                                                <div class="card-stamp card-stamp-lg">
-                                                    <div class="card-stamp-icon bg-teal">
-                                                        <i class="fa-solid fa-users"></i>
-                                                    </div>
-                                                </div>
-                                                <div class="card-body">
-                                                    <h3 class="card-title d-flex">
-                                                        Internal
-                                                        <button type="button"
-                                                            class="btn btn-icon btn-teal btn-sm ms-auto btn-addModal"
-                                                            data-id="{{ $useridkar }}" data-idtipe="intern"
-                                                            data-tipe="Internal">
-                                                            <i class="fa-solid fa-add"></i>
-                                                        </button>
-                                                    </h3>
-                                                    <input id="idi" value="1" type="hidden">
-                                                    <div class="table-responsive">
-                                                        <table
-                                                            class="table table-sm table-hover table-bordered table-vcenter card-table text-nowrap border border-teal"
-                                                            id="tb_int">
-                                                            <thead>
-                                                                <tr>
-                                                                    <th class="w-0 text-center"
-                                                                        style="padding: 2px 2px 2px 2px"></th>
-                                                                    <th>Tanggal</th>
-                                                                    <th>Nama Surat</th>
-                                                                    <th>Keterangan</th>
-                                                                </tr>
-                                                            </thead>
-                                                            <tbody>
-                                                                @foreach ($intern as $int => $i)
                                                                     <tr>
-                                                                        <td class="text-center"
-                                                                            style="padding: 2px 2px 2px 2px">
-                                                                            <a href="#"
-                                                                                class="btn btn-sm btn-info btn-icon"><i
-                                                                                    class="fa-solid fa-edit"></i></a>
-                                                                            <a href="#"
-                                                                                class="btn btn-sm btn-danger btn-icon"><i
-                                                                                    class="fa-solid fa-trash-can"></i></a>
-                                                                        </td>
-                                                                        <td class="text-end">
-                                                                            {{ date('d/m/Y', strtotime($i->legalitastgl)) }}
-                                                                        </td>
-                                                                        <td>{{ $i->suratket }}</td>
-                                                                        <td>{{ $i->keterangan }}</td>
+                                                                        <td style="width: 180px">Alamat</td>
+                                                                        <td>:</td>
+                                                                        <td>{{ $p->alamat }}</td>
                                                                     </tr>
-                                                                @endforeach
-                                                            </tbody>
-                                                        </table>
+                                                                </table>
+                                                            </div>
+                                                        </div>
                                                     </div>
                                                 </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="col-lg-4">
-                                    <div class="card card-xl border-pink shadow rounded">
-                                        <div class="card-stamp card-stamp-lg">
-                                            <div class="card-stamp-icon bg-pink">
-                                                <i class="fa-solid fa-id-card"></i>
-                                            </div>
-                                        </div>
-                                        <div class="card-body">
-                                            <h3 class="card-title d-flex">
-                                                Status
-                                                <button type="button"
-                                                    class="btn btn-icon btn-pink btn-sm ms-auto btn-addModal"
-                                                    data-id="{{ $useridkar }}" data-idtipe="status"
-                                                    data-tipe="Status">
-                                                    <i class="fa-solid fa-add"></i>
-                                                </button>
-                                            </h3>
-                                            <input id="ids" value="1" type="hidden">
-                                            <div class="table-responsive">
-                                                <table
-                                                    class="table table-sm table-hover table-bordered table-vcenter card-table text-nowrap border border-pink"
-                                                    id="tb_stt">
-                                                    <thead>
-                                                        <tr>
-                                                            <th class="w-1"></th>
-                                                            <th>Tanggal</th>
-                                                            <th>Nama Surat</th>
-                                                        </tr>
-                                                    </thead>
-                                                    <tbody>
-                                                        @foreach ($status as $stt => $s)
-                                                            <tr>
-                                                                <td class="text-center" style="padding: 2px 2px 2px 2px">
-                                                                    <a href="#"
-                                                                        class="btn btn-sm btn-info btn-icon"><i
-                                                                            class="fa-solid fa-edit"></i></a>
-                                                                    <a href="#"
-                                                                        class="btn btn-sm btn-danger btn-icon"><i
-                                                                            class="fa-solid fa-trash-can"></i></a>
-                                                                </td>
-                                                                <td class="text-end">
-                                                                    {{ date('d/m/Y', strtotime($s->legalitastgl)) }}</td>
-                                                                <td>{{ $s->suratket }}</td>
-                                                            </tr>
-                                                        @endforeach
-                                                    </tbody>
-                                                </table>
                                             </div>
                                         </div>
                                     </div>
                                 </div>
                             </div>
-                            <br>
-                            {{-- <button class="btn btn-blue" id="simpanLegalitas"><i class="fa-solid fa-floppy-disk"
+                            <div class="col-lg-12">
+                                <div class="card card-xl border-success shadow rounded">
+                                    <div class="card-stamp card-stamp-lg">
+                                        <div class="card-stamp-icon bg-success">
+                                            <i class="fa-regular fa-address-card"></i>
+                                        </div>
+                                    </div>
+                                    <div class="card-body">
+                                        <h3 class="card-title d-flex">
+                                            Basic Information
+                                            <div class=" ms-auto">
+                                                <a href="#" data-bs-toggle="modal" data-bs-target="#modal-stb"
+                                                    class="btn btn-secondary btn-sm"><i class="fa-solid fa-arrow-up-9-1"
+                                                        style="margin-right: 5px"></i> STB Terakhir</a>
+                                                <button type="button"
+                                                    class="btn btn-icon btn-success btn-sm btn-addModal"
+                                                    data-id="{{ $useridkar }}" data-idtipe="basic"
+                                                    data-tipe="Basic Information">
+                                                    <i class="fa-solid fa-add"></i>
+                                                </button>
+                                            </div>
+                                        </h3>
+                                        <input id="idf" value="1" type="hidden">
+                                        <div class="table-responsive">
+                                            <table
+                                                class="table table-sm table-bordered table-striped table-hover table-vcenter text-nowrap border border-green"
+                                                id="tb_basic">
+                                                <thead>
+                                                    <tr>
+                                                        <th class="w-1"></th>
+                                                        <th class="text-center">Tanggal</th>
+                                                        <th class="text-center">Nama Surat</th>
+                                                        <th class="text-center">Tgl Aktif</th>
+                                                        <th class="text-center">STB</th>
+                                                        <th class="text-center">Divisi</th>
+                                                        <th class="text-center">Bagian</th>
+                                                        <th class="text-center">Jabatan</th>
+                                                        <th class="text-center">Grup</th>
+                                                        <th class="text-center">Jns. Shift</th>
+                                                        <th class="text-center">Profesi</th>
+                                                        <th class="text-center">Libur</th>
+                                                        <th class="text-center">½ Hari</th>
+                                                        <th class="text-center">Keterangan</th>
+                                                    </tr>
+                                                </thead>
+                                                <tbody>
+                                                    @foreach ($basic as $bas => $b)
+                                                        <tr>
+                                                            <td class="text-center" style="padding: 2px 2px 2px 2px">
+                                                                <a href="#" class="btn btn-sm btn-info btn-icon"><i
+                                                                        class="fa-solid fa-edit"></i></a>
+                                                                <a href="#"
+                                                                    class="btn btn-sm btn-danger btn-icon"><i
+                                                                        class="fa-solid fa-trash-can"></i></a>
+                                                            </td>
+                                                            <td class="text-end">
+                                                                {{ date('d/m/Y', strtotime($b->legalitastgl)) }}</td>
+                                                            <td>{{ $b->nmsurat }}</td>
+                                                            <td class="text-end">
+                                                                {{ date('d/m/Y', strtotime($b->tglmasuk)) }}</td>
+                                                            <td>{{ $b->stb }}</td>
+                                                            <td>{{ $b->divisi }}</td>
+                                                            <td>{{ $b->bagian }}</td>
+                                                            <td>{{ $b->jabatan }}</td>
+                                                            <td>{{ $b->grup }}</td>
+                                                            <td>{{ $b->shift }}</td>
+                                                            <td>{{ $b->profesi }}</td>
+                                                            <td>{{ $b->hrlibur }}</td>
+                                                            <td>{{ $b->sethari }}</td>
+                                                            <td>{{ $b->keterangan }}</td>
+                                                        </tr>
+                                                    @endforeach
+                                                </tbody>
+                                            </table>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-lg-8">
+                                <div class="row row-deck row-cards">
+                                    <div class="col-lg-12">
+                                        <div class="card card-xl border-purple shadow rounded">
+                                            <div class="card-stamp card-stamp-lg">
+                                                <div class="card-stamp-icon bg-purple">
+                                                    <i class="fa-solid fa-users"></i>
+                                                </div>
+                                            </div>
+                                            <div class="card-body">
+                                                <h3 class="card-title d-flex">
+                                                    Perjanjian
+                                                    <button type="button"
+                                                        class="btn btn-icon btn-purple btn-sm ms-auto btn-addModal"
+                                                        data-id="{{ $useridkar }}" data-idtipe="perjanjian"
+                                                        data-tipe="Perjanjian">
+                                                        <i class="fa-solid fa-add"></i>
+                                                    </button>
+                                                </h3>
+                                                <input id="idp" value="1" type="hidden">
+                                                <div class="table-responsive">
+                                                    <table
+                                                        class="table table-sm table-hover table-bordered table-vcenter card-table text-nowrap border border-purple"
+                                                        id="tb_per">
+                                                        <thead>
+                                                            <tr>
+                                                                <th class="w-1"></th>
+                                                                <th class="text-center">Tanggal</th>
+                                                                <th class="text-center">Nama Surat</th>
+                                                                <th class="text-center">Jenis Surat</th>
+                                                                <th class="text-center">Awal</th>
+                                                                <th class="text-center">Akhir</th>
+                                                                <th class="text-center">Cuti</th>
+                                                            </tr>
+                                                        </thead>
+                                                        <tbody>
+                                                            @foreach ($perjanjian as $per => $p)
+                                                                <tr>
+                                                                    <td class="text-center"
+                                                                        style="padding: 2px 2px 2px 2px">
+                                                                        <a href="#"
+                                                                            class="btn btn-sm btn-info btn-icon"><i
+                                                                                class="fa-solid fa-edit"></i></a>
+                                                                        <a href="#"
+                                                                            class="btn btn-sm btn-danger btn-icon"><i
+                                                                                class="fa-solid fa-trash-can"></i></a>
+                                                                    </td>
+                                                                    <td class="text-end">
+                                                                        {{ date('d/m/Y', strtotime($p->legalitastgl)) }}
+                                                                    </td>
+                                                                    <td>{{ $p->nmsurat }}</td>
+                                                                    <td>{{ $p->suratket }}</td>
+                                                                    <td>{{ date('d/m/Y', strtotime($p->tglaw)) }}</td>
+                                                                    <td>{{ date('d/m/Y', strtotime($p->tglak)) }}</td>
+                                                                    <td>{{ $p->sacuti }}</td>
+                                                                </tr>
+                                                            @endforeach
+                                                        </tbody>
+                                                    </table>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-lg-12">
+                                        <div class="card card-xl border-teal shadow rounded">
+                                            <div class="card-stamp card-stamp-lg">
+                                                <div class="card-stamp-icon bg-teal">
+                                                    <i class="fa-solid fa-users"></i>
+                                                </div>
+                                            </div>
+                                            <div class="card-body">
+                                                <h3 class="card-title d-flex">
+                                                    Internal
+                                                    <button type="button"
+                                                        class="btn btn-icon btn-teal btn-sm ms-auto btn-addModal"
+                                                        data-id="{{ $useridkar }}" data-idtipe="intern"
+                                                        data-tipe="Internal">
+                                                        <i class="fa-solid fa-add"></i>
+                                                    </button>
+                                                </h3>
+                                                <input id="idi" value="1" type="hidden">
+                                                <div class="table-responsive">
+                                                    <table
+                                                        class="table table-sm table-hover table-bordered table-vcenter card-table text-nowrap border border-teal"
+                                                        id="tb_int">
+                                                        <thead>
+                                                            <tr>
+                                                                <th class="w-0 text-center"
+                                                                    style="padding: 2px 2px 2px 2px"></th>
+                                                                <th>Tanggal</th>
+                                                                <th>Nama Surat</th>
+                                                                <th>Keterangan</th>
+                                                            </tr>
+                                                        </thead>
+                                                        <tbody>
+                                                            @foreach ($intern as $int => $i)
+                                                                <tr>
+                                                                    <td class="text-center"
+                                                                        style="padding: 2px 2px 2px 2px">
+                                                                        <a href="#"
+                                                                            class="btn btn-sm btn-info btn-icon"><i
+                                                                                class="fa-solid fa-edit"></i></a>
+                                                                        <a href="#"
+                                                                            class="btn btn-sm btn-danger btn-icon"><i
+                                                                                class="fa-solid fa-trash-can"></i></a>
+                                                                    </td>
+                                                                    <td class="text-end">
+                                                                        {{ date('d/m/Y', strtotime($i->legalitastgl)) }}
+                                                                    </td>
+                                                                    <td>{{ $i->suratket }}</td>
+                                                                    <td>{{ $i->keterangan }}</td>
+                                                                </tr>
+                                                            @endforeach
+                                                        </tbody>
+                                                    </table>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-lg-4">
+                                <div class="card card-xl border-pink shadow rounded">
+                                    <div class="card-stamp card-stamp-lg">
+                                        <div class="card-stamp-icon bg-pink">
+                                            <i class="fa-solid fa-id-card"></i>
+                                        </div>
+                                    </div>
+                                    <div class="card-body">
+                                        <h3 class="card-title d-flex">
+                                            Status
+                                            <button type="button"
+                                                class="btn btn-icon btn-pink btn-sm ms-auto btn-addModal"
+                                                data-id="{{ $useridkar }}" data-idtipe="status" data-tipe="Status">
+                                                <i class="fa-solid fa-add"></i>
+                                            </button>
+                                        </h3>
+                                        <input id="ids" value="1" type="hidden">
+                                        <div class="table-responsive">
+                                            <table
+                                                class="table table-sm table-hover table-bordered table-vcenter card-table text-nowrap border border-pink"
+                                                id="tb_stt">
+                                                <thead>
+                                                    <tr>
+                                                        <th class="w-1"></th>
+                                                        <th>Tanggal</th>
+                                                        <th>Nama Surat</th>
+                                                    </tr>
+                                                </thead>
+                                                <tbody>
+                                                    @foreach ($status as $stt => $s)
+                                                        <tr>
+                                                            <td class="text-center" style="padding: 2px 2px 2px 2px">
+                                                                <a href="#" class="btn btn-sm btn-info btn-icon"><i
+                                                                        class="fa-solid fa-edit"></i></a>
+                                                                <a href="#"
+                                                                    class="btn btn-sm btn-danger btn-icon"><i
+                                                                        class="fa-solid fa-trash-can"></i></a>
+                                                            </td>
+                                                            <td class="text-end">
+                                                                {{ date('d/m/Y', strtotime($s->legalitastgl)) }}</td>
+                                                            <td>{{ $s->suratket }}</td>
+                                                        </tr>
+                                                    @endforeach
+                                                </tbody>
+                                            </table>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <br>
+                        {{-- <button class="btn btn-blue" id="simpanLegalitas"><i class="fa-solid fa-floppy-disk"
                                     style="margin-right: 5px"></i> Simpan</button> --}}
-                            <a href="{{ url('penerimaan/legalitas') }}" class="btn btn-secondary"><i
-                                    class="fa-solid fa-arrow-left" style="margin-right: 5px"></i> Kembali</a>
-                        @endforeach
-                    </div>
-                </form>
+                        <a href="{{ url('penerimaan/legalitas') }}" class="btn btn-secondary"><i
+                                class="fa-solid fa-arrow-left" style="margin-right: 5px"></i> Kembali</a>
+                    @endforeach
+                </div>
+                {{-- </form> --}}
             </div>
             @include('shared.footer')
         </div>
@@ -557,16 +553,28 @@
         </div>
         <div class="modal-dialog modal-lg modal-dialog-centered" role="document">
             <div class="modal-content">
-                <div class="modal-header">
-                    <h5 class="modal-title modal-judul-legalitas"></h5>
-                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                </div>
-                <div class="modal-isi-legalitas">
-                </div>
-                <div class="modal-footer">
-                    <button type="button" class="btn me-auto" data-bs-dismiss="modal">Batal</button>
-                    <button type="button" class="btn btn-primary" data-bs-dismiss="modal">Simpan Data</button>
-                </div>
+                <form id="formLegalitas" name="formLegalitas" method="post" action="javascript:void(0)">
+                    @csrf
+                    <div class="modal-header">
+                        <h5 class="modal-title modal-judul-legalitas"></h5>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    </div>
+                    <div class="modal-isi-legalitas">
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn me-auto" data-bs-dismiss="modal">Batal</button>
+                        <button type="submit" class="btn btn-primary" id="simpanLegalitas">
+                            <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-device-floppy"
+                                width="24" height="24" viewBox="0 0 24 24" stroke-width="2"
+                                stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+                                <path stroke="none" d="M0 0h24v24H0z" fill="none" />
+                                <path d="M6 4h10l4 4v10a2 2 0 0 1 -2 2h-12a2 2 0 0 1 -2 -2v-12a2 2 0 0 1 2 -2" />
+                                <path d="M12 14m-2 0a2 2 0 1 0 4 0a2 2 0 1 0 -4 0" />
+                                <path d="M14 4l0 4l-6 0l0 -4" />
+                            </svg> Simpan
+                        </button>
+                    </div>
+                </form>
             </div>
         </div>
     </div>
@@ -601,8 +609,8 @@
             });
 
             if ($("#formLegalitas").length > 0) {
+                var tipeinput = $('#suratjns').val();
                 $("#formLegalitas").validate({
-
                     submitHandler: function(form) {
                         $.ajaxSetup({
                             headers: {
@@ -618,8 +626,8 @@
                             data: $('#formLegalitas').serialize(),
                             beforeSend: function() {
                                 Swal.fire({
-                                    title: 'Mohon Menunggu',
-                                    html: '<center><lottie-player src="https://lottie.host/933bb0e2-47c0-4fa6-83f9-3330b433b883/yymyeZt49h.json"  background="transparent"  speed="1"  style="width: 300px; height: 300px;"  loop autoplay></lottie-player></center><br><h1 class="h4">Sedang memproses data, Proses mungkin membutuhkan beberapa menit. <br><br><b class="text-danger">(Jangan menutup jendela ini, bisa mengakibatkan error)</b></h1>',
+                                    title: 'Menyimpan ' + tipeinput,
+                                    html: '<center><lottie-player src="https://lottie.host/933bb0e2-47c0-4fa6-83f9-3330b433b883/yymyeZt49h.json"  background="transparent"  speed="1"  style="width: 300px; height: 300px;"  loop autoplay></lottie-player></center><br><h1 class="h4">Sedang menyimpan data</h1>',
                                     showConfirmButton: false,
                                     timerProgressBar: true,
                                     allowOutsideClick: false,
@@ -653,8 +661,9 @@
                                     document.getElementById("formLegalitas").reset();
                                     var sp = $('#selectEntitas').val();
                                     $('#entitas').val(sp);
-                                    window.location.replace(
-                                        "{{ url('penerimaan/legalitas') }}");
+                                    $('#modal-stb').modal('hide');
+                                    $('.modal-isi-legalitas').html('');
+                                    // window.location.replace("{{ url('penerimaan/legalitas') }}");
                                 } else if (response.status == false) {
                                     console.log('Error:', response);
                                     Swal.fire({
@@ -707,6 +716,7 @@
                         "_token": "{{ csrf_token() }}",
                         "id": id,
                         "idtipe": idtipe,
+                        "entitas": 'PINTEX',
                     },
                     success: function(res) {
                         $('.modal-judul-legalitas').html(

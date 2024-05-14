@@ -65,7 +65,7 @@ class ScheduleLegalitas extends Command
                                 array(
                                     'tglaktif' => $key->tglaw,
                                     'tglkeluar' => $key->tglak,
-                                    'perjanjian' => $key->suratket . "(" . $key->tglaw . " s.d. " . $key->tglak . ")",
+                                    'perjanjian' => $key->suratket . " (" . $key->tglaw . " s.d. " . $key->tglak . ")",
                                     'status' => 'PHL',
                                     'updated_at' => date('Y-m-d H:i:s'),
                                 )
@@ -78,7 +78,7 @@ class ScheduleLegalitas extends Command
                                 array(
                                     'tglaktif' => $key->tglaw,
                                     'tglkeluar' => $key->tglak,
-                                    'perjanjian' => $key->suratket . "(" . $key->tglaw . " s.d. " . $key->tglak . ")",
+                                    'perjanjian' => $key->suratket . " (" . $key->tglaw . " s.d. " . $key->tglak . ")",
                                     'status' => 'aktif',
                                     'updated_at' => date('Y-m-d H:i:s'),
                                 )
@@ -91,7 +91,7 @@ class ScheduleLegalitas extends Command
                                 array(
                                     'tglaktif' => $key->tglaw,
                                     'tglkeluar' => $key->tglak,
-                                    'perjanjian' => $key->suratket . "(" . $key->tglaw . " s.d. " . $key->tglak . ")",
+                                    'perjanjian' => $key->suratket . " (" . $key->tglaw . " s.d. " . $key->tglak . ")",
                                     'updated_at' => date('Y-m-d H:i:s'),
                                 )
                             );

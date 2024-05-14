@@ -62,6 +62,9 @@ return new class extends Migration
             $table->string('faskes_bpjs')->nullable();
             $table->string('keterangan')->nullable();
             $table->date('tglinput')->nullable();
+            $table->string('cutiaktif')->nullable();
+            $table->date('tgl_awalcuti')->nullable();
+            $table->date('tgl_akhircuti')->nullable();
             $table->string('dibuat')->nullable();
             $table->rememberToken();
             $table->timestamps();
