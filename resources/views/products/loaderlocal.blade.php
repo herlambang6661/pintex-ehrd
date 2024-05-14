@@ -61,7 +61,7 @@
     <script src="{{ asset('assets/extentions/jquery.validate.min.js') }}"></script>
     <script>
         (function() {
-            var start = "{{ date('Y-m-1', strtotime(date('Y-m-d') . '-1 month')) }}";
+            var start = "{{ date('Y-m-01', strtotime(date('Y-m-d') . '-1 month')) }}";
             var end = "{{ date('Y-m-t') }}";
             $(".ph-item").fadeIn(200);
             $('.fetched-data-absensi').text('');
