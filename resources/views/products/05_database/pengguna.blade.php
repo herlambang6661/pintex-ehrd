@@ -419,7 +419,7 @@
                 var token = $("meta[name='csrf-token']").attr("content");
                 Swal.fire({
                     icon: 'warning',
-                    title: 'Hapus Data Entitas',
+                    title: 'Hapus Data Pengguna',
                     text: 'Apakah anda yakin ingin menghapus ?',
                     showCancelButton: true,
                     confirmButtonColor: '#d33',

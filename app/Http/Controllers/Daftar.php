@@ -917,4 +917,66 @@ class Daftar extends Controller
 
         return response()->json($arr);
     }
+
+    public function users()
+    {
+        $judul = "Data Users";
+        $daftar = "active";
+        $users = "active";
+
+        return view('products.01_daftar.users', [
+            'judul' => $judul,
+            'daftar' => $daftar,
+            'users' => $users,
+        ]);
+    }
+
+    public function storeusers(Request $request)
+    {
+        $request->validate([
+            'name' => 'required',
+            'group' => 'required',
+            'level' => 'required',
+        ]);
+
+        $check = DB::table('daftar_users')->insert([
+            'name' => $request->name,
+            'group' => $request->group,
+            'level' => $request->level,
+        ]);
+
+        $arr = [
+            'msg' => $check ? 'Data berhasil disimpan' : 'Gagal menyimpan data',
+            'status' => $check
+        ];
+
+        return response()->json($arr);
+    }
+
+    public function updateUsers(Request $request)
+    {
+        $request->validate([
+            'id' => 'required',
+            'name' => 'required',
+            'group' => 'required',
+            'level' => 'required',
+        ]);
+
+        $check = DB::table('daftar_users')
+            ->where('id', $request->id)
+            ->update([
+                'name' => $request->name,
+                'group' => $request->group,
+                'level' => $request->level,
+                'updated_at'    => now(),
+            ]);
+
+        $arr = array('msg' => 'Ada kesalahan. Silakan coba lagi nanti.', 'status' => false);
+
+        if ($check) {
+            $arr = array('msg' => 'Data berhasil diperbarui', 'status' => true);
+        }
+
+        return response()->json($arr);
+    }
 }
