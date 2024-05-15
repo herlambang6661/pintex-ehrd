@@ -1762,7 +1762,6 @@ class Penerimaan extends Controller
         $legalitas = "active";
 
         $perjanjian = DB::table('penerimaan_legalitas')->where('userid', $userid)->where('suratjns', 'like', '%perjanjian%')->orderBy('legalitastgl', 'asc')->get();
-        $intern = DB::table('penerimaan_legalitas')->where('userid', $userid)->where('suratjns', 'like', '%intern%')->orderBy('legalitastgl', 'asc')->get();
 
         $p_divisi = DB::table('daftar_pospekerjaan')->where('type', 'like', '%DIVISI%')->orderBy('desc', 'asc')->get();
         $p_bagian = DB::table('daftar_pospekerjaan')->where('type', 'like', '%BAGIAN%')->orderBy('desc', 'asc')->get();
@@ -1781,7 +1780,7 @@ class Penerimaan extends Controller
             'getKar' => $data,
             // 'basic' => $basic,
             'perjanjian' => $perjanjian,
-            'intern' => $intern,
+            // 'intern' => $intern,
             // 'status' => $status,
             'p_divisi' => $p_divisi,
             'p_bagian' => $p_bagian,
@@ -1996,7 +1995,48 @@ class Penerimaan extends Controller
             $arr = array('msg' => 'Data telah berhasil diproses', 'status' => true);
             return Response()->json($arr);
         } elseif ($request->suratjns == "INTERN") {
-            # code...
+            $inputLegalitas = DB::table('penerimaan_legalitas')->insert([
+                'remember_token' => $request->_token,
+                'suratjns' => $request->suratjns,
+                'userid' => $request->userid,
+                'nama' => $karyawan->nama,
+                'inputtgl' => date('Y-m-d'),
+                'legalitastgl' => $request->tglinternal,
+                'nmsurat' => $request->nmsurat,
+                'suratket' => $request->nmsurat,
+                'keterangan' => $request->keterangan,
+                'id_cron'    => 'Langsung Dibuat',
+                'dibuat' => Auth::user()->name,
+                'created_at' => date('Y-m-d H:i:s'),
+            ]);
+            $intern = DB::table('penerimaan_karyawan')->where('userid', $request->userid)->first();
+            // Edit di karyawan
+            if ($intern->internal) {
+                if ($request->tglinternal <= $intern->tglinternal) {
+                    // do nothing
+                } else {
+                    $editKaryawan = DB::table('penerimaan_karyawan')
+                        ->where('userid', $request->userid)
+                        ->limit(1)
+                        ->update([
+                            'tglinternal' => $request->tglinternal,
+                            'internal' => $request->nmsurat . " " . $request->keterangan,
+                            'updated_at' => date('Y-m-d H:i:s'),
+                        ]);
+                }
+            } else {
+                $editKaryawan = DB::table('penerimaan_karyawan')
+                    ->where('userid', $request->userid)
+                    ->limit(1)
+                    ->update([
+                        'tglinternal' => $request->tglinternal,
+                        'internal' => $request->nmsurat . " " . $request->keterangan,
+                        'updated_at' => date('Y-m-d H:i:s'),
+                    ]);
+            }
+            // $arr = array('msg' => 'Something goes to wrong. Please try later', 'status' => false);
+            $arr = array('msg' => 'Data telah berhasil diproses', 'status' => true);
+            return Response()->json($arr);
         } elseif ($request->suratjns == "STATUS") {
             $inputLegalitas = DB::table('penerimaan_legalitas')->insert([
                 'remember_token' => $request->_token,
@@ -2212,6 +2252,40 @@ class Penerimaan extends Controller
                             <td>' . $b->hrlibur . '</td>
                             <td>' . $b->sethari . '</td>
                             <td>' . $b->keterangan . '</td>
+                        </tr>';
+        }
+        echo        '</tbody>
+                </table>
+            </div>
+        ';
+    }
+
+    public function getTableInternal(Request $request)
+    {
+        $intern = DB::table('penerimaan_legalitas')->where('userid', $request->userid)->where('suratjns', 'like', '%intern%')->orderBy('legalitastgl', 'asc')->get();
+
+        echo '
+            <div class="table-responsive">
+                <table class="table table-sm table-hover table-bordered table-vcenter card-table text-nowrap border border-teal" id="tb_int">
+                    <thead>
+                        <tr>
+                            <th class="w-0 text-center" style="padding: 2px 2px 2px 2px"></th>
+                            <th class="text-center">Tanggal</th>
+                            <th>Nama Surat</th>
+                            <th>Keterangan</th>
+                        </tr>
+                    </thead>
+                    <tbody>';
+        foreach ($intern as $int => $i) {
+            echo '
+                        <tr>
+                            <td class="text-center" style="padding: 2px 2px 2px 2px">
+                                <!-- <a href="#" class="btn btn-sm btn-info btn-icon"><i class="fa-solid fa-edit"></i></a> -->
+                                <button type="button" class="btn btn-sm btn-danger btn-icon btn-delete" data-id="' . $i->id . '" data-userid="' . $i->userid . '" data-nama="' . $i->nmsurat . '" data-tipe="' . $i->suratjns . '" data-url="internaldelete"><i class="fa-solid fa-trash-can"></i></button>
+                            </td>
+                            <td class="text-center">' . date('d/m/Y', strtotime($i->legalitastgl)) . '</td>
+                            <td>' . $i->suratket . '</td>
+                            <td>' . $i->keterangan . '</td>
                         </tr>';
         }
         echo        '</tbody>
@@ -2545,6 +2619,29 @@ class Penerimaan extends Controller
     public function basicdelete(Request $request)
     {
         DB::table('penerimaan_legalitas')->where('id', $request->id)->delete();
+
+        return response()->json(['success' => 'User Deleted Successfully!']);
+    }
+    public function internaldelete(Request $request)
+    {
+        DB::table('penerimaan_legalitas')->where('id', $request->id)->delete();
+        $intern = DB::table('penerimaan_legalitas')->where('userid', $request->userid)->where('suratjns', 'like', '%intern%')->orderBy('legalitastgl', 'desc')->first();
+
+        if ($intern) {
+            $getDateInternal = $intern->legalitastgl;
+            $getInternal = $intern->nmsurat . " - " . $intern->keterangan;
+        } else {
+            $getDateInternal = null;
+            $getInternal = null;
+        }
+        $editKaryawan = DB::table('penerimaan_karyawan')
+            ->where('userid', $request->userid)
+            ->limit(1)
+            ->update([
+                'tglinternal' => $getDateInternal,
+                'internal' => $getInternal,
+                'updated_at' => date('Y-m-d H:i:s'),
+            ]);
 
         return response()->json(['success' => 'User Deleted Successfully!']);
     }
