@@ -204,6 +204,7 @@ Route::controller(Absensi::class)->group(function () {
     Route::post('getalpha', 'getalpha')->name('getalpha');
     Route::post('getalphabydate', 'getalphabydate')->name('getalphabydate');
     Route::post('storedataKomunikasi', 'storeKomunikasi');
+    Route::post('storedataAcc', 'storedataAcc');
 
     Route::get('absensi/komunikasi/printKomunikasi/{id}', 'printSurat')->name('absensi/komunikasi/printKomunikasi/{id}');
     Route::post('checkAccKomunikasi', 'checkAccKomunikasi');

@@ -96,7 +96,7 @@
                         @foreach ($getDataItm as $key => $w)
                             <tr>
                                 <td class="text-center">{{ $i }}</td>
-                                <td class="text-center">{{ Carbon::parse($v->tanggal)->format('d/m/Y') }}</td>
+                                <td class="text-center">{{ Carbon::parse($w->tanggal)->format('d/m/Y') }}</td>
                                 <td class="text-center">{{ $w->stb }}</td>
                                 <td class="text-center">{{ $w->nama }}</td>
                                 <td class="text-center">{{ $w->suratid }}</td>

@@ -39,6 +39,10 @@ class DataKomunikasi extends Controller
                 ->addColumn('statussurat', function ($row) {
                     if ($row->statussurat == 'PENGAJUAN') {
                         $statussur = '<span class="badge bg-blue text-blue-fg">' . $row->statussurat . '</span>';
+                    } elseif ($row->statussurat == 'ACC') {
+                        $statussur = '<span class="badge bg-green text-blue-fg">' . $row->statussurat . '</span>';
+                    } elseif ($row->statussurat == 'REJECT') {
+                        $statussur = '<span class="badge bg-red text-blue-fg">' . $row->statussurat . '</span>';
                     } else {
                         $statussur = '<span class="badge bg-dark text-blue-fg">' . $row->statussurat . '</span>';
                     }
@@ -48,7 +52,7 @@ class DataKomunikasi extends Controller
                 ->addColumn('action', function ($row) {
                     if ($row->statussurat == "PENGAJUAN") {
                         $btn = ' <a href="komunikasi/printKomunikasi/' . $row->noform . '" target="_blank" data-toggle="tooltip" data-placement="top" title="Print Surat Komunikasi" data-id="' . $row->id . '" class="btn btn-sm btn-info btn-icon"><i class="fa-solid fa-print"></i></a>';
-                        $btn = $btn . ' <a href="javascript:void(0)" data-toggle="tooltip" data-placement="top" title="Hapus Karyawan" data-noform="' . $row->id . '" data-id="' . $row->id . '" class="btn btn-sm btn-red btn-icon deleteKaryawan"><i class="fa-solid fa-trash-can"></i></a>';
+                        $btn = $btn . ' <a href="javascript:void(0)" data-toggle="tooltip" data-nama="' . $row->nama . '" data-id="' . $row->id . '" data-noform="' . $row->noform . '" data-suratid="' . $row->suratid . '" data-keterangan="' . $row->keterangan . '" data-original-title="Delete" class="btn btn-danger btn-sm btn-icon deletePos"><i class="fa-solid fa-fw fa-trash-can"></i></a>';
                         return $btn;
                     } else {
                         $btn = ' <a href="komunikasi/printKomunikasi/' . $row->noform . '" target="_blank" data-toggle="tooltip" data-placement="top" title="Print Surat Komunikasi" data-id="' . $row->id . '" class="btn btn-sm btn-info btn-icon"><i class="fa-solid fa-print"></i></a>';
@@ -59,5 +63,13 @@ class DataKomunikasi extends Controller
                 ->make(true);
         }
         return view('products.03_absensi.komunikasi');
+    }
+
+    public function destroy($id)
+    {
+        // pr_01daftarentitas::find($id)->delete();
+        DB::table('absensi_komunikasiitm')->where('id', '=', $id)->delete();
+
+        return response()->json(['success' => 'Record deleted successfully.']);
     }
 }

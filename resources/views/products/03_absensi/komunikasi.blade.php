@@ -174,6 +174,7 @@
                                             </svg>
                                             List Surat</a>
                                     </li>
+                                    @if(Auth::user()->role != 'operator')
                                     <li class="nav-item" role="presentation">
                                         <a href="#tab-acc-komunikasi" class="nav-link" data-bs-toggle="tab"
                                             aria-selected="false" role="tab" tabindex="-1">
@@ -192,6 +193,7 @@
                                             Acc Surat Komunikasi
                                         </a>
                                     </li>
+                                    @endif
                                     <li class="nav-item" role="presentation">
                                         <a href="#tab-create-new" class="nav-link" data-bs-toggle="tab"
                                             aria-selected="false" role="tab" tabindex="-1">
@@ -255,11 +257,13 @@
                                             class="table table-striped table-bordered table-hover text-nowrap datatable-list-komunikasi">
                                         </table>
                                     </div>
+                                    @if(Auth::user()->role != 'operator')
                                     <div class="tab-pane" id="tab-acc-komunikasi" role="tabpanel">
                                         <table style="width: 100%"
                                             class="table table-striped table-bordered table-hover text-nowrap datatable-acc-komunikasi">
                                         </table>
                                     </div>
+                                    @endif
                                     <div class="tab-pane" id="tab-create-new" role="tabpanel">
                                         <div class="row">
                                             <div class="col">
@@ -738,7 +742,7 @@
         <div class="modal-dialog modal-full-width  modal-dialog-centered" role="document">
             <div class="modal-content">
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                <form method="POST" action="storeAcc">
+                <form id="formAcc" name="formAcc" method="post" action="javascript:void(0)">
                     @csrf
                     <input type="hidden" name="_token" value="{{ csrf_token() }}" />
                     <div class="resultChecklist"></div>
@@ -751,7 +755,7 @@
             var tableKaryawan = $('.datatable-karyawan').DataTable({
                 "processing": true, //Feature control the processing indicator.
                 "serverSide": false, //Feature control DataTables' server-side processing mode.
-                "scrollX": true,
+                "scrollX": false,
                 "scrollCollapse": true,
                 "pagingType": 'full_numbers',
                 "lengthMenu": [
@@ -811,7 +815,7 @@
             var tableKomunikasi = $('.datatable-list-komunikasi').DataTable({
                 "processing": true, //Feature control the processing indicator.
                 "serverSide": false, //Feature control DataTables' server-side processing mode.
-                "scrollX": true,
+                "scrollX": false,
                 "scrollCollapse": true,
                 "pagingType": 'full_numbers',
                 "lengthMenu": [
@@ -823,7 +827,6 @@
                     "<'table-responsive' <'col-sm-12'tr> >" +
                     "<'card-footer' <'row'<'col-sm-8'i><'col-sm-4'p> >>",
                 buttons: [
-
                     {
                         text: '<i class="fa-solid fa-filter" style="margin-right:5px"></i>',
                         className: 'btn btn-blue',
@@ -1043,6 +1046,12 @@
                     },
                 ],
             });
+            
+            /*------------------------------------------
+            --------------------------------------------
+            Submit Form
+            --------------------------------------------
+            --------------------------------------------*/
 
             if ($("#formKomunikasi").length > 0) {
                 $("#formKomunikasi").validate({
@@ -1093,6 +1102,7 @@
                                 );
                                 $("#btnSubmitKomunikasi").attr("disabled", false);
                                 tableKomunikasi.ajax.reload();
+                                tableAccKomunikasi.ajax.reload();
                                 const Toast = Swal.mixin({
                                     toast: true,
                                     position: "top-end",
@@ -1124,6 +1134,93 @@
                                     '<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="icon icon-tabler icons-tabler-outline icon-tabler-device-floppy"> <path stroke="none" d="M0 0h24v24H0z" fill="none" /> <path d="M6 4h10l4 4v10a2 2 0 0 1 -2 2h-12a2 2 0 0 1 -2 -2v-12a2 2 0 0 1 2 -2" /> <path d="M12 14m-2 0a2 2 0 1 0 4 0a2 2 0 1 0 -4 0" /> <path d="M14 4l0 4l-6 0l0 -4" /> </svg> Simpan'
                                 );
                                 $("#btnSubmitKomunikasi").attr("disabled", false);
+                            }
+                        });
+                    }
+                })
+            }
+
+            if ($("#formAcc").length > 0) {
+                var tipeinput = $('#suratjns').val();
+                $("#formAcc").validate({
+                    submitHandler: function(form) {
+                        $.ajaxSetup({
+                            headers: {
+                                'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                            }
+                        });
+                        $('#simpanAcc').html(
+                            '<i class="fa-solid fa-fw fa-spinner fa-spin"></i> Please Wait...');
+                        $("#simpanAcc").attr("disabled", true);
+                        $.ajax({
+                            url: "{{ url('storedataAcc') }}",
+                            type: "POST",
+                            data: $('#formAcc').serialize(),
+                            beforeSend: function() {
+                                Swal.fire({
+                                    title: 'Menyimpan ' + tipeinput,
+                                    html: '<center><lottie-player src="https://lottie.host/933bb0e2-47c0-4fa6-83f9-3330b433b883/yymyeZt49h.json"  background="transparent"  speed="1"  style="width: 300px; height: 300px;"  loop autoplay></lottie-player></center><br><h1 class="h4">Sedang menyimpan data</h1>',
+                                    showConfirmButton: false,
+                                    timerProgressBar: true,
+                                    allowOutsideClick: false,
+                                    allowEscapeKey: false,
+                                })
+                            },
+                            success: function(response) {
+                                console.log('Completed.');
+                                tableAccKomunikasi.ajax.reload();
+                                if (response.status == true) {
+                                    $('#simpanAcc').html(
+                                        '<svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-device-floppy" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><path d="M6 4h10l4 4v10a2 2 0 0 1 -2 2h-12a2 2 0 0 1 -2 -2v-12a2 2 0 0 1 2 -2" /><path d="M12 14m-2 0a2 2 0 1 0 4 0a2 2 0 1 0 -4 0" /><path d="M14 4l0 4l-6 0l0 -4" /></svg> Proses Surat Komunikasi'
+                                    );
+                                    $("#simpanAcc").attr("disabled", false);
+                                    const Toast = Swal.mixin({
+                                        toast: true,
+                                        position: "top-end",
+                                        showConfirmButton: false,
+                                        timer: 4000,
+                                        timerProgressBar: true,
+                                        didOpen: (toast) => {
+                                            toast.onmouseenter = Swal.stopTimer;
+                                            toast.onmouseleave = Swal
+                                                .resumeTimer;
+                                        }
+                                    });
+                                    Toast.fire({
+                                        icon: "success",
+                                        title: response.msg,
+                                    });
+                                    document.getElementById("formAcc").reset();
+                                    var sp = $('#selectEntitas').val();
+                                    $('#entitas').val(sp);
+                                    $('#myModalCheck').modal('hide');
+                                } else if (response.status == false) {
+                                    console.log('Error:', response);
+                                    Swal.fire({
+                                        icon: 'error',
+                                        title: 'Gagal Input',
+                                        html: response.msg,
+                                        showConfirmButton: true
+                                    });
+                                    $('#simpanAcc').html(
+                                        '<svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-device-floppy" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><path d="M6 4h10l4 4v10a2 2 0 0 1 -2 2h-12a2 2 0 0 1 -2 -2v-12a2 2 0 0 1 2 -2" /><path d="M12 14m-2 0a2 2 0 1 0 4 0a2 2 0 1 0 -4 0" /><path d="M14 4l0 4l-6 0l0 -4" /></svg> Proses Surat Komunikasi'
+                                    );
+                                    $("#simpanAcc").attr("disabled", false);
+                                }
+                            },
+                            error: function(data) {
+                                console.log('Error:', data);
+                                // const obj = JSON.parse(data.responseJSON);
+                                Swal.fire({
+                                    icon: 'error',
+                                    title: 'Gagal Input',
+                                    html: data.responseJSON.message,
+                                    showConfirmButton: true
+                                });
+                                $('#simpanLegalitas').html(
+                                    '<svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-device-floppy" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><path d="M6 4h10l4 4v10a2 2 0 0 1 -2 2h-12a2 2 0 0 1 -2 -2v-12a2 2 0 0 1 2 -2" /><path d="M12 14m-2 0a2 2 0 1 0 4 0a2 2 0 1 0 -4 0" /><path d="M14 4l0 4l-6 0l0 -4" /></svg> Proses Surat Komunikasi'
+                                );
+                                $("#simpanLegalitas").attr("disabled", false);
                             }
                         });
                     }
@@ -1163,6 +1260,86 @@
                         $(".overlay").fadeOut(300);
                     }, 500);
                 });
+            });
+
+            
+            /*------------------------------------------
+                --------------------------------------------
+                Delete
+                --------------------------------------------
+                --------------------------------------------*/
+
+            $('body').on('click', '.deletePos', function() {
+                var id = $(this).data("id");
+                var nama = $(this).data("nama");
+                var noform = $(this).data("noform");
+                var suratid = $(this).data("suratid");
+                var keterangan = $(this).data("keterangan");
+                var token = $("meta[name='csrf-token']").attr("content");
+                Swal.fire({
+                    icon: 'warning',
+                    title: 'Hapus Data '+suratid,
+                    text: 'Apakah anda yakin ingin menghapus ' + suratid + " : "+ nama + ' ( '+keterangan+' ) ?',
+                    showCancelButton: true,
+                    confirmButtonColor: '#d33',
+                    cancelButtonColor: '#3085d6',
+                    confirmButtonText: '<i class="fa-regular fa-trash-can"></i> Hapus',
+                    cancelButtonText: 'Batal',
+                }).then((result) => {
+                    if (result.isConfirmed) {
+                        $.ajax({
+                            type: "DELETE",
+                            url: "{{ route('getListKomunikasi.store') }}" + '/' + id,
+                            data: {
+                                "_token": "{{ csrf_token() }}",
+                            },
+                            beforeSend: function() {
+                                Swal.fire({
+                                    title: 'Mohon Menunggu',
+                                    html: '<center><lottie-player src="https://lottie.host/54b33864-47d1-4f30-b38c-bc2b9bdc3892/1xkjwmUkku.json"  background="transparent"  speed="1"  style="width: 400px; height: 400px;"  loop autoplay></lottie-player></center><br><h1 class="h4">Sedang menghapus data, Proses mungkin membutuhkan beberapa menit. <br><br><b class="text-danger">(Jangan menutup jendela ini, bisa mengakibatkan error)</b></h1>',
+                                    timerProgressBar: true,
+                                    showConfirmButton: false,
+                                    allowOutsideClick: false,
+                                    allowEscapeKey: false,
+                                })
+                            },
+                            success: function(data) {
+                                $('.datatable-list-komunikasi').DataTable().ajax.reload();
+                                const Toast = Swal.mixin({
+                                    toast: true,
+                                    position: "top-end",
+                                    showConfirmButton: false,
+                                    timer: 3000,
+                                    timerProgressBar: true,
+                                    didOpen: (toast) => {
+                                        toast.onmouseenter =
+                                            Swal.stopTimer;
+                                        toast.onmouseleave =
+                                            Swal
+                                            .resumeTimer;
+                                    }
+                                });
+                                Toast.fire({
+                                    icon: "success",
+                                    title: suratid + " : " +
+                                        nama +
+                                        " Berhasil Dihapus"
+                                });
+                            },
+                            error: function(data) {
+                                console.log('Error:', data.responseText);
+                                Swal.fire({
+                                    icon: 'error',
+                                    title: 'Gagal!',
+                                    text: 'Error: ' + data
+                                        .responseText,
+                                    showConfirmButton: true,
+                                });
+                            }
+                        });
+                    }
+                });
+
             });
         });
 

@@ -122,7 +122,7 @@
                                 placeholder="Masukkan username">
                         </div>
                         <div class="mb-3">
-                            <label class="col-3 col-form-label ">Select</label>
+                            <label class="col-3 col-form-label ">Role</label>
                             <div class="col border border-dark">
                                 <select class="form-select" name="role">
                                     <option>--- Pilih Role ---</option>

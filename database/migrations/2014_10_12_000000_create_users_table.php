@@ -20,6 +20,12 @@ return new class extends Migration
             $table->string('phone')->nullable();
             $table->string('email')->nullable();
             $table->string('admin')->nullable(); // ALL, SATU, DUA, GUDANG, TFI
+            // auth akses ke administrasi
+            $table->string('payroll')->nullable();
+            $table->string('terlambat')->nullable();
+            $table->string('bpjs')->nullable();
+            $table->string('kupon')->nullable();
+            $table->string('lembur')->nullable();
             $table->rememberToken();
             $table->timestamps();
         });
