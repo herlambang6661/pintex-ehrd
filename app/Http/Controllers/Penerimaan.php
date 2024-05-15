@@ -1761,10 +1761,8 @@ class Penerimaan extends Controller
         $penerimaan = "active";
         $legalitas = "active";
 
-        $basic = DB::table('penerimaan_legalitas')->where('userid', $userid)->where('suratjns', 'like', '%basic%')->orderBy('legalitastgl', 'asc')->get();
         $perjanjian = DB::table('penerimaan_legalitas')->where('userid', $userid)->where('suratjns', 'like', '%perjanjian%')->orderBy('legalitastgl', 'asc')->get();
         $intern = DB::table('penerimaan_legalitas')->where('userid', $userid)->where('suratjns', 'like', '%intern%')->orderBy('legalitastgl', 'asc')->get();
-        $status = DB::table('penerimaan_legalitas')->where('userid', $userid)->where('suratjns', 'like', '%status%')->orderBy('legalitastgl', 'asc')->get();
 
         $p_divisi = DB::table('daftar_pospekerjaan')->where('type', 'like', '%DIVISI%')->orderBy('desc', 'asc')->get();
         $p_bagian = DB::table('daftar_pospekerjaan')->where('type', 'like', '%BAGIAN%')->orderBy('desc', 'asc')->get();
@@ -1781,10 +1779,10 @@ class Penerimaan extends Controller
             'penerimaan' => $penerimaan,
             'legalitas' => $legalitas,
             'getKar' => $data,
-            'basic' => $basic,
+            // 'basic' => $basic,
             'perjanjian' => $perjanjian,
             'intern' => $intern,
-            'status' => $status,
+            // 'status' => $status,
             'p_divisi' => $p_divisi,
             'p_bagian' => $p_bagian,
             'p_jabatan' => $p_jabatan,
@@ -1832,7 +1830,7 @@ class Penerimaan extends Controller
             if ($request->tglaktif <= date('Y-m-d')) {
                 $inputLegalitas = DB::table('penerimaan_legalitas')->insert([
                     'remember_token' => $request->_token,
-                    'suratjns' => 'BASIC',
+                    'suratjns' => $request->suratjns,
                     'userid' => $request->userid,
                     'stb' => $karyawan->stb,
                     'nama' => $karyawan->nama,
@@ -1857,7 +1855,7 @@ class Penerimaan extends Controller
                     ->where('userid', $request->userid)
                     ->limit(1)
                     ->update([
-                        'entitas' => $request->entitas,
+                        'entitas' => 'PINTEX',
                         'stb' => $karyawan->stb,
                         'divisi' => $request->divisi,
                         'bagian' => $request->bagian,
@@ -1874,7 +1872,7 @@ class Penerimaan extends Controller
             } else {
                 $inputLegalitas = DB::table('penerimaan_legalitas')->insert([
                     'remember_token' => $request->_token,
-                    'suratjns' => 'BASIC',
+                    'suratjns' => $request->suratjns,
                     'userid' => $request->userid,
                     'stb' => $karyawan->stb,
                     'nama' => $karyawan->nama,
@@ -1910,7 +1908,6 @@ class Penerimaan extends Controller
                     'created_at' => date('Y-m-d H:i:s'),
                 ]);
             }
-
             // $arr = array('msg' => 'Something goes to wrong. Please try later', 'status' => false);
             $arr = array('msg' => 'Data telah berhasil diproses', 'status' => true);
             return Response()->json($arr);
@@ -2001,7 +1998,35 @@ class Penerimaan extends Controller
         } elseif ($request->suratjns == "INTERN") {
             # code...
         } elseif ($request->suratjns == "STATUS") {
-            # code...
+            $inputLegalitas = DB::table('penerimaan_legalitas')->insert([
+                'remember_token' => $request->_token,
+                'suratjns' => $request->suratjns,
+                'userid' => $request->userid,
+                'nama' => $karyawan->nama,
+                'inputtgl' => date('Y-m-d'),
+                'legalitastgl' => $request->tglstatus,
+                'nmsurat' => $request->nmsurat,
+                'suratket' => $request->keterangan,
+                'id_cron'    => 'Langsung Dibuat',
+                'dibuat' => Auth::user()->name,
+                'created_at' => date('Y-m-d H:i:s'),
+            ]);
+            // Edit di karyawan
+            if ($request->nmsurat == "Surat Cuti Melahirkan") {
+                $status = "(Aktif) " . $request->nmsurat . " - " . $request->tglstatus;
+            } else {
+                $status = $request->nmsurat . " - " . $request->tglstatus;
+            }
+            $editKaryawan = DB::table('penerimaan_karyawan')
+                ->where('userid', $request->userid)
+                ->limit(1)
+                ->update([
+                    'status' => $status,
+                    'updated_at' => date('Y-m-d H:i:s'),
+                ]);
+            // $arr = array('msg' => 'Something goes to wrong. Please try later', 'status' => false);
+            $arr = array('msg' => 'Data telah berhasil diproses', 'status' => true);
+            return Response()->json($arr);
         }
     }
 
@@ -2139,6 +2164,96 @@ class Penerimaan extends Controller
         echo '<i>*Klik STB untuk menyalin</i>';
     }
 
+    public function getTableBasic(Request $request)
+    {
+        $basic = DB::table('penerimaan_legalitas')->where('userid', $request->userid)->where('suratjns', 'like', '%basic%')->orderBy('legalitastgl', 'asc')->get();
+
+        echo '
+            <div class="table-responsive">
+                <table
+                    class="table table-sm table-bordered table-striped table-hover table-vcenter text-nowrap border border-green"
+                    id="tb_basic">
+                    <thead>
+                        <tr>
+                            <th class="w-1"></th>
+                            <th class="text-center">Tgl Aktif</th>
+                            <th class="text-center">Nama Surat</th>
+                            <th class="text-center">Tgl Masuk</th>
+                            <th class="text-center">STB</th>
+                            <th class="text-center">Divisi</th>
+                            <th class="text-center">Bagian</th>
+                            <th class="text-center">Jabatan</th>
+                            <th class="text-center">Grup</th>
+                            <th class="text-center">Jns. Shift</th>
+                            <th class="text-center">Profesi</th>
+                            <th class="text-center">Libur</th>
+                            <th class="text-center">½ Hari</th>
+                            <th class="text-center">Keterangan</th>
+                        </tr>
+                    </thead>
+                    <tbody>';
+        foreach ($basic as $bas => $b) {
+            echo '
+                        <tr>
+                            <td class="text-center" style="padding: 2px 2px 2px 2px">
+                                <!-- <a href="#" class="btn btn-sm btn-info btn-icon"><i class="fa-solid fa-edit"></i></a> -->
+                                <button type="button" class="btn btn-sm btn-danger btn-icon btn-delete" data-id="' . $b->id . '" data-userid="' . $b->userid . '" data-nama="' . $b->nmsurat . '" data-tipe="' . $b->suratjns . '" data-url="basicdelete"><i class="fa-solid fa-trash-can"></i></button>
+                            </td>
+                            <td class="text-end">' . date('d/m/Y', strtotime($b->legalitastgl)) . '</td>
+                            <td>' . $b->nmsurat . '</td>
+                            <td class="text-end">' . date('d/m/Y', strtotime($b->tglmasuk)) . '</td>
+                            <td>' . $b->stb . '</td>
+                            <td>' . $b->divisi . '</td>
+                            <td>' . $b->bagian . '</td>
+                            <td>' . $b->jabatan . '</td>
+                            <td>' . $b->grup . '</td>
+                            <td>' . $b->shift . '</td>
+                            <td>' . $b->profesi . '</td>
+                            <td>' . $b->hrlibur . '</td>
+                            <td>' . $b->sethari . '</td>
+                            <td>' . $b->keterangan . '</td>
+                        </tr>';
+        }
+        echo        '</tbody>
+                </table>
+            </div>
+        ';
+    }
+
+    public function getTableStatus(Request $request)
+    {
+        $status = DB::table('penerimaan_legalitas')->where('userid', $request->userid)->where('suratjns', 'like', '%status%')->orderBy('legalitastgl', 'asc')->get();
+
+        echo '
+            <div class="table-responsive">
+                <table class="table table-sm table-hover table-bordered table-vcenter card-table text-nowrap border border-pink" id="tb_stt">
+                        <thead>
+                            <tr>
+                                <th class="w-1"></th>
+                                <th>Tanggal</th>
+                                <th>Nama Surat</th>
+                                <th>Keterangan</th>
+                            </tr>
+                        </thead>
+                    <tbody>';
+        foreach ($status as $stt => $s) {
+            echo '
+                        <tr>
+                            <td class="text-center" style="padding: 2px 2px 2px 2px">
+                                <!-- <a href="#" class="btn btn-sm btn-info btn-icon"><i class="fa-solid fa-edit"></i></a> -->
+                                <button type="button" class="btn btn-sm btn-danger btn-icon btn-delete" data-id="' . $s->id . '" data-userid="' . $s->userid . '" data-nama="' . $s->nmsurat . '" data-tipe="' . $s->suratjns . '" data-url="statusdelete"><i class="fa-solid fa-trash-can"></i></button>
+                            </td>
+                            <td class="text-end">' . date('d/m/Y', strtotime($s->legalitastgl)) . '</td>
+                            <td>' . $s->nmsurat . '</td>
+                            <td>' . $s->suratket . '</td>
+                        </tr>';
+        }
+        echo        '</tbody>
+                </table>
+            </div>
+        ';
+    }
+
     public function addModal(Request $request)
     {
         $karyawan = DB::table('penerimaan_karyawan')->where('userid', $request->id)->first();
@@ -2163,13 +2278,13 @@ class Penerimaan extends Controller
                         <div class="col-lg-6">
                             <div class="mb-3">
                             <label class="form-label">Nama Karyawan</label>
-                            <input type="text" name="nama" class="form-control" value="' . $karyawan->nama . '" readonly>
+                            <input type="text" name="nama" class="form-control" value="' . $karyawan->nama . '" readonly required="true">
                             </div>
                         </div>
                         <div class="col-lg-6">
                             <div class="mb-3">
                             <label class="form-label">Nama Surat</label>
-                            <input type="text" name="nmsurat" class="form-control" value="Surat Deskripsi Pekerjaan" readonly>
+                            <input type="text" name="nmsurat" class="form-control" value="Surat Deskripsi Pekerjaan" readonly required="true">
                             </div>
                         </div>
                     </div>
@@ -2177,23 +2292,23 @@ class Penerimaan extends Controller
                         <tr>
                             <td style="padding-top: 12px;width:130px">Tanggal Input</td>
                             <td style="padding-top: 12px">:</td>
-                            <td><input type="date" name="tglinput" id="datepicker0" class="form-control" value="' . date("Y-m-d") . '"></td>
+                            <td><input type="date" name="tglinput" id="datepicker0" class="form-control" value="' . date("Y-m-d") . '" required="true"></td>
                         </tr>
                         <tr>
                             <td style="padding-top: 12px">Tanggal Aktif</td>
                             <td style="padding-top: 12px">:</td>
-                            <td><input type="date" name="tglaktif" id="datepicker1" class="form-control" value="' . date("Y-m-d") . '"></td>
+                            <td><input type="date" name="tglaktif" id="datepicker1" class="form-control" value="' . date("Y-m-d") . '" required="true"></td>
                         </tr>
                         <tr>
                             <td style="padding-top: 12px">STB</td>
                             <td style="padding-top: 12px">:</td>
-                            <td><input type="text" name="stb" class="form-control" placeholder="Masukkan STB Karyawan" value="' . $karyawan->stb . '"></td>
+                            <td><input type="text" name="stb" id="stb" class="form-control" placeholder="Masukkan STB Karyawan" value="' . $karyawan->stb . '" required="true"></td>
                         </tr>
                         <tr>
                             <td style="padding-top: 12px">Divisi</td>
                             <td style="padding-top: 12px">:</td>
                             <td>
-                                <select name="divisi" id="" class="form-select">
+                                <select name="divisi" id="divisi" class="form-select" required="true">
                                 <option hidden value="">-- Pilih Divisi --</option>';
             foreach ($divisi as $d) {
                 echo            '<option value="' . $d->desc . '">' . $d->desc . '</option>';
@@ -2206,7 +2321,7 @@ class Penerimaan extends Controller
                             <td style="padding-top: 12px">Bagian</td>
                             <td style="padding-top: 12px">:</td>
                             <td>
-                                <select name="bagian" id="" class="form-select">
+                                <select name="bagian" id="" class="form-select" required="true">
                                 <option hidden value="">-- Pilih Bagian --</option>';
             foreach ($bagian as $b) {
                 echo            '<option value="' . $b->desc . '">' . $b->desc . '</option>';
@@ -2219,7 +2334,7 @@ class Penerimaan extends Controller
                             <td style="padding-top: 12px">Jabatan</td>
                             <td style="padding-top: 12px">:</td>
                             <td>
-                                <select name="jabatan" id="" class="form-select">
+                                <select name="jabatan" id="" class="form-select" required="true">
                                 <option hidden value="">-- Pilih Jabatan --</option>';
             foreach ($jabatan as $j) {
                 echo            '<option value="' . $j->desc . '">' . $j->desc . '</option>';
@@ -2232,7 +2347,7 @@ class Penerimaan extends Controller
                             <td style="padding-top: 12px">Grup</td>
                             <td style="padding-top: 12px">:</td>
                             <td>
-                                <select name="grup" id="" class="form-select">
+                                <select name="grup" id="" class="form-select" required="true">
                                 <option hidden value="">-- Pilih Grup --</option>';
             foreach ($grup as $g) {
                 echo            '<option value="' . $g->desc . '">' . $g->desc . '</option>';
@@ -2245,7 +2360,7 @@ class Penerimaan extends Controller
                             <td style="padding-top: 12px">Jenis Shift</td>
                             <td style="padding-top: 12px">:</td>
                             <td>
-                                <select name="shift" id="" class="form-select">
+                                <select name="shift" id="" class="form-select" required="true">
                                 <option hidden value="">-- Jenis Shift --</option>';
             foreach ($shift as $s) {
                 echo            '<option value="' . $s->desc . '">' . $s->desc . '</option>';
@@ -2256,13 +2371,13 @@ class Penerimaan extends Controller
                         <tr>
                             <td style="padding-top: 12px">Profesi</td>
                             <td style="padding-top: 12px">:</td>
-                            <td><input type="text" name="profesi" class="form-control" placeholder="Profesi Karyawan"></td>
+                            <td><input type="text" name="profesi" class="form-control" placeholder="Profesi Karyawan" required="true"></td>
                         </tr>
                         <tr>
                             <td style="padding-top: 12px">Hari Libur</td>
                             <td style="padding-top: 12px">:</td>
                             <td>
-                                <select name="hrlibur" id="" class="form-select">
+                                <select name="hrlibur" id="" class="form-select" required="true">
                                 <option hidden value="">-- Hari Libur --</option>';
             foreach ($hari as $h => $v) {
                 echo            '<option value="' . $v . '">' . $v . '</option>';
@@ -2425,6 +2540,37 @@ class Penerimaan extends Controller
                 </div>
             ';
         }
+    }
+
+    public function basicdelete(Request $request)
+    {
+        DB::table('penerimaan_legalitas')->where('id', $request->id)->delete();
+
+        return response()->json(['success' => 'User Deleted Successfully!']);
+    }
+    public function statusdelete(Request $request)
+    {
+        DB::table('penerimaan_legalitas')->where('id', $request->id)->delete();
+        $status = DB::table('penerimaan_legalitas')->where('userid', $request->userid)->where('suratjns', 'like', '%status%')->orderBy('legalitastgl', 'desc')->first();
+
+        if ($status) {
+            if ($status->nmsurat == "Surat Cuti Melahirkan") {
+                $getStatus = "(Aktif) " . $status->nmsurat . " - " . $status->legalitastgl;
+            } else {
+                $getStatus = $status->nmsurat . " - " . $status->legalitastgl;
+            }
+        } else {
+            $getStatus = "Aktif";
+        }
+        $editKaryawan = DB::table('penerimaan_karyawan')
+            ->where('userid', $request->userid)
+            ->limit(1)
+            ->update([
+                'status' => $getStatus,
+                'updated_at' => date('Y-m-d H:i:s'),
+            ]);
+
+        return response()->json(['success' => 'User Deleted Successfully!']);
     }
 
     // ======================== END LEGALITAS ===========================================================================================

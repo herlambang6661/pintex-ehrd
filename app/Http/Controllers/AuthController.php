@@ -66,7 +66,6 @@ class AuthController extends Controller
                             "redirect" => url("loaderlocal")
                         ]);
                     } catch (\Throwable $th) {
-
                         return view('products.dashboard');
                     }
                 } else {

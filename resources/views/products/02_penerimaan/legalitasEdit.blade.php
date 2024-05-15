@@ -14,13 +14,13 @@
 
         td.cuspad2 {
             /* padding-top: 0.5px;
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                        padding-bottom: 0.5px;
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                        padding-right: 0.5px;
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                        padding-left: 0.5px;
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                        margin-top: 5px;
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                        margin-bottom: 5px;
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                        margin-right: 5px;
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                        margin-left: 5px; */
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                        padding-bottom: 0.5px;
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                        padding-right: 0.5px;
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                        padding-left: 0.5px;
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                        margin-top: 5px;
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                        margin-bottom: 5px;
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                        margin-right: 5px;
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                        margin-left: 5px; */
         }
 
         .overlay {
@@ -283,57 +283,23 @@
                                             </div>
                                         </h3>
                                         <input id="idf" value="1" type="hidden">
-                                        <div class="table-responsive">
-                                            <table
-                                                class="table table-sm table-bordered table-striped table-hover table-vcenter text-nowrap border border-green"
-                                                id="tb_basic">
-                                                <thead>
-                                                    <tr>
-                                                        <th class="w-1"></th>
-                                                        <th class="text-center">Tanggal</th>
-                                                        <th class="text-center">Nama Surat</th>
-                                                        <th class="text-center">Tgl Aktif</th>
-                                                        <th class="text-center">STB</th>
-                                                        <th class="text-center">Divisi</th>
-                                                        <th class="text-center">Bagian</th>
-                                                        <th class="text-center">Jabatan</th>
-                                                        <th class="text-center">Grup</th>
-                                                        <th class="text-center">Jns. Shift</th>
-                                                        <th class="text-center">Profesi</th>
-                                                        <th class="text-center">Libur</th>
-                                                        <th class="text-center">½ Hari</th>
-                                                        <th class="text-center">Keterangan</th>
-                                                    </tr>
-                                                </thead>
-                                                <tbody>
-                                                    @foreach ($basic as $bas => $b)
-                                                        <tr>
-                                                            <td class="text-center" style="padding: 2px 2px 2px 2px">
-                                                                <a href="#" class="btn btn-sm btn-info btn-icon"><i
-                                                                        class="fa-solid fa-edit"></i></a>
-                                                                <a href="#"
-                                                                    class="btn btn-sm btn-danger btn-icon"><i
-                                                                        class="fa-solid fa-trash-can"></i></a>
-                                                            </td>
-                                                            <td class="text-end">
-                                                                {{ date('d/m/Y', strtotime($b->legalitastgl)) }}</td>
-                                                            <td>{{ $b->nmsurat }}</td>
-                                                            <td class="text-end">
-                                                                {{ date('d/m/Y', strtotime($b->tglmasuk)) }}</td>
-                                                            <td>{{ $b->stb }}</td>
-                                                            <td>{{ $b->divisi }}</td>
-                                                            <td>{{ $b->bagian }}</td>
-                                                            <td>{{ $b->jabatan }}</td>
-                                                            <td>{{ $b->grup }}</td>
-                                                            <td>{{ $b->shift }}</td>
-                                                            <td>{{ $b->profesi }}</td>
-                                                            <td>{{ $b->hrlibur }}</td>
-                                                            <td>{{ $b->sethari }}</td>
-                                                            <td>{{ $b->keterangan }}</td>
-                                                        </tr>
-                                                    @endforeach
-                                                </tbody>
-                                            </table>
+                                        <div id="tableBasic"></div>
+                                        <div class="col-sm-12 col-md-12 placeholder-basic" style="display:none">
+                                            <div class="ph-item">
+                                                <div class="ph-col-12">
+                                                    <div class="ph-row">
+                                                        <div class="ph-col-12"></div>
+                                                        <div class="ph-col-12"></div>
+                                                        <div class="ph-col-12"></div>
+                                                        <div class="ph-col-12"></div>
+                                                        <div class="ph-col-12"></div>
+                                                        <div class="ph-col-12"></div>
+                                                        <div class="ph-col-12"></div>
+                                                        <div class="ph-col-12"></div>
+                                                        <div class="ph-col-12"></div>
+                                                    </div>
+                                                </div>
+                                            </div>
                                         </div>
                                     </div>
                                 </div>
@@ -476,34 +442,23 @@
                                             </button>
                                         </h3>
                                         <input id="ids" value="1" type="hidden">
-                                        <div class="table-responsive">
-                                            <table
-                                                class="table table-sm table-hover table-bordered table-vcenter card-table text-nowrap border border-pink"
-                                                id="tb_stt">
-                                                <thead>
-                                                    <tr>
-                                                        <th class="w-1"></th>
-                                                        <th>Tanggal</th>
-                                                        <th>Nama Surat</th>
-                                                    </tr>
-                                                </thead>
-                                                <tbody>
-                                                    @foreach ($status as $stt => $s)
-                                                        <tr>
-                                                            <td class="text-center" style="padding: 2px 2px 2px 2px">
-                                                                <a href="#" class="btn btn-sm btn-info btn-icon"><i
-                                                                        class="fa-solid fa-edit"></i></a>
-                                                                <a href="#"
-                                                                    class="btn btn-sm btn-danger btn-icon"><i
-                                                                        class="fa-solid fa-trash-can"></i></a>
-                                                            </td>
-                                                            <td class="text-end">
-                                                                {{ date('d/m/Y', strtotime($s->legalitastgl)) }}</td>
-                                                            <td>{{ $s->suratket }}</td>
-                                                        </tr>
-                                                    @endforeach
-                                                </tbody>
-                                            </table>
+                                        <div id="tableStatus"></div>
+                                        <div class="col-sm-12 col-md-12 placeholder-status" style="display:none">
+                                            <div class="ph-item">
+                                                <div class="ph-col-12">
+                                                    <div class="ph-row">
+                                                        <div class="ph-col-12"></div>
+                                                        <div class="ph-col-12"></div>
+                                                        <div class="ph-col-12"></div>
+                                                        <div class="ph-col-12"></div>
+                                                        <div class="ph-col-12"></div>
+                                                        <div class="ph-col-12"></div>
+                                                        <div class="ph-col-12"></div>
+                                                        <div class="ph-col-12"></div>
+                                                        <div class="ph-col-12"></div>
+                                                    </div>
+                                                </div>
+                                            </div>
                                         </div>
                                     </div>
                                 </div>
@@ -583,6 +538,13 @@
         var tglhariini = '<?php echo date('Y-m-d'); ?>';
 
         $(function() {
+            tampil_table();
+
+            /*------------------------------------------
+            --------------------------------------------
+            Modal Look STB
+            --------------------------------------------
+            --------------------------------------------*/
             $('#modal-stb').on('show.bs.modal', function(e) {
                 $(".overlay").fadeIn(300);
 
@@ -608,9 +570,23 @@
                 });
             });
 
+            /*------------------------------------------
+            --------------------------------------------
+            Submit Form
+            --------------------------------------------
+            --------------------------------------------*/
             if ($("#formLegalitas").length > 0) {
+
                 var tipeinput = $('#suratjns').val();
                 $("#formLegalitas").validate({
+                    rules: {
+                        stb: {
+                            required: true
+                        },
+                        divisi: {
+                            required: true
+                        },
+                    },
                     submitHandler: function(form) {
                         $.ajaxSetup({
                             headers: {
@@ -635,6 +611,7 @@
                                 })
                             },
                             success: function(response) {
+                                tampil_table()
                                 console.log('Completed.');
                                 console.log(response);
                                 if (response.status == true) {
@@ -661,7 +638,7 @@
                                     document.getElementById("formLegalitas").reset();
                                     var sp = $('#selectEntitas').val();
                                     $('#entitas').val(sp);
-                                    $('#modal-stb').modal('hide');
+                                    $('#modal-add-legalitas').modal('hide');
                                     $('.modal-isi-legalitas').html('');
                                     // window.location.replace("{{ url('penerimaan/legalitas') }}");
                                 } else if (response.status == false) {
@@ -697,6 +674,11 @@
                 })
             }
 
+            /*------------------------------------------
+            --------------------------------------------
+            Modal Add
+            --------------------------------------------
+            --------------------------------------------*/
             $('.btn-addModal').click(function() {
                 $('.modal-isi-legalitas').html('');
                 $(".overlay").fadeIn(300);
@@ -736,327 +718,132 @@
                     }, 500);
                 });
             });
+
+            /*------------------------------------------
+            --------------------------------------------
+            Modal Delete
+            --------------------------------------------
+            --------------------------------------------*/
+            $('body').on('click', '.btn-delete', function() {
+                var contract_id = $(this).data("id");
+                var userid = $(this).data("userid");
+                var nama = $(this).data("nama");
+                var tipe = $(this).data("tipe");
+                var token = $("meta[name='csrf-token']").attr("content");
+                var userURL = $(this).data('url');
+                if (userURL == "basicdelete") {
+                    sendURL = "{{ url('basicdelete') }}";
+                } else if (userURL == "statusdelete") {
+                    sendURL = "{{ url('statusdelete') }}";
+                }
+                console.log(userURL);
+                Swal.fire({
+                    icon: 'warning',
+                    title: 'Hapus Data ' + tipe,
+                    text: 'Apakah anda yakin ingin menghapus ' + nama + ' ?',
+                    showCancelButton: true,
+                    confirmButtonColor: '#d33',
+                    cancelButtonColor: '#3085d6',
+                    confirmButtonText: '<i class="fa-regular fa-trash-can"></i> Hapus',
+                    cancelButtonText: 'Batal',
+                }).then((result) => {
+                    if (result.isConfirmed) {
+                        $.ajaxSetup({
+                            headers: {
+                                'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                            }
+                        });
+                        $.ajax({
+                            url: sendURL,
+                            type: "POST",
+                            data: {
+                                "_token": "{{ csrf_token() }}",
+                                'id': contract_id,
+                                'userid': userid,
+                            },
+                            beforeSend: function() {
+                                Swal.fire({
+                                    title: 'Mohon Menunggu',
+                                    html: '<center><lottie-player src="https://lottie.host/54b33864-47d1-4f30-b38c-bc2b9bdc3892/1xkjwmUkku.json"  background="transparent"  speed="1"  style="width: 400px; height: 400px;"  loop autoplay></lottie-player></center><br><h1 class="h4">Sedang menghapus data, Proses mungkin membutuhkan beberapa menit. <br><br><b class="text-danger">(Jangan menutup jendela ini, bisa mengakibatkan error)</b></h1>',
+                                    timerProgressBar: true,
+                                    showConfirmButton: false,
+                                    allowOutsideClick: false,
+                                    allowEscapeKey: false,
+                                })
+                            },
+                            success: function(data) {
+                                tampil_table()
+                                const Toast = Swal.mixin({
+                                    toast: true,
+                                    position: "top-end",
+                                    showConfirmButton: false,
+                                    timer: 3000,
+                                    timerProgressBar: true,
+                                    didOpen: (toast) => {
+                                        toast
+                                            .onmouseenter =
+                                            Swal
+                                            .stopTimer;
+                                        toast
+                                            .onmouseleave =
+                                            Swal
+                                            .resumeTimer;
+                                    }
+                                });
+                                Toast.fire({
+                                    icon: "success",
+                                    title: "Data Lamaran : " +
+                                        nama + " Terhapus"
+                                });
+                            },
+                            error: function(data) {
+                                tampil_table()
+                                console.log('Error:', data.responseText);
+                                Swal.fire({
+                                    icon: 'error',
+                                    title: 'Gagal!',
+                                    text: 'Error: ' + data.responseText,
+                                    showConfirmButton: true,
+                                });
+                            }
+                        });
+                    }
+                });
+            });
         });
 
-        // function tambahBasic() {
-        //     var idf = document.getElementById("idf").value;
-
-        //     var tb_basic = document.getElementById("tb_basic");
-
-        //     var tr = document.createElement("tr");
-        //     tr.setAttribute("id", "btn-remove" + idf);
-
-        //     // Kolom 1 Hapus
-        //     var td = document.createElement("td");
-        //     td.setAttribute("align", "center");
-        //     td.setAttribute("class", "border border-green w-0");
-        //     td.innerHTML += '<button class="btn" type="button" onclick="hapusElemen(' + idf +
-        //         ');"><i class="fa-regular fa-trash-can"></i> </button>';
-        //     tr.appendChild(td);
-
-        //     // Kolom 2 Tanggal
-        //     var td = document.createElement("td");
-        //     td.setAttribute("class", "border border-green w-0");
-        //     td.innerHTML += '<input type="date" style="width:110px;" value="' + tglhariini + '" name="tgl[]" id="tgl_' +
-        //         idf + '">';
-        //     tr.appendChild(td);
-
-        //     // Kolom 3 Nama Surat                            
-        //     var td = document.createElement("td");
-        //     td.setAttribute("class", "border border-green");
-        //     td.innerHTML +=
-        //         '<input type="text" style="width:180px;" value="Surat Deskripsi Pekerjaan" name="namasurat[]" id="namasurat_' +
-        //         idf + '">';
-        //     tr.appendChild(td);
-
-        //     // Kolom 4 Tgl Aktif
-        //     var td = document.createElement("td");
-        //     td.setAttribute("class", "border border-green");
-        //     td.innerHTML += '<input type="date" style="width:110px;" value="' + tglhariini +
-        //         '" name="tglaktif[]" id="tglaktif_' + idf + '">';
-        //     tr.appendChild(td);
-
-        //     // Kolom 5 STB
-        //     var td = document.createElement("td");
-        //     td.setAttribute("class", "border border-green");
-        //     td.innerHTML += "<input type='text' name='stb[]' id='stb_" + idf +
-        //         "' class=' inputNone' style='width:60px;text-transform: uppercase;'>";
-        //     tr.appendChild(td);
-
-        //     // Kolom 6 Divisi
-        //     var td = document.createElement("td");
-        //     td.setAttribute("class", "border border-green");
-        //     // td.innerHTML += "<input type='text' name='divisi[]' id='divisi_" + idf + "' class='form-control  inputNone' style='text-transform: uppercase;'>";
-        //     td.innerHTML += "<select name='divisi[]' id='divisi_" + idf + "'>" +
-        //         "<option value='' hidden>-- Pilih Divisi --</option>" +
-        //         "<?php foreach($p_divisi as $key => $w){ ?>" +
-        //         "<option value='<?php echo $w->desc; ?>'><?php echo $w->desc; ?></option>" +
-        //         "<?php } ?>" +
-        //         "</select>";
-        //     tr.appendChild(td);
-
-        //     // Kolom 7 Bagian
-        //     var td = document.createElement("td");
-        //     td.setAttribute("class", "border border-green");
-        //     td.innerHTML += "<select name='bagian[]' id='bagian_" + idf + "'>" +
-        //         "<option value='' hidden>-- Pilih Bagian --</option>" +
-        //         "<?php foreach($p_bagian as $key => $w){ ?>" +
-        //         "<option value='<?php echo $w->desc; ?>'><?php echo $w->desc; ?></option>" +
-        //         "<?php } ?>" +
-        //         "</select>";
-        //     tr.appendChild(td);
-
-        //     // Kolom 8 Jabatan
-        //     var td = document.createElement("td");
-        //     td.setAttribute("class", "border border-green");
-        //     td.innerHTML += "<select name='jabatan[]' id='jabatan_" + idf + "'>" +
-        //         "<option value='' hidden>-- Pilih Jabatan --</option>" +
-        //         "<?php foreach($p_jabatan as $key => $w){ ?>" +
-        //         "<option value='<?php echo $w->desc; ?>'><?php echo $w->desc; ?></option>" +
-        //         "<?php } ?>" +
-        //         "</select>";
-        //     tr.appendChild(td);
-
-        //     // Kolom 9 Grup
-        //     var td = document.createElement("td");
-        //     td.setAttribute("class", "border border-green");
-        //     td.innerHTML += "<select name='grup[]' id='grup_" + idf + "'>" +
-        //         "<option value='' hidden>-- Pilih Grup --</option>" +
-        //         "<?php foreach($p_grup as $key => $w){ ?>" +
-        //         "<option value='<?php echo $w->desc; ?>'><?php echo $w->desc; ?></option>" +
-        //         "<?php } ?>" +
-        //         "</select>";
-        //     tr.appendChild(td);
-
-        //     // Kolom 10 Shift
-        //     var td = document.createElement("td");
-        //     td.setAttribute("class", "border border-green");
-        //     td.innerHTML += "<select name='shift[]' id='shift_" + idf + "'>" +
-        //         "<option value='' hidden>-- Pilih Shift --</option>" +
-        //         "<?php foreach($p_shift as $key => $w){ ?>" +
-        //         "<option value='<?php echo $w->desc; ?>'><?php echo $w->desc; ?></option>" +
-        //         "<?php } ?>" +
-        //         "</select>";
-        //     tr.appendChild(td);
-
-        //     // Kolom 11 Profesi
-        //     var td = document.createElement("td");
-        //     td.setAttribute("class", "border border-green");
-        //     td.innerHTML += "<input type='text' name='profesi[]' id='profesi_" + idf +
-        //         "' style='text-transform: uppercase;'>";
-        //     tr.appendChild(td);
-
-        //     // Kolom 12 Libur
-        //     var td = document.createElement("td");
-        //     td.setAttribute("class", "border border-green");
-        //     td.innerHTML += "<select name='libur[]' id='libur_" + idf + "'>" +
-        //         "<option value='' hidden>-- Pilih Libur --</option>" +
-        //         "<option value='SENIN'>SENIN</option>" +
-        //         "<option value='SELASA'>SELASA</option>" +
-        //         "<option value='RABU'>RABU</option>" +
-        //         "<option value='KAMIS'>KAMIS</option>" +
-        //         "<option value='JUMAT'>JUMAT</option>" +
-        //         "<option value='SABTU'>SABTU</option>" +
-        //         "<option value='MINGGU'>MINGGU</option>" +
-        //         "</select>";
-        //     tr.appendChild(td);
-
-        //     // Kolom 13 Setengah Hari
-        //     var td = document.createElement("td");
-        //     td.setAttribute("class", "border border-green");
-        //     td.innerHTML += "<select name='setengah[]' id='setengah_" + idf + "'>" +
-        //         "<option value='' hidden>-- Pilih ½ HARI --</option>" +
-        //         "<option value='SENIN'>SENIN</option>" +
-        //         "<option value='SELASA'>SELASA</option>" +
-        //         "<option value='RABU'>RABU</option>" +
-        //         "<option value='KAMIS'>KAMIS</option>" +
-        //         "<option value='JUMAT'>JUMAT</option>" +
-        //         "<option value='SABTU'>SABTU</option>" +
-        //         "<option value='MINGGU'>MINGGU</option>" +
-        //         "</select>";
-        //     tr.appendChild(td);
-
-        //     // Kolom 14 Ket
-        //     var td = document.createElement("td");
-        //     td.setAttribute("class", "border border-green");
-        //     td.innerHTML += "<input type='text' name='keterangan[]' id='keterangan_" + idf +
-        //         "' style='text-transform: uppercase;'>";
-        //     tr.appendChild(td);
-
-        //     tb_basic.appendChild(tr);
-
-        //     idf = (idf - 1) + 2;
-        //     document.getElementById("idf").value = idf;
-        //     $(".element").select2({
-        //         placeholder: "Pilih Kodeproduk"
-        //     });
-        // }
-
-        // function tambahPerjanjian() {
-        //     var idp = document.getElementById("idp").value;
-
-        //     var tb_per = document.getElementById("tb_per");
-        //     var tr = document.createElement("tr");
-        //     tr.setAttribute("id", "remove-perjanjian" + idp);
-
-        //     // Kolom 1 Hapus
-        //     var td = document.createElement("td");
-        //     td.setAttribute("class", "text-center border border-purple w-0");
-        //     td.innerHTML += '<button class="btn" type="button" onclick="hapusPerjanjian(' + idp +
-        //         ');"><i class="fa-regular fa-trash-can"></i> </button>';
-        //     tr.appendChild(td);
-
-        //     // Kolom 2 Tanggal Perjanjian
-        //     var td = document.createElement("td");
-        //     td.setAttribute("class", "border border-purple");
-        //     td.innerHTML += '<input type="date" style="width:100%" value="' + tglhariini +
-        //         '" name="tgl_perjanjian[]" id="tgl_perjanjian_' + idp + '" class="border border-white">';
-        //     tr.appendChild(td);
-
-        //     // Kolom 3 Nama Surat Perjanjian
-        //     var td = document.createElement("td");
-        //     td.setAttribute("class", "border border-purple");
-        //     td.innerHTML += "<select name='nmperjanjian[]' style='width:180px;' id='nmperjanjian_" + idp +
-        //         "' class='form-select' class='border border-white'>" +
-        //         "<option value='' hidden>-- Pilih Perjanjian --</option>" +
-        //         "<?php foreach($j_perjanjian as $key => $w){ ?>" +
-        //         "<option value='<?php echo $w->nmsurat; ?>'><?php echo $w->nmsurat; ?></option>" +
-        //         "<?php } ?>" +
-        //         "</select>";
-        //     tr.appendChild(td);
-
-        //     // Kolom 4 Jenis Surat Perjanjian
-        //     var td = document.createElement("td");
-        //     td.setAttribute("class", "border border-purple");
-        //     td.innerHTML += '<input type="text" value="" name="jenis_perjanjian[]" id="jenis_perjanjian_' + idp +
-        //         '" class="border border-white">';
-        //     tr.appendChild(td);
-
-        //     // Kolom 5 Tanggal Awal Perjanjian
-        //     var td = document.createElement("td");
-        //     td.setAttribute("class", "border border-purple");
-        //     td.innerHTML += '<input type="date" style="width:100%" value="' + tglhariini +
-        //         '" name="awal_perjanjian[]" id="awal_perjanjian_' + idp + '" class="border border-white">';
-        //     tr.appendChild(td);
-
-        //     // Kolom 6 Tanggal Akhir Perjanjian
-        //     var td = document.createElement("td");
-        //     td.setAttribute("class", "border border-purple");
-        //     td.innerHTML += '<input type="date" style="width:100%" value="' + tglhariini +
-        //         '" name="akhir_perjanjian[]" id="akhir_perjanjian_' + idp + '" class="border border-white">';
-        //     tr.appendChild(td);
-
-        //     // Kolom 7 Cuti
-        //     var td = document.createElement("td");
-        //     td.setAttribute("class", "border border-purple");
-        //     td.innerHTML += '<input type="text" value="" name="cuti[]" id="cuti_' + idp + '" class="border border-white">';
-        //     tr.appendChild(td);
-
-        //     tb_per.appendChild(tr);
-
-        //     idp = (idp - 1) + 2;
-        //     document.getElementById("idp").value = idp;
-        // }
-
-        // function tambahInternal() {
-        //     var idi = document.getElementById("idi").value;
-
-        //     var tb_int = document.getElementById("tb_int");
-        //     var tr = document.createElement("tr");
-        //     tr.setAttribute("id", "remove-internal" + idi);
-
-        //     // Kolom 1 Hapus
-        //     var td = document.createElement("td");
-        //     td.setAttribute("class", "text-center border border-teal w-0");
-        //     td.innerHTML += '<button class="btn" type="button" onclick="hapusInternal(' + idi +
-        //         ');"><i class="fa-regular fa-trash-can"></i> </button>';
-        //     tr.appendChild(td);
-
-        //     // Kolom 2 Tanggal Internal
-        //     var td = document.createElement("td");
-        //     td.setAttribute("class", "border border-teal");
-        //     td.innerHTML += '<input type="date" style="width:100%" value="' + tglhariini +
-        //         '" name="tgl_internal[]" id="tgl_internal_' + idi + '" class="border border-white">';
-        //     tr.appendChild(td);
-
-        //     // Kolom 3 Nama Surat Internal
-        //     var td = document.createElement("td");
-        //     td.setAttribute("class", "border border-teal");
-        //     td.innerHTML += "<select name='nminternal[]' style='width:100%;' id='nminternal_" + idi +
-        //         "' class='form-select' class='border border-white'>" +
-        //         "<option value='' hidden>-- Pilih Internal --</option>" +
-        //         "<?php foreach($j_internal as $key => $w){ ?>" +
-        //         "<option value='<?php echo $w->nmsurat; ?>'><?php echo $w->nmsurat; ?></option>" +
-        //         "<?php } ?>" +
-        //         "</select>";
-        //     tr.appendChild(td);
-
-        //     // Kolom 4 Keterangan 
-        //     var td = document.createElement("td");
-        //     td.setAttribute("class", "border border-teal");
-        //     td.innerHTML += '<input type="text" style="width:100%;" name="keterangan_internal[]" id="keterangan_internal_' +
-        //         idi + '" class="border border-white">';
-        //     tr.appendChild(td);
-
-        //     tb_int.appendChild(tr);
-
-        //     idi = (idi - 1) + 2;
-        //     document.getElementById("idi").value = idi;
-        // }
-
-        // function tambahStatus() {
-        //     var ids = document.getElementById("ids").value;
-
-        //     var tb_stt = document.getElementById("tb_stt");
-        //     var tr = document.createElement("tr");
-        //     tr.setAttribute("id", "remove-status" + ids);
-
-        //     // Kolom 1 Hapus
-        //     var td = document.createElement("td");
-        //     td.setAttribute("class", "text-center border border-pink w-0");
-        //     td.innerHTML += '<button class="btn" type="button" onclick="hapusStatus(' + ids +
-        //         ');"><i class="fa-regular fa-trash-can"></i> </button>';
-        //     tr.appendChild(td);
-
-        //     // Kolom 2 Tanggal Internal
-        //     var td = document.createElement("td");
-        //     td.setAttribute("class", "border border-pink");
-        //     td.innerHTML += '<input type="date" style="width:100%" value="' + tglhariini +
-        //         '" name="tgl_status[]" id="tgl_status_' + ids + '" class="border border-white">';
-        //     tr.appendChild(td);
-
-        //     // Kolom 3 Nama Surat Internal
-        //     var td = document.createElement("td");
-        //     td.setAttribute("class", "border border-pink");
-        //     td.innerHTML += "<select name='nmstatus[]' style='width:100%;' id='nmstatus_" + ids +
-        //         "' class='form-select' class='border border-white'>" +
-        //         "<option value='' hidden>-- Pilih Status --</option>" +
-        //         "<?php foreach($j_status as $key => $w){ ?>" +
-        //         "<option value='<?php echo $w->nmsurat; ?>'><?php echo $w->nmsurat; ?></option>" +
-        //         "<?php } ?>" +
-        //         "</select>";
-        //     tr.appendChild(td);
-
-        //     tb_stt.appendChild(tr);
-
-        //     ids = (ids - 1) + 2;
-        //     document.getElementById("ids").value = ids;
-        // }
-
-        // function hapusElemen(idf) {
-        //     $("#btn-remove" + idf).remove();
-        // }
-
-        // function hapusPerjanjian(idp) {
-        //     $("#remove-perjanjian" + idp).remove();
-        // }
-
-        // function hapusInternal(idi) {
-        //     $("#remove-internal" + idi).remove();
-        // }
-
-        // function hapusStatus(ids) {
-        //     $("#remove-status" + ids).remove();
-        // }
+        function tampil_table() {
+            $(".placeholder-basic").fadeIn(200);
+            $(".placeholder-status").fadeIn(200);
+            $.ajaxSetup({
+                headers: {
+                    'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                }
+            });
+            $.ajax({
+                url: "{{ url('getTableBasic') }}",
+                type: 'post',
+                data: {
+                    "_token": "{{ csrf_token() }}",
+                    'userid': "{{ $useridkar }}",
+                },
+                success: function(data) {
+                    $(".placeholder-basic").fadeOut(200);
+                    $('#tableBasic').html(data);
+                }
+            });
+            $.ajax({
+                url: "{{ url('getTableStatus') }}",
+                type: 'post',
+                data: {
+                    "_token": "{{ csrf_token() }}",
+                    'userid': "{{ $useridkar }}",
+                },
+                success: function(data) {
+                    $(".placeholder-status").fadeOut(200);
+                    $('#tableStatus').html(data);
+                }
+            });
+        }
     </script>
 @endsection

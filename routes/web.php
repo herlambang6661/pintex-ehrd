@@ -181,6 +181,10 @@ Route::controller(Penerimaan::class)->group(function () {
     Route::get('penerimaan/legalitas/edit/{id}', 'legalEdit')->name('penerimaan/legalitas/edit/{id}');
     Route::post('storedataLegalitas', 'storedataLegalitas');
     Route::post('storeUpdateKaryawan', 'storeUpdateKaryawan');
+    Route::post('getTableBasic', 'getTableBasic');
+    Route::post('getTableStatus', 'getTableStatus');
+    Route::post('basicdelete', 'basicdelete');
+    Route::post('statusdelete', 'statusdelete');
 });
 
 // Modules Absensi
