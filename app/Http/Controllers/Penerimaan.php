@@ -1752,7 +1752,7 @@ class Penerimaan extends Controller
 
     public function legalEdit($id)
     {
-        $data = DB::table('penerimaan_karyawan')->where('id', $id)->limit(1)->get();
+        $data = DB::table('penerimaan_karyawan')->where('userid', $id)->limit(1)->get();
         foreach ($data as $u) {
             $userid = $u->userid;
             $nama = $u->nama;

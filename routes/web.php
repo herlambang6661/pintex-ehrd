@@ -11,13 +11,16 @@ use App\Http\Controllers\Administrasi;
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\Datatables\DataOL;
 use App\Http\Controllers\Datatables\DataPos;
+use App\Http\Controllers\Datatables\DataUpah;
 use App\Http\Controllers\Datatables\DataLoker;
 use App\Http\Controllers\Datatables\DataShift;
 use App\Http\Controllers\Datatables\DataSurat;
+use App\Http\Controllers\Datatables\DataUsers;
 use App\Http\Controllers\Datatables\DataEntitas;
 use App\Http\Controllers\Datatables\DataLamaran;
 use App\Http\Controllers\Datatables\DataPayroll;
 use App\Http\Controllers\Datatables\DataKaryawan;
+use App\Http\Controllers\Datatables\DataPengguna;
 use App\Http\Controllers\Datatables\DataHariLibur;
 use App\Http\Controllers\Datatables\DataTerlambat;
 use App\Http\Controllers\Datatables\DataWawancara;
@@ -34,9 +37,7 @@ use App\Http\Controllers\Datatables\DataUserinfoMYSQL;
 use SebastianBergmann\CodeCoverage\Report\Html\Dashboard;
 use App\Http\Controllers\Datatables\DataLegalitasKaryawan;
 use App\Http\Controllers\Datatables\DataLegalitasKaryawanOl;
-use App\Http\Controllers\Datatables\DataPengguna;
-use App\Http\Controllers\Datatables\DataUpah;
-use App\Http\Controllers\Datatables\DataUsers;
+use App\Http\Controllers\Datatables\DataLegalitasKaryawanPhl;
 
 /*
 |--------------------------------------------------------------------------
@@ -70,6 +71,7 @@ Route::resources([
     'getOL' => DataOL::class,
     'getLegalitasKaryawan' => DataLegalitasKaryawan::class,
     'getLegalitasKaryawanOl' => DataLegalitasKaryawanOl::class,
+    'getLegalitasKaryawanPhl' => DataLegalitasKaryawanPhl::class,
     'getAbsensiLocal' => DataAbsensiLocal::class,
     'getUserODBC' => DataUserinfoODBC::class,
     'getUserMYSQL' => DataUserinfoMYSQL::class,

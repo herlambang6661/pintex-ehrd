@@ -41,7 +41,7 @@ class DataLegalitasKaryawanOl extends Controller
                     return $tgl_indo;
                 })
                 ->addColumn('action', function ($row) {
-                    $btn = ' <a href="legalitas/edit/' . $row->id . '" data-toggle="tooltip" data-placement="top" title="Edit Data Legalitas Karyawan" class="btn btn-sm btn-info btn-icon"><i class="fa-solid fa-file-signature"></i></a>';
+                    $btn = ' <a href="legalitas/edit/' . $row->userid . '" data-toggle="tooltip" data-placement="top" title="Edit Data Legalitas Karyawan" class="btn btn-sm btn-info btn-icon"><i class="fa-solid fa-file-signature"></i></a>';
                     return $btn;
                 })
                 ->rawColumns(['status', 'action', 'select_orders', 'ttl', 'umur'])

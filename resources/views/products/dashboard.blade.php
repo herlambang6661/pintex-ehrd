@@ -207,7 +207,9 @@
                                                     </div>
                                                     <div class="col">
                                                         <div class="text-truncate">
-                                                            <strong>{{ $item->nama }}</strong> {{ $item->nmsurat }} :
+                                                            <a
+                                                                href="penerimaan/legalitas/edit/{{ $item->userid }}"><strong>{{ $item->nama }}</strong></a>
+                                                            {{ $item->nmsurat }} :
                                                             <strong>{{ $item->suratket }}</strong>.
                                                         </div>
                                                         <div class="text-secondary">
@@ -266,7 +268,9 @@
                                                     </div>
                                                     <div class="col">
                                                         <div class="text-truncate">
-                                                            <strong>{{ $itemsp->nama }}</strong> :
+                                                            <a
+                                                                href="penerimaan/legalitas/edit/{{ $item->userid }}"><strong>{{ $itemsp->nama }}</strong></a>
+                                                            :
                                                             <strong>{{ $itemsp->keterangan }}</strong>.
                                                         </div>
                                                         <div class="text-secondary">

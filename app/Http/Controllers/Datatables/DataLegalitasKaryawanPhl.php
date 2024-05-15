@@ -8,7 +8,7 @@ use Yajra\DataTables\DataTables;
 use Illuminate\Routing\Controller;
 use Illuminate\Support\Facades\DB;
 
-class DataLegalitasKaryawan extends Controller
+class DataLegalitasKaryawanPhl extends Controller
 {
     public function __construct()
     {
@@ -23,7 +23,7 @@ class DataLegalitasKaryawan extends Controller
     {
         if ($request->ajax()) {
             $data = DB::table('penerimaan_karyawan')
-                ->where('status', 'like', '%Aktif%')
+                ->where('status', 'like', '%PHL%')
                 ->orderBy('nama', 'asc')
                 ->get();
             return DataTables::of($data)
