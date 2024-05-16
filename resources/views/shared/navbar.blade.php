@@ -6,7 +6,7 @@
         </button>
         <div class="navbar-nav flex-row order-md-last">
             <div class="d-none d-md-flex">
-                @if (Auth::user()->role == 'admin')
+                @if (Auth::user()->role != 'operator')
                     @if ($_SERVER['SERVER_NAME'] == '127.0.0.1')
                         <div class="nav-link px-0" style="margin-right: 20px">
                             <a href="{{ url('lokal/mesinfinger') }}" class="btn btn-green"><i class="fa-solid fa-robot"
