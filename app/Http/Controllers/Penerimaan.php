@@ -1761,8 +1761,6 @@ class Penerimaan extends Controller
         $penerimaan = "active";
         $legalitas = "active";
 
-        $perjanjian = DB::table('penerimaan_legalitas')->where('userid', $userid)->where('suratjns', 'like', '%perjanjian%')->orderBy('legalitastgl', 'asc')->get();
-
         $p_divisi = DB::table('daftar_pospekerjaan')->where('type', 'like', '%DIVISI%')->orderBy('desc', 'asc')->get();
         $p_bagian = DB::table('daftar_pospekerjaan')->where('type', 'like', '%BAGIAN%')->orderBy('desc', 'asc')->get();
         $p_jabatan = DB::table('daftar_pospekerjaan')->where('type', 'like', '%JABATAN%')->orderBy('desc', 'asc')->get();
@@ -1779,7 +1777,7 @@ class Penerimaan extends Controller
             'legalitas' => $legalitas,
             'getKar' => $data,
             // 'basic' => $basic,
-            'perjanjian' => $perjanjian,
+            // 'perjanjian' => $perjanjian,
             // 'intern' => $intern,
             // 'status' => $status,
             'p_divisi' => $p_divisi,
@@ -2260,6 +2258,48 @@ class Penerimaan extends Controller
         ';
     }
 
+
+    public function getTablePerjanjian(Request $request)
+    {
+        $perjanjian = DB::table('penerimaan_legalitas')->where('userid', $request->userid)->where('suratjns', 'like', '%perjanjian%')->orderBy('legalitastgl', 'asc')->get();
+
+        echo '
+            <div class="table-responsive">
+                <table
+                    class="table table-sm table-hover table-bordered table-vcenter card-table text-nowrap border border-purple"
+                    id="tb_per">
+                    <thead>
+                        <tr>
+                            <th class="w-1"></th>
+                            <th class="text-center">Tanggal</th>
+                            <th class="text-center">Nama Surat</th>
+                            <th class="text-center">Jenis Surat</th>
+                            <th class="text-center">Awal</th>
+                            <th class="text-center">Akhir</th>
+                            <th class="text-center">Cuti</th>
+                        </tr>
+                    </thead>
+                    <tbody>';
+        foreach ($perjanjian as $per => $p) {
+            echo '
+                        <tr>
+                            <td class="text-center" style="padding: 2px 2px 2px 2px">
+                                <button type="button" class="btn btn-sm btn-danger btn-icon btn-delete" data-id="' . $p->id . '" data-userid="' . $p->userid . '" data-nama="' . $p->nmsurat . '" data-tipe="' . $p->suratjns . '" data-url="perjanjiandelete"><i class="fa-solid fa-trash-can"></i></button>
+                            </td>
+                            <td class="text-end">' . date('d/m/Y', strtotime($p->legalitastgl)) . '</td>
+                            <td>' . $p->nmsurat . '</td>
+                            <td>' . $p->suratket . '</td>
+                            <td>' . date('d/m/Y', strtotime($p->tglaw))  . '</td>
+                            <td>' . date('d/m/Y', strtotime($p->tglak))  . '</td>
+                            <td>' . $p->sacuti . '</td>
+                        </tr>';
+        }
+        echo        '</tbody>
+                </table>
+            </div>
+        ';
+    }
+
     public function getTableInternal(Request $request)
     {
         $intern = DB::table('penerimaan_legalitas')->where('userid', $request->userid)->where('suratjns', 'like', '%intern%')->orderBy('legalitastgl', 'asc')->get();
@@ -2619,6 +2659,27 @@ class Penerimaan extends Controller
     public function basicdelete(Request $request)
     {
         DB::table('penerimaan_legalitas')->where('id', $request->id)->delete();
+
+        return response()->json(['success' => 'User Deleted Successfully!']);
+    }
+    public function perjanjiandelete(Request $request)
+    {
+        DB::table('penerimaan_legalitas')->where('id', $request->id)->delete();
+        $perjanjian = DB::table('penerimaan_legalitas')->where('userid', $request->userid)->where('suratjns', 'like', '%perjanjian%')->orderBy('legalitastgl', 'desc')->first();
+
+        if ($perjanjian) {
+            $per = $perjanjian->suratket . " (" . $perjanjian->tglaw . " s.d. " . $perjanjian->tglak . ")";
+        } else {
+            $per = null;
+        }
+
+        $editKaryawan = DB::table('penerimaan_karyawan')
+            ->where('userid', $request->userid)
+            ->limit(1)
+            ->update([
+                'perjanjian' => $per,
+                'updated_at' => date('Y-m-d H:i:s'),
+            ]);
 
         return response()->json(['success' => 'User Deleted Successfully!']);
     }

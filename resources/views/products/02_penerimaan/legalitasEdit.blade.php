@@ -14,13 +14,13 @@
 
         td.cuspad2 {
             /* padding-top: 0.5px;
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                padding-bottom: 0.5px;
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                padding-right: 0.5px;
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                padding-left: 0.5px;
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                margin-top: 5px;
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                margin-bottom: 5px;
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                margin-right: 5px;
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                margin-left: 5px; */
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                        padding-bottom: 0.5px;
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                        padding-right: 0.5px;
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                        padding-left: 0.5px;
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                        margin-top: 5px;
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                        margin-bottom: 5px;
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                        margin-right: 5px;
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                        margin-left: 5px; */
         }
 
         .overlay {
@@ -321,45 +321,24 @@
                                                     </button>
                                                 </h3>
                                                 <input id="idp" value="1" type="hidden">
-                                                <div class="table-responsive">
-                                                    <table
-                                                        class="table table-sm table-hover table-bordered table-vcenter card-table text-nowrap border border-purple"
-                                                        id="tb_per">
-                                                        <thead>
-                                                            <tr>
-                                                                <th class="w-1"></th>
-                                                                <th class="text-center">Tanggal</th>
-                                                                <th class="text-center">Nama Surat</th>
-                                                                <th class="text-center">Jenis Surat</th>
-                                                                <th class="text-center">Awal</th>
-                                                                <th class="text-center">Akhir</th>
-                                                                <th class="text-center">Cuti</th>
-                                                            </tr>
-                                                        </thead>
-                                                        <tbody>
-                                                            @foreach ($perjanjian as $per => $p)
-                                                                <tr>
-                                                                    <td class="text-center"
-                                                                        style="padding: 2px 2px 2px 2px">
-                                                                        <a href="#"
-                                                                            class="btn btn-sm btn-info btn-icon"><i
-                                                                                class="fa-solid fa-edit"></i></a>
-                                                                        <a href="#"
-                                                                            class="btn btn-sm btn-danger btn-icon"><i
-                                                                                class="fa-solid fa-trash-can"></i></a>
-                                                                    </td>
-                                                                    <td class="text-end">
-                                                                        {{ date('d/m/Y', strtotime($p->legalitastgl)) }}
-                                                                    </td>
-                                                                    <td>{{ $p->nmsurat }}</td>
-                                                                    <td>{{ $p->suratket }}</td>
-                                                                    <td>{{ date('d/m/Y', strtotime($p->tglaw)) }}</td>
-                                                                    <td>{{ date('d/m/Y', strtotime($p->tglak)) }}</td>
-                                                                    <td>{{ $p->sacuti }}</td>
-                                                                </tr>
-                                                            @endforeach
-                                                        </tbody>
-                                                    </table>
+                                                <div id="tablePerjanjian"></div>
+                                                <div class="col-sm-12 col-md-12 placeholder-perjanjian"
+                                                    style="display:none">
+                                                    <div class="ph-item">
+                                                        <div class="ph-col-12">
+                                                            <div class="ph-row">
+                                                                <div class="ph-col-12"></div>
+                                                                <div class="ph-col-12"></div>
+                                                                <div class="ph-col-12"></div>
+                                                                <div class="ph-col-12"></div>
+                                                                <div class="ph-col-12"></div>
+                                                                <div class="ph-col-12"></div>
+                                                                <div class="ph-col-12"></div>
+                                                                <div class="ph-col-12"></div>
+                                                                <div class="ph-col-12"></div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
                                                 </div>
                                             </div>
                                         </div>
@@ -710,6 +689,8 @@
                     sendURL = "{{ url('statusdelete') }}";
                 } else if (userURL == "internaldelete") {
                     sendURL = "{{ url('internaldelete') }}";
+                } else if (userURL == "perjanjiandelete") {
+                    sendURL = "{{ url('perjanjiandelete') }}";
                 }
                 console.log(userURL);
                 Swal.fire({
@@ -789,6 +770,7 @@
 
         function tampil_table() {
             $(".placeholder-basic").fadeIn(200);
+            $(".placeholder-perjanjian").fadeIn(200);
             $(".placeholder-status").fadeIn(200);
             $(".placeholder-internal").fadeIn(200);
             $.ajaxSetup({
@@ -806,6 +788,18 @@
                 success: function(data) {
                     $(".placeholder-basic").fadeOut(200);
                     $('#tableBasic').html(data);
+                }
+            });
+            $.ajax({
+                url: "{{ url('getTablePerjanjian') }}",
+                type: 'post',
+                data: {
+                    "_token": "{{ csrf_token() }}",
+                    'userid': "{{ $useridkar }}",
+                },
+                success: function(data) {
+                    $(".placeholder-perjanjian").fadeOut(200);
+                    $('#tablePerjanjian').html(data);
                 }
             });
             $.ajax({

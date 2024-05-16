@@ -186,9 +186,11 @@ Route::controller(Penerimaan::class)->group(function () {
     Route::post('storedataLegalitas', 'storedataLegalitas');
     Route::post('storeUpdateKaryawan', 'storeUpdateKaryawan');
     Route::post('getTableBasic', 'getTableBasic');
+    Route::post('getTablePerjanjian', 'getTablePerjanjian');
     Route::post('getTableInternal', 'getTableInternal');
     Route::post('getTableStatus', 'getTableStatus');
     Route::post('basicdelete', 'basicdelete');
+    Route::post('perjanjiandelete', 'perjanjiandelete');
     Route::post('statusdelete', 'statusdelete');
     Route::post('internaldelete', 'internaldelete');
 });
