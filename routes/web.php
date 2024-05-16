@@ -11,6 +11,7 @@ use App\Http\Controllers\Administrasi;
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\Datatables\DataOL;
 use App\Http\Controllers\Datatables\DataPos;
+use App\Http\Controllers\Datatables\DataCuti;
 use App\Http\Controllers\Datatables\DataUpah;
 use App\Http\Controllers\Datatables\DataLoker;
 use App\Http\Controllers\Datatables\DataShift;
@@ -68,6 +69,7 @@ Route::resources([
     'getLamaran' => DataLamaran::class,
     'getWawancara' => DataWawancara::class,
     'getKaryawan' => DataKaryawan::class,
+    'getCuti' => DataCuti::class,
     'getOL' => DataOL::class,
     'getLegalitasKaryawan' => DataLegalitasKaryawan::class,
     'getLegalitasKaryawanOl' => DataLegalitasKaryawanOl::class,

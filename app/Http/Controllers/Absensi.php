@@ -34,6 +34,19 @@ class Absensi extends Controller
         ]);
     }
 
+    public function cuti()
+    {
+        $judul = "Aktifitas Cuti";
+        $absensi = "active";
+        $cuti = "active";
+
+        return view('products/03_absensi.cuti', [
+            'judul' => $judul,
+            'absensi' => $absensi,
+            'cuti' => $cuti,
+        ]);
+    }
+
     public function fingerprint()
     {
         $judul = "Fingerprint";

@@ -205,7 +205,7 @@
         </div>
         <div class="collapse navbar-collapse" id="sidebar-menu">
             <ul class="navbar-nav pt-lg-3">
-                @if(Auth::user()->role == 'super')
+                @if (Auth::user()->role == 'super')
                     <li class="nav-item {{ !empty($dashboard) ? $dashboard : '' }}">
                         <a class="nav-link" href="{{ url('dashboard') }}">
                             <span
@@ -248,9 +248,10 @@
                             <div class="dropdown-menu-columns">
                                 <div class="dropdown-menu-column">
                                     <a class="dropdown-item" href="{{ url('daftar/pos') }}">
-                                        <svg xmlns="http://www.w3.org/2000/svg" style="margin-right: 10px" width="24"
-                                            height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor"
-                                            stroke-width="2" stroke-linecap="round" stroke-linejoin="round"
+                                        <svg xmlns="http://www.w3.org/2000/svg" style="margin-right: 10px"
+                                            width="24" height="24" viewBox="0 0 24 24" fill="none"
+                                            stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                                            stroke-linejoin="round"
                                             class="icon icon-tabler icons-tabler-outline icon-tabler-pin">
                                             <path stroke="none" d="M0 0h24v24H0z" fill="none" />
                                             <path d="M15 4.5l-4 4l-4 1.5l-1.5 1.5l7 7l1.5 -1.5l1.5 -4l4 -4" />
@@ -260,9 +261,10 @@
                                         Pos-Pekerjaan
                                     </a>
                                     <a class="dropdown-item" href="{{ url('daftar/tariflembur') }}">
-                                        <svg xmlns="http://www.w3.org/2000/svg" style="margin-right: 10px" width="24"
-                                            height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor"
-                                            stroke-width="2" stroke-linecap="round" stroke-linejoin="round"
+                                        <svg xmlns="http://www.w3.org/2000/svg" style="margin-right: 10px"
+                                            width="24" height="24" viewBox="0 0 24 24" fill="none"
+                                            stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                                            stroke-linejoin="round"
                                             class="icon icon-tabler icons-tabler-outline icon-tabler-ticket">
                                             <path stroke="none" d="M0 0h24v24H0z" fill="none" />
                                             <path d="M15 5l0 2" />
@@ -275,9 +277,10 @@
                                     </a>
                                     <a class="dropdown-item {{ !empty($libur) ? $libur : '' }}"
                                         href="{{ url('daftar/liburnas') }}">
-                                        <svg xmlns="http://www.w3.org/2000/svg" style="margin-right: 10px" width="24"
-                                            height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor"
-                                            stroke-width="2" stroke-linecap="round" stroke-linejoin="round"
+                                        <svg xmlns="http://www.w3.org/2000/svg" style="margin-right: 10px"
+                                            width="24" height="24" viewBox="0 0 24 24" fill="none"
+                                            stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                                            stroke-linejoin="round"
                                             class="icon icon-tabler icons-tabler-outline icon-tabler-flag">
                                             <path stroke="none" d="M0 0h24v24H0z" fill="none" />
                                             <path
@@ -287,9 +290,10 @@
                                         Hari Libur Nasional
                                     </a>
                                     <a class="dropdown-item" href="{{ url('daftar/surat') }}">
-                                        <svg xmlns="http://www.w3.org/2000/svg" style="margin-right: 10px" width="24"
-                                            height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor"
-                                            stroke-width="2" stroke-linecap="round" stroke-linejoin="round"
+                                        <svg xmlns="http://www.w3.org/2000/svg" style="margin-right: 10px"
+                                            width="24" height="24" viewBox="0 0 24 24" fill="none"
+                                            stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                                            stroke-linejoin="round"
                                             class="icon icon-tabler icons-tabler-outline icon-tabler-mail">
                                             <path stroke="none" d="M0 0h24v24H0z" fill="none" />
                                             <path
@@ -299,9 +303,10 @@
                                         Surat-Surat
                                     </a>
                                     <a class="dropdown-item" href="{{ url('daftar/jadwalshift') }}">
-                                        <svg xmlns="http://www.w3.org/2000/svg" style="margin-right: 10px" width="24"
-                                            height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor"
-                                            stroke-width="2" stroke-linecap="round" stroke-linejoin="round"
+                                        <svg xmlns="http://www.w3.org/2000/svg" style="margin-right: 10px"
+                                            width="24" height="24" viewBox="0 0 24 24" fill="none"
+                                            stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                                            stroke-linejoin="round"
                                             class="icon icon-tabler icons-tabler-outline icon-tabler-calendar">
                                             <path stroke="none" d="M0 0h24v24H0z" fill="none" />
                                             <path
@@ -315,9 +320,10 @@
                                         Jadwal Shift
                                     </a>
                                     <a class="dropdown-item" href="{{ url('daftar/entitas') }}">
-                                        <svg xmlns="http://www.w3.org/2000/svg" style="margin-right: 10px" width="24"
-                                            height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor"
-                                            stroke-width="2" stroke-linecap="round" stroke-linejoin="round"
+                                        <svg xmlns="http://www.w3.org/2000/svg" style="margin-right: 10px"
+                                            width="24" height="24" viewBox="0 0 24 24" fill="none"
+                                            stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                                            stroke-linejoin="round"
                                             class="icon icon-tabler icons-tabler-outline icon-tabler-settings-cog">
                                             <path stroke="none" d="M0 0h24v24H0z" fill="none" />
                                             <path
@@ -334,9 +340,10 @@
                                         Daftar Entitas
                                     </a>
                                     <a class="dropdown-item" href="{{ url('daftar/users') }}">
-                                        <svg xmlns="http://www.w3.org/2000/svg" style="margin-right: 10px" width="24"
-                                            height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor"
-                                            stroke-width="2" stroke-linecap="round" stroke-linejoin="round"
+                                        <svg xmlns="http://www.w3.org/2000/svg" style="margin-right: 10px"
+                                            width="24" height="24" viewBox="0 0 24 24" fill="none"
+                                            stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                                            stroke-linejoin="round"
                                             class="icon icon-tabler icons-tabler-outline icon-tabler-user">
                                             <path stroke="none" d="M0 0h24v24H0z" fill="none" />
                                             <path d="M8 7a4 4 0 1 0 8 0a4 4 0 0 0 -8 0" />
@@ -346,9 +353,10 @@
                                     </a>
                                     <a class="dropdown-item {{ !empty($loker) ? $loker : '' }}"
                                         href="{{ url('daftar/loker') }}">
-                                        <svg xmlns="http://www.w3.org/2000/svg" style="margin-right: 10px" width="24"
-                                            height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor"
-                                            stroke-width="2" stroke-linecap="round" stroke-linejoin="round"
+                                        <svg xmlns="http://www.w3.org/2000/svg" style="margin-right: 10px"
+                                            width="24" height="24" viewBox="0 0 24 24" fill="none"
+                                            stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                                            stroke-linejoin="round"
                                             class="icon icon-tabler icons-tabler-outline icon-tabler-briefcase">
                                             <path stroke="none" d="M0 0h24v24H0z" fill="none" />
                                             <path
@@ -361,9 +369,10 @@
                                     </a>
                                     <a class="dropdown-item {{ !empty($upah) ? $upah : '' }}"
                                         href="{{ url('daftar/upah') }}">
-                                        <svg xmlns="http://www.w3.org/2000/svg" style="margin-right: 10px" width="24"
-                                            height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor"
-                                            stroke-width="2" stroke-linecap="round" stroke-linejoin="round"
+                                        <svg xmlns="http://www.w3.org/2000/svg" style="margin-right: 10px"
+                                            width="24" height="24" viewBox="0 0 24 24" fill="none"
+                                            stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                                            stroke-linejoin="round"
                                             class="icon icon-tabler icons-tabler-outline icon-tabler-premium-rights">
                                             <path stroke="none" d="M0 0h24v24H0z" fill="none" />
                                             <path d="M12 12m-9 0a9 9 0 1 0 18 0a9 9 0 1 0 -18 0" />
@@ -383,9 +392,10 @@
                             data-bs-auto-close="false" role="button"
                             aria-expanded="{{ !empty($penerimaan) ? 'true' : 'false' }}">
                             <span class="nav-link-icon d-md-none d-lg-inline-block">
-                                <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-user-search"
-                                    width="24" height="24" viewBox="0 0 24 24" stroke-width="1.5"
-                                    stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+                                <svg xmlns="http://www.w3.org/2000/svg"
+                                    class="icon icon-tabler icon-tabler-user-search" width="24" height="24"
+                                    viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" fill="none"
+                                    stroke-linecap="round" stroke-linejoin="round">
                                     <path stroke="none" d="M0 0h24v24H0z" fill="none" />
                                     <path d="M8 7a4 4 0 1 0 8 0a4 4 0 0 0 -8 0" />
                                     <path d="M6 21v-2a4 4 0 0 1 4 -4h1.5" />
@@ -404,8 +414,9 @@
                                         href="{{ url('penerimaan/lamaran') }}">
                                         <svg xmlns="http://www.w3.org/2000/svg" style="margin-right: 10px"
                                             class="icon icon-tabler icon-tabler-clipboard-text" width="24"
-                                            height="24" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor"
-                                            fill="none" stroke-linecap="round" stroke-linejoin="round">
+                                            height="24" viewBox="0 0 24 24" stroke-width="1.5"
+                                            stroke="currentColor" fill="none" stroke-linecap="round"
+                                            stroke-linejoin="round">
                                             <path stroke="none" d="M0 0h24v24H0z" fill="none" />
                                             <path
                                                 d="M9 5h-2a2 2 0 0 0 -2 2v12a2 2 0 0 0 2 2h10a2 2 0 0 0 2 -2v-12a2 2 0 0 0 -2 -2h-2" />
@@ -420,8 +431,9 @@
                                         href="{{ url('penerimaan/wawancara') }}">
                                         <svg xmlns="http://www.w3.org/2000/svg" style="margin-right: 10px"
                                             class="icon icon-tabler icon-tabler-heart-handshake" width="24"
-                                            height="24" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor"
-                                            fill="none" stroke-linecap="round" stroke-linejoin="round">
+                                            height="24" viewBox="0 0 24 24" stroke-width="1.5"
+                                            stroke="currentColor" fill="none" stroke-linecap="round"
+                                            stroke-linejoin="round">
                                             <path stroke="none" d="M0 0h24v24H0z" fill="none" />
                                             <path
                                                 d="M19.5 12.572l-7.5 7.428l-7.5 -7.428a5 5 0 1 1 7.5 -6.566a5 5 0 1 1 7.5 6.572" />
@@ -436,8 +448,8 @@
                                         href="{{ url('penerimaan/karyawan') }}">
                                         <svg xmlns="http://www.w3.org/2000/svg" style="margin-right: 10px"
                                             class="icon icon-tabler icon-tabler-users" width="24" height="24"
-                                            viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" fill="none"
-                                            stroke-linecap="round" stroke-linejoin="round">
+                                            viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor"
+                                            fill="none" stroke-linecap="round" stroke-linejoin="round">
                                             <path stroke="none" d="M0 0h24v24H0z" fill="none" />
                                             <path d="M9 7m-4 0a4 4 0 1 0 8 0a4 4 0 1 0 -8 0" />
                                             <path d="M3 21v-2a4 4 0 0 1 4 -4h4a4 4 0 0 1 4 4v2" />
@@ -450,8 +462,9 @@
                                         href="{{ url('penerimaan/legalitas') }}">
                                         <svg xmlns="http://www.w3.org/2000/svg" style="margin-right: 10px"
                                             class="icon icon-tabler icon-tabler-address-book" width="24"
-                                            height="24" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor"
-                                            fill="none" stroke-linecap="round" stroke-linejoin="round">
+                                            height="24" viewBox="0 0 24 24" stroke-width="1.5"
+                                            stroke="currentColor" fill="none" stroke-linecap="round"
+                                            stroke-linejoin="round">
                                             <path stroke="none" d="M0 0h24v24H0z" fill="none" />
                                             <path
                                                 d="M20 6v12a2 2 0 0 1 -2 2h-10a2 2 0 0 1 -2 -2v-12a2 2 0 0 1 2 -2h10a2 2 0 0 1 2 2z" />
@@ -500,9 +513,10 @@
                                 <div class="dropdown-menu-column">
                                     <a class="dropdown-item {{ !empty($list) ? $list : '' }}"
                                         href="{{ url('absensi/absensi') }}">
-                                        <svg xmlns="http://www.w3.org/2000/svg" style="margin-right: 10px" width="24"
-                                            height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor"
-                                            stroke-width="2" stroke-linecap="round" stroke-linejoin="round"
+                                        <svg xmlns="http://www.w3.org/2000/svg" style="margin-right: 10px"
+                                            width="24" height="24" viewBox="0 0 24 24" fill="none"
+                                            stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                                            stroke-linejoin="round"
                                             class="icon icon-tabler icons-tabler-outline icon-tabler-id">
                                             <path stroke="none" d="M0 0h24v24H0z" fill="none" />
                                             <path
@@ -517,9 +531,10 @@
                                     <a class="dropdown-item {{ !empty($komunikasi) ? $komunikasi : '' }}"
                                         href="{{ url('absensi/komunikasi') }}">
                                         <svg xmlns="http://www.w3.org/2000/svg" style="margin-right:10px"
-                                            class="icon icon-tabler icon-tabler-mail-fast" width="24" height="24"
-                                            viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" fill="none"
-                                            stroke-linecap="round" stroke-linejoin="round">
+                                            class="icon icon-tabler icon-tabler-mail-fast" width="24"
+                                            height="24" viewBox="0 0 24 24" stroke-width="1.5"
+                                            stroke="currentColor" fill="none" stroke-linecap="round"
+                                            stroke-linejoin="round">
                                             <path stroke="none" d="M0 0h24v24H0z" fill="none" />
                                             <path d="M3 7h3" />
                                             <path d="M3 11h2" />
@@ -530,14 +545,16 @@
                                         Surat Komunikasi
                                     </a>
                                     <a class="dropdown-item {{ !empty($cuti) ? $cuti : '' }}"
-                                        href="{{ url('penerimaan/cuti') }}">
-                                        <svg xmlns="http://www.w3.org/2000/svg" style="margin-right:10px" width="24"
-                                            height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor"
-                                            stroke-width="2" stroke-linecap="round" stroke-linejoin="round"
+                                        href="{{ url('absensi/cuti') }}">
+                                        <svg xmlns="http://www.w3.org/2000/svg" style="margin-right:10px"
+                                            width="24" height="24" viewBox="0 0 24 24" fill="none"
+                                            stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                                            stroke-linejoin="round"
                                             class="icon icon-tabler icons-tabler-outline icon-tabler-beach">
                                             <path stroke="none" d="M0 0h24v24H0z" fill="none" />
                                             <path d="M17.553 16.75a7.5 7.5 0 0 0 -10.606 0" />
-                                            <path d="M18 3.804a6 6 0 0 0 -8.196 2.196l10.392 6a6 6 0 0 0 -2.196 -8.196z" />
+                                            <path
+                                                d="M18 3.804a6 6 0 0 0 -8.196 2.196l10.392 6a6 6 0 0 0 -2.196 -8.196z" />
                                             <path
                                                 d="M16.732 10c1.658 -2.87 2.225 -5.644 1.268 -6.196c-.957 -.552 -3.075 1.326 -4.732 4.196" />
                                             <path d="M15 9l-3 5.196" />
@@ -576,9 +593,10 @@
                                 <div class="dropdown-menu-column">
                                     <a class="dropdown-item {{ !empty($payroll) ? 'show' : '' }}"
                                         href="{{ url('administrasi/payroll') }}">
-                                        <svg xmlns="http://www.w3.org/2000/svg" style="margin-right: 10px" width="24"
-                                            height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor"
-                                            stroke-width="2" stroke-linecap="round" stroke-linejoin="round"
+                                        <svg xmlns="http://www.w3.org/2000/svg" style="margin-right: 10px"
+                                            width="24" height="24" viewBox="0 0 24 24" fill="none"
+                                            stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                                            stroke-linejoin="round"
                                             class="icon icon-tabler icons-tabler-outline icon-tabler-file-dollar">
                                             <path stroke="none" d="M0 0h24v24H0z" fill="none" />
                                             <path d="M14 3v4a1 1 0 0 0 1 1h4" />
@@ -591,9 +609,10 @@
                                     </a>
                                     <a class="dropdown-item {{ !empty($terlambat) ? 'show' : '' }}"
                                         href="{{ url('administrasi/terlambat') }}">
-                                        <svg xmlns="http://www.w3.org/2000/svg" style="margin-right: 10px" width="24"
-                                            height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor"
-                                            stroke-width="2" stroke-linecap="round" stroke-linejoin="round"
+                                        <svg xmlns="http://www.w3.org/2000/svg" style="margin-right: 10px"
+                                            width="24" height="24" viewBox="0 0 24 24" fill="none"
+                                            stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                                            stroke-linejoin="round"
                                             class="icon icon-tabler icons-tabler-outline icon-tabler-clock-exclamation">
                                             <path stroke="none" d="M0 0h24v24H0z" fill="none" />
                                             <path d="M20.986 12.502a9 9 0 1 0 -5.973 7.98" />
@@ -604,9 +623,10 @@
                                         Karyawan Terlambat
                                     </a>
                                     <a class="dropdown-item" href="{{ url('administrasi/bpjs') }}">
-                                        <svg xmlns="http://www.w3.org/2000/svg" style="margin-right: 10px" width="24"
-                                            height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor"
-                                            stroke-width="2" stroke-linecap="round" stroke-linejoin="round"
+                                        <svg xmlns="http://www.w3.org/2000/svg" style="margin-right: 10px"
+                                            width="24" height="24" viewBox="0 0 24 24" fill="none"
+                                            stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                                            stroke-linejoin="round"
                                             class="icon icon-tabler icons-tabler-outline icon-tabler-ambulance">
                                             <path stroke="none" d="M0 0h24v24H0z" fill="none" />
                                             <path d="M7 17m-2 0a2 2 0 1 0 4 0a2 2 0 1 0 -4 0" />
@@ -619,8 +639,8 @@
                                     <a class="dropdown-item" href="./layout-vertical-transparent.html">
                                         <svg xmlns="http://www.w3.org/2000/svg" style="margin-right: 10px"
                                             class="icon icon-tabler icon-tabler-qrcode" width="24" height="24"
-                                            viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" fill="none"
-                                            stroke-linecap="round" stroke-linejoin="round">
+                                            viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor"
+                                            fill="none" stroke-linecap="round" stroke-linejoin="round">
                                             <path stroke="none" d="M0 0h24v24H0z" fill="none" />
                                             <path
                                                 d="M4 4m0 1a1 1 0 0 1 1 -1h4a1 1 0 0 1 1 1v4a1 1 0 0 1 -1 1h-4a1 1 0 0 1 -1 -1z" />
@@ -643,8 +663,9 @@
                                     <a class="dropdown-item" href="./layout-vertical-transparent.html">
                                         <svg xmlns="http://www.w3.org/2000/svg" style="margin-right: 10px"
                                             class="icon icon-tabler icon-tabler-book-upload" width="24"
-                                            height="24" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor"
-                                            fill="none" stroke-linecap="round" stroke-linejoin="round">
+                                            height="24" viewBox="0 0 24 24" stroke-width="1.5"
+                                            stroke="currentColor" fill="none" stroke-linecap="round"
+                                            stroke-linejoin="round">
                                             <path stroke="none" d="M0 0h24v24H0z" fill="none" />
                                             <path d="M14 20h-8a2 2 0 0 1 -2 -2v-12a2 2 0 0 1 2 -2h12v5" />
                                             <path d="M11 16h-5a2 2 0 0 0 -2 2" />
@@ -663,7 +684,8 @@
                             <span class="nav-link-icon d-md-none d-lg-inline-block">
                                 <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-database"
                                     width="24" height="24" viewBox="0 0 24 24" stroke-width="1.5"
-                                    stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+                                    stroke="currentColor" fill="none" stroke-linecap="round"
+                                    stroke-linejoin="round">
                                     <path stroke="none" d="M0 0h24v24H0z" fill="none" />
                                     <path d="M12 6m-8 0a8 3 0 1 0 16 0a8 3 0 1 0 -16 0" />
                                     <path d="M4 6v6a8 3 0 0 0 16 0v-6" />
@@ -721,7 +743,9 @@
                         </div>
                     </li>
                 @elseif(Auth::user()->role == 'admin')
+
                 @elseif(Auth::user()->role == 'hrd')
+
                 @elseif(Auth::user()->role == 'operator')
                     <li class="nav-item {{ !empty($dashboard) ? $dashboard : '' }}">
                         <a class="nav-link" href="{{ url('dashboard') }}">
@@ -774,9 +798,10 @@
                                 <div class="dropdown-menu-column">
                                     <a class="dropdown-item {{ !empty($list) ? $list : '' }}"
                                         href="{{ url('absensi/absensi') }}">
-                                        <svg xmlns="http://www.w3.org/2000/svg" style="margin-right: 10px" width="24"
-                                            height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor"
-                                            stroke-width="2" stroke-linecap="round" stroke-linejoin="round"
+                                        <svg xmlns="http://www.w3.org/2000/svg" style="margin-right: 10px"
+                                            width="24" height="24" viewBox="0 0 24 24" fill="none"
+                                            stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                                            stroke-linejoin="round"
                                             class="icon icon-tabler icons-tabler-outline icon-tabler-id">
                                             <path stroke="none" d="M0 0h24v24H0z" fill="none" />
                                             <path
@@ -791,9 +816,10 @@
                                     <a class="dropdown-item {{ !empty($komunikasi) ? $komunikasi : '' }}"
                                         href="{{ url('absensi/komunikasi') }}">
                                         <svg xmlns="http://www.w3.org/2000/svg" style="margin-right:10px"
-                                            class="icon icon-tabler icon-tabler-mail-fast" width="24" height="24"
-                                            viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" fill="none"
-                                            stroke-linecap="round" stroke-linejoin="round">
+                                            class="icon icon-tabler icon-tabler-mail-fast" width="24"
+                                            height="24" viewBox="0 0 24 24" stroke-width="1.5"
+                                            stroke="currentColor" fill="none" stroke-linecap="round"
+                                            stroke-linejoin="round">
                                             <path stroke="none" d="M0 0h24v24H0z" fill="none" />
                                             <path d="M3 7h3" />
                                             <path d="M3 11h2" />
@@ -804,14 +830,16 @@
                                         Surat Komunikasi
                                     </a>
                                     <a class="dropdown-item {{ !empty($cuti) ? $cuti : '' }}"
-                                        href="{{ url('penerimaan/cuti') }}">
-                                        <svg xmlns="http://www.w3.org/2000/svg" style="margin-right:10px" width="24"
-                                            height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor"
-                                            stroke-width="2" stroke-linecap="round" stroke-linejoin="round"
+                                        href="{{ url('absensi/cuti') }}">
+                                        <svg xmlns="http://www.w3.org/2000/svg" style="margin-right:10px"
+                                            width="24" height="24" viewBox="0 0 24 24" fill="none"
+                                            stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                                            stroke-linejoin="round"
                                             class="icon icon-tabler icons-tabler-outline icon-tabler-beach">
                                             <path stroke="none" d="M0 0h24v24H0z" fill="none" />
                                             <path d="M17.553 16.75a7.5 7.5 0 0 0 -10.606 0" />
-                                            <path d="M18 3.804a6 6 0 0 0 -8.196 2.196l10.392 6a6 6 0 0 0 -2.196 -8.196z" />
+                                            <path
+                                                d="M18 3.804a6 6 0 0 0 -8.196 2.196l10.392 6a6 6 0 0 0 -2.196 -8.196z" />
                                             <path
                                                 d="M16.732 10c1.658 -2.87 2.225 -5.644 1.268 -6.196c-.957 -.552 -3.075 1.326 -4.732 4.196" />
                                             <path d="M15 9l-3 5.196" />
