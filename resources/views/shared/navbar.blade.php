@@ -177,20 +177,29 @@
                     aria-label="Open user menu">
                     <?php
                     $role = Auth::user()->role;
+                    $username = Auth::user()->username;
                     
                     if ($role === 'admin') {
-                        $avatarUrl = asset('assets/static/avatars/avatar.png');
+                        if ($username === 'alvin') {
+                            $avatarUrl = asset('assets/static/avatars/1.jpg');
+                        } elseif ($username === 'Brian') {
+                            $avatarUrl = asset('assets/static/avatars/2.jpg');
+                        } elseif ($username === 'felixjesse') {
+                            $avatarUrl = asset('assets/static/avatars/3.jpg');
+                        } else {
+                            $avatarUrl = asset('assets/static/avatars/avatar.png');
+                        }
                     } elseif ($role === 'hrd') {
                         $avatarUrl = asset('assets/static/avatars/hrd.png');
                     } elseif ($role === 'operator') {
                         $avatarUrl = asset('assets/static/avatars/operator.png');
                     } else {
-                        $avatarUrl = 'url_to_default_avatar_image';
+                        $avatarUrl = asset('assets/static/avatars/default.png');
                     }
                     ?>
-                    <span class="avatar avatar-sm rounded" style="background-image: url('{{ $avatarUrl }}')">
+                    <span class="avatar avatar-sm rounded"
+                        style="background-image: url('{{ $avatarUrl }}')"></span>
 
-                    </span>
                     <div class="d-none d-xl-block ps-2">
                         <div style="text-transform: capitalize;">{{ Auth::user()->name }}</div>
                         <div class="mt-1 small text-muted" style="text-transform: capitalize;">
