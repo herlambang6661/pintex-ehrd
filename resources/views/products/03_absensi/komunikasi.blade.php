@@ -174,25 +174,26 @@
                                             </svg>
                                             List Surat</a>
                                     </li>
-                                    @if(Auth::user()->role != 'operator')
-                                    <li class="nav-item" role="presentation">
-                                        <a href="#tab-acc-komunikasi" class="nav-link" data-bs-toggle="tab"
-                                            aria-selected="false" role="tab" tabindex="-1">
-                                            <svg xmlns="http://www.w3.org/2000/svg" style="margin-right:5px" width="24"
-                                                height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor"
-                                                stroke-width="2" stroke-linecap="round" stroke-linejoin="round"
-                                                class="icon icon-tabler icons-tabler-outline icon-tabler-list-check text-green">
-                                                <path stroke="none" d="M0 0h24v24H0z" fill="none" />
-                                                <path d="M3.5 5.5l1.5 1.5l2.5 -2.5" />
-                                                <path d="M3.5 11.5l1.5 1.5l2.5 -2.5" />
-                                                <path d="M3.5 17.5l1.5 1.5l2.5 -2.5" />
-                                                <path d="M11 6l9 0" />
-                                                <path d="M11 12l9 0" />
-                                                <path d="M11 18l9 0" />
-                                            </svg>
-                                            Acc Surat Komunikasi
-                                        </a>
-                                    </li>
+                                    @if (Auth::user()->role != 'operator')
+                                        <li class="nav-item" role="presentation">
+                                            <a href="#tab-acc-komunikasi" class="nav-link" data-bs-toggle="tab"
+                                                aria-selected="false" role="tab" tabindex="-1">
+                                                <svg xmlns="http://www.w3.org/2000/svg" style="margin-right:5px"
+                                                    width="24" height="24" viewBox="0 0 24 24" fill="none"
+                                                    stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                                                    stroke-linejoin="round"
+                                                    class="icon icon-tabler icons-tabler-outline icon-tabler-list-check text-green">
+                                                    <path stroke="none" d="M0 0h24v24H0z" fill="none" />
+                                                    <path d="M3.5 5.5l1.5 1.5l2.5 -2.5" />
+                                                    <path d="M3.5 11.5l1.5 1.5l2.5 -2.5" />
+                                                    <path d="M3.5 17.5l1.5 1.5l2.5 -2.5" />
+                                                    <path d="M11 6l9 0" />
+                                                    <path d="M11 12l9 0" />
+                                                    <path d="M11 18l9 0" />
+                                                </svg>
+                                                Acc Surat Komunikasi
+                                            </a>
+                                        </li>
                                     @endif
                                     <li class="nav-item" role="presentation">
                                         <a href="#tab-create-new" class="nav-link" data-bs-toggle="tab"
@@ -210,30 +211,32 @@
                                             </svg>
                                             Buat Formulir Komunikasi</a>
                                     </li>
-                                    <li class="nav-item" role="presentation">
-                                        <a href="#tab-by-date" class="nav-link" data-bs-toggle="tab"
-                                            aria-selected="true" role="tab">
-                                            <svg xmlns="http://www.w3.org/2000/svg" style="margin-right:5px"
-                                                width="24" height="24" viewBox="0 0 24 24" fill="none"
-                                                stroke="currentColor" stroke-width="2" stroke-linecap="round"
-                                                stroke-linejoin="round"
-                                                class="icon icon-tabler icons-tabler-outline icon-tabler-calendar-month text-pink">
-                                                <path stroke="none" d="M0 0h24v24H0z" fill="none" />
-                                                <path
-                                                    d="M4 7a2 2 0 0 1 2 -2h12a2 2 0 0 1 2 2v12a2 2 0 0 1 -2 2h-12a2 2 0 0 1 -2 -2v-12z" />
-                                                <path d="M16 3v4" />
-                                                <path d="M8 3v4" />
-                                                <path d="M4 11h16" />
-                                                <path d="M7 14h.013" />
-                                                <path d="M10.01 14h.005" />
-                                                <path d="M13.01 14h.005" />
-                                                <path d="M16.015 14h.005" />
-                                                <path d="M13.015 17h.005" />
-                                                <path d="M7.01 17h.005" />
-                                                <path d="M10.01 17h.005" />
-                                            </svg>
-                                            Berdasarkan Absensi</a>
-                                    </li>
+                                    @if (Auth::user()->role != 'operator')
+                                        <li class="nav-item" role="presentation">
+                                            <a href="#tab-by-date" class="nav-link" data-bs-toggle="tab"
+                                                aria-selected="true" role="tab">
+                                                <svg xmlns="http://www.w3.org/2000/svg" style="margin-right:5px"
+                                                    width="24" height="24" viewBox="0 0 24 24" fill="none"
+                                                    stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                                                    stroke-linejoin="round"
+                                                    class="icon icon-tabler icons-tabler-outline icon-tabler-calendar-month text-pink">
+                                                    <path stroke="none" d="M0 0h24v24H0z" fill="none" />
+                                                    <path
+                                                        d="M4 7a2 2 0 0 1 2 -2h12a2 2 0 0 1 2 2v12a2 2 0 0 1 -2 2h-12a2 2 0 0 1 -2 -2v-12z" />
+                                                    <path d="M16 3v4" />
+                                                    <path d="M8 3v4" />
+                                                    <path d="M4 11h16" />
+                                                    <path d="M7 14h.013" />
+                                                    <path d="M10.01 14h.005" />
+                                                    <path d="M13.01 14h.005" />
+                                                    <path d="M16.015 14h.005" />
+                                                    <path d="M13.015 17h.005" />
+                                                    <path d="M7.01 17h.005" />
+                                                    <path d="M10.01 17h.005" />
+                                                </svg>
+                                                Berdasarkan Absensi</a>
+                                        </li>
+                                    @endif
                                     <li class="nav-item ms-auto" role="presentation">
                                         <a href="#" class="nav-link" data-bs-toggle="modal" title="Cari STB"
                                             data-bs-target="#modal-large">
@@ -257,12 +260,12 @@
                                             class="table table-striped table-bordered table-hover text-nowrap datatable-list-komunikasi">
                                         </table>
                                     </div>
-                                    @if(Auth::user()->role != 'operator')
-                                    <div class="tab-pane" id="tab-acc-komunikasi" role="tabpanel">
-                                        <table style="width: 100%"
-                                            class="table table-striped table-bordered table-hover text-nowrap datatable-acc-komunikasi">
-                                        </table>
-                                    </div>
+                                    @if (Auth::user()->role != 'operator')
+                                        <div class="tab-pane" id="tab-acc-komunikasi" role="tabpanel">
+                                            <table style="width: 100%"
+                                                class="table table-striped table-bordered table-hover text-nowrap datatable-acc-komunikasi">
+                                            </table>
+                                        </div>
                                     @endif
                                     <div class="tab-pane" id="tab-create-new" role="tabpanel">
                                         <div class="row">
@@ -826,8 +829,7 @@
                     "<'card-body border-bottom py-3' <'row'<'col-sm-6'l><'col-sm-6'f>> >" +
                     "<'table-responsive' <'col-sm-12'tr> >" +
                     "<'card-footer' <'row'<'col-sm-8'i><'col-sm-4'p> >>",
-                buttons: [
-                    {
+                buttons: [{
                         text: '<i class="fa-solid fa-filter" style="margin-right:5px"></i>',
                         className: 'btn btn-blue',
                         attr: {
@@ -1046,7 +1048,7 @@
                     },
                 ],
             });
-            
+
             /*------------------------------------------
             --------------------------------------------
             Submit Form
@@ -1262,7 +1264,7 @@
                 });
             });
 
-            
+
             /*------------------------------------------
                 --------------------------------------------
                 Delete
@@ -1278,8 +1280,9 @@
                 var token = $("meta[name='csrf-token']").attr("content");
                 Swal.fire({
                     icon: 'warning',
-                    title: 'Hapus Data '+suratid,
-                    text: 'Apakah anda yakin ingin menghapus ' + suratid + " : "+ nama + ' ( '+keterangan+' ) ?',
+                    title: 'Hapus Data ' + suratid,
+                    text: 'Apakah anda yakin ingin menghapus ' + suratid + " : " + nama + ' ( ' +
+                        keterangan + ' ) ?',
                     showCancelButton: true,
                     confirmButtonColor: '#d33',
                     cancelButtonColor: '#3085d6',
@@ -1304,7 +1307,8 @@
                                 })
                             },
                             success: function(data) {
-                                $('.datatable-list-komunikasi').DataTable().ajax.reload();
+                                $('.datatable-list-komunikasi').DataTable().ajax
+                                    .reload();
                                 const Toast = Swal.mixin({
                                     toast: true,
                                     position: "top-end",

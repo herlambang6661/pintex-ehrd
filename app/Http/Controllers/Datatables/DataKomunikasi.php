@@ -7,6 +7,7 @@ use Illuminate\Http\Request;
 use Yajra\DataTables\DataTables;
 use Illuminate\Routing\Controller;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Auth;
 
 class DataKomunikasi extends Controller
 {
@@ -22,12 +23,41 @@ class DataKomunikasi extends Controller
     public function index(Request $request)
     {
         if ($request->ajax()) {
-            $data = DB::table('absensi_komunikasiitm AS b')
-                ->select('b.id', 'b.noform', 'b.tanggal', 'b.nama', 'b.suratid', 'b.sst', 'b.keterangan', 'b.statussurat')
-                // ->join('absensi_komunikasiitm AS b', 'a.noform', '=', 'b.noform')
-                ->whereBetween('b.tanggal', [date('Y-m-01'), date('Y-m-t')])
-                ->orderBy('b.id', 'desc')
-                ->get();
+            if (Auth::user()->admin == '1') {
+                $unit = 'UNIT 1';
+                $data = DB::table('absensi_komunikasiitm AS b')
+                    ->select('b.id', 'b.noform', 'b.tanggal', 'b.nama', 'b.suratid', 'b.sst', 'b.keterangan', 'b.statussurat')
+                    ->join('penerimaan_karyawan AS k', 'b.userid', '=', 'k.userid')
+                    ->where('k.bagian', '=', $unit)
+                    ->whereBetween('b.tanggal', [date('Y-m-01'), date('Y-m-t')])
+                    ->orderBy('b.id', 'desc')
+                    ->get();
+            } elseif (Auth::user()->admin == '2') {
+                $unit = 'UNIT 2';
+                $data = DB::table('absensi_komunikasiitm AS b')
+                    ->select('b.id', 'b.noform', 'b.tanggal', 'b.nama', 'b.suratid', 'b.sst', 'b.keterangan', 'b.statussurat')
+                    ->join('penerimaan_karyawan AS k', 'b.userid', '=', 'k.userid')
+                    ->where('k.bagian', '=', $unit)
+                    ->whereBetween('b.tanggal', [date('Y-m-01'), date('Y-m-t')])
+                    ->orderBy('b.id', 'desc')
+                    ->get();
+            } elseif (Auth::user()->admin == '3') {
+                $unit = 'GUDANG';
+                $data = DB::table('absensi_komunikasiitm AS b')
+                    ->select('b.id', 'b.noform', 'b.tanggal', 'b.nama', 'b.suratid', 'b.sst', 'b.keterangan', 'b.statussurat')
+                    ->join('penerimaan_karyawan AS k', 'b.userid', '=', 'k.userid')
+                    ->where('k.bagian', '=', $unit)
+                    ->whereBetween('b.tanggal', [date('Y-m-01'), date('Y-m-t')])
+                    ->orderBy('b.id', 'desc')
+                    ->get();
+            }
+
+            // $data = DB::table('absensi_komunikasiitm AS b')
+            // ->select('b.id', 'b.noform', 'b.tanggal', 'b.nama', 'b.suratid', 'b.sst', 'b.keterangan', 'b.statussurat')
+            // // ->join('absensi_komunikasiitm AS b', 'a.noform', '=', 'b.noform')
+            // ->whereBetween('b.tanggal', [date('Y-m-01'), date('Y-m-t')])
+            // ->orderBy('b.id', 'desc')
+            // ->get();
             return DataTables::of($data)
                 ->addIndexColumn()
 

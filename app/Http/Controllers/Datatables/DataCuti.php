@@ -8,6 +8,7 @@ use Yajra\DataTables\DataTables;
 use Illuminate\Routing\Controller;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Database\Eloquent\Builder;
 
 class DataCuti extends Controller
 {
@@ -23,38 +24,50 @@ class DataCuti extends Controller
     public function index(Request $request)
     {
         if ($request->ajax()) {
-            // if (Auth::user()->admin == '1') {
-            //     $unit = 'UNIT 1';
-            //     $data = DB::table('penerimaan_legalitas AS l')
-            //         ->join('penerimaan_karyawan AS k', 'l.userid', '=', 'k.userid')
-            //         ->where('l.suratjns', 'like', '%perjanjian%')
-            //         ->where('k.bagian', 'like', '%' . $unit . '%')
-            //         ->where('l.sacuti', '>', '0')
-            //         ->where('l.tglaw', '<=', date('Y-m-d'))
-            //         ->where('l.tglak', '>=', date('Y-m-d'))
-            //         ->orderBy('l.nama', 'asc')
-            //         ->get();
-            // } elseif (Auth::user()->admin == '2') {
-            //     $unit = 'UNIT 2';
-            //     $data = DB::table('penerimaan_legalitas AS l')
-            //         ->join('penerimaan_karyawan AS k', 'l.userid', '=', 'k.userid')
-            //         ->where('l.suratjns', 'like', '%perjanjian%')
-            //         ->where('k.bagian', 'like', '%' . $unit . '%')
-            //         ->where('l.sacuti', '>', '0')
-            //         ->where('l.tglaw', '<=', date('Y-m-d'))
-            //         ->where('l.tglak', '>=', date('Y-m-d'))
-            //         ->orderBy('l.nama', 'asc')
-            //         ->get();
-            // }
+            if (Auth::user()->admin == '1') {
+                $unit = 'UNIT 1';
+                $data = DB::table('penerimaan_legalitas AS l')
+                    ->join('penerimaan_karyawan AS k', 'l.userid', '=', 'k.userid')
+                    ->where('l.suratjns', 'like', '%perjanjian%')
+                    ->where('k.bagian', 'like', '%' . $unit . '%')
+                    ->where('l.sacuti', '>', '0')
+                    ->where('l.tglaw', '<=', date('Y-m-d'))
+                    ->where('l.tglak', '>=', date('Y-m-d'))
+                    ->orderBy('l.nama', 'asc')
+                    ->get();
+            } elseif (Auth::user()->admin == '2') {
+                $unit = 'UNIT 2';
+                $data = DB::table('penerimaan_legalitas AS l')
+                    ->join('penerimaan_karyawan AS k', 'l.userid', '=', 'k.userid')
+                    ->where('l.suratjns', 'like', '%perjanjian%')
+                    ->orWhere('k.bagian', 'like', '%' . $unit . '%')
+                    ->orWhere('k.bagian', 'like', '%WCR & WORKSHOP%')
+                    ->orWhere('k.bagian', 'like', '%TFO%')
+                    ->where('l.sacuti', '>', '0')
+                    ->where('l.tglaw', '<=', date('Y-m-d'))
+                    ->where('l.tglak', '>=', date('Y-m-d'))
+                    ->orderBy('l.nama', 'asc')
+                    ->get();
+            } elseif (Auth::user()->admin == '3') {
+                $unit = 'GUDANG';
+                $data = DB::table('penerimaan_legalitas AS l')
+                    ->join('penerimaan_karyawan AS k', 'l.userid', '=', 'k.userid')
+                    ->where('l.suratjns', 'like', '%perjanjian%')
+                    ->where('l.sacuti', '>', '0')
+                    ->where('l.tglaw', '<=', date('Y-m-d'))
+                    ->where('l.tglak', '>=', date('Y-m-d'))
+                    ->orderBy('l.nama', 'asc')
+                    ->get();
+            }
 
-            $data = DB::table('penerimaan_legalitas AS l')
-                ->join('penerimaan_karyawan AS k', 'l.userid', '=', 'k.userid')
-                ->where('l.suratjns', 'like', '%perjanjian%')
-                ->where('l.sacuti', '>', '0')
-                ->where('l.tglaw', '<=', date('Y-m-d'))
-                ->where('l.tglak', '>=', date('Y-m-d'))
-                ->orderBy('l.nama', 'asc')
-                ->get();
+            // $data = DB::table('penerimaan_legalitas AS l')
+            //     ->join('penerimaan_karyawan AS k', 'l.userid', '=', 'k.userid')
+            //     ->where('l.suratjns', 'like', '%perjanjian%')
+            //     ->where('l.sacuti', '>', '0')
+            //     ->where('l.tglaw', '<=', date('Y-m-d'))
+            //     ->where('l.tglak', '>=', date('Y-m-d'))
+            //     ->orderBy('l.nama', 'asc')
+            //     ->get();
 
             return DataTables::of($data)
                 ->addIndexColumn()

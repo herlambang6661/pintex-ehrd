@@ -666,8 +666,11 @@ class Absensi extends Controller
             'created_at' => date('Y-m-d H:i:s'),
         ]);
         for ($i = 0; $i < count($request->userid); $i++) {
-
-            $tanggalArray = $this->getBetweenDates($request->tanggalitm[$i], $request->tanggalitm2[$i]);
+            if ($request->tanggalitm[$i] == $request->tanggalitm2[$i]) {
+                $tanggalArray = $request->tanggalitm[$i];
+            } else {
+                $tanggalArray = $this->getBetweenDates($request->tanggalitm[$i], $request->tanggalitm2[$i]);
+            }
 
             for ($j = 0; $j < count($tanggalArray); $j++) {
                 $checkitm = DB::table('absensi_komunikasiitm')->insert([
