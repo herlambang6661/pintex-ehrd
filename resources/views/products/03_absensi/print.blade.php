@@ -79,7 +79,7 @@
                     </i>
                 @endforeach
                 <br>
-                <table class="table table-sm table-bordered text-nowrap"
+                <table class="table table-sm table-bordered"
                     style="color: black; border-color: black;text-transform: uppercase; font-size:11px">
                     <thead class="text-black" style="border-color: black;">
                         <th style="border-color: black;" class="text-center">No</th>
