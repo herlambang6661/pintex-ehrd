@@ -669,7 +669,7 @@ class Absensi extends Controller
             if ($request->tanggalitm2[$i] != null) {
                 $tanggalArray = $this->getBetweenDates($request->tanggalitm[$i], $request->tanggalitm2[$i]);
             } else {
-                $tanggalArray = $this->getBetweenDates($request->tanggalitm[$i], $request->tanggalitm[$i]);
+                $tanggalArray = 1;
             }
 
             for ($j = 0; $j < count($tanggalArray); $j++) {
