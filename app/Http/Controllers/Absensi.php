@@ -665,7 +665,7 @@ class Absensi extends Controller
             'keteranganform' => $request->keteranganform,
             'created_at' => date('Y-m-d H:i:s'),
         ]);
-        for ($i = 0; $i < count($request->userid); $i++) {
+        for ($i = 0; $i < count($request->idform); $i++) {
 
             $tanggalArray = $this->getBetweenDates($request->tanggalitm[$i], $request->tanggalitm2[$i]);
 

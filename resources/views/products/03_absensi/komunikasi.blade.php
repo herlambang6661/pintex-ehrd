@@ -1442,6 +1442,7 @@
             td.innerHTML += sst;
             td.innerHTML += '<input type="hidden" name="sst[]" value="' + sst + '">';
             td.innerHTML += '<input type="hidden" name="userid[]" id="userid' + idf + '">';
+            td.innerHTML += '<input type="hidden" name="idform[]" value="' + idf + '">';
             tr.appendChild(td);
             // Kolom 3 TANGGAL
             var td = document.createElement("td");
