@@ -796,7 +796,7 @@
                         <div class="dropdown-menu {{ !empty($absensi) ? 'show' : '' }}">
                             <div class="dropdown-menu-columns">
                                 <div class="dropdown-menu-column">
-                                    <a class="dropdown-item {{ !empty($list) ? $list : '' }}"
+                                    {{-- <a class="dropdown-item {{ !empty($list) ? $list : '' }}"
                                         href="{{ url('absensi/absensi') }}">
                                         <svg xmlns="http://www.w3.org/2000/svg" style="margin-right: 10px"
                                             width="24" height="24" viewBox="0 0 24 24" fill="none"
@@ -812,7 +812,7 @@
                                             <path d="M7 16l10 0" />
                                         </svg>
                                         List Absensi
-                                    </a>
+                                    </a> --}}
                                     <a class="dropdown-item {{ !empty($komunikasi) ? $komunikasi : '' }}"
                                         href="{{ url('absensi/komunikasi') }}">
                                         <svg xmlns="http://www.w3.org/2000/svg" style="margin-right:10px"
