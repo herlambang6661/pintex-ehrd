@@ -666,13 +666,15 @@ class Absensi extends Controller
             'created_at' => date('Y-m-d H:i:s'),
         ]);
         for ($i = 0; $i < count($request->idform); $i++) {
-            if ($request->tanggalitm2[$i] != null) {
+            if ($request->totaltanggal[$i] == '2') {
                 $tanggalArray = $this->getBetweenDates($request->tanggalitm[$i], $request->tanggalitm2[$i]);
+                $jml = count($tanggalArray);
             } else {
-                $tanggalArray = 1;
+                $tanggalArray = $this->getBetweenDates($request->tanggalitm[$i], $request->tanggalitm[$i]);
+                $jml = 1;
             }
 
-            for ($j = 0; $j < count($tanggalArray); $j++) {
+            for ($j = 0; $j < $jml; $j++) {
                 $checkitm = DB::table('absensi_komunikasiitm')->insert([
                     'entitas' => 'PINTEX',
                     'noform' => $kodeSurat,

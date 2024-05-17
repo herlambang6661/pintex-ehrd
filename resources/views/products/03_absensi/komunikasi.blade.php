@@ -1449,17 +1449,17 @@
             td.setAttribute("style", "width:250px");
             if (sst == "½") {
                 td.innerHTML += '<input type="date" style="width:100px" name="tanggalitm[]" id="tanggalitm' + idf +
-                    '" class="form-control border border-dark" value="<?= date('Y-m-d') ?>">';
+                    '" class="form-control border border-dark" value="<?= date('Y-m-d') ?>"><input type="hidden" name="totaltanggal[]" value="1">';
             } else if (sst == "GL") {
                 td.innerHTML += '<input type="date" style="width:100px" name="tanggalitm[]" id="tanggalitm' + idf +
-                    '" class="form-control border border-dark" value="<?= date('Y-m-d') ?>">';
+                    '" class="form-control border border-dark" value="<?= date('Y-m-d') ?>"><input type="hidden" name="totaltanggal[]" value="1">';
             } else {
                 td.innerHTML +=
                     '<div class="row"><div class="col"><input type="date" style="width:120px" name="tanggalitm[]" id="tanggalitm' +
                     idf +
                     '" class="form-control border border-dark" value="<?= date('Y-m-d') ?>"></div><div class="col"><input type="date" name="tanggalitm2[]" style="width:120px" id="tanggalitm' +
                     idf +
-                    '" class="form-control border border-dark" value="<?= date('Y-m-d') ?>"></div></div>';
+                    '" class="form-control border border-dark" value="<?= date('Y-m-d') ?>"></div></div><input type="hidden" name="totaltanggal[]" value="2">';
             }
             tr.appendChild(td);
             // Kolom 4 STB
