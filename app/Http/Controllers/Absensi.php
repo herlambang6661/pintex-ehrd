@@ -666,7 +666,7 @@ class Absensi extends Controller
             'created_at' => date('Y-m-d H:i:s'),
         ]);
         for ($i = 0; $i < count($request->idform); $i++) {
-            if ($request->tanggalitm2[$i]) {
+            if ($request->tanggalitm2[$i] != null) {
                 $tanggalArray = $this->getBetweenDates($request->tanggalitm[$i], $request->tanggalitm2[$i]);
             } else {
                 $tanggalArray = $this->getBetweenDates($request->tanggalitm[$i], $request->tanggalitm[$i]);
