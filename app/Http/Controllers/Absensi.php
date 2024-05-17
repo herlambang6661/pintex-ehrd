@@ -628,18 +628,18 @@ class Absensi extends Controller
     function storeKomunikasi(Request $request)
     {
 
-        $request->validate(
-            [
-                'nama' => 'required|array|min:1',
-                'tanggalform' => 'required',
-                'dibuat' => 'required',
-            ],
-            [
-                "nama.*"  => [
-                    'required',
-                ]
-            ]
-        );
+        // $request->validate(
+        //     [
+        //         'nama' => 'required|array|min:1',
+        //         'tanggalform' => 'required',
+        //         'dibuat' => 'required',
+        //     ],
+        //     [
+        //         "nama.*"  => [
+        //             'required',
+        //         ]
+        //     ]
+        // );
 
         $noform = date('y') . "0000";
         // // GET NOFORM
