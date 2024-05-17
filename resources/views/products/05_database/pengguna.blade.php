@@ -38,15 +38,30 @@
                                 <div class="card">
                                     <div class="card-body p-4 text-center">
                                         @if ($user->role === 'admin')
-                                            <span class="avatar avatar-xl mb-3 rounded"
-                                                style="background-image: url({{ asset('assets/static/avatars/avatar.png') }})"></span>
+                                            @if ($user->username === 'alvin')
+                                                <span class="avatar avatar-xl mb-3 rounded"
+                                                    style="background-image: url({{ asset('assets/static/avatars/1.jpg') }})"></span>
+                                            @elseif ($user->username === 'Brian')
+                                                <span class="avatar avatar-xl mb-3 rounded"
+                                                    style="background-image: url({{ asset('assets/static/avatars/2.jpg') }})"></span>
+                                            @elseif ($user->username === 'felixjesse')
+                                                <span class="avatar avatar-xl mb-3 rounded"
+                                                    style="background-image: url({{ asset('assets/static/avatars/3.jpg') }})"></span>
+                                            @else
+                                                <span class="avatar avatar-xl mb-3 rounded"
+                                                    style="background-image: url({{ asset('assets/static/avatars/avatar.png') }})"></span>
+                                            @endif
                                         @elseif ($user->role === 'hrd')
                                             <span class="avatar avatar-xl mb-3 rounded"
                                                 style="background-image: url({{ asset('assets/static/avatars/hrd.png') }})"></span>
-                                        @elseif ($user->role == 'operator')
+                                        @elseif ($user->role === 'operator')
                                             <span class="avatar avatar-xl mb-3 rounded"
                                                 style="background-image: url({{ asset('assets/static/avatars/operator.png') }})"></span>
+                                        @else
+                                            <span class="avatar avatar-xl mb-3 rounded"
+                                                style="background-image: url({{ asset('assets/static/avatars/default.png') }})"></span>
                                         @endif
+
                                         <h3 class="m-0 mb-1"><a href="#">{{ $user->name }}</a></h3>
                                         <h3 class="m-0 mb-1"><a href="#">{{ $user->username }}</a></h3>
                                         <div class="mt-3">
