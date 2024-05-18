@@ -56,11 +56,18 @@ class DataKaryawan extends Controller
                     return $btn;
                 })
 
+
+                ->addColumn('copystb', function ($row) {
+                    $btn = '<a href="javascript:void(0)" onclick="copyContent(' . $row->stb . ')">' . $row->stb . '</a>';
+                    $btn = $btn . '<p id="stbText' . $row->stb . '" hidden>' . $row->stb . '</p>';
+                    return $btn;
+                })
+
                 ->addColumn('actionBPJS', function ($row) {
                     $btn = ' <a href="#editBPJS" data-bs-toggle="modal" data-toggle="tooltip" data-placement="top" title="Lihat Detail Data BPJS Karyawan" data-item="' . $row->nama . '" data-id="' . $row->id . '" class="btn btn-sm btn-info btn-icon"><i class="fa-solid fa-user-pen"></i></a>';
                     return $btn;
                 })
-                ->rawColumns(['status', 'action', 'actionBPJS', 'select_orders', 'ttl', 'umur', 'bpjs_jkk', 'bpjs_jkm', 'bpjs_jp', 'bpjs_jht', 'bpjs_ks',])
+                ->rawColumns(['status', 'action', 'actionBPJS', 'select_orders', 'ttl', 'umur', 'bpjs_jkk', 'bpjs_jkm', 'bpjs_jp', 'bpjs_jht', 'bpjs_ks', 'copystb',])
                 ->make(true);
         }
         return view('products.02_penerimaan.wawancara');

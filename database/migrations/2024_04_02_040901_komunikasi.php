@@ -26,6 +26,7 @@ return new class extends Migration
             $table->string('entitas');
             $table->string('noform');
             $table->date('tanggal');
+            $table->date('tanggalw2')->nullable();
             $table->string('userid')->nullable();
             $table->string('nama')->nullable();
             $table->string('suratid')->nullable();

@@ -209,7 +209,7 @@
                                 @if (Auth::user()->admin == '3')
                                     Admin Gudang
                                 @else
-                                    Admin {{ Auth::user()->admin }}
+                                    Admin Unit {{ Auth::user()->admin }}
                                 @endif
                             @endif
                         </div>

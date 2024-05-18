@@ -80,7 +80,7 @@
                 @endforeach
                 <br>
                 <table class="table table-sm table-bordered"
-                    style="color: black; border-color: black;text-transform: uppercase; font-size:11px">
+                    style="color: black; border-color: black;text-transform: uppercase; font-size:10px">
                     <thead class="text-black" style="border-color: black;">
                         <th style="border-color: black;" class="text-center">No</th>
                         <th style="border-color: black;" class="text-center">Tanggal</th>
@@ -94,9 +94,16 @@
                     <?php $i = 1; ?>
                     <tbody class="text-black" style="border-color: black;">
                         @foreach ($getDataItm as $key => $w)
+                            <?php
+                            if ($w->tanggal == $w->tanggal2) {
+                                $tgls = Carbon::parse($w->tanggal)->format('d/m/Y');
+                            } else {
+                                $tgls = Carbon::parse($w->tanggal)->format('d') . '-' . Carbon::parse($w->tanggal2)->format('d/m/Y');
+                            }
+                            ?>
                             <tr>
                                 <td class="text-center">{{ $i }}</td>
-                                <td class="text-center">{{ Carbon::parse($w->tanggal)->format('d/m/Y') }}</td>
+                                <td class="text-center">{{ $tgls }}</td>
                                 <td class="text-center">{{ $w->stb }}</td>
                                 <td class="text-center">{{ $w->nama }}</td>
                                 <td class="text-center">{{ $w->suratid }}</td>

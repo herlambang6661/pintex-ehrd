@@ -627,20 +627,6 @@ class Absensi extends Controller
 
     function storeKomunikasi(Request $request)
     {
-
-        // $request->validate(
-        //     [
-        //         'nama' => 'required|array|min:1',
-        //         'tanggalform' => 'required',
-        //         'dibuat' => 'required',
-        //     ],
-        //     [
-        //         "nama.*"  => [
-        //             'required',
-        //         ]
-        //     ]
-        // );
-
         $noform = date('y') . "0000";
         // // GET NOFORM
         $checknoform = DB::table('absensi_komunikasi')->orderBy('noform', 'desc')->limit('1')->get();
@@ -657,6 +643,7 @@ class Absensi extends Controller
             $kodeSurat = "K" . date('y') . "0001";
         }
 
+        $jml = count($request->idf);
         $check = DB::table('absensi_komunikasi')->insert([
             'entitas' => 'PINTEX',
             'noform' => $kodeSurat,
@@ -665,30 +652,35 @@ class Absensi extends Controller
             'keteranganform' => $request->keteranganform,
             'created_at' => date('Y-m-d H:i:s'),
         ]);
-        for ($i = 0; $i < count($request->idform); $i++) {
-            if ($request->totaltanggal[$i] == '2') {
-                $tanggalArray = $this->getBetweenDates($request->tanggalitm[$i], $request->tanggalitm2[$i]);
-                $jml = count($tanggalArray);
-            } else {
-                $tanggalArray = $this->getBetweenDates($request->tanggalitm[$i], $request->tanggalitm[$i]);
-                $jml = 1;
-            }
+        for ($i = 0; $i < $jml; $i++) {
+            // if ($request->totaltanggal[$i] == '2') {
+            // $tanggalArray = $this->getBetweenDates($request->tanggalitm[$i], $request->tanggalitm2[$i]);
+            // $jmlTgl = count($tanggalArray);
+            $tglaw = $request->tanggalitm[$i];
+            $tglak = empty($request->tanggalitm2[$i]) ? $request->tanggalitm[$i] : $request->tanggalitm2[$i];
+            // } else {
+            // $tanggalArray = $this->getBetweenDates($request->tanggalitm[$i], $request->tanggalitm[$i]);
+            // $jmlTgl = 1;
+            //     $tglaw = $request->tanggalitm[$i];
+            //     $tglak = $request->tanggalitm[$i];
+            // }
 
-            for ($j = 0; $j < $jml; $j++) {
-                $checkitm = DB::table('absensi_komunikasiitm')->insert([
-                    'entitas' => 'PINTEX',
-                    'noform' => $kodeSurat,
-                    'tanggal' => $tanggalArray[$j],
-                    'userid' => $request->userid[$i],
-                    'nama' => $request->nama[$i],
-                    'suratid' => $request->suratid[$i],
-                    'sst' => $request->sst[$i],
-                    'keterangan' => $request->keterangan[$i],
-                    'dibuat' => $request->dibuat,
-                    'statussurat' => "PENGAJUAN",
-                    'created_at' => date('Y-m-d H:i:s'),
-                ]);
-            }
+            // for ($j = 0; $j < $jmlTgl; $j++) {
+            $checkitm = DB::table('absensi_komunikasiitm')->insert([
+                'entitas' => 'PINTEX',
+                'noform' => $kodeSurat,
+                'tanggal' => $tglaw,
+                'tanggal2' => $tglak,
+                'userid' => $request->userid[$i],
+                'nama' => $request->nama[$i],
+                'suratid' => $request->suratid[$i],
+                'sst' => $request->sst[$i],
+                'keterangan' => $request->keterangan[$i],
+                'dibuat' => $request->dibuat,
+                'statussurat' => "PENGAJUAN",
+                'created_at' => date('Y-m-d H:i:s'),
+            ]);
+            // }
         }
 
         $arr = array('msg' => 'Something goes to wrong. Please try later', 'status' => false);
@@ -705,7 +697,7 @@ class Absensi extends Controller
             ->get();
 
         $checkitm = DB::table('absensi_komunikasiitm AS k')
-            ->select('k.tanggal', 's.stb', 'k.nama', 'k.suratid', 'k.sst', 'k.keterangan')
+            ->select('k.tanggal', 'k.tanggal2', 's.stb', 'k.nama', 'k.suratid', 'k.sst', 'k.keterangan')
             ->join('penerimaan_karyawan AS s', 's.userid', '=', 'k.userid')
             ->where('noform', $id)
             ->get();

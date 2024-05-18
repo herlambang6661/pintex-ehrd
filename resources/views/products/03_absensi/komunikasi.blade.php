@@ -275,7 +275,7 @@
                                                     <div class="col-12">
                                                         <h3 class="card-title">Pilih Surat Komunikasi</h3>
                                                         <div class="row g-2 align-items-center">
-                                                            <div class="col-6 col-sm-4 col-md-2 col-xl ">
+                                                            <div class="col-6 col-sm-4 col-md-4 col-xl ">
                                                                 <a href="#"
                                                                     class="btn btn-outline-primary w-100 shadow rounded"
                                                                     onclick="tambahItem('C'); return false;">
@@ -295,7 +295,7 @@
                                                                     Surat Cuti
                                                                 </a>
                                                             </div>
-                                                            <div class="col-6 col-sm-4 col-md-2 col-xl ">
+                                                            <div class="col-6 col-sm-4 col-md-4 col-xl ">
                                                                 <a href="#"
                                                                     class="btn btn-outline-info w-100 shadow rounded"
                                                                     onclick="tambahItem('S'); return false;">
@@ -316,7 +316,7 @@
                                                                     Surat Sakit
                                                                 </a>
                                                             </div>
-                                                            <div class="col-6 col-sm-4 col-md-2 col-xl ">
+                                                            <div class="col-6 col-sm-4 col-md-4 col-xl ">
                                                                 <a href="#"
                                                                     class="btn btn-outline-success w-100 shadow rounded"
                                                                     onclick="tambahItem('CK'); return false;">
@@ -335,7 +335,7 @@
                                                                     Surat Cuti Khusus
                                                                 </a>
                                                             </div>
-                                                            <div class="col-6 col-sm-4 col-md-2 col-xl ">
+                                                            <div class="col-6 col-sm-4 col-md-4 col-xl ">
                                                                 <a href="#"
                                                                     class="btn btn-outline-warning w-100 shadow rounded"
                                                                     onclick="tambahItem('I'); return false;">
@@ -357,7 +357,7 @@
                                                             </div>
                                                         </div>
                                                         <div class="row g-2 align-items-center">
-                                                            <div class="col-6 col-sm-4 col-md-2 col-xl py-3">
+                                                            <div class="col-6 col-sm-4 col-md-4 col-xl py-3">
                                                                 <a href="#"
                                                                     class="btn btn-outline-cyan w-100 shadow rounded"
                                                                     onclick="tambahItem('½'); return false;">
@@ -376,7 +376,7 @@
                                                                     Surat PC
                                                                 </a>
                                                             </div>
-                                                            <div class="col-6 col-sm-4 col-md-2 col-xl py-3">
+                                                            <div class="col-6 col-sm-4 col-md-4 col-xl py-3">
                                                                 <a href="#"
                                                                     class="btn btn-outline-purple w-100 shadow rounded"
                                                                     onclick="tambahItem('L'); return false;">
@@ -396,7 +396,7 @@
                                                                     Surat Libur KJK
                                                                 </a>
                                                             </div>
-                                                            <div class="col-6 col-sm-4 col-md-2 col-xl py-3">
+                                                            <div class="col-6 col-sm-4 col-md-4 col-xl py-3">
                                                                 <a href="#"
                                                                     class="btn btn-outline-red w-100 shadow rounded"
                                                                     onclick="tambahItem('A'); return false;">
@@ -414,7 +414,7 @@
                                                                     Ket. Alpa
                                                                 </a>
                                                             </div>
-                                                            <div class="col-6 col-sm-4 col-md-2 col-xl py-3">
+                                                            <div class="col-6 col-sm-4 col-md-4 col-xl py-3">
                                                                 <a href="#"
                                                                     class="btn btn-outline-teal w-100 shadow rounded"
                                                                     onclick="tambahItem('GL'); return false;">
@@ -459,7 +459,6 @@
                                                                     </svg>
                                                                 </div>
                                                             </div>
-
                                                             @csrf
                                                             <div class="card-body">
                                                                 <div class="row row-cards">
@@ -713,6 +712,156 @@
         </div>
     </div>
 
+    {{-- Modal Filter --}}
+    <div class="offcanvas offcanvas-blur offcanvas-end" tabindex="-1" id="offcanvasEnd-lamaran"
+        aria-labelledby="offcanvasEndLabel">
+        <div class="offcanvas-header">
+            <h2 class="offcanvas-title" id="offcanvasEndLabel">Saring Data Payroll</h2>
+            <button type="button" class="btn-close text-reset" data-bs-dismiss="offcanvas" aria-label="Close"></button>
+        </div>
+        <div class="offcanvas-body">
+            <div>
+                <div class="card-stamp card-stamp-lg">
+                    <div class="card-stamp-icon bg-blue">
+                        <i class="fa-solid fa-users"></i>
+                    </div>
+                </div>
+
+                <form action="#" id="form-filter-items" method="get" autocomplete="off" novalidate=""
+                    class="sticky-top">
+                    <div class="form-label">Tanggal Surat Komunikasi</div>
+                    <div class="row">
+                        <div class="col">
+                            <div class="input-icon mb-2">
+                                <input class="form-control border-primary ListDari" placeholder="Select a date"
+                                    id="datepicker2" value="<?= date('Y-m-01') ?>" />
+                                <span class="input-icon-addon">
+                                    <svg xmlns="http://www.w3.org/2000/svg" class="icon" width="24" height="24"
+                                        viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none"
+                                        stroke-linecap="round" stroke-linejoin="round">
+                                        <path stroke="none" d="M0 0h24v24H0z" fill="none" />
+                                        <path
+                                            d="M4 7a2 2 0 0 1 2 -2h12a2 2 0 0 1 2 2v12a2 2 0 0 1 -2 2h-12a2 2 0 0 1 -2 -2v-12z" />
+                                        <path d="M16 3v4" />
+                                        <path d="M8 3v4" />
+                                        <path d="M4 11h16" />
+                                        <path d="M11 15h1" />
+                                        <path d="M12 15v3" />
+                                    </svg>
+                                </span>
+                            </div>
+                        </div>
+                        <div class="col">
+                            <div class="input-icon mb-2">
+                                <input class="form-control border-primary ListSampai" placeholder="Select a date"
+                                    id="datepicker3" value="<?= date('Y-m-t') ?>" />
+                                <span class="input-icon-addon">
+                                    <svg xmlns="http://www.w3.org/2000/svg" class="icon" width="24" height="24"
+                                        viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none"
+                                        stroke-linecap="round" stroke-linejoin="round">
+                                        <path stroke="none" d="M0 0h24v24H0z" fill="none" />
+                                        <path
+                                            d="M4 7a2 2 0 0 1 2 -2h12a2 2 0 0 1 2 2v12a2 2 0 0 1 -2 2h-12a2 2 0 0 1 -2 -2v-12z" />
+                                        <path d="M16 3v4" />
+                                        <path d="M8 3v4" />
+                                        <path d="M4 11h16" />
+                                        <path d="M11 15h1" />
+                                        <path d="M12 15v3" />
+                                    </svg>
+                                </span>
+                            </div>
+                        </div>
+                    </div>
+                    <br>
+                    <div class="form-label">Jenis Surat Komunikasi</div>
+                    <div class="mb-4">
+                        <div class="row">
+                            <div class="col-sm-12">
+                                <label class="form-check">
+                                    <input type="checkbox" class="form-check-input jenis_kelamin" value="PRIA"
+                                        checked="" id="sSmp">
+                                    <span class="form-check-label">Formulir Permohonan Cuti</span>
+                                </label>
+                            </div>
+                            <div class="col-sm-12">
+                                <label class="form-check">
+                                    <input type="checkbox" class="form-check-input jenis_kelamin" value="WANITA"
+                                        checked="" id="sSma">
+                                    <span class="form-check-label">Formulir Izin Tidak Masuk Karena Sakit</span>
+                                </label>
+                            </div>
+                            <div class="col-sm-12">
+                                <label class="form-check">
+                                    <input type="checkbox" class="form-check-input jenis_kelamin" value="WANITA"
+                                        checked="" id="sSma">
+                                    <span class="form-check-label">Keputusan Izin (IP)</span>
+                                </label>
+                            </div>
+                            <div class="col-sm-12">
+                                <label class="form-check">
+                                    <input type="checkbox" class="form-check-input jenis_kelamin" value="WANITA"
+                                        checked="" id="sSma">
+                                    <span class="form-check-label">Keputusan Alpa</span>
+                                </label>
+                            </div>
+                            <div class="col-sm-12">
+                                <label class="form-check">
+                                    <input type="checkbox" class="form-check-input jenis_kelamin" value="WANITA"
+                                        checked="" id="sSma">
+                                    <span class="form-check-label">Keputusan-Mgr. Libur</span>
+                                </label>
+                            </div>
+                            <div class="col-sm-12">
+                                <label class="form-check">
+                                    <input type="checkbox" class="form-check-input jenis_kelamin" value="WANITA"
+                                        checked="" id="sSma">
+                                    <span class="form-check-label">Surat Geser/Tukar Libur</span>
+                                </label>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="form-label">Status</div>
+                    <div class="mb-4">
+                        <div class="row">
+                            <div class="col-sm-12">
+                                <label class="form-check">
+                                    <input type="checkbox" class="form-check-input divisi" value="HRD & GA"
+                                        checked="" id="pOperator">
+                                    <span class="form-check-label">PENGAJUAN</span>
+                                </label>
+                            </div>
+                            <div class="col-sm-12">
+                                <label class="form-check">
+                                    <input type="checkbox" class="form-check-input divisi" value="PRODUKSI"
+                                        checked="" id="pPengemudi">
+                                    <span class="form-check-label">KOREKSI</span>
+                                </label>
+                            </div>
+                            <div class="col-sm-12">
+                                <label class="form-check">
+                                    <input type="checkbox" class="form-check-input divisi" value="PRODUKSI"
+                                        checked="" id="pPengemudi">
+                                    <span class="form-check-label">ACC</span>
+                                </label>
+                            </div>
+                            <div class="col-sm-12">
+                                <label class="form-check">
+                                    <input type="checkbox" class="form-check-input divisi" value="PRODUKSI"
+                                        checked="" id="pPengemudi">
+                                    <span class="form-check-label">REJECT</span>
+                                </label>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="mt-5">
+                        <button type="button" class="btn btn-primary w-100" onclick="synList()" id="btn-filter">Filter
+                            Data</button> <br>
+                        <button type="button" class="btn btn-link w-100" id="btn-reset-items">Reset Saring Data</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
     {{-- Modal --}}
     <div class="modal modal-blur fade" id="modal-large" tabindex="-1" style="display: none;" aria-hidden="true">
         <div class="modal-dialog modal-lg modal-dialog-centered" role="document">
@@ -724,10 +873,33 @@
                 <div class="modal-body">
                     <table class="table table-striped table-bordered table-hover text-nowrap datatable-karyawan">
                     </table>
-                </div>
-                <div class="modal-footer">
-                    {{-- <button type="button" class="btn me-auto" data-bs-dismiss="modal">Close</button> --}}
-                    <button type="button" class="btn btn-primary" data-bs-dismiss="modal">Kembali</button>
+                    <script>
+                        let text = document.getElementById("stbText").innerHTML;
+                        const copyContent = async () => {
+                            try {
+                                await navigator.clipboard.writeText(text);
+                                console.log("Content copied to clipboard");
+                                $("#modal-large").modal("hide");
+                                const Toast = Swal.mixin({
+                                    toast: true,
+                                    position: "top-end",
+                                    showConfirmButton: false,
+                                    timer: 3000,
+                                    timerProgressBar: true,
+                                    didOpen: (toast) => {
+                                        toast.onmouseenter = Swal.stopTimer;
+                                        toast.onmouseleave = Swal.resumeTimer;
+                                    }
+                                });
+                                Toast.fire({
+                                    icon: "success",
+                                    title: "STB Berhasil Disalin ke Clipboard",
+                                });
+                            } catch (err) {
+                                console.error("Failed to copy: ", err);
+                            }
+                        }
+                    </script>
                 </div>
             </div>
         </div>
@@ -754,22 +926,28 @@
         </div>
     </div>
     <script>
+        var tableKaryawan, tableKomunikasi, tableAccKomunikasi;
+
+        function synList() {
+            tableKomunikasi.ajax.reload();
+        }
         $(function() {
-            var tableKaryawan = $('.datatable-karyawan').DataTable({
+            var token = $("meta[name='csrf-token']").attr("content");
+            tableKaryawan = $('.datatable-karyawan').DataTable({
                 "processing": true, //Feature control the processing indicator.
                 "serverSide": false, //Feature control DataTables' server-side processing mode.
                 "scrollX": false,
                 "scrollCollapse": true,
                 "pagingType": 'full_numbers',
                 "lengthMenu": [
-                    [10, 25, 35, 40, 50, -1],
-                    ['10', '25', '35', '40', '50', 'Tampilkan Semua']
+                    [10, 25, 35, 40, 50],
+                    ['10', '25', '35', '40', '50']
                 ],
                 "dom": "<'card-body border-bottom py-3' <'row'<'col-sm-6'l><'col-sm-6'f>> >" +
                     "<'table-responsive' <'col-sm-12'tr> >" +
-                    "<'card-footer' <'row'<'col-sm-8'i><'col-sm-4'p> >>",
+                    "<'card-footer' <'row'<'col-sm-8'><'col-sm-4'p> >>",
                 "language": {
-                    "lengthMenu": "Menampilkan STB _MENU_",
+                    "lengthMenu": "_MENU_",
                     "zeroRecords": "Data Tidak Ditemukan",
                     "info": "Menampilkan _START_ sampai _END_ dari _TOTAL_ total data",
                     "infoEmpty": "Data Tidak Ditemukan",
@@ -791,7 +969,7 @@
                         title: 'STB',
                         data: 'stb',
                         name: 'stb',
-                        className: 'cuspad0'
+                        className: 'cuspad0 text-center'
                     },
                     {
                         title: 'Nama',
@@ -815,7 +993,7 @@
 
             });
 
-            var tableKomunikasi = $('.datatable-list-komunikasi').DataTable({
+            tableKomunikasi = $('.datatable-list-komunikasi').DataTable({
                 "processing": true, //Feature control the processing indicator.
                 "serverSide": false, //Feature control DataTables' server-side processing mode.
                 "scrollX": false,
@@ -830,7 +1008,7 @@
                     "<'table-responsive' <'col-sm-12'tr> >" +
                     "<'card-footer' <'row'<'col-sm-8'i><'col-sm-4'p> >>",
                 buttons: [{
-                        text: '<i class="fa-solid fa-filter" style="margin-right:5px"></i>',
+                        text: '<i class="fa-solid fa-filter" style="margin-right:5px"></i> Saring Surat Komunikasi',
                         className: 'btn btn-blue',
                         attr: {
                             'href': '#offcanvasEnd-lamaran',
@@ -842,8 +1020,8 @@
                     {
                         extend: 'excelHtml5',
                         autoFilter: true,
-                        className: 'btn btn-cyan',
-                        text: '<i class="fa fa-file-excel text-white" style="margin-right:5px"></i>',
+                        className: 'btn btn-green',
+                        text: '<i class="fa fa-file-excel text-white" style="margin-right:5px"></i> Download Excel',
                         action: newexportaction,
                     },
                 ],
@@ -862,11 +1040,16 @@
                         "previous": '<svg xmlns="http://www.w3.org/2000/svg" class="icon" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z" fill="none"></path><path d="M15 6l-6 6l6 6"></path></svg>',
                     },
                 },
-                ajax: "{{ route('getListKomunikasi.index') }}",
+                "ajax": {
+                    "url": "{{ route('getListKomunikasi.index') }}",
+                    "data": function(data) {
+                        data._token = "{{ csrf_token() }}";
+                        data.dari = $('.ListDari').val();
+                        data.sampai = $('.ListSampai').val();
+                    }
+                },
                 autoWidth: true,
-                columns: [
-
-                    {
+                columns: [{
                         title: 'Opsi',
                         data: 'action',
                         name: 'action',
@@ -881,8 +1064,8 @@
                     },
                     {
                         title: 'Tanggal',
-                        data: 'tanggal',
-                        name: 'tanggal',
+                        data: 'tanggalKomunikasi',
+                        name: 'tanggalKomunikasi',
                         className: 'cuspad0 text-center'
                     },
                     {
@@ -919,7 +1102,7 @@
 
             });
 
-            var tableAccKomunikasi = $('.datatable-acc-komunikasi').DataTable({
+            tableAccKomunikasi = $('.datatable-acc-komunikasi').DataTable({
                 "processing": true, //Feature control the processing indicator.
                 "serverSide": false, //Feature control DataTables' server-side processing mode.
                 "scrollX": false,
@@ -940,7 +1123,7 @@
                         text: '<i class="fa-solid fa-filter" style="margin-right:5px"></i>',
                         className: 'btn btn-blue',
                         attr: {
-                            'href': '#offcanvasEnd-lamaran',
+                            'href': '#offcanvasEnd-acc',
                             'data-bs-toggle': 'offcanvas',
                             'role': 'button',
                             'aria-controls': 'offcanvasEnd',
@@ -1442,24 +1625,29 @@
             td.innerHTML += sst;
             td.innerHTML += '<input type="hidden" name="sst[]" value="' + sst + '">';
             td.innerHTML += '<input type="hidden" name="userid[]" id="userid' + idf + '">';
+            td.innerHTML += '<input type="hidden" name="idf[]" value="' + idf + '">';
             td.innerHTML += '<input type="hidden" name="idform[]" value="' + idf + '">';
             tr.appendChild(td);
             // Kolom 3 TANGGAL
             var td = document.createElement("td");
             td.setAttribute("style", "width:250px");
             if (sst == "½") {
-                td.innerHTML += '<input type="date" style="width:100px" name="tanggalitm[]" id="tanggalitm' + idf +
-                    '" class="form-control border border-dark" value="<?= date('Y-m-d') ?>"><input type="hidden" name="totaltanggal[]" value="1">';
+                td.innerHTML +=
+                    '<div class="row"><div class="col"><input type="date" name="tanggalitm[]" id="tanggalitm' +
+                    idf +
+                    '" class="form-control" value="<?= date('Y-m-d') ?>"><input type="hidden" name="totaltanggal[]" value="1"></div></div>';
             } else if (sst == "GL") {
-                td.innerHTML += '<input type="date" style="width:100px" name="tanggalitm[]" id="tanggalitm' + idf +
-                    '" class="form-control border border-dark" value="<?= date('Y-m-d') ?>"><input type="hidden" name="totaltanggal[]" value="1">';
+                td.innerHTML +=
+                    '<div class="row"><div class="col"><input type="date" name="tanggalitm[]" id="tanggalitm' +
+                    idf +
+                    '" class="form-control" value="<?= date('Y-m-d') ?>"><input type="hidden" name="totaltanggal[]" value="1"></div></div>';
             } else {
                 td.innerHTML +=
                     '<div class="row"><div class="col"><input type="date" style="width:120px" name="tanggalitm[]" id="tanggalitm' +
                     idf +
-                    '" class="form-control border border-dark" value="<?= date('Y-m-d') ?>"></div><div class="col"><input type="date" name="tanggalitm2[]" style="width:120px" id="tanggalitm' +
+                    '" class="form-control " value="<?= date('Y-m-d') ?>"></div><div class="col"><input type="date" name="tanggalitm2[]" style="width:120px" id="tanggalitm' +
                     idf +
-                    '" class="form-control border border-dark" value="<?= date('Y-m-d') ?>"></div></div><input type="hidden" name="totaltanggal[]" value="2">';
+                    '" class="form-control " value="<?= date('Y-m-d') ?>"></div></div><input type="hidden" name="totaltanggal[]" value="2">';
             }
             tr.appendChild(td);
             // Kolom 4 STB

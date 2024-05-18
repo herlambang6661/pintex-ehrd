@@ -23,6 +23,19 @@ class DataKomunikasi extends Controller
     public function index(Request $request)
     {
         if ($request->ajax()) {
+            // Set Dari tanggal
+            if ($request->dari) {
+                $dari = $request->dari;
+            } else {
+                $dari = date('Y-m-d');
+            }
+            // Set Sampai tanggal
+            if ($request->sampai) {
+                $sampai = $request->sampai;
+            } else {
+                $sampai = date('Y-m-d');
+            }
+
             // if (Auth::user()->admin == '1') {
             //     $unit = 'UNIT 1';
             //     $data = DB::table('absensi_komunikasiitm AS b')
@@ -52,18 +65,35 @@ class DataKomunikasi extends Controller
             //         ->get();
             // }
 
-            $data = DB::table('absensi_komunikasiitm AS b')
-                ->select('b.id', 'b.noform', 'b.tanggal', 'b.nama', 'b.suratid', 'b.sst', 'b.keterangan', 'b.statussurat')
-                // ->join('absensi_komunikasiitm AS b', 'a.noform', '=', 'b.noform')
-                ->whereBetween('b.tanggal', [date('Y-m-01'), date('Y-m-t')])
-                ->where('dibuat', '=', Auth::user()->name)
-                ->orderBy('b.id', 'desc')
-                ->get();
+            if (Auth::user()->admin != 'ALL') {
+                $data = DB::table('absensi_komunikasiitm AS b')
+                    ->select('b.id', 'b.noform', 'b.tanggal', 'b.tanggal2', 'b.nama', 'b.suratid', 'b.sst', 'b.keterangan', 'b.statussurat')
+                    // ->join('absensi_komunikasiitm AS b', 'a.noform', '=', 'b.noform')
+                    ->whereBetween('b.tanggal', [$dari, $sampai])
+                    ->where('b.dibuat', '=', Auth::user()->name)
+                    ->orderBy('b.id', 'desc')
+                    ->get();
+            } else {
+                $data = DB::table('absensi_komunikasiitm AS b')
+                    ->select('b.id', 'b.noform', 'b.tanggal', 'b.tanggal2', 'b.nama', 'b.suratid', 'b.sst', 'b.keterangan', 'b.statussurat')
+                    // ->join('absensi_komunikasiitm AS b', 'a.noform', '=', 'b.noform')
+                    ->whereBetween('b.tanggal', [$dari, $sampai])
+                    ->orderBy('b.tanggal', 'desc')
+                    ->get();
+            }
             return DataTables::of($data)
                 ->addIndexColumn()
 
                 ->addColumn('tanggal', function ($row) {
                     $tgl = Carbon::parse($row->tanggal)->format('d/m/Y');
+                    return $tgl;
+                })
+                ->addColumn('tanggalKomunikasi', function ($row) {
+                    if ($row->tanggal == $row->tanggal2) {
+                        $tgl = Carbon::parse($row->tanggal)->format('d/m/Y');
+                    } else {
+                        $tgl = Carbon::parse($row->tanggal)->format('d') . "-" . Carbon::parse($row->tanggal2)->format('d/m/Y');
+                    }
                     return $tgl;
                 })
 
