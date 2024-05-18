@@ -167,6 +167,7 @@ Route::controller(Penerimaan::class)->group(function () {
     Route::get('penerimaan/wawancara', 'wawancara')->name('penerimaan/wawancara');
     Route::get('penerimaan/karyawan', 'karyawan')->name('penerimaan/karyawan');
     Route::get('penerimaan/legalitas', 'legalitas')->name('penerimaan/legalitas');
+    Route::get('penerimaan/massUpload', 'uploadMassalLegalitas')->name('penerimaan/massUpload');
 
     Route::get('penerimaan/printLamaran/{id}', 'printLamaran')->name('penerimaan/printLamaran/{id}');
 
@@ -193,6 +194,7 @@ Route::controller(Penerimaan::class)->group(function () {
     Route::post('perjanjiandelete', 'perjanjiandelete');
     Route::post('statusdelete', 'statusdelete');
     Route::post('internaldelete', 'internaldelete');
+    Route::get('export_excel_legalitas', 'exportLegalitas')->name('export_excel_legalitas');
 });
 
 // Modules Absensi

@@ -14,13 +14,13 @@
 
         td.cuspad2 {
             /* padding-top: 0.5px;
-                                    padding-bottom: 0.5px;
-                                    padding-right: 0.5px;
-                                    padding-left: 0.5px;
-                                    margin-top: 5px;
-                                    margin-bottom: 5px;
-                                    margin-right: 5px;
-                                    margin-left: 5px; */
+                                                                                                                        padding-bottom: 0.5px;
+                                                                                                                        padding-right: 0.5px;
+                                                                                                                        padding-left: 0.5px;
+                                                                                                                        margin-top: 5px;
+                                                                                                                        margin-bottom: 5px;
+                                                                                                                        margin-right: 5px;
+                                                                                                                        margin-left: 5px; */
         }
 
         .overlay {
@@ -411,10 +411,10 @@
     </div>
     <script type="text/javascript">
         /*------------------------------------------
-                                --------------------------------------------
-                                Render DataTable
-                                --------------------------------------------
-                                --------------------------------------------*/
+                                                                                                                    --------------------------------------------
+                                                                                                                    Render DataTable
+                                                                                                                    --------------------------------------------
+                                                                                                                    --------------------------------------------*/
 
         function newexportaction(e, dt, button, config) {
             var self = this;
@@ -487,8 +487,11 @@
                     "<'table-responsive' <'col-sm-12'tr> >" +
                     "<'card-footer' <'row'<'col-sm-8'i><'col-sm-4'p> >>",
                 buttons: [{
-                        className: 'btn btn-dark checkall',
-                        text: '<i class="fa-regular fa-square-check"></i>',
+                        className: 'btn btn-outline-blue',
+                        text: '<i class="fa-solid fa-envelope-open-text"></i> Mass Input',
+                        action: function(e, dt, button, config) {
+                            window.location = 'massUpload';
+                        }
                     },
                     {
                         text: '<i class="fa-solid fa-filter" style="margin-right:5px"></i>',

@@ -1750,6 +1750,26 @@ class Penerimaan extends Controller
         ]);
     }
 
+    public function uploadMassalLegalitas()
+    {
+        $judul = "Upload Massal";
+        $penerimaan = "active";
+        $legalitas = "active";
+
+        return view('products/02_penerimaan.massupload', [
+            'judul' => $judul,
+            'penerimaan' => $penerimaan,
+            'legalitas' => $legalitas
+        ]);
+    }
+
+    public function exportLegalitas()
+    {
+        $file_path = public_path('file_excel/ContohUploadLegalitas.xlsx');
+
+        return response()->download($file_path);
+    }
+
     public function legalEdit($id)
     {
         $data = DB::table('penerimaan_karyawan')->where('userid', $id)->limit(1)->get();
