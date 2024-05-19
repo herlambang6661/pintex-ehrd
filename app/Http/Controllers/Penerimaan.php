@@ -2085,6 +2085,41 @@ class Penerimaan extends Controller
             // $arr = array('msg' => 'Something goes to wrong. Please try later', 'status' => false);
             $arr = array('msg' => 'Data telah berhasil diproses', 'status' => true);
             return Response()->json($arr);
+        } elseif ($request->suratjns == "CUTI") {
+            // GET IDJOB
+            $noform = date('y') . "00000";
+            $checknoform = DB::table('schedule')->orderBy('idjob', 'desc')->limit('1')->get();
+            foreach ($checknoform as $key) {
+                $noform = $key->idjob;
+            }
+            $y = substr($noform, 0, 2);
+            if (date('y') == $y) {
+                $noUrut = substr($noform, 2, 5);
+                $na = $noUrut + 1;
+                $char = date('y');
+                $kode = $char . sprintf("%05s", $na);
+            } else {
+                $kode = date('y') . "00001";
+            }
+            // GET IDJOB
+            $inputLegalitas = DB::table('penerimaan_legalitas')->insert([
+                'remember_token' => $request->_token,
+                'suratjns' => $request->suratjns,
+                'nmsurat' => $request->nmsurat,
+                'suratket' => $request->suratket,
+                'userid' => $request->userid,
+                'nama' => $karyawan->nama,
+                'inputtgl' => date('Y-m-d'),
+                'legalitastgl' => date('Y-m-d'),
+                'tglaw' => $request->tglawal,
+                'tglak' => $request->tglakhir,
+                'sacuti' => $request->cuti,
+                'id_cron'    => 'Langsung Dibuat',
+                'created_at' => date('Y-m-d H:i:s'),
+            ]);
+            // $arr = array('msg' => 'Something goes to wrong. Please try later', 'status' => false);
+            $arr = array('msg' => 'Data telah berhasil diproses', 'status' => true);
+            return Response()->json($arr);
         }
     }
 
@@ -2278,7 +2313,6 @@ class Penerimaan extends Controller
         ';
     }
 
-
     public function getTablePerjanjian(Request $request)
     {
         $perjanjian = DB::table('penerimaan_legalitas')->where('userid', $request->userid)->where('suratjns', 'like', '%perjanjian%')->orderBy('legalitastgl', 'asc')->get();
@@ -2380,6 +2414,47 @@ class Penerimaan extends Controller
                             <td class="text-end">' . date('d/m/Y', strtotime($s->legalitastgl)) . '</td>
                             <td>' . $s->nmsurat . '</td>
                             <td>' . $s->suratket . '</td>
+                        </tr>';
+        }
+        echo        '</tbody>
+                </table>
+            </div>
+        ';
+    }
+
+    public function getTableCuti(Request $request)
+    {
+        $perjanjian = DB::table('penerimaan_legalitas')->where('userid', $request->userid)->where('suratjns', 'like', '%cuti%')->orderBy('legalitastgl', 'asc')->get();
+
+        echo '
+            <div class="table-responsive">
+                <table
+                    class="table table-sm table-hover table-bordered table-vcenter card-table text-nowrap border border-purple"
+                    id="tb_per">
+                    <thead>
+                        <tr>
+                            <th class="w-1"></th>
+                            <th class="text-center">Tanggal</th>
+                            <th class="text-center">Nama Surat</th>
+                            <th class="text-center">Jenis Surat</th>
+                            <th class="text-center">Awal</th>
+                            <th class="text-center">Akhir</th>
+                            <th class="text-center">Qty</th>
+                        </tr>
+                    </thead>
+                    <tbody>';
+        foreach ($perjanjian as $per => $p) {
+            echo '
+                        <tr>
+                            <td class="text-center" style="padding: 2px 2px 2px 2px">
+                                <button type="button" class="btn btn-sm btn-danger btn-icon btn-delete" data-id="' . $p->id . '" data-userid="' . $p->userid . '" data-nama="' . $p->nmsurat . '" data-tipe="' . $p->suratjns . '" data-url="perjanjiandelete"><i class="fa-solid fa-trash-can"></i></button>
+                            </td>
+                            <td class="text-end">' . date('d/m/Y', strtotime($p->legalitastgl)) . '</td>
+                            <td>' . $p->nmsurat . '</td>
+                            <td>' . $p->suratket . '</td>
+                            <td>' . date('d/m/Y', strtotime($p->tglaw))  . '</td>
+                            <td>' . date('d/m/Y', strtotime($p->tglak))  . '</td>
+                            <td>' . $p->sacuti . '</td>
                         </tr>';
         }
         echo        '</tbody>
@@ -2669,6 +2744,41 @@ class Penerimaan extends Controller
                             <td style="padding-top: 12px;width:130px">Keterangan tambahan</td>
                             <td style="padding-top: 12px">:</td>
                             <td><input type="text" name="keterangan" class="form-control" placeholder="keterangan"></td>
+                        </tr>
+                    </table>
+                </div>
+            ';
+        } elseif ($request->idtipe == "cuti") {
+            echo '<input type="hidden" name="suratjns" value="CUTI" id="suratjns">';
+            echo '<input type="hidden" name="nmsurat" value="Cuti Dispensasi" id="nmsurat">';
+            echo '<input type="hidden" name="suratket" value="Cuti Dispensasi Diluar Cuti Tahunan" id="suratket">';
+            echo '<input type="hidden" name="userid" value="' . $request->id . '">';
+            echo
+            '
+                <div class="modal-body">
+                    <div class="row">
+                        <div class="col-lg-12">
+                            <div class="mb-3">
+                            <label class="form-label">Nama Karyawan</label>
+                            <input type="text" name="nama" class="form-control" value="' . $karyawan->nama . '" readonly>
+                            </div>
+                        </div>
+                    </div>
+                    <table class="table table-sm table-borderless">
+                        <tr>
+                            <td style="padding-top: 12px">Tanggal Awal</td>
+                            <td style="padding-top: 12px">:</td>
+                            <td><input type="date" name="tglawal" class="form-control" value="' . date("Y-m-d") . '"></td>
+                        </tr>
+                        <tr>
+                            <td style="padding-top: 12px">Tanggal Akhir</td>
+                            <td style="padding-top: 12px">:</td>
+                            <td><input type="date" name="tglakhir" class="form-control" value="' . date("Y-m-d") . '"></td>
+                        </tr>
+                        <tr>
+                            <td style="padding-top: 12px">Banyak Cuti</td>
+                            <td style="padding-top: 12px">:</td>
+                            <td><input type="number" name="cuti" min="0" value="5" class="form-control" placeholder="Cuti"></td>
                         </tr>
                     </table>
                 </div>

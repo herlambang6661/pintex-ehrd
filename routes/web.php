@@ -190,6 +190,7 @@ Route::controller(Penerimaan::class)->group(function () {
     Route::post('getTablePerjanjian', 'getTablePerjanjian');
     Route::post('getTableInternal', 'getTableInternal');
     Route::post('getTableStatus', 'getTableStatus');
+    Route::post('getTableCuti', 'getTableCuti');
     Route::post('basicdelete', 'basicdelete');
     Route::post('perjanjiandelete', 'perjanjiandelete');
     Route::post('statusdelete', 'statusdelete');
