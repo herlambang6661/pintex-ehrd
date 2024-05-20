@@ -203,6 +203,7 @@ Route::controller(Penerimaan::class)->group(function () {
 // Modules Absensi
 Route::controller(Absensi::class)->group(function () {
 
+    Route::get('export_excel_lamaran', 'exportLamaran')->name('export_excel_lamaran');
     Route::get('absensi/absensi', 'absensi')->name('absensi/absensi');
     Route::get('absensi/fingerprint', 'fingerprint')->name('absensi/fingerprint');
     Route::get('absensi/komunikasi', 'komunikasi')->name('absensi/komunikasi');

@@ -59,6 +59,13 @@ class Absensi extends Controller
         ]);
     }
 
+    public function exportLamaran()
+    {
+        $file_path = public_path('file_excel/ContohUploadLamaran.xlsx');
+
+        return response()->download($file_path);
+    }
+
     public function getabsensi(Request $request)
     {
         if (count($request->tgl) > 32) {

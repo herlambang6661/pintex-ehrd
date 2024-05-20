@@ -75,7 +75,10 @@ echo '<i>Tanggal Print : ' . date('H:i:s d-m-Y') . '</i>';
                     <th style="border-color: black;" class="text-center">Telp</th>
                     <th style="border-color: black;" class="text-center">Tinggi</th>
                     <th style="border-color: black;" class="text-center">Berat</th>
-                    <th style="border-color: black;" class="text-center">Paraf</th>
+                    <th style="border-color: black;" class="text-center">Buta Warna (Berapa Gambar)</th>
+                    <th style="border-color: black;" class="text-center">Jalan Cepat/Lambar</th>
+                    <th style="border-color: black;" class="text-center">Mata Minus/Plus</th>
+                    <th style="border-color: black;" class="text-center">Keterangan</th>
                 </thead>
                 <?php $i = 1; ?>
                 @foreach ($getData as $key => $w)
@@ -84,6 +87,9 @@ echo '<i>Tanggal Print : ' . date('H:i:s d-m-Y') . '</i>';
                         <td class="text-center">{{ $w->nama }}</td>
                         <td class="text-center">{{ $w->pendidikan . ' ' . $w->jurusan }}</td>
                         <td class="text-center">{{ $w->notlp }}</td>
+                        <td class="text-center">{{ $w->tinggi }}</td>
+                        <td class="text-center">{{ $w->berat }}</td>
+                        <td class="text-center"></td>
                         <td class="text-center"></td>
                         <td class="text-center"></td>
                         <td class="text-center"></td>
