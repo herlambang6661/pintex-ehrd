@@ -60,96 +60,91 @@ echo '<i>Tanggal Print : ' . date('H:i:s d-m-Y') . '</i>';
             </div>
         </div>
         <hr style="margin-top: 5px;">
-        <div class="container">
-            <i>
-                <h6>Tanggal : </h6>
-                <h6>No Form : {{ $noform }}</h6>
-            </i>
-            <br>
-            <table class="table table-sm table-bordered text-nowrap"
-                style="color: black; border-color: black;text-transform: uppercase; font-size:11px">
-                <thead class="text-black" style="border-color: black;">
-                    <th style="border-color: black;" class="text-center">No</th>
-                    <th style="border-color: black;" class="text-center">Nama</th>
-                    <th style="border-color: black;" class="text-center">Pendidikan</th>
-                    <th style="border-color: black;" class="text-center">Telp</th>
-                    <th style="border-color: black;" class="text-center">Tinggi</th>
-                    <th style="border-color: black;" class="text-center">Berat</th>
-                    <th style="border-color: black;" class="text-center">Buta Warna (Berapa Gambar)</th>
-                    <th style="border-color: black;" class="text-center">Jalan Cepat/Lambar</th>
-                    <th style="border-color: black;" class="text-center">Mata Minus/Plus</th>
-                    <th style="border-color: black;" class="text-center">Keterangan</th>
-                </thead>
-                <?php $i = 1; ?>
-                @foreach ($getData as $key => $w)
-                    <tr>
-                        <td class="text-center">{{ $i }}</td>
-                        <td class="text-center">{{ $w->nama }}</td>
-                        <td class="text-center">{{ $w->pendidikan . ' ' . $w->jurusan }}</td>
-                        <td class="text-center">{{ $w->notlp }}</td>
-                        <td class="text-center">{{ $w->tinggi }}</td>
-                        <td class="text-center">{{ $w->berat }}</td>
-                        <td class="text-center"></td>
-                        <td class="text-center"></td>
-                        <td class="text-center"></td>
-                        <td class="text-center"></td>
-                    </tr>
-                    <?php $i++; ?>
-                @endforeach
+        <i>
+            <h6>Tanggal : </h6>
+            <h6>No Form : {{ $noform }}</h6>
+        </i>
+        <br>
+        <table class="table table-sm table-bordered text-nowrap"
+            style="color: black; border-color: black;text-transform: uppercase; font-size:11px">
+            <thead class="text-black" style="border-color: black;">
+                <th style="border-color: black;" class="text-center">No</th>
+                <th style="border-color: black;" class="text-center">Nama</th>
+                <th style="border-color: black;" class="text-center">Pendidikan</th>
+                <th style="border-color: black;" class="text-center">Telp</th>
+                <th style="border-color: black;" class="text-center">Tinggi</th>
+                <th style="border-color: black;" class="text-center">Berat</th>
+                <th style="border-color: black;" class="text-center">Buta Warna</th>
+                <th style="border-color: black;" class="text-center">Jalan</th>
+                <th style="border-color: black;" class="text-center">Mata</th>
+                <th style="border-color: black;" class="text-center">Keterangan</th>
+            </thead>
+            <?php $i = 1; ?>
+            @foreach ($getData as $key => $w)
                 <tr>
-                    <td class="text-center text-white" style="color: white">{{ $i }}</td>
-                    <td></td>
-                    <td></td>
-                    <td></td>
-                    <td></td>
-                    <td></td>
-                    <td></td>
+                    <td class="text-center">{{ $i }}</td>
+                    <td class="text-center">{{ $w->nama }}</td>
+                    <td class="text-center">{{ $w->pendidikan . ' ' . $w->jurusan }}</td>
+                    <td class="text-center">{{ $w->notlp }}</td>
+                    <td class="text-center">{{ $w->tinggi }}</td>
+                    <td class="text-center">{{ $w->berat }}</td>
+                    <td class="text-center"></td>
+                    <td class="text-center"></td>
+                    <td class="text-center"></td>
+                    <td class="text-center"></td>
                 </tr>
-                <tr>
-                    <td class="text-center text-white" style="color: white">{{ $i }}</td>
-                    <td></td>
-                    <td></td>
-                    <td></td>
-                    <td></td>
-                    <td></td>
-                    <td></td>
-                </tr>
-                <tr>
-                    <td class="text-center text-white" style="color: white">{{ $i }}</td>
-                    <td></td>
-                    <td></td>
-                    <td></td>
-                    <td></td>
-                    <td></td>
-                    <td></td>
-                </tr>
-            </table>
-            <i>*Note : </i>
-            <br>
-            <br>
-            <br>
-            <br>
-            <br>
-            <div class="row text-center">
-                <div class="col">
-                    HRD,
-                </div>
-                <div class="col">
-                </div>
-                <div class="col">
-                    User,
-                </div>
+                <?php $i++; ?>
+            @endforeach
+            <tr>
+                <td class="text-center text-white" style="color: white">{{ $i }}</td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+            </tr>
+            <tr>
+                <td class="text-center text-white" style="color: white">{{ $i }}</td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+            </tr>
+        </table>
+        <i>*Note : </i>
+        <br>
+        <br>
+        <br>
+        <br>
+        <br>
+        <div class="row text-center">
+            <div class="col">
+                HRD,
             </div>
-            <br><br><br><br><br>
-            <div class="row text-center">
-                <div class="col">
-                    ( ............................................. )
-                </div>
-                <div class="col">
-                </div>
-                <div class="col">
-                    ( ............................................. )
-                </div>
+            <div class="col">
+            </div>
+            <div class="col">
+                User,
+            </div>
+        </div>
+        <br><br><br><br><br>
+        <div class="row text-center">
+            <div class="col">
+                ( ............................................. )
+            </div>
+            <div class="col">
+            </div>
+            <div class="col">
+                ( ............................................. )
             </div>
         </div>
 
