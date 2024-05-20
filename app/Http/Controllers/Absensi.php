@@ -718,6 +718,129 @@ class Absensi extends Controller
                             <svg  xmlns="http://www.w3.org/2000/svg"  width="24"  height="24"  viewBox="0 0 24 24"  fill="none"  stroke="currentColor"  stroke-width="2"  stroke-linecap="round"  stroke-linejoin="round" class="icon icon-tabler icons-tabler-outline icon-tabler-messages mb-2 text-green icon-lg"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><path d="M21 14l-3 -3h-7a1 1 0 0 1 -1 -1v-6a1 1 0 0 1 1 -1h9a1 1 0 0 1 1 1v10" /><path d="M14 15v2a1 1 0 0 1 -1 1h-7l-3 3v-10a1 1 0 0 1 1 -1h2" /></svg>
                             <h3>PENERIMAAN SURAT KOMUNIKASI</h3>
                                 <div class="table-responsive">
+                                    <table class="table table-sm table-vcenter table-bordered table-hover">
+                                        <thead>
+                                            <tr>
+                                                <th>Noform</th>
+                                                <th>Tanggal</th>
+                                                <th>STB</th>
+                                                <th>Nama</th>
+                                                <th>Surat</th>
+                                                <th>Sst</th>
+                                                <th>Keterangan</th>
+                                                <th>Dibuat</th>
+                                                <th>ACC</th>
+                                                <th>Keterangan ACC</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+            ';
+            $j = 1;
+            for ($i = 0; $i < $jml; $i++) {
+                $data = DB::table('absensi_komunikasiitm as o')->select('o.id', 'o.noform', 'o.userid', 'o.nama', 'k.stb', 'o.tanggal', 'o.tanggal2', 'o.suratid', 'o.sst', 'o.keterangan', 'o.dibuat')->join('penerimaan_karyawan as k', 'k.userid', '=', 'o.userid')->where('o.noform', $request->id[$i])->get();
+                foreach ($data as $u) {
+
+                    if ($u->tanggal == $u->tanggal2) {
+                        $tgl = Carbon::parse($u->tanggal)->format('d/m/Y');
+                    } else {
+                        $tgl = Carbon::parse($u->tanggal)->format('d') . "-" . Carbon::parse($u->tanggal2)->format('d/m/Y');
+                    }
+                    echo '
+                                            <input type="hidden" name="id[]" value="' . $u->id . '">
+                                            <input type="hidden" name="tanggal[]" value="' . $u->tanggal . '">
+                                            <input type="hidden" name="userid[]" value="' . $u->userid . '">
+                                            <input type="hidden" name="chgsst[]" value="' . $u->sst . '">
+                                            <tr>
+                                                <td>' . $u->noform . '</td>
+                                                <td>' . $tgl . '</td>
+                                                <td>' . $u->stb . '</td>
+                                                <td>' . $u->nama . '</td>
+                                                <td>' . $u->suratid . '</td>
+                                                <td>' . $u->sst . '</td>
+                                                <td>' . $u->keterangan . '</td>
+                                                <td>' . $u->dibuat . '</td>
+                                                <td>
+                                                <div class="row">
+                                                    <div class="col">
+                                                        <select name="acc[]" id="acc' . $request->id[$i] . '" class="form-select form-select-sm" onchange="getAcc(' . $request->id[$i] . ')" onkeydown = "if (event.keyCode == 13)  getAcc(' . $request->id[$i] . ')">
+                                                            <option value="ACC">ACC</option>
+                                                            <option value="KOREKSI">KOREKSI</option>
+                                                            <option value="REJECT">REJECT</option>
+                                                        </select>
+                                                    </div>
+                                                    <div class="col" style="display:none" id="divKoreksi' . $request->id[$i] . '">
+                                                        <select name="koreksi[]" id="koreksi' . $request->id[$i] . '" class="form-select form-select-sm" disabled="true">
+                                                            <option value="">-- KOREKSI --</option>
+                                                            <option value="S">S</option>
+                                                            <option value="I">IP</option>
+                                                            <option value="A">A</option>
+                                                            <option value="L">L</option>
+                                                            <option value="CK">CK</option>
+                                                            <option value="H">H</option>
+                                                            <option value="½">½</option>
+                                                        </select>
+                                                    </div>
+                                                </div>
+                                                </td>
+                                                <td><input type="text" name="ket_acc[]" class="form-control form-control-sm"></td>
+                                            </tr>
+                    ';
+                }
+                $j++;
+            }
+            echo '
+                                        </tbody>
+                                    </table>
+                                    <script>
+                                        function getAcc(params){
+                                            var acc = $("#acc" + params).val();
+                                                if(acc=="KOREKSI"){
+                                                    $("#divKoreksi" + params).fadeIn(100);
+                                                    $("#koreksi" + params).attr("disabled", false);
+                                                } else {
+                                                    $("#divKoreksi" + params).fadeOut(100);
+                                                    $("#koreksi" + params).attr("disabled", true);
+                                                }  
+                                        }
+                                    </script>
+                                </div>
+                        </div>
+                        <div class="modal-footer">
+                            <div class="w-100">
+                                <div class="row">
+                                    <div class="col">
+                                        <button type="button" class="btn w-100" data-bs-dismiss="modal">
+                                            <svg  xmlns="http://www.w3.org/2000/svg"  width="24"  height="24"  viewBox="0 0 24 24"  fill="none"  stroke="currentColor"  stroke-width="2"  stroke-linecap="round"  stroke-linejoin="round"  class="icon icon-tabler icons-tabler-outline icon-tabler-arrow-back-up"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><path d="M9 14l-4 -4l4 -4" /><path d="M5 10h11a4 4 0 1 1 0 8h-1" /></svg>
+                                            Kembali
+                                        </button>
+                                    </div>
+                                    <div class="col">
+                                        <button type="submit" class="btn btn-success w-100">
+                                            <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-device-floppy" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><path d="M6 4h10l4 4v10a2 2 0 0 1 -2 2h-12a2 2 0 0 1 -2 -2v-12a2 2 0 0 1 2 -2" /><path d="M12 14m-2 0a2 2 0 1 0 4 0a2 2 0 1 0 -4 0" /><path d="M14 4l0 4l-6 0l0 -4" /></svg> Proses Surat Komunikasi
+                                        </button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+            ';
+        }
+        // return $result;
+    }
+
+    function checkAccKomunikasiItem(Request $request)
+    {
+        if (empty($request->id)) {
+            echo '<div class="modal-body text-center py-4">';
+            echo '<center><iframe src="https://lottie.host/embed/94d605b9-2cc4-4d11-809a-7f41357109b0/OzwBgj9bHl.json" width="300px" height="300px"></iframe></center>';
+            echo "<center>Tidak ada data yang dipilih</center>";
+            echo '</div>';
+        } else {
+            $jml = count($request->id);
+            echo '
+                        <div class="modal-body text-center py-4">
+                            <svg  xmlns="http://www.w3.org/2000/svg"  width="24"  height="24"  viewBox="0 0 24 24"  fill="none"  stroke="currentColor"  stroke-width="2"  stroke-linecap="round"  stroke-linejoin="round" class="icon icon-tabler icons-tabler-outline icon-tabler-messages mb-2 text-green icon-lg"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><path d="M21 14l-3 -3h-7a1 1 0 0 1 -1 -1v-6a1 1 0 0 1 1 -1h9a1 1 0 0 1 1 1v10" /><path d="M14 15v2a1 1 0 0 1 -1 1h-7l-3 3v-10a1 1 0 0 1 1 -1h2" /></svg>
+                            <h3>PENERIMAAN SURAT KOMUNIKASI</h3>
+                                <div class="table-responsive">
                                     <table class="table table-sm table-vcenter table-bordered">
                                         <thead>
                                             <tr>

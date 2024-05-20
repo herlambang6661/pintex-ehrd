@@ -71,14 +71,14 @@ class DataKomunikasi extends Controller
                     // ->join('absensi_komunikasiitm AS b', 'a.noform', '=', 'b.noform')
                     ->whereBetween('b.tanggal', [$dari, $sampai])
                     ->where('b.dibuat', '=', Auth::user()->name)
-                    ->orderBy('b.id', 'desc')
+                    ->orderBy('b.noform', 'desc')
                     ->get();
             } else {
                 $data = DB::table('absensi_komunikasiitm AS b')
                     ->select('b.id', 'b.noform', 'b.tanggal', 'b.tanggal2', 'b.nama', 'b.suratid', 'b.sst', 'b.keterangan', 'b.statussurat')
                     // ->join('absensi_komunikasiitm AS b', 'a.noform', '=', 'b.noform')
                     ->whereBetween('b.tanggal', [$dari, $sampai])
-                    ->orderBy('b.tanggal', 'desc')
+                    ->orderBy('b.noform', 'desc')
                     ->get();
             }
             return DataTables::of($data)

@@ -20,6 +20,7 @@ use App\Http\Controllers\Datatables\DataUsers;
 use App\Http\Controllers\Datatables\DataEntitas;
 use App\Http\Controllers\Datatables\DataLamaran;
 use App\Http\Controllers\Datatables\DataPayroll;
+use App\Http\Controllers\Datatables\DataACCItems;
 use App\Http\Controllers\Datatables\DataKaryawan;
 use App\Http\Controllers\Datatables\DataPengguna;
 use App\Http\Controllers\Datatables\DataHariLibur;
@@ -85,6 +86,7 @@ Route::resources([
     'getentitas' => DataEntitas::class,
     'getListKomunikasi' => DataKomunikasi::class,
     'getAccKomunikasi' => DataACCKomunikasi::class,
+    'getAccKomunikasiitems' => DataACCItems::class,
     'getLoker' => DataLoker::class,
     'getPayroll' => DataPayroll::class,
     'getTerlambat' => DataTerlambat::class,

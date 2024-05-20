@@ -262,9 +262,34 @@
                                     </div>
                                     @if (Auth::user()->role != 'operator')
                                         <div class="tab-pane" id="tab-acc-komunikasi" role="tabpanel">
-                                            <table style="width: 100%"
-                                                class="table table-striped table-bordered table-hover text-nowrap datatable-acc-komunikasi">
-                                            </table>
+                                            <ul class="nav nav-tabs card-header-tabs mb-3 mt-3 ms-auto"
+                                                data-bs-toggle="tabs" role="tablist">
+                                                <li class="nav-item" role="presentation">
+                                                    <a href="#tabs-form" class="btn btn-info active"
+                                                        style="margin-right:10px" data-bs-toggle="tab"
+                                                        aria-selected="true" role="tab">
+                                                        <i class="fa-solid fa-book" style="margin-right:10px"></i>
+                                                        Form</a>
+                                                </li>
+                                                <li class="nav-item" role="presentation">
+                                                    <a href="#tabs-items" class="btn btn-orange" data-bs-toggle="tab"
+                                                        aria-selected="false" tabindex="-1" role="tab">
+                                                        <i class="fa-solid fa-list-ul" style="margin-right:10px"></i>
+                                                        Items</a>
+                                                </li>
+                                            </ul>
+                                            <div class="tab-content">
+                                                <div class="tab-pane active show" id="tabs-form" role="tabpanel">
+                                                    <table style="width: 100%"
+                                                        class="table table-striped table-bordered table-hover text-nowrap datatable-acc-komunikasi">
+                                                    </table>
+                                                </div>
+                                                <div class="tab-pane" id="tabs-items" role="tabpanel">
+                                                    <table style="width: 100%"
+                                                        class="table table-striped table-bordered table-hover text-nowrap datatable-acc-items">
+                                                    </table>
+                                                </div>
+                                            </div>
                                         </div>
                                     @endif
                                     <div class="tab-pane" id="tab-create-new" role="tabpanel">
@@ -1120,7 +1145,7 @@
                 buttons: [
 
                     {
-                        text: '<i class="fa-solid fa-filter" style="margin-right:5px"></i>',
+                        text: '<i class="fa-solid fa-filter" style="margin-right:5px"></i> Saring Surat Komunikasi',
                         className: 'btn btn-blue',
                         attr: {
                             'href': '#offcanvasEnd-acc',
@@ -1133,12 +1158,12 @@
                         extend: 'excelHtml5',
                         autoFilter: true,
                         className: 'btn btn-green',
-                        text: '<i class="fa fa-file-excel text-white" style="margin-right:5px"></i>',
+                        text: '<i class="fa fa-file-excel text-white" style="margin-right:5px"></i> Download Excel',
                         action: newexportaction,
                     },
                     {
-                        className: 'btn btn-blue',
-                        text: 'Proses Surat Komunikasi',
+                        className: 'btn btn-red',
+                        text: '<i class="fa-solid fa-list-check" style="margin-right:5px"></i> Proses Surat Komunikasi',
                         action: function(e, node, config) {
                             $('#myModalCheck').modal('show')
                         }
@@ -1183,7 +1208,8 @@
                 columns: [{
                         data: 'select_orders',
                         name: 'select_orders',
-                        className: 'cuspad2',
+                        // className: 'cuspad2',
+                        className: 'cuspad0 text-center',
                         orderable: false,
                         searchable: false,
                     },
@@ -1191,43 +1217,144 @@
                         title: 'Noform',
                         data: 'noform',
                         name: 'noform',
-                        // className: 'cuspad0'
+                        className: 'cuspad0 text-center',
                     },
                     {
                         title: 'Tanggal',
                         data: 'tanggal',
                         name: 'tanggal',
-                        // className: 'cuspad0 text-center'
+                        className: 'cuspad0 text-center',
+                    },
+                    {
+                        title: 'Dibuat',
+                        data: 'dibuat',
+                        name: 'dibuat',
+                        className: 'cuspad0 text-center',
+                    },
+                ],
+            });
+
+            tableAccItems = $('.datatable-acc-items').DataTable({
+                "processing": true, //Feature control the processing indicator.
+                "serverSide": false, //Feature control DataTables' server-side processing mode.
+                "scrollX": false,
+                "scrollCollapse": true,
+                "pagingType": 'full_numbers',
+                "lengthMenu": [
+                    [10, 25, 35, 40, 50, -1],
+                    ['10', '25', '35', '40', '50', 'Tampilkan Semua']
+                ],
+
+                "dom": "<'card-header h3' B>" +
+                    "<'card-body border-bottom py-3' <'row'<'col-sm-6'l><'col-sm-6'f>> >" +
+                    "<'table-responsive' <'col-sm-12'tr> >" +
+                    "<'card-footer' <'row'<'col-sm-8'i><'col-sm-4'p> >>",
+                buttons: [
+
+                    {
+                        text: '<i class="fa-solid fa-filter" style="margin-right:5px"></i> Saring Surat Komunikasi',
+                        className: 'btn btn-blue',
+                        attr: {
+                            'href': '#offcanvasEnd-acc',
+                            'data-bs-toggle': 'offcanvas',
+                            'role': 'button',
+                            'aria-controls': 'offcanvasEnd',
+                        }
+                    },
+                    {
+                        extend: 'excelHtml5',
+                        autoFilter: true,
+                        className: 'btn btn-green',
+                        text: '<i class="fa fa-file-excel text-white" style="margin-right:5px"></i> Download Excel',
+                        action: newexportaction,
+                    },
+                    {
+                        className: 'btn btn-red',
+                        text: '<i class="fa-solid fa-list-check" style="margin-right:5px"></i> Proses Surat Komunikasi',
+                        action: function(e, node, config) {
+                            $('#myModalCheck').modal('show')
+                        }
+                    },
+                ],
+                "language": {
+                    "lengthMenu": "Menampilkan _MENU_",
+                    "zeroRecords": "Data Tidak Ditemukan",
+                    "info": "Menampilkan _START_ sampai _END_ dari _TOTAL_ total data",
+                    "infoEmpty": "Data Tidak Ditemukan",
+                    "infoFiltered": "(Difilter dari _MAX_ total records)",
+                    "processing": '<div class="container container-slim py-4"><div class="text-center"><div class="mb-3"></div><div class="text-secondary mb-3">Loading Data...</div><div class="progress progress-sm"><div class="progress-bar progress-bar-indeterminate"></div></div></div></div>',
+                    "search": '<svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-search" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z" fill="none"></path><path d="M10 10m-7 0a7 7 0 1 0 14 0a7 7 0 1 0 -14 0"></path><path d="M21 21l-6 -6"></path></svg>',
+                    "paginate": {
+                        "first": '<svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-chevron-left-pipe" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z" fill="none"></path><path d="M7 6v12"></path><path d="M18 6l-6 6l6 6"></path></svg>',
+                        "last": '<svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-chevron-right-pipe" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z" fill="none"></path><path d="M6 6l6 6l-6 6"></path><path d="M17 5v13"></path></svg>',
+                        "next": '<svg xmlns="http://www.w3.org/2000/svg" class="icon" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z" fill="none"></path><path d="M9 6l6 6l-6 6"></path></svg>',
+                        "previous": '<svg xmlns="http://www.w3.org/2000/svg" class="icon" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z" fill="none"></path><path d="M15 6l-6 6l6 6"></path></svg>',
+                    },
+                    "select": {
+                        rows: {
+                            _: "%d kandidat dipilih",
+                            0: "Pilih item dan tekan tombol Proses data untuk memproses Acc",
+                        }
+                    },
+                },
+                ajax: "{{ route('getAccKomunikasiitems.index') }}",
+                autoWidth: false,
+                select: {
+                    'style': 'multi',
+                },
+                columnDefs: [{
+                        'targets': 0,
+                        // "orderable": false,
+                        'className': 'select-checkbox',
+                        'checkboxes': {
+                            'selectRow': true
+                        },
+                    }
+
+                ],
+                columns: [{
+                        data: 'select_orders',
+                        name: 'select_orders',
+                        // className: 'cuspad2',
+                        className: 'cuspad0 text-center',
+                        orderable: false,
+                        searchable: false,
+                    },
+                    {
+                        title: 'Noform',
+                        data: 'noform',
+                        name: 'noform',
+                        className: 'cuspad0 text-center',
+                    },
+                    {
+                        title: 'Tanggal',
+                        data: 'tanggalKomunikasi',
+                        name: 'tanggalKomunikasi',
+                        className: 'cuspad0 text-center',
                     },
                     {
                         title: 'Nama',
                         data: 'nama',
                         name: 'nama',
-                        // className: 'cuspad0 text-center'
+                        className: 'cuspad0 text-center',
                     },
                     {
                         title: 'Surat',
                         data: 'suratid',
                         name: 'suratid',
-                        // className: 'cuspad0 text-center'
-                    },
-                    {
-                        title: 'Status',
-                        data: 'sst',
-                        name: 'sst',
-                        // className: 'cuspad0 text-center'
+                        className: 'cuspad0 text-center',
                     },
                     {
                         title: 'Keterangan',
                         data: 'keterangan',
                         name: 'keterangan',
-                        // className: 'cuspad0 text-center'
+                        className: 'cuspad0 text-center',
                     },
                     {
-                        title: 'Status Surat',
+                        title: 'Status',
                         data: 'statussurat',
                         name: 'statussurat',
-                        // className: 'cuspad0 text-center'
+                        className: 'cuspad0 text-center',
                     },
                 ],
             });
@@ -1419,7 +1546,7 @@
 
                 $.each(tableAccKomunikasi.rows('.selected').nodes(), function(index, rowId) {
                     var rows_selected = tableAccKomunikasi.rows('.selected').data();
-                    itemTables.push(rows_selected[index]['id']);
+                    itemTables.push(rows_selected[index]['noform']);
                 });
                 console.log(itemTables);
 
