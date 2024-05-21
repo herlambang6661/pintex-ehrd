@@ -1,9 +1,11 @@
 <?php
 
+use Carbon\Carbon;
 use App\Http\Controllers\Daftar;
 use App\Http\Controllers\Absensi;
 use App\Http\Controllers\DBLokal;
 use App\Http\Controllers\Database;
+use Illuminate\Support\Facades\DB;
 use App\Http\Controllers\Penerimaan;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
@@ -56,9 +58,28 @@ Route::get('logs', [\Rap2hpoutre\LaravelLogViewer\LogViewerController::class, 'i
 
 Route::get('/', function () {
     if (Auth::check()) {
-        return view('products.dashboard');
+        $judul = "Dashboard";
+        $countLamaran = DB::table('penerimaan_lamaran')->count();
+        $countKaryawan = DB::table('penerimaan_karyawan')->where('status', 'like', '%Aktif%')->count();
+        $countKomunikasi = DB::table('absensi_komunikasiitm')->count();
+        $absensi = DB::table('absensi_absensi')->orderBy('tanggal', 'desc')->limit('1')->get();
+        $kontrak = DB::table('penerimaan_legalitas')->where('nmsurat', 'Perjanjian Kontrak')->where('tglak', '>', date('Y-m-d'))->orderBy('tglak', 'asc')->limit('50')->get();
+        $sp = DB::table('penerimaan_legalitas')->where('nmsurat', 'Surat Peringatan (SP)')->where('legalitastgl', '>=', now()->subMonths(6))->orderBy('legalitastgl', 'desc')->limit('50')->get();
+
+        foreach ($absensi as $ab) {
+            $absen = Carbon::parse($ab->tanggal)->format('d-m-Y');
+        }
+
+        return view('products.dashboard', [
+            'judul' => $judul,
+            'lamaran' => $countLamaran,
+            'karyawan' => $countKaryawan,
+            'komunikasi' => $countKomunikasi,
+            'absen' => $absen,
+            'kontrak' => $kontrak,
+            'sp' => $sp,
+        ]);
     } else {
-        // return view('login');
         return redirect("login")->withSuccess('Opps! You do not have access');
     }
 });

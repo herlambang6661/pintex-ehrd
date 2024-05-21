@@ -38,7 +38,7 @@ class DataACCItems extends Controller
                 ->select('b.id', 'b.noform', 'b.tanggal', 'b.tanggal2', 'b.nama', 'b.suratid', 'b.sst', 'b.keterangan', 'b.statussurat')
                 ->whereBetween('b.tanggal', [$dari, $sampai])
                 ->where('statussurat', 'PENGAJUAN')
-                ->orderBy('b.id', 'desc')
+                ->orderBy('b.noform', 'desc')
                 ->get();
             return DataTables::of($data)
                 ->addIndexColumn()
@@ -59,6 +59,11 @@ class DataACCItems extends Controller
                 ->addColumn('tanggal', function ($row) {
                     $tgl = Carbon::parse($row->tanggal)->format('d/m/Y');
                     return $tgl;
+                })
+
+                ->addColumn('thari', function ($row) {
+                    $diff = 1 + Carbon::parse($row->tanggal)->diffInDays($row->tanggal2);
+                    return $diff;
                 })
 
                 ->addColumn('statussurat', function ($row) {

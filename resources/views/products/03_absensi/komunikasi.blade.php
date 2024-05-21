@@ -950,6 +950,27 @@
             </div>
         </div>
     </div>
+    <div class="modal modal-blur fade" id="myModalCheckitem" tabindex="-1" style="display: none;" aria-hidden="true">
+        <div class="overlay">
+            <div class="loader">
+                <span class="spinner spinner1"></span>
+                <span class="spinner spinner2"></span>
+                <span class="spinner spinner3"></span>
+                <br>
+                <span class="loader-text">MEMUAT DATA</span>
+            </div>
+        </div>
+        <div class="modal-dialog modal-full-width  modal-dialog-centered" role="document">
+            <div class="modal-content">
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                <form id="formAccItem" name="formAccItem" method="post" action="javascript:void(0)">
+                    @csrf
+                    <input type="hidden" name="_token" value="{{ csrf_token() }}" />
+                    <div class="resultChecklist"></div>
+                </form>
+            </div>
+        </div>
+    </div>
     <script>
         var tableKaryawan, tableKomunikasi, tableAccKomunikasi;
 
@@ -1091,6 +1112,12 @@
                         title: 'Tanggal',
                         data: 'tanggalKomunikasi',
                         name: 'tanggalKomunikasi',
+                        className: 'cuspad0 text-center'
+                    },
+                    {
+                        title: 'Hari',
+                        data: 'thari',
+                        name: 'thari',
                         className: 'cuspad0 text-center'
                     },
                     {
@@ -1272,7 +1299,7 @@
                         className: 'btn btn-red',
                         text: '<i class="fa-solid fa-list-check" style="margin-right:5px"></i> Proses Surat Komunikasi',
                         action: function(e, node, config) {
-                            $('#myModalCheck').modal('show')
+                            $('#myModalCheckitem').modal('show')
                         }
                     },
                 ],
@@ -1330,6 +1357,12 @@
                         title: 'Tanggal',
                         data: 'tanggalKomunikasi',
                         name: 'tanggalKomunikasi',
+                        className: 'cuspad0 text-center',
+                    },
+                    {
+                        title: 'Hari',
+                        data: 'thari',
+                        name: 'thari',
                         className: 'cuspad0 text-center',
                     },
                     {
@@ -1529,10 +1562,96 @@
                                     html: data.responseJSON.message,
                                     showConfirmButton: true
                                 });
-                                $('#simpanLegalitas').html(
+                                $('#simpanAccItem').html(
                                     '<svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-device-floppy" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><path d="M6 4h10l4 4v10a2 2 0 0 1 -2 2h-12a2 2 0 0 1 -2 -2v-12a2 2 0 0 1 2 -2" /><path d="M12 14m-2 0a2 2 0 1 0 4 0a2 2 0 1 0 -4 0" /><path d="M14 4l0 4l-6 0l0 -4" /></svg> Proses Surat Komunikasi'
                                 );
-                                $("#simpanLegalitas").attr("disabled", false);
+                                $("#simpanAccItem").attr("disabled", false);
+                            }
+                        });
+                    }
+                })
+            }
+            if ($("#formAccItem").length > 0) {
+                var tipeinput = $('#suratjns').val();
+                $("#formAccItem").validate({
+                    submitHandler: function(form) {
+                        $.ajaxSetup({
+                            headers: {
+                                'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                            }
+                        });
+                        $('#simpanAccItem').html(
+                            '<i class="fa-solid fa-fw fa-spinner fa-spin"></i> Please Wait...');
+                        $("#simpanAccItem").attr("disabled", true);
+                        $.ajax({
+                            url: "{{ url('storedataAcc') }}",
+                            type: "POST",
+                            data: $('#formAccItem').serialize(),
+                            beforeSend: function() {
+                                Swal.fire({
+                                    title: 'Menyimpan ' + tipeinput,
+                                    html: '<center><lottie-player src="https://lottie.host/933bb0e2-47c0-4fa6-83f9-3330b433b883/yymyeZt49h.json"  background="transparent"  speed="1"  style="width: 300px; height: 300px;"  loop autoplay></lottie-player></center><br><h1 class="h4">Sedang menyimpan data</h1>',
+                                    showConfirmButton: false,
+                                    timerProgressBar: true,
+                                    allowOutsideClick: false,
+                                    allowEscapeKey: false,
+                                })
+                            },
+                            success: function(response) {
+                                console.log('Completed.');
+                                tableAccKomunikasi.ajax.reload();
+                                if (response.status == true) {
+                                    $('#simpanAccItem').html(
+                                        '<svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-device-floppy" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><path d="M6 4h10l4 4v10a2 2 0 0 1 -2 2h-12a2 2 0 0 1 -2 -2v-12a2 2 0 0 1 2 -2" /><path d="M12 14m-2 0a2 2 0 1 0 4 0a2 2 0 1 0 -4 0" /><path d="M14 4l0 4l-6 0l0 -4" /></svg> Proses Surat Komunikasi'
+                                    );
+                                    $("#simpanAccItem").attr("disabled", false);
+                                    const Toast = Swal.mixin({
+                                        toast: true,
+                                        position: "top-end",
+                                        showConfirmButton: false,
+                                        timer: 4000,
+                                        timerProgressBar: true,
+                                        didOpen: (toast) => {
+                                            toast.onmouseenter = Swal.stopTimer;
+                                            toast.onmouseleave = Swal
+                                                .resumeTimer;
+                                        }
+                                    });
+                                    Toast.fire({
+                                        icon: "success",
+                                        title: response.msg,
+                                    });
+                                    document.getElementById("formAccItem").reset();
+                                    var sp = $('#selectEntitas').val();
+                                    $('#entitas').val(sp);
+                                    $('#myModalCheck').modal('hide');
+                                } else if (response.status == false) {
+                                    console.log('Error:', response);
+                                    Swal.fire({
+                                        icon: 'error',
+                                        title: 'Gagal Input',
+                                        html: response.msg,
+                                        showConfirmButton: true
+                                    });
+                                    $('#simpanAccItem').html(
+                                        '<svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-device-floppy" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><path d="M6 4h10l4 4v10a2 2 0 0 1 -2 2h-12a2 2 0 0 1 -2 -2v-12a2 2 0 0 1 2 -2" /><path d="M12 14m-2 0a2 2 0 1 0 4 0a2 2 0 1 0 -4 0" /><path d="M14 4l0 4l-6 0l0 -4" /></svg> Proses Surat Komunikasi'
+                                    );
+                                    $("#simpanAccItem").attr("disabled", false);
+                                }
+                            },
+                            error: function(data) {
+                                console.log('Error:', data);
+                                // const obj = JSON.parse(data.responseJSON);
+                                Swal.fire({
+                                    icon: 'error',
+                                    title: 'Gagal Input',
+                                    html: data.responseJSON.message,
+                                    showConfirmButton: true
+                                });
+                                $('#simpanAccItem').html(
+                                    '<svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-device-floppy" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><path d="M6 4h10l4 4v10a2 2 0 0 1 -2 2h-12a2 2 0 0 1 -2 -2v-12a2 2 0 0 1 2 -2" /><path d="M12 14m-2 0a2 2 0 1 0 4 0a2 2 0 1 0 -4 0" /><path d="M14 4l0 4l-6 0l0 -4" /></svg> Proses Surat Komunikasi'
+                                );
+                                $("#simpanAccItem").attr("disabled", false);
                             }
                         });
                     }
@@ -1563,6 +1682,42 @@
                         "_token": "{{ csrf_token() }}",
                         id: itemTables,
                         jml: itemTables.length,
+                        tipe: 'form',
+                    },
+                    success: function(data) {
+                        $('.resultChecklist').html(data);
+                    }
+                }).done(function() {
+                    setTimeout(function() {
+                        $(".overlay").fadeOut(300);
+                    }, 500);
+                });
+            });
+            $('#myModalCheckitem').on('show.bs.modal', function(e) {
+                $(".overlay").fadeIn(300);
+                itemTables = [];
+                // console.log(count);
+
+                $.each(tableAccItems.rows('.selected').nodes(), function(index, rowId) {
+                    var rows_selected = tableAccItems.rows('.selected').data();
+                    itemTables.push(rows_selected[index]['id']);
+                });
+                console.log(itemTables);
+
+                $.ajaxSetup({
+                    headers: {
+                        'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                    }
+                });
+                //menggunakan fungsi ajax untuk pengambilan data
+                $.ajax({
+                    type: 'POST',
+                    url: '{{ url('checkAccKomunikasi') }}',
+                    data: {
+                        "_token": "{{ csrf_token() }}",
+                        id: itemTables,
+                        jml: itemTables.length,
+                        tipe: 'item',
                     },
                     success: function(data) {
                         $('.resultChecklist').html(data);

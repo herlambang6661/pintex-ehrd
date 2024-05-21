@@ -88,6 +88,10 @@ class DataKomunikasi extends Controller
                     $tgl = Carbon::parse($row->tanggal)->format('d/m/Y');
                     return $tgl;
                 })
+                ->addColumn('thari', function ($row) {
+                    $diff = 1 + Carbon::parse($row->tanggal)->diffInDays($row->tanggal2);
+                    return $diff;
+                })
                 ->addColumn('tanggalKomunikasi', function ($row) {
                     if ($row->tanggal == $row->tanggal2) {
                         $tgl = Carbon::parse($row->tanggal)->format('d/m/Y');
