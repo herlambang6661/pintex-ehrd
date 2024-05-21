@@ -1956,14 +1956,14 @@ class Penerimaan extends Controller
             // maka eksekusi sekarang, 
             // tapi jika lebih besar dari hari ini maka masuk ke schedule
             // ================================================================
-            if ($request->tglinput <= date('Y-m-d')) {
+            if ($request->tglawal <= date('Y-m-d')) {
                 $inputLegalitas = DB::table('penerimaan_legalitas')->insert([
                     'remember_token' => $request->_token,
                     'suratjns' => $request->suratjns,
                     'userid' => $request->userid,
                     'nama' => $karyawan->nama,
                     'inputtgl' => date('Y-m-d'),
-                    'legalitastgl' => $request->tglinput,
+                    'legalitastgl' => $request->tglawal,
                     'tglaw' => $request->tglawal,
                     'tglak' => $request->tglakhir,
                     'nmsurat' => $request->nmsurat,
@@ -1991,7 +1991,7 @@ class Penerimaan extends Controller
                     'userid' => $request->userid,
                     'nama' => $karyawan->nama,
                     'inputtgl' => date('Y-m-d'),
-                    'legalitastgl' => $request->tglinput,
+                    'legalitastgl' => $request->tglawal,
                     'tglaw' => $request->tglawal,
                     'tglak' => $request->tglakhir,
                     'nmsurat' => $request->nmsurat,
@@ -2008,7 +2008,7 @@ class Penerimaan extends Controller
                     'idjob' => $kode,
                     'dbjob' => 'penerimaan_legalitas',
                     'job' => 'add',
-                    'datejob' => $request->tglinput,
+                    'datejob' => $request->tglawal,
                     'nama' => $karyawan->nama,
                     'idemployee' => $request->userid,
                     'dibuat' => Auth::user()->name,
@@ -2472,6 +2472,7 @@ class Penerimaan extends Controller
     public function addModal(Request $request)
     {
         $karyawan = DB::table('penerimaan_karyawan')->where('userid', $request->id)->first();
+        $sebelumnya_perjanjian = DB::table('penerimaan_legalitas')->where('userid', $request->id)->where('suratjns', 'perjanjian')->orderBy('legalitastgl', 'desc')->first();
         $divisi = DB::table('daftar_pospekerjaan')->where('type', '=', 'DIVISI')->get();
         $bagian = DB::table('daftar_pospekerjaan')->where('type', '=', 'BAGIAN')->get();
         $jabatan = DB::table('daftar_pospekerjaan')->where('type', '=', 'JABATAN')->get();
@@ -2627,6 +2628,23 @@ class Penerimaan extends Controller
             echo
             '
                 <div class="modal-body">
+                    <table class="table table-sm table-bordered bg-blue-lt text-white text-center">
+                        <thead>
+                            <tr>
+                                <td colspan="4">Perjanjian Terakhir : ' . $sebelumnya_perjanjian->suratket . '</td>
+                            </tr>
+                            <tr>
+                                <td>Awal</td>
+                                <td>Akhir</td>
+                                <td>Cuti</td>
+                            </tr>
+                        </thead>
+                        <tr>
+                            <td>' . Carbon::parse($sebelumnya_perjanjian->tglaw)->format('d/m/Y') . '</td>
+                            <td>' . Carbon::parse($sebelumnya_perjanjian->tglak)->format('d/m/Y') . '</td>
+                            <td>' . $sebelumnya_perjanjian->sacuti . '</td>
+                        </tr>
+                    </table>
                     <div class="row">
                         <div class="col-lg-12">
                             <div class="mb-3">
@@ -2637,7 +2655,7 @@ class Penerimaan extends Controller
                         <div class="col-lg-6">
                             <div class="mb-3">
                             <label class="form-label">Nama Surat</label>
-                                <select name="nmsurat" id="" class="form-select">
+                                <select name="nmsurat" id="nmsurat" class="form-select" onchange="setJenis()">
                                 <option hidden value="">-- Pilih Nama Surat --</option>';
             foreach ($perjanjian as $pe) {
                 echo            '<option value="' . $pe->nmsurat . '">' . $pe->nmsurat . '</option>';
@@ -2648,25 +2666,20 @@ class Penerimaan extends Controller
                         <div class="col-lg-6">
                             <div class="mb-3">
                             <label class="form-label">Jenis Surat</label>
-                            <input type="text" name="jnssurat" class="form-control" placeholder="Masukkan Jenis Surat">
+                            <input type="text" name="jnssurat" id="jnssurat" class="form-control" placeholder="Masukkan Jenis Surat">
                             </div>
                         </div>
                     </div>
                     <table class="table table-sm table-borderless">
                         <tr>
-                            <td style="padding-top: 12px;width:130px">Tanggal Input</td>
-                            <td style="padding-top: 12px">:</td>
-                            <td><input type="date" name="tglinput" class="form-control" value="' . date("Y-m-d") . '"></td>
-                        </tr>
-                        <tr>
                             <td style="padding-top: 12px">Tanggal Awal</td>
                             <td style="padding-top: 12px">:</td>
-                            <td><input type="date" name="tglawal" class="form-control" value="' . date("Y-m-d") . '"></td>
+                            <td><input type="date" name="tglawal" class="form-control" value="' . date('Y-m-d', strtotime($sebelumnya_perjanjian->tglak . ' +1 day')) . '"></td>
                         </tr>
                         <tr>
                             <td style="padding-top: 12px">Tanggal Akhir</td>
                             <td style="padding-top: 12px">:</td>
-                            <td><input type="date" name="tglakhir" class="form-control" value="' . date("Y-m-d") . '"></td>
+                            <td><input type="date" name="tglakhir" class="form-control" value="' . date('Y-m-d', strtotime($sebelumnya_perjanjian->tglak . ' +1 day')) . '"></td>
                         </tr>
                         <tr>
                             <td style="padding-top: 12px">Cuti</td>
@@ -2674,6 +2687,16 @@ class Penerimaan extends Controller
                             <td><input type="number" name="cuti" min="0" class="form-control" placeholder="Cuti"></td>
                         </tr>
                     </table>
+                    <script>
+                        function setJenis(){
+                            val nm = $("#nmsurat").val();
+                            if (nm == "Perjanjian Kerja OL") {
+                                $("#jnssurat").val("OL")
+                            } else {
+                                $("#jnssurat").val("OL")
+                            }
+                        }
+                    </script>
                 </div>
             ';
         } elseif ($request->idtipe == "intern") {
