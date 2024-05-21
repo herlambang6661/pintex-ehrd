@@ -15,7 +15,7 @@
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
     <meta http-equiv="X-UA-Compatible" content="ie=edge" />
-    <link rel="icon" href="{{ asset('ehrd32.png') }}">
+    <link rel="icon" href="{{ asset('hrd16.png') }}">
     <title>Login - EHRD</title>
     <!-- CSS files -->
     <link href="{{ asset('assets/extentions/fontawesome/css/all.min.css') }}" rel="stylesheet">

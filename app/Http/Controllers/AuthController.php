@@ -129,7 +129,7 @@ class AuthController extends Controller
             $countKaryawan = DB::table('penerimaan_karyawan')->where('status', 'like', '%Aktif%')->count();
             $countKomunikasi = DB::table('absensi_komunikasiitm')->count();
             $absensi = DB::table('absensi_absensi')->orderBy('tanggal', 'desc')->limit('1')->get();
-            $kontrak = DB::table('penerimaan_legalitas')->where('nmsurat', 'Perjanjian Kontrak')->where('tglak', '>', date('Y-m-d'))->orderBy('tglak', 'asc')->limit('50')->get();
+            $kontrak = DB::table('penerimaan_legalitas as l')->join('penerimaan_karyawan as k', 'l.userid', '=', 'k.userid')->where('k.status', 'like', '%Aktif%')->where('l.nmsurat', 'Perjanjian Kontrak')->where('l.tglak', '>', date('Y-m-d'))->orderBy('l.tglak', 'asc')->limit('50')->get();
             $sp = DB::table('penerimaan_legalitas')->where('nmsurat', 'Surat Peringatan (SP)')->where('legalitastgl', '>=', now()->subMonths(6))->orderBy('legalitastgl', 'desc')->limit('50')->get();
 
             foreach ($absensi as $ab) {
