@@ -1742,11 +1742,17 @@ class Penerimaan extends Controller
         $legalitas = "active";
 
         $basic = DB::table('daftar_surat')->where('jenissurat', '=', 'Basic')->get();
+        $bagian = DB::table('daftar_pospekerjaan')->where('type', '=', 'BAGIAN')->get();
+        $grup = DB::table('daftar_pospekerjaan')->where('type', '=', 'GRUP')->get();
+        $shift = DB::table('daftar_pospekerjaan')->where('type', '=', 'SHIFT')->get();
         return view('products/02_penerimaan.legalitas', [
             'basic' => $basic,
             'judul' => $judul,
             'penerimaan' => $penerimaan,
-            'legalitas' => $legalitas
+            'legalitas' => $legalitas,
+            'bagian' => $bagian,
+            'grup' => $grup,
+            'shift' => $shift,
         ]);
     }
 

@@ -22,15 +22,55 @@ class DataLegalitasKaryawan extends Controller
     public function index(Request $request)
     {
         if ($request->ajax()) {
+            if ($request->status) {
+                if ($request->status == '*') {
+                    $sst = '%%';
+                } else {
+                    $sst = '%' . $request->status . '%';
+                }
+            } else {
+                $sst = '%Aktif%';
+            }
+
+            if ($request->bagian) {
+                if ($request->bagian == '*') {
+                    $bagian = '%%';
+                } else {
+                    $bagian = '%' . $request->bagian . '%';
+                }
+            } else {
+                $bagian = '%%';
+            }
+
+            if ($request->grup) {
+                if ($request->grup == '*') {
+                    $grup = '%%';
+                } else {
+                    $grup = '%' . $request->grup . '%';
+                }
+            } else {
+                $grup = '%%';
+            }
+
+            if ($request->shift) {
+                if ($request->shift == '*') {
+                    $shift = '%%';
+                } else {
+                    $shift = '%' . $request->shift . '%';
+                }
+            } else {
+                $shift = '%%';
+            }
+
             $data = DB::table('penerimaan_karyawan')
-                ->where('status', 'like', '%Aktif%')
+                ->where('status', 'like', $sst)
+                ->where('bagian', 'like', $bagian)
+                ->where('grup', 'like', $grup)
+                ->where('shift', 'like', $shift)
                 ->orderBy('nama', 'asc')
                 ->get();
             return DataTables::of($data)
                 ->addIndexColumn()
-                // ->editColumn('select_orders', function ($row) {
-                //     return '';
-                // })
 
                 ->addColumn('ttl', function ($row) {
                     if ($row->tglmasuk) {

@@ -14,13 +14,13 @@
 
         td.cuspad2 {
             /* padding-top: 0.5px;
-                                                                                                                        padding-bottom: 0.5px;
-                                                                                                                        padding-right: 0.5px;
-                                                                                                                        padding-left: 0.5px;
-                                                                                                                        margin-top: 5px;
-                                                                                                                        margin-bottom: 5px;
-                                                                                                                        margin-right: 5px;
-                                                                                                                        margin-left: 5px; */
+                                                                                                                                                                                                                    padding-bottom: 0.5px;
+                                                                                                                                                                                                                    padding-right: 0.5px;
+                                                                                                                                                                                                                    padding-left: 0.5px;
+                                                                                                                                                                                                                    margin-top: 5px;
+                                                                                                                                                                                                                    margin-bottom: 5px;
+                                                                                                                                                                                                                    margin-right: 5px;
+                                                                                                                                                                                                                    margin-left: 5px; */
         }
 
         .overlay {
@@ -254,10 +254,10 @@
         </div>
     </div>
     {{-- Modal Filter --}}
-    <div class="offcanvas offcanvas-blur offcanvas-end" tabindex="-1" id="offcanvasEnd-lamaran"
+    <div class="offcanvas offcanvas-blur offcanvas-end" tabindex="-1" id="offcanvasEnd-karyawan"
         aria-labelledby="offcanvasEndLabel">
         <div class="offcanvas-header">
-            <h2 class="offcanvas-title" id="offcanvasEndLabel">Saring Data Wawancara</h2>
+            <h2 class="offcanvas-title" id="offcanvasEndLabel">Saring Data Legalitas</h2>
             <button type="button" class="btn-close text-reset" data-bs-dismiss="offcanvas" aria-label="Close"></button>
         </div>
         <div class="offcanvas-body">
@@ -269,112 +269,63 @@
                 </div>
                 <form action="#" id="form-filter-items" method="get" autocomplete="off" novalidate=""
                     class="sticky-top">
-                    <div class="form-label">Tanggal Penginputan</div>
-                    <div class="row">
-                        <div class="col">
-                            <div class="input-icon mb-2">
-                                <input name="dari" class="form-control border-primary" placeholder="Select a date"
-                                    id="datepicker0" value="<?= date('Y-01-01') ?>" />
-                                <span class="input-icon-addon">
-                                    <svg xmlns="http://www.w3.org/2000/svg" class="icon" width="24" height="24"
-                                        viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none"
-                                        stroke-linecap="round" stroke-linejoin="round">
-                                        <path stroke="none" d="M0 0h24v24H0z" fill="none" />
-                                        <path
-                                            d="M4 7a2 2 0 0 1 2 -2h12a2 2 0 0 1 2 2v12a2 2 0 0 1 -2 2h-12a2 2 0 0 1 -2 -2v-12z" />
-                                        <path d="M16 3v4" />
-                                        <path d="M8 3v4" />
-                                        <path d="M4 11h16" />
-                                        <path d="M11 15h1" />
-                                        <path d="M12 15v3" />
-                                    </svg>
-                                </span>
-                            </div>
-                        </div>
-                        <div class="col">
-                            <div class="input-icon mb-2">
-                                <input name="sampai" class="form-control border-primary" placeholder="Select a date"
-                                    id="datepicker1" value="<?= date('Y-12-31') ?>" />
-                                <span class="input-icon-addon">
-                                    <svg xmlns="http://www.w3.org/2000/svg" class="icon" width="24" height="24"
-                                        viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none"
-                                        stroke-linecap="round" stroke-linejoin="round">
-                                        <path stroke="none" d="M0 0h24v24H0z" fill="none" />
-                                        <path
-                                            d="M4 7a2 2 0 0 1 2 -2h12a2 2 0 0 1 2 2v12a2 2 0 0 1 -2 2h-12a2 2 0 0 1 -2 -2v-12z" />
-                                        <path d="M16 3v4" />
-                                        <path d="M8 3v4" />
-                                        <path d="M4 11h16" />
-                                        <path d="M11 15h1" />
-                                        <path d="M12 15v3" />
-                                    </svg>
-                                </span>
-                            </div>
-                        </div>
-                    </div>
-                    <br>
-                    <div class="form-label">Jenis Kelamin</div>
+                    <div class="form-label">Status Karyawan</div>
                     <div class="mb-4">
                         <div class="row">
-                            <div class="col-sm-6">
-                                <label class="form-check">
-                                    <input type="checkbox" class="form-check-input filter-checkbox-rayon"
-                                        name="pendidikan[]" value="IBR" checked="" id="sSmp">
-                                    <span class="form-check-label">Pria</span>
-                                </label>
-                                <label class="form-check">
-                                    <input type="checkbox" class="form-check-input filter-checkbox-rayon"
-                                        name="pendidikan[]" value="SPV" checked="" id="sSma">
-                                    <span class="form-check-label">Wanita</span>
-                                </label>
+                            <div class="col-sm-12">
+                                <select name="fstatus" id="fstatus" class="form-select border-primary">
+                                    <option value="Aktif">Aktif</option>
+                                    <option value="Resign">Resign</option>
+                                    <option value="Habis">Habis Kontrak</option>
+                                    <option value="PHK">PHK</option>
+                                    <option value="*">Semua</option>
+                                </select>
                             </div>
                         </div>
                     </div>
-                    <div class="form-label">Posisi Dituju</div>
+                    <div class="form-label">Bagian</div>
                     <div class="mb-4">
-                        <label class="form-check">
-                            <input type="checkbox" class="form-check-input" name="posisidituju[]" value="OPERATOR"
-                                checked="" id="pOperator">
-                            <span class="form-check-label">Operator</span>
-                        </label>
-                        <label class="form-check">
-                            <input type="checkbox" class="form-check-input" name="posisidituju[]" value="PENGEMUDI"
-                                checked="" id="pPengemudi">
-                            <span class="form-check-label">Pengemudi</span>
-                        </label>
-                        <label class="form-check">
-                            <input type="checkbox" class="form-check-input" name="posisidituju[]" value="IT"
-                                checked="" id="pIT">
-                            <span class="form-check-label">IT</span>
-                        </label>
-                        <label class="form-check">
-                            <input type="checkbox" class="form-check-input" name="posisidituju[]" value="HRD"
-                                checked="" id="pHRD">
-                            <span class="form-check-label">HRD</span>
-                        </label>
-                        <label class="form-check">
-                            <input type="checkbox" class="form-check-input" name="posisidituju[]" value="KEAMANAN"
-                                checked="" id="pKeamanan">
-                            <span class="form-check-label">Keamanan</span>
-                        </label>
+                        <div class="row">
+                            <div class="col-sm-12">
+                                <select name="fbagian" id="fbagian" class="form-select border-primary">
+                                    <option value="*">Semua</option>
+                                    @foreach ($bagian as $b)
+                                        <option value="{{ $b->desc }}">{{ $b->desc }}</option>
+                                    @endforeach
+                                </select>
+                            </div>
+                        </div>
                     </div>
-                    <div class="form-label">Tinggi Minimal</div>
+                    <div class="form-label">Jenis Shift</div>
                     <div class="mb-4">
-                        <input type="number" min="0" max="300" class="form-control" id="tinggi">
+                        <div class="row">
+                            <div class="col-sm-12">
+                                <select name="fshift" id="fshift" class="form-select border-primary">
+                                    <option value="*">Semua</option>
+                                    @foreach ($shift as $s)
+                                        <option value="{{ $s->desc }}">{{ $s->desc }}</option>
+                                    @endforeach
+                                </select>
+                            </div>
+                        </div>
                     </div>
-                    <div class="form-label">Proses Wawancara</div>
+                    <div class="form-label">Grup</div>
                     <div class="mb-4">
-                        <label class="form-check form-switch">
-                            <input class="form-check-input" type="checkbox">
-                            <span class="form-check-label form-check-label-on">Sudah</span>
-                            <span class="form-check-label form-check-label-off">Belum</span>
-                        </label>
+                        <div class="row">
+                            <div class="col-sm-12">
+                                <select name="fgrup" id="fgrup" class="form-select border-primary">
+                                    <option value="*">Semua</option>
+                                    @foreach ($grup as $g)
+                                        <option value="{{ $g->desc }}">{{ $g->desc }}</option>
+                                    @endforeach
+                                </select>
+                            </div>
+                        </div>
                     </div>
                     <div class="mt-5">
-                        <button type="button" class="btn btn-primary w-100" id="btn-filter">Filter
+                        <button type="button" class="btn btn-primary w-100" onclick="syn();" id="btn-filter">Filter
                             Data</button> <br>
-                        <button type="button" class="btn btn-link w-100" id="btn-reset-items">Reset to
-                            defaults</button>
+                        <input type="reset" class="btn btn-link w-100" value="Reset">
                     </div>
                 </form>
             </div>
@@ -411,10 +362,10 @@
     </div>
     <script type="text/javascript">
         /*------------------------------------------
-                                                                                                                    --------------------------------------------
-                                                                                                                    Render DataTable
-                                                                                                                    --------------------------------------------
-                                                                                                                    --------------------------------------------*/
+                                                                                                                                                                                                                --------------------------------------------
+                                                                                                                                                                                                                Render DataTable
+                                                                                                                                                                                                                --------------------------------------------
+                                                                                                                                                                                                                --------------------------------------------*/
 
         function newexportaction(e, dt, button, config) {
             var self = this;
@@ -458,6 +409,12 @@
             dt.ajax.reload();
         }
 
+        var tableWawancara;
+
+        function syn() {
+            tableWawancara.ajax.reload();
+        }
+
         $(function() {
             /*------------------------------------------==============================================================================================================================================================
             --------------------------------------------==============================================================================================================================================================
@@ -472,7 +429,7 @@
                 $('.w_excel').attr('data-toggle', 'tooltip').attr('data-placement', 'top').attr('title',
                     'Download Excel dari tabel');
             });
-            var tableWawancara = $('.datatable-karyawan').DataTable({
+            tableWawancara = $('.datatable-karyawan').DataTable({
                 "processing": true, //Feature control the processing indicator.
                 "serverSide": false, //Feature control DataTables' server-side processing mode.
                 "scrollX": true,
@@ -497,7 +454,7 @@
                         text: '<i class="fa-solid fa-filter" style="margin-right:5px"></i>',
                         className: 'btn btn-blue w_filter',
                         attr: {
-                            'href': '#offcanvasEnd-lamaran',
+                            'href': '#offcanvasEnd-karyawan',
                             'data-bs-toggle': 'offcanvas',
                             'role': 'button',
                             'aria-controls': 'offcanvasEnd',
@@ -525,37 +482,20 @@
                         "next": '<svg xmlns="http://www.w3.org/2000/svg" class="icon" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z" fill="none"></path><path d="M9 6l6 6l-6 6"></path></svg>',
                         "previous": '<svg xmlns="http://www.w3.org/2000/svg" class="icon" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z" fill="none"></path><path d="M15 6l-6 6l6 6"></path></svg>',
                     },
-                    // "select": {
-                    //     rows: {
-                    //         _: "%d kandidat dipilih",
-                    //         0: "Pilih item dan tekan tombol Proses data untuk Penerimaan karyawan",
-                    //     }
-                    // },
                 },
-                ajax: "{{ route('getLegalitasKaryawan.index') }}",
-                // columnDefs: [{
-                //         'targets': 0,
-                //         "orderable": false,
-                //         'className': 'select-checkbox',
-                //         'checkboxes': {
-                //             'selectRow': true
-                //         },
-                //     }
-
-                // ],
-                // select: {
-                //     'style': 'multi',
-                //     "selector": 'td:not(:last-child)',
-                // },
-                columns: [
-                    // {
-                    //     data: 'select_orders',
-                    //     name: 'select_orders',
-                    //     className: 'cuspad2',
-                    //     orderable: false,
-                    //     searchable: false
-                    // },
-                    {
+                "ajax": {
+                    "url": "{{ route('getLegalitasKaryawan.index') }}",
+                    "data": function(data) {
+                        data._token = "{{ csrf_token() }}";
+                        data.dari = $('.dari').val();
+                        data.sampai = $('.sampai').val();
+                        data.status = $('#fstatus').val();
+                        data.bagian = $('#fbagian').val();
+                        data.grup = $('#fgrup').val();
+                        data.shift = $('#fshift').val();
+                    }
+                },
+                columns: [{
                         data: 'action',
                         name: 'action',
                         orderable: false,
@@ -659,7 +599,7 @@
                         text: '<i class="fa-solid fa-filter" style="margin-right:5px"></i>',
                         className: 'btn btn-blue w_filter',
                         attr: {
-                            'href': '#offcanvasEnd-lamaran',
+                            'href': '#offcanvasEnd-ol',
                             'data-bs-toggle': 'offcanvas',
                             'role': 'button',
                             'aria-controls': 'offcanvasEnd',
@@ -793,7 +733,7 @@
                         text: '<i class="fa-solid fa-filter" style="margin-right:5px"></i>',
                         className: 'btn btn-blue w_filter',
                         attr: {
-                            'href': '#offcanvasEnd-lamaran',
+                            'href': '#offcanvasEnd-phl',
                             'data-bs-toggle': 'offcanvas',
                             'role': 'button',
                             'aria-controls': 'offcanvasEnd',
