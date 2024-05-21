@@ -2687,14 +2687,20 @@ class Penerimaan extends Controller
                             <td><input type="number" name="cuti" min="0" class="form-control" placeholder="Cuti"></td>
                         </tr>
                     </table>
+                    
                     <script>
                         function setJenis(){
-                            val nm = $("#nmsurat").val();
-                            if (nm == "Perjanjian Kerja OL") {
-                                $("#jnssurat").val("OL")
-                            } else {
-                                $("#jnssurat").val("OL")
-                            }
+                            var jns = $("#nmsurat").val();
+                            console.log(jns);
+                            if(jns=="Perjanjian Kerja OL"){
+                                $("#jnssurat").val("OL");
+                            } else if(jns=="Perjanjian Kerja PHL"){
+                                $("#jnssurat").val("PHL");
+                            }  else if(jns=="Perjanjian Kontrak"){
+                                $("#jnssurat").val("Kontrak Baru");
+                            }   else if(jns=="Perjanjian Magang"){
+                                $("#jnssurat").val("Magang");
+                            }  
                         }
                     </script>
                 </div>
