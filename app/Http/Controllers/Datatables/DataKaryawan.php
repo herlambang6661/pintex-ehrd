@@ -22,8 +22,19 @@ class DataKaryawan extends Controller
     public function index(Request $request)
     {
         if ($request->ajax()) {
+
+            if ($request->status) {
+                if ($request->status == '*') {
+                    $sst = '%%';
+                } else {
+                    $sst = '%' . $request->status . '%';
+                }
+            } else {
+                $sst = '%Aktif%';
+            }
+
             $data = DB::table('penerimaan_karyawan')
-                ->where('status', 'like', '%Aktif%')
+                ->where('status', 'like', $sst)
                 ->orderBy('nama', 'asc')
                 ->get();
             return DataTables::of($data)

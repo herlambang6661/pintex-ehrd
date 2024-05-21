@@ -14,13 +14,13 @@
 
         td.cuspad2 {
             /* padding-top: 0.5px;
-                                                    padding-bottom: 0.5px;
-                                                    padding-right: 0.5px;
-                                                    padding-left: 0.5px;
-                                                    margin-top: 5px;
-                                                    margin-bottom: 5px;
-                                                    margin-right: 5px;
-                                                    margin-left: 5px; */
+                                                                                                                                                    padding-bottom: 0.5px;
+                                                                                                                                                    padding-right: 0.5px;
+                                                                                                                                                    padding-left: 0.5px;
+                                                                                                                                                    margin-top: 5px;
+                                                                                                                                                    margin-bottom: 5px;
+                                                                                                                                                    margin-right: 5px;
+                                                                                                                                                    margin-left: 5px; */
         }
 
         .overlay {
@@ -34,30 +34,30 @@
         }
 
         /* .cv-spinner {
-                                            height: 100%;
-                                            display: flex;
-                                            justify-content: center;
-                                            align-items: center;
-                                        }
+                                                                                                                                            height: 100%;
+                                                                                                                                            display: flex;
+                                                                                                                                            justify-content: center;
+                                                                                                                                            align-items: center;
+                                                                                                                                        }
 
-                                        .spinner {
-                                            width: 40px;
-                                            height: 40px;
-                                            border: 4px #ddd solid;
-                                            border-top: 4px #2e93e6 solid;
-                                            border-radius: 50%;
-                                            animation: sp-anime 0.8s infinite linear;
-                                        }
+                                                                                                                                        .spinner {
+                                                                                                                                            width: 40px;
+                                                                                                                                            height: 40px;
+                                                                                                                                            border: 4px #ddd solid;
+                                                                                                                                            border-top: 4px #2e93e6 solid;
+                                                                                                                                            border-radius: 50%;
+                                                                                                                                            animation: sp-anime 0.8s infinite linear;
+                                                                                                                                        }
 
-                                        @keyframes sp-anime {
-                                            100% {
-                                                transform: rotate(360deg);
-                                            }
-                                        }
+                                                                                                                                        @keyframes sp-anime {
+                                                                                                                                            100% {
+                                                                                                                                                transform: rotate(360deg);
+                                                                                                                                            }
+                                                                                                                                        }
 
-                                        .is-hide {
-                                            display: none;
-                                        } */
+                                                                                                                                        .is-hide {
+                                                                                                                                            display: none;
+                                                                                                                                        } */
         .loader {
             position: fixed;
             z-index: 301;
@@ -332,51 +332,21 @@
                 </div>
                 <form action="#" id="form-filter-items" method="get" autocomplete="off" novalidate=""
                     class="sticky-top">
-                    <div class="form-label">Tanggal Penginputan</div>
-                    <div class="row">
-                        <div class="col">
-                            <div class="input-icon mb-2">
-                                <input name="dari" class="form-control border-primary" placeholder="Select a date"
-                                    id="datepicker0" value="<?= date('Y-01-01') ?>" />
-                                <span class="input-icon-addon">
-                                    <svg xmlns="http://www.w3.org/2000/svg" class="icon" width="24" height="24"
-                                        viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none"
-                                        stroke-linecap="round" stroke-linejoin="round">
-                                        <path stroke="none" d="M0 0h24v24H0z" fill="none" />
-                                        <path
-                                            d="M4 7a2 2 0 0 1 2 -2h12a2 2 0 0 1 2 2v12a2 2 0 0 1 -2 2h-12a2 2 0 0 1 -2 -2v-12z" />
-                                        <path d="M16 3v4" />
-                                        <path d="M8 3v4" />
-                                        <path d="M4 11h16" />
-                                        <path d="M11 15h1" />
-                                        <path d="M12 15v3" />
-                                    </svg>
-                                </span>
-                            </div>
-                        </div>
-                        <div class="col">
-                            <div class="input-icon mb-2">
-                                <input name="sampai" class="form-control border-primary" placeholder="Select a date"
-                                    id="datepicker1" value="<?= date('Y-12-31') ?>" />
-                                <span class="input-icon-addon">
-                                    <svg xmlns="http://www.w3.org/2000/svg" class="icon" width="24" height="24"
-                                        viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none"
-                                        stroke-linecap="round" stroke-linejoin="round">
-                                        <path stroke="none" d="M0 0h24v24H0z" fill="none" />
-                                        <path
-                                            d="M4 7a2 2 0 0 1 2 -2h12a2 2 0 0 1 2 2v12a2 2 0 0 1 -2 2h-12a2 2 0 0 1 -2 -2v-12z" />
-                                        <path d="M16 3v4" />
-                                        <path d="M8 3v4" />
-                                        <path d="M4 11h16" />
-                                        <path d="M11 15h1" />
-                                        <path d="M12 15v3" />
-                                    </svg>
-                                </span>
+                    <div class="form-label">Status Karyawan</div>
+                    <div class="mb-4">
+                        <div class="row">
+                            <div class="col-sm-12">
+                                <select name="fstatus" id="fstatus" class="form-select border-primary">
+                                    <option value="Aktif">Aktif</option>
+                                    <option value="Resign">Resign</option>
+                                    <option value="Habis">Habis Kontrak</option>
+                                    <option value="PHK">PHK</option>
+                                    <option value="*">Semua</option>
+                                </select>
                             </div>
                         </div>
                     </div>
-                    <br>
-                    <div class="form-label">Jenis Kelamin</div>
+                    <div class="form-label">Bagian</div>
                     <div class="mb-4">
                         <div class="row">
                             <div class="col-sm-6">
@@ -434,7 +404,7 @@
                         </label>
                     </div>
                     <div class="mt-5">
-                        <button type="button" class="btn btn-primary w-100" id="btn-filter">Filter
+                        <button type="button" class="btn btn-primary w-100" onclick="syn()" id="btn-filter">Filter
                             Data</button> <br>
                         <button type="button" class="btn btn-link w-100" id="btn-reset-items">Reset to
                             defaults</button>
@@ -483,10 +453,10 @@
     </div>
     <script type="text/javascript">
         /*------------------------------------------
-                                                --------------------------------------------
-                                                Render DataTable
-                                                --------------------------------------------
-                                                --------------------------------------------*/
+                                                                                                                                                --------------------------------------------
+                                                                                                                                                Render DataTable
+                                                                                                                                                --------------------------------------------
+                                                                                                                                                --------------------------------------------*/
 
         function newexportaction(e, dt, button, config) {
             var self = this;
@@ -530,12 +500,14 @@
             dt.ajax.reload();
         }
 
+        var tableWawancara;
         $(function() {
             /*------------------------------------------==============================================================================================================================================================
             --------------------------------------------==============================================================================================================================================================
             Create Data
             --------------------------------------------==============================================================================================================================================================
             --------------------------------------------==============================================================================================================================================================*/
+            var token = $("meta[name='csrf-token']").attr("content");
             $('.datatable-karyawan').on('init.dt', function() {
                 $('.checkall').attr('data-toggle', 'tooltip').attr('data-placement', 'top').attr('title',
                     'Tooltip on top');
@@ -544,7 +516,7 @@
                 $('.w_excel').attr('data-toggle', 'tooltip').attr('data-placement', 'top').attr('title',
                     'Download Excel dari tabel');
             });
-            var tableWawancara = $('.datatable-karyawan').DataTable({
+            tableWawancara = $('.datatable-karyawan').DataTable({
                 "processing": true, //Feature control the processing indicator.
                 "serverSide": false, //Feature control DataTables' server-side processing mode.
                 "scrollX": true,
@@ -594,37 +566,17 @@
                         "next": '<svg xmlns="http://www.w3.org/2000/svg" class="icon" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z" fill="none"></path><path d="M9 6l6 6l-6 6"></path></svg>',
                         "previous": '<svg xmlns="http://www.w3.org/2000/svg" class="icon" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z" fill="none"></path><path d="M15 6l-6 6l6 6"></path></svg>',
                     },
-                    // "select": {
-                    //     rows: {
-                    //         _: "%d kandidat dipilih",
-                    //         0: "Pilih item dan tekan tombol Proses data untuk Penerimaan karyawan",
-                    //     }
-                    // },
                 },
-                ajax: "{{ route('getKaryawan.index') }}",
-                // columnDefs: [{
-                //         'targets': 0,
-                //         "orderable": false,
-                //         'className': 'select-checkbox',
-                //         'checkboxes': {
-                //             'selectRow': true
-                //         },
-                //     }
-
-                // ],
-                // select: {
-                //     'style': 'multi',
-                //     "selector": 'td:not(:last-child)',
-                // },
-                columns: [
-                    // {
-                    //     data: 'select_orders',
-                    //     name: 'select_orders',
-                    //     className: 'cuspad2',
-                    //     orderable: false,
-                    //     searchable: false
-                    // },
-                    {
+                "ajax": {
+                    "url": "{{ route('getKaryawan.index') }}",
+                    "data": function(data) {
+                        data._token = "{{ csrf_token() }}";
+                        data.dari = $('.dari').val();
+                        data.sampai = $('.sampai').val();
+                        data.status = $('#fstatus').val();
+                    }
+                },
+                columns: [{
                         data: 'action',
                         name: 'action',
                         orderable: false,
@@ -1090,5 +1042,9 @@
 
             });
         });
+
+        function syn() {
+            tableWawancara.ajax.reload();
+        }
     </script>
 @endsection
