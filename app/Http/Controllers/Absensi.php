@@ -775,7 +775,7 @@ class Absensi extends Controller
                                                 <td>
                                                     <div class="row">
                                                         <div class="col">
-                                                            <select name="acc[]" id="acc' . $request->id[$i] . '" class="form-select form-select-sm" onchange="getAcc(' . $request->id[$i] . ')" >
+                                                            <select name="acc[]" id="acc" class="form-select form-select-sm" onchange="setAcc()">
                                                                 <option value="ACC">ACC</option>
                                                                 <option value="KOREKSI">KOREKSI</option>
                                                                 <option value="REJECT">REJECT</option>
@@ -795,7 +795,7 @@ class Absensi extends Controller
                                                         </div>
                                                     </div>
                                                 </td>
-                                                <td><input type="text" name="ket_acc[]" class="form-control form-control-sm"></td>
+                                                <td><input type="text" name="ket_acc[]" id="ket_acc" class="form-control form-control-sm"></td>
                                             </tr>
                     ';
                 }
@@ -804,15 +804,15 @@ class Absensi extends Controller
                                         </tbody>
                                     </table>
                                     <script>
-                                        function getAcc(params){
-                                            var acc = $("#acc" + params).val();
+                                        function setAcc(){
+                                            var acc = $("#acc").val();
                                             console.log(acc);
-                                            if(acc=="KOREKSI"){
-                                                $("#divKoreksi" + params).fadeIn(100);
-                                                $("#koreksi" + params).attr("disabled", false);
-                                            } else {
-                                                $("#divKoreksi" + params).fadeOut(100);
-                                                $("#koreksi" + params).attr("disabled", true);
+                                            if(acc=="ACC"){
+                                                $("#ket_acc").val("OL");
+                                            } else if(acc=="KOREKSI"){
+                                                $("#ket_acc").val("PHL");
+                                            }  else if(acc=="REJECT"){
+                                                $("#ket_acc").val("Kontrak Baru");
                                             }  
                                         }
                                     </script>

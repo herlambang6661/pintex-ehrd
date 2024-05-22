@@ -1855,7 +1855,7 @@ class Penerimaan extends Controller
                     'remember_token' => $request->_token,
                     'suratjns' => $request->suratjns,
                     'userid' => $request->userid,
-                    'stb' => $karyawan->stb,
+                    'stb' => $request->stb,
                     'nama' => $karyawan->nama,
                     'inputtgl' => $request->tglinput,
                     'legalitastgl' => $request->tglaktif,
