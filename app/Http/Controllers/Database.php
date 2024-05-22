@@ -71,7 +71,7 @@ class Database extends Controller
                 'name' => $request->name,
                 'username' => $request->username,
                 'role' => $request->role,
-                'password' => hash::make($request->role),
+                'password' => Hash::make($request->password),
                 'updated_at'    => now(),
 
             ]);
