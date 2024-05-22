@@ -54,23 +54,6 @@ class Penerimaan extends Controller
             ]
         );
 
-        // $noform = date('y') . "00000";
-        // // // GET NOFORM
-        // $checknoform = DB::table('raw_suratkontrak')->orderBy('NOFORM', 'desc')->limit('1')->get();
-        // foreach ($checknoform as $key) {
-        //     $noform = $key->NOFORM;
-        // }
-        // $y = substr($noform, 0, 2);
-        // if (date('y') == $y) {
-        //     $noUrut = substr($noform, 2, 5);
-        //     $na = $noUrut + 1;
-        //     $char = date('y');
-        //     $kodeSurat = $char . sprintf("%05s", $na);
-        // } else {
-        //     $kodeSurat = date('y') . "00001";
-        // }
-        // GET NOFORM
-
         $check = DB::table('penerimaan_lamaran')->insert([
             'remember_token' => $request->_token,
             'entitas' => $request->entitas,
@@ -1247,6 +1230,7 @@ class Penerimaan extends Controller
                 );
 
             $getDataLam = DB::table('penerimaan_lamaran')->where('id', $request->id[$i])->limit(1)->get();
+            $getGapok = DB::table('daftar_upah')->where('jenis', 'gapok')->first();
             foreach ($getDataLam as $l) {
 
                 // GET PHL
@@ -1285,7 +1269,7 @@ class Penerimaan extends Controller
                     'notlp' => $l->notlp,
                     'email' => $l->email,
 
-                    'gapok' => 100000,
+                    'gapok' => $getGapok->nominal,
                     'status' => 'OL',
                     'keterangan' => $l->keterangan,
                     'tglinput' => date('Y-m-d'),
@@ -1345,6 +1329,7 @@ class Penerimaan extends Controller
                 );
 
             $getDataLam = DB::table('penerimaan_lamaran')->where('id', $request->idlamaran[$i])->limit(1)->get();
+            $getGapok = DB::table('daftar_upah')->where('jenis', 'gapok')->first();
             foreach ($getDataLam as $l) {
 
                 // GET PHL
@@ -1365,21 +1350,56 @@ class Penerimaan extends Controller
                 }
                 // GET PHL
 
-
                 $statusditerima = null;
                 if ($request->diterimasebagai[$i] == "OL") {
+                    // GET STB OL
+                    $checknostb = DB::table('penerimaan_karyawan')
+                        ->where('stb', 'like', '%OL%')
+                        ->orderBy('userid', 'desc')
+                        ->first();
+                    if ($checknostb == null) {
+                        $nostb = "000";
+                    } else {
+                        $nostb =  substr($checknostb->stb, -3, 3);
+                    }
+                    if ($nostb != "000") {
+                        $ns = $nostb + 1;
+                        $kodestb = "OL-" . sprintf("%03s", $ns);
+                    } else {
+                        $kodestb = "OL-001";
+                    }
+                    // GET STB OL
                     $statusditerima = "OL";
                     $perjanjian = 'OL (' . Carbon::parse($request->dari[$i])->format('d/m/Y') . ' s.d. ' . Carbon::parse($request->ke[$i])->format('d/m/Y') . ')';
                     $nmsurat = "Perjanjian Kerja OL";
                     $suratket = "OL";
                 } elseif ($request->diterimasebagai[$i] == "PHL") {
+                    // GET STB PHL
+                    $checknostb = DB::table('penerimaan_karyawan')
+                        ->where('stb', 'like', '%PHL%')
+                        ->orderBy('userid', 'desc')
+                        ->first();
+                    if ($checknostb == null) {
+                        $nostb = "000";
+                    } else {
+                        $nostb =  substr($checknostb->stb, -3, 3);
+                    }
+                    $nostb =  substr($checknostb->stb, -3, 3);
+                    if ($nostb != "000") {
+                        $ns = $nostb + 1;
+                        $kodestb = "PHL-" . sprintf("%03s", $ns);
+                    } else {
+                        $kodestb = "PHL-001";
+                    }
+                    // GET STB PHL
                     $statusditerima = "PHL";
                     $perjanjian = 'PHL (' . Carbon::parse($request->dari[$i])->format('d/m/Y') . ' s.d. ' . Carbon::parse($request->ke[$i])->format('d/m/Y') . ')';
                     $nmsurat = "Perjanjian Kerja PHL";
                     $suratket = "PHL";
                 } elseif ($request->diterimasebagai[$i] == "Kontrak") {
+                    $kodestb = "0";
                     $statusditerima = "Aktif";
-                    $perjanjian = 'Kontrak I (' . Carbon::parse($request->dari[$i])->format('d/m/Y') . ' s.d. ' . Carbon::parse($request->ke[$i])->format('d/m/Y') . ')';
+                    $perjanjian = 'Kontrak Baru (' . Carbon::parse($request->dari[$i])->format('d/m/Y') . ' s.d. ' . Carbon::parse($request->ke[$i])->format('d/m/Y') . ')';
                     $nmsurat = "Perjanjian Kontrak";
                     $suratket = "Kontrak I";
                 }
@@ -1389,6 +1409,7 @@ class Penerimaan extends Controller
                     'entitas' => $l->entitas,
                     'nik' => $l->nik,
                     'userid' => $kode,
+                    'stb' => $kodestb,
                     'nama' => $l->nama,
                     'gender' => $l->gender,
                     'tempat' => $l->tempat,
@@ -1404,7 +1425,7 @@ class Penerimaan extends Controller
                     'tglmasuk' => $request->dari[$i],
                     'tglaktif' => $request->dari[$i],
                     'perjanjian' => $perjanjian,
-                    'gapok' => 100000,
+                    'gapok' => $getGapok->nominal,
                     'status' => $statusditerima,
                     'keterangan' => $l->keterangan,
                     'tglinput' => date('Y-m-d'),
@@ -1859,7 +1880,7 @@ class Penerimaan extends Controller
                     'nama' => $karyawan->nama,
                     'inputtgl' => $request->tglinput,
                     'legalitastgl' => $request->tglaktif,
-                    'tglmasuk' => $karyawan->tglmasuk,
+                    'tglmasuk' => $request->tglmasuk,
                     'nmsurat' => $request->nmsurat,
                     'divisi' => $request->divisi,
                     'bagian' => $request->bagian,
@@ -2511,9 +2532,14 @@ class Penerimaan extends Controller
                             <td><input type="date" name="tglinput" id="datepicker0" class="form-control" value="' . date("Y-m-d") . '" required="true"></td>
                         </tr>
                         <tr>
-                            <td style="padding-top: 12px">Tanggal Aktif</td>
+                            <td style="padding-top: 12px">Tanggal Aktif Surat</td>
                             <td style="padding-top: 12px">:</td>
                             <td><input type="date" name="tglaktif" id="datepicker1" class="form-control" value="' . date("Y-m-d") . '" required="true"></td>
+                        </tr>
+                        <tr>
+                            <td style="padding-top: 12px">Tanggal Masuk</td>
+                            <td style="padding-top: 12px">:</td>
+                            <td><input type="date" name="tglmasuk" class="form-control" value="' . date("Y-m-d") . '" required="true"></td>
                         </tr>
                         <tr>
                             <td style="padding-top: 12px">STB</td>

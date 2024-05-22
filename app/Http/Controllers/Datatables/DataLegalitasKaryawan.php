@@ -71,7 +71,6 @@ class DataLegalitasKaryawan extends Controller
                 ->get();
             return DataTables::of($data)
                 ->addIndexColumn()
-
                 ->addColumn('ttl', function ($row) {
                     if ($row->tglmasuk) {
                         $tgl_indo = Carbon::createFromFormat('Y-m-d', $row->tglmasuk)->format('d/m/Y');

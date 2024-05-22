@@ -14,13 +14,13 @@
 
         td.cuspad2 {
             /* padding-top: 0.5px;
-                                                                                                                                                                                                                    padding-bottom: 0.5px;
-                                                                                                                                                                                                                    padding-right: 0.5px;
-                                                                                                                                                                                                                    padding-left: 0.5px;
-                                                                                                                                                                                                                    margin-top: 5px;
-                                                                                                                                                                                                                    margin-bottom: 5px;
-                                                                                                                                                                                                                    margin-right: 5px;
-                                                                                                                                                                                                                    margin-left: 5px; */
+                                                                                                                                                                                                                                                                padding-bottom: 0.5px;
+                                                                                                                                                                                                                                                                padding-right: 0.5px;
+                                                                                                                                                                                                                                                                padding-left: 0.5px;
+                                                                                                                                                                                                                                                                margin-top: 5px;
+                                                                                                                                                                                                                                                                margin-bottom: 5px;
+                                                                                                                                                                                                                                                                margin-right: 5px;
+                                                                                                                                                                                                                                                                margin-left: 5px; */
         }
 
         .overlay {
@@ -181,7 +181,7 @@
                                 </div>
                             </div>
                             {{-- Tab Orientasi Lapangan --}}
-                            <div class="tab-pane fade active" id="tabs-ol" role="tabpanel">
+                            <div class="tab-pane fade" id="tabs-ol" role="tabpanel">
                                 <div class="card card-xl border-dark shadow rounded">
                                     <div class="card-stamp card-stamp-lg">
                                         <div class="card-stamp-icon bg-dark">
@@ -362,10 +362,10 @@
     </div>
     <script type="text/javascript">
         /*------------------------------------------
-                                                                                                                                                                                                                --------------------------------------------
-                                                                                                                                                                                                                Render DataTable
-                                                                                                                                                                                                                --------------------------------------------
-                                                                                                                                                                                                                --------------------------------------------*/
+                                                                                                                                                                                                                                                            --------------------------------------------
+                                                                                                                                                                                                                                                            Render DataTable
+                                                                                                                                                                                                                                                            --------------------------------------------
+                                                                                                                                                                                                                                                            --------------------------------------------*/
 
         function newexportaction(e, dt, button, config) {
             var self = this;
@@ -409,10 +409,12 @@
             dt.ajax.reload();
         }
 
-        var tableWawancara;
+        var tableWawancara, tableOl, tablePhl;
 
         function syn() {
             tableWawancara.ajax.reload();
+            tableOl.ajax.reload();
+            tablePhl.ajax.reload();
         }
 
         $(function() {
@@ -432,7 +434,7 @@
             tableWawancara = $('.datatable-karyawan').DataTable({
                 "processing": true, //Feature control the processing indicator.
                 "serverSide": false, //Feature control DataTables' server-side processing mode.
-                "scrollX": true,
+                "scrollX": false,
                 "scrollCollapse": true,
                 "pagingType": 'full_numbers',
                 "lengthMenu": [
@@ -576,10 +578,10 @@
                 ],
 
             });
-            var tableOl = $('.datatable-ol').DataTable({
+            tableOl = $('.datatable-ol').DataTable({
                 "processing": true, //Feature control the processing indicator.
                 "serverSide": false, //Feature control DataTables' server-side processing mode.
-                "scrollX": true,
+                "scrollX": false,
                 "scrollCollapse": true,
                 "pagingType": 'full_numbers',
                 "lengthMenu": [
@@ -710,10 +712,10 @@
 
             });
 
-            var tablePhl = $('.datatable-phl').DataTable({
+            tablePhl = $('.datatable-phl').DataTable({
                 "processing": true, //Feature control the processing indicator.
                 "serverSide": false, //Feature control DataTables' server-side processing mode.
-                "scrollX": true,
+                "scrollX": false,
                 "scrollCollapse": true,
                 "pagingType": 'full_numbers',
                 "lengthMenu": [
