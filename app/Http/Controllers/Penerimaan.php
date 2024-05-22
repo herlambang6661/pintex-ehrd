@@ -1900,7 +1900,7 @@ class Penerimaan extends Controller
                     ->limit(1)
                     ->update([
                         'entitas' => 'PINTEX',
-                        'stb' => $karyawan->stb,
+                        'stb' => $request->stb,
                         'divisi' => $request->divisi,
                         'bagian' => $request->bagian,
                         'jabatan' => $request->jabatan,
@@ -1918,7 +1918,7 @@ class Penerimaan extends Controller
                     'remember_token' => $request->_token,
                     'suratjns' => $request->suratjns,
                     'userid' => $request->userid,
-                    'stb' => $karyawan->stb,
+                    'stb' => $request->stb,
                     'nama' => $karyawan->nama,
                     'inputtgl' => $request->tglinput,
                     'legalitastgl' => $request->tglaktif,
