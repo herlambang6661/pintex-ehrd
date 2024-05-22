@@ -1922,7 +1922,7 @@ class Penerimaan extends Controller
                     'nama' => $karyawan->nama,
                     'inputtgl' => $request->tglinput,
                     'legalitastgl' => $request->tglaktif,
-                    'tglmasuk' => $karyawan->tglmasuk,
+                    'tglmasuk' => $request->tglmasuk,
                     'nmsurat' => $request->nmsurat,
                     'divisi' => $request->divisi,
                     'bagian' => $request->bagian,
