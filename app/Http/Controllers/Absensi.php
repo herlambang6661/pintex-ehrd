@@ -887,7 +887,8 @@ class Absensi extends Controller
                 '_token' => 'required',
             ],
         );
-        for ($i = 0; $i < count($request->idsuratkomunikasi); $i++) {
+        $jml = count($request->idsuratkomunikasi);
+        for ($i = 0; $i < $jml; $i++) {
             if ($request->sst[$i] == "Batal") {
                 $update = DB::table('absensi_komunikasiitm')
                     ->where('id', '=', $request->idsuratkomunikasi[$i])
@@ -910,7 +911,6 @@ class Absensi extends Controller
                                 'entitas' => $getSurat->entitas,
                                 'noform' => $getSurat->noform,
                                 'tanggal' => $value->format('Y-m-d'),
-                                // 'tanggal2' => $getSurat->tanggal2,
                                 'userid' => $getSurat->userid,
                                 'nama' => $getSurat->nama,
                                 'suratid' => $getSurat->suratid,
@@ -926,7 +926,7 @@ class Absensi extends Controller
                         );
 
                     $updateabsensi = DB::table('absensi_absensi')
-                        ->where('userid', '=', $getSurat->userid[$i])
+                        ->where('userid', '=', $getSurat->userid)
                         ->where('tanggal', '=', $value->format('Y-m-d'))
                         ->update(
                             array(
