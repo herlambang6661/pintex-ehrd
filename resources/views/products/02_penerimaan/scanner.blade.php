@@ -1,19 +1,23 @@
-<link href="{{ asset('assets/extentions/bootstrap.min.css" rel="stylesheet') }}" />
-<link href="{{ asset('assets/extentions/site.css') }}" rel="stylesheet" />
-<link href="{{ asset('assets/extentions/cropper.min.css') }}" rel="stylesheet" />
-<link href="{{ asset('assets/extentions/simplebar.css') }}" rel="stylesheet" />
+<!DOCTYPE html>
 
-<script src="{{ asset('assets/extentions/jquery-3.7.1.min.js') }}"></script>
+<html lang="en">
 
-<script src="{{ asset('assets/extentions/scanx/signalr.min.js') }}"></script>
+<head>
 
-<script src="{{ asset('assets/extentions/scanx/scanx.js') }}"></script>
+    <title>
+        ScanX
+    </title>
 
-<script src="{{ asset('assets/extentions/scanx/cropper.min.js') }}"></script>
 
-<script src="{{ asset('assets/extentions/scanx/simplebar.js') }}"></script>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <link href="{{ asset('assets/extentions/scanx/bootstrap.css') }}" rel="stylesheet" />
+    <link href="{{ asset('assets/extentions/scanx/site.css') }}" rel="stylesheet" />
 
-<script src="{{ asset('assets/extentions/scanx/cropper-viewer.js') }}"></script>
+    <link href="{{ asset('assets/extentions/scanx/cropper.min.css') }}" rel="stylesheet" />
+    <link href="{{ asset('assets/extentions/scanx/simplebar.css') }}" rel="stylesheet" />
+
+</head>
 
 <body>
 
@@ -142,7 +146,8 @@
                                         <button type="button" class="btn btn-sm btn-primary" onclick="zoomOut();">
                                             <i class="fas fa-search-minus"></i>
                                         </button>
-                                        <button type="button" class="btn btn-sm btn-primary" onclick="clearCropper();">
+                                        <button type="button" class="btn btn-sm btn-primary"
+                                            onclick="clearCropper();">
                                             <i class="fas fa-arrows-alt"></i>
                                         </button>
                                         <button type="button" class="btn btn-sm btn-primary" onclick="setCrop();">
@@ -199,9 +204,11 @@
         </div>
     </footer>
 
-    <script src="/js/jquery.min.js"></script>
-    <script src="/js/bootstrap.min.js"></script>
-    <script src="/lib/fontawesome/js/all.min.js"></script>
+
+    <script src="{{ asset('assets/extentions/jquery-3.7.1.min.js') }}"></script>
+    <script src="{{ asset('assets/extentions/scanx/bootstrap.min.js') }}"></script>
+    <script src="{{ asset('assets/extentions/scanx/all.min.js') }}"></script>
+
 
     <script type="text/javascript">
         $(function() {
@@ -235,6 +242,16 @@
             });
         }
     </script>
+
+    <script src="{{ asset('assets/extentions/scanx/cropper.min.js') }}"></script>
+
+    <script src="{{ asset('assets/extentions/scanx/signalr.min.js') }}"></script>
+
+    <script src="{{ asset('assets/extentions/scanx/scanx.js') }}"></script>
+
+    <script src="{{ asset('assets/extentions/scanx/simplebar.js') }}"></script>
+
+    <script src="{{ asset('assets/extentions/scanx/cropper-viewer.js') }}"></script>
 
 
     <script type="text/javascript">
