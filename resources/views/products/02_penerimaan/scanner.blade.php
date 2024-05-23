@@ -64,10 +64,7 @@
                             Choose scanner:
                         </label>
                         <select id="select-scanner-drp" class="form-control">
-
                             <option value="">--- Select Scanner ---</option>
-
-
                         </select>
                     </div>
 
