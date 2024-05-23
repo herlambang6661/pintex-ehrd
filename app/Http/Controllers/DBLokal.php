@@ -1650,6 +1650,7 @@ class DBLokal extends Controller
     {
         $ac = DB::table('penerimaan_karyawan')
             ->where('status', 'like', '%Aktif%')
+            ->whereNotNull('stb')
             ->select('*')
             ->orderBy('userid', 'ASC')
             ->get();
