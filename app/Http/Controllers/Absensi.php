@@ -732,11 +732,9 @@ class Absensi extends Controller
                                                 <th>STB</th>
                                                 <th>Nama</th>
                                                 <th>Surat</th>
+                                                <th>Dibuat</th>
                                                 <th>Sst</th>
                                                 <th>Keterangan</th>
-                                                <th>Dibuat</th>
-                                                <th>ACC</th>
-                                                <th>Keterangan ACC</th>
                                             </tr>
                                         </thead>
                                         <tbody>
@@ -756,10 +754,8 @@ class Absensi extends Controller
                     }
                     $diff = 1 + Carbon::parse($u->tanggal)->diffInDays($u->tanggal2);
                     echo '
-                                            <input type="hidden" name="id[]" value="' . $u->id . '">
-                                            <input type="hidden" name="tanggal[]" value="' . $u->tanggal . '">
+                                            <input type="hidden" name="idsuratkomunikasi[]" value="' . $u->id . '">
                                             <input type="hidden" name="userid[]" value="' . $u->userid . '">
-                                            <input type="hidden" name="chgsst[]" value="' . $u->sst . '">
                                             <tr>
                                                 <td>' . $u->noform . '</td>
                                                 <td>' . $tgl . '</td>
@@ -767,21 +763,11 @@ class Absensi extends Controller
                                                 <td>' . $u->stb . '</td>
                                                 <td>' . $u->nama . '</td>
                                                 <td>' . $u->suratid . '</td>
-                                                <td>' . $u->sst . '</td>
-                                                <td>' . $u->keterangan . '</td>
                                                 <td>' . $u->dibuat . '</td>
                                                 <td>
-                                                    <div class="row">
                                                         <div class="col">
-                                                            <select name="acc[]" id="acc" class="form-select form-select-sm" onchange="setAcc()">
-                                                                <option value="ACC">ACC</option>
-                                                                <option value="KOREKSI">KOREKSI</option>
-                                                                <option value="REJECT">REJECT</option>
-                                                            </select>
-                                                        </div>
-                                                        <div class="col" style="display:none" id="divKoreksi' . $request->id[$i] . '">
-                                                            <select name="koreksi[]" id="koreksi' . $request->id[$i] . '" class="form-select form-select-sm" disabled="true">
-                                                                <option value="">-- KOREKSI --</option>
+                                                            <select name="sst[]" class="form-select form-select-sm">
+                                                                <option value="' . $u->sst . '">-- ' . $u->sst . ' --</option>
                                                                 <option value="S">S</option>
                                                                 <option value="I">IP</option>
                                                                 <option value="A">A</option>
@@ -789,11 +775,12 @@ class Absensi extends Controller
                                                                 <option value="CK">CK</option>
                                                                 <option value="H">H</option>
                                                                 <option value="½">½</option>
+                                                                <option value="Batal">Batalkan Surat</option>
                                                             </select>
-                                                        </div>
-                                                    </div>
+                                                        </div></td>
+                                                <td> 
+                                                    <input type="text" class="form-control form-control-sm" name="keterangan[]" value="' . $u->keterangan . '">
                                                 </td>
-                                                <td><input type="text" name="ket_acc[]" id="ket_acc" class="form-control form-control-sm"></td>
                                             </tr>
                     ';
                 }
@@ -801,19 +788,6 @@ class Absensi extends Controller
             echo '
                                         </tbody>
                                     </table>
-                                    <script>
-                                        function setAcc(){
-                                            var acc = $("#acc").val();
-                                            console.log(acc);
-                                            if(acc=="ACC"){
-                                                $("#ket_acc").val("OL");
-                                            } else if(acc=="KOREKSI"){
-                                                $("#ket_acc").val("PHL");
-                                            }  else if(acc=="REJECT"){
-                                                $("#ket_acc").val("Kontrak Baru");
-                                            }  
-                                        }
-                                    </script>
                                 </div>
                         </div>
                         <div class="modal-footer">
@@ -907,89 +881,64 @@ class Absensi extends Controller
                 '_token' => 'required',
             ],
         );
-        for ($i = 0; $i < count($request->id); $i++) {
-            if ($request->acc[$i] == "ACC") {
-                // Jika tanggal surat kurang dari tanggal sekarang, maka akan di eksekusi
-                if ($request->tanggal[$i] <= date('Y-m-d')) {
-                    $update = DB::table('absensi_komunikasiitm')
-                        ->where('id', '=', $request->id[$i])
-                        ->update(
-                            array(
-                                'statussurat' => $request->acc[$i],
-                                'updated_at' => date('Y-m-d H:i:s'),
-                                'cron' => '0',
-                            )
-                        );
-
-                    $updateabsensi = DB::table('absensi_absensi')
-                        ->where('userid', '=', $request->userid[$i])
-                        ->where('tanggal', '=', $request->tanggal[$i])
-                        ->update(
-                            array(
-                                'sst' => $request->chgsst[$i],
-                                'updated_at' => date('Y-m-d H:i:s'),
-                            )
-                        );
-                } else {
-                    // jika tanggal surat lebih dari hari ini maka masuk schedule
-                    $update = DB::table('absensi_komunikasiitm')
-                        ->where('id', '=', $request->id[$i])
-                        ->update(
-                            array(
-                                'statussurat' => $request->acc[$i],
-                                'updated_at' => date('Y-m-d H:i:s'),
-                                'cron' => '0',
-                            )
-                        );
-                }
-            } elseif ($request->acc[$i] == "KOREKSI") {
-                // Jika tanggal surat kurang dari tanggal sekarang, maka akan di eksekusi
-                if ($request->tanggal[$i] <= date('Y-m-d')) {
-                    $update = DB::table('absensi_komunikasiitm')
-                        ->where('id', '=', $request->id[$i])
-                        ->update(
-                            array(
-                                'statussurat' => $request->acc[$i],
-                                'sst' => $request->koreksi[$i],
-                                'ket_acc' => $request->ket_acc[$i],
-                                'updated_at' => date('Y-m-d H:i:s'),
-                                'cron' => '0',
-                            )
-                        );
-
-                    $updateabsensi = DB::table('absensi_absensi')
-                        ->where('userid', '=', $request->userid[$i])
-                        ->where('tanggal', '=', $request->tanggal[$i])
-                        ->update(
-                            array(
-                                'sst' => $request->koreksi[$i],
-                                'updated_at' => date('Y-m-d H:i:s'),
-                            )
-                        );
-                } else {
-                    // jika tanggal surat lebih dari hari ini maka masuk schedule
-                    $update = DB::table('absensi_komunikasiitm')
-                        ->where('id', '=', $request->id[$i])
-                        ->update(
-                            array(
-                                'statussurat' => $request->acc[$i],
-                                'sst' => $request->koreksi[$i],
-                                'ket_acc' => $request->ket_acc[$i],
-                                'updated_at' => date('Y-m-d H:i:s'),
-                                'cron' => '0',
-                            )
-                        );
-                }
-            } elseif ($request->acc[$i] == "REJECT") {
-                // tidak ada perubahan jika reject
+        for ($i = 0; $i < count($request->idsuratkomunikasi); $i++) {
+            if ($request->sst[$i] == "Batal") {
                 $update = DB::table('absensi_komunikasiitm')
-                    ->where('id', '=', $request->id[$i])
+                    ->where('id', '=', $request->idsuratkomunikasi[$i])
                     ->update(
                         array(
-                            'statussurat' => $request->acc[$i],
-                            'ket_acc' => $request->ket_acc[$i],
+                            'statussurat' => 'DIBATALKAN',
+                            'ket_acc' => $request->keterangan[$i],
                             'updated_at' => date('Y-m-d H:i:s'),
                             'cron' => '1',
+                        )
+                    );
+            } else {
+                $getSurat = DB::table('absensi_komunikasiitm')->where('id', '=', $request->idsuratkomunikasi[$i])->first();
+
+                $period = new DatePeriod(new DateTime($getSurat->tanggal), new DateInterval('P1D'), new DateTime(date("Y-m-d", strtotime($getSurat->tanggal2 . "+1 days"))));
+                foreach ($period as $key => $value) {
+                    DB::table('absensi_komunikasiacc')
+                        ->insert(
+                            [
+                                'entitas' => $getSurat->entitas,
+                                'noform' => $getSurat->noform,
+                                'tanggal' => $value->format('Y-m-d'),
+                                // 'tanggal2' => $getSurat->tanggal2,
+                                'userid' => $getSurat->userid,
+                                'nama' => $getSurat->nama,
+                                'suratid' => $getSurat->suratid,
+                                'sst' => $request->sst[$i],
+                                'statussurat' => "ACC",
+                                'ket_acc' => $request->keterangan[$i],
+                                'keterangan' => $getSurat->keterangan,
+                                'cron' => 0,
+                                'dibuat' => Auth::user()->name,
+                                'updated_at' => date('Y-m-d H:i:s'),
+
+                            ]
+                        );
+
+                    $updateabsensi = DB::table('absensi_absensi')
+                        ->where('userid', '=', $getSurat->userid[$i])
+                        ->where('tanggal', '=', $value->format('Y-m-d'))
+                        ->update(
+                            array(
+                                'sst' => $request->sst[$i],
+                                'updated_at' => date('Y-m-d H:i:s'),
+                            )
+                        );
+                }
+
+                $update = DB::table('absensi_komunikasiitm')
+                    ->where('id', '=', $request->idsuratkomunikasi[$i])
+                    ->update(
+                        array(
+                            'statussurat' => "ACC",
+                            'sst' => $request->sst[$i],
+                            'ket_acc' => $request->keterangan[$i],
+                            'updated_at' => date('Y-m-d H:i:s'),
+                            'cron' => '0',
                         )
                     );
             }
