@@ -219,6 +219,7 @@ Route::controller(Penerimaan::class)->group(function () {
     Route::post('statusdelete', 'statusdelete');
     Route::post('internaldelete', 'internaldelete');
     Route::get('export_excel_legalitas', 'exportLegalitas')->name('export_excel_legalitas');
+    Route::get('penerimaan/scanner', 'scanner')->name('penerimaan/scanner');
 });
 
 // Modules Absensi

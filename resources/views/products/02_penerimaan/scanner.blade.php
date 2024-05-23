@@ -1,112 +1,41 @@
-<!DOCTYPE html>
-<html>
+<script src="{{ asset('assets/extentions/jquery-3.7.1.min.js') }}"></script>
 
-<head>
-    <title>Dynamic Web TWAIN for Laravel</title>
-    <script src="{{ asset('Resources/dynamsoft.webtwain.initiate.js') }}"></script>
-    <script src="{{ asset('Resources/dynamsoft.webtwain.config.js') }}"></script>
-    <meta name="_token" content="{{ csrf_token() }}" />
-</head>
+<script src="{{ asset('assets/extentions/scanx/signalr.min.js') }}"></script>
 
-<body>
-    <h3>Dynamic Web TWAIN for Laravel</h3>
-    <div id="dwtcontrolContainer"></div>
-    <input type="button" value="Load Image" onclick="loadImage();" />
-    <input type="button" value="Scan Image" onclick="acquireImage();" />
-    <input id="btnUpload" type="button" value="Upload Image" onclick="upload()">
+<script src="{{ asset('assets/extentions/scanx/scanx.js') }}"></script>
 
-    <script>
-        var DWObject;
-        var deviceList = [];
+<img id="image" alt="scanned image" />
 
-        window.onload = function() {
-            if (Dynamsoft) {
-                Dynamsoft.DWT.AutoLoad = false;
-                Dynamsoft.DWT.UseLocalService = true;
-                Dynamsoft.DWT.Containers = [{
-                    ContainerId: 'dwtcontrolContainer',
-                    Width: '640px',
-                    Height: '640px'
-                }];
-                Dynamsoft.DWT.RegisterEvent('OnWebTwainReady', Dynamsoft_OnReady);
-                // https://www.dynamsoft.com/customer/license/trialLicense?product=dwt
-                Dynamsoft.DWT.ProductKey =
-                    'LICENSE-KEY';
-                Dynamsoft.DWT.ResourcesPath = 'https://unpkg.com/dwt/dist/';
+<button type="button" onclick="startScan()">
+    Scan
+</button>
 
-                Dynamsoft.DWT.Load();
-            }
+<script type="text/javascript">
+    // declar scanx class
+    var scan = new ScanX();
 
-        };
 
-        function Dynamsoft_OnReady() {
-            DWObject = Dynamsoft.DWT.GetWebTwain('dwtcontrolContainer');
-            var token = document.querySelector("meta[name='_token']").getAttribute("content");
-            DWObject.SetHTTPFormField('_token', token);
+    //setup on image scan events
+    scan.connection.on("OnImageScanned", (data) => {
+        console.log('image event');
+        var image = document.getElementById('image');
+        image.src = "data:image/jpeg;base64," + data.imageBytes;
+    });
 
-            let count = DWObject.SourceCount;
-            let select = document.getElementById("source");
+    //get installed scanners and select the first id
+    var firstScannerId = scan.getScanners()[0].deviceId;
 
-            DWObject.GetDevicesAsync().then(function(devices) {
-                for (var i = 0; i < devices.length; i++) { // Get how many sources are installed in the system
-                    let option = document.createElement('option');
-                    option.value = devices[i].displayName;
-                    option.text = devices[i].displayName;
-                    deviceList.push(devices[i]);
-                    select.appendChild(option);
-                }
-            }).catch(function(exp) {
-                alert(exp.message);
-            });
-        }
+    //define scan settings
+    var settings = {
+        color: 1, //color mode 1 color, 2 Grayscale, 4 Black and white
+        dpi: 200 //dpi
+    }
 
-        function loadImage() {
-            var OnSuccess = function() {};
-            var OnFailure = function(errorCode, errorString) {};
+    //Scan first imaga
+    function startScan() {
+        scan.scanSingle(firstScannerId, settings);
+    }
 
-            if (DWObject) {
-                DWObject.IfShowFileDialog = true;
-                DWObject.LoadImageEx("", Dynamsoft.DWT.EnumDWT_ImageType.IT_ALL, OnSuccess, OnFailure);
-            }
-        }
-
-        function acquireImage() {
-            if (DWObject) {
-                var sources = document.getElementById('source');
-                if (sources) {
-                    DWObject.SelectDeviceAsync(deviceList[sources.selectedIndex]).then(function() {
-                        return DWObject.AcquireImageAsync({
-                            IfShowUI: false,
-                            IfCloseSourceAfterAcquire: true
-                        });
-                    }).catch(function(exp) {
-                        alert(exp.message);
-                    });
-                }
-            }
-        }
-
-        function upload() {
-            var OnSuccess = function(httpResponse) {
-                alert("Succesfully uploaded");
-            };
-
-            var OnFailure = function(errorCode, errorString, httpResponse) {
-                alert(httpResponse);
-            };
-
-            var date = new Date();
-            DWObject.HTTPUploadThroughPostEx(
-                "{{ route('dwtupload.upload') }}",
-                DWObject.CurrentImageIndexInBuffer,
-                '',
-                date.getTime() + ".jpg",
-                1, // JPEG
-                OnSuccess, OnFailure
-            );
-        }
-    </script>
-
-</body>
-
-</html>
+    //Connect to the protocol
+    scan.connect();
+</script>

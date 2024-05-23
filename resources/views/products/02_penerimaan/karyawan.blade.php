@@ -14,13 +14,13 @@
 
         td.cuspad2 {
             /* padding-top: 0.5px;
-                                                                                                                                                    padding-bottom: 0.5px;
-                                                                                                                                                    padding-right: 0.5px;
-                                                                                                                                                    padding-left: 0.5px;
-                                                                                                                                                    margin-top: 5px;
-                                                                                                                                                    margin-bottom: 5px;
-                                                                                                                                                    margin-right: 5px;
-                                                                                                                                                    margin-left: 5px; */
+                                                                                                                                                                                                    padding-bottom: 0.5px;
+                                                                                                                                                                                                    padding-right: 0.5px;
+                                                                                                                                                                                                    padding-left: 0.5px;
+                                                                                                                                                                                                    margin-top: 5px;
+                                                                                                                                                                                                    margin-bottom: 5px;
+                                                                                                                                                                                                    margin-right: 5px;
+                                                                                                                                                                                                    margin-left: 5px; */
         }
 
         .overlay {
@@ -34,30 +34,30 @@
         }
 
         /* .cv-spinner {
-                                                                                                                                            height: 100%;
-                                                                                                                                            display: flex;
-                                                                                                                                            justify-content: center;
-                                                                                                                                            align-items: center;
-                                                                                                                                        }
+                                                                                                                                                                                            height: 100%;
+                                                                                                                                                                                            display: flex;
+                                                                                                                                                                                            justify-content: center;
+                                                                                                                                                                                            align-items: center;
+                                                                                                                                                                                        }
 
-                                                                                                                                        .spinner {
-                                                                                                                                            width: 40px;
-                                                                                                                                            height: 40px;
-                                                                                                                                            border: 4px #ddd solid;
-                                                                                                                                            border-top: 4px #2e93e6 solid;
-                                                                                                                                            border-radius: 50%;
-                                                                                                                                            animation: sp-anime 0.8s infinite linear;
-                                                                                                                                        }
+                                                                                                                                                                                        .spinner {
+                                                                                                                                                                                            width: 40px;
+                                                                                                                                                                                            height: 40px;
+                                                                                                                                                                                            border: 4px #ddd solid;
+                                                                                                                                                                                            border-top: 4px #2e93e6 solid;
+                                                                                                                                                                                            border-radius: 50%;
+                                                                                                                                                                                            animation: sp-anime 0.8s infinite linear;
+                                                                                                                                                                                        }
 
-                                                                                                                                        @keyframes sp-anime {
-                                                                                                                                            100% {
-                                                                                                                                                transform: rotate(360deg);
-                                                                                                                                            }
-                                                                                                                                        }
+                                                                                                                                                                                        @keyframes sp-anime {
+                                                                                                                                                                                            100% {
+                                                                                                                                                                                                transform: rotate(360deg);
+                                                                                                                                                                                            }
+                                                                                                                                                                                        }
 
-                                                                                                                                        .is-hide {
-                                                                                                                                            display: none;
-                                                                                                                                        } */
+                                                                                                                                                                                        .is-hide {
+                                                                                                                                                                                            display: none;
+                                                                                                                                                                                        } */
         .loader {
             position: fixed;
             z-index: 301;
@@ -226,24 +226,6 @@
                                     <table style="width:100%; font-family: 'Trebuchet MS', Helvetica, sans-serif;"
                                         class="display table table-vcenter card-table table-sm table-striped table-bordered table-hover text-nowrap datatable-karyawan"
                                         id="tbkaryawan">
-                                        <thead>
-                                            <tr class="text-center">
-                                                <th>Opsi</th>
-                                                <th>Masuk</th>
-                                                <th>STB</th>
-                                                <th>NIK</th>
-                                                <th>Nama</th>
-                                                <th>Gender</th>
-                                                <th>Status</th>
-                                                <th>No Map</th>
-                                                <th>Bagian</th>
-                                                <th>Grup</th>
-                                                <th>Profesi</th>
-                                                <th>Pendidikan</th>
-                                                <th>Jurusan</th>
-                                                <th>Sidik Jari</th>
-                                            </tr>
-                                        </thead>
                                     </table>
                                 </div>
                             </div>
@@ -286,7 +268,7 @@
                                         </div>
                                     </div>
                                     <table style="width:100%; font-family: 'Trebuchet MS', Helvetica, sans-serif;"
-                                        class="display table table-vcenter card-table table-sm table-striped table-bordered table-hover text-nowrap datatable-karyawan"
+                                        class="display table table-vcenter card-table table-sm table-striped table-bordered table-hover text-nowrap datatable-phl"
                                         id="tblamaran">
                                         <thead>
                                             <tr class="text-center">
@@ -453,10 +435,10 @@
     </div>
     <script type="text/javascript">
         /*------------------------------------------
-                                                                                                                                                --------------------------------------------
-                                                                                                                                                Render DataTable
-                                                                                                                                                --------------------------------------------
-                                                                                                                                                --------------------------------------------*/
+                                                                                                                                                                                                --------------------------------------------
+                                                                                                                                                                                                Render DataTable
+                                                                                                                                                                                                --------------------------------------------
+                                                                                                                                                                                                --------------------------------------------*/
 
         function newexportaction(e, dt, button, config) {
             var self = this;
@@ -500,7 +482,7 @@
             dt.ajax.reload();
         }
 
-        var tableWawancara;
+        var tableWawancara, tableOl;
         $(function() {
             /*------------------------------------------==============================================================================================================================================================
             --------------------------------------------==============================================================================================================================================================
@@ -519,7 +501,7 @@
             tableWawancara = $('.datatable-karyawan').DataTable({
                 "processing": true, //Feature control the processing indicator.
                 "serverSide": false, //Feature control DataTables' server-side processing mode.
-                "scrollX": true,
+                "scrollX": false,
                 "scrollCollapse": false,
                 "pagingType": 'full_numbers',
                 "lengthMenu": [
@@ -531,11 +513,7 @@
                     "<'table-responsive' <'col-sm-12'tr> >" +
                     "<'card-footer' <'row'<'col-sm-8'i><'col-sm-4'p> >>",
                 buttons: [{
-                        className: 'btn btn-dark checkall',
-                        text: '<i class="fa-regular fa-square-check"></i>',
-                    },
-                    {
-                        text: '<i class="fa-solid fa-filter" style="margin-right:5px"></i>',
+                        text: '<i class="fa-solid fa-filter" style="margin-right:5px"></i> Filter Data Karyawan',
                         className: 'btn btn-blue w_filter',
                         attr: {
                             'href': '#offcanvasEnd-lamaran',
@@ -548,7 +526,7 @@
                         extend: 'excelHtml5',
                         autoFilter: true,
                         className: 'btn btn-success w_excel',
-                        text: '<i class="fa fa-file-excel text-white" style="margin-right:5px"></i>',
+                        text: '<i class="fa fa-file-excel text-white" style="margin-right:5px"></i> Download Excel',
                         action: newexportaction,
                     },
                 ],
@@ -584,78 +562,121 @@
                         className: 'cuspad0 text-center'
                     },
                     {
+                        title: 'Tgl Masuk',
                         data: 'tglmasuk',
                         name: 'tglmasuk',
                         className: 'cuspad0 text-center'
                     },
                     {
+                        title: 'STB',
                         data: 'stb',
                         name: 'stb',
                         className: 'cuspad0'
                     },
                     {
+                        title: 'NIK',
                         data: 'nik',
                         name: 'nik',
-                        visible: false,
+                        visible: true,
                         className: 'cuspad0 text-center'
                     },
                     {
+                        title: 'Nama',
                         data: 'nama',
                         name: 'nama',
                         className: 'cuspad0 text-center'
                     },
                     {
+                        title: 'Gender',
                         data: 'gender',
                         name: 'gender',
                         className: 'cuspad0 text-center'
                     },
                     {
+                        title: 'Status',
                         data: 'status',
                         name: 'status',
                         className: 'cuspad0 text-center'
                     },
                     {
+                        title: 'No. Map',
                         data: 'nomap',
                         name: 'nomap',
                         className: 'cuspad0 text-center'
                     },
                     {
+                        title: 'Bagian',
                         data: 'bagian',
                         name: 'bagian',
                         className: 'cuspad0 text-center'
                     },
                     {
+                        title: 'Grup',
                         data: 'grup',
                         name: 'grup',
                         className: 'cuspad0 text-center'
                     },
                     {
+                        title: 'Profesi',
                         data: 'profesi',
                         name: 'profesi',
                         className: 'cuspad0 text-center'
                     },
                     {
+                        title: 'Pendidikan',
                         data: 'pendidikan',
                         name: 'pendidikan',
                         className: 'cuspad0 text-center'
                     },
                     {
+                        title: 'Jurusan',
                         data: 'jurusan',
                         name: 'jurusan',
                         className: 'cuspad0'
                     },
                     {
-                        data: 'gender',
-                        name: 'gender',
+                        title: 'Email',
+                        data: 'email',
+                        name: 'email',
+                        className: 'cuspad0 text-center'
+                    },
+                    {
+                        title: 'Telp',
+                        data: 'notlp',
+                        name: 'notlp',
+                        className: 'cuspad0 text-center'
+                    },
+                    {
+                        title: 'Perjanjian',
+                        data: 'perjanjian',
+                        name: 'perjanjian',
+                        className: 'cuspad0 text-center'
+                    },
+                    {
+                        title: 'Internal',
+                        data: 'internal',
+                        name: 'internal',
+                        className: 'cuspad0 text-center'
+                    },
+                    {
+                        title: 'No. Rekening',
+                        data: 'bankrek',
+                        name: 'bankrek',
+                        className: 'cuspad0 text-center'
+                    },
+                    {
+                        title: 'Serikat',
+                        data: 'serikat',
+                        name: 'serikat',
                         className: 'cuspad0 text-center'
                     },
                 ],
 
             });
-            var tableOl = $('.datatable-ol').DataTable({
+            tableOl = $('.datatable-ol').DataTable({
                 "processing": true, //Feature control the processing indicator.
                 "serverSide": false, //Feature control DataTables' server-side processing mode.
-                "scrollX": true,
+                "scrollX": false,
                 "scrollCollapse": false,
                 "pagingType": 'full_numbers',
                 "lengthMenu": [

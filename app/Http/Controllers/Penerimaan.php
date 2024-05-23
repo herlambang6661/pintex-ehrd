@@ -29,6 +29,11 @@ class Penerimaan extends Controller
         ]);
     }
 
+    public function scanner()
+    {
+        return view('products/02_penerimaan.scanner');
+    }
+
     public function storeLamaran(Request $request)
     {
         $request->validate(
@@ -1530,7 +1535,7 @@ class Penerimaan extends Controller
                     </div>
                 </div>
                 <div class="col-lg-5">
-                    <div class="card shadow ">
+                    <div class="card shadow bg-green-lt ">
                         <div class="card-body">
                             <div class="row">
                                 <div class="mb-3">
@@ -1708,6 +1713,19 @@ class Penerimaan extends Controller
                             <div class="mb-3">
                                 <label class="form-label">Status Karyawan</label>
                                 <h3>' . $u->status . '</h3>
+                            </div>
+                        </div>
+                    </div>
+                    <br>
+                    <div class="card shadow bg-red-lt">
+                        <div class="card-body">
+                            <div class="mb-1 mt-3">
+                                <div class="form-label">Upload Pas Photo</div>
+                                <input type="file" class="form-control">
+                            </div>
+                            <div class="mb-3">
+                                <div class="form-label">Upload KTP</div>
+                                <input type="file" class="form-control">
                             </div>
                         </div>
                     </div>
