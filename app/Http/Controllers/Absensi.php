@@ -467,10 +467,10 @@ class Absensi extends Controller
                 // ->select('k.userid', 'k.stb', 'k.nama')
                 ->select(DB::raw(
                     "k.userid, k.stb, k.nama, 
-                    (SELECT SUM(l.sacuti) FROM penerimaan_legalitas l WHERE l.userid = k.userid AND l.tglaw <= '" . date('Y-m-d') . "' ) AS sacuti,
-                    (SELECT tglaw FROM penerimaan_legalitas l WHERE l.userid = k.userid ORDER BY tglaw DESC LIMIT 1 ) AS tglawal,
-                    (SELECT tglak FROM penerimaan_legalitas l WHERE l.userid = k.userid ORDER BY tglaw DESC LIMIT 1 ) AS tglakhir,
-                    (SELECT COUNT(o.sst) FROM absensi_komunikasiitm o WHERE k.userid = o.userid AND o.tanggal >= tglawal AND o.tanggal <= tglakhir ) AS cutiterpakai
+                (SELECT tglaw FROM penerimaan_legalitas l WHERE l.userid = k.userid ORDER BY tglaw DESC LIMIT 1 ) AS tglawal,
+                (SELECT tglak FROM penerimaan_legalitas l WHERE l.userid = k.userid ORDER BY tglaw DESC LIMIT 1 ) AS tglakhir,
+                (SELECT sacuti FROM penerimaan_legalitas l WHERE l.userid = k.userid AND l.tglak >= tglawal AND l.tglak <= tglakhir ) AS sacuti,
+                (SELECT COUNT(o.sst) FROM absensi_komunikasiacc o WHERE o.userid = k.userid AND o.sst = 'C' AND o.tanggal >= tglawal AND o.tanggal <= tglakhir ) AS cutiterpakai
                     "
                 ))
                 ->where('k.status', 'like', '%aktif%')
@@ -478,7 +478,7 @@ class Absensi extends Controller
                 ->get();
             if ($data->isNotEmpty()) {
                 foreach ($data as $k) {
-                    return ['success' => 'Data Ditemukan', 'stat' => true, 'result' => $k->nama, 'userid' => $k->userid, 'sisacuti' => $k->sacuti, 'cutidikomunikasi' => $k->cutiterpakai];
+                    return ['success' => 'Data Ditemukan', 'stat' => true, 'result' => $k->nama, 'userid' => $k->userid, 'sisacuti' => $k->sacuti, 'cutidikomunikasi' => $k->cutiterpakai, 'tglawal' => $k->tglawal, 'tglakhir' => $k->tglakhir];
                 }
             } else {
                 return ['error' => 'Data Tidak Ditemukan', 'stat' => false];

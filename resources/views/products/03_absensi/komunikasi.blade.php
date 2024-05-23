@@ -2006,6 +2006,8 @@
                     if (data.success = 'Data Ditemukan') {
                         if (sst == "C") {
                             var finalcuti = data.sisacuti - data.cutidikomunikasi;
+                            console.log("Sisa Cuti: " + finalcuti + " ( " + data.sisacuti + " - " + data
+                                .cutidikomunikasi + " )")
                             if (finalcuti > 0) {
                                 $('#nama' + params).attr("readonly", true);
                                 $('#nama' + params).val(data.result);
