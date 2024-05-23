@@ -1,8 +1,19 @@
+<link href="{{ asset('assets/extentions/bootstrap.min.css" rel="stylesheet') }}" />
+<link href="{{ asset('assets/extentions/site.css') }}" rel="stylesheet" />
+<link href="{{ asset('assets/extentions/cropper.min.css') }}" rel="stylesheet" />
+<link href="{{ asset('assets/extentions/simplebar.css') }}" rel="stylesheet" />
+
 <script src="{{ asset('assets/extentions/jquery-3.7.1.min.js') }}"></script>
 
 <script src="{{ asset('assets/extentions/scanx/signalr.min.js') }}"></script>
 
 <script src="{{ asset('assets/extentions/scanx/scanx.js') }}"></script>
+
+<script src="{{ asset('assets/extentions/scanx/cropper.min.js') }}"></script>
+
+<script src="{{ asset('assets/extentions/scanx/simplebar.js') }}"></script>
+
+<script src="{{ asset('assets/extentions/scanx/cropper-viewer.js') }}"></script>
 
 <body>
 
@@ -137,7 +148,8 @@
                                         <button type="button" class="btn btn-sm btn-primary" onclick="setCrop();">
                                             <i class="fas fa-crop"></i>
                                         </button>
-                                        <button type="button" class="btn btn-sm btn-primary" onclick="rotateLeft();">
+                                        <button type="button" class="btn btn-sm btn-primary"
+                                            onclick="rotateLeft();">
                                             <i class="fas fa-undo"></i>
                                         </button>
 
@@ -224,17 +236,6 @@
         }
     </script>
 
-
-
-    <script src="/lib/cropperjs/dist/cropper.min.js"></script>
-
-    <script src="/js/signalr.min.js"></script>
-
-    <script src="/js/scanx.js"></script>
-
-    <script src="/lib/simplebar/dist/simplebar.js"></script>
-
-    <script src="/js/cropper-viewer.js"></script>
 
     <script type="text/javascript">
         var scan = new ScanX();
