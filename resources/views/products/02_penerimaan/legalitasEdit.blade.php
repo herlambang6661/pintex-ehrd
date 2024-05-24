@@ -14,13 +14,13 @@
 
         td.cuspad2 {
             /* padding-top: 0.5px;
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                    padding-bottom: 0.5px;
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                    padding-right: 0.5px;
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                    padding-left: 0.5px;
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                    margin-top: 5px;
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                    margin-bottom: 5px;
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                    margin-right: 5px;
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                    margin-left: 5px; */
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                            padding-bottom: 0.5px;
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                            padding-right: 0.5px;
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                            padding-left: 0.5px;
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                            margin-top: 5px;
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                            margin-bottom: 5px;
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                            margin-right: 5px;
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                            margin-left: 5px; */
         }
 
         .overlay {
@@ -476,7 +476,8 @@
             @include('shared.footer')
         </div>
     </div>
-    {{-- Modal --}}
+    {{-- Start Modal --}}
+    {{-- === Modal STB === --}}
     <div class="modal modal-blur fade" id="modal-stb" tabindex="-1" style="display: none;" aria-hidden="true">
         <div class="overlay">
             <div class="cv-spinner">
@@ -499,6 +500,8 @@
             </div>
         </div>
     </div>
+    {{-- === Modal STB === --}}
+    {{-- === Modal Add === --}}
     <div class="modal modal-blur fade" id="modal-add-legalitas" tabindex="-1" style="display: none;"
         aria-hidden="true">
         <div class="overlay">
@@ -533,7 +536,44 @@
             </div>
         </div>
     </div>
-    {{-- Modal --}}
+    {{-- === Modal Add === --}}
+    {{-- === Modal Edit === --}}
+    <div class="modal modal-blur fade" id="modal-edit-legalitas" tabindex="-1" style="display: none;"
+        aria-hidden="true">
+        <div class="overlay">
+            <div class="cv-spinner">
+                <span class="spinner"></span>
+            </div>
+        </div>
+        <div class="modal-dialog modal-lg modal-dialog-centered" role="document">
+            <div class="modal-content">
+                <form id="formEditLegalitas" name="formEditLegalitas" method="post" action="javascript:void(0)">
+                    @csrf
+                    <div class="modal-header">
+                        <h5 class="modal-title modal-judul-edit-legalitas"></h5>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    </div>
+                    <div class="modal-isi-edit-legalitas">
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn me-auto" data-bs-dismiss="modal">Batal</button>
+                        <button type="submit" class="btn btn-primary" id="simpanEditLegalitas">
+                            <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-device-floppy"
+                                width="24" height="24" viewBox="0 0 24 24" stroke-width="2"
+                                stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+                                <path stroke="none" d="M0 0h24v24H0z" fill="none" />
+                                <path d="M6 4h10l4 4v10a2 2 0 0 1 -2 2h-12a2 2 0 0 1 -2 -2v-12a2 2 0 0 1 2 -2" />
+                                <path d="M12 14m-2 0a2 2 0 1 0 4 0a2 2 0 1 0 -4 0" />
+                                <path d="M14 4l0 4l-6 0l0 -4" />
+                            </svg> Simpan
+                        </button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+    {{-- === Modal Edit === --}}
+    {{-- End Modal --}}
     <script type="text/javascript">
         var tglhariini = '<?php echo date('Y-m-d'); ?>';
 
@@ -711,6 +751,53 @@
                 });
             });
 
+            /*------------------------------------------
+            --------------------------------------------
+            Modal Edit
+            --------------------------------------------
+            --------------------------------------------*/
+            $('body').on('click', '.btn-edit', function() {
+                $('.modal-isi-edit-legalitas').html('');
+                $(".overlay").fadeIn(300);
+
+                var id = $(this).data("id");
+                var userid = $(this).data("userid");
+                var tipe = $(this).data("tipe");
+                var idtipe = $(this).data("idtipe");
+
+                $.ajaxSetup({
+                    headers: {
+                        'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                    }
+                });
+                $.ajax({
+                    type: "POST",
+                    url: "{{ url('editModal') }}",
+                    data: {
+                        "_token": "{{ csrf_token() }}",
+                        "id": id,
+                        "userid": userid,
+                        "idtipe": idtipe,
+                        "entitas": 'PINTEX',
+                    },
+                    success: function(res) {
+                        $('.modal-judul-edit-legalitas').html(
+                            '<div class="badge bg-primary" style="margin-right:10px"></div> Edit ' +
+                            tipe);
+                        $('.modal-isi-edit-legalitas').html(res);
+                        // show modal
+                        $('#modal-edit-legalitas').modal('show');
+
+                    },
+                    error: function(request, status, error) {
+                        console.log("ajax call went wrong:" + request.responseText);
+                    }
+                }).done(function() {
+                    setTimeout(function() {
+                        $(".overlay").fadeOut(300);
+                    }, 500);
+                });
+            });
             /*------------------------------------------
             --------------------------------------------
             Modal Delete

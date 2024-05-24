@@ -206,6 +206,7 @@ Route::controller(Penerimaan::class)->group(function () {
     Route::post('listKaryawan', 'listKaryawan');
     Route::post('listStb', 'listStb');
     Route::post('addModal', 'addModal');
+    Route::post('editModal', 'editModal');
     Route::get('penerimaan/legalitas/edit/{id}', 'legalEdit')->name('penerimaan/legalitas/edit/{id}');
     Route::post('storedataLegalitas', 'storedataLegalitas');
     Route::post('storeUpdateKaryawan', 'storeUpdateKaryawan');
