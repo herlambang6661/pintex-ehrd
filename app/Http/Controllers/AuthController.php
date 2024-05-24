@@ -18,6 +18,7 @@ class AuthController extends Controller
     public function __construct(DBLokal $Dblocal)
     {
         $this->Dblocal = $Dblocal;
+        date_default_timezone_set('Asia/Jakarta');
     }
     /**
      * Write code on Method

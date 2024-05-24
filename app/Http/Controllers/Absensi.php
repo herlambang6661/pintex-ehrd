@@ -18,7 +18,7 @@ class Absensi extends Controller
     public function __construct()
     {
         $this->middleware('auth');
-        setlocale(LC_ALL, 'IND');
+        date_default_timezone_set('Asia/Jakarta');
     }
 
     public function absensi()

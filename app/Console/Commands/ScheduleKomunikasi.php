@@ -28,104 +28,23 @@ class ScheduleKomunikasi extends Command
     public function handle()
     {
         date_default_timezone_set('Asia/Jakarta');
-        $checkLegalitas = DB::table('penerimaan_legalitas')->where('legalitastgl', '=', date('Y-m-d'))->get();
         try {
-            foreach ($checkLegalitas as $key) {
+            $checkKomunikasi = DB::table('absensi_komunikasiacc')->where('cron', '=', '0')->where('tanggal', '<=', date('Y-m-d'))->orderBy('tanggal', 'desc')->get();
+            foreach ($checkKomunikasi as $key) {
                 // ============================================================  BASIC  ============================================================
-                if ($key->suratjns == 'BASIC') {
-                    DB::table('penerimaan_karyawan')
-                        ->where('userid', $key->userid)
-                        ->limit(1)
-                        ->update(
-                            array(
-                                'stb' => $key->stb,
-                                'divisi' => $key->divisi,
-                                'bagian' => $key->bagian,
-                                'jabatan' => $key->jabatan,
-                                'grup' => $key->grup,
-                                'profesi' => $key->profesi,
-                                'shift' => $key->shift,
-                                'hrlibur' => $key->hrlibur,
-                                'sethari' => $key->sethari,
-                                'keterangan' => $key->keterangan,
-                                'updated_at' => date('Y-m-d H:i:s'),
-                            )
-                        );
-                    Log::info($key->suratjns . " Berhasil di jalankan ( " . $key->nmsurat . " ). USERID: " . $key->userid . " (" . $key->nama . "). IDCRON: " . $key->id_cron . ". Date: " . date('Y-m-d H:i:s'));
-                }
-                // ============================================================  PERJANJIAN  ============================================================
-                if ($key->suratjns == 'PERJANJIAN') {
-                    if ($key->nmsurat == 'Perjanjian Kerja PHL') {
-                        DB::table('penerimaan_karyawan')
-                            ->where('userid', $key->userid)
-                            ->limit(1)
-                            ->update(
-                                array(
-                                    'tglaktif' => $key->tglaw,
-                                    'tglkeluar' => $key->tglak,
-                                    'perjanjian' => $key->suratket . "(" . $key->tglaw . " s.d. " . $key->tglak . ")",
-                                    'status' => 'PHL',
-                                    'updated_at' => date('Y-m-d H:i:s'),
-                                )
-                            );
-                    } elseif ($key->nmsurat == 'Perjanjian Kontrak') {
-                        DB::table('penerimaan_karyawan')
-                            ->where('userid', $key->userid)
-                            ->limit(1)
-                            ->update(
-                                array(
-                                    'tglaktif' => $key->tglaw,
-                                    'tglkeluar' => $key->tglak,
-                                    'perjanjian' => $key->suratket . "(" . $key->tglaw . " s.d. " . $key->tglak . ")",
-                                    'status' => 'aktif',
-                                    'updated_at' => date('Y-m-d H:i:s'),
-                                )
-                            );
-                    } else {
-                        DB::table('penerimaan_karyawan')
-                            ->where('userid', $key->userid)
-                            ->limit(1)
-                            ->update(
-                                array(
-                                    'tglaktif' => $key->tglaw,
-                                    'tglkeluar' => $key->tglak,
-                                    'perjanjian' => $key->suratket . "(" . $key->tglaw . " s.d. " . $key->tglak . ")",
-                                    'updated_at' => date('Y-m-d H:i:s'),
-                                )
-                            );
-                    }
-                    Log::info($key->suratjns . " Berhasil di jalankan ( " . $key->nmsurat . " ). USERID: " . $key->userid . " (" . $key->nama . "). IDCRON: " . $key->id_cron . ". Date: " . date('Y-m-d H:i:s'));
-                }
-                // ============================================================  INTERN  ============================================================
-                if ($key->suratjns == 'INTERN') {
-                    DB::table('penerimaan_karyawan')
-                        ->where('userid', $key->userid)
-                        ->limit(1)
-                        ->update(
-                            array(
-                                'tglinternal' => $key->legalitastgl,
-                                'internal' => $key->nmsurat . " " . $key->keterangan,
-                                'updated_at' => date('Y-m-d H:i:s'),
-                            )
-                        );
-                    Log::info($key->suratjns . " Berhasil di jalankan ( " . $key->nmsurat . " ). USERID: " . $key->userid . " (" . $key->nama . "). IDCRON: " . $key->id_cron . ". Date: " . date('Y-m-d H:i:s'));
-                }
-                // ============================================================  STATUS  ============================================================
-                if ($key->suratjns == 'STATUS') {
-                    DB::table('penerimaan_karyawan')
-                        ->where('userid', $key->userid)
-                        ->limit(1)
-                        ->update(
-                            array(
-                                'status' => $key->nmsurat . " - " . $key->legalitastgl,
-                                'updated_at' => date('Y-m-d H:i:s'),
-                            )
-                        );
-                    Log::info($key->suratjns . " Berhasil di jalankan ( " . $key->nmsurat . " ). USERID: " . $key->userid . " (" . $key->nama . "). IDCRON: " . $key->id_cron . ". Date: " . date('Y-m-d H:i:s'));
-                }
+                DB::table('absensi_absensi')
+                    ->where('userid', $key->userid)
+                    ->where('tanggal', $key->tanggal)
+                    ->update(
+                        array(
+                            'sst' => $key->sst,
+                            'updated_at' => date('Y-m-d H:i:s'),
+                        )
+                    );
+                Log::info($key->suratid . " Berhasil di jalankan. a/n " . $key->nama . " ( " . $key->stb . " ). Date: " . date('Y-m-d H:i:s'));
             }
         } catch (\Exception $e) {
-            Log::error("Cron job Gagal di jalankan " . $e);
+            Log::error("Cron job Komunikasi Gagal di jalankan. " . $e);
         }
     }
 }
