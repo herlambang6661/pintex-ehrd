@@ -676,22 +676,18 @@ class Absensi extends Controller
             'created_at' => date('Y-m-d H:i:s'),
         ]);
         for ($i = 0; $i < $jml; $i++) {
-            // if ($request->totaltanggal[$i] == '2') {
-            // $tanggalArray = $this->getBetweenDates($request->tanggalitm[$i], $request->tanggalitm2[$i]);
-            // $jmlTgl = count($tanggalArray);
-            // } else {
-            // $tanggalArray = $this->getBetweenDates($request->tanggalitm[$i], $request->tanggalitm[$i]);
-            // $jmlTgl = 1;
-            //     $tglaw = $request->tanggalitm[$i];
-            //     $tglak = $request->tanggalitm[$i];
-            // }
+            if ($request->totaltanggal[$i] == '2') {
+                $tgl2 = $request->tanggalitm2[$i];
+            } else {
+                $tgl2 = $request->tanggalitm[$i];
+            }
 
             // for ($j = 0; $j < $jmlTgl; $j++) {
             $checkitm = DB::table('absensi_komunikasiitm')->insert([
                 'entitas' => 'PINTEX',
                 'noform' => $kodeSurat,
                 'tanggal' => $request->tanggalitm[$i],
-                'tanggal2' => empty($request->tanggalitm2[$i]) ? $request->tanggalitm[$i] : $request->tanggalitm2[$i],
+                'tanggal2' => $tgl2,
                 'userid' => $request->userid[$i],
                 'nama' => $request->nama[$i],
                 'suratid' => $request->suratid[$i],
