@@ -463,6 +463,30 @@
                                                                     Geser Libur
                                                                 </a>
                                                             </div>
+                                                            <div class="col-6 col-sm-4 col-md-4 col-xl py-3">
+                                                                <a href="#"
+                                                                    class="btn btn-outline-dark w-100 shadow rounded"
+                                                                    onclick="tambahItem('H'); return false;">
+                                                                    <svg xmlns="http://www.w3.org/2000/svg" width="24"
+                                                                        height="24" viewBox="0 0 24 24" fill="none"
+                                                                        stroke="currentColor" stroke-width="2"
+                                                                        stroke-linecap="round" stroke-linejoin="round"
+                                                                        class="icon icon-tabler icons-tabler-outline icon-tabler-a-b-2">
+                                                                        <path stroke="none" d="M0 0h24v24H0z"
+                                                                            fill="none" />
+                                                                        <path
+                                                                            d="M16 21h3c.81 0 1.48 -.67 1.48 -1.48l.02 -.02c0 -.82 -.69 -1.5 -1.5 -1.5h-3v3z" />
+                                                                        <path
+                                                                            d="M16 15h2.5c.84 -.01 1.5 .66 1.5 1.5s-.66 1.5 -1.5 1.5h-2.5v-3z" />
+                                                                        <path
+                                                                            d="M4 9v-4c0 -1.036 .895 -2 2 -2s2 .964 2 2v4" />
+                                                                        <path
+                                                                            d="M2.99 11.98a9 9 0 0 0 9 9m9 -9a9 9 0 0 0 -9 -9" />
+                                                                        <path d="M8 7h-4" />
+                                                                    </svg>
+                                                                    Geser Setengah Hari
+                                                                </a>
+                                                            </div>
                                                         </div>
                                                         <form class="card shadow rounded" id="formKomunikasi"
                                                             name="formKomunikasi" method="post"
@@ -754,46 +778,34 @@
 
                 <form action="#" id="form-filter-items" method="get" autocomplete="off" novalidate=""
                     class="sticky-top">
-                    <div class="form-label">Tanggal Surat Komunikasi</div>
+                    <div class="form-label">Tanggal Formulir</div>
                     <div class="row">
                         <div class="col">
                             <div class="input-icon mb-2">
-                                <input class="form-control border-primary ListDari" placeholder="Select a date"
-                                    id="datepicker2" value="<?= date('Y-m-01') ?>" />
-                                <span class="input-icon-addon">
-                                    <svg xmlns="http://www.w3.org/2000/svg" class="icon" width="24" height="24"
-                                        viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none"
-                                        stroke-linecap="round" stroke-linejoin="round">
-                                        <path stroke="none" d="M0 0h24v24H0z" fill="none" />
-                                        <path
-                                            d="M4 7a2 2 0 0 1 2 -2h12a2 2 0 0 1 2 2v12a2 2 0 0 1 -2 2h-12a2 2 0 0 1 -2 -2v-12z" />
-                                        <path d="M16 3v4" />
-                                        <path d="M8 3v4" />
-                                        <path d="M4 11h16" />
-                                        <path d="M11 15h1" />
-                                        <path d="M12 15v3" />
-                                    </svg>
-                                </span>
+                                <input type="date" class="form-control border-primary TglFormDari"
+                                    value="<?= date('Y-m-01') ?>" />
                             </div>
                         </div>
                         <div class="col">
                             <div class="input-icon mb-2">
-                                <input class="form-control border-primary ListSampai" placeholder="Select a date"
-                                    id="datepicker3" value="<?= date('Y-m-t') ?>" />
-                                <span class="input-icon-addon">
-                                    <svg xmlns="http://www.w3.org/2000/svg" class="icon" width="24" height="24"
-                                        viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none"
-                                        stroke-linecap="round" stroke-linejoin="round">
-                                        <path stroke="none" d="M0 0h24v24H0z" fill="none" />
-                                        <path
-                                            d="M4 7a2 2 0 0 1 2 -2h12a2 2 0 0 1 2 2v12a2 2 0 0 1 -2 2h-12a2 2 0 0 1 -2 -2v-12z" />
-                                        <path d="M16 3v4" />
-                                        <path d="M8 3v4" />
-                                        <path d="M4 11h16" />
-                                        <path d="M11 15h1" />
-                                        <path d="M12 15v3" />
-                                    </svg>
-                                </span>
+                                <input type="date" class="form-control border-primary TglFormSampai"
+                                    value="<?= date('Y-m-t') ?>" />
+                            </div>
+                        </div>
+                    </div>
+                    <br>
+                    <div class="form-label">Tanggal Surat Komunikasi</div>
+                    <div class="row">
+                        <div class="col">
+                            <div class="input-icon mb-2">
+                                <input type="date" class="form-control border-primary ListDari"
+                                    value="<?= date('Y-m-01') ?>" />
+                            </div>
+                        </div>
+                        <div class="col">
+                            <div class="input-icon mb-2">
+                                <input type="date" class="form-control border-primary ListSampai"
+                                    value="<?= date('Y-m-t') ?>" />
                             </div>
                         </div>
                     </div>
@@ -1101,7 +1113,12 @@
                         name: 'action',
                         className: 'cuspad0 text-center'
                     },
-
+                    {
+                        title: 'Tgl Form',
+                        data: 'tanggalform',
+                        name: 'tanggalform',
+                        className: 'cuspad0 text-center'
+                    },
                     {
                         title: 'Noform',
                         data: 'noform',
@@ -1109,7 +1126,7 @@
                         className: 'cuspad0'
                     },
                     {
-                        title: 'Tanggal',
+                        title: 'Tanggal Surat',
                         data: 'tanggalKomunikasi',
                         name: 'tanggalKomunikasi',
                         className: 'cuspad0 text-center'
@@ -1904,7 +1921,7 @@
             // Kolom 2 SST
             var td = document.createElement("td");
             td.setAttribute("align", "center");
-            td.innerHTML += sst;
+            td.innerHTML += (sst == "H" ? "GS" : sst);
             td.innerHTML += '<input type="hidden" name="sst[]" value="' + sst + '">';
             td.innerHTML += '<input type="hidden" name="userid[]" id="userid' + idf + '">';
             td.innerHTML += '<input type="hidden" name="idf[]" value="' + idf + '">';
@@ -1913,16 +1930,13 @@
             // Kolom 3 TANGGAL
             var td = document.createElement("td");
             td.setAttribute("style", "width:250px");
-            if (sst == "½") {
+            if (sst == "½" || sst == "GL" || sst == "H") {
                 td.innerHTML +=
                     '<div class="row"><div class="col"><input type="date" name="tanggalitm[]" id="tanggalitm' +
                     idf +
-                    '" class="form-control" value="<?= date('Y-m-d') ?>"><input type="hidden" name="totaltanggal[]" value="1"></div></div>';
-            } else if (sst == "GL") {
-                td.innerHTML +=
-                    '<div class="row"><div class="col"><input type="date" name="tanggalitm[]" id="tanggalitm' +
+                    '" class="form-control" value="<?= date('Y-m-d') ?>"><input type="hidden" name="tanggalitm2[]" style="width:120px" id="tanggalitm' +
                     idf +
-                    '" class="form-control" value="<?= date('Y-m-d') ?>"><input type="hidden" name="totaltanggal[]" value="1"></div></div>';
+                    '" class="form-control " value="<?= date('Y-m-d') ?>"><input type="hidden" name="totaltanggal[]" value="1"></div></div>';
             } else {
                 td.innerHTML +=
                     '<div class="row"><div class="col"><input type="date" style="width:120px" name="tanggalitm[]" id="tanggalitm' +
@@ -1970,6 +1984,9 @@
             } else if (sst == "½") {
                 td.innerHTML += '<input type="text" name="keterangan[]" class="form-control" value="">';
                 td.innerHTML += '<input type="hidden" name="suratid[]" value="Surat Izin Setengah Hari">';
+            } else if (sst == "H") {
+                td.innerHTML += '<input type="text" name="keterangan[]" class="form-control" value="GESER SETENGAH HARI">';
+                td.innerHTML += '<input type="hidden" name="suratid[]" value="Surat Geser Setengah Hari">';
             }
             tr.appendChild(td);
             detail_transaksi.appendChild(tr);

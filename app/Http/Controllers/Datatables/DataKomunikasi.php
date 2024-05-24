@@ -68,15 +68,15 @@ class DataKomunikasi extends Controller
             if (Auth::user()->admin != 'ALL') {
                 $data = DB::table('absensi_komunikasiitm AS b')
                     ->select('b.id', 'b.noform', 'b.tanggal', 'b.tanggal2', 'b.nama', 'b.suratid', 'b.sst', 'b.keterangan', 'b.statussurat')
-                    // ->join('absensi_komunikasiitm AS b', 'a.noform', '=', 'b.noform')
+                    ->join('absensi_komunikasi AS a', 'b.noform', '=', 'a.noform')
                     ->whereBetween('b.tanggal', [$dari, $sampai])
                     ->where('b.dibuat', '=', Auth::user()->name)
                     ->orderBy('b.noform', 'desc')
                     ->get();
             } else {
                 $data = DB::table('absensi_komunikasiitm AS b')
-                    ->select('b.id', 'b.noform', 'b.tanggal', 'b.tanggal2', 'b.nama', 'b.suratid', 'b.sst', 'b.keterangan', 'b.statussurat')
-                    // ->join('absensi_komunikasiitm AS b', 'a.noform', '=', 'b.noform')
+                    ->select('b.id', 'b.noform', 'b.tanggal', 'a.tanggal as tanggalform', 'b.tanggal2', 'b.nama', 'b.suratid', 'b.sst', 'b.keterangan', 'b.statussurat')
+                    ->join('absensi_komunikasi AS a', 'b.noform', '=', 'a.noform')
                     ->whereBetween('b.tanggal', [$dari, $sampai])
                     ->orderBy('b.noform', 'desc')
                     ->get();
@@ -98,6 +98,10 @@ class DataKomunikasi extends Controller
                     } else {
                         $tgl = Carbon::parse($row->tanggal)->format('d') . "-" . Carbon::parse($row->tanggal2)->format('d/m/Y');
                     }
+                    return $tgl;
+                })
+                ->addColumn('tanggalform', function ($row) {
+                    $tgl = Carbon::parse($row->tanggalform)->format('d/m/Y');
                     return $tgl;
                 })
 
