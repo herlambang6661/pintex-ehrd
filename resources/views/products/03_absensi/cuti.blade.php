@@ -37,30 +37,30 @@
         }
 
         /* .cv-spinner {
-                                                                                                                                                                                                                                                                        height: 100%;
-                                                                                                                                                                                                                                                                        display: flex;
-                                                                                                                                                                                                                                                                        justify-content: center;
-                                                                                                                                                                                                                                                                        align-items: center;
-                                                                                                                                                                                                                                                                    }
-
-                                                                                                                                                                                                                                                                    .spinner {
-                                                                                                                                                                                                                                                                        width: 40px;
-                                                                                                                                                                                                                                                                        height: 40px;
-                                                                                                                                                                                                                                                                        border: 4px #ddd solid;
-                                                                                                                                                                                                                                                                        border-top: 4px #2e93e6 solid;
-                                                                                                                                                                                                                                                                        border-radius: 50%;
-                                                                                                                                                                                                                                                                        animation: sp-anime 0.8s infinite linear;
-                                                                                                                                                                                                                                                                    }
-
-                                                                                                                                                                                                                                                                    @keyframes sp-anime {
-                                                                                                                                                                                                                                                                        100% {
-                                                                                                                                                                                                                                                                            transform: rotate(360deg);
+                                                                                                                                                                                                                                                                            height: 100%;
+                                                                                                                                                                                                                                                                            display: flex;
+                                                                                                                                                                                                                                                                            justify-content: center;
+                                                                                                                                                                                                                                                                            align-items: center;
                                                                                                                                                                                                                                                                         }
-                                                                                                                                                                                                                                                                    }
 
-                                                                                                                                                                                                                                                                    .is-hide {
-                                                                                                                                                                                                                                                                        display: none;
-                                                                                                                                                                                                                                                                    } */
+                                                                                                                                                                                                                                                                        .spinner {
+                                                                                                                                                                                                                                                                            width: 40px;
+                                                                                                                                                                                                                                                                            height: 40px;
+                                                                                                                                                                                                                                                                            border: 4px #ddd solid;
+                                                                                                                                                                                                                                                                            border-top: 4px #2e93e6 solid;
+                                                                                                                                                                                                                                                                            border-radius: 50%;
+                                                                                                                                                                                                                                                                            animation: sp-anime 0.8s infinite linear;
+                                                                                                                                                                                                                                                                        }
+
+                                                                                                                                                                                                                                                                        @keyframes sp-anime {
+                                                                                                                                                                                                                                                                            100% {
+                                                                                                                                                                                                                                                                                transform: rotate(360deg);
+                                                                                                                                                                                                                                                                            }
+                                                                                                                                                                                                                                                                        }
+
+                                                                                                                                                                                                                                                                        .is-hide {
+                                                                                                                                                                                                                                                                            display: none;
+                                                                                                                                                                                                                                                                        } */
         .loader {
             position: fixed;
             z-index: 301;
@@ -420,33 +420,27 @@
                             className: 'cuspad0 text-center'
                         },
                         {
+                            title: 'STB',
+                            data: 'stb',
+                            name: 'stb',
+                            className: 'cuspad0 text-center'
+                        },
+                        {
                             title: 'Nama',
                             data: 'nama',
                             name: 'nama',
                             className: 'cuspad0 text-center'
                         },
                         {
-                            title: 'Unit',
-                            data: 'bagian',
-                            name: 'bagian',
-                            className: 'cuspad0 text-center'
-                        },
-                        {
                             title: 'Tgl Awal',
-                            data: 'tglaw',
-                            name: 'tglaw',
+                            data: 'tglawal',
+                            name: 'tglawal',
                             className: 'cuspad0 text-center'
                         },
                         {
                             title: 'Tgl Akhir',
-                            data: 'tglak',
-                            name: 'tglak',
-                            className: 'cuspad0 text-center'
-                        },
-                        {
-                            title: 'Cuti Awal',
-                            data: 'sacuti',
-                            name: 'sacuti',
+                            data: 'tglakhir',
+                            name: 'tglakhir',
                             className: 'cuspad0 text-center'
                         },
                         {

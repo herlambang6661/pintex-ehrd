@@ -28,6 +28,7 @@ class DataCuti extends Controller
                 $unit = 'UNIT 1';
                 $data = DB::table('penerimaan_legalitas AS l')
                     ->join('penerimaan_karyawan AS k', 'l.userid', '=', 'k.userid')
+                    ->where('k.status', 'like', '%aktif%')
                     ->where('l.suratjns', 'like', '%perjanjian%')
                     ->where('k.bagian', 'like', '%' . $unit . '%')
                     ->where('l.sacuti', '>', '0')
@@ -39,6 +40,7 @@ class DataCuti extends Controller
                 $unit = 'UNIT 2';
                 $data = DB::table('penerimaan_legalitas AS l')
                     ->join('penerimaan_karyawan AS k', 'l.userid', '=', 'k.userid')
+                    ->where('k.status', 'like', '%aktif%')
                     ->where('l.suratjns', 'like', '%perjanjian%')
                     ->orWhere('k.bagian', 'like', '%' . $unit . '%')
                     ->orWhere('k.bagian', 'like', '%WCR & WORKSHOP%')
@@ -52,11 +54,27 @@ class DataCuti extends Controller
                 $unit = 'GUDANG';
                 $data = DB::table('penerimaan_legalitas AS l')
                     ->join('penerimaan_karyawan AS k', 'l.userid', '=', 'k.userid')
+                    ->where('k.status', 'like', '%aktif%')
                     ->where('l.suratjns', 'like', '%perjanjian%')
+                    ->where('k.bagian', 'like', '%' . $unit . '%')
                     ->where('l.sacuti', '>', '0')
                     ->where('l.tglaw', '<=', date('Y-m-d'))
                     ->where('l.tglak', '>=', date('Y-m-d'))
                     ->orderBy('l.nama', 'asc')
+                    ->get();
+            } else {
+
+                $data = DB::table('penerimaan_karyawan as k')
+                    // ->select('k.userid', 'k.stb', 'k.nama')
+                    ->select(DB::raw(
+                        "k.userid, k.stb, k.nama, 
+                    (SELECT tglaw FROM penerimaan_legalitas l WHERE l.userid = k.userid ORDER BY tglaw DESC LIMIT 1 ) AS tglawal,
+                    (SELECT tglak FROM penerimaan_legalitas l WHERE l.userid = k.userid ORDER BY tglaw DESC LIMIT 1 ) AS tglakhir,
+                    (SELECT sacuti FROM penerimaan_legalitas l WHERE l.userid = k.userid AND suratjns = 'PERJANJIAN' AND l.tglak >= tglawal AND l.tglak <= tglakhir ) AS sacuti,
+                    (SELECT COUNT(o.sst) FROM absensi_komunikasiacc o WHERE o.userid = k.userid AND o.sst = 'C' AND o.tanggal >= tglawal AND o.tanggal <= tglakhir ) AS cutiterpakai
+                    "
+                    ))
+                    ->where('k.status', 'like', '%aktif%')
                     ->get();
             }
 
@@ -71,20 +89,11 @@ class DataCuti extends Controller
 
             return DataTables::of($data)
                 ->addIndexColumn()
-                ->addColumn('cutiTerpakai', function ($row) {
-                    $data = DB::table('absensi_komunikasiitm')
-                        ->where('userid', '=', $row->userid)
-                        ->where('sst', '=', 'C')
-                        ->where('tanggal', '>=', $row->tglaw)
-                        ->where('tanggal', '<=', $row->tglak)
-                        ->count();
-                    return $data;
-                })
                 ->addColumn('action', function ($row) {
                     $btn = ' <a href="#viewCuti" data-bs-toggle="modal" data-toggle="tooltip" data-placement="top" title="Lihat Detail Cuti Karyawan" data-item="' . $row->nama . '" data-id="' . $row->userid . '" class="btn btn-sm btn-info btn-icon"><i class="fa-solid fa-eye"></i></a>';
                     return $btn;
                 })
-                ->rawColumns(['status', 'action', 'cutiTerpakai',])
+                ->rawColumns(['status', 'action',])
                 ->make(true);
         }
         return view('products.03_absensi.cuti');

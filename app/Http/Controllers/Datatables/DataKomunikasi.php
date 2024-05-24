@@ -67,7 +67,7 @@ class DataKomunikasi extends Controller
 
             if (Auth::user()->admin != 'ALL') {
                 $data = DB::table('absensi_komunikasiitm AS b')
-                    ->select('b.id', 'b.noform', 'b.tanggal', 'b.tanggal2', 'b.nama', 'b.suratid', 'b.sst', 'b.keterangan', 'b.statussurat')
+                    ->select('b.id', 'b.noform', 'b.tanggal', 'a.tanggal as tanggalform', 'b.tanggal2', 'b.nama', 'b.suratid', 'b.sst', 'b.keterangan', 'b.statussurat')
                     ->join('absensi_komunikasi AS a', 'b.noform', '=', 'a.noform')
                     ->whereBetween('b.tanggal', [$dari, $sampai])
                     ->where('b.dibuat', '=', Auth::user()->name)
