@@ -317,7 +317,7 @@ class Absensi extends Controller
 
         $data = DB::table('penerimaan_karyawan')->where('stb', $request->id)->get();
         $absensi = DB::table('absensi_absensi AS a')
-            ->select('a.tanggal', 'a.in', 'a.out', 'a.qj', 'a.jis', 'a.qjnet', 'a.sst', 'b.keterangan')
+            ->select('a.tanggal', 'a.in', 'a.out', 'a.qj', 'a.jis', 'a.qjnet', 'a.sst', 'b.keterangan', 'b.ket_acc')
             ->leftJoin('absensi_komunikasiacc AS b', function ($join) {
                 $join->on('a.userid', '=', 'b.userid');
                 $join->on('a.tanggal', '=', 'b.tanggal');
@@ -332,11 +332,11 @@ class Absensi extends Controller
             <div class="row">
                 <div class="col-lg-5">
                     <div class="row">
-                        <div class="shadow" style="padding: 0px 0px 0px 0px">
+                        <div class="shadow" style="padding: 0px 0px 0px 0px;height:290px">
                             <div class="col-lg-12">
                                 <a data-fslightbox="gallery" href="' . $link . '.jpg">
                                     <div class="img-responsive rounded-3 border"
-                                        style="background-image: url(' . $link . '.jpg)">
+                                        style="background-image: url(' . $link . '.jpg);height:290px">
                                     </div>
                                 </a>
                             </div>
@@ -347,7 +347,17 @@ class Absensi extends Controller
                 <div class="col-lg-7">
                     <div class="card shadow bg-info-lt">
                         <div class="table-responsive">
-                            <table class="table table-vcenter card-table table-sm">
+                            <table class="table table-vcenter card-table table-sm table-striped">
+                                <tr>
+                                    <td width="150px">STB</td>
+                                    <td>:</td>
+                                    <td>' . $u->stb . '</td>
+                                </tr>
+                                <tr>
+                                    <td width="150px">Nama</td>
+                                    <td>:</td>
+                                    <td>' . $u->nama . '</td>
+                                </tr>
                                 <tr>
                                     <td width="150px">Divisi</td>
                                     <td>:</td>
@@ -398,7 +408,7 @@ class Absensi extends Controller
                 <div class="col-lg-12">
                     <div class="card shadow">
                         <div class="table-responsive">
-                            <table class="table table-vcenter card-table table-sm text-nowrap table-bordered table-hover " style="width:100%; font-size:12px">
+                            <table class="table table-vcenter card-table table-sm text-nowrap table-bordered table-hover table-striped" style="width:100%; font-size:12px">
                                 <thead>
                                     <tr class="text-center">
                                         <td>Tanggal</td>
@@ -429,7 +439,7 @@ class Absensi extends Controller
                                         <td>' . $key->jis . '</td>
                                         <td>' . $key->qjnet . '</td>
                                         <td class="' . $sstnm . '">' . $key->sst . '</td>
-                                        <td>' . $key->keterangan . '</td>
+                                        <td>' . $key->ket_acc . '</td>
                                     </tr>
                                 </tbody>
                                 ';
@@ -953,6 +963,40 @@ class Absensi extends Controller
         $arr = array('msg' => 'Something goes to wrong. Please try later', 'status' => false);
         if ($update) {
             $arr = array('msg' => 'Data telah berhasil diproses', 'status' => true);
+        }
+        return Response()->json($arr);
+    }
+
+    public function syncKom(Request $request)
+    {
+        $tgl_awal = $request->tglaw;
+        $tgl_akhir = $request->tglak;
+
+        $dbKomunikasi = DB::table('absensi_komunikasiacc')->whereBetween('tanggal', [$tgl_awal, $tgl_akhir])->where('statussurat', '=', 'ACC')->where('cron', '=', '0')->get();
+        foreach ($dbKomunikasi as $key) {
+            $updateKomunikasi = DB::table('absensi_komunikasiacc')
+                ->where('id', '=', $key->id)
+                ->update(
+                    array(
+                        'cron' => '1',
+                        'updated_at' => date('Y-m-d H:i:s'),
+                    )
+                );
+            $updateAbsensi = DB::table('absensi_absensi')
+                ->where('tanggal', '=', $key->tanggal)
+                ->where('userid', '=', $key->userid)
+                ->update(
+                    array(
+                        'sst' => $key->sst,
+                        'updated_at' => date('Y-m-d H:i:s'),
+                    )
+                );
+        }
+
+        if ($updateKomunikasi && $updateAbsensi) {
+            $arr = array('msg' => 'Data telah berhasil diproses', 'status' => true);
+        } else {
+            $arr = array('msg' => 'Something goes to wrong. Please try later', 'status' => false);
         }
         return Response()->json($arr);
     }

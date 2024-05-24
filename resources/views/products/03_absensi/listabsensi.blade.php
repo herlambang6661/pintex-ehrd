@@ -37,30 +37,30 @@
         }
 
         /* .cv-spinner {
-                                                                                                                                                        height: 100%;
-                                                                                                                                                        display: flex;
-                                                                                                                                                        justify-content: center;
-                                                                                                                                                        align-items: center;
-                                                                                                                                                    }
+                                                                                                                                                                                                                                    height: 100%;
+                                                                                                                                                                                                                                    display: flex;
+                                                                                                                                                                                                                                    justify-content: center;
+                                                                                                                                                                                                                                    align-items: center;
+                                                                                                                                                                                                                                }
 
-                                                                                                                                                    .spinner {
-                                                                                                                                                        width: 40px;
-                                                                                                                                                        height: 40px;
-                                                                                                                                                        border: 4px #ddd solid;
-                                                                                                                                                        border-top: 4px #2e93e6 solid;
-                                                                                                                                                        border-radius: 50%;
-                                                                                                                                                        animation: sp-anime 0.8s infinite linear;
-                                                                                                                                                    }
+                                                                                                                                                                                                                                .spinner {
+                                                                                                                                                                                                                                    width: 40px;
+                                                                                                                                                                                                                                    height: 40px;
+                                                                                                                                                                                                                                    border: 4px #ddd solid;
+                                                                                                                                                                                                                                    border-top: 4px #2e93e6 solid;
+                                                                                                                                                                                                                                    border-radius: 50%;
+                                                                                                                                                                                                                                    animation: sp-anime 0.8s infinite linear;
+                                                                                                                                                                                                                                }
 
-                                                                                                                                                    @keyframes sp-anime {
-                                                                                                                                                        100% {
-                                                                                                                                                            transform: rotate(360deg);
-                                                                                                                                                        }
-                                                                                                                                                    }
+                                                                                                                                                                                                                                @keyframes sp-anime {
+                                                                                                                                                                                                                                    100% {
+                                                                                                                                                                                                                                        transform: rotate(360deg);
+                                                                                                                                                                                                                                    }
+                                                                                                                                                                                                                                }
 
-                                                                                                                                                    .is-hide {
-                                                                                                                                                        display: none;
-                                                                                                                                                    } */
+                                                                                                                                                                                                                                .is-hide {
+                                                                                                                                                                                                                                    display: none;
+                                                                                                                                                                                                                                } */
         .loader {
             position: fixed;
             z-index: 301;
@@ -177,6 +177,12 @@
                         <!-- Page title actions -->
                         <div class="col-auto ms-auto d-print-none">
                             <div class="btn-list">
+                                @if (Auth::user()->username == 'Yudha' || Auth::user()->role == 'super')
+                                    <button type="button" class="btn btn-info d-none d-sm-inline-block" id="btnSynKom">
+                                        <i class="fa-solid fa-arrows-rotate"></i>
+                                        Sinkronisasi Komunikasi
+                                    </button>
+                                @endif
                                 <a href="#" class="btn btn-danger d-none d-sm-inline-block" onclick="alpha();">
                                     <i class="fa-solid fa-person-running"></i>
                                     Data Alfa
@@ -504,6 +510,83 @@
                             $(".overlay").fadeOut(300);
                         }, 500);
                     });
+                });
+
+
+                $('#btnSynKom').click(function() {
+                    var token = $("meta[name='csrf-token']").attr("content");
+                    var tglaw = $('.tglaw').val();
+                    var tglak = $('.tglak').val();
+                    Swal.fire({
+                        icon: 'question',
+                        title: 'Perbarui Data Komunikasi',
+                        text: 'Apakah anda yakin ingin Perbarui data absen tanggal ' + tglaw + ' - ' +
+                            tglak + ' ?',
+                        showCancelButton: true,
+                        confirmButtonColor: '#d33',
+                        cancelButtonColor: '#3085d6',
+                        confirmButtonText: ' Ya',
+                        cancelButtonText: 'Tidak',
+                    }).then((result) => {
+                        if (result.isConfirmed) {
+                            $.ajaxSetup({
+                                headers: {
+                                    'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                                }
+                            });
+                            $.ajax({
+                                type: "POST",
+                                url: "{{ url('syncKom') }}",
+                                data: {
+                                    "_token": "{{ csrf_token() }}",
+                                    'tglaw': tglaw,
+                                    'tglak': tglak,
+                                },
+                                beforeSend: function() {
+                                    Swal.fire({
+                                        title: 'Mohon Menunggu',
+                                        html: '<center><lottie-player src="https://lottie.host/f6ad03a7-1560-4082-8f73-eba358540a2a/jwBLWkLRwZ.json"  background="transparent"  speed="1"  style="width: 300px; height: 300px;"  loop autoplay></lottie-player></center><br><h1 class="h4">Sedang Sinkronisasi data, Proses mungkin membutuhkan beberapa menit. <br><br><b class="text-danger">(Jangan menutup jendela ini, bisa mengakibatkan error)</b></h1>',
+                                        timerProgressBar: true,
+                                        showConfirmButton: false,
+                                        allowOutsideClick: false,
+                                        allowEscapeKey: false,
+                                    });
+                                    console.log('fetch data: ' + tglaw + ' - ' + tglak);
+                                },
+                                success: function(data) {
+                                    console.log(data);
+                                    tb();
+                                    const Toast = Swal.mixin({
+                                        toast: true,
+                                        position: "top-end",
+                                        showConfirmButton: false,
+                                        timer: 3000,
+                                        timerProgressBar: true,
+                                        didOpen: (toast) => {
+                                            toast.onmouseenter = Swal.stopTimer;
+                                            toast.onmouseleave = Swal
+                                                .resumeTimer;
+                                        }
+                                    });
+                                    Toast.fire({
+                                        icon: "success",
+                                        title: "Berhasil Memperbarui data Surat Komunikasi"
+                                    });
+                                },
+                                error: function(data) {
+                                    console.log(data);
+                                    console.log('Error:', data.error);
+                                    Swal.fire({
+                                        icon: 'error',
+                                        title: 'Gagal!',
+                                        text: 'Error: ' + data.responseText,
+                                        showConfirmButton: true,
+                                    });
+                                }
+                            });
+                        }
+                    });
+                    // tableAbsensi.ajax.reload(); //just reload table
                 });
             });
             /*------------------------------------------
