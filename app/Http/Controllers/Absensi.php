@@ -773,8 +773,8 @@ class Absensi extends Controller
                                             <input type="hidden" name="userid[]" value="' . $u->userid . '">
                                             <tr>
                                                 <td>' . $u->noform . '</td>
-                                                <td><input type="date" name="tanggal" class="form-control form-control-sm" value="' . $u->tanggal . '"></td>
-                                                <td><input type="date" name="tanggal2" class="form-control form-control-sm" value="' . $u->tanggal2 . '"></td>
+                                                <td><input type="date" name="tanggal[]" class="form-control form-control-sm" value="' . $u->tanggal . '"></td>
+                                                <td><input type="date" name="tanggal2[]" class="form-control form-control-sm" value="' . $u->tanggal2 . '"></td>
                                                 <td>' . $diff . '</td>
                                                 <td>' . $u->stb . '</td>
                                                 <td>' . $u->nama . '</td>
