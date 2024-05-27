@@ -209,6 +209,7 @@ Route::controller(Penerimaan::class)->group(function () {
     Route::post('editModal', 'editModal');
     Route::get('penerimaan/legalitas/edit/{id}', 'legalEdit')->name('penerimaan/legalitas/edit/{id}');
     Route::post('storedataLegalitas', 'storedataLegalitas');
+    Route::post('storedataEditLegalitas', 'storedataEditLegalitas');
     Route::post('storeUpdateKaryawan', 'storeUpdateKaryawan');
     Route::post('getTableBasic', 'getTableBasic');
     Route::post('getTablePerjanjian', 'getTablePerjanjian');

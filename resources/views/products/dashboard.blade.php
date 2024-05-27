@@ -223,7 +223,7 @@
                                                             <div class="text-secondary">
                                                                 <i class="fa-solid fa-calendar-days"
                                                                     style="margin-right: 3px"></i>
-                                                                {{ \Carbon\Carbon::parse($item->tglak)->format('d-m-Y') }}
+                                                                {{ \Carbon\Carbon::parse($item->tglak)->isoFormat('D MMMM Y') }}
                                                                 <i class="fa-solid fa-circle-right"
                                                                     style="margin-left: 10px;margin-right: 3px"></i>
                                                                 {{ \Carbon\Carbon::parse($item->tglak)->diffForHumans() }}
@@ -284,7 +284,7 @@
                                                             <div class="text-secondary">
                                                                 <i class="fa-solid fa-calendar-days"
                                                                     style="margin-right: 3px"></i>
-                                                                {{ \Carbon\Carbon::parse($itemsp->legalitastgl)->format('d-m-Y') }}
+                                                                {{ \Carbon\Carbon::parse($itemsp->legalitastgl)->isoFormat('D MMMM Y') }}
                                                                 <i class="fa-solid fa-circle-right"
                                                                     style="margin-left: 10px;margin-right: 3px"></i>
                                                                 {{ \Carbon\Carbon::parse($itemsp->legalitastgl)->diffForHumans() }}

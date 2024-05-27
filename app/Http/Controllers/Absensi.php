@@ -19,6 +19,8 @@ class Absensi extends Controller
     {
         $this->middleware('auth');
         date_default_timezone_set('Asia/Jakarta');
+        setlocale(LC_TIME, 'id_ID');
+        \Carbon\Carbon::setLocale('id');
     }
 
     public function absensi()
@@ -432,7 +434,7 @@ class Absensi extends Controller
                                 <tbody>
                                     <tr class="text-center">
                                         <td>' . $key->tanggal . '</td>
-                                        <td>' . strtoupper(Carbon::parse($key->tanggal)->formatLocalized('%A')) . '</td>
+                                        <td>' . strtoupper(Carbon::parse($key->tanggal)->isoFormat('dddd')) . '</td>
                                         <td>' . $setIn . '</td>
                                         <td>' . $setout . '</td>
                                         <td>' . $key->qj . '</td>
@@ -739,7 +741,8 @@ class Absensi extends Controller
                                         <thead>
                                             <tr>
                                                 <th>Noform</th>
-                                                <th>Tanggal</th>
+                                                <th>Tgl Aw</th>
+                                                <th>Tgl Ak</th>
                                                 <th>Hari</th>
                                                 <th>STB</th>
                                                 <th>Nama</th>
@@ -759,18 +762,19 @@ class Absensi extends Controller
                 }
                 $data = DB::table('absensi_komunikasiitm as o')->select('o.id', 'o.noform', 'o.userid', 'o.nama', 'k.stb', 'o.tanggal', 'o.tanggal2', 'o.suratid', 'o.sst', 'o.keterangan', 'o.dibuat')->join('penerimaan_karyawan as k', 'k.userid', '=', 'o.userid')->where($idrequest, $request->id[$i])->get();
                 foreach ($data as $u) {
-                    if ($u->tanggal == $u->tanggal2) {
-                        $tgl = Carbon::parse($u->tanggal)->format('d/m/Y');
-                    } else {
-                        $tgl = Carbon::parse($u->tanggal)->format('d') . "-" . Carbon::parse($u->tanggal2)->format('d/m/Y');
-                    }
+                    // if ($u->tanggal == $u->tanggal2) {
+                    //     $tgl = Carbon::parse($u->tanggal)->format('d/m/Y');
+                    // } else {
+                    //     $tgl = Carbon::parse($u->tanggal)->format('d') . "-" . Carbon::parse($u->tanggal2)->format('d/m/Y');
+                    // }
                     $diff = 1 + Carbon::parse($u->tanggal)->diffInDays($u->tanggal2);
                     echo '
                                             <input type="hidden" name="idsuratkomunikasi[]" value="' . $u->id . '">
                                             <input type="hidden" name="userid[]" value="' . $u->userid . '">
                                             <tr>
                                                 <td>' . $u->noform . '</td>
-                                                <td>' . $tgl . '</td>
+                                                <td><input type="date" name="tanggal" class="form-control form-control-sm" value="' . $u->tanggal . '"></td>
+                                                <td><input type="date" name="tanggal2" class="form-control form-control-sm" value="' . $u->tanggal2 . '"></td>
                                                 <td>' . $diff . '</td>
                                                 <td>' . $u->stb . '</td>
                                                 <td>' . $u->nama . '</td>
@@ -909,7 +913,7 @@ class Absensi extends Controller
             } else {
                 $getSurat = DB::table('absensi_komunikasiitm')->where('id', '=', $request->idsuratkomunikasi[$i])->first();
 
-                $period = new DatePeriod(new DateTime($getSurat->tanggal), new DateInterval('P1D'), new DateTime(date("Y-m-d", strtotime($getSurat->tanggal2 . "+1 days"))));
+                $period = new DatePeriod(new DateTime($request->tanggal[$i]), new DateInterval('P1D'), new DateTime(date("Y-m-d", strtotime($request->tanggal2[$i] . "+1 days"))));
                 foreach ($period as $key => $value) {
                     DB::table('absensi_komunikasiacc')
                         ->insert(
@@ -946,6 +950,8 @@ class Absensi extends Controller
                     ->where('id', '=', $request->idsuratkomunikasi[$i])
                     ->update(
                         array(
+                            'tanggal' => $request->tanggal[$i],
+                            'tanggal2' => $request->tanggal2[$i],
                             'statussurat' => "ACC",
                             'sst' => $request->sst[$i],
                             'ket_acc' => $request->keterangan[$i],
@@ -968,7 +974,7 @@ class Absensi extends Controller
         $tgl_awal = $request->tglaw;
         $tgl_akhir = $request->tglak;
 
-        $dbKomunikasi = DB::table('absensi_komunikasiacc')->whereBetween('tanggal', [$tgl_awal, $tgl_akhir])->where('statussurat', '=', 'ACC')->where('cron', '=', '0')->get();
+        $dbKomunikasi = DB::table('absensi_komunikasiacc')->whereBetween('tanggal', [$tgl_awal, $tgl_akhir])->where('statussurat', '=', 'ACC')->get();
         foreach ($dbKomunikasi as $key) {
             $updateKomunikasi = DB::table('absensi_komunikasiacc')
                 ->where('id', '=', $key->id)
