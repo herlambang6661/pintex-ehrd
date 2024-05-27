@@ -14,13 +14,13 @@
 
         td.cuspad2 {
             /* padding-top: 0.5px;
-                                                                                                                                                        padding-bottom: 0.5px;
-                                                                                                                                                        padding-right: 0.5px;
-                                                                                                                                                        padding-left: 0.5px;
-                                                                                                                                                        margin-top: 5px;
-                                                                                                                                                        margin-bottom: 5px;
-                                                                                                                                                        margin-right: 5px;
-                                                                                                                                                        margin-left: 5px; */
+                                                                                                                                                                    padding-bottom: 0.5px;
+                                                                                                                                                                    padding-right: 0.5px;
+                                                                                                                                                                    padding-left: 0.5px;
+                                                                                                                                                                    margin-top: 5px;
+                                                                                                                                                                    margin-bottom: 5px;
+                                                                                                                                                                    margin-right: 5px;
+                                                                                                                                                                    margin-left: 5px; */
         }
 
         .unselectable {
@@ -197,6 +197,7 @@
                                             <th class="text-center">JIS</th>
                                             <th class="text-center">QJNET</th>
                                             <th class="text-center">SST</th>
+                                            <th class="text-center">Bagian</th>
                                         </tr>
                                     </thead>
                                 </table>
@@ -547,6 +548,11 @@
                     {
                         data: 'sst',
                         name: 'sst',
+                        className: 'cuspad0 text-center'
+                    },
+                    {
+                        data: 'bagian',
+                        name: 'bagian',
                         className: 'cuspad0 text-center'
                     },
                 ],
