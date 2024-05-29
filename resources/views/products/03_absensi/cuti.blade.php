@@ -37,30 +37,30 @@
         }
 
         /* .cv-spinner {
-                                                                                                                                                                                                                                                                                                                            height: 100%;
-                                                                                                                                                                                                                                                                                                                            display: flex;
-                                                                                                                                                                                                                                                                                                                            justify-content: center;
-                                                                                                                                                                                                                                                                                                                            align-items: center;
-                                                                                                                                                                                                                                                                                                                        }
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                            height: 100%;
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                            display: flex;
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                            justify-content: center;
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                            align-items: center;
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                        }
 
-                                                                                                                                                                                                                                                                                                                        .spinner {
-                                                                                                                                                                                                                                                                                                                            width: 40px;
-                                                                                                                                                                                                                                                                                                                            height: 40px;
-                                                                                                                                                                                                                                                                                                                            border: 4px #ddd solid;
-                                                                                                                                                                                                                                                                                                                            border-top: 4px #2e93e6 solid;
-                                                                                                                                                                                                                                                                                                                            border-radius: 50%;
-                                                                                                                                                                                                                                                                                                                            animation: sp-anime 0.8s infinite linear;
-                                                                                                                                                                                                                                                                                                                        }
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                        .spinner {
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                            width: 40px;
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                            height: 40px;
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                            border: 4px #ddd solid;
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                            border-top: 4px #2e93e6 solid;
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                            border-radius: 50%;
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                            animation: sp-anime 0.8s infinite linear;
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                        }
 
-                                                                                                                                                                                                                                                                                                                        @keyframes sp-anime {
-                                                                                                                                                                                                                                                                                                                            100% {
-                                                                                                                                                                                                                                                                                                                                transform: rotate(360deg);
-                                                                                                                                                                                                                                                                                                                            }
-                                                                                                                                                                                                                                                                                                                        }
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                        @keyframes sp-anime {
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                            100% {
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                transform: rotate(360deg);
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                            }
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                        }
 
-                                                                                                                                                                                                                                                                                                                        .is-hide {
-                                                                                                                                                                                                                                                                                                                            display: none;
-                                                                                                                                                                                                                                                                                                                        } */
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                        .is-hide {
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                            display: none;
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                        } */
         .loader {
             position: fixed;
             z-index: 301;
@@ -222,137 +222,127 @@
                                     <i class="fa-solid fa-users"></i>
                                 </div>
                             </div>
-                            <div class="table-responsive">
-                                <table style="width:100%; font-family: 'Trebuchet MS', Helvetica, sans-serif;"
-                                    class="display table table-vcenter card-table table-sm table-striped table-bordered table-hover text-nowrap datatable-cuti"
-                                    id="tbkaryawan">
-                                </table>
+                            <div class="card-body">
+                                <div class="row row-cards">
+                                    <div class="mb-3">
+                                        <label class="form-label">Cari Karyawan</label>
+                                        <div class="row g-2">
+                                            <div class="col-lg-4">
+                                                <input type="text" class="form-control border border-azure"
+                                                    autofocus="true" id="idcari"
+                                                    placeholder="Masukkan STB / Nama untuk melihat cuti">
+                                            </div>
+                                            <div class="col-auto">
+                                                <button tupe="button" class="btn btn-icon bg-azure-lt border border-azure"
+                                                    aria-label="Button" onclick="get_cuti();">
+                                                    <svg xmlns="http://www.w3.org/2000/svg" class="icon" width="24"
+                                                        height="24" viewBox="0 0 24 24" stroke-width="2"
+                                                        stroke="currentColor" fill="none" stroke-linecap="round"
+                                                        stroke-linejoin="round">
+                                                        <path stroke="none" d="M0 0h24v24H0z" fill="none"></path>
+                                                        <path d="M10 10m-7 0a7 7 0 1 0 14 0a7 7 0 1 0 -14 0"></path>
+                                                        <path d="M21 21l-6 -6"></path>
+                                                    </svg>
+                                                </button>
+                                                <i class="text-muted" id="textLoading"
+                                                    style="margin-left: 20px;display:none"></i>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="row" id="loading" style="display:none">
+                                    <div class="col-4 col-sm-3">
+                                        <div class="ph-item">
+                                            <div class="ph-col-12">
+                                                <div class="ph-picture"></div>
+                                                <div class="ph-row">
+                                                    <div class="ph-col-4"></div>
+                                                    <div class="ph-col-12"></div>
+                                                </div>
+                                            </div>
+                                            <div class="ph-col-2">
+                                                <div class="ph-avatar"></div>
+                                            </div>
+                                            <div>
+                                                <div class="ph-row">
+                                                    <div class="ph-col-12"></div>
+                                                    <div class="ph-col-2"></div>
+                                                    <div class="ph-col-8 big"></div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-4 col-sm-3">
+                                        <div class="ph-item">
+                                            <div class="ph-col-12">
+                                                <div class="ph-picture"></div>
+                                                <div class="ph-row">
+                                                    <div class="ph-col-4"></div>
+                                                    <div class="ph-col-12"></div>
+                                                </div>
+                                            </div>
+                                            <div class="ph-col-2">
+                                                <div class="ph-avatar"></div>
+                                            </div>
+                                            <div>
+                                                <div class="ph-row">
+                                                    <div class="ph-col-12"></div>
+                                                    <div class="ph-col-2"></div>
+                                                    <div class="ph-col-8 big"></div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-4 col-sm-3">
+                                        <div class="ph-item">
+                                            <div class="ph-col-12">
+                                                <div class="ph-picture"></div>
+                                                <div class="ph-row">
+                                                    <div class="ph-col-4"></div>
+                                                    <div class="ph-col-12"></div>
+                                                </div>
+                                            </div>
+                                            <div class="ph-col-2">
+                                                <div class="ph-avatar"></div>
+                                            </div>
+                                            <div>
+                                                <div class="ph-row">
+                                                    <div class="ph-col-12"></div>
+                                                    <div class="ph-col-2"></div>
+                                                    <div class="ph-col-8 big"></div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-4 col-sm-3">
+                                        <div class="ph-item">
+                                            <div class="ph-col-12">
+                                                <div class="ph-picture"></div>
+                                                <div class="ph-row">
+                                                    <div class="ph-col-4"></div>
+                                                    <div class="ph-col-12"></div>
+                                                </div>
+                                            </div>
+                                            <div class="ph-col-2">
+                                                <div class="ph-avatar"></div>
+                                            </div>
+                                            <div>
+                                                <div class="ph-row">
+                                                    <div class="ph-col-12"></div>
+                                                    <div class="ph-col-2"></div>
+                                                    <div class="ph-col-8 big"></div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="fetched-data-cuti"></div>
                             </div>
                         </div>
                     </div>
                 </div>
                 @include('shared.footer')
-            </div>
-        </div>
-        {{-- Modal Filter --}}
-        <div class="offcanvas offcanvas-blur offcanvas-end" tabindex="-1" id="offcanvasEnd-lamaran"
-            aria-labelledby="offcanvasEndLabel">
-            <div class="offcanvas-header">
-                <h2 class="offcanvas-title" id="offcanvasEndLabel">Saring Data Absensi</h2>
-                <button type="button" class="btn-close text-reset" data-bs-dismiss="offcanvas" aria-label="Close"></button>
-            </div>
-            <div class="offcanvas-body">
-                <div>
-                    <div class="card-stamp card-stamp-lg">
-                        <div class="card-stamp-icon bg-blue">
-                            <i class="fa-solid fa-users"></i>
-                        </div>
-                    </div>
-                    <form action="#" id="form-filter-items" method="get" autocomplete="off" novalidate=""
-                        class="sticky-top">
-                        <div class="form-label">Bagian</div>
-                        <div class="mb-4">
-                            <div class="row">
-                                <div class="col-sm-12">
-                                    <select name="bagian" id="bagian" class="form-select">
-                                        <option value="ALL">SEMUA</option>
-                                        <option value="AKUNTING & KEUANGAN">AKUNTING & KEUANGAN</option>
-                                        <option value="GUDANG">GUDANG</option>
-                                        <option value="KEAMANAN">KEAMANAN</option>
-                                        <option value="KEBERSIHAN">KEBERSIHAN</option>
-                                        <option value="PERSONALIA">PERSONALIA</option>
-                                        <option value="TFI">TFI</option>
-                                        <option value="TFO">TFO</option>
-                                        <option value="UMUM">UMUM</option>
-                                        <option value="UNIT 1">UNIT 1</option>
-                                        <option value="UNIT 2">UNIT 2</option>
-                                        <option value="WCR & WORKSHOP">WCR & WORKSHOP</option>
-                                    </select>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="form-label">Grup</div>
-                        <div class="mb-4">
-                            <div class="row">
-                                <div class="col-sm-6">
-                                    <label class="form-check">
-                                        <input type="checkbox" class="form-check-input" name="grup[]" value="A"
-                                            checked="" id="gA">
-                                        <span class="form-check-label">A</span>
-                                    </label>
-                                    <label class="form-check">
-                                        <input type="checkbox" class="form-check-input" name="grup[]" value="B"
-                                            checked="" id="gB">
-                                        <span class="form-check-label">B</span>
-                                    </label>
-                                    <label class="form-check">
-                                        <input type="checkbox" class="form-check-input" name="grup[]" value="C"
-                                            checked="" id="gC">
-                                        <span class="form-check-label">C</span>
-                                    </label>
-                                    <label class="form-check">
-                                        <input type="checkbox" class="form-check-input" name="grup[]" value="NON GRUP"
-                                            checked="" id="gN">
-                                        <span class="form-check-label">NON GRUP</span>
-                                    </label>
-                                </div>
-                                <div class="col-sm-6">
-                                    <label class="form-check">
-                                        <input type="checkbox" class="form-check-input" name="grup[]" value="MTC"
-                                            checked="" id="gM">
-                                        <span class="form-check-label">MTC</span>
-                                    </label>
-                                    <label class="form-check">
-                                        <input type="checkbox" class="form-check-input" name="grup[]" value="OPD"
-                                            checked="" id="gO">
-                                        <span class="form-check-label">OPD</span>
-                                    </label>
-                                    <label class="form-check">
-                                        <input type="checkbox" class="form-check-input" name="grup[]" value="PPC/QC"
-                                            checked="" id="gP">
-                                        <span class="form-check-label">PPC/QC</span>
-                                    </label>
-                                    <label class="form-check">
-                                        <input type="checkbox" class="form-check-input" name="grup[]" value="B"
-                                            checked="" id="gB">
-                                        <span class="form-check-label">B</span>
-                                    </label>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="form-label">Gender</div>
-                        <div class="mb-4">
-                            <label class="form-check">
-                                <input type="checkbox" class="form-check-input" name="gender[]" value="PRIA"
-                                    checked="" id="gPria">
-                                <span class="form-check-label">Pria</span>
-                            </label>
-                            <label class="form-check">
-                                <input type="checkbox" class="form-check-input" name="gender[]" value="WANITA"
-                                    checked="" id="gWanita">
-                                <span class="form-check-label">Wanita</span>
-                            </label>
-                        </div>
-                        <div class="form-label">Status</div>
-                        <div class="mb-4">
-                            <div class="row">
-                                <div class="col-sm-12">
-                                    <select name="status" id="status" class="form-select">
-                                        <option value="Semua">Semua</option>
-                                        <option value="Aktif">Aktif</option>
-                                        <option value="Non Aktif">Non Aktif</option>
-                                    </select>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="mt-5">
-                            <button type="button" class="btn btn-primary w-100" id="btn-filter">Filter
-                                Data</button> <br>
-                            <button type="button" class="btn btn-link w-100" id="btn-reset-items">Reset to
-                                defaults</button>
-                        </div>
-                    </form>
-                </div>
             </div>
         </div>
 
@@ -365,7 +355,7 @@
                 --------------------------------------------*/
                 var tableWawancara = $('.datatable-cuti').DataTable({
                     "processing": true, //Feature control the processing indicator.
-                    "serverSide": true, //Feature control DataTables' server-side processing mode.
+                    "serverSide": false, //Feature control DataTables' server-side processing mode.
                     "scrollX": true,
                     "scrollCollapse": false,
                     "pagingType": 'full_numbers',
@@ -466,46 +456,46 @@
                 });
             });
 
-            function newexportaction(e, dt, button, config) {
-                var self = this;
-                var oldStart = dt.settings()[0]._iDisplayStart;
-                dt.one('preXhr', function(e, s, data) {
-                    // Just this once, load all data from the server...
-                    data.start = 0;
-                    data.length = 2147483647;
-                    dt.one('preDraw', function(e, settings) {
-                        // Call the original action function
-                        if (button[0].className.indexOf('buttons-copy') >= 0) {
-                            $.fn.dataTable.ext.buttons.copyHtml5.action.call(self, e, dt, button, config);
-                        } else if (button[0].className.indexOf('buttons-excel') >= 0) {
-                            $.fn.dataTable.ext.buttons.excelHtml5.available(dt, config) ?
-                                $.fn.dataTable.ext.buttons.excelHtml5.action.call(self, e, dt, button, config) :
-                                $.fn.dataTable.ext.buttons.excelFlash.action.call(self, e, dt, button, config);
-                        } else if (button[0].className.indexOf('buttons-csv') >= 0) {
-                            $.fn.dataTable.ext.buttons.csvHtml5.available(dt, config) ?
-                                $.fn.dataTable.ext.buttons.csvHtml5.action.call(self, e, dt, button, config) :
-                                $.fn.dataTable.ext.buttons.csvFlash.action.call(self, e, dt, button, config);
-                        } else if (button[0].className.indexOf('buttons-pdf') >= 0) {
-                            $.fn.dataTable.ext.buttons.pdfHtml5.available(dt, config) ?
-                                $.fn.dataTable.ext.buttons.pdfHtml5.action.call(self, e, dt, button, config) :
-                                $.fn.dataTable.ext.buttons.pdfFlash.action.call(self, e, dt, button, config);
-                        } else if (button[0].className.indexOf('buttons-print') >= 0) {
-                            $.fn.dataTable.ext.buttons.print.action(e, dt, button, config);
-                        }
-                        dt.one('preXhr', function(e, s, data) {
-                            // DataTables thinks the first item displayed is index 0, but we're not drawing that.
-                            // Set the property to what it was before exporting.
-                            settings._iDisplayStart = oldStart;
-                            data.start = oldStart;
-                        });
-                        // Reload the grid with the original page. Otherwise, API functions like table.cell(this) don't work properly.
-                        setTimeout(dt.ajax.reload, 0);
-                        // Prevent rendering of the full data to the DOM
-                        return false;
-                    });
+
+            function get_cuti() {
+                var idcari = $('#idcari').val();
+                console.log("Searching for " + idcari);
+                $("#loading").fadeIn(200);
+                $("#textLoading").fadeIn(200);
+                $('.fetched-data-cuti').html('');
+                $.ajaxSetup({
+                    headers: {
+                        'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                    }
                 });
-                // Requery the server with the new one-time export settings
-                dt.ajax.reload();
+                //menggunakan fungsi ajax untuk pengambilan data
+                $.ajax({
+                    type: 'POST',
+                    url: "{{ url('getcuti') }}",
+                    data: {
+                        "_token": "{{ csrf_token() }}",
+                        'idcari': idcari,
+                    },
+                    beforeSend: function() {
+                        $('#textLoading').text('Mencari Data Cuti...');
+                    },
+                    success: function(data) {
+                        $('.fetched-data-cuti').html(data);
+                    },
+                    error: function(data) {
+                        console.log('Error:', data.responseText);
+                        $('#textLoading').text('STB / Nama tidak ditemukan');
+                        $("#loading").fadeOut(200);
+                        setTimeout(function() {
+                            $("#textLoading").fadeOut(200);
+                        }, 4000);
+                    }
+                }).done(function() {
+                    setTimeout(function() {
+                        $("#textLoading").fadeOut(200);
+                        $("#loading").fadeOut(200);
+                    }, 300);
+                });
             }
         </script>
     @endsection

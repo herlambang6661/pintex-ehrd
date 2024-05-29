@@ -57,7 +57,7 @@
                                             </h3>
                                             <div class="markdown text-secondary">
                                                 Aplikasi E-HRD ini adalah aplikasi untuk Mengelola Recruitment sampai dengan
-                                                Payrolldi <b>PT. Plumbon International Textile.</b>
+                                                Payroll di <b>PT. Plumbon International Textile.</b>
                                                 <br>
                                                 Silahkan pilih menu disamping untuk mulai menggunakan aplikasi.
                                             </div>
