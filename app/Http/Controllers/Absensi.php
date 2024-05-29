@@ -1102,7 +1102,7 @@ class Absensi extends Controller
                                 </td>
                                 <td class="text-center">
                                     <div class="text-uppercase text-secondary font-weight-medium">Sisa Cuti</div>
-                                    <div class="display-6 fw-bold my-3">' . ($key->sacuti - $key->cutiterpakai) . '</div>
+                                    <div class="display-6 fw-bold my-3">' . ($sisacuti - $key->cutiterpakai) . '</div>
                                 </td>
                                 </tr>
                             </thead>
