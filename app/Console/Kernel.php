@@ -13,6 +13,7 @@ class Kernel extends ConsoleKernel
     protected $commands = [
         Commands\ScheduleLegalitas::class,
         Commands\ScheduleKomunikasi::class,
+        Commands\ScheduleKaryawanUmum::class,
     ];
 
     protected function schedule(Schedule $schedule): void
