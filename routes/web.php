@@ -245,6 +245,7 @@ Route::controller(Absensi::class)->group(function () {
     Route::post('absensi/storeAcc', 'storeKomunikasiAcc')->name('absensi/storeAcc');
     Route::post('syncKom', 'syncKom')->name('syncKom');
     Route::post('getcuti', 'getcuti')->name('getcuti');
+    Route::post('fixUmum', 'fixUmum')->name('fixUmum');
 });
 
 // Modules Penarikan Data Mesin Fingerprint

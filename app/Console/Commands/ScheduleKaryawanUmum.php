@@ -29,23 +29,19 @@ class ScheduleKaryawanUmum extends Command
     public function handle()
     {
         date_default_timezone_set('Asia/Jakarta');
-        try {
-            $start = new Carbon('first day of last month');
-            $end = date('Y-m-d');
-            $checkUmum = DB::table('absensi_absensi')->where('bagian', '=', 'UMUM')->whereBetween('tanggal', [$start, $end])->where('sst', '=', 'A')->orWhere('sst', '=', 'F1')->orWhere('sst', '=', 'F2')->orderBy('tanggal', 'desc')->get();
-            foreach ($checkUmum as $key) {
-                DB::table('absensi_absensi')
-                    ->where('id', $key->id)
-                    ->update(
-                        array(
-                            'sst' => "H",
-                            'updated_at' => date('Y-m-d H:i:s'),
-                        )
-                    );
-                Log::info("ID: " . $key->id . " Berhasil di jalankan. a/n " . $key->nama . " ( " . $key->stb . " ). Date: " . date('Y-m-d H:i:s'));
-            }
-        } catch (\Exception $e) {
-            Log::error("Cron job Karyawan Umum Gagal di jalankan. " . $e);
+        $start = new Carbon('first day of last month');
+        $end = date('Y-m-d');
+        $checkUmum = DB::table('absensi_absensi')->where('bagian', '=', 'UMUM')->whereBetween('tanggal', [$start, $end])->orderBy('tanggal', 'desc')->get();
+        foreach ($checkUmum as $key) {
+            DB::table('absensi_absensi')
+                ->where('id', $key->id)
+                ->where('bagian', '=', 'UMUM')
+                ->update(
+                    array(
+                        'sst' => "H",
+                        'updated_at' => date('Y-m-d H:i:s'),
+                    )
+                );
         }
     }
 }

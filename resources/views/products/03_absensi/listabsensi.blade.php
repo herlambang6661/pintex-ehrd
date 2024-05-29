@@ -37,30 +37,30 @@
         }
 
         /* .cv-spinner {
-                                                                                                                                                                                                                                    height: 100%;
-                                                                                                                                                                                                                                    display: flex;
-                                                                                                                                                                                                                                    justify-content: center;
-                                                                                                                                                                                                                                    align-items: center;
-                                                                                                                                                                                                                                }
+                                                                                                                                                                                                                                                                                                                        height: 100%;
+                                                                                                                                                                                                                                                                                                                        display: flex;
+                                                                                                                                                                                                                                                                                                                        justify-content: center;
+                                                                                                                                                                                                                                                                                                                        align-items: center;
+                                                                                                                                                                                                                                                                                                                    }
 
-                                                                                                                                                                                                                                .spinner {
-                                                                                                                                                                                                                                    width: 40px;
-                                                                                                                                                                                                                                    height: 40px;
-                                                                                                                                                                                                                                    border: 4px #ddd solid;
-                                                                                                                                                                                                                                    border-top: 4px #2e93e6 solid;
-                                                                                                                                                                                                                                    border-radius: 50%;
-                                                                                                                                                                                                                                    animation: sp-anime 0.8s infinite linear;
-                                                                                                                                                                                                                                }
+                                                                                                                                                                                                                                                                                                                    .spinner {
+                                                                                                                                                                                                                                                                                                                        width: 40px;
+                                                                                                                                                                                                                                                                                                                        height: 40px;
+                                                                                                                                                                                                                                                                                                                        border: 4px #ddd solid;
+                                                                                                                                                                                                                                                                                                                        border-top: 4px #2e93e6 solid;
+                                                                                                                                                                                                                                                                                                                        border-radius: 50%;
+                                                                                                                                                                                                                                                                                                                        animation: sp-anime 0.8s infinite linear;
+                                                                                                                                                                                                                                                                                                                    }
 
-                                                                                                                                                                                                                                @keyframes sp-anime {
-                                                                                                                                                                                                                                    100% {
-                                                                                                                                                                                                                                        transform: rotate(360deg);
-                                                                                                                                                                                                                                    }
-                                                                                                                                                                                                                                }
+                                                                                                                                                                                                                                                                                                                    @keyframes sp-anime {
+                                                                                                                                                                                                                                                                                                                        100% {
+                                                                                                                                                                                                                                                                                                                            transform: rotate(360deg);
+                                                                                                                                                                                                                                                                                                                        }
+                                                                                                                                                                                                                                                                                                                    }
 
-                                                                                                                                                                                                                                .is-hide {
-                                                                                                                                                                                                                                    display: none;
-                                                                                                                                                                                                                                } */
+                                                                                                                                                                                                                                                                                                                    .is-hide {
+                                                                                                                                                                                                                                                                                                                        display: none;
+                                                                                                                                                                                                                                                                                                                    } */
         .loader {
             position: fixed;
             z-index: 301;
@@ -177,41 +177,52 @@
                         <!-- Page title actions -->
                         <div class="col-auto ms-auto d-print-none">
                             <div class="btn-list">
-                                @if (Auth::user()->username == 'Yudha' || Auth::user()->role == 'super')
-                                    <button type="button" class="btn btn-info d-none d-sm-inline-block" id="btnSynKom">
-                                        <i class="fa-solid fa-arrows-rotate"></i>
-                                        Sinkronisasi Komunikasi
-                                    </button>
-                                @endif
-                                <a href="#" class="btn btn-danger d-none d-sm-inline-block" onclick="alpha();">
-                                    <i class="fa-solid fa-person-running"></i>
-                                    Data Alfa
-                                </a>
-                                <a href="#" class="btn btn-warning d-none d-sm-inline-block" onclick="f1();">
-                                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24"
-                                        viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
-                                        stroke-linecap="round" stroke-linejoin="round"
-                                        class="icon icon-tabler icons-tabler-outline icon-tabler-fingerprint-off">
-                                        <path stroke="none" d="M0 0h24v24H0z" fill="none" />
-                                        <path d="M18.9 7a8 8 0 0 1 1.1 5v1a6 6 0 0 0 .8 3" />
-                                        <path
-                                            d="M8 11c0 -.848 .264 -1.634 .713 -2.28m2.4 -1.621a4 4 0 0 1 4.887 3.901l0 1" />
-                                        <path d="M12 12v1a14 14 0 0 0 2.5 8" />
-                                        <path d="M8 15a18 18 0 0 0 1.8 6" />
-                                        <path
-                                            d="M4.9 19a22 22 0 0 1 -.9 -7v-1a8 8 0 0 1 1.854 -5.143m2.176 -1.825a8 8 0 0 1 7.97 .018" />
-                                        <path d="M3 3l18 18" />
-                                    </svg>
-                                    Data F1F2
-                                </a>
-                                <a href="#" class="btn btn-danger d-sm-none btn-icon" data-bs-toggle="modal"
-                                    data-bs-target="#modal-lamaran" aria-label="Tambah Lamaran">
-                                    <i class="fa-solid fa-person-running"></i>
-                                </a>
-                                <a href="#" class="btn btn-warning d-sm-none btn-icon" data-bs-toggle="modal"
-                                    data-bs-target="#modal-upload" aria-label="Upload Excel">
-                                    <i class="fa-solid fa-user-slash"></i>
-                                </a>
+                                <div class="input-group">
+                                    @if (Auth::user()->username == 'Yudha' || Auth::user()->role == 'super')
+                                        <button type="button" class="btn btn-info d-none d-sm-inline-block" id="btnSynKom">
+                                            <i class="fa-solid fa-arrows-rotate"></i>
+                                            Sinkronisasi Komunikasi
+                                        </button>
+                                        <button data-bs-toggle="dropdown" type="button"
+                                            class="btn btn-info dropdown-toggle dropdown-toggle-split"
+                                            aria-expanded="false"></button>
+                                        <div class="dropdown-menu dropdown-menu-end" style="">
+                                            <button type="button" class="dropdown-item" id="fixUmum">
+                                                <i class="fa-solid fa-truck-front" style="margin-right:5px"></i>
+                                                Fixing Absensi Umum
+                                            </button>
+                                        </div>
+                                    @endif
+                                    <a href="#" class="btn btn-danger d-none d-sm-inline-block" onclick="alpha();">
+                                        <i class="fa-solid fa-person-running"></i>
+                                        Data Alfa
+                                    </a>
+                                    <a href="#" class="btn btn-warning d-none d-sm-inline-block" onclick="f1();">
+                                        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24"
+                                            viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+                                            stroke-linecap="round" stroke-linejoin="round"
+                                            class="icon icon-tabler icons-tabler-outline icon-tabler-fingerprint-off">
+                                            <path stroke="none" d="M0 0h24v24H0z" fill="none" />
+                                            <path d="M18.9 7a8 8 0 0 1 1.1 5v1a6 6 0 0 0 .8 3" />
+                                            <path
+                                                d="M8 11c0 -.848 .264 -1.634 .713 -2.28m2.4 -1.621a4 4 0 0 1 4.887 3.901l0 1" />
+                                            <path d="M12 12v1a14 14 0 0 0 2.5 8" />
+                                            <path d="M8 15a18 18 0 0 0 1.8 6" />
+                                            <path
+                                                d="M4.9 19a22 22 0 0 1 -.9 -7v-1a8 8 0 0 1 1.854 -5.143m2.176 -1.825a8 8 0 0 1 7.97 .018" />
+                                            <path d="M3 3l18 18" />
+                                        </svg>
+                                        Data F1F2
+                                    </a>
+                                    <a href="#" class="btn btn-danger d-sm-none btn-icon" data-bs-toggle="modal"
+                                        data-bs-target="#modal-lamaran" aria-label="Tambah Lamaran">
+                                        <i class="fa-solid fa-person-running"></i>
+                                    </a>
+                                    <a href="#" class="btn btn-warning d-sm-none btn-icon" data-bs-toggle="modal"
+                                        data-bs-target="#modal-upload" aria-label="Upload Excel">
+                                        <i class="fa-solid fa-user-slash"></i>
+                                    </a>
+                                </div>
                             </div>
                         </div>
                     </div>
@@ -571,6 +582,81 @@
                                     Toast.fire({
                                         icon: "success",
                                         title: "Berhasil Memperbarui data Surat Komunikasi"
+                                    });
+                                },
+                                error: function(data) {
+                                    console.log(data);
+                                    console.log('Error:', data.error);
+                                    Swal.fire({
+                                        icon: 'error',
+                                        title: 'Gagal!',
+                                        text: 'Error: ' + data.responseText,
+                                        showConfirmButton: true,
+                                    });
+                                }
+                            });
+                        }
+                    });
+                    // tableAbsensi.ajax.reload(); //just reload table
+                });
+                $('#fixUmum').click(function() {
+                    var token = $("meta[name='csrf-token']").attr("content");
+                    var tglaw = $('.tglaw').val();
+                    var tglak = $('.tglak').val();
+                    Swal.fire({
+                        icon: 'question',
+                        title: 'Perbarui Data Komunikasi Sopir',
+                        text: 'Apakah anda yakin ingin Perbarui data absen tanggal ' + tglaw + ' - ' +
+                            tglak + ' untuk sopir?',
+                        showCancelButton: true,
+                        confirmButtonColor: '#d33',
+                        cancelButtonColor: '#3085d6',
+                        confirmButtonText: ' Ya',
+                        cancelButtonText: 'Tidak',
+                    }).then((result) => {
+                        if (result.isConfirmed) {
+                            $.ajaxSetup({
+                                headers: {
+                                    'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                                }
+                            });
+                            $.ajax({
+                                type: "POST",
+                                url: "{{ url('fixUmum') }}",
+                                data: {
+                                    "_token": "{{ csrf_token() }}",
+                                    'tglaw': tglaw,
+                                    'tglak': tglak,
+                                },
+                                beforeSend: function() {
+                                    Swal.fire({
+                                        title: 'Mohon Menunggu',
+                                        html: '<center><lottie-player src="https://lottie.host/f6ad03a7-1560-4082-8f73-eba358540a2a/jwBLWkLRwZ.json"  background="transparent"  speed="1"  style="width: 300px; height: 300px;"  loop autoplay></lottie-player></center><br><h1 class="h4">Sedang Sinkronisasi data, Proses mungkin membutuhkan beberapa menit. <br><br><b class="text-danger">(Jangan menutup jendela ini, bisa mengakibatkan error)</b></h1>',
+                                        timerProgressBar: true,
+                                        showConfirmButton: false,
+                                        allowOutsideClick: false,
+                                        allowEscapeKey: false,
+                                    });
+                                    console.log('fetch data: ' + tglaw + ' - ' + tglak);
+                                },
+                                success: function(data) {
+                                    console.log(data);
+                                    tb();
+                                    const Toast = Swal.mixin({
+                                        toast: true,
+                                        position: "top-end",
+                                        showConfirmButton: false,
+                                        timer: 3000,
+                                        timerProgressBar: true,
+                                        didOpen: (toast) => {
+                                            toast.onmouseenter = Swal.stopTimer;
+                                            toast.onmouseleave = Swal
+                                                .resumeTimer;
+                                        }
+                                    });
+                                    Toast.fire({
+                                        icon: "success",
+                                        title: "Berhasil Memperbarui data Absensi"
                                     });
                                 },
                                 error: function(data) {

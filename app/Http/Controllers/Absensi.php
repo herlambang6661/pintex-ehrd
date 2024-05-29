@@ -10,6 +10,7 @@ use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Routing\Controller;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Artisan;
 
@@ -1143,5 +1144,31 @@ class Absensi extends Controller
             ';
             }
         }
+    }
+
+    public function fixUmum(Request $request)
+    {
+        $start = $request->tglaw;
+        $end = $request->tglak;
+
+        $checkUmum = DB::table('absensi_absensi')->where('bagian', '=', 'UMUM')->whereBetween('tanggal', [$start, $end])->orderBy('tanggal', 'desc')->get();
+        foreach ($checkUmum as $key) {
+            DB::table('absensi_absensi')
+                ->where('id', $key->id)
+                ->where('bagian', '=', 'UMUM')
+                ->update(
+                    array(
+                        'sst' => "H",
+                        'updated_at' => date('Y-m-d H:i:s'),
+                    )
+                );
+        }
+
+        if ($checkUmum) {
+            $arr = array('msg' => 'Data telah berhasil diproses', 'status' => true);
+        } else {
+            $arr = array('msg' => 'Something goes to wrong. Please try later', 'status' => false);
+        }
+        return Response()->json($arr);
     }
 }
