@@ -2,6 +2,7 @@
 
 namespace App\Console\Commands;
 
+use Carbon\Carbon;
 use Illuminate\Console\Command;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Log;
@@ -29,7 +30,9 @@ class ScheduleKomunikasi extends Command
     {
         date_default_timezone_set('Asia/Jakarta');
         try {
-            $checkKomunikasi = DB::table('absensi_komunikasiacc')->where('cron', '=', '0')->where('tanggal', '<=', date('Y-m-d'))->orderBy('tanggal', 'desc')->get();
+            $start = new Carbon('first day of last month');
+            $end = date('Y-m-d');
+            $checkKomunikasi = DB::table('absensi_komunikasiacc')->where('cron', '=', '0')->whereBetween('tanggal', [$start, $end])->orderBy('tanggal', 'desc')->get();
             foreach ($checkKomunikasi as $key) {
                 // ============================================================  BASIC  ============================================================
                 DB::table('absensi_absensi')
