@@ -18,8 +18,9 @@ class Kernel extends ConsoleKernel
     protected function schedule(Schedule $schedule): void
     {
         // $schedule->command('inspire')->hourly();
+        $schedule->command('komunikasi:cron')->dailyAt('01:00')->timezone('Asia/Jakarta');
+        $schedule->command('karyawanumum:cron')->dailyAt('04:00')->timezone('Asia/Jakarta');
         $schedule->command('legalitas:cron')->dailyAt('06:00')->timezone('Asia/Jakarta');
-        $schedule->command('komunikasi:cron')->dailyAt('03:00')->timezone('Asia/Jakarta');
         $schedule->command('cache: clear')->daily();
     }
 
