@@ -1014,7 +1014,8 @@ class Absensi extends Controller
                     "k.userid, k.stb, k.nama, k.bagian, k.profesi,
                         (SELECT l.tglaw FROM penerimaan_legalitas l WHERE l.userid = k.userid ORDER BY l.tglaw DESC LIMIT 1 ) AS tglawal,
                         (SELECT l.tglak FROM penerimaan_legalitas l WHERE l.userid = k.userid ORDER BY l.tglaw DESC LIMIT 1 ) AS tglakhir,
-                        (SELECT l.sacuti FROM penerimaan_legalitas l WHERE l.userid = k.userid AND l.suratjns = 'perjanjian' ORDER BY l.id DESC LIMIT 1 ) AS sacuti,
+                    (SELECT sacuti FROM penerimaan_legalitas l WHERE l.userid = k.userid AND suratjns = 'PERJANJIAN' AND l.tglak >= tglawal AND l.tglak <= tglakhir ) AS sacuti,
+                    (SELECT sacuti FROM penerimaan_legalitas l WHERE l.userid = k.userid AND suratjns = 'CUTI' AND l.tglak >= tglawal AND l.tglak <= tglakhir ) AS sacuti2,
                         (SELECT COUNT(o.sst) FROM absensi_komunikasiacc o WHERE o.userid = k.userid AND o.sst = 'C' AND o.tanggal >= tglawal AND o.tanggal <= tglakhir ) AS cutiterpakai"
                 ))
                 ->where('k.bagian', '=', $unit)
@@ -1029,7 +1030,8 @@ class Absensi extends Controller
                     "k.userid, k.stb, k.nama, k.bagian, k.profesi,
                         (SELECT l.tglaw FROM penerimaan_legalitas l WHERE l.userid = k.userid ORDER BY l.tglaw DESC LIMIT 1 ) AS tglawal,
                         (SELECT l.tglak FROM penerimaan_legalitas l WHERE l.userid = k.userid ORDER BY l.tglaw DESC LIMIT 1 ) AS tglakhir,
-                        (SELECT l.sacuti FROM penerimaan_legalitas l WHERE l.userid = k.userid AND l.suratjns = 'perjanjian' ORDER BY l.id DESC LIMIT 1 ) AS sacuti,
+                    (SELECT sacuti FROM penerimaan_legalitas l WHERE l.userid = k.userid AND suratjns = 'PERJANJIAN' AND l.tglak >= tglawal AND l.tglak <= tglakhir ) AS sacuti,
+                    (SELECT sacuti FROM penerimaan_legalitas l WHERE l.userid = k.userid AND suratjns = 'CUTI' AND l.tglak >= tglawal AND l.tglak <= tglakhir ) AS sacuti2,
                         (SELECT COUNT(o.sst) FROM absensi_komunikasiacc o WHERE o.userid = k.userid AND o.sst = 'C' AND o.tanggal >= tglawal AND o.tanggal <= tglakhir ) AS cutiterpakai"
                 ))
                 ->where('k.bagian', '=', '%' . $unit . '%')
@@ -1046,7 +1048,8 @@ class Absensi extends Controller
                     "k.userid, k.stb, k.nama, k.bagian, k.profesi,
                         (SELECT l.tglaw FROM penerimaan_legalitas l WHERE l.userid = k.userid ORDER BY l.tglaw DESC LIMIT 1 ) AS tglawal,
                         (SELECT l.tglak FROM penerimaan_legalitas l WHERE l.userid = k.userid ORDER BY l.tglaw DESC LIMIT 1 ) AS tglakhir,
-                        (SELECT l.sacuti FROM penerimaan_legalitas l WHERE l.userid = k.userid AND l.suratjns = 'perjanjian' ORDER BY l.id DESC LIMIT 1 ) AS sacuti,
+                    (SELECT sacuti FROM penerimaan_legalitas l WHERE l.userid = k.userid AND suratjns = 'PERJANJIAN' AND l.tglak >= tglawal AND l.tglak <= tglakhir ) AS sacuti,
+                    (SELECT sacuti FROM penerimaan_legalitas l WHERE l.userid = k.userid AND suratjns = 'CUTI' AND l.tglak >= tglawal AND l.tglak <= tglakhir ) AS sacuti2,
                         (SELECT COUNT(o.sst) FROM absensi_komunikasiacc o WHERE o.userid = k.userid AND o.sst = 'C' AND o.tanggal >= tglawal AND o.tanggal <= tglakhir ) AS cutiterpakai"
                 ))
                 ->where('k.bagian', '=', '%' . $unit . '%')
@@ -1061,7 +1064,8 @@ class Absensi extends Controller
                     "k.userid, k.stb, k.nama, k.bagian, k.profesi,
                         (SELECT l.tglaw FROM penerimaan_legalitas l WHERE l.userid = k.userid ORDER BY l.tglaw DESC LIMIT 1 ) AS tglawal,
                         (SELECT l.tglak FROM penerimaan_legalitas l WHERE l.userid = k.userid ORDER BY l.tglaw DESC LIMIT 1 ) AS tglakhir,
-                        (SELECT l.sacuti FROM penerimaan_legalitas l WHERE l.userid = k.userid AND l.suratjns = 'perjanjian' ORDER BY l.id DESC LIMIT 1 ) AS sacuti,
+                    (SELECT sacuti FROM penerimaan_legalitas l WHERE l.userid = k.userid AND suratjns = 'PERJANJIAN' AND l.tglak >= tglawal AND l.tglak <= tglakhir ) AS sacuti,
+                    (SELECT sacuti FROM penerimaan_legalitas l WHERE l.userid = k.userid AND suratjns = 'CUTI' AND l.tglak >= tglawal AND l.tglak <= tglakhir ) AS sacuti2,
                         (SELECT COUNT(o.sst) FROM absensi_komunikasiacc o WHERE o.userid = k.userid AND o.sst = 'C' AND o.tanggal >= tglawal AND o.tanggal <= tglakhir ) AS cutiterpakai"
                 ))
                 ->where('k.nama', 'like', '%' . $request->idcari . '%')
@@ -1071,6 +1075,11 @@ class Absensi extends Controller
         }
 
         foreach ($getKaryawan as $key) {
+            if (!empty($key->sacuti)) {
+                $sisacuti = $key->sacuti;
+            } else {
+                $sisacuti = $key->sacuti2;
+            }
             echo '
                 <div class="card mb-5 shadow border border-azure">
                     <div class="table-responsive">
@@ -1085,7 +1094,7 @@ class Absensi extends Controller
                                 </td>
                                 <td class="text-center">
                                     <div class="text-uppercase text-secondary font-weight-medium">Total Cuti</div>
-                                    <div class="display-6 fw-bold my-3">' . (empty($key->sacuti) ? 0 : $key->sacuti) . '</div>
+                                    <div class="display-6 fw-bold my-3">' . (empty($sisacuti) ? 0 : $sisacuti) . '</div>
                                 </td>
                                 <td class="text-center">
                                     <div class="text-uppercase text-secondary font-weight-medium">Cuti Terpakai</div>
