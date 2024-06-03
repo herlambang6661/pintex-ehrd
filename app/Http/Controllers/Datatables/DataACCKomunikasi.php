@@ -23,17 +23,17 @@ class DataACCKomunikasi extends Controller
     {
         if ($request->ajax()) {
             // Set Dari tanggal
-            if ($request->dari) {
-                $dari = $request->dari;
-            } else {
-                $dari = date('Y-m-01');
-            }
-            // Set Sampai tanggal
-            if ($request->sampai) {
-                $sampai = $request->sampai;
-            } else {
-                $sampai = date('Y-m-d');
-            }
+            // if ($request->dari) {
+            //     $dari = $request->dari;
+            // } else {
+            //     $dari = date('Y-m-01');
+            // }
+            // // Set Sampai tanggal
+            // if ($request->sampai) {
+            //     $sampai = $request->sampai;
+            // } else {
+            //     $sampai = date('Y-m-d');
+            // }
             // $data = DB::table('absensi_komunikasiitm AS b')
             //     ->select('b.id', 'b.noform', 'b.tanggal', 'b.nama', 'b.suratid', 'b.sst', 'b.keterangan', 'b.statussurat')
             //     ->whereBetween('b.tanggal', [date('Y-m-01'), date('Y-m-t')])
@@ -41,7 +41,7 @@ class DataACCKomunikasi extends Controller
             //     ->orderBy('b.id', 'desc')
             //     ->get();
             $data = DB::table('absensi_komunikasi AS b')
-                ->whereBetween('b.tanggal', [$dari, $sampai])
+                // ->whereBetween('b.tanggal', [$dari, $sampai])
                 ->orderBy('b.id', 'desc')
                 ->get();
             return DataTables::of($data)
