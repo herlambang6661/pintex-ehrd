@@ -23,20 +23,20 @@ class DataACCItems extends Controller
     {
         if ($request->ajax()) {
             // Set Dari tanggal
-            if ($request->dari) {
-                $dari = $request->dari;
-            } else {
-                $dari = date('Y-m-01');
-            }
-            // Set Sampai tanggal
-            if ($request->sampai) {
-                $sampai = $request->sampai;
-            } else {
-                $sampai = date('Y-m-d');
-            }
+            // if ($request->dari) {
+            //     $dari = $request->dari;
+            // } else {
+            //     $dari = date('Y-m-01');
+            // }
+            // // Set Sampai tanggal
+            // if ($request->sampai) {
+            //     $sampai = $request->sampai;
+            // } else {
+            //     $sampai = date('Y-m-d');
+            // }
             $data = DB::table('absensi_komunikasiitm AS b')
                 ->select('b.id', 'b.noform', 'b.tanggal', 'b.tanggal2', 'b.nama', 'b.suratid', 'b.sst', 'b.keterangan', 'b.statussurat')
-                ->whereBetween('b.tanggal', [$dari, $sampai])
+                // ->whereBetween('b.tanggal', [$dari, $sampai])
                 ->where('statussurat', 'PENGAJUAN')
                 ->orderBy('b.noform', 'desc')
                 ->get();
