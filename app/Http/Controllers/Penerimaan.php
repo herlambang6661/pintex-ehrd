@@ -7,6 +7,8 @@ use Illuminate\Http\Request;
 use Illuminate\Routing\Controller;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Storage;
+use Symfony\Component\HttpFoundation\Response;
 
 class Penerimaan extends Controller
 {
@@ -1745,9 +1747,10 @@ class Penerimaan extends Controller
             ],
         );
 
-        if ($request->file('image')) {
-            $request->image->storeAs('public/photo', $request->userid);
-        }
+        // if ($request->file('image')) {
+        // $fileName = $request->userid . '.' . $request->image->extension();
+        // $request->image->storeAs('public/photo', $fileName);
+        // }
 
         $check = DB::table('penerimaan_karyawan')
             ->where('id', $request->id)
@@ -1776,6 +1779,20 @@ class Penerimaan extends Controller
             $arr = array('msg' => 'Data: ' . $request->nama . ' telah berhasil disimpan', 'status' => true);
         }
         return Response()->json($arr);
+    }
+
+    public function imageStore(Request $request)
+    {
+        $this->validate($request, [
+            'image' => 'required|image|mimes:jpg,png,jpeg,gif,svg|max:2048',
+        ]);
+        $image_path = $request->file('image')->store('image', 'public');
+
+        $data = Image::create([
+            'image' => $image_path,
+        ]);
+
+        return response($data, Response::HTTP_CREATED);
     }
 
     // ======================== END KARYAWAN ===========================================================================================

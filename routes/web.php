@@ -185,6 +185,8 @@ Route::controller(Daftar::class)->group(function () {
     Route::post('daftar/update', 'updateUsers');
 });
 
+
+
 // Modules Penerimaan
 Route::controller(Penerimaan::class)->group(function () {
     Route::get('penerimaan/lamaran', 'lamaran')->name('penerimaan/lamaran');
