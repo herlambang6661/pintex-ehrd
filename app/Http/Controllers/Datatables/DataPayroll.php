@@ -62,6 +62,11 @@ class DataPayroll extends Controller
                     $res = $row->potongan_absen + $row->potongan_infaq + $row->potongan_koperasi + $row->potongan_pinjaman;
                     return $res;
                 })
+                ->addColumn('potabs', function ($row) {
+                    $bruto = $row->gapok + $row->prestasi + $row->tjabat;
+                    $res = - (($row->potongan_absen / 25) * $bruto);
+                    return $res;
+                })
                 ->addColumn('gnetto', function ($row) {
                     $res = ($row->gapok + $row->prestasi + $row->tjabat) + ($row->pot_bpjs_jht + $row->pot_bpjs_jp + $row->pot_bpjs_ks) + ($row->potongan_absen + $row->potongan_infaq + $row->potongan_koperasi + $row->potongan_pinjaman);
                     return $res;

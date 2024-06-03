@@ -129,6 +129,7 @@ class Administrasi extends Controller
                             'gapok' => $key->gapok,
                             'bank' => $key->banknm,
                             'rekening' => $key->bankrek,
+                            'potongan_absen' => ($sakit + $izin),
                             'H' => $hadir,
                             'S' => $sakit,
                             'I' => $izin,
