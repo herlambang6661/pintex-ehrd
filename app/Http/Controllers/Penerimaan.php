@@ -1508,7 +1508,7 @@ class Penerimaan extends Controller
                         </div>
                     </div>
                     <br>
-                    <div class="card shadow bg-info-lt">
+                    <div class="card shadow bg-info-lt mb-3">
                         <div class="table-responsive">
                             <table class="table table-sm table-vcenter card-table table-sm">
                                 <tr>
@@ -1544,6 +1544,7 @@ class Penerimaan extends Controller
                                         <div class="col">
                                             <label class="form-label">No. Map</label>
                                             <input type="hidden" name="id" placeholder="" value="' . $u->id . '" />
+                                            <input type="hidden" name="userid" placeholder="" value="' . $u->userid . '" />
                                             <input type="text" class="form-control" name="nomap" placeholder="" value="' . $u->nomap . '" style="border-color:black"  />
                                         </div>
                                         <div class="col">
@@ -1722,11 +1723,11 @@ class Penerimaan extends Controller
                         <div class="card-body">
                             <div class="mb-1 mt-3">
                                 <div class="form-label">Upload Pas Photo</div>
-                                <input type="file" class="form-control">
+                                <input type="file" class="form-control" name="image">
                             </div>
                             <div class="mb-3">
                                 <div class="form-label">Upload KTP</div>
-                                <input type="file" class="form-control">
+                                <input type="file" class="form-control" name="imageKTP">
                             </div>
                         </div>
                     </div>
@@ -1743,6 +1744,10 @@ class Penerimaan extends Controller
                 '_token' => 'required',
             ],
         );
+
+        if ($request->file('image')) {
+            $request->image->storeAs('public/photo', $request->userid);
+        }
 
         $check = DB::table('penerimaan_karyawan')
             ->where('id', $request->id)
@@ -1765,6 +1770,7 @@ class Penerimaan extends Controller
                     'updated_at' => date('Y-m-d H:i:s'),
                 )
             );
+
         $arr = array('msg' => 'Something goes to wrong. Please try later', 'status' => false);
         if ($check) {
             $arr = array('msg' => 'Data: ' . $request->nama . ' telah berhasil disimpan', 'status' => true);

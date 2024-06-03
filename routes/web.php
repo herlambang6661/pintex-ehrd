@@ -12,6 +12,7 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Administrasi;
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\Datatables\DataOL;
+use App\Http\Controllers\Datatables\DataPHL;
 use App\Http\Controllers\Datatables\DataPos;
 use App\Http\Controllers\Datatables\DataCuti;
 use App\Http\Controllers\Datatables\DataUpah;
@@ -93,6 +94,7 @@ Route::resources([
     'getKaryawan' => DataKaryawan::class,
     'getCuti' => DataCuti::class,
     'getOL' => DataOL::class,
+    'getPHL' => DataPHL::class,
     'getLegalitasKaryawan' => DataLegalitasKaryawan::class,
     'getLegalitasKaryawanOl' => DataLegalitasKaryawanOl::class,
     'getLegalitasKaryawanPhl' => DataLegalitasKaryawanPhl::class,
