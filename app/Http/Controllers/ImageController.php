@@ -28,7 +28,7 @@ class ImageController extends Controller
     public function store(Request $request): RedirectResponse
     {
         $request->validate([
-            'image' => 'required|image|mimes:jpeg,png,jpg,gif,svg|max:2048',
+            'image' => 'required|image|mimes:jpeg,png,jpg,gif,svg|max:3048',
         ]);
         $imageName = $request->userid;
         $request->image->move(public_path('photo/pas'), $imageName);
@@ -45,7 +45,7 @@ class ImageController extends Controller
     public function storeKTP(Request $request): RedirectResponse
     {
         $request->validate([
-            'image' => 'required|image|mimes:jpeg,png,jpg,gif,svg|max:2048',
+            'image' => 'required|image|mimes:jpeg,png,jpg,gif,svg|max:3048',
         ]);
         $imageName = $request->userid;
         $request->image->move(public_path('photo/ktp'), $imageName);
