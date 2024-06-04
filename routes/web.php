@@ -202,6 +202,7 @@ Route::controller(Penerimaan::class)->group(function () {
     Route::get('penerimaan/massUpload', 'uploadMassalLegalitas')->name('penerimaan/massUpload');
 
     Route::get('penerimaan/karyawan/edit/{id}', 'editKaryawan')->name('penerimaan/karyawan/edit/{id}');
+    Route::post('penerimaan/karyawaneditdata', 'karyawaneditdata')->name('penerimaan/karyawaneditdata');
 
     Route::get('penerimaan/printLamaran/{id}', 'printLamaran')->name('penerimaan/printLamaran/{id}');
 
@@ -243,6 +244,7 @@ Route::controller(Absensi::class)->group(function () {
     Route::get('absensi/fingerprint', 'fingerprint')->name('absensi/fingerprint');
     Route::get('absensi/komunikasi', 'komunikasi')->name('absensi/komunikasi');
     Route::get('absensi/cuti', 'cuti')->name('absensi/cuti');
+    Route::get('absensi/absenkosong/{id}', 'absenkosong')->name('absensi/absenkosong/{id}');
 
     Route::post('getabsensi', 'getabsensi')->name('getabsensi');
     Route::post('listAbsensiDetail', 'listAbsensiDetail');

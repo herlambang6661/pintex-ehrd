@@ -37,30 +37,30 @@
         }
 
         /* .cv-spinner {
-                                                                                                                                                                                                                                                                                                                        height: 100%;
-                                                                                                                                                                                                                                                                                                                        display: flex;
-                                                                                                                                                                                                                                                                                                                        justify-content: center;
-                                                                                                                                                                                                                                                                                                                        align-items: center;
-                                                                                                                                                                                                                                                                                                                    }
+                                                                                                                                                                                                                                                                                                                                                                                    height: 100%;
+                                                                                                                                                                                                                                                                                                                                                                                    display: flex;
+                                                                                                                                                                                                                                                                                                                                                                                    justify-content: center;
+                                                                                                                                                                                                                                                                                                                                                                                    align-items: center;
+                                                                                                                                                                                                                                                                                                                                                                                }
 
-                                                                                                                                                                                                                                                                                                                    .spinner {
-                                                                                                                                                                                                                                                                                                                        width: 40px;
-                                                                                                                                                                                                                                                                                                                        height: 40px;
-                                                                                                                                                                                                                                                                                                                        border: 4px #ddd solid;
-                                                                                                                                                                                                                                                                                                                        border-top: 4px #2e93e6 solid;
-                                                                                                                                                                                                                                                                                                                        border-radius: 50%;
-                                                                                                                                                                                                                                                                                                                        animation: sp-anime 0.8s infinite linear;
-                                                                                                                                                                                                                                                                                                                    }
+                                                                                                                                                                                                                                                                                                                                                                                .spinner {
+                                                                                                                                                                                                                                                                                                                                                                                    width: 40px;
+                                                                                                                                                                                                                                                                                                                                                                                    height: 40px;
+                                                                                                                                                                                                                                                                                                                                                                                    border: 4px #ddd solid;
+                                                                                                                                                                                                                                                                                                                                                                                    border-top: 4px #2e93e6 solid;
+                                                                                                                                                                                                                                                                                                                                                                                    border-radius: 50%;
+                                                                                                                                                                                                                                                                                                                                                                                    animation: sp-anime 0.8s infinite linear;
+                                                                                                                                                                                                                                                                                                                                                                                }
 
-                                                                                                                                                                                                                                                                                                                    @keyframes sp-anime {
-                                                                                                                                                                                                                                                                                                                        100% {
-                                                                                                                                                                                                                                                                                                                            transform: rotate(360deg);
-                                                                                                                                                                                                                                                                                                                        }
-                                                                                                                                                                                                                                                                                                                    }
+                                                                                                                                                                                                                                                                                                                                                                                @keyframes sp-anime {
+                                                                                                                                                                                                                                                                                                                                                                                    100% {
+                                                                                                                                                                                                                                                                                                                                                                                        transform: rotate(360deg);
+                                                                                                                                                                                                                                                                                                                                                                                    }
+                                                                                                                                                                                                                                                                                                                                                                                }
 
-                                                                                                                                                                                                                                                                                                                    .is-hide {
-                                                                                                                                                                                                                                                                                                                        display: none;
-                                                                                                                                                                                                                                                                                                                    } */
+                                                                                                                                                                                                                                                                                                                                                                                .is-hide {
+                                                                                                                                                                                                                                                                                                                                                                                    display: none;
+                                                                                                                                                                                                                                                                                                                                                                                } */
         .loader {
             position: fixed;
             z-index: 301;
@@ -178,26 +178,45 @@
                         <div class="col-auto ms-auto d-print-none">
                             <div class="btn-list">
                                 <div class="input-group">
-                                    @if (Auth::user()->username == 'Yudha' || Auth::user()->role == 'super')
-                                        <button type="button" class="btn btn-info d-none d-sm-inline-block" id="btnSynKom">
-                                            <i class="fa-solid fa-arrows-rotate"></i>
-                                            Sinkronisasi Komunikasi
+                                    {{-- @if (Auth::user()->username == 'Yudha' || Auth::user()->role == 'super') --}}
+                                    <button type="button" class="btn btn-info d-none d-sm-inline-block" id="btnSynKom">
+                                        <i class="fa-solid fa-arrows-rotate"></i>
+                                        Sinkronisasi Komunikasi
+                                    </button>
+                                    <button data-bs-toggle="dropdown" type="button"
+                                        class="btn btn-info dropdown-toggle dropdown-toggle-split"
+                                        aria-expanded="false"></button>
+                                    <div class="dropdown-menu dropdown-menu-end" style="">
+                                        <button type="button" class="dropdown-item" id="fixUmum">
+                                            <i class="fa-solid fa-truck-front" style="margin-right:5px"></i>
+                                            Fixing Absensi Umum
                                         </button>
-                                        <button data-bs-toggle="dropdown" type="button"
-                                            class="btn btn-info dropdown-toggle dropdown-toggle-split"
-                                            aria-expanded="false"></button>
-                                        <div class="dropdown-menu dropdown-menu-end" style="">
-                                            <button type="button" class="dropdown-item" id="fixUmum">
-                                                <i class="fa-solid fa-truck-front" style="margin-right:5px"></i>
-                                                Fixing Absensi Umum
-                                            </button>
-                                        </div>
-                                    @endif
-                                    <a href="#" class="btn btn-danger d-none d-sm-inline-block" onclick="alpha();">
-                                        <i class="fa-solid fa-person-running"></i>
-                                        Data Alfa
-                                    </a>
-                                    <a href="#" class="btn btn-warning d-none d-sm-inline-block" onclick="f1();">
+                                    </div>
+                                    {{-- @endif --}}
+                                    <form action="{{ url('absensi/absenkosong/alpha') }}" method="post">
+                                        <input type="hidden" id="tglstart">
+                                        <input type="hidden" id="tglend">
+                                        <a href="" target="_blank" class="btn btn-danger d-none d-sm-inline-block">
+                                            <i class="fa-solid fa-person-running"></i>
+                                            Data Alfa
+                                        </a>
+                                        <script type="text/javascript">
+                                            $(function() {
+                                                $('#tglstart').val($('.tglaw').val());
+                                                $('#tglend').val($('.tglak').val());
+                                                $('.tglaw').on('keydown keyup load change hover', function() {
+                                                    var sp = this.value;
+                                                    $('#tglstart').val(sp);
+                                                });
+                                                $('.tglak').on('keydown keyup load change hover', function() {
+                                                    var sp = this.value;
+                                                    $('#tglend').val(sp);
+                                                });
+                                            });
+                                        </script>
+                                    </form>
+                                    <a href="{{ url('absensi/absenkosong/f1') }}" target="_blank"
+                                        class="btn btn-warning d-none d-sm-inline-block">
                                         <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24"
                                             viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
                                             stroke-linecap="round" stroke-linejoin="round"

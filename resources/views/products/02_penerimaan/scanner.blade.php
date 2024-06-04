@@ -14,13 +14,13 @@
 
         td.cuspad2 {
             /* padding-top: 0.5px;
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                    padding-bottom: 0.5px;
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                    padding-right: 0.5px;
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                    padding-left: 0.5px;
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                    margin-top: 5px;
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                    margin-bottom: 5px;
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                    margin-right: 5px;
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                    margin-left: 5px; */
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                    padding-bottom: 0.5px;
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                    padding-right: 0.5px;
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                    padding-left: 0.5px;
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                    margin-top: 5px;
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                    margin-bottom: 5px;
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                    margin-right: 5px;
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                    margin-left: 5px; */
         }
 
         .overlay {
@@ -34,30 +34,30 @@
         }
 
         /* .cv-spinner {
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                            height: 100%;
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                            display: flex;
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                            justify-content: center;
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                            align-items: center;
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                        }
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                            height: 100%;
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                            display: flex;
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                            justify-content: center;
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                            align-items: center;
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                        }
 
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                        .spinner {
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                            width: 40px;
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                            height: 40px;
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                            border: 4px #ddd solid;
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                            border-top: 4px #2e93e6 solid;
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                            border-radius: 50%;
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                            animation: sp-anime 0.8s infinite linear;
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                        }
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                        .spinner {
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                            width: 40px;
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                            height: 40px;
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                            border: 4px #ddd solid;
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                            border-top: 4px #2e93e6 solid;
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                            border-radius: 50%;
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                            animation: sp-anime 0.8s infinite linear;
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                        }
 
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                        @keyframes sp-anime {
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                            100% {
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                transform: rotate(360deg);
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                            }
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                        }
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                        @keyframes sp-anime {
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                            100% {
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                transform: rotate(360deg);
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                            }
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                        }
 
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                        .is-hide {
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                            display: none;
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                        } */
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                        .is-hide {
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                            display: none;
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                        } */
         .loader {
             position: fixed;
             z-index: 301;
@@ -258,150 +258,186 @@
                                         </div>
                                     </div>
                                     <div class="col-lg-5">
-                                        <div class="card shadow bg-green-lt ">
-                                            <div class="card-body">
-                                                <div class="row">
-                                                    <div class="mb-3">
-                                                        <div class="row">
-                                                            <div class="col">
-                                                                <label class="form-label">No. Map</label>
-                                                                <input type="hidden" name="id" placeholder=""
-                                                                    value="{{ $getKaryawan->id }}" />
-                                                                <input type="hidden" name="userid" placeholder=""
-                                                                    value="{{ $getKaryawan->userid }}" />
-                                                                <input type="text" class="form-control" name="nomap"
-                                                                    placeholder="" value="{{ $getKaryawan->nomap }}"
-                                                                    style="border-color:black" />
-                                                            </div>
-                                                            <div class="col">
-                                                                <label class="form-label">STB</label>
-                                                                <input type="text" class="form-control" placeholder=""
-                                                                    value="{{ $getKaryawan->stb }}"
-                                                                    style="border-color:black" disabled readonly />
-                                                            </div>
-                                                        </div>
+                                        @if ($message = Session::get('successEdit'))
+                                            <div class="alert alert-success alert-dismissible" role="alert">
+                                                <div class="d-flex">
+                                                    <div>
+                                                        <svg xmlns="http://www.w3.org/2000/svg" class="icon alert-icon"
+                                                            width="24" height="24" viewBox="0 0 24 24"
+                                                            stroke-width="2" stroke="currentColor" fill="none"
+                                                            stroke-linecap="round" stroke-linejoin="round">
+                                                            <path stroke="none" d="M0 0h24v24H0z" fill="none">
+                                                            </path>
+                                                            <path d="M5 12l5 5l10 -10"></path>
+                                                        </svg>
                                                     </div>
-                                                    <div class="mb-3">
-                                                        <label class="form-label">KTP</label>
-                                                        <input type="text" class="form-control" name="nik"
-                                                            placeholder="" value="{{ $getKaryawan->nik }}"
-                                                            style="border-color:black" />
+                                                    <div>
+                                                        <strong>{{ $message }}</strong>
                                                     </div>
-                                                    <div class="mb-3">
-                                                        <label class="form-label">Nama</label>
-                                                        <input type="text" class="form-control" name="nama"
-                                                            placeholder="" value="{{ $getKaryawan->nama }}"
-                                                            style="border-color:black" />
-                                                    </div>
-                                                    <div class="mb-3">
-                                                        <div class="row">
-                                                            <div class="col">
-                                                                <label class="form-label">Gender</label>
-                                                                <select name="gender" id="gender"
-                                                                    class="form-select border-dark">
-                                                                    <option value="{{ $getKaryawan->gender }}" hidden>--
-                                                                        {{ $getKaryawan->gender }} --</option>
-                                                                    <option value="PRIA">Pria</option>
-                                                                    <option value="WANITA">Wanita</option>
-                                                                </select>
-                                                            </div>
-                                                            <div class="col">
-                                                                <label class="form-label">Agama</label>
-                                                                <select name="agama" id="agama"
-                                                                    class="form-select border-dark">
-                                                                    <option value="{{ $getKaryawan->agama }}" hidden>--
-                                                                        {{ $getKaryawan->agama }} --</option>
-                                                                    <option value="Islam">Islam</option>
-                                                                    <option value="Kristen">Kristen</option>
-                                                                    <option value="Katolik">Katolik</option>
-                                                                    <option value="Hindu">Hindu</option>
-                                                                    <option value="Buddha">Buddha</option>
-                                                                    <option value="Khonghucu">Khonghucu</option>
-                                                                </select>
-                                                            </div>
-                                                        </div>
-                                                    </div>
-                                                    <div class="mb-3">
-                                                        <div class="row">
-                                                            <div class="col">
-                                                                <label class="form-label">Tinggi</label>
-                                                                <input type="text" class="form-control" name="tinggi"
-                                                                    placeholder="" value="{{ $getKaryawan->tinggi }}"
-                                                                    style="border-color:black" />
-                                                            </div>
-                                                            <div class="col">
-                                                                <label class="form-label">Berat</label>
-                                                                <input type="text" class="form-control" name="berat"
-                                                                    placeholder="" value="{{ $getKaryawan->berat }}"
-                                                                    style="border-color:black" />
-                                                            </div>
-                                                        </div>
-                                                    </div>
-                                                    <div class="mb-3">
-                                                        <label class="form-label">Tempat, Tanggal Lahir</label>
-                                                        <div class="row">
-                                                            <div class="col">
-                                                                <input type="text" class="form-control" name="tempat"
-                                                                    placeholder="" value="{{ $getKaryawan->tempat }}"
-                                                                    style="border-color:black" />
-                                                            </div>
-                                                            <div class="col">
-                                                                <input type="text" class="form-control"
-                                                                    name="tgllahir" placeholder=""
-                                                                    value="{{ $getKaryawan->tgllahir }}"
-                                                                    style="border-color:black" id="datepicker3" />
-                                                                <script>
-                                                                    window.Litepicker && (new Litepicker({
-                                                                        element: document.getElementById("datepicker3"),
-                                                                        buttonText: {
-                                                                            previousMonth: `<svg xmlns="http://www.w3.org/2000/svg" class="icon" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><path d="M15 6l-6 6l6 6" /></svg>`,
-                                                                            nextMonth: `<svg xmlns="http://www.w3.org/2000/svg" class="icon" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><path d="M9 6l6 6l-6 6" /></svg>`,
-                                                                        },
-                                                                    }));
-                                                                </script>
-                                                            </div>
-                                                        </div>
-                                                    </div>
+                                                </div>
+                                                <a class="btn-close" data-bs-dismiss="alert" aria-label="close"></a>
+                                            </div>
+                                        @endif
+                                        <form action="{{ route('penerimaan/karyawaneditdata') }}" method="post">
+                                            @csrf
+                                            <div class="card shadow bg-green-lt ">
+                                                <div class="card-body">
                                                     <div class="row">
-                                                        <div class="col">
-                                                            <div class="mb-3">
-                                                                <label class="form-label">Pendidikan</label>
-                                                                <input type="text" class="form-control"
-                                                                    name="pendidikan" placeholder=""
-                                                                    value="{{ $getKaryawan->pendidikan }}"
-                                                                    style="border-color:black" />
+                                                        <div class="mb-3">
+                                                            <div class="row">
+                                                                <div class="col">
+                                                                    <label class="form-label">No. Map</label>
+                                                                    <input type="hidden" name="id"
+                                                                        value="{{ $getKaryawan->id }}" />
+                                                                    <input type="hidden" name="userid"
+                                                                        value="{{ $getKaryawan->userid }}" />
+                                                                    <input type="text" class="form-control"
+                                                                        name="nomap" placeholder=""
+                                                                        value="{{ $getKaryawan->nomap }}"
+                                                                        style="border-color:black" />
+                                                                </div>
+                                                                <div class="col">
+                                                                    <label class="form-label">Rekening</label>
+                                                                    <input type="text" class="form-control"
+                                                                        name="rekening" placeholder=""
+                                                                        value="{{ $getKaryawan->bankrek }}"
+                                                                        style="border-color:black" />
+                                                                </div>
                                                             </div>
                                                         </div>
-                                                        <div class="col">
-                                                            <div class="mb-3">
-                                                                <label class="form-label">Jurusan</label>
-                                                                <input type="text" class="form-control" name="jurusan"
-                                                                    placeholder="" value="{{ $getKaryawan->jurusan }}"
-                                                                    style="border-color:black" />
+                                                        <div class="mb-3">
+                                                            <label class="form-label">KTP</label>
+                                                            <input type="text" class="form-control" name="nik"
+                                                                placeholder="" value="{{ $getKaryawan->nik }}"
+                                                                style="border-color:black" />
+                                                        </div>
+                                                        <div class="mb-3">
+                                                            <label class="form-label">Nama</label>
+                                                            <input type="text" class="form-control" name="nama"
+                                                                placeholder="" value="{{ $getKaryawan->nama }}"
+                                                                style="border-color:black" />
+                                                        </div>
+                                                        <div class="mb-3">
+                                                            <div class="row">
+                                                                <div class="col">
+                                                                    <label class="form-label">Gender</label>
+                                                                    <select name="gender" id="gender"
+                                                                        class="form-select border-dark">
+                                                                        <option value="{{ $getKaryawan->gender }}" hidden>
+                                                                            --
+                                                                            {{ $getKaryawan->gender }} --</option>
+                                                                        <option value="PRIA">Pria</option>
+                                                                        <option value="WANITA">Wanita</option>
+                                                                    </select>
+                                                                </div>
+                                                                <div class="col">
+                                                                    <label class="form-label">Agama</label>
+                                                                    <select name="agama" id="agama"
+                                                                        class="form-select border-dark">
+                                                                        <option value="{{ $getKaryawan->agama }}" hidden>
+                                                                            --
+                                                                            {{ $getKaryawan->agama }} --</option>
+                                                                        <option value="Islam">Islam</option>
+                                                                        <option value="Kristen">Kristen</option>
+                                                                        <option value="Katolik">Katolik</option>
+                                                                        <option value="Hindu">Hindu</option>
+                                                                        <option value="Buddha">Buddha</option>
+                                                                        <option value="Khonghucu">Khonghucu</option>
+                                                                    </select>
+                                                                </div>
                                                             </div>
                                                         </div>
-                                                    </div>
-                                                    <div class="row">
-                                                        <div class="col-lg-6">
-                                                            <div class="mb-3">
-                                                                <label class="form-label">Telepon</label>
-                                                                <input type="text" class="form-control" name="notlp"
-                                                                    placeholder="" value="{{ $getKaryawan->notlp }}"
-                                                                    style="border-color:black" />
+                                                        <div class="mb-3">
+                                                            <div class="row">
+                                                                <div class="col">
+                                                                    <label class="form-label">Tinggi</label>
+                                                                    <input type="text" class="form-control"
+                                                                        name="tinggi" placeholder=""
+                                                                        value="{{ $getKaryawan->tinggi }}"
+                                                                        style="border-color:black" />
+                                                                </div>
+                                                                <div class="col">
+                                                                    <label class="form-label">Berat</label>
+                                                                    <input type="text" class="form-control"
+                                                                        name="berat" placeholder=""
+                                                                        value="{{ $getKaryawan->berat }}"
+                                                                        style="border-color:black" />
+                                                                </div>
                                                             </div>
                                                         </div>
-                                                        <div class="col-lg-6">
-                                                            <div class="mb-3">
-                                                                <label class="form-label">Serikat</label>
-                                                                <input type="text" class="form-control" name="serikat"
-                                                                    placeholder="" value="{{ $getKaryawan->serikat }}"
-                                                                    style="border-color:black" />
+                                                        <div class="mb-3">
+                                                            <label class="form-label">Tempat, Tanggal Lahir</label>
+                                                            <div class="row">
+                                                                <div class="col">
+                                                                    <input type="text" class="form-control"
+                                                                        name="tempat" placeholder=""
+                                                                        value="{{ $getKaryawan->tempat }}"
+                                                                        style="border-color:black" />
+                                                                </div>
+                                                                <div class="col">
+                                                                    <input type="text" class="form-control"
+                                                                        name="tgllahir" placeholder=""
+                                                                        value="{{ $getKaryawan->tgllahir }}"
+                                                                        style="border-color:black" id="datepicker3" />
+                                                                    <script>
+                                                                        window.Litepicker && (new Litepicker({
+                                                                            element: document.getElementById("datepicker3"),
+                                                                            buttonText: {
+                                                                                previousMonth: `<svg xmlns="http://www.w3.org/2000/svg" class="icon" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><path d="M15 6l-6 6l6 6" /></svg>`,
+                                                                                nextMonth: `<svg xmlns="http://www.w3.org/2000/svg" class="icon" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><path d="M9 6l6 6l-6 6" /></svg>`,
+                                                                            },
+                                                                        }));
+                                                                    </script>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                        <div class="row">
+                                                            <div class="col">
+                                                                <div class="mb-3">
+                                                                    <label class="form-label">Pendidikan</label>
+                                                                    <input type="text" class="form-control"
+                                                                        name="pendidikan" placeholder=""
+                                                                        value="{{ $getKaryawan->pendidikan }}"
+                                                                        style="border-color:black" />
+                                                                </div>
+                                                            </div>
+                                                            <div class="col">
+                                                                <div class="mb-3">
+                                                                    <label class="form-label">Jurusan</label>
+                                                                    <input type="text" class="form-control"
+                                                                        name="jurusan" placeholder=""
+                                                                        value="{{ $getKaryawan->jurusan }}"
+                                                                        style="border-color:black" />
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                        <div class="row">
+                                                            <div class="col-lg-6">
+                                                                <div class="mb-3">
+                                                                    <label class="form-label">Telepon</label>
+                                                                    <input type="text" class="form-control"
+                                                                        name="notlp" placeholder=""
+                                                                        value="{{ $getKaryawan->notlp }}"
+                                                                        style="border-color:black" />
+                                                                </div>
+                                                            </div>
+                                                            <div class="col-lg-6">
+                                                                <div class="mb-3">
+                                                                    <label class="form-label">Serikat</label>
+                                                                    <input type="text" class="form-control"
+                                                                        name="serikat" placeholder=""
+                                                                        value="{{ $getKaryawan->serikat }}"
+                                                                        style="border-color:black" />
+                                                                </div>
                                                             </div>
                                                         </div>
                                                     </div>
                                                 </div>
+                                                <div class="card-footer">
+                                                    <button type="submit" class="btn btn-green">Simpan</button>
+                                                </div>
                                             </div>
-                                        </div>
+                                        </form>
                                     </div>
 
                                     <div class="col-lg-4">

@@ -1795,6 +1795,33 @@ class Penerimaan extends Controller
         return response($data, Response::HTTP_CREATED);
     }
 
+    public function karyawaneditdata(Request $request)
+    {
+        $editKaryawan = DB::table('penerimaan_karyawan')
+            ->where('userid', $request->userid)
+            ->limit(1)
+            ->update([
+                'nomap' => $request->nomap,
+                'bankrek' => $request->rekening,
+                'nik' => $request->nik,
+                'nama' => $request->nama,
+                'gender' => $request->gender,
+                'agama' => $request->agama,
+                'tinggi' => $request->tinggi,
+                'berat' => $request->berat,
+                'tempat' => $request->tempat,
+                'tgllahir' => $request->tgllahir,
+                'pendidikan' => $request->pendidikan,
+                'jurusan' => $request->jurusan,
+                'notlp' => $request->notlp,
+                'serikat' => $request->serikat,
+                'updated_at' => date('Y-m-d H:i:s'),
+            ]);
+        if ($editKaryawan) {
+            return redirect('/penerimaan/karyawan/edit/' . $request->id)->with('successEdit', 'Data Berhasil Diubah.');
+        }
+    }
+
     // ======================== END KARYAWAN ===========================================================================================
     // ======================== START LEGALITAS =========================================================================================
 

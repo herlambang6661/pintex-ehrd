@@ -78,4 +78,13 @@
     $(document).ready(function() {
         $('.formattahun').mask('0000');
     });
+
+    // JS Pencarian Start
+    $("#myInput").keyup(function(event) {
+        if (event.keyCode === 13) {
+            event.preventDefault();
+            alert('AA');
+        }
+    });
+    // JS Pencarian End
 </script>

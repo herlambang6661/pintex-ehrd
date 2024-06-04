@@ -1171,4 +1171,27 @@ class Absensi extends Controller
         }
         return Response()->json($arr);
     }
+
+    function absenkosong($id)
+    {
+        if ($id == "alpha") {
+            $judul = "Absensi Alpa";
+            $absensi = "active";
+            $list = "active";
+            return view('products/03_absensi.alpa', [
+                'judul' => $judul,
+                'absensi' => $absensi,
+                'list' => $list
+            ]);
+        } elseif ($id == "f1") {
+            $judul = "Absensi F1F2";
+            $absensi = "active";
+            $list = "active";
+            return view('products/03_absensi.listabsensi', [
+                'judul' => $judul,
+                'absensi' => $absensi,
+                'list' => $list
+            ]);
+        }
+    }
 }
