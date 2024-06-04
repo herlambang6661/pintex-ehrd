@@ -344,6 +344,23 @@ class Penerimaan extends Controller
         return view('products/02_penerimaan.print', ['getData' => $check, 'noform' => $id,]);
     }
 
+    public function editKaryawan($id)
+    {
+        $getKaryawan = DB::table('penerimaan_karyawan')->where('id', $id)->first();
+
+        $judul = "Edit Data " . $getKaryawan->nama;
+        $penerimaan = "active";
+        $karyawan = "active";
+
+        return view('products/02_penerimaan.scanner', [
+            'getKaryawan' => $getKaryawan,
+            'nama' => $getKaryawan->nama,
+            'judul' => $judul,
+            'penerimaan' => $penerimaan,
+            'karyawan' => $karyawan,
+        ]);
+    }
+
     public function listLamaran(Request $request)
     {
         $data = DB::table('penerimaan_lamaran')->where('id', $request->id)->get();
@@ -1623,29 +1640,25 @@ class Penerimaan extends Controller
                                         </div>
                                     </div>
                                 </div>
-                                <div class="row">
-                                    <div class="col">
-                                        <div class="mb-3">
+                                <div class="mb-3">
+                                    <div class="row">
+                                        <div class="col">
                                             <label class="form-label">Pendidikan</label>
                                             <input type="text" class="form-control" name="pendidikan" placeholder="" value="' . $u->pendidikan . '" style="border-color:black"  />
                                         </div>
-                                    </div>
-                                    <div class="col">
-                                        <div class="mb-3">
+                                        <div class="col">
                                             <label class="form-label">Jurusan</label>
                                             <input type="text" class="form-control" name="jurusan" placeholder="" value="' . $u->jurusan . '" style="border-color:black"  />
                                         </div>
                                     </div>
                                 </div>
-                                <div class="row">
-                                    <div class="col-lg-6">
-                                        <div class="mb-3">
+                                <div class="mb-3">
+                                    <div class="row">
+                                        <div class="col">
                                             <label class="form-label">Telepon</label>
                                             <input type="text" class="form-control" name="notlp" placeholder="" value="' . $u->notlp . '" style="border-color:black"  />
                                         </div>
-                                    </div>
-                                    <div class="col-lg-6">
-                                        <div class="mb-3">
+                                        <div class="col">
                                             <label class="form-label">Serikat</label>
                                             <input type="text" class="form-control" name="serikat" placeholder="" value="' . $u->serikat . '"
                                                 style="border-color:black"  />
@@ -1717,19 +1730,6 @@ class Penerimaan extends Controller
                             <div class="mb-3">
                                 <label class="form-label">Status Karyawan</label>
                                 <h3>' . $u->status . '</h3>
-                            </div>
-                        </div>
-                    </div>
-                    <br>
-                    <div class="card shadow bg-red-lt">
-                        <div class="card-body">
-                            <div class="mb-1 mt-3">
-                                <div class="form-label">Upload Pas Photo</div>
-                                <input type="file" class="form-control" name="image">
-                            </div>
-                            <div class="mb-3">
-                                <div class="form-label">Upload KTP</div>
-                                <input type="file" class="form-control" name="imageKTP">
                             </div>
                         </div>
                     </div>

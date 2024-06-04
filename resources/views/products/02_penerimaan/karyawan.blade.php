@@ -14,13 +14,13 @@
 
         td.cuspad2 {
             /* padding-top: 0.5px;
-                                                                                                                                                                                                                                                                                                        padding-bottom: 0.5px;
-                                                                                                                                                                                                                                                                                                        padding-right: 0.5px;
-                                                                                                                                                                                                                                                                                                        padding-left: 0.5px;
-                                                                                                                                                                                                                                                                                                        margin-top: 5px;
-                                                                                                                                                                                                                                                                                                        margin-bottom: 5px;
-                                                                                                                                                                                                                                                                                                        margin-right: 5px;
-                                                                                                                                                                                                                                                                                                        margin-left: 5px; */
+                                                                                                                                                                                                                                                                                                                    padding-bottom: 0.5px;
+                                                                                                                                                                                                                                                                                                                    padding-right: 0.5px;
+                                                                                                                                                                                                                                                                                                                    padding-left: 0.5px;
+                                                                                                                                                                                                                                                                                                                    margin-top: 5px;
+                                                                                                                                                                                                                                                                                                                    margin-bottom: 5px;
+                                                                                                                                                                                                                                                                                                                    margin-right: 5px;
+                                                                                                                                                                                                                                                                                                                    margin-left: 5px; */
         }
 
         .overlay {
@@ -34,30 +34,30 @@
         }
 
         /* .cv-spinner {
-                                                                                                                                                                                                                                                                                                height: 100%;
-                                                                                                                                                                                                                                                                                                display: flex;
-                                                                                                                                                                                                                                                                                                justify-content: center;
-                                                                                                                                                                                                                                                                                                align-items: center;
-                                                                                                                                                                                                                                                                                            }
+                                                                                                                                                                                                                                                                                                            height: 100%;
+                                                                                                                                                                                                                                                                                                            display: flex;
+                                                                                                                                                                                                                                                                                                            justify-content: center;
+                                                                                                                                                                                                                                                                                                            align-items: center;
+                                                                                                                                                                                                                                                                                                        }
 
-                                                                                                                                                                                                                                                                                            .spinner {
-                                                                                                                                                                                                                                                                                                width: 40px;
-                                                                                                                                                                                                                                                                                                height: 40px;
-                                                                                                                                                                                                                                                                                                border: 4px #ddd solid;
-                                                                                                                                                                                                                                                                                                border-top: 4px #2e93e6 solid;
-                                                                                                                                                                                                                                                                                                border-radius: 50%;
-                                                                                                                                                                                                                                                                                                animation: sp-anime 0.8s infinite linear;
-                                                                                                                                                                                                                                                                                            }
+                                                                                                                                                                                                                                                                                                        .spinner {
+                                                                                                                                                                                                                                                                                                            width: 40px;
+                                                                                                                                                                                                                                                                                                            height: 40px;
+                                                                                                                                                                                                                                                                                                            border: 4px #ddd solid;
+                                                                                                                                                                                                                                                                                                            border-top: 4px #2e93e6 solid;
+                                                                                                                                                                                                                                                                                                            border-radius: 50%;
+                                                                                                                                                                                                                                                                                                            animation: sp-anime 0.8s infinite linear;
+                                                                                                                                                                                                                                                                                                        }
 
-                                                                                                                                                                                                                                                                                            @keyframes sp-anime {
-                                                                                                                                                                                                                                                                                                100% {
-                                                                                                                                                                                                                                                                                                    transform: rotate(360deg);
-                                                                                                                                                                                                                                                                                                }
-                                                                                                                                                                                                                                                                                            }
+                                                                                                                                                                                                                                                                                                        @keyframes sp-anime {
+                                                                                                                                                                                                                                                                                                            100% {
+                                                                                                                                                                                                                                                                                                                transform: rotate(360deg);
+                                                                                                                                                                                                                                                                                                            }
+                                                                                                                                                                                                                                                                                                        }
 
-                                                                                                                                                                                                                                                                                            .is-hide {
-                                                                                                                                                                                                                                                                                                display: none;
-                                                                                                                                                                                                                                                                                            } */
+                                                                                                                                                                                                                                                                                                        .is-hide {
+                                                                                                                                                                                                                                                                                                            display: none;
+                                                                                                                                                                                                                                                                                                        } */
         .loader {
             position: fixed;
             z-index: 301;
@@ -174,12 +174,6 @@
                             <div class="btn-list">
 
                                 <ul class="nav">
-                                    <a href="#kamera" class="nav-link btn bg-pink text-white d-none d-sm-inline-block"
-                                        data-bs-toggle="modal" style="margin-right: 5px">
-                                        <i class="fa-solid fa-camera"></i>
-                                        Upload Foto
-                                    </a>
-
                                     <a href="#tabs-ol" class="nav-link btn bg-dark text-white d-none d-sm-inline-block"
                                         data-bs-toggle="tab" aria-selected="true" role="tab" style="margin-right: 5px"
                                         aria-label="Orientasi Lapangan">
@@ -365,42 +359,8 @@
             </div>
         </div>
     </div>
-    {{-- Modal Kamera --}}
-    <div class="modal modal-blur fade" id="kamera" tabindex="-1" role="dialog" aria-hidden="true">
-        <div class="overlay">
-            <div class="cv-spinner">
-                <span class="spinner"></span>
-            </div>
-        </div>
-        <div class="modal-dialog" role="document">
-            <div class="modal-content">
-                <form name="formCheckWawancara" method="post" action="javascript:void(0)">
-                    @csrf
-                    <div class="modal-header">
-                        <h5 class="modal-title"><i class="fa-solid fa-camera" style="margin-right: 5px"></i> Upload Foto
-                        </h5>
-                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                    </div>
-                    <div class="modal-body">
-                        <div class="fetched-data-karyawan"></div>
-                    </div>
-                    <div class="modal-footer">
-                        <button type="submit" id="submitCheck" class="btn btn-green"><i class="fas fa-save"
-                                style="margin-right: 5px"></i> Simpan</button>
-                        <button type="button" class="btn btn-link link-secondary ms-auto" data-bs-dismiss="modal"><i
-                                class="fa-solid fa-fw fa-arrow-rotate-left"></i> Kembali</button>
-                    </div>
-                </form>
-            </div>
-        </div>
-    </div>
     {{-- Modal View --}}
     <div class="modal modal-blur fade" id="viewKaryawan" tabindex="-1" role="dialog" aria-hidden="true">
-        {{-- <div class="overlay">
-        <div class="cv-spinner">
-            <span class="spinner"></span>
-        </div>
-    </div> --}}
         <div class="overlay">
             <div class="loader">
                 <span class="spinner spinner1"></span>
@@ -423,8 +383,8 @@
                         <div class="fetched-data-karyawan"></div>
                     </div>
                     <div class="modal-footer">
-                        <button type="submit" id="submitCheck" class="btn btn-green"><i class="fas fa-save"
-                                style="margin-right: 5px"></i> Simpan Perubahan</button>
+                        {{-- <button type="submit" id="submitCheck" class="btn btn-green"><i class="fas fa-save"
+                                style="margin-right: 5px"></i> Simpan Perubahan</button> --}}
                         <button type="button" class="btn btn-link link-secondary ms-auto" data-bs-dismiss="modal"><i
                                 class="fa-solid fa-fw fa-arrow-rotate-left"></i> Kembali</button>
                     </div>
@@ -434,10 +394,10 @@
     </div>
     <script type="text/javascript">
         /*------------------------------------------
-                                                                                                                                                                                                                                                                                                    --------------------------------------------
-                                                                                                                                                                                                                                                                                                    Render DataTable
-                                                                                                                                                                                                                                                                                                    --------------------------------------------
-                                                                                                                                                                                                                                                                                                    --------------------------------------------*/
+                                                                                                                                                                                                                                                                                                                --------------------------------------------
+                                                                                                                                                                                                                                                                                                                Render DataTable
+                                                                                                                                                                                                                                                                                                                --------------------------------------------
+                                                                                                                                                                                                                                                                                                                --------------------------------------------*/
 
         function newexportaction(e, dt, button, config) {
             var self = this;

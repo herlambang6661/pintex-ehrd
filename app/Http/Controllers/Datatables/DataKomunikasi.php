@@ -27,7 +27,7 @@ class DataKomunikasi extends Controller
             if ($request->dari) {
                 $dari = $request->dari;
             } else {
-                $dari = date('Y-m-d');
+                $dari = date('Y-01-01');
             }
             // Set Sampai tanggal
             if ($request->sampai) {

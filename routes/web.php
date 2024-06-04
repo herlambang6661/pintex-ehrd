@@ -11,6 +11,7 @@ use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Administrasi;
 use App\Http\Controllers\AuthController;
+use App\Http\Controllers\ImageController;
 use App\Http\Controllers\Datatables\DataOL;
 use App\Http\Controllers\Datatables\DataPHL;
 use App\Http\Controllers\Datatables\DataPos;
@@ -185,7 +186,11 @@ Route::controller(Daftar::class)->group(function () {
     Route::post('daftar/update', 'updateUsers');
 });
 
-
+Route::controller(ImageController::class)->group(function () {
+    Route::get('penerimaan/image-upload', 'index');
+    Route::post('penerimaan/image-upload', 'store')->name('image.store');
+    Route::post('penerimaan/image-upload2', 'storeKTP')->name('image.storeKTP');
+});
 
 // Modules Penerimaan
 Route::controller(Penerimaan::class)->group(function () {
@@ -195,6 +200,8 @@ Route::controller(Penerimaan::class)->group(function () {
     Route::get('penerimaan/karyawan', 'karyawan')->name('penerimaan/karyawan');
     Route::get('penerimaan/legalitas', 'legalitas')->name('penerimaan/legalitas');
     Route::get('penerimaan/massUpload', 'uploadMassalLegalitas')->name('penerimaan/massUpload');
+
+    Route::get('penerimaan/karyawan/edit/{id}', 'editKaryawan')->name('penerimaan/karyawan/edit/{id}');
 
     Route::get('penerimaan/printLamaran/{id}', 'printLamaran')->name('penerimaan/printLamaran/{id}');
 
