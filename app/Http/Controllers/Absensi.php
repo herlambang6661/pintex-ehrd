@@ -129,6 +129,12 @@ class Absensi extends Controller
                 $tgl31 = !empty($request->tglfull[30]) ? $request->tglfull[30] : '';
             }
 
+            if ($request->bagian == 'ALL') {
+                $bagian = '%%';
+            } else {
+                $bagian = '%' . $request->bagian . '%';
+            }
+
             // echo json_encode($tgl2);
             // die();
             $results = DB::table('penerimaan_karyawan AS k')
@@ -165,6 +171,7 @@ class Absensi extends Controller
                     (SELECT a.sst FROM absensi_absensi a WHERE a.userid = k.userid AND a.tanggal = '$tgl30') AS _30, 
                     (SELECT a.sst FROM absensi_absensi a WHERE a.userid = k.userid AND a.tanggal = '$tgl31') AS _31"))
                 ->where('k.status', 'like', '%Aktif%')
+                ->where('k.bagian', 'like', $bagian)
                 ->orderBy('k.nama', 'ASC')
                 ->get();
             echo '  
@@ -256,7 +263,7 @@ class Absensi extends Controller
                 </div>';
             echo '
                 <script>
-                    var tb1 = $(".datatable-absensi").DataTable({
+                    tb1 = $(".datatable-absensi").DataTable({
                         "processing": true, 
                         "serverSide": false, 
                         "scrollX": true,
@@ -1184,6 +1191,8 @@ class Absensi extends Controller
                 'absensi' => $absensi,
                 'list' => $list,
                 'getalpa' => $getAlpa,
+                'dari' => $request->input('tglstart'),
+                'sampai' => $request->input('tglend'),
                 'jns' => $request->input('jns'),
             ]);
         } elseif ($request->jns == "f1f2") {
@@ -1196,6 +1205,8 @@ class Absensi extends Controller
                 'absensi' => $absensi,
                 'list' => $list,
                 'getalpa' => $getF1,
+                'dari' => $request->input('tglstart'),
+                'sampai' => $request->input('tglend'),
                 'jns' => $request->input('jns'),
             ]);
         } elseif ($request->jns == 'fingerprint') {

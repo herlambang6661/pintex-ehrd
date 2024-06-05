@@ -37,30 +37,30 @@
         }
 
         /* .cv-spinner {
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                        height: 100%;
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                        display: flex;
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                        justify-content: center;
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                        align-items: center;
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                    }
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                    height: 100%;
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                    display: flex;
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                    justify-content: center;
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                    align-items: center;
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                }
 
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                    .spinner {
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                        width: 40px;
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                        height: 40px;
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                        border: 4px #ddd solid;
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                        border-top: 4px #2e93e6 solid;
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                        border-radius: 50%;
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                        animation: sp-anime 0.8s infinite linear;
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                    }
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                .spinner {
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                    width: 40px;
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                    height: 40px;
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                    border: 4px #ddd solid;
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                    border-top: 4px #2e93e6 solid;
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                    border-radius: 50%;
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                    animation: sp-anime 0.8s infinite linear;
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                }
 
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                    @keyframes sp-anime {
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                        100% {
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                            transform: rotate(360deg);
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                        }
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                    }
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                @keyframes sp-anime {
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                    100% {
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                        transform: rotate(360deg);
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                    }
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                }
 
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                    .is-hide {
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                        display: none;
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                    } */
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                .is-hide {
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                    display: none;
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                } */
         .loader {
             position: fixed;
             z-index: 301;
@@ -212,7 +212,7 @@
                                         </div>
                                         <div class="row row-cards">
                                             <div class="table-responsive">
-                                                <table class="table table-sm table-bordered table-striped mb-0"
+                                                <table class="table table-sm table-bordered table-striped mb-0 table-hover"
                                                     id="table-alpa">
                                                     <thead>
                                                         <tr>
@@ -227,6 +227,7 @@
                                                             <th class="text-center">Grup</th>
                                                             <th class="text-center">Bagian</th>
                                                             <th class="text-center">SST</th>
+                                                            <th class="text-center"></th>
                                                         </tr>
                                                     </thead>
                                                     <tbody>
@@ -245,6 +246,55 @@
                                                                 <td class="text-center">{{ $a->grup }}</td>
                                                                 <td class="text-center">{{ $a->bagian }}</td>
                                                                 <td class="text-center">{{ $a->sst }}</td>
+                                                                <td class="text-center"
+                                                                    style="border: 1px solid transparent">
+                                                                    <div class="col-auto lh-1">
+                                                                        <div class="dropdown">
+                                                                            <a href="#" class="link-secondary"
+                                                                                data-bs-toggle="dropdown"
+                                                                                aria-expanded="false"><!-- Download SVG icon from http://tabler-icons.io/i/dots -->
+                                                                                <svg xmlns="http://www.w3.org/2000/svg"
+                                                                                    class="icon" width="24"
+                                                                                    height="24" viewBox="0 0 24 24"
+                                                                                    stroke-width="2" stroke="currentColor"
+                                                                                    fill="none" stroke-linecap="round"
+                                                                                    stroke-linejoin="round">
+                                                                                    <path stroke="none" d="M0 0h24v24H0z"
+                                                                                        fill="none"></path>
+                                                                                    <path
+                                                                                        d="M5 12m-1 0a1 1 0 1 0 2 0a1 1 0 1 0 -2 0">
+                                                                                    </path>
+                                                                                    <path
+                                                                                        d="M12 12m-1 0a1 1 0 1 0 2 0a1 1 0 1 0 -2 0">
+                                                                                    </path>
+                                                                                    <path
+                                                                                        d="M19 12m-1 0a1 1 0 1 0 2 0a1 1 0 1 0 -2 0">
+                                                                                    </path>
+                                                                                </svg>
+                                                                            </a>
+                                                                            <div class="dropdown-menu dropdown-menu-end"
+                                                                                style="">
+                                                                                <a class="dropdown-item" href="#">
+                                                                                    Ubah Hari Libur
+                                                                                </a>
+                                                                                <a class="dropdown-item" href="#">
+                                                                                    Keputusan Mgr. Alpa
+                                                                                </a>
+                                                                                <a class="dropdown-item" href="#">
+                                                                                    Keputusan Mgr. Libur
+                                                                                </a>
+                                                                                <a href="#" class="dropdown-item"
+                                                                                    data-bs-toggle="modal"
+                                                                                    data-bs-target=".modal-detail-absensi"
+                                                                                    data-id="{{ $a->stb }}"
+                                                                                    data-tglaw="{{ $dari }}"
+                                                                                    data-tglak="{{ $sampai }}"
+                                                                                    style="text-decoration: none !important;color: inherit;">Lihat
+                                                                                    Detail Absen</a>
+                                                                            </div>
+                                                                        </div>
+                                                                    </div>
+                                                                </td>
                                                             </tr>
                                                         @endforeach
                                                     </tbody>
@@ -266,7 +316,8 @@
             aria-labelledby="offcanvasEndLabel">
             <div class="offcanvas-header">
                 <h2 class="offcanvas-title" id="offcanvasEndLabel">Saring Data Absensi</h2>
-                <button type="button" class="btn-close text-reset" data-bs-dismiss="offcanvas" aria-label="Close"></button>
+                <button type="button" class="btn-close text-reset" data-bs-dismiss="offcanvas"
+                    aria-label="Close"></button>
             </div>
             <div class="offcanvas-body">
                 <div>
@@ -439,6 +490,37 @@
                     ],
 
                 });
+
+                $('.modal-detail-absensi').on('show.bs.modal', function(e) {
+                    var rowid = $(e.relatedTarget).data('id');
+                    var rowaw = $(e.relatedTarget).data('tglaw');
+                    var rowak = $(e.relatedTarget).data('tglak');
+                    console.log("Fetch: " + rowid);
+                    $(".overlay").fadeIn(300);
+                    $.ajaxSetup({
+                        headers: {
+                            'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                        }
+                    });
+                    $.ajax({
+                        type: 'POST',
+                        url: "{{ url('listAbsensiDetail') }}",
+                        data: {
+                            "_token": "{{ csrf_token() }}",
+                            id: rowid,
+                            tglaw: rowaw,
+                            tglak: rowak,
+                        },
+                        success: function(data) {
+                            $('.fetched-absensi-detail').html(
+                                data); //menampilkan data ke dalam modal
+                        }
+                    }).done(function() {
+                        setTimeout(function() {
+                            $(".overlay").fadeOut(300);
+                        }, 500);
+                    });
+                });
             });
             /*------------------------------------------
             --------------------------------------------
@@ -488,4 +570,31 @@
                 dt.ajax.reload();
             }
         </script>
+
+        <div class="modal modal-blur fade modal-detail-absensi" tabindex="-1" style="display: none;"
+            aria-hidden="true">
+            <div class="overlay">
+                <div class="loader">
+                    <span class="spinner spinner1"></span>
+                    <span class="spinner spinner2"></span>
+                    <span class="spinner spinner3"></span>
+                    <br>
+                    <span class="loader-text">MEMUAT DATA</span>
+                </div>
+            </div>
+            <div class="modal-dialog modal-lg modal-dialog-centered modal-dialog-scrollable" role="document">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title">Detail Absensi Karyawan</h5>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    </div>
+                    <div class="modal-body">
+                        <div class="fetched-absensi-detail"></div>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-primary" data-bs-dismiss="modal">Tutup</button>
+                    </div>
+                </div>
+            </div>
+        </div>
     @endsection

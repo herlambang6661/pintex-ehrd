@@ -37,30 +37,30 @@
         }
 
         /* .cv-spinner {
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                        height: 100%;
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                        display: flex;
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                        justify-content: center;
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                        align-items: center;
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                    }
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                            height: 100%;
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                            display: flex;
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                            justify-content: center;
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                            align-items: center;
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                        }
 
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                    .spinner {
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                        width: 40px;
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                        height: 40px;
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                        border: 4px #ddd solid;
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                        border-top: 4px #2e93e6 solid;
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                        border-radius: 50%;
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                        animation: sp-anime 0.8s infinite linear;
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                    }
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                        .spinner {
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                            width: 40px;
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                            height: 40px;
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                            border: 4px #ddd solid;
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                            border-top: 4px #2e93e6 solid;
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                            border-radius: 50%;
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                            animation: sp-anime 0.8s infinite linear;
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                        }
 
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                    @keyframes sp-anime {
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                        100% {
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                            transform: rotate(360deg);
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                        }
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                    }
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                        @keyframes sp-anime {
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                            100% {
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                transform: rotate(360deg);
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                            }
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                        }
 
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                    .is-hide {
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                        display: none;
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                    } */
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                        .is-hide {
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                            display: none;
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                        } */
         .loader {
             position: fixed;
             z-index: 301;
@@ -137,7 +137,9 @@
         @include('shared.sidebar')
         <!-- Navbar -->
         @include('shared.navbar')
-
+        <script>
+            var tb1;
+        </script>
         <div class="page-wrapper">
             <!-- Page header -->
             <div class="page-header d-print-none">
@@ -178,7 +180,7 @@
                         <div class="col-auto ms-auto d-print-none">
                             <div class="btn-list">
                                 <div class="input-group">
-                                    <form action="{{ url('absenkosong') }}" method="get">
+                                    <form action="{{ url('absenkosong') }}" method="get" target="_blank">
                                         {{-- @csrf --}}
                                         <input type="hidden" name="jns" id="jns" value="alpa">
                                         <input type="hidden" name="tglstart" class="tglstart">
@@ -191,7 +193,7 @@
                                             <i class="fa-solid fa-person-running"></i>
                                         </button>
                                     </form>
-                                    <form action="{{ url('absenkosong') }}" method="get">
+                                    <form action="{{ url('absenkosong') }}" method="get" target="_blank">
                                         <input type="hidden" name="jns" id="jns" value="f1f2">
                                         <input type="hidden" name="tglstart" class="tglstart">
                                         <input type="hidden" name="tglend" class="tglend">
@@ -213,7 +215,7 @@
                                             Data F1F2
                                         </button>
                                     </form>
-                                    <form action="{{ url('absenkosong') }}" method="get">
+                                    <form action="{{ url('absenkosong') }}" method="get" target="_blank">
                                         <input type="hidden" name="jns" id="jns" value="fingerprint">
                                         <input type="hidden" name="tglstart" class="tglstart">
                                         <input type="hidden" name="tglend" class="tglend">
@@ -496,20 +498,8 @@
                                 <span class="form-check-label">Wanita</span>
                             </label>
                         </div>
-                        <div class="form-label">Status</div>
-                        <div class="mb-4">
-                            <div class="row">
-                                <div class="col-sm-12">
-                                    <select name="status" id="status" class="form-select">
-                                        <option value="Semua">Semua</option>
-                                        <option value="Aktif">Aktif</option>
-                                        <option value="Non Aktif">Non Aktif</option>
-                                    </select>
-                                </div>
-                            </div>
-                        </div>
                         <div class="mt-5">
-                            <button type="button" class="btn btn-primary w-100" id="btn-filter">Filter
+                            <button type="button" class="btn btn-primary w-100" onclick="syn()" id="btn-filter">Filter
                                 Data</button> <br>
                             <button type="button" class="btn btn-link w-100" id="btn-reset-items">Reset to
                                 defaults</button>
@@ -752,6 +742,10 @@
                 dt.ajax.reload();
             }
 
+            function syn() {
+                tb();
+            }
+
             Date.prototype.addDays = function(days) {
                 var dat = new Date(this.valueOf())
                 dat.setDate(dat.getDate() + days);
@@ -794,7 +788,7 @@
                 }
                 var aw = $('.tglaw').val();
                 var ak = $('.tglak').val();
-                console.log(aw);
+                console.log($('#bagian').val());
 
                 $(".ph-item").fadeIn(200);
                 $('.fetched-data-absensi').html('');
@@ -818,6 +812,7 @@
                         'ak': ak,
                         'tglaw': $('.tglaw').val(),
                         'tglak': $('.tglak').val(),
+                        'bagian': $('#bagian').val(),
                     },
                     success: function(data) {
                         $('.fetched-data-absensi').html(data);
