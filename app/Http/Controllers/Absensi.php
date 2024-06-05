@@ -1172,25 +1172,43 @@ class Absensi extends Controller
         return Response()->json($arr);
     }
 
-    function absenkosong($id)
+    function absenkosong(Request $request)
     {
-        if ($id == "alpha") {
+        if ($request->input('jns') == "alpa") {
+            $getAlpa = DB::table('absensi_absensi')->where('sst', '=', 'A')->where('stb', 'NOT LIKE', '%PHL-%')->where('stb', 'NOT LIKE', '%OL-%')->whereBetween('tanggal', [$request->input('tglstart'), $request->input('tglend')])->orderBy('bagian', 'asc')->orderBy('grup', 'asc')->orderBy('name', 'asc')->get();
             $judul = "Absensi Alpa";
             $absensi = "active";
             $list = "active";
             return view('products/03_absensi.alpa', [
                 'judul' => $judul,
                 'absensi' => $absensi,
-                'list' => $list
+                'list' => $list,
+                'getalpa' => $getAlpa,
+                'jns' => $request->input('jns'),
             ]);
-        } elseif ($id == "f1") {
+        } elseif ($request->jns == "f1f2") {
+            $getF1 = DB::table('absensi_absensi')->whereIn('sst', ['F1', 'F2'])->where('stb', 'NOT LIKE', '%PHL-%')->where('stb', 'NOT LIKE', '%OL-%')->whereBetween('tanggal', [$request->input('tglstart'), $request->input('tglend')])->orderBy('bagian', 'asc')->orderBy('grup', 'asc')->orderBy('name', 'asc')->get();
             $judul = "Absensi F1F2";
             $absensi = "active";
             $list = "active";
-            return view('products/03_absensi.listabsensi', [
+            return view('products/03_absensi.alpa', [
                 'judul' => $judul,
                 'absensi' => $absensi,
-                'list' => $list
+                'list' => $list,
+                'getalpa' => $getF1,
+                'jns' => $request->input('jns'),
+            ]);
+        } elseif ($request->jns == 'fingerprint') {
+            $getFinger = DB::table('absensi_absensi')->where('stb', 'NOT LIKE', '%PHL-%')->where('stb', 'NOT LIKE', '%OL-%')->whereBetween('tanggal', [$request->input('tglstart'), $request->input('tglend')])->get();
+            $judul = "Data Fingerprint";
+            $absensi = "active";
+            $list = "active";
+            return view('products/03_absensi.alpa', [
+                'judul' => $judul,
+                'absensi' => $absensi,
+                'list' => $list,
+                'getalpa' => $getFinger,
+                'jns' => $request->input('jns'),
             ]);
         }
     }

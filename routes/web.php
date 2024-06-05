@@ -244,7 +244,8 @@ Route::controller(Absensi::class)->group(function () {
     Route::get('absensi/fingerprint', 'fingerprint')->name('absensi/fingerprint');
     Route::get('absensi/komunikasi', 'komunikasi')->name('absensi/komunikasi');
     Route::get('absensi/cuti', 'cuti')->name('absensi/cuti');
-    Route::get('absensi/absenkosong/{id}', 'absenkosong')->name('absensi/absenkosong/{id}');
+
+    Route::get('absenkosong', 'absenkosong')->name('absenkosong');
 
     Route::post('getabsensi', 'getabsensi')->name('getabsensi');
     Route::post('listAbsensiDetail', 'listAbsensiDetail');

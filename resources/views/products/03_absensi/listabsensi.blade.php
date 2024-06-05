@@ -37,30 +37,30 @@
         }
 
         /* .cv-spinner {
-                                                                                                                                                                                                                                                                                                                                                                                    height: 100%;
-                                                                                                                                                                                                                                                                                                                                                                                    display: flex;
-                                                                                                                                                                                                                                                                                                                                                                                    justify-content: center;
-                                                                                                                                                                                                                                                                                                                                                                                    align-items: center;
-                                                                                                                                                                                                                                                                                                                                                                                }
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                        height: 100%;
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                        display: flex;
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                        justify-content: center;
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                        align-items: center;
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                    }
 
-                                                                                                                                                                                                                                                                                                                                                                                .spinner {
-                                                                                                                                                                                                                                                                                                                                                                                    width: 40px;
-                                                                                                                                                                                                                                                                                                                                                                                    height: 40px;
-                                                                                                                                                                                                                                                                                                                                                                                    border: 4px #ddd solid;
-                                                                                                                                                                                                                                                                                                                                                                                    border-top: 4px #2e93e6 solid;
-                                                                                                                                                                                                                                                                                                                                                                                    border-radius: 50%;
-                                                                                                                                                                                                                                                                                                                                                                                    animation: sp-anime 0.8s infinite linear;
-                                                                                                                                                                                                                                                                                                                                                                                }
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                    .spinner {
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                        width: 40px;
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                        height: 40px;
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                        border: 4px #ddd solid;
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                        border-top: 4px #2e93e6 solid;
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                        border-radius: 50%;
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                        animation: sp-anime 0.8s infinite linear;
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                    }
 
-                                                                                                                                                                                                                                                                                                                                                                                @keyframes sp-anime {
-                                                                                                                                                                                                                                                                                                                                                                                    100% {
-                                                                                                                                                                                                                                                                                                                                                                                        transform: rotate(360deg);
-                                                                                                                                                                                                                                                                                                                                                                                    }
-                                                                                                                                                                                                                                                                                                                                                                                }
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                    @keyframes sp-anime {
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                        100% {
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                            transform: rotate(360deg);
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                        }
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                    }
 
-                                                                                                                                                                                                                                                                                                                                                                                .is-hide {
-                                                                                                                                                                                                                                                                                                                                                                                    display: none;
-                                                                                                                                                                                                                                                                                                                                                                                } */
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                    .is-hide {
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                        display: none;
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                    } */
         .loader {
             position: fixed;
             z-index: 301;
@@ -178,6 +178,64 @@
                         <div class="col-auto ms-auto d-print-none">
                             <div class="btn-list">
                                 <div class="input-group">
+                                    <form action="{{ url('absenkosong') }}" method="get">
+                                        {{-- @csrf --}}
+                                        <input type="hidden" name="jns" id="jns" value="alpa">
+                                        <input type="hidden" name="tglstart" class="tglstart">
+                                        <input type="hidden" name="tglend" class="tglend">
+                                        <button type="submit" class="btn btn-danger d-none d-sm-inline-block">
+                                            <i class="fa-solid fa-person-running"></i>
+                                            Data Alfa
+                                        </button>
+                                        <button type="submit" class="btn btn-danger d-sm-none btn-icon">
+                                            <i class="fa-solid fa-person-running"></i>
+                                        </button>
+                                    </form>
+                                    <form action="{{ url('absenkosong') }}" method="get">
+                                        <input type="hidden" name="jns" id="jns" value="f1f2">
+                                        <input type="hidden" name="tglstart" class="tglstart">
+                                        <input type="hidden" name="tglend" class="tglend">
+                                        <button type="submit" class="btn btn-dark d-none d-sm-inline-block">
+                                            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24"
+                                                viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+                                                stroke-linecap="round" stroke-linejoin="round"
+                                                class="icon icon-tabler icons-tabler-outline icon-tabler-fingerprint-off">
+                                                <path stroke="none" d="M0 0h24v24H0z" fill="none" />
+                                                <path d="M18.9 7a8 8 0 0 1 1.1 5v1a6 6 0 0 0 .8 3" />
+                                                <path
+                                                    d="M8 11c0 -.848 .264 -1.634 .713 -2.28m2.4 -1.621a4 4 0 0 1 4.887 3.901l0 1" />
+                                                <path d="M12 12v1a14 14 0 0 0 2.5 8" />
+                                                <path d="M8 15a18 18 0 0 0 1.8 6" />
+                                                <path
+                                                    d="M4.9 19a22 22 0 0 1 -.9 -7v-1a8 8 0 0 1 1.854 -5.143m2.176 -1.825a8 8 0 0 1 7.97 .018" />
+                                                <path d="M3 3l18 18" />
+                                            </svg>
+                                            Data F1F2
+                                        </button>
+                                    </form>
+                                    <form action="{{ url('absenkosong') }}" method="get">
+                                        <input type="hidden" name="jns" id="jns" value="fingerprint">
+                                        <input type="hidden" name="tglstart" class="tglstart">
+                                        <input type="hidden" name="tglend" class="tglend">
+                                        <button type="submit" class="btn btn-cyan d-none d-sm-inline-block">
+                                            <i class="fa-solid fa-fingerprint"></i>
+                                            Data Fingerprint
+                                        </button>
+                                    </form>
+                                    <script type="text/javascript">
+                                        $(function() {
+                                            $('.tglstart').val($('.tglaw').val());
+                                            $('.tglend').val($('.tglak').val());
+                                            $('.tglaw').on('keydown keyup load change hover', function() {
+                                                var sp = this.value;
+                                                $('.tglstart').val(sp);
+                                            });
+                                            $('.tglak').on('keydown keyup load change hover', function() {
+                                                var sp = this.value;
+                                                $('.tglend').val(sp);
+                                            });
+                                        });
+                                    </script>
                                     {{-- @if (Auth::user()->username == 'Yudha' || Auth::user()->role == 'super') --}}
                                     <button type="button" class="btn btn-info d-none d-sm-inline-block" id="btnSynKom">
                                         <i class="fa-solid fa-arrows-rotate"></i>
@@ -193,54 +251,6 @@
                                         </button>
                                     </div>
                                     {{-- @endif --}}
-                                    <form action="{{ url('absensi/absenkosong/alpha') }}" method="post">
-                                        <input type="hidden" id="tglstart">
-                                        <input type="hidden" id="tglend">
-                                        <a href="" target="_blank" class="btn btn-danger d-none d-sm-inline-block">
-                                            <i class="fa-solid fa-person-running"></i>
-                                            Data Alfa
-                                        </a>
-                                        <script type="text/javascript">
-                                            $(function() {
-                                                $('#tglstart').val($('.tglaw').val());
-                                                $('#tglend').val($('.tglak').val());
-                                                $('.tglaw').on('keydown keyup load change hover', function() {
-                                                    var sp = this.value;
-                                                    $('#tglstart').val(sp);
-                                                });
-                                                $('.tglak').on('keydown keyup load change hover', function() {
-                                                    var sp = this.value;
-                                                    $('#tglend').val(sp);
-                                                });
-                                            });
-                                        </script>
-                                    </form>
-                                    <a href="{{ url('absensi/absenkosong/f1') }}" target="_blank"
-                                        class="btn btn-warning d-none d-sm-inline-block">
-                                        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24"
-                                            viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
-                                            stroke-linecap="round" stroke-linejoin="round"
-                                            class="icon icon-tabler icons-tabler-outline icon-tabler-fingerprint-off">
-                                            <path stroke="none" d="M0 0h24v24H0z" fill="none" />
-                                            <path d="M18.9 7a8 8 0 0 1 1.1 5v1a6 6 0 0 0 .8 3" />
-                                            <path
-                                                d="M8 11c0 -.848 .264 -1.634 .713 -2.28m2.4 -1.621a4 4 0 0 1 4.887 3.901l0 1" />
-                                            <path d="M12 12v1a14 14 0 0 0 2.5 8" />
-                                            <path d="M8 15a18 18 0 0 0 1.8 6" />
-                                            <path
-                                                d="M4.9 19a22 22 0 0 1 -.9 -7v-1a8 8 0 0 1 1.854 -5.143m2.176 -1.825a8 8 0 0 1 7.97 .018" />
-                                            <path d="M3 3l18 18" />
-                                        </svg>
-                                        Data F1F2
-                                    </a>
-                                    <a href="#" class="btn btn-danger d-sm-none btn-icon" data-bs-toggle="modal"
-                                        data-bs-target="#modal-lamaran" aria-label="Tambah Lamaran">
-                                        <i class="fa-solid fa-person-running"></i>
-                                    </a>
-                                    <a href="#" class="btn btn-warning d-sm-none btn-icon" data-bs-toggle="modal"
-                                        data-bs-target="#modal-upload" aria-label="Upload Excel">
-                                        <i class="fa-solid fa-user-slash"></i>
-                                    </a>
                                 </div>
                             </div>
                         </div>
@@ -273,11 +283,11 @@
                                                     <tbody>
                                                         <tr>
                                                             <td>
-                                                                <input type="text" class="form-control tglaw"
+                                                                <input type="date" class="form-control tglaw"
                                                                     value="{{ date('Y-m-16') }}" id="datepicker0">
                                                             </td>
                                                             <td>
-                                                                <input type="text" class="form-control tglak"
+                                                                <input type="date" class="form-control tglak"
                                                                     value="{{ date('Y-m-15', strtotime('first day of +1 month')) }}"
                                                                     id="datepicker1">
                                                             </td>
