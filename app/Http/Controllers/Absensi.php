@@ -1199,15 +1199,15 @@ class Absensi extends Controller
                 'jns' => $request->input('jns'),
             ]);
         } elseif ($request->jns == 'fingerprint') {
-            $getFinger = DB::table('absensi_absensi')->where('stb', 'NOT LIKE', '%PHL-%')->where('stb', 'NOT LIKE', '%OL-%')->whereBetween('tanggal', [$request->input('tglstart'), $request->input('tglend')])->get();
             $judul = "Data Fingerprint";
             $absensi = "active";
             $list = "active";
-            return view('products/03_absensi.alpa', [
+            return view('products/03_absensi.absensifingerprint', [
                 'judul' => $judul,
                 'absensi' => $absensi,
                 'list' => $list,
-                'getalpa' => $getFinger,
+                'dari' => $request->input('tglstart'),
+                'sampai' => $request->input('tglend'),
                 'jns' => $request->input('jns'),
             ]);
         }

@@ -21,6 +21,7 @@ use App\Http\Controllers\Datatables\DataLoker;
 use App\Http\Controllers\Datatables\DataShift;
 use App\Http\Controllers\Datatables\DataSurat;
 use App\Http\Controllers\Datatables\DataUsers;
+use App\Http\Controllers\Datatables\DataFinger;
 use App\Http\Controllers\Datatables\DataEntitas;
 use App\Http\Controllers\Datatables\DataLamaran;
 use App\Http\Controllers\Datatables\DataPayroll;
@@ -102,6 +103,7 @@ Route::resources([
     'getAbsensiLocal' => DataAbsensiLocal::class,
     'getUserODBC' => DataUserinfoODBC::class,
     'getUserMYSQL' => DataUserinfoMYSQL::class,
+    'getFingerprint' => DataFinger::class,
     'getFingerODBC' => DataFingerODBC::class,
     'getFingerMYSQL' => DataFingerMYSQL::class,
     'getLembur' => DataTarifLembur::class,
