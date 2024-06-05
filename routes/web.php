@@ -293,7 +293,6 @@ Route::controller(Administrasi::class)->group(function () {
     Route::get('/payroll/export_excel', 'exportPayroll')->name('/payroll/export_excel');
     Route::post('getpayroll', 'getpayroll')->name('getpayroll');
     Route::post('generatePayroll', 'generatePayroll')->name('generatePayroll');
-    Route::post('generatePayroll', 'generatePayroll')->name('generatePayroll');
     Route::post('/umr/update', 'updateumr')->name('/umr/update');
     Route::post('/payroll/import_excel', 'importPayroll')->name('/payroll/import_excel');
     Route::post('listBPJSKaryawan', 'listBPJSKaryawan');

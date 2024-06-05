@@ -50,6 +50,7 @@ return new class extends Migration
             $table->string('status')->nullable();
             $table->string('serikat')->nullable();
             $table->integer('tjabat')->nullable();
+            $table->integer('tprestasi')->nullable();
             $table->integer('sptp')->nullable();
             $table->string('banknm')->nullable();
             $table->string('bankrek')->nullable();

@@ -129,6 +129,8 @@ class Administrasi extends Controller
                             'shift' => $key->shift,
                             'umr' => $key->gapok,
                             'gapok' => $key->gapok,
+                            'tjabat' => $key->tjabat,
+                            'prestasi' => $key->tprestasi,
                             'bank' => $key->banknm,
                             'rekening' => $key->bankrek,
                             'potongan_absen' => ($sakit + $izin),
