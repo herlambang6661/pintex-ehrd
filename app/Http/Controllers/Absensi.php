@@ -1163,6 +1163,9 @@ class Absensi extends Controller
             DB::table('absensi_absensi')
                 ->where('id', $key->id)
                 ->where('bagian', '=', 'UMUM')
+                ->where('sst', '=', 'A')
+                ->orWhere('sst', '=', 'F1')
+                ->orWhere('sst', '=', 'F2')
                 ->update(
                     array(
                         'sst' => "H",

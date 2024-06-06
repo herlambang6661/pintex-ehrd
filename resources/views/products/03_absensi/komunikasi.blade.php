@@ -380,6 +380,29 @@
                                                                     Surat IP
                                                                 </a>
                                                             </div>
+                                                            <div class="col-6 col-sm-4 col-md-4 col-xl ">
+                                                                <a href="#"
+                                                                    class="btn btn-outline-secondary w-100 shadow rounded"
+                                                                    onclick="tambahItem('CM'); return false;">
+                                                                    <svg xmlns="http://www.w3.org/2000/svg" width="24"
+                                                                        height="24" viewBox="0 0 24 24" fill="none"
+                                                                        stroke="currentColor" stroke-width="2"
+                                                                        stroke-linecap="round" stroke-linejoin="round"
+                                                                        class="icon icon-tabler icons-tabler-outline icon-tabler-baby-carriage">
+                                                                        <path stroke="none" d="M0 0h24v24H0z"
+                                                                            fill="none" />
+                                                                        <path d="M8 19m-2 0a2 2 0 1 0 4 0a2 2 0 1 0 -4 0" />
+                                                                        <path
+                                                                            d="M18 19m-2 0a2 2 0 1 0 4 0a2 2 0 1 0 -4 0" />
+                                                                        <path
+                                                                            d="M2 5h2.5l1.632 4.897a6 6 0 0 0 5.693 4.103h2.675a5.5 5.5 0 0 0 0 -11h-.5v6" />
+                                                                        <path d="M6 9h14" />
+                                                                        <path d="M9 17l1 -3" />
+                                                                        <path d="M16 14l1 3" />
+                                                                    </svg>
+                                                                    Surat Cuti Melahirkan
+                                                                </a>
+                                                            </div>
                                                         </div>
                                                         <div class="row g-2 align-items-center">
                                                             <div class="col-6 col-sm-4 col-md-4 col-xl py-3">
@@ -1949,7 +1972,8 @@
             // Kolom 4 STB
             var td = document.createElement("td");
             td.setAttribute("style", "width:100px");
-            td.innerHTML += '<input type="text" name="stb[]" id="stb' + idf + '" class="form-control" onchange="fetchKar(' +
+            td.innerHTML += '<input type="text" name="stb[]" id="stb' + idf +
+                '" class="form-control text-center" onchange="fetchKar(' +
                 idf + ', `' + sst + '`)" onkeydown = "if (event.keyCode == 13)  fetchKar(' + idf + ', `' + sst + '`)">';
             tr.appendChild(td);
             // Kolom 5 NAMA
@@ -1987,6 +2011,10 @@
             } else if (sst == "H") {
                 td.innerHTML += '<input type="text" name="keterangan[]" class="form-control" value="GESER SETENGAH HARI">';
                 td.innerHTML += '<input type="hidden" name="suratid[]" value="Surat Geser Setengah Hari">';
+            } else if (sst == "CM") {
+                td.innerHTML +=
+                    '<input type="text" name="keterangan[]" class="form-control" value="SURAT CUTI MELAHIRKAN">';
+                td.innerHTML += '<input type="hidden" name="suratid[]" value="Surat Cuti Melahirkan">';
             }
             tr.appendChild(td);
             detail_transaksi.appendChild(tr);
