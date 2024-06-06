@@ -39,6 +39,7 @@ use App\Http\Controllers\Datatables\DataTarifLembur;
 use App\Http\Controllers\Datatables\DataAbsensiLocal;
 use App\Http\Controllers\Datatables\DataFixedAbsensi;
 use App\Http\Controllers\Datatables\DataUserinfoODBC;
+use App\Http\Controllers\Datatables\DataAbsensiServer;
 use App\Http\Controllers\Datatables\DataACCKomunikasi;
 use App\Http\Controllers\Datatables\DataUserinfoMYSQL;
 use SebastianBergmann\CodeCoverage\Report\Html\Dashboard;
@@ -100,7 +101,7 @@ Route::resources([
     'getLegalitasKaryawan' => DataLegalitasKaryawan::class,
     'getLegalitasKaryawanOl' => DataLegalitasKaryawanOl::class,
     'getLegalitasKaryawanPhl' => DataLegalitasKaryawanPhl::class,
-    'getAbsensiLocal' => DataAbsensiLocal::class,
+    'getAbsensiServer' => DataAbsensiServer::class,
     'getUserODBC' => DataUserinfoODBC::class,
     'getUserMYSQL' => DataUserinfoMYSQL::class,
     'getFingerprint' => DataFinger::class,
