@@ -28,23 +28,23 @@ class ScheduleKaryawanUmum extends Command
      */
     public function handle()
     {
-        date_default_timezone_set('Asia/Jakarta');
-        $start = new Carbon('first day of last month');
-        $end = date('Y-m-d');
-        $checkUmum = DB::table('absensi_absensi')->where('bagian', '=', 'UMUM')->whereBetween('tanggal', [$start, $end])->orderBy('tanggal', 'desc')->get();
-        foreach ($checkUmum as $key) {
-            DB::table('absensi_absensi')
-                ->where('id', $key->id)
-                ->where('bagian', '=', 'UMUM')
-                ->where('sst', '=', 'A')
-                ->orWhere('sst', '=', 'F1')
-                ->orWhere('sst', '=', 'F2')
-                ->update(
-                    array(
-                        'sst' => "H",
-                        'updated_at' => date('Y-m-d H:i:s'),
-                    )
-                );
-        }
+        // date_default_timezone_set('Asia/Jakarta');
+        // $start = new Carbon('first day of last month');
+        // $end = date('Y-m-d');
+        // $checkUmum = DB::table('absensi_absensi')->where('bagian', '=', 'UMUM')->whereBetween('tanggal', [$start, $end])->orderBy('tanggal', 'desc')->get();
+        // foreach ($checkUmum as $key) {
+        //     DB::table('absensi_absensi')
+        //         ->where('id', $key->id)
+        //         ->where('bagian', '=', 'UMUM')
+        //         ->where('sst', '=', 'A')
+        //         ->orWhere('sst', '=', 'F1')
+        //         ->orWhere('sst', '=', 'F2')
+        //         ->update(
+        //             array(
+        //                 'sst' => "H",
+        //                 'updated_at' => date('Y-m-d H:i:s'),
+        //             )
+        //         );
+        // }
     }
 }
