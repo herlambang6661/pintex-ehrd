@@ -22,13 +22,13 @@ class DataTerlambat extends Controller
     public function index(Request $request)
     {
         // Set Dari tanggal
-        if ($request->dari) {
+        if (!empty($request->dari)) {
             $dari = $request->dari;
         } else {
             $dari = date('Y-m-d');
         }
         // Set Sampai tanggal
-        if ($request->sampai) {
+        if (!empty($request->sampai)) {
             $sampai = $request->sampai;
         } else {
             $sampai = date('Y-m-d');
