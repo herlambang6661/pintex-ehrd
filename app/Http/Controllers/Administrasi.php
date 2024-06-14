@@ -173,7 +173,7 @@ class Administrasi extends Controller
                             'S' => $sakit,
                             'I' => $izin,
                             'A' => $alpha,
-                            'potongan_infaq' => '-5000',
+                            // 'potongan_infaq' => '-5000',
                             'updated_at' => date('Y-m-d H:i:s'),
                         )
                     );
@@ -206,37 +206,10 @@ class Administrasi extends Controller
                             'I' => $izin,
                             'A' => $alpha,
                             'potongan_infaq' => '-5000',
-                            'updated_at' => date('Y-m-d H:i:s'),
+                            'created_at' => date('Y-m-d H:i:s'),
                         )
                     );
             }
-
-            // $karyawanPayroll = DB::table('administrasi_payroll')->where('userid', '=', $key->userid)->where('periode', '=', $periode)->get();
-            // foreach ($karyawanPayroll as $p) {
-            //     $absensi = DB::table('absensi_absensi')
-            //         ->select(DB::raw("
-            //             SUM(IF(sst = 'H', 1, 0)) as Hadir,
-            //             SUM(IF(sst = 'S', 1, 0)) as Sakit,
-            //             SUM(IF(sst = 'I', 1, 0)) as Izin,
-            //             SUM(IF(sst = 'A', 1, 0)) as Alpha
-            //         "))
-            //         ->where('stb', '=', $key->stb)
-            //         ->whereBetween('tanggal', [$p->dari, $p->sampai])
-            //         ->get();
-            //     foreach ($absensi as $a) {
-            //         DB::table('administrasi_payroll')
-            //             ->where('id', '=', $p->id)
-            //             ->limit(1)
-            //             ->update(
-            //                 array(
-            //                     'H' => $a->Hadir,
-            //                     'S' => $a->Sakit,
-            //                     'I' => $a->Izin,
-            //                     'A' => $a->Alpha,
-            //                 )
-            //             );
-            //     }
-            // }
         }
     }
 
