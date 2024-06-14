@@ -68,6 +68,36 @@ class Administrasi extends Controller
         }
     }
 
+    public function updateTambahanPayroll(Request $request)
+    {
+        if ($request->ajax()) {
+            if ($request->pk == "koperasi") {
+                DB::table('administrasi_payrolldtl')
+                    ->where('id', $request->name)
+                    ->limit(1)
+                    ->update(
+                        array(
+                            'koperasi' => $request->value,
+                            'updated_at' => date('Y-m-d H:i:s'),
+                        )
+                    );
+                return response()->json(['success' => true]);
+            }
+            if ($request->pk == "pinjaman") {
+                DB::table('administrasi_payrolldtl')
+                    ->where('id', $request->name)
+                    ->limit(1)
+                    ->update(
+                        array(
+                            'pinjaman' => $request->value,
+                            'updated_at' => date('Y-m-d H:i:s'),
+                        )
+                    );
+                return response()->json(['success' => true]);
+            }
+        }
+    }
+
     public function getpayroll(Request $request)
     {
 
@@ -103,10 +133,13 @@ class Administrasi extends Controller
                 ->where('periode', '=', $periode)
                 ->first();
             // menemukan karyawan sesuai, update
-            $hadir = $this->absensi('H', $key->userid, date("Y-m-d", strtotime($request->tahun . '-' . $request->bulan . '-16' . "-1 month")), $request->tahun . '-' . $request->bulan . '-15');
-            $sakit = $this->absensi('S', $key->userid, date("Y-m-d", strtotime($request->tahun . '-' . $request->bulan . '-16' . "-1 month")), $request->tahun . '-' . $request->bulan . '-15');
-            $izin = $this->absensi('I', $key->userid, date("Y-m-d", strtotime($request->tahun . '-' . $request->bulan . '-16' . "-1 month")), $request->tahun . '-' . $request->bulan . '-15');
-            $alpha = $this->absensi('A', $key->userid, date("Y-m-d", strtotime($request->tahun . '-' . $request->bulan . '-16' . "-1 month")), $request->tahun . '-' . $request->bulan . '-15');
+            $hadir  = $this->absensi('H', $key->userid, date("Y-m-d", strtotime($request->tahun . '-' . $request->bulan . '-16' . "-1 month")), $request->tahun . '-' . $request->bulan . '-15');
+            $sakit  = $this->absensi('S', $key->userid, date("Y-m-d", strtotime($request->tahun . '-' . $request->bulan . '-16' . "-1 month")), $request->tahun . '-' . $request->bulan . '-15');
+            $izin   = $this->absensi('I', $key->userid, date("Y-m-d", strtotime($request->tahun . '-' . $request->bulan . '-16' . "-1 month")), $request->tahun . '-' . $request->bulan . '-15');
+            $alpha  = $this->absensi('A', $key->userid, date("Y-m-d", strtotime($request->tahun . '-' . $request->bulan . '-16' . "-1 month")), $request->tahun . '-' . $request->bulan . '-15');
+
+            $bpjs_jp = $this->get_bpjs('bpjs_jp', $key->stb);
+            $bpjs_ks = $this->get_bpjs('bpjs_ks', $key->stb);
 
             if ($cekUpdateKaryawan) {
                 DB::table('administrasi_payroll')
@@ -115,25 +148,27 @@ class Administrasi extends Controller
                     ->limit(1)
                     ->update(
                         array(
-                            'entitas' => 'PINTEX',
-                            'dari' => date("Y-m-d", strtotime($request->tahun . '-' . $request->bulan . '-16' . "-1 month")),
-                            'sampai' => $request->tahun . '-' . $request->bulan . '-15',
-                            'stb' => $key->stb,
-                            'nama' => $key->nama,
-                            'level' => $key->level,
-                            'divisi' => $key->divisi,
-                            'bagian' => $key->bagian,
-                            'jabatan' => $key->jabatan,
-                            'grup' => $key->grup,
-                            'profesi' => $key->profesi,
-                            'shift' => $key->shift,
+                            // 'entitas' => 'PINTEX',
+                            // 'dari' => date("Y-m-d", strtotime($request->tahun . '-' . $request->bulan . '-16' . "-1 month")),
+                            // 'sampai' => $request->tahun . '-' . $request->bulan . '-15',
+                            // 'stb' => $key->stb,
+                            // 'nama' => $key->nama,
+                            // 'level' => $key->level,
+                            // 'divisi' => $key->divisi,
+                            // 'bagian' => $key->bagian,
+                            // 'jabatan' => $key->jabatan,
+                            // 'grup' => $key->grup,
+                            // 'profesi' => $key->profesi,
+                            // 'shift' => $key->shift,
                             'umr' => $key->gapok,
                             'gapok' => $key->gapok,
                             'tjabat' => $key->tjabat,
                             'prestasi' => $key->tprestasi,
-                            'bank' => $key->banknm,
+                            // 'bank' => $key->banknm,
                             'rekening' => $key->bankrek,
                             'potongan_absen' => ($sakit + $izin),
+                            'pot_bpjs_jp' => $bpjs_jp,
+                            'pot_bpjs_ks' => $bpjs_ks,
                             'H' => $hadir,
                             'S' => $sakit,
                             'I' => $izin,
@@ -164,6 +199,8 @@ class Administrasi extends Controller
                             'gapok' => $key->gapok,
                             'bank' => $key->banknm,
                             'rekening' => $key->bankrek,
+                            'pot_bpjs_jp' => $bpjs_jp,
+                            'pot_bpjs_ks' => $bpjs_ks,
                             'H' => $hadir,
                             'S' => $sakit,
                             'I' => $izin,
@@ -203,6 +240,25 @@ class Administrasi extends Controller
         }
     }
 
+    public function uploadTambahanPayroll(Request $request)
+    {
+        $judul = "Koperasi & Pinjaman";
+        $administrasi = "active";
+        $payroll = "active";
+
+        $periode = substr($request->selectedyear, -2) . $request->selectedmonth;
+
+        $getTambahan = DB::table('administrasi_payrolldtl')->where('periode', '=', $periode)->get();
+
+        return view('products/04_administrasi.tambahanPayroll', [
+            'judul' => $judul,
+            'administrasi' => $administrasi,
+            'payroll' => $payroll,
+            'periode' => $periode,
+            'tambahan' => $getTambahan,
+        ]);
+    }
+
     private function absensi($params, $userid, $start, $end)
     {
         $absensi = DB::table('absensi_absensi')
@@ -217,6 +273,36 @@ class Administrasi extends Controller
         return $result;
     }
 
+    private function get_bpjs($jenis, $stb)
+    {
+        $karyawanAktif = DB::table('penerimaan_karyawan')
+            ->where('stb', '=', $stb)
+            ->first();
+
+        // get upah bpjs
+        if ($jenis == 'bpjs_ks') {
+            $bpjs_ks = DB::table('daftar_upah')
+                ->where('jenis', '=', 'bpjs_ks')
+                ->first();
+            if ($karyawanAktif->bpjs_ks > 0) {
+                $res = - ($karyawanAktif->gapok * $bpjs_ks->nominal) / 100;
+            } else {
+                $res = null;
+            }
+        } elseif ($jenis == 'bpjs_jp') {
+            $bpjs_jp = DB::table('daftar_upah')
+                ->where('jenis', '=', 'bpjs_jp')
+                ->first();
+            if ($karyawanAktif->bpjs_jp > 0) {
+                $res = - ($karyawanAktif->gapok * $bpjs_jp->nominal) / 100;
+            } else {
+                $res = null;
+            }
+        }
+
+        return $res;
+    }
+
     public function importPayroll(Request $request)
     {
         // validasi
@@ -226,26 +312,32 @@ class Administrasi extends Controller
                 'file' => 'required|mimes:csv,xls,xlsx',
             ],
         );
-
         // menangkap file excel
         $file = $request->file('file');
-
-        // membuat nama file unik
-        $nama_file = 'Periode-' . $request->periode . '_upload-' . date('Ymd') . $file->getClientOriginalName();
-
-        // upload ke folder file_siswa di dalam folder public
-        $file->move('file_excel', $nama_file);
-
+        // membuat nama file
+        $nama_file = 'Periode-' . $request->periode . '_upload-' . date('Ymd') . '-' . $file->getClientOriginalName();
+        // upload ke folder file_excel di dalam folder public
+        $file->move('file_excel/c_payroll', $nama_file);
         // import data
-        // ExcelM::import(new ImportExcelTest, public_path('/file_excel/' . $nama_file));
-        $folder = public_path('file_excel/' . $nama_file);
+        $folder = public_path('file_excel/c_payroll/' . $nama_file);
         ExcelM::import(new ImportExcelPayroll, $folder);
-
         // notifikasi dengan session
         Session::flash('success', 'Data Payroll Berhasil Diimport!');
-
         // alihkan halaman kembali
-        return redirect()->back()->with('success', 'Data Payroll Berhasil Diimport!');
+        // return redirect()->back()->with('success', 'Data Payroll Berhasil Diimport!');
+
+        $judul = "Koperasi & Pinjaman";
+        $administrasi = "active";
+        $payroll = "active";
+        $getTambahan = DB::table('administrasi_payrolldtl')->where('periode', '=', $request->periode)->get();
+
+        return view('products/04_administrasi.tambahanPayroll', [
+            'judul' => $judul,
+            'administrasi' => $administrasi,
+            'payroll' => $payroll,
+            'periode' => $request->periode,
+            'tambahan' => $getTambahan,
+        ]);
     }
 
     public function exportPayroll()

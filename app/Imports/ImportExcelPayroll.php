@@ -29,16 +29,14 @@ class ImportExcelPayroll implements ToCollection, WithBatchInserts, WithChunkRea
             $cekPayroll = DB::table('administrasi_payrolldtl')
                 ->where('periode', '=', $row[0])
                 ->where('stb', '=', $row[1])
-                ->where('jenis', '=', $row[3])
                 ->first();
-            // $cekPayroll = DB::table('administrasi_payrolldtl')->where('periode', '=', $row[0])->where('stb', '=', $row[1])->where('jenis', '=', $row[3])->get();
             if ($cekPayroll) {
                 // Data Ditemukan, update data yang ada
-                DB::table('administrasi_payrolldtl')->where('periode', '=', $row[0])->where('stb', '=', $row[1])->where('jenis', '=', $row[3])  // find your user by their email
+                DB::table('administrasi_payrolldtl')->where('periode', '=', $row[0])->where('stb', '=', $row[1])  // find your user by their email
                     ->update(
                         array(
-                            'nama' => $row[2],
-                            'nominal' => $row[4],
+                            'koperasi' => $row[3],
+                            'pinjaman' => $row[4],
                             'updated_at' => date('Y-m-d H:i:s'),
                         )
                     );
@@ -46,7 +44,8 @@ class ImportExcelPayroll implements ToCollection, WithBatchInserts, WithChunkRea
                 DB::table('administrasi_payroll')->where('periode', '=', $row[0])->where('stb', '=', $row[1])  // find your user by their email
                     ->update(
                         array(
-                            strtolower($row[3]) => $row[4],
+                            'potongan_koperasi' => $row[3],
+                            'potongan_pinjaman' => $row[4],
                             'updated_at' => date('Y-m-d H:i:s'),
                         )
                     );
@@ -58,8 +57,8 @@ class ImportExcelPayroll implements ToCollection, WithBatchInserts, WithChunkRea
                             'periode' => $row[0],
                             'stb' => $row[1],
                             'nama' => $row[2],
-                            'jenis' => $row[3],
-                            'nominal' => $row[4],
+                            'koperasi' => $row[3],
+                            'pinjaman' => $row[4],
                             'dibuat' => Auth::user()->name,
                             'created_at' => date('Y-m-d H:i:s'),
                         ]
@@ -69,7 +68,8 @@ class ImportExcelPayroll implements ToCollection, WithBatchInserts, WithChunkRea
                 DB::table('administrasi_payroll')->where('periode', '=', $row[0])->where('stb', '=', $row[1])  // find your user by their email
                     ->update(
                         array(
-                            strtolower($row[3]) => $row[4],
+                            'potongan_koperasi' => $row[3],
+                            'potongan_pinjaman' => $row[4],
                             'updated_at' => date('Y-m-d H:i:s'),
                         )
                     );

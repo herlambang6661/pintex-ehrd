@@ -189,6 +189,7 @@ Route::controller(Daftar::class)->group(function () {
     Route::post('daftar/update', 'updateUsers');
 });
 
+// Modules Upload Gambar
 Route::controller(ImageController::class)->group(function () {
     Route::get('penerimaan/image-upload', 'index');
     Route::post('penerimaan/image-upload', 'store')->name('image.store');
@@ -295,11 +296,13 @@ Route::controller(Administrasi::class)->group(function () {
     Route::post('getpayroll', 'getpayroll')->name('getpayroll');
     Route::post('generatePayroll', 'generatePayroll')->name('generatePayroll');
     Route::post('/umr/update', 'updateumr')->name('/umr/update');
-    Route::post('/payroll/import_excel', 'importPayroll')->name('/payroll/import_excel');
+    Route::post('importPayroll', 'importPayroll')->name('importPayroll');
     Route::post('listBPJSKaryawan', 'listBPJSKaryawan');
     Route::post('pos/update', 'updatePos');
     Route::post('updateBPJS', 'updateBPJS');
     Route::post('bpjsupdate', 'updateUpahBpjs')->name('bpjsupdate');
+    Route::post('administrasi/tambahanPayroll', 'uploadTambahanPayroll')->name('administrasi/tambahanPayroll');
+    Route::post('/administrasi/updateTambahanPayroll', 'updateTambahanPayroll')->name('/administrasi/updateTambahanPayroll');
 });
 
 // Modules Database
