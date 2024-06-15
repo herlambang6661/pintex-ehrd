@@ -122,6 +122,7 @@ class Administrasi extends Controller
         $periode = substr($request->tahun, -2) . "" . $request->bulan;
         // get karyawan hanya yang aktif
         $karyawanAktif = DB::table('penerimaan_karyawan')
+            ->select('userid', 'stb', 'nama', 'level', 'divisi', 'bagian', 'jabatan', 'grup', 'profesi', 'shift', 'gapok', 'tjabat', 'tprestasi', 'banknm', 'bankrek')
             ->where('status', 'LIKE', '%Aktif%')
             ->orderBy('userid', 'asc')
             ->get();
@@ -200,49 +201,67 @@ class Administrasi extends Controller
         // set periode gaji
         $periode = substr($request->tahun, -2) . "" . $request->bulan;
         // get karyawan hanya yang aktif
-        $karyawanAktif = DB::table('penerimaan_karyawan')
-            ->where('status', 'LIKE', '%Aktif%')
+        $cekUpdateKaryawan = DB::table('administrasi_payroll')
+            ->where('periode', '=', $periode)
             ->orderBy('userid', 'asc')
             ->get();
-
-        foreach ($karyawanAktif as $key) {
-            // cek karyawan
-            $cekUpdateKaryawan = DB::table('administrasi_payroll')
-                ->where('userid', '=', $key->userid)
-                ->where('periode', '=', $periode)
-                ->first();
+        foreach ($cekUpdateKaryawan as $key) {
             // menemukan karyawan sesuai, update
             $hadir  = $this->absensi('H', $key->userid, date("Y-m-d", strtotime($request->tahun . '-' . $request->bulan . '-16' . "-1 month")), $request->tahun . '-' . $request->bulan . '-15');
             $sakit  = $this->absensi('S', $key->userid, date("Y-m-d", strtotime($request->tahun . '-' . $request->bulan . '-16' . "-1 month")), $request->tahun . '-' . $request->bulan . '-15');
             $izin   = $this->absensi('I', $key->userid, date("Y-m-d", strtotime($request->tahun . '-' . $request->bulan . '-16' . "-1 month")), $request->tahun . '-' . $request->bulan . '-15');
             $alpha  = $this->absensi('A', $key->userid, date("Y-m-d", strtotime($request->tahun . '-' . $request->bulan . '-16' . "-1 month")), $request->tahun . '-' . $request->bulan . '-15');
+            DB::table('administrasi_payroll')
+                ->where('userid', '=', $key->userid)
+                ->where('periode', '=', $periode)
+                ->limit(1)
+                ->update(
+                    array(
+                        'potongan_absen' => ($sakit + $izin),
+                        'H' => $hadir,
+                        'S' => $sakit,
+                        'I' => $izin,
+                        'A' => $alpha,
+                        'updated_at' => date('Y-m-d H:i:s'),
+                    )
+                );
+            Session::flash('success', 'Data Berhasil Diperbarui untuk data Payroll');
+        }
+    }
 
+    public function generateBPJS(Request $request)
+    {
+        // set periode gaji
+        $periode = substr($request->tahun, -2) . "" . $request->bulan;
+        // get karyawan hanya yang aktif
+        $cekUpdateKaryawan = DB::table('administrasi_payroll')
+            ->where('periode', '=', $periode)
+            ->orderBy('userid', 'asc')
+            ->get();
+
+        foreach ($cekUpdateKaryawan as $key) {
             $bpjs_jkk   = $this->get_bpjs('bpjs_jkk', $key->stb);
             $bpjs_jkm   = $this->get_bpjs('bpjs_jkm', $key->stb);
             $bpjs_jp    = $this->get_bpjs('bpjs_jp', $key->stb);
             $bpjs_jht   = $this->get_bpjs('bpjs_jht', $key->stb);
             $bpjs_ks    = $this->get_bpjs('bpjs_ks', $key->stb);
             $bpjs_ksAdd = $this->get_bpjs('bpjs_ksAdd', $key->stb);
-
-            if ($cekUpdateKaryawan) {
-                DB::table('administrasi_payroll')
-                    ->where('userid', '=', $key->userid)
-                    ->where('periode', '=', $periode)
-                    ->limit(1)
-                    ->update(
-                        array(
-                            'potongan_absen' => ($sakit + $izin),
-                            'pot_bpjs_jp' => $bpjs_jp,
-                            'pot_bpjs_ks' => $bpjs_ks,
-                            'H' => $hadir,
-                            'S' => $sakit,
-                            'I' => $izin,
-                            'A' => $alpha,
-                            'updated_at' => date('Y-m-d H:i:s'),
-                        )
-                    );
-                Session::flash('success', 'Data Berhasil Diperbarui untuk data Payroll');
-            }
+            DB::table('administrasi_payroll')
+                ->where('userid', '=', $key->userid)
+                ->where('periode', '=', $periode)
+                ->limit(1)
+                ->update(
+                    array(
+                        'pot_bpjs_jkk' => $bpjs_jkk,
+                        'pot_bpjs_jkm' => $bpjs_jkm,
+                        'pot_bpjs_jp' => $bpjs_jp,
+                        'pot_bpjs_jht' => $bpjs_jht,
+                        'pot_bpjs_ks' => $bpjs_ks,
+                        'pot_bpjs_ksAdd' => $bpjs_ksAdd,
+                        'updated_at' => date('Y-m-d H:i:s'),
+                    )
+                );
+            Session::flash('success', 'Data Berhasil Diperbarui untuk data Payroll');
         }
     }
 
@@ -288,20 +307,56 @@ class Administrasi extends Controller
             $bpjs = DB::table('daftar_upah')
                 ->where('jenis', '=', 'bpjs_jkk')
                 ->first();
-        } elseif ($jenis == 'bpjs_ks') {
+            if ($karyawanAktif->bpjs_jkk > 0) {
+                $res = - ($karyawanAktif->gapok * $bpjs->nominal) / 100;
+            } else {
+                $res = null;
+            }
+        } elseif ($jenis == 'bpjs_jkm') {
             $bpjs = DB::table('daftar_upah')
-                ->where('jenis', '=', 'bpjs_ks')
+                ->where('jenis', '=', 'bpjs_jkm')
                 ->first();
+            if ($karyawanAktif->bpjs_jkm > 0) {
+                $res = - ($karyawanAktif->gapok * $bpjs->nominal) / 100;
+            } else {
+                $res = null;
+            }
         } elseif ($jenis == 'bpjs_jp') {
             $bpjs = DB::table('daftar_upah')
                 ->where('jenis', '=', 'bpjs_jp')
                 ->first();
-        }
-
-        if ($karyawanAktif->bpjs_ks > 0) {
-            $res = - ($karyawanAktif->gapok * $bpjs->nominal) / 100;
-        } else {
-            $res = null;
+            if ($karyawanAktif->bpjs_jp > 0) {
+                $res = - ($karyawanAktif->gapok * $bpjs->nominal) / 100;
+            } else {
+                $res = null;
+            }
+        } elseif ($jenis == 'bpjs_jht') {
+            $bpjs = DB::table('daftar_upah')
+                ->where('jenis', '=', 'bpjs_jht')
+                ->first();
+            if ($karyawanAktif->bpjs_jht > 0) {
+                $res = - ($karyawanAktif->gapok * $bpjs->nominal) / 100;
+            } else {
+                $res = null;
+            }
+        } elseif ($jenis == 'bpjs_ks') {
+            $bpjs = DB::table('daftar_upah')
+                ->where('jenis', '=', 'bpjs_ks')
+                ->first();
+            if ($karyawanAktif->bpjs_ks > 0) {
+                $res = - ($karyawanAktif->gapok * $bpjs->nominal) / 100;
+            } else {
+                $res = null;
+            }
+        } elseif ($jenis == 'bpjs_ksAdd') {
+            $bpjs = DB::table('daftar_upah')
+                ->where('jenis', '=', 'bpjs_ks')
+                ->first();
+            if ($karyawanAktif->bpjs_ksAdd > 0) {
+                $res = - ($karyawanAktif->gapok * $bpjs->nominal) / 100;
+            } else {
+                $res = null;
+            }
         }
 
         return $res;

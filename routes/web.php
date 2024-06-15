@@ -296,6 +296,7 @@ Route::controller(Administrasi::class)->group(function () {
     Route::post('getpayroll', 'getpayroll')->name('getpayroll');
     Route::post('generatePayroll', 'generatePayroll')->name('generatePayroll');
     Route::post('generateKaryawan', 'generateKaryawan')->name('generateKaryawan');
+    Route::post('generateBPJS', 'generateBPJS')->name('generateBPJS');
     Route::post('/umr/update', 'updateumr')->name('/umr/update');
     Route::post('importPayroll', 'importPayroll')->name('importPayroll');
     Route::post('listBPJSKaryawan', 'listBPJSKaryawan');
