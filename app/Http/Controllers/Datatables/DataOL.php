@@ -33,8 +33,8 @@ class DataOL extends Controller
                 // })
 
                 ->addColumn('action', function ($row) {
-                    $btn = ' <a href="#viewKaryawan" data-bs-toggle="modal" data-toggle="tooltip" data-placement="top" title="Lihat Detail Data Karyawan" data-item="' . $row->nama . '" data-id="' . $row->id . '" class="btn btn-sm btn-info btn-icon"><i class="fa-solid fa-user-pen"></i></a>';
-                    // $btn = $btn . ' <a href="javascript:void(0)" data-toggle="tooltip" data-placement="top" title="Hapus Karyawan" data-noform="' . $row->id . '" data-nama="' . $row->nama . '" data-id="' . $row->id . '" class="btn btn-sm btn-red btn-icon deleteKaryawan"><i class="fa-solid fa-trash-can"></i></a>';
+                    $btn = ' <a href="#viewKaryawan" data-bs-toggle="modal" data-toggle="tooltip" data-placement="top" title="Lihat Detail Data Karyawan" data-item="' . $row->nama . '" data-id="' . $row->id . '" class="btn btn-sm btn-outline-info btn-icon"><i class="fa-solid fa-eye"></i></a>';
+                    $btn = $btn . ' <a href="karyawan/edit/' . $row->id . '" data-toggle="tooltip" data-placement="top" title="Edit" data-noform="' . $row->id . '" data-nama="' . $row->nama . '" data-id="' . $row->id . '" class="btn btn-sm btn-outline-orange btn-icon editKaryawan"><i class="fa-solid fa-pen-to-square"></i></a>';
                     return $btn;
                 })
                 ->rawColumns(['status', 'action', 'select_orders', 'ttl', 'umur'])

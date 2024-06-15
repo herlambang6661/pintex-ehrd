@@ -116,6 +116,85 @@ class Administrasi extends Controller
                 </div>';
     }
 
+    public function generateKaryawan(Request $request)
+    {
+        // set periode gaji
+        $periode = substr($request->tahun, -2) . "" . $request->bulan;
+        // get karyawan hanya yang aktif
+        $karyawanAktif = DB::table('penerimaan_karyawan')
+            ->where('status', 'LIKE', '%Aktif%')
+            ->orderBy('userid', 'asc')
+            ->get();
+
+        foreach ($karyawanAktif as $key) {
+            // cek karyawan
+            $cekUpdateKaryawan = DB::table('administrasi_payroll')
+                ->where('userid', '=', $key->userid)
+                ->where('periode', '=', $periode)
+                ->first();
+
+            if ($cekUpdateKaryawan) {
+                DB::table('administrasi_payroll')
+                    ->where('userid', '=', $key->userid)
+                    ->where('periode', '=', $periode)
+                    ->limit(1)
+                    ->update(
+                        array(
+                            'entitas' => 'PINTEX',
+                            'dari' => date("Y-m-d", strtotime($request->tahun . '-' . $request->bulan . '-16' . "-1 month")),
+                            'sampai' => $request->tahun . '-' . $request->bulan . '-15',
+                            'stb' => $key->stb,
+                            'nama' => $key->nama,
+                            'level' => $key->level,
+                            'divisi' => $key->divisi,
+                            'bagian' => $key->bagian,
+                            'jabatan' => $key->jabatan,
+                            'grup' => $key->grup,
+                            'profesi' => $key->profesi,
+                            'shift' => $key->shift,
+                            'umr' => $key->gapok,
+                            'gapok' => $key->gapok,
+                            'tjabat' => $key->tjabat,
+                            'prestasi' => $key->tprestasi,
+                            'bank' => $key->banknm,
+                            'rekening' => $key->bankrek,
+                            'potongan_infaq' => '-5000',
+                            'updated_at' => date('Y-m-d H:i:s'),
+                        )
+                    );
+                Session::flash('success', 'Data Karyawan Berhasil Diperbarui untuk data Payroll');
+            } else {
+                // tidak menemukan karyawan sesuai, buat data baru
+                DB::table('administrasi_payroll')
+                    ->insert(
+                        array(
+                            'entitas' => 'PINTEX',
+                            'dari' => date("Y-m-d", strtotime($request->tahun . '-' . $request->bulan . '-16' . "-1 month")),
+                            'sampai' => $request->tahun . '-' . $request->bulan . '-15',
+                            'stb' => $key->stb,
+                            'nama' => $key->nama,
+                            'level' => $key->level,
+                            'divisi' => $key->divisi,
+                            'bagian' => $key->bagian,
+                            'jabatan' => $key->jabatan,
+                            'grup' => $key->grup,
+                            'profesi' => $key->profesi,
+                            'shift' => $key->shift,
+                            'umr' => $key->gapok,
+                            'gapok' => $key->gapok,
+                            'tjabat' => $key->tjabat,
+                            'prestasi' => $key->tprestasi,
+                            'bank' => $key->banknm,
+                            'rekening' => $key->bankrek,
+                            'potongan_infaq' => '-5000',
+                            'created_at' => date('Y-m-d H:i:s'),
+                        )
+                    );
+                Session::flash('success', 'Data Karyawan Berhasil Dibuat untuk data Payroll');
+            }
+        }
+    }
+
     public function generatePayroll(Request $request)
     {
         // set periode gaji
@@ -138,8 +217,12 @@ class Administrasi extends Controller
             $izin   = $this->absensi('I', $key->userid, date("Y-m-d", strtotime($request->tahun . '-' . $request->bulan . '-16' . "-1 month")), $request->tahun . '-' . $request->bulan . '-15');
             $alpha  = $this->absensi('A', $key->userid, date("Y-m-d", strtotime($request->tahun . '-' . $request->bulan . '-16' . "-1 month")), $request->tahun . '-' . $request->bulan . '-15');
 
-            $bpjs_jp = $this->get_bpjs('bpjs_jp', $key->stb);
-            $bpjs_ks = $this->get_bpjs('bpjs_ks', $key->stb);
+            $bpjs_jkk   = $this->get_bpjs('bpjs_jkk', $key->stb);
+            $bpjs_jkm   = $this->get_bpjs('bpjs_jkm', $key->stb);
+            $bpjs_jp    = $this->get_bpjs('bpjs_jp', $key->stb);
+            $bpjs_jht   = $this->get_bpjs('bpjs_jht', $key->stb);
+            $bpjs_ks    = $this->get_bpjs('bpjs_ks', $key->stb);
+            $bpjs_ksAdd = $this->get_bpjs('bpjs_ksAdd', $key->stb);
 
             if ($cekUpdateKaryawan) {
                 DB::table('administrasi_payroll')
@@ -148,24 +231,6 @@ class Administrasi extends Controller
                     ->limit(1)
                     ->update(
                         array(
-                            // 'entitas' => 'PINTEX',
-                            // 'dari' => date("Y-m-d", strtotime($request->tahun . '-' . $request->bulan . '-16' . "-1 month")),
-                            // 'sampai' => $request->tahun . '-' . $request->bulan . '-15',
-                            // 'stb' => $key->stb,
-                            // 'nama' => $key->nama,
-                            // 'level' => $key->level,
-                            // 'divisi' => $key->divisi,
-                            // 'bagian' => $key->bagian,
-                            // 'jabatan' => $key->jabatan,
-                            // 'grup' => $key->grup,
-                            // 'profesi' => $key->profesi,
-                            // 'shift' => $key->shift,
-                            'umr' => $key->gapok,
-                            'gapok' => $key->gapok,
-                            'tjabat' => $key->tjabat,
-                            'prestasi' => $key->tprestasi,
-                            // 'bank' => $key->banknm,
-                            'rekening' => $key->bankrek,
                             'potongan_absen' => ($sakit + $izin),
                             'pot_bpjs_jp' => $bpjs_jp,
                             'pot_bpjs_ks' => $bpjs_ks,
@@ -173,42 +238,10 @@ class Administrasi extends Controller
                             'S' => $sakit,
                             'I' => $izin,
                             'A' => $alpha,
-                            // 'potongan_infaq' => '-5000',
                             'updated_at' => date('Y-m-d H:i:s'),
                         )
                     );
-            } else {
-                // tidak menemukan karyawan sesuai, buat data baru
-                DB::table('administrasi_payroll')
-                    ->insert(
-                        array(
-                            'entitas' => 'PINTEX',
-                            'periode' => $periode,
-                            'dari' => date("Y-m-d", strtotime($request->tahun . '-' . $request->bulan . '-16' . "-1 month")),
-                            'sampai' => $request->tahun . '-' . $request->bulan . '-15',
-                            'userid' => $key->userid,
-                            'stb' => $key->stb,
-                            'nama' => $key->nama,
-                            'level' => $key->level,
-                            'divisi' => $key->divisi,
-                            'bagian' => $key->bagian,
-                            'jabatan' => $key->jabatan,
-                            'grup' => $key->grup,
-                            'profesi' => $key->profesi,
-                            'umr' => $key->gapok,
-                            'gapok' => $key->gapok,
-                            'bank' => $key->banknm,
-                            'rekening' => $key->bankrek,
-                            'pot_bpjs_jp' => $bpjs_jp,
-                            'pot_bpjs_ks' => $bpjs_ks,
-                            'H' => $hadir,
-                            'S' => $sakit,
-                            'I' => $izin,
-                            'A' => $alpha,
-                            'potongan_infaq' => '-5000',
-                            'created_at' => date('Y-m-d H:i:s'),
-                        )
-                    );
+                Session::flash('success', 'Data Berhasil Diperbarui untuk data Payroll');
             }
         }
     }
@@ -251,26 +284,24 @@ class Administrasi extends Controller
         $karyawanAktif = DB::table('penerimaan_karyawan')
             ->where('stb', '=', $stb)
             ->first();
-
-        // get upah bpjs
-        if ($jenis == 'bpjs_ks') {
-            $bpjs_ks = DB::table('daftar_upah')
+        if ($jenis == 'bpjs_jkk') {
+            $bpjs = DB::table('daftar_upah')
+                ->where('jenis', '=', 'bpjs_jkk')
+                ->first();
+        } elseif ($jenis == 'bpjs_ks') {
+            $bpjs = DB::table('daftar_upah')
                 ->where('jenis', '=', 'bpjs_ks')
                 ->first();
-            if ($karyawanAktif->bpjs_ks > 0) {
-                $res = - ($karyawanAktif->gapok * $bpjs_ks->nominal) / 100;
-            } else {
-                $res = null;
-            }
         } elseif ($jenis == 'bpjs_jp') {
-            $bpjs_jp = DB::table('daftar_upah')
+            $bpjs = DB::table('daftar_upah')
                 ->where('jenis', '=', 'bpjs_jp')
                 ->first();
-            if ($karyawanAktif->bpjs_jp > 0) {
-                $res = - ($karyawanAktif->gapok * $bpjs_jp->nominal) / 100;
-            } else {
-                $res = null;
-            }
+        }
+
+        if ($karyawanAktif->bpjs_ks > 0) {
+            $res = - ($karyawanAktif->gapok * $bpjs->nominal) / 100;
+        } else {
+            $res = null;
         }
 
         return $res;
