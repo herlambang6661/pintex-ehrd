@@ -32,13 +32,10 @@ class DataFinger extends Controller
                 ->get();
             return DataTables::of($data)
                 ->addIndexColumn()
-                ->addColumn('select_orders', function ($row) {
-                    return '';
-                })
                 ->addColumn('hari', function ($row) {
                     return strtoupper(Carbon::parse($row->tanggal)->isoFormat('dddd'));
                 })
-                ->rawColumns(['select_orders', 'hari'])
+                ->rawColumns(['hari'])
                 ->make(true);
         }
         return view('products.03_absensi.absensifingerprint');
