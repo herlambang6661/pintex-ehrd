@@ -1190,7 +1190,7 @@ class Absensi extends Controller
             $getAlpa = DB::table('absensi_absensi as a')
                 ->join('penerimaan_karyawan as k', 'a.userid', '=', 'k.userid')
                 ->where('a.sst', '=', 'A')
-                ->where('a.koreksi', '=', '1')
+                ->whereNull('a.koreksi')
                 ->where('a.stb', 'NOT LIKE', '%PHL-%')
                 ->where('a.stb', 'NOT LIKE', '%OL-%')
                 ->where('k.status', 'LIKE', '%Aktif%')
@@ -1214,8 +1214,8 @@ class Absensi extends Controller
         } elseif ($request->jns == "f1f2") {
             $getF1 = DB::table('absensi_absensi as a')
                 ->join('penerimaan_karyawan as k', 'a.userid', '=', 'k.userid')
+                ->whereNull('a.koreksi')
                 ->whereIn('a.sst', ['F1', 'F2', '½'])
-                ->where('a.koreksi', '=', '1')
                 ->where('a.stb', 'NOT LIKE', '%PHL-%')
                 ->where('a.stb', 'NOT LIKE', '%OL-%')
                 ->where('k.status', 'LIKE', '%Aktif%')
