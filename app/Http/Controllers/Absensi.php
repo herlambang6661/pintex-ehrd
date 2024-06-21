@@ -1246,7 +1246,7 @@ class Absensi extends Controller
                 'list' => $list,
                 'dari' => $request->input('tglstart'),
                 'sampai' => $request->input('tglend'),
-                'jns' => $request->jns,
+                'jns' => $request->input('jns'),
             ]);
         }
     }
