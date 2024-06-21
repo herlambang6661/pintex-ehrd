@@ -1185,7 +1185,17 @@ class Absensi extends Controller
     function absenkosong(Request $request)
     {
         if ($request->input('jns') == "alpa") {
-            $getAlpa = DB::table('absensi_absensi')->where('sst', '=', 'A')->where('stb', 'NOT LIKE', '%PHL-%')->where('stb', 'NOT LIKE', '%OL-%')->whereBetween('tanggal', [$request->input('tglstart'), $request->input('tglend')])->orderBy('bagian', 'asc')->orderBy('grup', 'asc')->orderBy('name', 'asc')->get();
+            $getAlpa = DB::table('absensi_absensi as a')
+                ->join('penerimaan_karyawan as k', 'a.userid', '=', 'k.userid')
+                ->where('a.sst', '=', 'A')
+                ->where('a.stb', 'NOT LIKE', '%PHL-%')
+                ->where('a.stb', 'NOT LIKE', '%OL-%')
+                ->where('k.status', 'LIKE', '%Aktif%')
+                ->whereBetween('a.tanggal', [$request->input('tglstart'), $request->input('tglend')])
+                ->orderBy('a.bagian', 'asc')
+                ->orderBy('a.grup', 'asc')
+                ->orderBy('a.name', 'asc')
+                ->get();
             $judul = "Absensi Alpa";
             $absensi = "active";
             $list = "active";
@@ -1199,7 +1209,17 @@ class Absensi extends Controller
                 'jns' => $request->input('jns'),
             ]);
         } elseif ($request->jns == "f1f2") {
-            $getF1 = DB::table('absensi_absensi')->whereIn('sst', ['F1', 'F2'])->where('stb', 'NOT LIKE', '%PHL-%')->where('stb', 'NOT LIKE', '%OL-%')->whereBetween('tanggal', [$request->input('tglstart'), $request->input('tglend')])->orderBy('bagian', 'asc')->orderBy('grup', 'asc')->orderBy('name', 'asc')->get();
+            $getF1 = DB::table('absensi_absensi as a')
+                ->join('penerimaan_karyawan as k', 'a.userid', '=', 'k.userid')
+                ->whereIn('a.sst', ['F1', 'F2'])
+                ->where('a.stb', 'NOT LIKE', '%PHL-%')
+                ->where('a.stb', 'NOT LIKE', '%OL-%')
+                ->where('k.status', 'LIKE', '%Aktif%')
+                ->whereBetween('a.tanggal', [$request->input('tglstart'), $request->input('tglend')])
+                ->orderBy('a.bagian', 'asc')
+                ->orderBy('a.grup', 'asc')
+                ->orderBy('a.name', 'asc')
+                ->get();
             $judul = "Absensi F1F2";
             $absensi = "active";
             $list = "active";
