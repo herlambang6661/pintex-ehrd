@@ -24,20 +24,29 @@ class DataFinger extends Controller
      */
     public function index(Request $request)
     {
+        if ($request->dari) {
+            $dari = $request->dari;
+        } else {
+            $dari = date('Y-m-d');
+        }
+        if ($request->sampai) {
+            $sampai = $request->sampai;
+        } else {
+            $sampai = date('Y-m-d');
+        }
         if ($request->ajax()) {
             $data = DB::table('absensi_absensi')
-                ->where('stb', 'NOT LIKE', '%PHL-%')
-                ->where('stb', 'NOT LIKE', '%OL-%')
-                ->whereBetween('tanggal', [$request->dari, $request->sampai])
-                ->get();
+                ->whereBetween('tanggal', [$dari, $sampai])
+                ->orderBy('name', 'asc')->get();
             return DataTables::of($data)
                 ->addIndexColumn()
-                ->addColumn('hari', function ($row) {
-                    return strtoupper(Carbon::parse($row->tanggal)->isoFormat('dddd'));
+                ->addColumn('action', function ($row) {
+                    $btn = ' <a href="javascript:void(0)" data-bs-toggle="modal" data-bs-target="#modal-view" class="btn btn-outline-info btn-sm btn-icon"><i class="fa-solid fa-fw fa-eye"></i></a>';
+                    return $btn;
                 })
-                ->rawColumns(['hari'])
+                ->rawColumns(['action',])
                 ->make(true);
+            return view($data);
         }
-        return view('products.03_absensi.absensifingerprint');
     }
 }
