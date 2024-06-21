@@ -35,9 +35,11 @@ class DataFinger extends Controller
             $sampai = date('Y-m-d');
         }
         if ($request->ajax()) {
-            $data = DB::table('absensi_absensi')
-                ->whereBetween('tanggal', [$dari, $sampai])
-                ->orderBy('name', 'asc')->get();
+            $data = DB::table('absensi_absensi as a')
+                // ->join('penerimaan_karyawan as k', 'a.userid', '=', 'k.userid')
+                // ->where('k.status', 'LIKE', '%Aktif%')
+                ->whereBetween('a.tanggal', [$dari, $sampai])->get();
+            // ->orderBy('a.name', 'asc')->get();
             return DataTables::of($data)
                 ->addIndexColumn()
                 ->addColumn('action', function ($row) {
