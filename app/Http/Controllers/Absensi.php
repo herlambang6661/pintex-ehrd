@@ -949,6 +949,7 @@ class Absensi extends Controller
                         ->update(
                             array(
                                 'sst' => $request->sst[$i],
+                                'koreksi' => 1,
                                 'updated_at' => date('Y-m-d H:i:s'),
                             )
                         );
@@ -998,6 +999,7 @@ class Absensi extends Controller
                 ->update(
                     array(
                         'sst' => $key->sst,
+                        'koreksi' => 1,
                         'updated_at' => date('Y-m-d H:i:s'),
                     )
                 );
@@ -1188,6 +1190,7 @@ class Absensi extends Controller
             $getAlpa = DB::table('absensi_absensi as a')
                 ->join('penerimaan_karyawan as k', 'a.userid', '=', 'k.userid')
                 ->where('a.sst', '=', 'A')
+                ->where('a.koreksi', '>', 0)
                 ->where('a.stb', 'NOT LIKE', '%PHL-%')
                 ->where('a.stb', 'NOT LIKE', '%OL-%')
                 ->where('k.status', 'LIKE', '%Aktif%')
@@ -1211,7 +1214,8 @@ class Absensi extends Controller
         } elseif ($request->jns == "f1f2") {
             $getF1 = DB::table('absensi_absensi as a')
                 ->join('penerimaan_karyawan as k', 'a.userid', '=', 'k.userid')
-                ->whereIn('a.sst', ['F1', 'F2'])
+                ->whereIn('a.sst', ['F1', 'F2', '½'])
+                ->where('a.koreksi', '>', 0)
                 ->where('a.stb', 'NOT LIKE', '%PHL-%')
                 ->where('a.stb', 'NOT LIKE', '%OL-%')
                 ->where('k.status', 'LIKE', '%Aktif%')
