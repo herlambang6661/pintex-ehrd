@@ -8,6 +8,8 @@ use DatePeriod;
 use DateInterval;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
+use Maatwebsite\Excel\Facades\Excel;
+use App\Exports\ExportAbsensi;
 use Illuminate\Routing\Controller;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Log;
@@ -1249,5 +1251,10 @@ class Absensi extends Controller
                 'jns' => $request->input('jns'),
             ]);
         }
+    }
+
+    public function exportAbsensi(Request $request)
+    {
+        return Excel::download(new ExportAbsensi($request->dari, $request->sampai), 'MttRegistrations.xlsx');
     }
 }

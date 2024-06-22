@@ -533,6 +533,8 @@
                 ],
             });
 
+            $.fn.dataTable.ext.errMode = 'throw';
+
             $('#btnPerbarui').click(function() {
                 var token = $("meta[name='csrf-token']").attr("content");
                 var tgl = $('.tgl').val();
