@@ -8,7 +8,7 @@ use Maatwebsite\Excel\Concerns\Exportable;
 use Illuminate\Contracts\Queue\ShouldQueue;
 use Maatwebsite\Excel\Concerns\WithHeadings;
 
-class ExportAbsensi implements FromQuery, ShouldQueue, WithHeadings
+class ExportSKD implements FromQuery, ShouldQueue, WithHeadings
 {
     use Exportable;
     protected $dari, $sampai;
@@ -25,23 +25,22 @@ class ExportAbsensi implements FromQuery, ShouldQueue, WithHeadings
             'Tanggal',
             'STB',
             'Nama',
-            'Finger In',
-            'Finger Out',
-            'QJ',
-            'JIS',
-            'QJNET',
+            'Surat',
             'Status',
-            'Grup',
+            'Keterangan',
             'Bagian',
+            'Grup',
+            'Ket. ACC',
         ];
     }
 
     public function query()
     {
-        return DB::table('absensi_absensi as a')
-            ->select('tanggal', 'stb', 'name', 'in', 'out', 'qj', 'jis', 'qjnet', 'sst', 'grup', 'bagian')
-            ->whereBetween('a.tanggal', [$this->dari, $this->sampai])->orderBy('name');
-        // return $data;
+        return DB::table('absensi_komunikasiacc as a')
+            ->join('penerimaan_karyawan as k', 'a.userid', '=', 'k.userid')
+            ->select('a.tanggal', 'k.stb', 'a.nama', 'a.suratid', 'a.sst', 'a.keterangan', 'k.bagian', 'k.grup', 'a.ket_acc')
+            ->where('sst', '=', 'S')
+            ->whereBetween('a.tanggal', [$this->dari, $this->sampai])->orderBy('a.tanggal');
     }
 
     public function batchSize(): int

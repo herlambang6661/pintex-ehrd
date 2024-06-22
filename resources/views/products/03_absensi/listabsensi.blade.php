@@ -37,30 +37,30 @@
         }
 
         /* .cv-spinner {
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                    height: 100%;
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                    display: flex;
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                    justify-content: center;
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                    align-items: center;
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                }
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                            height: 100%;
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                            display: flex;
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                            justify-content: center;
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                            align-items: center;
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                        }
 
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                .spinner {
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                    width: 40px;
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                    height: 40px;
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                    border: 4px #ddd solid;
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                    border-top: 4px #2e93e6 solid;
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                    border-radius: 50%;
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                    animation: sp-anime 0.8s infinite linear;
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                }
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                        .spinner {
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                            width: 40px;
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                            height: 40px;
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                            border: 4px #ddd solid;
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                            border-top: 4px #2e93e6 solid;
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                            border-radius: 50%;
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                            animation: sp-anime 0.8s infinite linear;
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                        }
 
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                @keyframes sp-anime {
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                    100% {
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                        transform: rotate(360deg);
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                    }
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                }
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                        @keyframes sp-anime {
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                            100% {
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                transform: rotate(360deg);
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                            }
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                        }
 
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                .is-hide {
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                    display: none;
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                } */
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                        .is-hide {
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                            display: none;
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                        } */
         .loader {
             position: fixed;
             z-index: 301;
@@ -210,7 +210,7 @@
                                             <input type="hidden" name="sampai" class="tglend">
                                             <button type="submit" class="dropdown-item text-blue">
                                                 <i class="fa-solid fa-fingerprint" style="margin-right:5px"></i>
-                                                Data Fingerprint
+                                                Unduh Data Fingerprint
                                             </button>
                                         </form>
                                         <form action="{{ url('absenkosong') }}" method="get" target="_blank">
@@ -236,14 +236,14 @@
                                             <i class="fa-solid fa-truck-front" style="margin-right:5px"></i>
                                             Perbaiki Absensi Umum
                                         </button>
-                                        <form action="{{ url('absensakit') }}" method="get" target="_blank">
-                                            {{-- @csrf --}}
+                                        <form action="{{ url('exportSKD') }}" method="post">
+                                            @csrf
                                             <input type="hidden" name="jns" id="jns" value="sakit">
-                                            <input type="hidden" name="tglstart" class="tglstart">
-                                            <input type="hidden" name="tglend" class="tglend">
+                                            <input type="hidden" name="skdstart" class="tglstart">
+                                            <input type="hidden" name="skdend" class="tglend">
                                             <button type="submit" class="dropdown-item text-green">
                                                 <i class="fa-solid fa-user-doctor" style="margin-right:5px"></i>
-                                                Surat Keterangan Dokter
+                                                Unduh Surat Keterangan Dokter
                                             </button>
                                         </form>
                                     </div>
@@ -268,6 +268,134 @@
                                             </div>
                                         </div>
                                         <div class="row row-cards">
+                                            <style>
+                                                .spinnerLoading svg {
+                                                    -webkit-animation: loading-rotate 2s linear infinite;
+                                                    -moz-animation: loading-rotate 2s linear infinite;
+                                                    -o-animation: loading-rotate 2s linear infinite;
+                                                    animation: loading-rotate 2s linear infinite;
+                                                    height: 50px;
+                                                    width: 50px;
+                                                }
+
+                                                .spinnerLoading .path {
+                                                    stroke-dasharray: 90, 150;
+                                                    stroke-dashoffset: 0;
+                                                    stroke-width: 2;
+                                                    stroke: #409eff;
+                                                    stroke-linecap: round;
+                                                    -webkit-animation: loading-dash 1.5s ease-in-out infinite;
+                                                    -moz-animation: loading-dash 1.5s ease-in-out infinite;
+                                                    -o-animation: loading-dash 1.5s ease-in-out infinite;
+                                                    animation: loading-dash 1.5s ease-in-out infinite;
+                                                }
+
+                                                @-webkit-keyframes loading-rotate {
+                                                    to {
+                                                        -webkit-transform: rotate(1turn);
+                                                        transform: rotate(1turn);
+                                                    }
+                                                }
+
+                                                @-moz-keyframes loading-rotate {
+                                                    to {
+                                                        -moz-transform: rotate(1turn);
+                                                        transform: rotate(1turn);
+                                                    }
+                                                }
+
+                                                @-o-keyframes loading-rotate {
+                                                    to {
+                                                        -o-transform: rotate(1turn);
+                                                        transform: rotate(1turn);
+                                                    }
+                                                }
+
+                                                @keyframes loading-rotate {
+                                                    to {
+                                                        -webkit-transform: rotate(1turn);
+                                                        -moz-transform: rotate(1turn);
+                                                        -o-transform: rotate(1turn);
+                                                        transform: rotate(1turn);
+                                                    }
+                                                }
+
+                                                @-webkit-keyframes loading-dash {
+                                                    0% {
+                                                        stroke-dasharray: 1, 200;
+                                                        stroke-dashoffset: 0;
+                                                    }
+
+                                                    50% {
+                                                        stroke-dasharray: 90, 150;
+                                                        stroke-dashoffset: -40px;
+                                                    }
+
+                                                    to {
+                                                        stroke-dasharray: 90, 150;
+                                                        stroke-dashoffset: -120px;
+                                                    }
+                                                }
+
+                                                @-moz-keyframes loading-dash {
+                                                    0% {
+                                                        stroke-dasharray: 1, 200;
+                                                        stroke-dashoffset: 0;
+                                                    }
+
+                                                    50% {
+                                                        stroke-dasharray: 90, 150;
+                                                        stroke-dashoffset: -40px;
+                                                    }
+
+                                                    to {
+                                                        stroke-dasharray: 90, 150;
+                                                        stroke-dashoffset: -120px;
+                                                    }
+                                                }
+
+                                                @-o-keyframes loading-dash {
+                                                    0% {
+                                                        stroke-dasharray: 1, 200;
+                                                        stroke-dashoffset: 0;
+                                                    }
+
+                                                    50% {
+                                                        stroke-dasharray: 90, 150;
+                                                        stroke-dashoffset: -40px;
+                                                    }
+
+                                                    to {
+                                                        stroke-dasharray: 90, 150;
+                                                        stroke-dashoffset: -120px;
+                                                    }
+                                                }
+
+                                                @keyframes loading-dash {
+                                                    0% {
+                                                        stroke-dasharray: 1, 200;
+                                                        stroke-dashoffset: 0;
+                                                    }
+
+                                                    50% {
+                                                        stroke-dasharray: 90, 150;
+                                                        stroke-dashoffset: -40px;
+                                                    }
+
+                                                    to {
+                                                        stroke-dasharray: 90, 150;
+                                                        stroke-dashoffset: -120px;
+                                                    }
+                                                }
+                                            </style>
+                                            <div class="col-sm-12 col-md-12 text-center">
+                                                <div class="spinnerLoading" style="display:none">
+                                                    <svg viewBox="25 25 50 50">
+                                                        <circle cx="50" cy="50" r="20" fill="none"
+                                                            class="path"></circle>
+                                                    </svg>
+                                                </div>
+                                            </div>
                                             <div class="table-responsive">
                                                 <table class=" mb-0">
                                                     <thead>
@@ -914,11 +1042,22 @@
                         <h5 class="modal-title">Detail Absensi Karyawan</h5>
                         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                     </div>
-                    <div class="modal-body">
+                    <div class="modal-body pt-2">
                         <div class="fetched-absensi-detail"></div>
                     </div>
                     <div class="modal-footer">
-                        <button type="button" class="btn btn-primary" data-bs-dismiss="modal">Tutup</button>
+                        <button type="button" class="btn btn-info" data-bs-dismiss="modal">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"
+                                fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                                stroke-linejoin="round"
+                                class="icon icon-tabler icons-tabler-outline icon-tabler-arrow-left">
+                                <path stroke="none" d="M0 0h24v24H0z" fill="none" />
+                                <path d="M5 12l14 0" />
+                                <path d="M5 12l6 6" />
+                                <path d="M5 12l6 -6" />
+                            </svg>
+                            Tutup
+                        </button>
                     </div>
                 </div>
             </div>

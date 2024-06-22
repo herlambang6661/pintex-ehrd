@@ -3013,9 +3013,9 @@ class Penerimaan extends Controller
         } elseif ($request->idtipe == "perjanjian") {
             echo '<input type="hidden" name="suratjns" value="PERJANJIAN" id="suratjns">';
             echo '<input type="hidden" name="userid" value="' . $request->id . '">';
-            echo
-            '
-                <div class="modal-body">
+            echo '<div class="modal-body">';
+            if ($sebelumnya_perjanjian) {
+                echo '
                     <table class="table table-sm table-bordered bg-blue-lt text-white text-center">
                         <thead>
                             <tr>
@@ -3032,7 +3032,9 @@ class Penerimaan extends Controller
                             <td>' . Carbon::parse($sebelumnya_perjanjian->tglak)->format('d/m/Y') . '</td>
                             <td>' . $sebelumnya_perjanjian->sacuti . '</td>
                         </tr>
-                    </table>
+                    </table>';
+            }
+            echo '
                     <div class="row">
                         <div class="col-lg-12">
                             <div class="mb-3">
@@ -3062,12 +3064,12 @@ class Penerimaan extends Controller
                         <tr>
                             <td style="padding-top: 12px">Tanggal Awal</td>
                             <td style="padding-top: 12px">:</td>
-                            <td><input type="date" name="tglawal" class="form-control" value="' . date('Y-m-d', strtotime($sebelumnya_perjanjian->tglak . ' +1 day')) . '"></td>
+                            <td><input type="date" name="tglawal" class="form-control" value="' . (!empty($sebelumnya_perjanjian->tglak) ? date('Y-m-d', strtotime($sebelumnya_perjanjian->tglak . ' +1 day')) : date('Y-m-d')) . '"></td>
                         </tr>
                         <tr>
                             <td style="padding-top: 12px">Tanggal Akhir</td>
                             <td style="padding-top: 12px">:</td>
-                            <td><input type="date" name="tglakhir" class="form-control" value="' . date('Y-m-d', strtotime($sebelumnya_perjanjian->tglak . ' +1 day')) . '"></td>
+                            <td><input type="date" name="tglakhir" class="form-control" value="' . (!empty($sebelumnya_perjanjian->tglak) ? date('Y-m-d', strtotime($sebelumnya_perjanjian->tglak . ' +1 day')) : date('Y-m-d')) . '"></td>
                         </tr>
                         <tr>
                             <td style="padding-top: 12px">Cuti</td>
