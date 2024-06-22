@@ -1255,6 +1255,12 @@ class Absensi extends Controller
 
     public function exportAbsensi(Request $request)
     {
-        return Excel::download(new ExportAbsensi($request->dari, $request->sampai), 'MttRegistrations.xlsx');
+        $characters = '0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ';
+        $charactersLength = strlen($characters);
+        $randomString = '';
+        for ($i = 0; $i < 10; $i++) {
+            $randomString .= $characters[random_int(0, $charactersLength - 1)];
+        }
+        return Excel::download(new ExportAbsensi($request->dari, $request->sampai), 'Absen Periode ' . $request->dari . ' - ' . $request->sampai . ' (' . $randomString . ').xlsx');
     }
 }

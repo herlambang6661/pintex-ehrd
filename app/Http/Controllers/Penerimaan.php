@@ -1425,7 +1425,7 @@ class Penerimaan extends Controller
                     $suratket = "PHL";
                 } elseif ($request->diterimasebagai[$i] == "Kontrak") {
                     $kodestb = "0";
-                    $statusditerima = "Aktif";
+                    $statusditerima = "aktif";
                     $perjanjian = 'Kontrak Baru (' . Carbon::parse($request->dari[$i])->format('d/m/Y') . ' s.d. ' . Carbon::parse($request->ke[$i])->format('d/m/Y') . ')';
                     $nmsurat = "Perjanjian Kontrak";
                     $suratket = "Kontrak I";
@@ -1457,6 +1457,14 @@ class Penerimaan extends Controller
                     'keterangan' => $l->keterangan,
                     'tglinput' => date('Y-m-d'),
                     'dibuat' => Auth::user()->name,
+                    'nomap' => ' ',
+                    'level' => ' ',
+                    'divisi' => ' ',
+                    'bagian' => ' ',
+                    'jabatan' => ' ',
+                    'grup' => ' ',
+                    'profesi' => ' ',
+                    'shift' => ' ',
                     'created_at' => date('Y-m-d H:i:s'),
                 ]);
                 // Add Legalitas
