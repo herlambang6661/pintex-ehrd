@@ -1279,23 +1279,14 @@ class Absensi extends Controller
 
     public function exportAbsensi(Request $request)
     {
-        ini_set('memory_limit', '-1');
-
         $characters = '0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ';
+        ini_set('memory_limit', '-1');
         $charactersLength = strlen($characters);
         $randomString = '';
         for ($i = 0; $i < 10; $i++) {
             $randomString .= $characters[random_int(0, $charactersLength - 1)];
         }
-        // return Excel::download(new ExportAbsensi($request->dari, $request->sampai), 'Absen Periode ' . $request->dari . ' - ' . $request->sampai . ' (' . $randomString . ').xlsx');
-
-        $exporter = new ExportAbsensi($request->dari, $request->sampai);
-        $exporter->queue(
-            'Absen Periode ' . $request->dari . ' - ' . $request->sampai . ' (' . $randomString . ').xlsx',
-            \Maatwebsite\Excel\Excel::XLSX
-        )->chain([
-            Excel::download($exporter)
-        ]);
+        return Excel::download(new ExportAbsensi($request->dari, $request->sampai), 'Absen Periode ' . $request->dari . ' - ' . $request->sampai . ' (' . $randomString . ').xlsx');
     }
 
     public function exportSKD(Request $request)
