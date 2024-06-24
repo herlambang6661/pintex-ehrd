@@ -34,7 +34,7 @@ class DataPayroll extends Controller
         if ($request->ajax()) {
             $data = DB::table('administrasi_payroll')
                 ->selectRaw('
-                            id, stb, nama, gapok, level, prestasi, tjabat, bank, rekening, pot_bpjs_jht, pot_bpjs_jp, pot_bpjs_ks, potongan_absen, potongan_infaq, potongan_koperasi, potongan_pinjaman
+                            id, stb, nama, gapok, level, prestasi, tjabat, bank, rekening, pot_bpjs_jkk, pot_bpjs_jkm, pot_bpjs_jp, pot_bpjs_jht, pot_bpjs_ks, pot_bpjs_ksAdd, potongan_absen, potongan_infaq, potongan_koperasi, potongan_pinjaman
                             ')
                 ->where('periode', '=', $tahun . $bulan)
                 ->orderBy('nama', 'asc')
