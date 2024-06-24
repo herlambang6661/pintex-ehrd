@@ -7,8 +7,9 @@ use Maatwebsite\Excel\Concerns\FromQuery;
 use Maatwebsite\Excel\Concerns\Exportable;
 use Illuminate\Contracts\Queue\ShouldQueue;
 use Maatwebsite\Excel\Concerns\WithHeadings;
+use Maatwebsite\Excel\Concerns\WithCustomChunkSize;
 
-class ExportAbsensi implements FromQuery, ShouldQueue, WithHeadings
+class ExportAbsensi implements FromQuery, ShouldQueue, WithHeadings, WithCustomChunkSize
 {
     use Exportable;
     protected $dari, $sampai;
@@ -38,9 +39,9 @@ class ExportAbsensi implements FromQuery, ShouldQueue, WithHeadings
 
     public function query()
     {
-        return DB::table('absensi_absensi as a')
+        return DB::table('absensi_absensi')
             ->select('tanggal', 'stb', 'name', 'in', 'out', 'qj', 'jis', 'qjnet', 'sst', 'grup', 'bagian')
-            ->whereBetween('a.tanggal', [$this->dari, $this->sampai])->orderBy('name');
+            ->whereBetween('tanggal', [$this->dari, $this->sampai])->orderBy('name');
         // return $data;
     }
 
