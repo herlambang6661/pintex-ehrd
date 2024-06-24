@@ -41,6 +41,7 @@ class ExportAbsensi implements FromQuery, ShouldQueue, WithHeadings, WithCustomC
     {
         return DB::table('absensi_absensi')
             ->select('tanggal', 'stb', 'name', 'in', 'out', 'qj', 'jis', 'qjnet', 'sst', 'grup', 'bagian')
+            ->where('status', 'LIKE', '%aktif%')
             ->whereBetween('tanggal', [$this->dari, $this->sampai])->orderBy('name');
         // return $data;
     }
