@@ -55,7 +55,7 @@ class DataPayroll extends Controller
                     return $res;
                 })
                 ->addColumn('potbpjs', function ($row) {
-                    $res = $row->pot_bpjs_jht + $row->pot_bpjs_jp + $row->pot_bpjs_ks;
+                    $res = $row->pot_bpjs_jkk + $row->pot_bpjs_jkm + $row->pot_bpjs_jp + $row->pot_bpjs_jht + $row->pot_bpjs_ks + $row->pot_bpjs_ksAdd;
                     return $res;
                 })
                 ->addColumn('potlain', function ($row) {

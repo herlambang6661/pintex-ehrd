@@ -14,13 +14,13 @@
 
         td.cuspad2 {
             /* padding-top: 0.5px;
-                                                                                                                                                                                        padding-bottom: 0.5px;
-                                                                                                                                                                                        padding-right: 0.5px;
-                                                                                                                                                                                        padding-left: 0.5px;
-                                                                                                                                                                                        margin-top: 5px;
-                                                                                                                                                                                        margin-bottom: 5px;
-                                                                                                                                                                                        margin-right: 5px;
-                                                                                                                                                                                        margin-left: 5px; */
+                                                                                                                                                                                                                                    padding-bottom: 0.5px;
+                                                                                                                                                                                                                                    padding-right: 0.5px;
+                                                                                                                                                                                                                                    padding-left: 0.5px;
+                                                                                                                                                                                                                                    margin-top: 5px;
+                                                                                                                                                                                                                                    margin-bottom: 5px;
+                                                                                                                                                                                                                                    margin-right: 5px;
+                                                                                                                                                                                                                                    margin-left: 5px; */
         }
 
         .unselectable {
@@ -111,13 +111,13 @@
                                             <path d="M20 11a8.1 8.1 0 0 0 -15.5 -2m-.5 -4v4h4" />
                                             <path d="M4 13a8.1 8.1 0 0 0 15.5 2m.5 4v-4h-4" />
                                         </svg>
-                                        Perbarui
+                                        Perbarui I/O
                                     </button>
                                     <button data-bs-toggle="dropdown" type="button"
                                         class="btn btn-blue dropdown-toggle dropdown-toggle-split"
                                         aria-expanded="false"></button>
                                     <div class="dropdown-menu dropdown-menu-end" style="">
-                                        <button class="dropdown-item" id="btnUpload">
+                                        {{-- <button class="dropdown-item" id="btnUpload">
                                             <svg xmlns="http://www.w3.org/2000/svg" style="margin-right: 10px"
                                                 width="24" height="24" viewBox="0 0 24 24" fill="none"
                                                 stroke="currentColor" stroke-width="2" stroke-linecap="round"
@@ -130,7 +130,7 @@
                                                 <path d="M12 12l0 9" />
                                             </svg>
                                             Upload Cloud
-                                        </button>
+                                        </button> --}}
                                         <button class="dropdown-item" id="btnPerbaruiUpload">
                                             <svg xmlns="http://www.w3.org/2000/svg" style="margin-right: 10px"
                                                 width="24" height="24" viewBox="0 0 24 24" fill="none"
@@ -144,9 +144,9 @@
                                                 <path d="M16 16v4a1 1 0 0 0 1 1h4" />
                                                 <path d="M8 16v4a1 1 0 0 1 -1 1h-4" />
                                             </svg>
-                                            Perbarui & Upload ke Cloud
+                                            Upload Absensi Cloud
                                         </button>
-                                        {{-- <button class="dropdown-item" id="btnPerbaruiUploadBulan">
+                                        <button class="dropdown-item" id="btnRefreshAbsensi">
                                             <svg xmlns="http://www.w3.org/2000/svg" style="margin-right: 10px"
                                                 width="24" height="24" viewBox="0 0 24 24" fill="none"
                                                 stroke="currentColor" stroke-width="2" stroke-linecap="round"
@@ -160,8 +160,8 @@
                                                 <path
                                                     d="M8 16.004h-1.343c-2.572 -.004 -4.657 -2.011 -4.657 -4.487c0 -2.475 2.085 -4.482 4.657 -4.482c.393 -1.762 1.794 -3.2 3.675 -3.773c1.88 -.572 3.956 -.193 5.444 1c1.488 1.19 2.162 3.007 1.77 4.769h.99c1.913 0 3.464 1.56 3.464 3.486c0 1.927 -1.551 3.487 -3.465 3.487h-2.535" />
                                             </svg>
-                                            Perbarui & Upload ke Cloud Berdasarkan Bulan
-                                        </button> --}}
+                                            Refresh Absensi Cloud
+                                        </button>
                                     </div>
                                 </div>
                             </div>
@@ -702,7 +702,7 @@
 
                 Swal.fire({
                     icon: 'question',
-                    title: 'Perbarui & Upload Data Absen',
+                    title: 'Upload Data Absen',
                     text: 'Apakah anda yakin ingin Perbarui & Upload data absen tanggal ' + tgl +
                         ' dari Lokal ke Cloud ? Proses akan membutuhkan waktu yang cukup lama, mohon bersabar.',
                     showCancelButton: true,
@@ -766,17 +766,14 @@
                 });
             });
 
-            $('#btnPerbaruiUploadBulan').click(function() {
-
+            $('#btnRefreshAbsensi').click(function() {
                 var token = $("meta[name='csrf-token']").attr("content");
                 var tgl = $('.tgl').val();
-
                 Swal.fire({
                     icon: 'question',
-                    title: 'Perbarui & Upload Data Absen Berdasarkan Bulan',
-                    text: 'Apakah anda yakin ingin Perbarui & Upload data absen tanggal ' +
-                        tgl +
-                        ' dari Lokal ke Cloud ? Proses akan membutuhkan waktu yang cukup lama, mohon bersabar.',
+                    title: 'Perbarui Data Absen Cloud',
+                    text: 'Apakah anda yakin ingin Perbarui data absen Cloud tanggal ' + tgl +
+                        ' ? Proses akan membutuhkan waktu yang cukup lama, mohon bersabar.',
                     showCancelButton: true,
                     confirmButtonColor: '#d33',
                     cancelButtonColor: '#3085d6',
@@ -786,7 +783,7 @@
                     if (result.isConfirmed) {
                         $.ajax({
                             type: "POST",
-                            url: "{{ url('perbaruiUploadAbsenBulan') }}",
+                            url: "{{ url('refreshUploadAbsen') }}",
                             data: {
                                 "_token": "{{ csrf_token() }}",
                                 'tgl': tgl,

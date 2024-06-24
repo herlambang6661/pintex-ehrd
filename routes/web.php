@@ -283,7 +283,7 @@ Route::controller(DBLokal::class)->group(function () {
     Route::post('uploadAbsen', 'uploadAbsen');
     Route::post('perbaruiUploadAbsen', 'perbaruiUploadAbsen');
     Route::post('UploadFixedAbsen', 'UploadFixedAbsen');
-    Route::post('perbaruiUploadAbsenBulan', 'perbaruiUploadAbsenBulan');
+    Route::post('refreshUploadAbsen', 'refreshUploadAbsen');
     Route::get('loaderlocal', 'loading');
 });
 
