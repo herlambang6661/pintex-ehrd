@@ -89,7 +89,6 @@ class DBLokal extends Controller
 
     public function syncFromAccess()
     {
-
         $ac = DB::connection('odbc')
             ->table('USERINFO')
             ->select('*')

@@ -58,8 +58,10 @@ class DataPayroll extends Controller
                     $res = $row->pot_bpjs_jkk + $row->pot_bpjs_jkm + $row->pot_bpjs_jp + $row->pot_bpjs_jht + $row->pot_bpjs_ks + $row->pot_bpjs_ksAdd;
                     return $res;
                 })
-                ->addColumn('potlain', function ($row) {
-                    $res = $row->potongan_absen + $row->potongan_infaq + $row->potongan_koperasi + $row->potongan_pinjaman;
+                ->addColumn('totpot', function ($row) {
+                    $bpjs = $row->pot_bpjs_jkk + $row->pot_bpjs_jkm + $row->pot_bpjs_jp + $row->pot_bpjs_jht + $row->pot_bpjs_ks + $row->pot_bpjs_ksAdd;
+                    $infaqkoperasi = $row->potongan_koperasi + $row->potongan_infaq;
+                    $res = $bpjs + $infaqkoperasi;
                     return $res;
                 })
                 ->addColumn('potabs', function ($row) {
@@ -68,16 +70,21 @@ class DataPayroll extends Controller
                     return $res;
                 })
                 ->addColumn('gnetto', function ($row) {
-                    $res = ($row->gapok + $row->prestasi + $row->tjabat) + ($row->pot_bpjs_jht + $row->pot_bpjs_jp + $row->pot_bpjs_ks) + ($row->potongan_absen + $row->potongan_infaq + $row->potongan_koperasi + $row->potongan_pinjaman);
+                    $bruto = $row->gapok + $row->prestasi + $row->tjabat;
+                    $bpjs = $row->pot_bpjs_jkk + $row->pot_bpjs_jkm + $row->pot_bpjs_jp + $row->pot_bpjs_jht + $row->pot_bpjs_ks + $row->pot_bpjs_ksAdd;
+                    $infaqkoperasi = $row->potongan_koperasi + $row->potongan_infaq;
+                    $potongan = $bpjs + $infaqkoperasi;
+
+                    $res = $bruto + $potongan;
                     return $res;
                 })
                 ->addColumn('pembulatan', function ($row) {
                     $res = ($row->gapok + $row->prestasi + $row->tjabat) + ($row->pot_bpjs_jht + $row->pot_bpjs_jp + $row->pot_bpjs_ks) + ($row->potongan_absen + $row->potongan_infaq + $row->potongan_koperasi + $row->potongan_pinjaman);
                     $res = ceil($res);
                     if (substr($res, -3) > 499) {
-                        $result = round($res, -3);
+                        $result = round($res, -2);
                     } else {
-                        $result = round($res, -3) + 1000;
+                        $result = round($res, -2) + 100;
                     }
                     return $result;
                 })
