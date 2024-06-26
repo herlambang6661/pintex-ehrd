@@ -376,15 +376,7 @@ class Administrasi extends Controller
                 ->where('jenis', '=', 'bpjs_ks')
                 ->first();
             if ($karyawanAktif->bpjs_ks > 0) {
-                if ($karyawanAktif->jabatan == 'KASIE') {
-                    $res = - (($karyawanAktif->gapok + 125000) * $bpjs->nominal) / 100;
-                } elseif ($karyawanAktif->jabatan == 'KABAG') {
-                    $res = - (($karyawanAktif->gapok + 500000) * $bpjs->nominal) / 100;
-                } elseif ($karyawanAktif->jabatan == 'MANAGER') {
-                    $res = - (($karyawanAktif->gapok + 1000000) * $bpjs->nominal) / 100;
-                } else {
-                    $res = - ($karyawanAktif->gapok * $bpjs->nominal) / 100;
-                }
+                $res = - ($karyawanAktif->gapok * $bpjs->nominal) / 100;
             } else {
                 $res = null;
             }
@@ -393,15 +385,7 @@ class Administrasi extends Controller
                 ->where('jenis', '=', 'bpjs_ks')
                 ->first();
             if ($karyawanAktif->bpjs_ksAdd > 0) {
-                if ($karyawanAktif->jabatan == 'KASIE') {
-                    $res = - (($karyawanAktif->gapok + 125000) * $bpjs->nominal) / 100;
-                } elseif ($karyawanAktif->jabatan == 'KABAG') {
-                    $res = - (($karyawanAktif->gapok + 500000) * $bpjs->nominal) / 100;
-                } elseif ($karyawanAktif->jabatan == 'MANAGER') {
-                    $res = - (($karyawanAktif->gapok + 1000000) * $bpjs->nominal) / 100;
-                } else {
-                    $res = - ($karyawanAktif->gapok * $bpjs->nominal) / 100;
-                }
+                $res = - ($karyawanAktif->gapok * $bpjs->nominal) / 100;
             } else {
                 $res = null;
             }
