@@ -308,6 +308,8 @@ Route::controller(Administrasi::class)->group(function () {
     Route::post('bpjsupdate', 'updateUpahBpjs')->name('bpjsupdate');
     Route::post('administrasi/tambahanPayroll', 'uploadTambahanPayroll')->name('administrasi/tambahanPayroll');
     Route::post('/administrasi/updateTambahanPayroll', 'updateTambahanPayroll')->name('/administrasi/updateTambahanPayroll');
+    Route::post('getSlipgaji', 'getSlipgaji');
+    Route::post('administrasi/printPayroll', 'printPayroll')->name('administrasi/printPayroll');
 });
 
 // Modules Database

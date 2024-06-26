@@ -284,6 +284,98 @@ class Administrasi extends Controller
         ]);
     }
 
+    public function printPayroll(Request $request)
+    {
+        $judul = "Print Payroll";
+        $administrasi = "active";
+        $payroll = "active";
+
+        for ($i = 0; $i < count($request->id); $i++) {
+            $getPayroll[] = DB::table('administrasi_payroll as p')
+                ->select('p.*', 'k.bankrek')
+                ->join('penerimaan_karyawan as k', 'p.userid', '=', 'k.userid')
+                ->where('p.id', '=', $request->id[$i])
+                ->first();
+        }
+
+        return view('products/04_administrasi.printPayroll', [
+            'judul' => $judul,
+            'administrasi' => $administrasi,
+            'payroll' => $payroll,
+            'getPayroll' => $getPayroll,
+        ]);
+    }
+
+    public function getSlipgaji(Request $request)
+    {
+        if (empty($request->id)) {
+            echo '<center><iframe src="https://lottie.host/embed/94d605b9-2cc4-4d11-809a-7f41357109b0/OzwBgj9bHl.json" width="300px" height="300px"></iframe></center>';
+            echo "<center>Tidak ada data yang dipilih</center>";
+        } else {
+            $jml = count($request->id);
+            echo '<div class="table-responsive">';
+            echo '<div class="space-y">';
+
+            for ($i = 0; $i < $jml; $i++) {
+                $data = DB::table('administrasi_payroll')->where('id', $request->id[$i])->get();
+                foreach ($data as $u) {
+                    echo  '<input type="hidden" name="id[]" value="' . $u->id . '" >';
+                    echo  '<input type="hidden" name="nama[]" value="' . $u->nama . '" >';
+                    echo '
+                        <div class="card shadow border-green">
+                            <div class="row g-0">
+                                <div class="col-auto">
+                                    <div class="card-body">
+                                        <div class="avatar avatar-md shadow" style="background-image: url(/photo/pas/' . $u->userid . '.jpg)"></div>
+                                    </div>
+                                </div>
+                                <div class="col">
+                                    <div class="card-body ps-0">
+                                        <div class="row">
+                                            <div class="col">
+                                                <h3 class="mb-0">' . $u->nama . ' ( ' . $u->stb . ' )</h3>
+                                            </div>
+                                        </div>
+                                        <div class="row">
+                                            <div class="col-md">
+                                                <div class="mt-3 list-inline list-inline-dots mb-0 text-secondary d-sm-block d-none">
+                                                    <div class="list-inline-item">
+                                                        <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-inline" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z" fill="none"></path><path d="M15 21h-9a3 3 0 0 1 -3 -3v-1h10v2a2 2 0 0 0 4 0v-14a2 2 0 1 1 2 2h-2m2 -4h-11a3 3 0 0 0 -3 3v11"></path><path d="M9 7l4 0"></path><path d="M9 11l4 0"></path></svg>
+                                                        ' . $u->periode . '
+                                                    </div>
+                                                    <div class="list-inline-item">
+                                                        <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-inline" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z" fill="none"></path><path d="M8 9l5 5v7h-5v-4m0 4h-5v-7l5 -5m1 1v-6a1 1 0 0 1 1 -1h10a1 1 0 0 1 1 1v17h-8"></path><path d="M13 7l0 .01"></path><path d="M17 7l0 .01"></path><path d="M17 11l0 .01"></path><path d="M17 15l0 .01"></path></svg>
+                                                        ' . $u->bagian . '
+                                                    </div>
+                                                </div>
+                                                <div class="mt-3 list mb-0 text-secondary d-block d-sm-none">
+                                                    <div class="list-item">
+                                                        <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-inline" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z" fill="none"></path><path d="M15 21h-9a3 3 0 0 1 -3 -3v-1h10v2a2 2 0 0 0 4 0v-14a2 2 0 1 1 2 2h-2m2 -4h-11a3 3 0 0 0 -3 3v11"></path><path d="M9 7l4 0"></path><path d="M9 11l4 0"></path></svg>
+                                                        ' . $u->periode . '
+                                                    </div>
+                                                    <div class="list-item">
+                                                        <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-inline" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z" fill="none"></path><path d="M8 9l5 5v7h-5v-4m0 4h-5v-7l5 -5m1 1v-6a1 1 0 0 1 1 -1h10a1 1 0 0 1 1 1v17h-8"></path><path d="M13 7l0 .01"></path><path d="M17 7l0 .01"></path><path d="M17 11l0 .01"></path><path d="M17 15l0 .01"></path></svg>
+                                                        ' . $u->bagian . '
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="col-md-auto">
+                                                <div class="mt-3 badges">
+                                                    <i href="#" class="badge badge-outline text-secondary fw-normal badge-pill">Tanggal: ' . carbon::parse($u->dari)->format('d/m/Y') . ' s/d ' . carbon::parse($u->sampai)->format('d/m/Y') . '</i>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        ';
+                }
+            }
+        }
+        // return $result;
+    }
+
     private function absensi($params, $userid, $start, $end)
     {
         $absensi = DB::table('absensi_absensi')
