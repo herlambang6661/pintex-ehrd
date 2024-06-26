@@ -965,14 +965,14 @@
                             data: 'gnetto',
                             name: 'gnetto',
                             render: $.fn.dataTable.render.number('.', ',', 0, ''),
-                            className: 'cuspad0 text-center text-green'
+                            className: 'cuspad0 text-center text-blue'
                         },
                         {
                             title: 'Pembulatan',
                             data: 'pembulatan',
                             name: 'pembulatan',
                             render: $.fn.dataTable.render.number('.', ',', 0, ''),
-                            className: 'cuspad0 text-center'
+                            className: 'cuspad0 text-center text-blue'
                         },
                         {
                             title: 'Bank',
