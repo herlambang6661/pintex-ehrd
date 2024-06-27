@@ -296,19 +296,25 @@ Route::controller(Administrasi::class)->group(function () {
     Route::get('administrasi/lembur', 'lembur')->name('administrasi/lembur');
 
     Route::get('/payroll/export_excel', 'exportPayroll')->name('/payroll/export_excel');
+    Route::get('/payroll/export_excel_absensi', 'exportAbsenPayroll')->name('/payroll/export_excel_absensi');
     Route::post('getpayroll', 'getpayroll')->name('getpayroll');
     Route::post('generatePayroll', 'generatePayroll')->name('generatePayroll');
     Route::post('generateKaryawan', 'generateKaryawan')->name('generateKaryawan');
     Route::post('generateBPJS', 'generateBPJS')->name('generateBPJS');
     Route::post('/umr/update', 'updateumr')->name('/umr/update');
     Route::post('importPayroll', 'importPayroll')->name('importPayroll');
+    Route::post('importAbsenPayroll', 'importAbsenPayroll')->name('importAbsenPayroll');
+    Route::post('pilihFixAbsen', 'pilihFixAbsen')->name('pilihFixAbsen');
     Route::post('listBPJSKaryawan', 'listBPJSKaryawan');
     Route::post('pos/update', 'updatePos');
     Route::post('updateBPJS', 'updateBPJS');
     Route::post('bpjsupdate', 'updateUpahBpjs')->name('bpjsupdate');
     Route::post('administrasi/tambahanPayroll', 'uploadTambahanPayroll')->name('administrasi/tambahanPayroll');
+    Route::post('administrasi/kelolalevel', 'kelolalevel')->name('administrasi/kelolalevel');
+    Route::post('administrasi/tambahanAbsensi', 'uploadtambahanAbsensi')->name('administrasi/tambahanAbsensi');
     Route::post('/administrasi/updateTambahanPayroll', 'updateTambahanPayroll')->name('/administrasi/updateTambahanPayroll');
     Route::post('getSlipgaji', 'getSlipgaji');
+    Route::post('rekapPayroll', 'rekapPayroll');
     Route::post('administrasi/printPayroll', 'printPayroll')->name('administrasi/printPayroll');
 });
 

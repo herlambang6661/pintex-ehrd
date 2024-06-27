@@ -24,22 +24,21 @@ class DataFinger extends Controller
      */
     public function index(Request $request)
     {
-        if ($request->dari) {
-            $dari = $request->dari;
-        } else {
-            $dari = date('Y-m-d');
-        }
-        if ($request->sampai) {
-            $sampai = $request->sampai;
-        } else {
-            $sampai = date('Y-m-d');
-        }
+        // if ($request->dari) {
+        //     $dari = $request->dari;
+        // } else {
+        //     $dari = date('Y-m-d');
+        // }
+        // if ($request->sampai) {
+        //     $sampai = $request->sampai;
+        // } else {
+        //     $sampai = date('Y-m-d');
+        // }
         if ($request->ajax()) {
-            $data = DB::table('absensi_absensi as a')
-                // ->join('penerimaan_karyawan as k', 'a.userid', '=', 'k.userid')
-                // ->where('k.status', 'LIKE', '%Aktif%')
-                ->whereBetween('a.tanggal', [$dari, $sampai])->get();
-            // ->orderBy('a.name', 'asc')->get();
+            $data = DB::table('access_checkinout as a')
+                ->orderByDesc('CHECKTIME')
+                ->limit(7000)
+                ->get();
             return DataTables::of($data)
                 ->addIndexColumn()
                 ->addColumn('action', function ($row) {

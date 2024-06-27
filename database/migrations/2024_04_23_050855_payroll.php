@@ -35,16 +35,25 @@ return new class extends Migration
             $table->integer('tjabat')->nullable();
             $table->integer('prestasi')->nullable();
             $table->integer('potongan_absen')->nullable();
+            $table->integer('potongan_absen_input')->nullable();
+            $table->integer('potongan_absen_fix')->nullable();
+            $table->integer('potongan_absen_rp')->nullable();
             $table->integer('potongan_infaq')->nullable();
             $table->integer('potongan_koperasi')->nullable();
             $table->integer('potongan_pinjaman')->nullable();
-            $table->integer('pot_bpjs_jht')->nullable();
+            $table->integer('pot_bpjs_jkk')->nullable();
+            $table->integer('pot_bpjs_jkm')->nullable();
             $table->integer('pot_bpjs_jp')->nullable();
+            $table->integer('pot_bpjs_jht')->nullable();
             $table->integer('pot_bpjs_ks')->nullable();
+            $table->integer('pot_bpjs_ksAdd')->nullable();
             $table->integer('H')->nullable();
             $table->integer('S')->nullable();
             $table->integer('I')->nullable();
             $table->integer('A')->nullable();
+            $table->integer('locked')->nullable();
+            $table->integer('printed')->nullable();
+            $table->integer('print_date')->nullable();
             $table->timestamps();
         });
     }

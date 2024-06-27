@@ -344,6 +344,60 @@
                                                                 Kelola Potongan Koperasi & Pinjaman
                                                             </button>
                                                         </form>
+                                                        <form action="{{ url('administrasi/kelolalevel') }}"
+                                                            method="post" target="_blank">
+                                                            {{ csrf_field() }}
+                                                            <input type="hidden" id="selectedmonth" name="selectedmonth"
+                                                                value="{{ date('m') }}">
+                                                            <input type="hidden" id="selectedyear" name="selectedyear"
+                                                                value="{{ date('Y') }}">
+                                                            <button class="dropdown-item" type="submit"
+                                                                data-bs-trigger="hover" data-bs-toggle="popover"
+                                                                title="Langkah 5. Kelola Data Karyawan"
+                                                                data-bs-content="untuk mengelola data karyawan di payroll. Masuk atau pindah grup lain">
+                                                                <svg xmlns="http://www.w3.org/2000/svg" width="24"
+                                                                    style="margin-right: 5px" height="24"
+                                                                    viewBox="0 0 24 24" fill="none"
+                                                                    stroke="currentColor" stroke-width="2"
+                                                                    stroke-linecap="round" stroke-linejoin="round"
+                                                                    class="icon icon-tabler icons-tabler-outline icon-tabler-users">
+                                                                    <path stroke="none" d="M0 0h24v24H0z"
+                                                                        fill="none" />
+                                                                    <path d="M9 7m-4 0a4 4 0 1 0 8 0a4 4 0 1 0 -8 0" />
+                                                                    <path d="M3 21v-2a4 4 0 0 1 4 -4h4a4 4 0 0 1 4 4v2" />
+                                                                    <path d="M16 3.13a4 4 0 0 1 0 7.75" />
+                                                                    <path d="M21 21v-2a4 4 0 0 0 -3 -3.85" />
+                                                                </svg>
+                                                                Kelola Data Karyawan
+                                                            </button>
+                                                        </form>
+                                                        <form action="{{ url('administrasi/tambahanAbsensi') }}"
+                                                            method="post" target="_blank">
+                                                            {{ csrf_field() }}
+                                                            <input type="hidden" id="selectedmonth" name="selectedmonth"
+                                                                value="{{ date('m') }}">
+                                                            <input type="hidden" id="selectedyear" name="selectedyear"
+                                                                value="{{ date('Y') }}">
+                                                            <button class="dropdown-item" type="submit"
+                                                                data-bs-trigger="hover" data-bs-toggle="popover"
+                                                                title="Langkah 6. Kelola Data Absensi"
+                                                                data-bs-content="untuk mengelola data potongan absensi karyawan di payroll. Kelola data Potongan Sakit, Izin dan Alpa">
+                                                                <svg xmlns="http://www.w3.org/2000/svg" width="24"
+                                                                    style="margin-right: 5px" height="24"
+                                                                    viewBox="0 0 24 24" fill="none"
+                                                                    stroke="currentColor" stroke-width="2"
+                                                                    stroke-linecap="round" stroke-linejoin="round"
+                                                                    class="icon icon-tabler icons-tabler-outline icon-tabler-user-bolt">
+                                                                    <path stroke="none" d="M0 0h24v24H0z"
+                                                                        fill="none" />
+                                                                    <path d="M8 7a4 4 0 1 0 8 0a4 4 0 0 0 -8 0" />
+                                                                    <path
+                                                                        d="M6 21v-2a4 4 0 0 1 4 -4h4c.267 0 .529 .026 .781 .076" />
+                                                                    <path d="M19 16l-2 3h4l-2 3" />
+                                                                </svg>
+                                                                Kelola Potongan Absen
+                                                            </button>
+                                                        </form>
                                                     </div>
                                                 </div>
                                             </div>
@@ -710,6 +764,7 @@
         </div>
 
         <script>
+            var tablePayroll;
             $(function() {
                 var bln = $('#bulan').val();
                 var thn = $('#tahun').val();
@@ -723,11 +778,9 @@
                 });
 
                 $('#modal-rekap').on('show.bs.modal', function(e) {
+                    var bln = $('#bulan').val();
+                    var thn = $('#tahun').val();
                     console.log('Rekap payroll: ' + bln + '/' + thn);
-                    // var rowid = $(e.relatedTarget).data('id');
-                    // var rowaw = $(e.relatedTarget).data('tglaw');
-                    // var rowak = $(e.relatedTarget).data('tglak');
-                    // console.log("Fetch: " + rowid);
                     $(".overlay").fadeIn(300);
                     $.ajaxSetup({
                         headers: {
@@ -741,7 +794,6 @@
                             "_token": "{{ csrf_token() }}",
                             bulan: bln,
                             tahun: thn,
-                            // tglak: rowak,
                         },
                         success: function(data) {
                             //menampilkan data ke dalam modal
@@ -800,7 +852,6 @@
                             attr: {
                                 'href': '#modal-rekap',
                                 'data-bs-toggle': 'modal',
-                                'onclick': 'setPeriodeToUpload()',
                             }
                         },
                     ],
@@ -823,7 +874,7 @@
                         "select": {
                             rows: {
                                 _: "%d karyawan dipilih",
-                                0: "Pilih item dan tekan tombol Proses data untuk memproses",
+                                0: "Pilih beberapa item",
                             }
                         },
                     },
@@ -953,15 +1004,15 @@
                         },
                         {
                             title: 'Qty. Absen',
-                            data: 'potongan_absen',
-                            name: 'potongan_absen',
+                            data: 'potongan_absen_fix',
+                            name: 'potongan_absen_fix',
                             render: $.fn.dataTable.render.number('.', ',', 0, ''),
                             className: 'cuspad0 text-center text-red'
                         },
                         {
                             title: 'Pot. Absen',
-                            data: 'potabs',
-                            name: 'potabs',
+                            data: 'potongan_absen_rp',
+                            name: 'potongan_absen_rp',
                             render: $.fn.dataTable.render.number('.', ',', 0, ''),
                             className: 'cuspad0 text-center text-red'
                         },
@@ -1105,7 +1156,6 @@
                 dt.ajax.reload();
             }
 
-            var tablePayroll;
             var d = new Date();
             var strDate = d.getFullYear() + "/" + (d.getMonth() + 1) + "/" + d.getDate();
 

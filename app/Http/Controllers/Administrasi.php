@@ -8,6 +8,7 @@ use Illuminate\Routing\Controller;
 use Illuminate\Support\Facades\DB;
 use App\Imports\ImportExcelPayroll;
 use Illuminate\Support\Facades\Session;
+use App\Imports\ImportExcelAbsenPayroll;
 use Maatwebsite\Excel\Facades\Excel as ExcelM;
 
 class Administrasi extends Controller
@@ -284,6 +285,25 @@ class Administrasi extends Controller
         ]);
     }
 
+    public function uploadtambahanAbsensi(Request $request)
+    {
+        $judul = "Kelola Absensi";
+        $administrasi = "active";
+        $payroll = "active";
+
+        $periode = substr($request->selectedyear, -2) . $request->selectedmonth;
+
+        $getTambahan = DB::table('administrasi_payroll')->where('periode', '=', $periode)->get();
+
+        return view('products/04_administrasi.tambahanAbsensi', [
+            'judul' => $judul,
+            'administrasi' => $administrasi,
+            'payroll' => $payroll,
+            'periode' => $periode,
+            'absensi' => $getTambahan,
+        ]);
+    }
+
     public function printPayroll(Request $request)
     {
         $judul = "Print Payroll";
@@ -374,6 +394,353 @@ class Administrasi extends Controller
             }
         }
         // return $result;
+    }
+
+    public function rekapPayroll(Request $request)
+    {
+        $bulan = array(
+            1 =>       'Januari',
+            'Februari',
+            'Maret',
+            'April',
+            'Mei',
+            'Juni',
+            'Juli',
+            'Agustus',
+            'September',
+            'Oktober',
+            'November',
+            'Desember'
+        );
+        $periode = substr($request->tahun, 2) . $request->bulan;
+
+        // mendapatkan jumlah karyawan berdasarkan level
+        $getPayroll = DB::table('administrasi_payroll')
+            ->select(DB::raw("
+                        (SELECT COUNT(level) FROM administrasi_payroll WHERE level = 'UNIT 1' AND periode = '$periode' ) AS level_unit1,
+                        (SELECT COUNT(level) FROM administrasi_payroll WHERE level = 'UNIT 2' AND periode = '$periode' ) AS level_unit2,
+                        (SELECT COUNT(level) FROM administrasi_payroll WHERE level = 'UMUM' AND periode = '$periode' ) AS level_umum,
+                        (SELECT COUNT(level) FROM administrasi_payroll WHERE level = 'STAFF' AND periode = '$periode' ) AS level_staff,
+                        (SELECT COUNT(level) FROM administrasi_payroll WHERE level = 'TFI' AND periode = '$periode' ) AS level_tfi,
+                        (SELECT COUNT(level) FROM administrasi_payroll WHERE level = 'TFO' AND periode = '$periode' ) AS level_tfo,
+                        (SELECT COUNT(level) FROM administrasi_payroll WHERE level = 'WCR & WORKSHOP' AND periode = '$periode' ) AS level_wcrwr,
+
+                        (SELECT (SUM(gapok) + SUM(prestasi) + SUM(tjabat)) FROM administrasi_payroll WHERE level = 'UNIT 1' AND periode = '$periode' ) AS bruto_unit1,
+                        (SELECT (SUM(gapok) + SUM(prestasi) + SUM(tjabat)) FROM administrasi_payroll WHERE level = 'UNIT 2' AND periode = '$periode' ) AS bruto_unit2,
+                        (SELECT (SUM(gapok) + SUM(prestasi) + SUM(tjabat)) FROM administrasi_payroll WHERE level = 'UMUM' AND periode = '$periode' ) AS bruto_umum,
+                        (SELECT (SUM(gapok) + SUM(prestasi) + SUM(tjabat)) FROM administrasi_payroll WHERE level = 'STAFF' AND periode = '$periode' ) AS bruto_staff,
+                        (SELECT (SUM(gapok) + SUM(prestasi) + SUM(tjabat)) FROM administrasi_payroll WHERE level = 'TFI' AND periode = '$periode' ) AS bruto_tfi,
+                        (SELECT (SUM(gapok) + SUM(prestasi) + SUM(tjabat)) FROM administrasi_payroll WHERE level = 'TFO' AND periode = '$periode' ) AS bruto_tfo,
+                        (SELECT (SUM(gapok) + SUM(prestasi) + SUM(tjabat)) FROM administrasi_payroll WHERE level = 'WCR & WORKSHOP' AND periode = '$periode' ) AS bruto_wcrwr,
+
+                        (SELECT SUM(potongan_koperasi) FROM administrasi_payroll WHERE level = 'UNIT 1' AND periode = '$periode' ) AS koperasi_unit1,
+                        (SELECT SUM(potongan_koperasi) FROM administrasi_payroll WHERE level = 'UNIT 2' AND periode = '$periode' ) AS koperasi_unit2,
+                        (SELECT SUM(potongan_koperasi) FROM administrasi_payroll WHERE level = 'UMUM' AND periode = '$periode' ) AS koperasi_umum,
+                        (SELECT SUM(potongan_koperasi) FROM administrasi_payroll WHERE level = 'STAFF' AND periode = '$periode' ) AS koperasi_staff,
+                        (SELECT SUM(potongan_koperasi) FROM administrasi_payroll WHERE level = 'TFI' AND periode = '$periode' ) AS koperasi_tfi,
+                        (SELECT SUM(potongan_koperasi) FROM administrasi_payroll WHERE level = 'TFO' AND periode = '$periode' ) AS koperasi_tfo,
+                        (SELECT SUM(potongan_koperasi) FROM administrasi_payroll WHERE level = 'WCR & WORKSHOP' AND periode = '$periode' ) AS koperasi_wcrwr,
+
+                        (SELECT SUM(potongan_infaq) FROM administrasi_payroll WHERE level = 'UNIT 1' AND periode = '$periode' ) AS infaq_unit1,
+                        (SELECT SUM(potongan_infaq) FROM administrasi_payroll WHERE level = 'UNIT 2' AND periode = '$periode' ) AS infaq_unit2,
+                        (SELECT SUM(potongan_infaq) FROM administrasi_payroll WHERE level = 'UMUM' AND periode = '$periode' ) AS infaq_umum,
+                        (SELECT SUM(potongan_infaq) FROM administrasi_payroll WHERE level = 'STAFF' AND periode = '$periode' ) AS infaq_staff,
+                        (SELECT SUM(potongan_infaq) FROM administrasi_payroll WHERE level = 'TFI' AND periode = '$periode' ) AS infaq_tfi,
+                        (SELECT SUM(potongan_infaq) FROM administrasi_payroll WHERE level = 'TFO' AND periode = '$periode' ) AS infaq_tfo,
+                        (SELECT SUM(potongan_infaq) FROM administrasi_payroll WHERE level = 'WCR & WORKSHOP' AND periode = '$periode' ) AS infaq_wcrwr,
+
+                        (SELECT SUM(potongan_pinjaman) FROM administrasi_payroll WHERE level = 'UNIT 1' AND periode = '$periode' ) AS pinjaman_unit1,
+                        (SELECT SUM(potongan_pinjaman) FROM administrasi_payroll WHERE level = 'UNIT 2' AND periode = '$periode' ) AS pinjaman_unit2,
+                        (SELECT SUM(potongan_pinjaman) FROM administrasi_payroll WHERE level = 'UMUM' AND periode = '$periode' ) AS pinjaman_umum,
+                        (SELECT SUM(potongan_pinjaman) FROM administrasi_payroll WHERE level = 'STAFF' AND periode = '$periode' ) AS pinjaman_staff,
+                        (SELECT SUM(potongan_pinjaman) FROM administrasi_payroll WHERE level = 'TFI' AND periode = '$periode' ) AS pinjaman_tfi,
+                        (SELECT SUM(potongan_pinjaman) FROM administrasi_payroll WHERE level = 'TFO' AND periode = '$periode' ) AS pinjaman_tfo,
+                        (SELECT SUM(potongan_pinjaman) FROM administrasi_payroll WHERE level = 'WCR & WORKSHOP' AND periode = '$periode' ) AS pinjaman_wcrwr,
+
+                        (SELECT COALESCE(SUM(pot_bpjs_jkk),0)+COALESCE(SUM(pot_bpjs_jkm),0)+COALESCE(SUM(pot_bpjs_jp),0)+COALESCE(SUM(pot_bpjs_jht),0) FROM administrasi_payroll WHERE level = 'UNIT 1' AND periode = '$periode' ) AS bpjstk_unit1,
+                        (SELECT COALESCE(SUM(pot_bpjs_jkk),0)+COALESCE(SUM(pot_bpjs_jkm),0)+COALESCE(SUM(pot_bpjs_jp),0)+COALESCE(SUM(pot_bpjs_jht),0) FROM administrasi_payroll WHERE level = 'UNIT 2' AND periode = '$periode' ) AS bpjstk_unit2,
+                        (SELECT COALESCE(SUM(pot_bpjs_jkk),0)+COALESCE(SUM(pot_bpjs_jkm),0)+COALESCE(SUM(pot_bpjs_jp),0)+COALESCE(SUM(pot_bpjs_jht),0) FROM administrasi_payroll WHERE level = 'UMUM' AND periode = '$periode' ) AS bpjstk_umum,
+                        (SELECT COALESCE(SUM(pot_bpjs_jkk),0)+COALESCE(SUM(pot_bpjs_jkm),0)+COALESCE(SUM(pot_bpjs_jp),0)+COALESCE(SUM(pot_bpjs_jht),0) FROM administrasi_payroll WHERE level = 'STAFF' AND periode = '$periode' ) AS bpjstk_staff,
+                        (SELECT COALESCE(SUM(pot_bpjs_jkk),0)+COALESCE(SUM(pot_bpjs_jkm),0)+COALESCE(SUM(pot_bpjs_jp),0)+COALESCE(SUM(pot_bpjs_jht),0) FROM administrasi_payroll WHERE level = 'TFI' AND periode = '$periode' ) AS bpjstk_tfi,
+                        (SELECT COALESCE(SUM(pot_bpjs_jkk),0)+COALESCE(SUM(pot_bpjs_jkm),0)+COALESCE(SUM(pot_bpjs_jp),0)+COALESCE(SUM(pot_bpjs_jht),0) FROM administrasi_payroll WHERE level = 'TFO' AND periode = '$periode' ) AS bpjstk_tfo,
+                        (SELECT COALESCE(SUM(pot_bpjs_jkk),0)+COALESCE(SUM(pot_bpjs_jkm),0)+COALESCE(SUM(pot_bpjs_jp),0)+COALESCE(SUM(pot_bpjs_jht),0) FROM administrasi_payroll WHERE level = 'WCR & WORKSHOP' AND periode = '$periode' ) AS bpjstk_wcrwr,
+
+                        (SELECT COALESCE(SUM(pot_bpjs_ks),0)+COALESCE(SUM(pot_bpjs_ksAdd),0) FROM administrasi_payroll WHERE level = 'UNIT 1' AND periode = '$periode' ) AS bpjsks_unit1,
+                        (SELECT COALESCE(SUM(pot_bpjs_ks),0)+COALESCE(SUM(pot_bpjs_ksAdd),0) FROM administrasi_payroll WHERE level = 'UNIT 2' AND periode = '$periode' ) AS bpjsks_unit2,
+                        (SELECT COALESCE(SUM(pot_bpjs_ks),0)+COALESCE(SUM(pot_bpjs_ksAdd),0) FROM administrasi_payroll WHERE level = 'UMUM' AND periode = '$periode' ) AS bpjsks_umum,
+                        (SELECT COALESCE(SUM(pot_bpjs_ks),0)+COALESCE(SUM(pot_bpjs_ksAdd),0) FROM administrasi_payroll WHERE level = 'STAFF' AND periode = '$periode' ) AS bpjsks_staff,
+                        (SELECT COALESCE(SUM(pot_bpjs_ks),0)+COALESCE(SUM(pot_bpjs_ksAdd),0) FROM administrasi_payroll WHERE level = 'TFI' AND periode = '$periode' ) AS bpjsks_tfi,
+                        (SELECT COALESCE(SUM(pot_bpjs_ks),0)+COALESCE(SUM(pot_bpjs_ksAdd),0) FROM administrasi_payroll WHERE level = 'TFO' AND periode = '$periode' ) AS bpjsks_tfo,
+                        (SELECT COALESCE(SUM(pot_bpjs_ks),0)+COALESCE(SUM(pot_bpjs_ksAdd),0) FROM administrasi_payroll WHERE level = 'WCR & WORKSHOP' AND periode = '$periode' ) AS bpjsks_wcrwr
+                    "))
+            ->first();
+        $levels = array(
+            'UNIT 1' => $getPayroll->level_unit1,
+            'UNIT 2' => $getPayroll->level_unit2,
+            'UMUM' => $getPayroll->level_umum,
+            'STAFF' => $getPayroll->level_staff,
+            'TFI' => $getPayroll->level_tfi,
+            'TFO' => $getPayroll->level_tfo,
+            'WCR & WORKSHOP' => $getPayroll->level_wcrwr,
+        );
+        $brutos = array(
+            'UNIT 1' => $getPayroll->bruto_unit1,
+            'UNIT 2' => $getPayroll->bruto_unit2,
+            'UMUM' => $getPayroll->bruto_umum,
+            'STAFF' => $getPayroll->bruto_staff,
+            'TFI' => $getPayroll->bruto_tfi,
+            'TFO' => $getPayroll->bruto_tfo,
+            'WCR & WORKSHOP' => $getPayroll->bruto_wcrwr,
+        );
+        $koperasis = array(
+            'UNIT 1' => $getPayroll->koperasi_unit1,
+            'UNIT 2' => $getPayroll->koperasi_unit2,
+            'UMUM' => $getPayroll->koperasi_umum,
+            'STAFF' => $getPayroll->koperasi_staff,
+            'TFI' => $getPayroll->koperasi_tfi,
+            'TFO' => $getPayroll->koperasi_tfo,
+            'WCR & WORKSHOP' => $getPayroll->koperasi_wcrwr,
+        );
+        $infaqs = array(
+            'UNIT 1' => $getPayroll->infaq_unit1,
+            'UNIT 2' => $getPayroll->infaq_unit2,
+            'UMUM' => $getPayroll->infaq_umum,
+            'STAFF' => $getPayroll->infaq_staff,
+            'TFI' => $getPayroll->infaq_tfi,
+            'TFO' => $getPayroll->infaq_tfo,
+            'WCR & WORKSHOP' => $getPayroll->infaq_wcrwr,
+        );
+        $pinjamans = array(
+            'UNIT 1' => $getPayroll->pinjaman_unit1,
+            'UNIT 2' => $getPayroll->pinjaman_unit2,
+            'UMUM' => $getPayroll->pinjaman_umum,
+            'STAFF' => $getPayroll->pinjaman_staff,
+            'TFI' => $getPayroll->pinjaman_tfi,
+            'TFO' => $getPayroll->pinjaman_tfo,
+            'WCR & WORKSHOP' => $getPayroll->pinjaman_wcrwr,
+        );
+        $bpjstks = array(
+            'UNIT 1' => $getPayroll->bpjstk_unit1,
+            'UNIT 2' => $getPayroll->bpjstk_unit2,
+            'UMUM' => $getPayroll->bpjstk_umum,
+            'STAFF' => $getPayroll->bpjstk_staff,
+            'TFI' => $getPayroll->bpjstk_tfi,
+            'TFO' => $getPayroll->bpjstk_tfo,
+            'WCR & WORKSHOP' => $getPayroll->bpjstk_wcrwr,
+        );
+        $bpjskss = array(
+            'UNIT 1' => $getPayroll->bpjsks_unit1,
+            'UNIT 2' => $getPayroll->bpjsks_unit2,
+            'UMUM' => $getPayroll->bpjsks_umum,
+            'STAFF' => $getPayroll->bpjsks_staff,
+            'TFI' => $getPayroll->bpjsks_tfi,
+            'TFO' => $getPayroll->bpjsks_tfo,
+            'WCR & WORKSHOP' => $getPayroll->bpjsks_wcrwr,
+        );
+
+        // insert atau update setelah mendapatkan data jumlah karyawan
+        // UNIT 1
+        DB::table('administrasi_payrollrekap')
+            ->updateOrInsert(
+                [
+                    'entitas' => 'PINTEX',
+                    'level' => 'UNIT 1',
+                    'periode' => $periode,
+                ],
+                [
+                    'dari' => date("Y-m-d", strtotime($request->tahun . '-' . $request->bulan . '-16' . "-1 month")),
+                    'sampai' => $request->tahun . '-' . $request->bulan . '-15',
+                    'jml_karyawan' => $levels['UNIT 1'],
+                    'bruto' => $brutos['UNIT 1'],
+                    'koperasi' => $koperasis['UNIT 1'],
+                    'infaq' => $infaqs['UNIT 1'],
+                    'lainnya' => $pinjamans['UNIT 1'],
+                    'bpjs_tk' => $bpjstks['UNIT 1'],
+                    'bpjs_ks' => $bpjskss['UNIT 1'],
+                    'tot_potongan' => $koperasis['UNIT 1'] + $infaqs['UNIT 1'] + $pinjamans['UNIT 1'] + $bpjstks['UNIT 1'] + $bpjskss['UNIT 1'],
+                ],
+            );
+        // UNIT 2
+        DB::table('administrasi_payrollrekap')
+            ->updateOrInsert(
+                [
+                    'entitas' => 'PINTEX',
+                    'level' => 'UNIT 2',
+                    'periode' => $periode,
+                ],
+                [
+                    'dari' => date("Y-m-d", strtotime($request->tahun . '-' . $request->bulan . '-16' . "-1 month")),
+                    'sampai' => $request->tahun . '-' . $request->bulan . '-15',
+                    'jml_karyawan' => $levels['UNIT 2'],
+                    'bruto' => $brutos['UNIT 2'],
+                    'koperasi' => $koperasis['UNIT 2'],
+                    'infaq' => $infaqs['UNIT 2'],
+                    'lainnya' => $pinjamans['UNIT 2'],
+                    'bpjs_tk' => $bpjstks['UNIT 2'],
+                    'bpjs_ks' => $bpjskss['UNIT 2'],
+                    'tot_potongan' => $koperasis['UNIT 2'] + $infaqs['UNIT 2'] + $pinjamans['UNIT 2'] + $bpjstks['UNIT 2'] + $bpjskss['UNIT 2'],
+                ],
+            );
+        // UMUM
+        DB::table('administrasi_payrollrekap')
+            ->updateOrInsert(
+                [
+                    'entitas' => 'PINTEX',
+                    'level' => 'UMUM',
+                    'periode' => $periode,
+                ],
+                [
+                    'dari' => date("Y-m-d", strtotime($request->tahun . '-' . $request->bulan . '-16' . "-1 month")),
+                    'sampai' => $request->tahun . '-' . $request->bulan . '-15',
+                    'jml_karyawan' => $levels['UMUM'],
+                    'bruto' => $brutos['UMUM'],
+                    'koperasi' => $koperasis['UMUM'],
+                    'infaq' => $infaqs['UMUM'],
+                    'lainnya' => $pinjamans['UMUM'],
+                    'bpjs_tk' => $bpjstks['UMUM'],
+                    'bpjs_ks' => $bpjskss['UMUM'],
+                    'tot_potongan' => $koperasis['UMUM'] + $infaqs['UMUM'] + $pinjamans['UMUM'] + $bpjstks['UMUM'] + $bpjskss['UMUM'],
+                ],
+            );
+        // STAFF
+        DB::table('administrasi_payrollrekap')
+            ->updateOrInsert(
+                [
+                    'entitas' => 'PINTEX',
+                    'level' => 'STAFF',
+                    'periode' => $periode,
+                ],
+                [
+                    'dari' => date("Y-m-d", strtotime($request->tahun . '-' . $request->bulan . '-16' . "-1 month")),
+                    'sampai' => $request->tahun . '-' . $request->bulan . '-15',
+                    'jml_karyawan' => $levels['STAFF'],
+                    'bruto' => $brutos['STAFF'],
+                    'koperasi' => $koperasis['STAFF'],
+                    'infaq' => $infaqs['STAFF'],
+                    'lainnya' => $pinjamans['STAFF'],
+                    'bpjs_ks' => $bpjskss['STAFF'],
+                    'bpjs_tk' => $bpjstks['STAFF'],
+                    'tot_potongan' => $koperasis['STAFF'] + $infaqs['STAFF'] + $pinjamans['STAFF'] + $bpjstks['STAFF'] + $bpjskss['STAFF'],
+                ],
+            );
+        // TFI
+        DB::table('administrasi_payrollrekap')
+            ->updateOrInsert(
+                [
+                    'entitas' => 'PINTEX',
+                    'level' => 'TFI',
+                    'periode' => $periode,
+                ],
+                [
+                    'dari' => date("Y-m-d", strtotime($request->tahun . '-' . $request->bulan . '-16' . "-1 month")),
+                    'sampai' => $request->tahun . '-' . $request->bulan . '-15',
+                    'jml_karyawan' => $levels['TFI'],
+                    'bruto' => $brutos['TFI'],
+                    'koperasi' => $koperasis['TFI'],
+                    'infaq' => $infaqs['TFI'],
+                    'lainnya' => $pinjamans['TFI'],
+                    'bpjs_ks' => $bpjskss['TFI'],
+                    'bpjs_tk' => $bpjstks['TFI'],
+                    'tot_potongan' => $koperasis['TFI'] + $infaqs['TFI'] + $pinjamans['TFI'] + $bpjstks['TFI'] + $bpjskss['TFI'],
+                ],
+            );
+        // TFO
+        DB::table('administrasi_payrollrekap')
+            ->updateOrInsert(
+                [
+                    'entitas' => 'PINTEX',
+                    'level' => 'TFO',
+                    'periode' => $periode,
+                ],
+                [
+                    'dari' => date("Y-m-d", strtotime($request->tahun . '-' . $request->bulan . '-16' . "-1 month")),
+                    'sampai' => $request->tahun . '-' . $request->bulan . '-15',
+                    'jml_karyawan' => $levels['TFO'],
+                    'bruto' => $brutos['TFO'],
+                    'koperasi' => $koperasis['TFO'],
+                    'infaq' => $infaqs['TFO'],
+                    'lainnya' => $pinjamans['TFO'],
+                    'bpjs_ks' => $bpjskss['TFO'],
+                    'bpjs_tk' => $bpjstks['TFO'],
+                    'tot_potongan' => $koperasis['TFO'] + $infaqs['TFO'] + $pinjamans['TFO'] + $bpjstks['TFO'] + $bpjskss['TFO'],
+                ],
+            );
+        // WCR & WORKSHOP
+        DB::table('administrasi_payrollrekap')
+            ->updateOrInsert(
+                [
+                    'entitas' => 'PINTEX',
+                    'level' => 'WCR & WORKSHOP',
+                    'periode' => $periode,
+                ],
+                [
+                    'dari' => date("Y-m-d", strtotime($request->tahun . '-' . $request->bulan . '-16' . "-1 month")),
+                    'sampai' => $request->tahun . '-' . $request->bulan . '-15',
+                    'jml_karyawan' => $levels['WCR & WORKSHOP'],
+                    'bruto' => $brutos['WCR & WORKSHOP'],
+                    'koperasi' => $koperasis['WCR & WORKSHOP'],
+                    'infaq' => $infaqs['WCR & WORKSHOP'],
+                    'lainnya' => $pinjamans['WCR & WORKSHOP'],
+                    'bpjs_ks' => $bpjskss['WCR & WORKSHOP'],
+                    'bpjs_tk' => $bpjstks['WCR & WORKSHOP'],
+                    'tot_potongan' => $koperasis['WCR & WORKSHOP'] + $infaqs['WCR & WORKSHOP'] + $pinjamans['WCR & WORKSHOP'] + $bpjstks['WCR & WORKSHOP'] + $bpjskss['WCR & WORKSHOP'],
+                ],
+            );
+
+        $getRekap = DB::table('administrasi_payrollrekap')
+            ->where('periode', '=', $periode)
+            ->get();
+
+        echo '
+                <div class="card">
+                    <div class="card-header">
+                        <h5 class="modal-title">Rekap Payroll Periode ' . $bulan[(int)$request->bulan] . ', ' . $request->tahun . '</h5>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    </div>
+                    <div class="table-responsive">
+                        <table class="table table-sm card-table table-vcenter text-nowrap datatable table-bordered">
+                            <thead>
+                                <tr>
+                                    <th class="text-center">Grup</th>
+                                    <th class="text-center">Jml Karyawan</th>
+                                    <th class="text-center">Gaji Bruto</th>
+                                    <th class="text-center">Koperasi</th>
+                                    <th class="text-center">Infaq</th>
+                                    <th class="text-center">Pinjaman</th>
+                                    <th class="text-center">BPJS TK</th>
+                                    <th class="text-center">BPJS Kesehatan</th>
+                                    <th class="text-center">Absensi</th>
+                                    <th class="text-center">Total Potongan</th>
+                                    <th class="text-center">Gaji Netto</th>
+                                </tr>
+                            </thead>
+                            <tbody>';
+        foreach ($getRekap as $r) {
+            echo '
+                                <tr>
+                                    <th>' . $r->level . '</th>
+                                    <th class="text-center">' . $r->jml_karyawan . '</th>
+                                    <th class="text-center">' . number_format($r->bruto, 0, ',', '.') . '</th>
+                                    <th class="text-center">' . number_format($r->koperasi, 0, ',', '.') . '</th>
+                                    <th class="text-center">' . number_format($r->infaq, 0, ',', '.') . '</th>
+                                    <th class="text-center">' . number_format($r->lainnya, 0, ',', '.') . '</th>
+                                    <th class="text-center">' . number_format($r->bpjs_tk, 0, ',', '.') . '</th>
+                                    <th class="text-center">' . number_format($r->bpjs_ks, 0, ',', '.') . '</th>
+                                    <th class="text-center">' . number_format($r->absensi, 0, ',', '.') . '</th>
+                                    <th class="text-center">' . number_format($r->tot_potongan, 0, ',', '.') . '</th>
+                                    <th class="text-center">' . number_format($r->netto, 0, ',', '.') . '</th>
+                                </tr>
+                        ';
+        }
+        echo '
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn me-auto" data-bs-dismiss="modal">Tutup</button>
+                </div>
+            ';
     }
 
     private function absensi($params, $userid, $start, $end)
@@ -523,10 +890,98 @@ class Administrasi extends Controller
         ]);
     }
 
+    public function importAbsenPayroll(Request $request)
+    {
+        // validasi
+        $request->validate(
+            [
+                '_token' => 'required',
+                'file' => 'required|mimes:csv,xls,xlsx',
+            ],
+        );
+        // menangkap file excel
+        $file = $request->file('file');
+        // membuat nama file
+        $nama_file = 'Periode-' . $request->periode . '_upload-' . date('Ymd') . '-' . $file->getClientOriginalName();
+        // upload ke folder file_excel di dalam folder public
+        $file->move('file_excel/c_absen', $nama_file);
+        // import data
+        $folder = public_path('file_excel/c_absen/' . $nama_file);
+        ExcelM::import(new ImportExcelAbsenPayroll, $folder);
+        // notifikasi dengan session
+        Session::flash('success', 'Data Payroll Berhasil Diimport!');
+        // alihkan halaman kembali
+        // return redirect()->back()->with('success', 'Data Payroll Berhasil Diimport!');
+
+        $judul = "Kelola Absensi";
+        $administrasi = "active";
+        $payroll = "active";
+
+        $periode = substr($request->selectedyear, -2) . $request->selectedmonth;
+
+        $getTambahan = DB::table('administrasi_payroll')->where('periode', '=', $request->periode)->get();
+
+        return view('products/04_administrasi.tambahanAbsensi', [
+            'judul' => $judul,
+            'administrasi' => $administrasi,
+            'payroll' => $payroll,
+            'payroll' => $payroll,
+            'periode' => $request->periode,
+            'absensi' => $getTambahan,
+        ]);
+    }
+
+    public function pilihFixAbsen(Request $request)
+    {
+        if ($request->pilihAbsen == "SISTEM") {
+            $getAbsen = DB::table('administrasi_payroll')->select('potongan_absen', 'stb', 'gapok', 'prestasi', 'tjabat', 'potongan_absen_fix')->where('periode', '=', $request->periode)->get();
+        } elseif ($request->pilihAbsen == "INPUT") {
+            $getAbsen = DB::table('administrasi_payroll')->select('potongan_absen_input', 'stb', 'gapok', 'prestasi', 'tjabat', 'potongan_absen_fix')->where('periode', '=', $request->periode)->get();
+        }
+
+        foreach ($getAbsen as $key) {
+            DB::table('administrasi_payroll')
+                ->where('periode', '=', $request->periode)
+                ->where('stb', '=', $key->stb)
+                ->update(
+                    array(
+                        'potongan_absen_fix' => $key->potongan_absen_input,
+                        'potongan_absen_rp' => - (($key->gapok + $key->prestasi + $key->tjabat) / 25) * $key->potongan_absen_fix,
+                        'updated_at' => date('Y-m-d H:i:s'),
+                    )
+                );
+        }
+        // notifikasi dengan session
+        Session::flash('success', 'Data Berhasil Diperbarui!');
+
+        $judul = "Kelola Absensi";
+        $administrasi = "active";
+        $payroll = "active";
+
+        $getTambahan = DB::table('administrasi_payroll')->where('periode', '=', $request->periode)->get();
+
+        return view('products/04_administrasi.tambahanAbsensi', [
+            'judul' => $judul,
+            'administrasi' => $administrasi,
+            'payroll' => $payroll,
+            'payroll' => $payroll,
+            'periode' => $request->periode,
+            'absensi' => $getTambahan,
+        ]);
+    }
+
     public function exportPayroll()
     {
         $file_path = public_path('file_excel/ContohUploadPayroll.xlsx');
         $file_name = 'Contoh Format Upload Tambahan dan Potongan Payroll.xlsx';
+
+        return response()->download($file_path, $file_name);
+    }
+
+    public function exportAbsenPayroll()
+    {
+        $file_path = public_path('file_excel/ContohUploadAbsenPayroll.xlsx');
+        $file_name = 'Contoh Format Upload Absensi Payroll.xlsx';
 
         return response()->download($file_path, $file_name);
     }
@@ -749,69 +1204,6 @@ class Administrasi extends Controller
                 );
             return response()->json(['success' => true]);
         }
-    }
-
-    public function rekapPayroll(Request $request)
-    {
-        $bulan = array(
-            1 =>   'Januari',
-            'Februari',
-            'Maret',
-            'April',
-            'Mei',
-            'Juni',
-            'Juli',
-            'Agustus',
-            'September',
-            'Oktober',
-            'November',
-            'Desember'
-        );
-        echo '
-                <div class="card">
-                    <div class="card-header">
-                        <h5 class="modal-title">Rekap Payroll Periode ' . $bulan[(int)$request->bulan] . ', ' . $request->tahun . '</h5>
-                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                    </div>
-                    <div class="table-responsive">
-                        <table class="table card-table table-vcenter text-nowrap datatable">
-                            <thead>
-                                <tr>
-                                    <th>Grup</th>
-                                    <th>Jml Karyawan</th>
-                                    <th>Gaji Bruto</th>
-                                    <th>Koperasi</th>
-                                    <th>Infaq</th>
-                                    <th>Lainnya</th>
-                                    <th>BPJS TK</th>
-                                    <th>BPJS Kesehatan</th>
-                                    <th>Absensi</th>
-                                    <th>Total Potongan</th>
-                                    <th>Gaji Netto</th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                <tr>
-                                    <th>Grup</th>
-                                    <th>Jml Karyawan</th>
-                                    <th>Gaji Bruto</th>
-                                    <th>Koperasi</th>
-                                    <th>Infaq</th>
-                                    <th>Lainnya</th>
-                                    <th>BPJS TK</th>
-                                    <th>BPJS Kesehatan</th>
-                                    <th>Absensi</th>
-                                    <th>Total Potongan</th>
-                                    <th>Gaji Netto</th>
-                                </tr>
-                            </tbody>
-                        </table>
-                    </div>
-                </div>
-                <div class="modal-footer">
-                    <button type="button" class="btn me-auto" data-bs-dismiss="modal">Tutup</button>
-                </div>
-            ';
     }
 
     public function updateUpahBpjs(Request $request)

@@ -34,7 +34,7 @@ class DataPayroll extends Controller
         if ($request->ajax()) {
             $data = DB::table('administrasi_payroll')
                 ->selectRaw('
-                            id, stb, nama, gapok, level, prestasi, tjabat, bank, rekening, pot_bpjs_jkk, pot_bpjs_jkm, pot_bpjs_jp, pot_bpjs_jht, pot_bpjs_ks, pot_bpjs_ksAdd, potongan_absen, potongan_infaq, potongan_koperasi, potongan_pinjaman
+                            id, stb, nama, gapok, level, prestasi, tjabat, bank, rekening, pot_bpjs_jkk, pot_bpjs_jkm, pot_bpjs_jp, pot_bpjs_jht, pot_bpjs_ks, pot_bpjs_ksAdd, potongan_absen, potongan_infaq, potongan_koperasi, potongan_pinjaman, potongan_absen_fix, potongan_absen_rp
                             ')
                 ->where('periode', '=', $tahun . $bulan)
                 ->orderBy('nama', 'asc')
@@ -47,8 +47,8 @@ class DataPayroll extends Controller
                     return $btn;
                 })
                 ->addColumn('level', function ($row) {
-                    $btn = '<a href="" class="editableLevel" data-type="text" data-name="level" data-pk="' . $row->id . '">' . $row->level . '</a>';
-                    return $btn;
+                    // $btn = '<a href="" class="editableLevel" data-type="text" data-name="level" data-pk="' . $row->id . '">' . $row->level . '</a>';
+                    return $row->level;
                 })
                 ->addColumn('gbruto', function ($row) {
                     $res = $row->gapok + $row->prestasi + $row->tjabat;
@@ -61,25 +61,25 @@ class DataPayroll extends Controller
                 ->addColumn('totpot', function ($row) {
                     $bpjs = $row->pot_bpjs_jkk + $row->pot_bpjs_jkm + $row->pot_bpjs_jp + $row->pot_bpjs_jht + $row->pot_bpjs_ks + $row->pot_bpjs_ksAdd;
                     $infaqkoperasi = $row->potongan_koperasi + $row->potongan_infaq;
-                    $res = $bpjs + $infaqkoperasi;
+                    $res = $bpjs + $infaqkoperasi + $row->potongan_absen_rp;
                     return $res;
                 })
                 ->addColumn('potabs', function ($row) {
                     $bruto = $row->gapok + $row->prestasi + $row->tjabat;
-                    $res = - (($row->potongan_absen / 25) * $bruto);
+                    $res = - (($row->potongan_absen_fix / 25) * $bruto);
                     return $res;
                 })
                 ->addColumn('gnetto', function ($row) {
                     $bruto = $row->gapok + $row->prestasi + $row->tjabat;
                     $bpjs = $row->pot_bpjs_jkk + $row->pot_bpjs_jkm + $row->pot_bpjs_jp + $row->pot_bpjs_jht + $row->pot_bpjs_ks + $row->pot_bpjs_ksAdd;
                     $infaqkoperasi = $row->potongan_koperasi + $row->potongan_infaq;
-                    $potongan = $bpjs + $infaqkoperasi;
+                    $potongan = $bpjs + $infaqkoperasi + $row->potongan_absen_rp;
 
                     $res = $bruto + $potongan;
                     return $res;
                 })
                 ->addColumn('pembulatan', function ($row) {
-                    $res = ($row->gapok + $row->prestasi + $row->tjabat) + ($row->pot_bpjs_jht + $row->pot_bpjs_jp + $row->pot_bpjs_ks) + ($row->potongan_absen + $row->potongan_infaq + $row->potongan_koperasi + $row->potongan_pinjaman);
+                    $res = ($row->gapok + $row->prestasi + $row->tjabat) + ($row->pot_bpjs_jht + $row->pot_bpjs_jp + $row->pot_bpjs_ks) + ($row->potongan_absen_rp + $row->potongan_infaq + $row->potongan_koperasi + $row->potongan_pinjaman);
                     $res = ceil($res);
                     if (substr($res, -3) > 499) {
                         $result = round($res, -2);
