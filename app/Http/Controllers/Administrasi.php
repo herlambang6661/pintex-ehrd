@@ -465,6 +465,14 @@ class Administrasi extends Controller
                         (SELECT COALESCE(SUM(pot_bpjs_jkk),0)+COALESCE(SUM(pot_bpjs_jkm),0)+COALESCE(SUM(pot_bpjs_jp),0)+COALESCE(SUM(pot_bpjs_jht),0) FROM administrasi_payroll WHERE level = 'TFO' AND periode = '$periode' ) AS bpjstk_tfo,
                         (SELECT COALESCE(SUM(pot_bpjs_jkk),0)+COALESCE(SUM(pot_bpjs_jkm),0)+COALESCE(SUM(pot_bpjs_jp),0)+COALESCE(SUM(pot_bpjs_jht),0) FROM administrasi_payroll WHERE level = 'WCR & WORKSHOP' AND periode = '$periode' ) AS bpjstk_wcrwr,
 
+                        (SELECT COALESCE(SUM(potongan_absen_rp),0) FROM administrasi_payroll WHERE level = 'UNIT 1' AND periode = '$periode' ) AS absensi_unit1,
+                        (SELECT COALESCE(SUM(potongan_absen_rp),0) FROM administrasi_payroll WHERE level = 'UNIT 2' AND periode = '$periode' ) AS absensi_unit2,
+                        (SELECT COALESCE(SUM(potongan_absen_rp),0) FROM administrasi_payroll WHERE level = 'UMUM' AND periode = '$periode' ) AS absensi_umum,
+                        (SELECT COALESCE(SUM(potongan_absen_rp),0) FROM administrasi_payroll WHERE level = 'STAFF' AND periode = '$periode' ) AS absensi_staff,
+                        (SELECT COALESCE(SUM(potongan_absen_rp),0) FROM administrasi_payroll WHERE level = 'TFI' AND periode = '$periode' ) AS absensi_tfi,
+                        (SELECT COALESCE(SUM(potongan_absen_rp),0) FROM administrasi_payroll WHERE level = 'TFO' AND periode = '$periode' ) AS absensi_tfo,
+                        (SELECT COALESCE(SUM(potongan_absen_rp),0) FROM administrasi_payroll WHERE level = 'WCR & WORKSHOP' AND periode = '$periode' ) AS absensi_wcrwr,
+                        
                         (SELECT COALESCE(SUM(pot_bpjs_ks),0)+COALESCE(SUM(pot_bpjs_ksAdd),0) FROM administrasi_payroll WHERE level = 'UNIT 1' AND periode = '$periode' ) AS bpjsks_unit1,
                         (SELECT COALESCE(SUM(pot_bpjs_ks),0)+COALESCE(SUM(pot_bpjs_ksAdd),0) FROM administrasi_payroll WHERE level = 'UNIT 2' AND periode = '$periode' ) AS bpjsks_unit2,
                         (SELECT COALESCE(SUM(pot_bpjs_ks),0)+COALESCE(SUM(pot_bpjs_ksAdd),0) FROM administrasi_payroll WHERE level = 'UMUM' AND periode = '$periode' ) AS bpjsks_umum,
@@ -537,6 +545,15 @@ class Administrasi extends Controller
             'TFO' => $getPayroll->bpjsks_tfo,
             'WCR & WORKSHOP' => $getPayroll->bpjsks_wcrwr,
         );
+        $absens = array(
+            'UNIT 1' => $getPayroll->absensi_unit1,
+            'UNIT 2' => $getPayroll->absensi_unit2,
+            'UMUM' => $getPayroll->absensi_umum,
+            'STAFF' => $getPayroll->absensi_staff,
+            'TFI' => $getPayroll->absensi_tfi,
+            'TFO' => $getPayroll->absensi_tfo,
+            'WCR & WORKSHOP' => $getPayroll->absensi_wcrwr,
+        );
 
         // insert atau update setelah mendapatkan data jumlah karyawan
         // UNIT 1
@@ -557,7 +574,9 @@ class Administrasi extends Controller
                     'lainnya' => $pinjamans['UNIT 1'],
                     'bpjs_tk' => $bpjstks['UNIT 1'],
                     'bpjs_ks' => $bpjskss['UNIT 1'],
+                    'absensi' => $absens['UNIT 1'],
                     'tot_potongan' => $koperasis['UNIT 1'] + $infaqs['UNIT 1'] + $pinjamans['UNIT 1'] + $bpjstks['UNIT 1'] + $bpjskss['UNIT 1'],
+                    'netto' => $brutos['UNIT 1'] + $bpjskss['UNIT 1'] + $bpjstks['UNIT 1'] + $koperasis['UNIT 1'] + $infaqs['UNIT 1'] + $pinjamans['UNIT 1'],
                 ],
             );
         // UNIT 2
@@ -578,7 +597,9 @@ class Administrasi extends Controller
                     'lainnya' => $pinjamans['UNIT 2'],
                     'bpjs_tk' => $bpjstks['UNIT 2'],
                     'bpjs_ks' => $bpjskss['UNIT 2'],
+                    'absensi' => $absens['UNIT 2'],
                     'tot_potongan' => $koperasis['UNIT 2'] + $infaqs['UNIT 2'] + $pinjamans['UNIT 2'] + $bpjstks['UNIT 2'] + $bpjskss['UNIT 2'],
+                    'netto' => $brutos['UNIT 2'] + $bpjskss['UNIT 2'] + $bpjstks['UNIT 2'] + $koperasis['UNIT 2'] + $infaqs['UNIT 2'] + $pinjamans['UNIT 2'],
                 ],
             );
         // UMUM
@@ -599,7 +620,9 @@ class Administrasi extends Controller
                     'lainnya' => $pinjamans['UMUM'],
                     'bpjs_tk' => $bpjstks['UMUM'],
                     'bpjs_ks' => $bpjskss['UMUM'],
+                    'absensi' => $absens['UMUM'],
                     'tot_potongan' => $koperasis['UMUM'] + $infaqs['UMUM'] + $pinjamans['UMUM'] + $bpjstks['UMUM'] + $bpjskss['UMUM'],
+                    'netto' => $brutos['UMUM'] + $bpjskss['UMUM'] + $bpjstks['UMUM'] + $koperasis['UMUM'] + $infaqs['UMUM'] + $pinjamans['UMUM'],
                 ],
             );
         // STAFF
@@ -620,7 +643,9 @@ class Administrasi extends Controller
                     'lainnya' => $pinjamans['STAFF'],
                     'bpjs_ks' => $bpjskss['STAFF'],
                     'bpjs_tk' => $bpjstks['STAFF'],
+                    'absensi' => $absens['STAFF'],
                     'tot_potongan' => $koperasis['STAFF'] + $infaqs['STAFF'] + $pinjamans['STAFF'] + $bpjstks['STAFF'] + $bpjskss['STAFF'],
+                    'netto' => $brutos['STAFF'] + $bpjskss['STAFF'] + $bpjstks['STAFF'] + $koperasis['STAFF'] + $infaqs['STAFF'] + $pinjamans['STAFF'],
                 ],
             );
         // TFI
@@ -641,7 +666,9 @@ class Administrasi extends Controller
                     'lainnya' => $pinjamans['TFI'],
                     'bpjs_ks' => $bpjskss['TFI'],
                     'bpjs_tk' => $bpjstks['TFI'],
+                    'absensi' => $absens['TFI'],
                     'tot_potongan' => $koperasis['TFI'] + $infaqs['TFI'] + $pinjamans['TFI'] + $bpjstks['TFI'] + $bpjskss['TFI'],
+                    'netto' => $brutos['TFI'] + $bpjskss['TFI'] + $bpjstks['TFI'] + $koperasis['TFI'] + $infaqs['TFI'] + $pinjamans['TFI'],
                 ],
             );
         // TFO
@@ -662,7 +689,9 @@ class Administrasi extends Controller
                     'lainnya' => $pinjamans['TFO'],
                     'bpjs_ks' => $bpjskss['TFO'],
                     'bpjs_tk' => $bpjstks['TFO'],
+                    'absensi' => $absens['TFO'],
                     'tot_potongan' => $koperasis['TFO'] + $infaqs['TFO'] + $pinjamans['TFO'] + $bpjstks['TFO'] + $bpjskss['TFO'],
+                    'netto' => $brutos['TFO'] + $bpjskss['TFO'] + $bpjstks['TFO'] + $koperasis['TFO'] + $infaqs['TFO'] + $pinjamans['TFO'],
                 ],
             );
         // WCR & WORKSHOP
@@ -683,7 +712,9 @@ class Administrasi extends Controller
                     'lainnya' => $pinjamans['WCR & WORKSHOP'],
                     'bpjs_ks' => $bpjskss['WCR & WORKSHOP'],
                     'bpjs_tk' => $bpjstks['WCR & WORKSHOP'],
+                    'absensi' => $absens['WCR & WORKSHOP'],
                     'tot_potongan' => $koperasis['WCR & WORKSHOP'] + $infaqs['WCR & WORKSHOP'] + $pinjamans['WCR & WORKSHOP'] + $bpjstks['WCR & WORKSHOP'] + $bpjskss['WCR & WORKSHOP'],
+                    'netto' => $brutos['WCR & WORKSHOP'] + $bpjskss['WCR & WORKSHOP'] + $bpjstks['WCR & WORKSHOP'] + $koperasis['WCR & WORKSHOP'] + $infaqs['WCR & WORKSHOP'] + $pinjamans['WCR & WORKSHOP'],
                 ],
             );
 
@@ -734,6 +765,21 @@ class Administrasi extends Controller
         }
         echo '
                             </tbody>
+                            <thead>
+                                <tr>
+                                    <th class="text-center">Grup</th>
+                                    <th class="text-center">Jml Karyawan</th>
+                                    <th class="text-center">Gaji Bruto</th>
+                                    <th class="text-center">Koperasi</th>
+                                    <th class="text-center">Infaq</th>
+                                    <th class="text-center">Pinjaman</th>
+                                    <th class="text-center">BPJS TK</th>
+                                    <th class="text-center">BPJS Kesehatan</th>
+                                    <th class="text-center">Absensi</th>
+                                    <th class="text-center">Total Potongan</th>
+                                    <th class="text-center">Gaji Netto</th>
+                                </tr>
+                            </thead>
                         </table>
                     </div>
                 </div>

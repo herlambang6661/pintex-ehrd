@@ -116,7 +116,7 @@
             <?php
             $totBpjs = $key->pot_bpjs_jkk + $key->pot_bpjs_jkm + $key->pot_bpjs_jp + $key->pot_bpjs_jht + $key->pot_bpjs_ks + $key->pot_bpjs_ksAdd;
             
-            $pembulatan = $key->gapok + $key->prestasi + $key->tjabat + ($key->pot_bpjs_jht + $key->pot_bpjs_jp + $key->pot_bpjs_ks) + ($key->potongan_absen + $key->potongan_infaq + $key->potongan_koperasi + $key->potongan_pinjaman);
+            $pembulatan = $key->gapok + $key->prestasi + $key->tjabat + ($key->pot_bpjs_jht + $key->pot_bpjs_jp + $key->pot_bpjs_ks) + ($key->potongan_absen + $key->potongan_infaq + $key->potongan_koperasi + $key->potongan_pinjaman + $key->potongan_absen_rp);
             $pembulatan = ceil($pembulatan);
             if (substr($pembulatan, -3) > 499) {
                 $resPem = round($pembulatan, -2);
@@ -174,7 +174,7 @@
                             </td>
 
                             </td>
-                            <td class="text-center" rowspan="5">
+                            <td class="text-center" rowspan="4">
                                 <table class="table table-sm table-borderless">
                                     <tr>
                                         <td style="text-align: end;">Sakit</td>
@@ -197,7 +197,9 @@
                         <tr>
                             <td>Pot. Absensi</td>
                             <td class="text-center">:</td>
-                            <td class="text-right"></td>
+                            <td class="text-right">
+                                {{ empty($key->potongan_absen_rp) ? '' : number_format($key->potongan_absen_rp) }}
+                            </td>
                         </tr>
                         <tr>
                             <td>Pot. Koperasi</td>
@@ -212,9 +214,9 @@
                                 {{ empty($key->potongan_pinjaman) ? '' : number_format($key->potongan_pinjaman) }}</td>
                         </tr>
                         <tr>
-                            <td>Pembulatan</td>
-                            <td class="text-center">:</td>
-                            <td class="text-right">{{ empty($resPem) ? '' : number_format($resPem) }}</td>
+                            <td class="border-top">Pembulatan</td>
+                            <td class="text-center border-top">:</td>
+                            <td class="text-right border-top">{{ empty($resPem) ? '' : number_format($resPem) }}</td>
                             <td class="text-center">BCA {{ $key->bankrek }}</td>
                         </tr>
                     </tbody>

@@ -61,7 +61,7 @@ class DataPayroll extends Controller
                 ->addColumn('totpot', function ($row) {
                     $bpjs = $row->pot_bpjs_jkk + $row->pot_bpjs_jkm + $row->pot_bpjs_jp + $row->pot_bpjs_jht + $row->pot_bpjs_ks + $row->pot_bpjs_ksAdd;
                     $infaqkoperasi = $row->potongan_koperasi + $row->potongan_infaq;
-                    $res = $bpjs + $infaqkoperasi + $row->potongan_absen_rp;
+                    $res = $bpjs + $infaqkoperasi + $row->potongan_absen_rp + $row->potongan_pinjaman;
                     return $res;
                 })
                 ->addColumn('potabs', function ($row) {
@@ -72,7 +72,7 @@ class DataPayroll extends Controller
                 ->addColumn('gnetto', function ($row) {
                     $bruto = $row->gapok + $row->prestasi + $row->tjabat;
                     $bpjs = $row->pot_bpjs_jkk + $row->pot_bpjs_jkm + $row->pot_bpjs_jp + $row->pot_bpjs_jht + $row->pot_bpjs_ks + $row->pot_bpjs_ksAdd;
-                    $infaqkoperasi = $row->potongan_koperasi + $row->potongan_infaq;
+                    $infaqkoperasi = $row->potongan_koperasi + $row->potongan_infaq + $row->potongan_pinjaman;
                     $potongan = $bpjs + $infaqkoperasi + $row->potongan_absen_rp;
 
                     $res = $bruto + $potongan;
