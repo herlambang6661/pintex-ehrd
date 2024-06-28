@@ -79,11 +79,14 @@
                     'end': end,
                 },
                 beforeSend: function() {
-                    $('.stt').text('Fetching Data Fingerprint & Updating Database...');
+                    $('.stt').text(
+                        'Fetching Data Fingerprint & Updating Database<span class="animated-dots"></span>'
+                    );
                     console.log('fetch data: ' + start + '-' + end);
                 },
                 success: function(data) {
-                    console.log('Success Fetching, redirect into Dashboard');
+                    console.log(
+                        'Success Fetching, redirect into Dashboard<span class="animated-dots"></span>');
                     $('.stt').text('');
                     $('.stt').text('Success Updating Data');
                     $('.fetched-data-absensi').html(data);

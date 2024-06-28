@@ -1016,6 +1016,106 @@ class Administrasi extends Controller
         ]);
     }
 
+    public function kelolalevel(Request $request)
+    {
+        $judul = "Kelola Data Karyawan";
+        $administrasi = "active";
+        $payroll = "active";
+
+        $periode = substr($request->selectedyear, -2) . $request->selectedmonth;
+
+        $getTambahan = DB::table('administrasi_payroll')->where('periode', '=', $periode)->orderBy('nama')->get();
+
+        return view('products/04_administrasi.kelolaKaryawan', [
+            'judul' => $judul,
+            'administrasi' => $administrasi,
+            'payroll' => $payroll,
+            'periode' => $periode,
+            'absensi' => $getTambahan,
+        ]);
+    }
+
+    public function editLevelKaryawan(Request $request)
+    {
+
+        $data = DB::table('administrasi_payroll')->where('id', $request->id)->get();
+        foreach ($data as $u) {
+            echo '
+                    <div class="mb-3">
+                        <label class="form-label">STB</label>
+                        <input type="text" class="form-control" disabled value="' . $u->stb . '" />
+                        <input type="hidden" name="periode" value="' . $u->periode . '" />
+                        <input type="hidden" name="userid" value="' . $u->userid . '" />
+                        <input type="hidden" name="stb" value="' . $u->stb . '" />
+                    </div>
+                    <div class="mb-3">
+                        <label class="form-label">Nama</label>
+                        <input type="text" class="form-control" disabled value="' . $u->nama . '" />
+                    </div>
+                    <div class="mb-3">
+                        <label class="form-label">Level Gaji</label>
+                        <input type="text" list="levels" name="level" class="form-control" value="' . $u->level . '" />
+                        <datalist id="levels">
+                            <option value="UNIT 1">
+                            <option value="UNIT 2">
+                            <option value="UMUM">
+                            <option value="STAFF">
+                            <option value="TFI">
+                            <option value="TFO">
+                            <option value="WCR & WORKSHOP">
+                        </datalist>
+                    </div>
+                    <div class="mb-3">
+                        <label class="form-label">Tunj. Jabatan</label>
+                        <input type="text" name="tjabat" class="form-control" value="' . $u->tjabat . '" />
+                    </div>
+                    <div class="mb-3">
+                        <label class="form-label">Prestasi</label>
+                        <input type="text" name="prestasi" class="form-control" value="' . $u->prestasi . '" />
+                    </div>
+            ';
+        }
+    }
+
+    public function storeUpdateLevelKaryawan(Request $request)
+    {
+        $request->validate(
+            [
+                '_token' => 'required',
+            ],
+        );
+        $check = DB::table('penerimaan_karyawan')
+            ->where('userid', $request->userid)
+            ->limit(1)
+            ->update(
+                array(
+                    'level' => $request->level,
+                    'tjabat' => $request->tjabat,
+                    'tprestasi' => $request->prestasi,
+                    'updated_at' => date('Y-m-d H:i:s'),
+                )
+            );
+
+        DB::table('administrasi_payroll')
+            ->where('periode', $request->periode)
+            ->where('userid', $request->userid)
+            ->limit(1)
+            ->update(
+                array(
+                    'level' => $request->level,
+                    'tjabat' => $request->tjabat,
+                    'prestasi' => $request->prestasi,
+                    'updated_at' => date('Y-m-d H:i:s'),
+                )
+            );
+
+        $arr = array('msg' => 'Something goes to wrong. Please try later', 'status' => false);
+        if ($check) {
+            $arr = array('msg' => 'Data: ' . $request->nama . ' telah berhasil diubah', 'status' => true);
+        }
+        return Response()->json($arr);
+    }
+
     public function exportPayroll()
     {
         $file_path = public_path('file_excel/ContohUploadPayroll.xlsx');

@@ -134,7 +134,8 @@
                     submitHandler: function(form) {
 
                         $('#submitLogin').html(
-                            '<i class="fa-solid fa-fw fa-spinner fa-spin"></i> Please Wait...');
+                            '<span class="spinner-border spinner-border-sm me-2" role="status"></span> Please Wait<span class="animated-dots"></span>'
+                        );
                         $("#submitLogin").attr("disabled", true);
 
 
@@ -148,7 +149,7 @@
 
                                 if (data.status) {
                                     $('#submitLogin').html(
-                                        '<i class="fa-solid fa-fw fa-spinner fa-spin"></i> Redirect to Dashboard'
+                                        '<span class="spinner-border spinner-border-sm me-2" role="status"></span> Redirect to Dashboard'
                                     );
                                     window.location = data.redirect;
                                 } else {

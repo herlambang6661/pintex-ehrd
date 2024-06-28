@@ -34,7 +34,7 @@ class DataPayroll extends Controller
         if ($request->ajax()) {
             $data = DB::table('administrasi_payroll')
                 ->selectRaw('
-                            id, stb, nama, gapok, level, prestasi, tjabat, bank, rekening, pot_bpjs_jkk, pot_bpjs_jkm, pot_bpjs_jp, pot_bpjs_jht, pot_bpjs_ks, pot_bpjs_ksAdd, potongan_absen, potongan_infaq, potongan_koperasi, potongan_pinjaman, potongan_absen_fix, potongan_absen_rp
+                            id, periode, stb, nama, gapok, level, prestasi, tjabat, bank, rekening, pot_bpjs_jkk, pot_bpjs_jkm, pot_bpjs_jp, pot_bpjs_jht, pot_bpjs_ks, pot_bpjs_ksAdd, potongan_absen, potongan_infaq, potongan_koperasi, potongan_pinjaman, potongan_absen_fix, potongan_absen_rp
                             ')
                 ->where('periode', '=', $tahun . $bulan)
                 ->orderBy('nama', 'asc')
@@ -88,10 +88,33 @@ class DataPayroll extends Controller
                     }
                     return $result;
                 })
+                ->addColumn('opsiEditLevelKaryawan', function ($row) {
+                    $result = '
+                        <a href="#editKaryawan" data-bs-toggle="modal"
+                            data-toggle="tooltip" data-placement="top"
+                            title="Edit Data Karyawan" data-item="' . $row->nama . '"
+                            data-id="' . $row->id . '"
+                            class="btn btn-sm btn-outline-info btn-icon">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="24"
+                                height="24" viewBox="0 0 24 24" fill="none"
+                                stroke="currentColor" stroke-width="2"
+                                stroke-linecap="round" stroke-linejoin="round"
+                                class="icon icon-tabler icons-tabler-outline icon-tabler-edit">
+                                <path stroke="none" d="M0 0h24v24H0z" fill="none" />
+                                <path
+                                    d="M7 7h-1a2 2 0 0 0 -2 2v9a2 2 0 0 0 2 2h9a2 2 0 0 0 2 -2v-1" />
+                                <path
+                                    d="M20.385 6.585a2.1 2.1 0 0 0 -2.97 -2.97l-8.415 8.385v3h3l8.385 -8.415z" />
+                                <path d="M16 5l3 3" />
+                            </svg>
+                        </a>';
+                    return $result;
+                })
+
                 ->editColumn('select_orders', function ($row) {
                     return '';
                 })
-                ->rawColumns(['action', 'select_orders', 'level'])
+                ->rawColumns(['action', 'select_orders', 'level', 'opsiEditLevelKaryawan'])
                 ->make(true);
         }
         return view('products.04_administrasi.payroll');

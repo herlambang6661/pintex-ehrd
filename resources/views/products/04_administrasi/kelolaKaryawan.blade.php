@@ -136,7 +136,7 @@
                                     <path d="M17 21h-10a2 2 0 0 1 -2 -2v-14a2 2 0 0 1 2 -2h7l5 5v11a2 2 0 0 1 -2 2z" />
                                     <path d="M14 11h-2.5a1.5 1.5 0 0 0 0 3h1a1.5 1.5 0 0 1 0 3h-2.5" />
                                     <path d="M12 17v1m0 -8v1" />
-                                </svg>Kelola Potongan Absensi
+                                </svg>Kelola Potongan Data Karyawan
                             </h2>
                             <div class="page-pretitle">
                                 <ol class="breadcrumb" aria-label="breadcrumbs">
@@ -151,7 +151,7 @@
                                     </li>
                                     <li class="breadcrumb-item active" aria-current="page">
                                         <a href="#">
-                                            <i class="fa-solid fa-file-invoice-dollar"></i> Kelola Absensi
+                                            <i class="fa-solid fa-file-invoice-dollar"></i> Kelola Karyawan
                                             <i class="text-danger"> (Restricted Area).</i>
                                         </a>
                                     </li>
@@ -179,205 +179,9 @@
                                                 <i class="fa-solid fa-sack-dollar"></i>
                                             </div>
                                         </div>
-                                        <div class="row row-cards">
-                                            <div class="col-sm-12 col-md-12 col-lg-5">
-                                                <form method="post" action="{{ route('importAbsenPayroll') }}"
-                                                    enctype="multipart/form-data">
-                                                    <div class="form-label">
-                                                        Upload Excel
-                                                        <a href="/payroll/export_excel">
-                                                            <i>( Download file contoh )</i>
-                                                        </a>
-                                                    </div>
-                                                    <div class="input-group">
-                                                        {{ csrf_field() }}
-                                                        <input type="hidden" name="periode" id="periodeUpload"
-                                                            value="{{ $periode }}">
-                                                        <input type="file" name="file" required="required"
-                                                            class="form-control" accept=".xl*">
-                                                        <button type="submit" class="btn btn-primary"
-                                                            onclick="loading();">Upload Excel</button>
-                                                    </div>
-                                                </form>
-                                            </div>
-                                            <div class="col-sm-12 col-md-12 col-lg-3">
-                                                <form method="post" action="{{ route('pilihFixAbsen') }}"
-                                                    enctype="multipart/form-data">
-                                                    <div class="form-label">
-                                                        Pilih Fix Absensi
-                                                    </div>
-                                                    <div class="input-group">
-                                                        {{ csrf_field() }}
-                                                        <input type="hidden" name="periode" id="periodeUpload"
-                                                            value="{{ $periode }}">
-                                                        <select class="form-select" name="pilihAbsen" id="pilihAbsen">
-                                                            <option value="SISTEM">Sistem</option>
-                                                            <option value="INPUT">Inputan</option>
-                                                        </select>
-                                                        <button type="submit" class="btn btn-primary"
-                                                            onclick="loading();">Simpan</button>
-                                                    </div>
-                                                </form>
-                                            </div>
-                                            <style>
-                                                .spinnerLoading svg {
-                                                    -webkit-animation: loading-rotate 2s linear infinite;
-                                                    -moz-animation: loading-rotate 2s linear infinite;
-                                                    -o-animation: loading-rotate 2s linear infinite;
-                                                    animation: loading-rotate 2s linear infinite;
-                                                    height: 50px;
-                                                    width: 50px;
-                                                }
-
-                                                .spinnerLoading .path {
-                                                    stroke-dasharray: 90, 150;
-                                                    stroke-dashoffset: 0;
-                                                    stroke-width: 2;
-                                                    stroke: #409eff;
-                                                    stroke-linecap: round;
-                                                    -webkit-animation: loading-dash 1.5s ease-in-out infinite;
-                                                    -moz-animation: loading-dash 1.5s ease-in-out infinite;
-                                                    -o-animation: loading-dash 1.5s ease-in-out infinite;
-                                                    animation: loading-dash 1.5s ease-in-out infinite;
-                                                }
-
-                                                @-webkit-keyframes loading-rotate {
-                                                    to {
-                                                        -webkit-transform: rotate(1turn);
-                                                        transform: rotate(1turn);
-                                                    }
-                                                }
-
-                                                @-moz-keyframes loading-rotate {
-                                                    to {
-                                                        -moz-transform: rotate(1turn);
-                                                        transform: rotate(1turn);
-                                                    }
-                                                }
-
-                                                @-o-keyframes loading-rotate {
-                                                    to {
-                                                        -o-transform: rotate(1turn);
-                                                        transform: rotate(1turn);
-                                                    }
-                                                }
-
-                                                @keyframes loading-rotate {
-                                                    to {
-                                                        -webkit-transform: rotate(1turn);
-                                                        -moz-transform: rotate(1turn);
-                                                        -o-transform: rotate(1turn);
-                                                        transform: rotate(1turn);
-                                                    }
-                                                }
-
-                                                @-webkit-keyframes loading-dash {
-                                                    0% {
-                                                        stroke-dasharray: 1, 200;
-                                                        stroke-dashoffset: 0;
-                                                    }
-
-                                                    50% {
-                                                        stroke-dasharray: 90, 150;
-                                                        stroke-dashoffset: -40px;
-                                                    }
-
-                                                    to {
-                                                        stroke-dasharray: 90, 150;
-                                                        stroke-dashoffset: -120px;
-                                                    }
-                                                }
-
-                                                @-moz-keyframes loading-dash {
-                                                    0% {
-                                                        stroke-dasharray: 1, 200;
-                                                        stroke-dashoffset: 0;
-                                                    }
-
-                                                    50% {
-                                                        stroke-dasharray: 90, 150;
-                                                        stroke-dashoffset: -40px;
-                                                    }
-
-                                                    to {
-                                                        stroke-dasharray: 90, 150;
-                                                        stroke-dashoffset: -120px;
-                                                    }
-                                                }
-
-                                                @-o-keyframes loading-dash {
-                                                    0% {
-                                                        stroke-dasharray: 1, 200;
-                                                        stroke-dashoffset: 0;
-                                                    }
-
-                                                    50% {
-                                                        stroke-dasharray: 90, 150;
-                                                        stroke-dashoffset: -40px;
-                                                    }
-
-                                                    to {
-                                                        stroke-dasharray: 90, 150;
-                                                        stroke-dashoffset: -120px;
-                                                    }
-                                                }
-
-                                                @keyframes loading-dash {
-                                                    0% {
-                                                        stroke-dasharray: 1, 200;
-                                                        stroke-dashoffset: 0;
-                                                    }
-
-                                                    50% {
-                                                        stroke-dasharray: 90, 150;
-                                                        stroke-dashoffset: -40px;
-                                                    }
-
-                                                    to {
-                                                        stroke-dasharray: 90, 150;
-                                                        stroke-dashoffset: -120px;
-                                                    }
-                                                }
-                                            </style>
-                                            <div class="col-sm-12 col-md-12 text-center">
-                                                <div class="spinnerLoading" style="display:none">
-                                                    <svg viewBox="25 25 50 50">
-                                                        <circle cx="50" cy="50" r="20" fill="none"
-                                                            class="path"></circle>
-                                                    </svg>
-                                                </div>
-                                            </div>
-                                        </div>
-                                        <table class="table table-sm table-bordered table-hover table-striped mt-3">
-                                            <thead>
-                                                <tr>
-                                                    <th class="text-center">TH/BL</th>
-                                                    <th class="text-center">STB</th>
-                                                    <th class="text-center">NAMA</th>
-                                                    <th class="text-center text-blue">S</th>
-                                                    <th class="text-center text-blue">I</th>
-                                                    <th class="text-center text-blue">A</th>
-                                                    <th class="text-center text-red">Absensi</th>
-                                                    <th class="text-center text-green">Absensi Input</th>
-                                                    <th class="text-center">Absensi Fix</th>
-                                                </tr>
-                                            </thead>
-                                            <tbody>
-                                                @foreach ($absensi as $t)
-                                                    <tr>
-                                                        <td class="text-center">{{ $t->periode }}</td>
-                                                        <td class="text-center">{{ $t->stb }}</td>
-                                                        <td>{{ $t->nama }}</td>
-                                                        <td class="text-center text-blue">{{ $t->S }}</td>
-                                                        <td class="text-center text-blue">{{ $t->I }}</td>
-                                                        <td class="text-center text-blue">{{ $t->A }}</td>
-                                                        <td class="text-center text-red">{{ $t->potongan_absen }}</td>
-                                                        <td class="text-center text-green">{{ $t->potongan_absen_input }}
-                                                        </td>
-                                                        <td class="text-center">{{ $t->potongan_absen_fix }}</td>
-                                                    </tr>
-                                                @endforeach
-                                            </tbody>
+                                        <table
+                                            class="table table-sm table-bordered table-hover table-striped mt-3 dt-karyawan"
+                                            style="width: 100%">
                                         </table>
                                     </div>
                                 </div>
@@ -393,8 +197,7 @@
             aria-labelledby="offcanvasEndLabel">
             <div class="offcanvas-header">
                 <h2 class="offcanvas-title" id="offcanvasEndLabel">Saring Data Payroll</h2>
-                <button type="button" class="btn-close text-reset" data-bs-dismiss="offcanvas"
-                    aria-label="Close"></button>
+                <button type="button" class="btn-close text-reset" data-bs-dismiss="offcanvas" aria-label="Close"></button>
             </div>
             <div class="offcanvas-body">
                 <div>
@@ -473,51 +276,9 @@
                 </div>
             </div>
         </div>
-        <div class="modal modal-blur fade" id="modal-tambahan" tabindex="-1" style="display: none;"
-            aria-hidden="true">
-            <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable" role="document">
-                <div class="modal-content">
-                    <div class="modal-header">
-                        <h5 class="modal-title">
-                            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"
-                                fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
-                                stroke-linejoin="round" class="icon icon-tabler icons-tabler-outline icon-tabler-upload">
-                                <path stroke="none" d="M0 0h24v24H0z" fill="none" />
-                                <path d="M4 17v2a2 2 0 0 0 2 2h12a2 2 0 0 0 2 -2v-2" />
-                                <path d="M7 9l5 -5l5 5" />
-                                <path d="M12 4l0 12" />
-                            </svg>
-                            Upload Data Tambahan / Potongan
-                        </h5>
-                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                    </div>
-                    <div class="modal-body">
-                        <form method="post" action="/payroll/import_excel" enctype="multipart/form-data">
-                            <div class="form-label">
-                                Upload Excel
-                                <a href="/payroll/export_excel">
-                                    <i>( Download file contoh )</i>
-                                </a>
-                            </div>
 
-                            <div class="input-group">
-                                {{ csrf_field() }}
-                                <input type="hidden" name="periode" id="periodeUpload" value="">
-                                <input type="file" name="file" required="required" class="form-control"
-                                    accept=".xl*">
-                                <button type="submit" class="btn btn-primary">Upload Excel</button>
-                            </div>
-                        </form>
-                    </div>
-                    <div class="modal-footer">
-                        <button type="button" class="btn me-auto" data-bs-dismiss="modal">Kembali</button>
-                        {{-- <button type="button" class="btn btn-primary" data-bs-dismiss="modal">Simpan</button> --}}
-                    </div>
-                </div>
-            </div>
-        </div>
-        <div class="modal modal-blur fade bg-dark" id="modal-rekap" tabindex="-1" style="display: none;"
-            aria-hidden="true">
+        {{-- Modal Edit --}}
+        <div class="modal modal-blur fade" id="editKaryawan" tabindex="-1" role="dialog" aria-hidden="true">
             <div class="overlay">
                 <div class="loader">
                     <span class="spinner spinner1"></span>
@@ -527,14 +288,44 @@
                     <span class="loader-text">MEMUAT DATA</span>
                 </div>
             </div>
-            <div class="modal-dialog modal-full-width modal-dialog-centered" role="document">
+            <div class="modal-dialog modal-xl" role="document">
                 <div class="modal-content">
-                    <div class="fetched-rekap-payroll"></div>
+                    <form id="formUpdateKaryawan" name="formUpdateKaryawan" method="post" action="javascript:void(0)">
+                        @csrf
+                        <div class="modal-header">
+                            <h5 class="modal-title">
+                                <i class="fa-solid fa-user" style="margin-right: 5px"></i> Data Karyawan
+                            </h5>
+                            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close">
+                            </button>
+                        </div>
+                        <div class="modal-body">
+                            <div class="fetched-data-karyawan"></div>
+                        </div>
+                        <div class="modal-footer">
+                            <button class="btn btn-primary" type="submit" id="submitEdit">
+                                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24"
+                                    viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+                                    stroke-linecap="round" stroke-linejoin="round"
+                                    class="icon icon-tabler icons-tabler-outline icon-tabler-device-floppy">
+                                    <path stroke="none" d="M0 0h24v24H0z" fill="none" />
+                                    <path d="M6 4h10l4 4v10a2 2 0 0 1 -2 2h-12a2 2 0 0 1 -2 -2v-12a2 2 0 0 1 2 -2" />
+                                    <path d="M12 14m-2 0a2 2 0 1 0 4 0a2 2 0 1 0 -4 0" />
+                                    <path d="M14 4l0 4l-6 0l0 -4" />
+                                </svg>
+                                Simpan
+                            </button>
+                            <button type="button" class="btn btn-link link-secondary ms-auto" data-bs-dismiss="modal">
+                                <i class="fa-solid fa-fw fa-arrow-rotate-left"></i> Kembali
+                            </button>
+                        </div>
+                    </form>
                 </div>
             </div>
         </div>
 
         <script>
+            var tablePayroll;
             $(function() {
                 $('#modal-rekap').on('show.bs.modal', function(e) {
                     var bln = $('#bulan').val();
@@ -569,6 +360,198 @@
                         }, 500);
                     });
                 });
+                console.log("fetch: " + "{{ substr($periode, 2, 2) }} - 20{{ substr($periode, 0, 2) }}");
+                tablePayroll = $('.dt-karyawan').DataTable({
+                    "processing": true, //Feature control the processing indicator.
+                    "serverSide": false, //Feature control DataTables' server-side processing mode.
+                    "scrollX": true,
+                    "scrollCollapse": true,
+                    "pagingType": 'full_numbers',
+                    "dom": "<'card-header h3' B>" +
+                        "<'card-body border-bottom py-3' <'row'<'col-sm-6'l><'col-sm-6'f>> >" +
+                        "<'table-responsive' <'col-sm-12'tr> >" +
+                        "<'card-footer' <'row'<'col-sm-8'i><'col-sm-4'p> >>",
+                    "lengthMenu": [
+                        [10, 25, 35, 40, 50, -1],
+                        ['10', '25', '35', '40', '50', 'Tampilkan Semua']
+                    ],
+                    buttons: [{
+                        extend: 'excelHtml5',
+                        autoFilter: true,
+                        className: 'btn btn-success',
+                        text: '<svg  xmlns="http://www.w3.org/2000/svg"  width="24"  height="24"  viewBox="0 0 24 24"  fill="none"  stroke="currentColor"  stroke-width="2"  stroke-linecap="round"  stroke-linejoin="round"  class="icon icon-tabler icons-tabler-outline icon-tabler-table"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><path d="M3 5a2 2 0 0 1 2 -2h14a2 2 0 0 1 2 2v14a2 2 0 0 1 -2 2h-14a2 2 0 0 1 -2 -2v-14z" /><path d="M3 10h18" /><path d="M10 3v18" /></svg> Download Excel',
+                        action: newexportaction,
+                    }, ],
+                    "language": {
+                        "lengthMenu": "Menampilkan _MENU_",
+                        "zeroRecords": "Data Tidak Ditemukan",
+                        "info": "Menampilkan _START_ sampai _END_ dari _TOTAL_ total data",
+                        "infoEmpty": "Data Tidak Ditemukan",
+                        "infoFiltered": "(Difilter dari _MAX_ total records)",
+                        "processing": '<div class="container container-slim py-4"><div class="text-center"><div class="mb-3"></div><div class="text-secondary mb-3">Loading Data...</div><div class="progress progress-sm"><div class="progress-bar progress-bar-indeterminate"></div></div></div></div>',
+                        "search": '<svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-search" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z" fill="none"></path><path d="M10 10m-7 0a7 7 0 1 0 14 0a7 7 0 1 0 -14 0"></path><path d="M21 21l-6 -6"></path></svg>',
+                        "paginate": {
+                            "first": '<svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-chevron-left-pipe" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z" fill="none"></path><path d="M7 6v12"></path><path d="M18 6l-6 6l6 6"></path></svg>',
+                            "last": '<svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-chevron-right-pipe" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z" fill="none"></path><path d="M6 6l6 6l-6 6"></path><path d="M17 5v13"></path></svg>',
+                            "next": '<svg xmlns="http://www.w3.org/2000/svg" class="icon" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z" fill="none"></path><path d="M9 6l6 6l-6 6"></path></svg>',
+                            "previous": '<svg xmlns="http://www.w3.org/2000/svg" class="icon" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z" fill="none"></path><path d="M15 6l-6 6l6 6"></path></svg>',
+                        },
+                        "decimal": ",",
+                        "thousands": ".",
+                    },
+                    "ajax": {
+                        "url": "{{ route('getPayroll.index') }}",
+                        "data": function(data) {
+                            data._token = "{{ csrf_token() }}";
+                            data.bulan = "{{ substr($periode, 2, 2) }}";
+                            data.tahun = "20{{ substr($periode, 0, 2) }}";
+                        }
+                    },
+                    columns: [{
+                            title: 'TH/BL',
+                            data: 'periode',
+                            name: 'periode',
+                            orderable: false,
+                            searchable: false,
+                            className: 'cuspad0 text-center'
+                        },
+                        {
+                            title: 'STB',
+                            data: 'stb',
+                            name: 'stb',
+                            className: 'cuspad0 text-center'
+                        },
+                        {
+                            title: 'Nama',
+                            data: 'nama',
+                            name: 'nama',
+                            className: 'cuspad0'
+                        },
+                        {
+                            title: 'Level',
+                            data: 'level',
+                            name: 'level',
+                            className: 'cuspad0 text-center'
+                        },
+                        {
+                            title: 'Tunj. Jabatan',
+                            data: 'tjabat',
+                            name: 'tjabat',
+                            className: 'cuspad0 text-center'
+                        },
+                        {
+                            title: 'Prestasi',
+                            data: 'prestasi',
+                            name: 'prestasi',
+                            className: 'cuspad0 text-center'
+                        },
+                        {
+                            title: 'Opsi',
+                            data: 'opsiEditLevelKaryawan',
+                            name: 'opsiEditLevelKaryawan',
+                            className: 'cuspad0 text-center'
+                        },
+                    ],
+                });
+
+                $('#editKaryawan').on('show.bs.modal', function(e) {
+                    var rowid = $(e.relatedTarget).data('id');
+                    console.log(rowid);
+                    $(".overlay").fadeIn(300);
+                    $.ajaxSetup({
+                        headers: {
+                            'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                        }
+                    });
+                    //menggunakan fungsi ajax untuk pengambilan data
+                    $.ajax({
+                        type: 'POST',
+                        url: '{{ url('editLevelKaryawan') }}',
+                        data: {
+                            "_token": "{{ csrf_token() }}",
+                            id: rowid,
+                        },
+                        success: function(data) {
+                            $('.fetched-data-karyawan').html(
+                                data); //menampilkan data ke dalam modal
+                            // alert(itemTables);
+                        }
+                    }).done(function() {
+                        setTimeout(function() {
+                            $(".overlay").fadeOut(300);
+                        }, 500);
+                    });
+                });
+
+
+                if ($("#formUpdateKaryawan").length > 0) {
+                    $("#formUpdateKaryawan").validate({
+                        submitHandler: function(form) {
+                            $.ajaxSetup({
+                                headers: {
+                                    'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                                }
+                            });
+                            $('#submitEdit').html(
+                                '<i class="fa-solid fa-fw fa-spinner fa-spin"></i> Please Wait...');
+                            $("#submitEdit").attr("disabled", true);
+                            $.ajax({
+                                url: "{{ url('storeUpdateLevelKaryawan') }}",
+                                type: "POST",
+                                data: $('#formUpdateKaryawan').serialize(),
+                                beforeSend: function() {
+                                    Swal.fire({
+                                        title: 'Mohon Menunggu',
+                                        html: '<center><lottie-player src="https://lottie.host/933bb0e2-47c0-4fa6-83f9-3330b433b883/yymyeZt49h.json"  background="transparent"  speed="1"  style="width: 300px; height: 300px;"  loop autoplay></lottie-player></center><br><h1 class="h4">Sedang memproses data, Proses mungkin membutuhkan beberapa menit.</h1>',
+                                        showConfirmButton: false,
+                                        timerProgressBar: true,
+                                        allowOutsideClick: false,
+                                        allowEscapeKey: false,
+                                    })
+                                },
+                                success: function(response) {
+                                    console.log('Completed.');
+                                    $('#submitEdit').html(
+                                        '<i class="fas fa-save" style="margin-right: 5px"></i> Simpan'
+                                    );
+                                    $("#submitEdit").attr("disabled", false);
+                                    tablePayroll.ajax.reload();
+                                    const Toast = Swal.mixin({
+                                        toast: true,
+                                        position: "top-end",
+                                        showConfirmButton: false,
+                                        timer: 4000,
+                                        timerProgressBar: true,
+                                        didOpen: (toast) => {
+                                            toast.onmouseenter = Swal.stopTimer;
+                                            toast.onmouseleave = Swal.resumeTimer;
+                                        }
+                                    });
+                                    Toast.fire({
+                                        icon: "success",
+                                        title: response.msg,
+                                    });
+                                    document.getElementById("formUpdateKaryawan").reset();
+                                    $('#editKaryawan').modal('hide');
+                                },
+                                error: function(data) {
+                                    console.log('Error:', data);
+                                    // const obj = JSON.parse(data.responseJSON);
+                                    Swal.fire({
+                                        icon: 'error',
+                                        title: 'Gagal Input',
+                                        html: data.responseJSON.message,
+                                        showConfirmButton: true
+                                    });
+                                    $('#submitEdit').html(
+                                        '<i class="fas fa-save" style="margin-right: 5px"></i> Simpan'
+                                    );
+                                    $("#submitEdit").attr("disabled", false);
+                                }
+                            });
+                        }
+                    })
+                }
             });
             /*------------------------------------------
             --------------------------------------------
@@ -619,18 +602,6 @@
                 });
                 // Requery the server with the new one-time export settings
                 dt.ajax.reload();
-            }
-
-            var d = new Date();
-            var strDate = d.getFullYear() + "/" + (d.getMonth() + 1) + "/" + d.getDate();
-            $(function() {
-                var token = $("meta[name='csrf-token']").attr("content");
-
-
-            });
-
-            function syn() {
-                tablePayroll.ajax.reload();
             }
 
             function setPeriodeToUpload() {

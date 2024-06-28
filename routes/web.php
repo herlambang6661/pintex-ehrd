@@ -316,6 +316,8 @@ Route::controller(Administrasi::class)->group(function () {
     Route::post('getSlipgaji', 'getSlipgaji');
     Route::post('rekapPayroll', 'rekapPayroll');
     Route::post('administrasi/printPayroll', 'printPayroll')->name('administrasi/printPayroll');
+    Route::post('editLevelKaryawan', 'editLevelKaryawan');
+    Route::post('storeUpdateLevelKaryawan', 'storeUpdateLevelKaryawan');
 });
 
 // Modules Database
