@@ -174,6 +174,7 @@ class Administrasi extends Controller
                             'periode' => $periode,
                             'dari' => date("Y-m-d", strtotime($request->tahun . '-' . $request->bulan . '-16' . "-1 month")),
                             'sampai' => $request->tahun . '-' . $request->bulan . '-15',
+                            'userid' => $key->userid,
                             'stb' => $key->stb,
                             'nama' => $key->nama,
                             'level' => $key->level,
