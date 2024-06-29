@@ -171,6 +171,7 @@ class Administrasi extends Controller
                     ->insert(
                         array(
                             'entitas' => 'PINTEX',
+                            'periode' => $periode,
                             'dari' => date("Y-m-d", strtotime($request->tahun . '-' . $request->bulan . '-16' . "-1 month")),
                             'sampai' => $request->tahun . '-' . $request->bulan . '-15',
                             'stb' => $key->stb,
@@ -575,8 +576,8 @@ class Administrasi extends Controller
                     'bpjs_tk' => $bpjstks['UNIT 1'],
                     'bpjs_ks' => $bpjskss['UNIT 1'],
                     'absensi' => $absens['UNIT 1'],
-                    'tot_potongan' => $koperasis['UNIT 1'] + $infaqs['UNIT 1'] + $pinjamans['UNIT 1'] + $bpjstks['UNIT 1'] + $bpjskss['UNIT 1'],
-                    'netto' => $brutos['UNIT 1'] + $bpjskss['UNIT 1'] + $bpjstks['UNIT 1'] + $koperasis['UNIT 1'] + $infaqs['UNIT 1'] + $pinjamans['UNIT 1'],
+                    'tot_potongan' => $koperasis['UNIT 1'] + $infaqs['UNIT 1'] + $pinjamans['UNIT 1'] + $bpjstks['UNIT 1'] + $bpjskss['UNIT 1'] + $absens['UNIT 1'],
+                    'netto' => $brutos['UNIT 1'] + $bpjskss['UNIT 1'] + $bpjstks['UNIT 1'] + $koperasis['UNIT 1'] + $infaqs['UNIT 1'] + $pinjamans['UNIT 1'] + $absens['UNIT 1'],
                 ],
             );
         // UNIT 2
@@ -598,8 +599,8 @@ class Administrasi extends Controller
                     'bpjs_tk' => $bpjstks['UNIT 2'],
                     'bpjs_ks' => $bpjskss['UNIT 2'],
                     'absensi' => $absens['UNIT 2'],
-                    'tot_potongan' => $koperasis['UNIT 2'] + $infaqs['UNIT 2'] + $pinjamans['UNIT 2'] + $bpjstks['UNIT 2'] + $bpjskss['UNIT 2'],
-                    'netto' => $brutos['UNIT 2'] + $bpjskss['UNIT 2'] + $bpjstks['UNIT 2'] + $koperasis['UNIT 2'] + $infaqs['UNIT 2'] + $pinjamans['UNIT 2'],
+                    'tot_potongan' => $koperasis['UNIT 2'] + $infaqs['UNIT 2'] + $pinjamans['UNIT 2'] + $bpjstks['UNIT 2'] + $bpjskss['UNIT 2'] + $absens['UNIT 2'],
+                    'netto' => $brutos['UNIT 2'] + $bpjskss['UNIT 2'] + $bpjstks['UNIT 2'] + $koperasis['UNIT 2'] + $infaqs['UNIT 2'] + $pinjamans['UNIT 2'] + $absens['UNIT 2'],
                 ],
             );
         // UMUM
@@ -621,8 +622,8 @@ class Administrasi extends Controller
                     'bpjs_tk' => $bpjstks['UMUM'],
                     'bpjs_ks' => $bpjskss['UMUM'],
                     'absensi' => $absens['UMUM'],
-                    'tot_potongan' => $koperasis['UMUM'] + $infaqs['UMUM'] + $pinjamans['UMUM'] + $bpjstks['UMUM'] + $bpjskss['UMUM'],
-                    'netto' => $brutos['UMUM'] + $bpjskss['UMUM'] + $bpjstks['UMUM'] + $koperasis['UMUM'] + $infaqs['UMUM'] + $pinjamans['UMUM'],
+                    'tot_potongan' => $koperasis['UMUM'] + $infaqs['UMUM'] + $pinjamans['UMUM'] + $bpjstks['UMUM'] + $bpjskss['UMUM'] + $absens['UMUM'],
+                    'netto' => $brutos['UMUM'] + $bpjskss['UMUM'] + $bpjstks['UMUM'] + $koperasis['UMUM'] + $infaqs['UMUM'] + $pinjamans['UMUM'] + $absens['UMUM'],
                 ],
             );
         // STAFF
@@ -644,8 +645,8 @@ class Administrasi extends Controller
                     'bpjs_ks' => $bpjskss['STAFF'],
                     'bpjs_tk' => $bpjstks['STAFF'],
                     'absensi' => $absens['STAFF'],
-                    'tot_potongan' => $koperasis['STAFF'] + $infaqs['STAFF'] + $pinjamans['STAFF'] + $bpjstks['STAFF'] + $bpjskss['STAFF'],
-                    'netto' => $brutos['STAFF'] + $bpjskss['STAFF'] + $bpjstks['STAFF'] + $koperasis['STAFF'] + $infaqs['STAFF'] + $pinjamans['STAFF'],
+                    'tot_potongan' => $koperasis['STAFF'] + $infaqs['STAFF'] + $pinjamans['STAFF'] + $bpjstks['STAFF'] + $bpjskss['STAFF'] + $absens['STAFF'],
+                    'netto' => $brutos['STAFF'] + $bpjskss['STAFF'] + $bpjstks['STAFF'] + $koperasis['STAFF'] + $infaqs['STAFF'] + $pinjamans['STAFF'] + $absens['STAFF'],
                 ],
             );
         // TFI
@@ -667,8 +668,8 @@ class Administrasi extends Controller
                     'bpjs_ks' => $bpjskss['TFI'],
                     'bpjs_tk' => $bpjstks['TFI'],
                     'absensi' => $absens['TFI'],
-                    'tot_potongan' => $koperasis['TFI'] + $infaqs['TFI'] + $pinjamans['TFI'] + $bpjstks['TFI'] + $bpjskss['TFI'],
-                    'netto' => $brutos['TFI'] + $bpjskss['TFI'] + $bpjstks['TFI'] + $koperasis['TFI'] + $infaqs['TFI'] + $pinjamans['TFI'],
+                    'tot_potongan' => $koperasis['TFI'] + $infaqs['TFI'] + $pinjamans['TFI'] + $bpjstks['TFI'] + $bpjskss['TFI'] + $absens['TFI'],
+                    'netto' => $brutos['TFI'] + $bpjskss['TFI'] + $bpjstks['TFI'] + $koperasis['TFI'] + $infaqs['TFI'] + $pinjamans['TFI'] + $absens['TFI'],
                 ],
             );
         // TFO
@@ -690,8 +691,8 @@ class Administrasi extends Controller
                     'bpjs_ks' => $bpjskss['TFO'],
                     'bpjs_tk' => $bpjstks['TFO'],
                     'absensi' => $absens['TFO'],
-                    'tot_potongan' => $koperasis['TFO'] + $infaqs['TFO'] + $pinjamans['TFO'] + $bpjstks['TFO'] + $bpjskss['TFO'],
-                    'netto' => $brutos['TFO'] + $bpjskss['TFO'] + $bpjstks['TFO'] + $koperasis['TFO'] + $infaqs['TFO'] + $pinjamans['TFO'],
+                    'tot_potongan' => $koperasis['TFO'] + $infaqs['TFO'] + $pinjamans['TFO'] + $bpjstks['TFO'] + $bpjskss['TFO'] + $absens['TFO'],
+                    'netto' => $brutos['TFO'] + $bpjskss['TFO'] + $bpjstks['TFO'] + $koperasis['TFO'] + $infaqs['TFO'] + $pinjamans['TFO'] + $absens['TFO'],
                 ],
             );
         // WCR & WORKSHOP
@@ -713,8 +714,8 @@ class Administrasi extends Controller
                     'bpjs_ks' => $bpjskss['WCR & WORKSHOP'],
                     'bpjs_tk' => $bpjstks['WCR & WORKSHOP'],
                     'absensi' => $absens['WCR & WORKSHOP'],
-                    'tot_potongan' => $koperasis['WCR & WORKSHOP'] + $infaqs['WCR & WORKSHOP'] + $pinjamans['WCR & WORKSHOP'] + $bpjstks['WCR & WORKSHOP'] + $bpjskss['WCR & WORKSHOP'],
-                    'netto' => $brutos['WCR & WORKSHOP'] + $bpjskss['WCR & WORKSHOP'] + $bpjstks['WCR & WORKSHOP'] + $koperasis['WCR & WORKSHOP'] + $infaqs['WCR & WORKSHOP'] + $pinjamans['WCR & WORKSHOP'],
+                    'tot_potongan' => $koperasis['WCR & WORKSHOP'] + $infaqs['WCR & WORKSHOP'] + $pinjamans['WCR & WORKSHOP'] + $bpjstks['WCR & WORKSHOP'] + $bpjskss['WCR & WORKSHOP'] + $absens['WCR & WORKSHOP'],
+                    'netto' => $brutos['WCR & WORKSHOP'] + $bpjskss['WCR & WORKSHOP'] + $bpjstks['WCR & WORKSHOP'] + $koperasis['WCR & WORKSHOP'] + $infaqs['WCR & WORKSHOP'] + $pinjamans['WCR & WORKSHOP'] + $absens['WCR & WORKSHOP'],
                 ],
             );
 
