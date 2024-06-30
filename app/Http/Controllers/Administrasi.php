@@ -770,21 +770,21 @@ class Administrasi extends Controller
         }
         echo '
                             </tbody>
-                            <thead>
+                            <tfoot>
                                 <tr>
-                                    <th class="text-center">Grup</th>
-                                    <th class="text-center">Jml Karyawan</th>
-                                    <th class="text-center">Gaji Bruto</th>
-                                    <th class="text-center">Koperasi</th>
-                                    <th class="text-center">Infaq</th>
-                                    <th class="text-center">Pinjaman</th>
-                                    <th class="text-center">BPJS TK</th>
-                                    <th class="text-center">BPJS Kesehatan</th>
-                                    <th class="text-center">Absensi</th>
-                                    <th class="text-center">Total Potongan</th>
-                                    <th class="text-center">Gaji Netto</th>
+                                    <th class="text-center">Total</th>
+                                    <th class="text-center">' . number_format(array_sum($levels), 0, ',', '.') . '</th>
+                                    <th class="text-center">' . number_format(array_sum($brutos), 0, ',', '.') . '</th>
+                                    <th class="text-center">' . number_format(array_sum($koperasis), 0, ',', '.') . '</th>
+                                    <th class="text-center">' . number_format(array_sum($infaqs), 0, ',', '.') . '</th>
+                                    <th class="text-center">' . number_format(array_sum($pinjamans), 0, ',', '.') . '</th>
+                                    <th class="text-center">' . number_format(array_sum($bpjstks), 0, ',', '.') . '</th>
+                                    <th class="text-center">' . number_format(array_sum($bpjskss), 0, ',', '.') . '</th>
+                                    <th class="text-center">' . number_format(array_sum($absens), 0, ',', '.') . '</th>
+                                    <th class="text-center">' . number_format((array_sum($koperasis) + array_sum($infaqs) + array_sum($pinjamans) + array_sum($bpjstks) + array_sum($bpjskss) + array_sum($absens)), 0, ',', '.') . '</th>
+                                    <th class="text-center">' . number_format((array_sum($brutos) + array_sum($bpjskss) + array_sum($bpjstks) + array_sum($koperasis) + array_sum($infaqs) + array_sum($pinjamans) + array_sum($absens)), 0, ',', '.') . '</th>
                                 </tr>
-                            </thead>
+                            </tfoot>
                         </table>
                     </div>
                 </div>
