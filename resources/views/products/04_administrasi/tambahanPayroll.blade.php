@@ -346,12 +346,13 @@
                                                         <td class="text-center">{{ $t->periode }}</td>
                                                         <td class="text-center">{{ $t->stb }}</td>
                                                         <td>{{ $t->nama }}</td>
+                                                        <td class="text-center">{{ $t->level }}</td>
                                                         <td class="text-center">
                                                             <a href="" class="editable" data-type="number"
                                                                 data-stb="{{ $t->stb }}"
                                                                 data-periode="{{ $periode }}"
                                                                 data-name="{{ $t->id }}" data-pk="koperasi">
-                                                                {{ $t->koperasi }}
+                                                                {{ $t->potongan_koperasi }}
                                                             </a>
                                                         </td>
                                                         <td class="text-center">
@@ -359,7 +360,7 @@
                                                                 data-stb="{{ $t->stb }}"
                                                                 data-periode="{{ $periode }}"
                                                                 data-name="{{ $t->id }}" data-pk="pinjaman">
-                                                                {{ $t->pinjaman }}
+                                                                {{ $t->potongan_pinjaman }}
                                                             </a>
                                                         </td>
                                                         <td class="text-center">

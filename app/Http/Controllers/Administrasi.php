@@ -214,6 +214,8 @@ class Administrasi extends Controller
             $sakit  = $this->absensi('S', $key->userid, date("Y-m-d", strtotime($request->tahun . '-' . $request->bulan . '-16' . "-1 month")), $request->tahun . '-' . $request->bulan . '-15');
             $izin   = $this->absensi('I', $key->userid, date("Y-m-d", strtotime($request->tahun . '-' . $request->bulan . '-16' . "-1 month")), $request->tahun . '-' . $request->bulan . '-15');
             $alpha  = $this->absensi('A', $key->userid, date("Y-m-d", strtotime($request->tahun . '-' . $request->bulan . '-16' . "-1 month")), $request->tahun . '-' . $request->bulan . '-15');
+            // hitung potongan absen = (bruto/25)*jml_absen. bruto = gapok + prestasi + tunj.jabatan.
+            $absen_rp = (($key->gapok + $key->prestasi + $key->tjabat) / 25) * $key->potongan_absen_fix;
             DB::table('administrasi_payroll')
                 ->where('userid', '=', $key->userid)
                 ->where('periode', '=', $periode)
@@ -221,6 +223,7 @@ class Administrasi extends Controller
                 ->update(
                     array(
                         'potongan_absen' => ($sakit + $izin),
+                        'potongan_absen_rp' => $absen_rp,
                         'H' => $hadir,
                         'S' => $sakit,
                         'I' => $izin,
@@ -276,7 +279,7 @@ class Administrasi extends Controller
 
         $periode = substr($request->selectedyear, -2) . $request->selectedmonth;
 
-        $getTambahan = DB::table('administrasi_payrolldtl')->where('periode', '=', $periode)->get();
+        $getTambahan = DB::table('administrasi_payroll')->where('periode', '=', $periode)->get();
 
         return view('products/04_administrasi.tambahanPayroll', [
             'judul' => $judul,
