@@ -223,7 +223,7 @@ class Administrasi extends Controller
                 ->update(
                     array(
                         'potongan_absen' => ($sakit + $izin),
-                        'potongan_absen_rp' => $absen_rp,
+                        'potongan_absen_rp' => - ($absen_rp),
                         'H' => $hadir,
                         'S' => $sakit,
                         'I' => $izin,
