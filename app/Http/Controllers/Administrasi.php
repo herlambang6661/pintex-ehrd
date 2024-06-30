@@ -321,6 +321,15 @@ class Administrasi extends Controller
                 ->join('penerimaan_karyawan as k', 'p.userid', '=', 'k.userid')
                 ->where('p.id', '=', $request->id[$i])
                 ->first();
+
+            $updatePrinted = DB::table('administrasi_payroll')
+                ->where('id', '=', $request->id[$i])
+                ->update(
+                    [
+                        'printed' => DB::raw('IFNULL(printed, 0) + 1'),
+                        'print_date' => date('Y-m-d H:i:s'),
+                    ]
+                );
         }
 
         return view('products/04_administrasi.printPayroll', [
@@ -337,6 +346,22 @@ class Administrasi extends Controller
             echo '<center><iframe src="https://lottie.host/embed/94d605b9-2cc4-4d11-809a-7f41357109b0/OzwBgj9bHl.json" width="300px" height="300px"></iframe></center>';
             echo "<center>Tidak ada data yang dipilih</center>";
         } else {
+
+            $bulan = array(
+                1 =>       'Januari',
+                'Februari',
+                'Maret',
+                'April',
+                'Mei',
+                'Juni',
+                'Juli',
+                'Agustus',
+                'September',
+                'Oktober',
+                'November',
+                'Desember'
+            );
+
             $jml = count($request->id);
             echo '<div class="table-responsive">';
             echo '<div class="space-y">';
@@ -347,7 +372,7 @@ class Administrasi extends Controller
                     echo  '<input type="hidden" name="id[]" value="' . $u->id . '" >';
                     echo  '<input type="hidden" name="nama[]" value="' . $u->nama . '" >';
                     echo '
-                        <div class="card shadow border-green">
+                        <div class="card shadow ' . (($u->printed > 0) ? "border-red bg-red-lt" : "border-green") . '">
                             <div class="row g-0">
                                 <div class="col-auto">
                                     <div class="card-body">
@@ -366,7 +391,7 @@ class Administrasi extends Controller
                                                 <div class="mt-3 list-inline list-inline-dots mb-0 text-secondary d-sm-block d-none">
                                                     <div class="list-inline-item">
                                                         <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-inline" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z" fill="none"></path><path d="M15 21h-9a3 3 0 0 1 -3 -3v-1h10v2a2 2 0 0 0 4 0v-14a2 2 0 1 1 2 2h-2m2 -4h-11a3 3 0 0 0 -3 3v11"></path><path d="M9 7l4 0"></path><path d="M9 11l4 0"></path></svg>
-                                                        ' . $u->periode . '
+                                                        ' . $bulan[(int)substr($u->periode, 2)] . ' 20' . substr($u->periode, 0, 2) . '
                                                     </div>
                                                     <div class="list-inline-item">
                                                         <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-inline" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z" fill="none"></path><path d="M8 9l5 5v7h-5v-4m0 4h-5v-7l5 -5m1 1v-6a1 1 0 0 1 1 -1h10a1 1 0 0 1 1 1v17h-8"></path><path d="M13 7l0 .01"></path><path d="M17 7l0 .01"></path><path d="M17 11l0 .01"></path><path d="M17 15l0 .01"></path></svg>
@@ -386,7 +411,7 @@ class Administrasi extends Controller
                                             </div>
                                             <div class="col-md-auto">
                                                 <div class="mt-3 badges">
-                                                    <i href="#" class="badge badge-outline text-secondary fw-normal badge-pill">Tanggal: ' . carbon::parse($u->dari)->format('d/m/Y') . ' s/d ' . carbon::parse($u->sampai)->format('d/m/Y') . '</i>
+                                                    <i href="#" class="badge badge-outline text-secondary fw-normal badge-pill">' . ((($u->printed > 0) ? "<span class='status-dot status-dot-animated status-red'></span>" : "")) . ' Tanggal Print: ' . (empty($u->print_date) ? ' -' : carbon::parse($u->print_date)->format('d/m/Y') . " Jam " . carbon::parse($u->print_date)->format('H:i:s')) . '</i>
                                                 </div>
                                             </div>
                                         </div>
