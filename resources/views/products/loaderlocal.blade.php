@@ -80,13 +80,13 @@
                 },
                 beforeSend: function() {
                     $('.stt').text(
-                        'Fetching Data Fingerprint & Updating Database<span class="animated-dots"></span>'
+                        'Fetching Data Fingerprint & Updating Database...'
                     );
                     console.log('fetch data: ' + start + '-' + end);
                 },
                 success: function(data) {
                     console.log(
-                        'Success Fetching, redirect into Dashboard<span class="animated-dots"></span>');
+                        'Success Fetching, redirect into Dashboard...');
                     $('.stt').text('');
                     $('.stt').text('Success Updating Data');
                     $('.fetched-data-absensi').html(data);
@@ -95,7 +95,7 @@
                 error: function(data) {
                     console.log('Error:', data.responseText);
                     $('.stt').text(
-                        'Driver ODBC Access tidak ditemukan, beralih ke Dashboard tanpa syncronisasi'
+                        'Driver ODBC Access tidak ditemukan, beralih ke Dashboard tanpa syncronisasi...'
                     );
                     setTimeout(function() {
                         window.location.href = '/dashboard';

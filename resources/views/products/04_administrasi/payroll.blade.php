@@ -193,40 +193,40 @@
                                                     <select name="bulan" id="bulan"
                                                         class="form-select border border-primary">
                                                         <option value="01"
-                                                            {{ date('m') == '01' ? 'selected="selected"' : '' }}>
+                                                            {{ date('m', strtotime('first day of -1 month')) == '01' ? 'selected="selected"' : '' }}>
                                                             Januari</option>
                                                         <option value="02"
-                                                            {{ date('m') == '02' ? 'selected="selected"' : '' }}>
+                                                            {{ date('m', strtotime('first day of -1 month')) == '02' ? 'selected="selected"' : '' }}>
                                                             Februari</option>
                                                         <option value="03"
-                                                            {{ date('m') == '03' ? 'selected="selected"' : '' }}>
+                                                            {{ date('m', strtotime('first day of -1 month')) == '03' ? 'selected="selected"' : '' }}>
                                                             Maret</option>
                                                         <option value="04"
-                                                            {{ date('m') == '04' ? 'selected="selected"' : '' }}>
+                                                            {{ date('m', strtotime('first day of -1 month')) == '04' ? 'selected="selected"' : '' }}>
                                                             April</option>
                                                         <option value="05"
-                                                            {{ date('m') == '05' ? 'selected="selected"' : '' }}>
+                                                            {{ date('m', strtotime('first day of -1 month')) == '05' ? 'selected="selected"' : '' }}>
                                                             Mei</option>
                                                         <option value="06"
-                                                            {{ date('m') == '06' ? 'selected="selected"' : '' }}>
+                                                            {{ date('m', strtotime('first day of -1 month')) == '06' ? 'selected="selected"' : '' }}>
                                                             Juni</option>
                                                         <option value="07"
-                                                            {{ date('m') == '07' ? 'selected="selected"' : '' }}>
+                                                            {{ date('m', strtotime('first day of -1 month')) == '07' ? 'selected="selected"' : '' }}>
                                                             Juli</option>
                                                         <option value="08"
-                                                            {{ date('m') == '08' ? 'selected="selected"' : '' }}>
+                                                            {{ date('m', strtotime('first day of -1 month')) == '08' ? 'selected="selected"' : '' }}>
                                                             Agustus</option>
                                                         <option value="09"
-                                                            {{ date('m') == '09' ? 'selected="selected"' : '' }}>
+                                                            {{ date('m', strtotime('first day of -1 month')) == '09' ? 'selected="selected"' : '' }}>
                                                             September</option>
                                                         <option value="10"
-                                                            {{ date('m') == '10' ? 'selected="selected"' : '' }}>
+                                                            {{ date('m', strtotime('first day of -1 month')) == '10' ? 'selected="selected"' : '' }}>
                                                             Oktober</option>
                                                         <option value="11"
-                                                            {{ date('m') == '11' ? 'selected="selected"' : '' }}>
+                                                            {{ date('m', strtotime('first day of -1 month')) == '11' ? 'selected="selected"' : '' }}>
                                                             November</option>
                                                         <option value="12"
-                                                            {{ date('m') == '12' ? 'selected="selected"' : '' }}>
+                                                            {{ date('m', strtotime('first day of -1 month')) == '12' ? 'selected="selected"' : '' }}>
                                                             Desember</option>
                                                     </select>
                                                     <select name="tahun" id="tahun"
