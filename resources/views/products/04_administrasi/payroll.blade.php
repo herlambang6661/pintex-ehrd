@@ -753,7 +753,7 @@
                                 <i class="fas fa-print" style="margin-right: 5px"></i>
                                 Proses
                             </button>
-                            <button type="submit" class="btn btn-link link-secondary ms-auto" data-bs-dismiss="modal">
+                            <button type="button" class="btn btn-link link-secondary ms-auto" data-bs-dismiss="modal">
                                 <i class="fa-solid fa-fw fa-arrow-rotate-left"></i>
                                 Batal
                             </button>
