@@ -660,7 +660,7 @@
                                         </svg>
                                         Kupon
                                     </a>
-                                    <a class="dropdown-item" href="./layout-vertical-transparent.html">
+                                    <a class="dropdown-item" href="{{ url('administrasi/lembur') }}">
                                         <svg xmlns="http://www.w3.org/2000/svg" style="margin-right: 10px"
                                             class="icon icon-tabler icon-tabler-book-upload" width="24"
                                             height="24" viewBox="0 0 24 24" stroke-width="1.5"

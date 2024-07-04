@@ -1417,4 +1417,17 @@ class Administrasi extends Controller
             'terlambat' => $terlambat,
         ]);
     }
+
+    public function lembur()
+    {
+        $judul = "Lemburan";
+        $administrasi = "active";
+        $lembur = "active";
+
+        return view('products/04_administrasi.lembur', [
+            'judul' => $judul,
+            'administrasi' => $administrasi,
+            'lembur' => $lembur,
+        ]);
+    }
 }

@@ -22,6 +22,7 @@ use App\Http\Controllers\Datatables\DataShift;
 use App\Http\Controllers\Datatables\DataSurat;
 use App\Http\Controllers\Datatables\DataUsers;
 use App\Http\Controllers\Datatables\DataFinger;
+use App\Http\Controllers\Datatables\DataLembur;
 use App\Http\Controllers\Datatables\DataEntitas;
 use App\Http\Controllers\Datatables\DataLamaran;
 use App\Http\Controllers\Datatables\DataPayroll;
@@ -120,6 +121,7 @@ Route::resources([
     'getUpah' => DataUpah::class,
     'getPengguna' => DataPengguna::class,
     'getDataUsers' => DataUsers::class,
+    'getLembur' => DataLembur::class,
 ]);
 
 // Modules Auth
