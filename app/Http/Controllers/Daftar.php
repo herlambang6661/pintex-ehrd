@@ -2,9 +2,10 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Pos_pekerjaan;
+use Carbon\Carbon;
 use App\Models\Shift;
 use Illuminate\Http\Request;
+use App\Models\Pos_pekerjaan;
 use Illuminate\Routing\Controller;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Auth;
@@ -358,16 +359,48 @@ class Daftar extends Controller
         $judul = "Hari Libur Nasional";
         $Harilibur = "active";
         $libur = "active";
-        // return view('products.01_daftar.hari_libur_nasional', [
-        //     'judul' => $judul,
-        //     'daftar' => $Harilibur,
-        //     'libur' => $libur,
-        // ]);
-        return view('products.01_daftar.hari_libur_nasional_new', [
+        return view('products.01_daftar.hari_libur_nasional', [
             'judul' => $judul,
             'daftar' => $Harilibur,
             'libur' => $libur,
         ]);
+        // return view('products.01_daftar.hari_libur_nasional_new', [
+        //     'judul' => $judul,
+        //     'daftar' => $Harilibur,
+        //     'libur' => $libur,
+        // ]);
+    }
+
+    public function prosesLibnas($id)
+    {
+
+        $libnas = DB::table('daftar_hari_libur_nasional')->where('id', $id)->first();
+
+        $up = DB::table('absensi_absensi')
+            ->where('tanggal', '=', $libnas->tanggal)
+            ->update(
+                array(
+                    'sst' => 'L',
+                    'updated_at' => date('Y-m-d H:i:s'),
+                )
+            );
+        return response()->json(['success' => true]);
+    }
+
+    public function kembalikanLibnas($tgl)
+    {
+        $libnas = DB::table('absensi_absensi')->where('tanggal', $tgl)->get();
+        foreach ($libnas as $key) {
+            DB::table('absensi_absensi')
+                ->where('tanggal', '=', $key->tanggal)
+                ->update(
+                    array(
+                        'sst' => $key->raw_sst,
+                        'updated_at' => date('Y-m-d H:i:s'),
+                    )
+                );
+        }
+        return response()->json(['success' => true]);
     }
 
     public function getLibur(Request $request)
@@ -430,18 +463,19 @@ class Daftar extends Controller
 
     public function updatelibur(Request $request)
     {
-        if ($request->ajax()) {
-            DB::table('daftar_hari_libur_nasional')
-                ->where('id', $request->name)
-                ->limit(1)
-                ->update(
-                    array(
-                        'tanggal' => $request->value,
-                        'updated_at' => date('Y-m-d H:i:s'),
-                    )
-                );
-            return response()->json(['success' => true]);
-        }
+        $up = DB::table('daftar_hari_libur_nasional')
+            ->where('id', '=', $request->id)
+            ->update(
+                array(
+                    'tanggal' => $request->tanggal,
+                    'tahun' => Carbon::parse($request->tanggal)->format('Y'),
+                    'libur_nasional' => $request->libur_nasional,
+                    'sumber_ketentuan' => $request->sumber_ketentuan,
+                    'keterangan' => $request->keterangan,
+                    'updated_at' => date('Y-m-d H:i:s'),
+                )
+            );
+        return response()->json(['success' => true]);
     }
 
     public function storelibur(Request $request)
@@ -452,16 +486,17 @@ class Daftar extends Controller
                 'tanggal' => 'required',
                 'libur_nasional' => 'required',
                 'sumber_ketentuan'   => 'required',
-                'keterangan' => 'required',
             ],
         );
 
         $check = DB::table('daftar_hari_libur_nasional')->insert([
             'entitas' => $request->entitas,
             'tanggal' => $request->tanggal,
+            'tahun' => Carbon::parse($request->tanggal)->format('Y'),
             'libur_nasional' => $request->libur_nasional,
             'sumber_ketentuan'   => $request->sumber_ketentuan,
             'keterangan' => $request->keterangan,
+            'created_at' => date('Y-m-d H:i:s'),
         ]);
         $arr = array('msg' => 'Something goes to wrong. Please try later', 'status' => false);
         if ($check) {

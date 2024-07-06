@@ -151,12 +151,14 @@ Route::controller(Daftar::class)->group(function () {
 
     //Routes libur nasional DONE
     Route::get('daftar/liburnas', 'liburnas')->name('daftar/liburnas');
-    Route::post('getLibur', 'getLibur')->name('getLibur');
+    // Route::post('getLibur', 'getLibur')->name('getLibur');
     Route::post('storedataLibur', 'storelibur');
     Route::post('detail/liburnas', 'liburnasview');
     // Route::post('update/liburnas', 'updateliburnas');
     Route::post('generateYear', 'generateLiburNasional');
-    Route::post('/liburnas/update', 'updatelibur')->name('/liburnas/update');
+    Route::post('updatelibur', 'updatelibur')->name('updatelibur');
+    Route::get('daftar/prosesLibnas/{id}', 'prosesLibnas')->name('daftar/prosesLibnas/{id}');
+    Route::get('daftar/kembalikanLibnas/{id}', 'kembalikanLibnas')->name('daftar/kembalikanLibnas/{id}');
 
 
     //routes Surat-surat DONE

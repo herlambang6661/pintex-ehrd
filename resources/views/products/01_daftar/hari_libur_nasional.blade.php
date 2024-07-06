@@ -14,13 +14,13 @@
 
         td.cuspad2 {
             /* padding-top: 0.5px;
-                                padding-bottom: 0.5px;
-                                padding-right: 0.5px;
-                                padding-left: 0.5px;
-                                margin-top: 5px;
-                                margin-bottom: 5px;
-                                margin-right: 5px;
-                                margin-left: 5px; */
+                                                                                                                                                                                                                                                                                                                                                                                    padding-bottom: 0.5px;
+                                                                                                                                                                                                                                                                                                                                                                                    padding-right: 0.5px;
+                                                                                                                                                                                                                                                                                                                                                                                    padding-left: 0.5px;
+                                                                                                                                                                                                                                                                                                                                                                                    margin-top: 5px;
+                                                                                                                                                                                                                                                                                                                                                                                    margin-bottom: 5px;
+                                                                                                                                                                                                                                                                                                                                                                                    margin-right: 5px;
+                                                                                                                                                                                                                                                                                                                                                                                    margin-left: 5px; */
         }
 
         .unselectable {
@@ -85,19 +85,22 @@
                                         <i class="fa-solid fa-users"></i>
                                     </div>
                                 </div>
+                                <div class="container pt-3">
+                                    <form action="javascript:void(0)">
+                                        @csrf
+                                        <div class="input-group">
+                                            <input type="number" id="selectYear" min="2000" max="9999"
+                                                step="1" value="{{ date('Y') }}" class="form-control formattahun">
+                                            <button type="button" class="btn btn-blue" id="btnView" onclick="syn()">
+                                                <i class="fa-regular fa-eye fa-fw" style="margin-right:5px"></i>
+                                                Lihat
+                                            </button>
+                                        </div>
+                                    </form>
+                                </div>
                                 <table style="width:100%; font-family: 'Trebuchet MS', Helvetica, sans-serif;"
                                     class="display table table-vcenter card-table table-sm table-bordered table-hover text-nowrap datatable-libur"
                                     id="tblamaran">
-                                    <thead>
-                                        <tr class="text-center">
-                                            <th>Opsi</th>
-                                            <th>Entitas</th>
-                                            <th>Tanggal</th>
-                                            <th>Libur Nasional</th>
-                                            <th>Sumber Ketentuan</th>
-                                            <th>Keterangan</th>
-                                        </tr>
-                                    </thead>
                                 </table>
                             </div>
                         </div>
@@ -123,7 +126,7 @@
                                         </div>
                                         <div class="mb-3">
                                             <label class="form-label">Tanggal</label>
-                                            <input type="text" class="form-control border border-dark" name="tanggal"
+                                            <input type="date" class="form-control border border-dark" name="tanggal"
                                                 value="{{ date('Y-m-d') }}" id="datepicker0">
                                         </div>
                                         <div class="mb-3">
@@ -140,8 +143,8 @@
                                         </div>
                                         <div class="mb-3">
                                             <label class="form-label">Keterangan</label>
-                                            <input type="text" class="form-control border border-dark" name="keterangan"
-                                                id="keterangan" placeholder="Masukkan Nama Keterangan">
+                                            <input type="text" class="form-control border border-dark"
+                                                name="keterangan" id="keterangan" placeholder="Masukkan Nama Keterangan">
                                         </div>
                                         <div class="modal-footer">
                                             {{-- <a href="#" class="btn btn-link link-secondary" data-bs-dismiss="modal"><i class="fa-solid fa-fw fa-arrow-rotate-left"></i> Kembali</a> --}}
@@ -199,7 +202,7 @@
         aria-labelledby="exampleModalLabel" aria-hidden="true">
         <div class="modal-dialog" role="document">
             <div class="modal-content">
-                <form action="javascript:void(0)" method="post">
+                <form id="editliburnasional" name="editliburnasional" method="post" action="javascript:void(0)">
                     @csrf
                     <div class="modal-header bg-success text-white">
                         <h5 class="modal-title" id="exampleModalLabel">Edit dan Update Libur Nasional</h5>
@@ -207,6 +210,11 @@
                     </div>
                     <div class="modal-body">
                         <div class="fetched-edit-liburnas"></div>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="submit" class="btn btn-success" data-bs-dismiss="modal">
+                            <i class="fa-solid fa-pen-nib" style="margin-right:5px"></i> Update
+                        </button>
                     </div>
                 </form>
             </div>
@@ -255,7 +263,11 @@
             // Requery the server with the new one-time export settings
             dt.ajax.reload();
         }
+        var tablePos;
 
+        function syn() {
+            tablePos.ajax.reload();
+        }
         $(function() {
 
             /*------------------------------------------
@@ -264,7 +276,7 @@
             --------------------------------------------
             --------------------------------------------*/
 
-            var tablePos = $('.datatable-libur').DataTable({
+            tablePos = $('.datatable-libur').DataTable({
                 "processing": true, //Feature control the processing indicator.
                 "serverSide": false, //Feature control DataTables' server-side processing mode.
                 "scrollX": true,
@@ -274,32 +286,10 @@
                     [-1, 25, 35, 40, 50, ],
                     ['Tampilkan Semua', '25', '35', '40', '50', ]
                 ],
-                "dom": "<'card-header h3' B>" +
+                "dom": "<'card-header h3'>" +
                     "<'card-body border-bottom py-3' <'row'<'col-sm-6'l><'col-sm-6'f>> >" +
                     "<'table-responsive' <'col-sm-12'tr> >" +
                     "<'card-footer' <'row'<'col-sm-8'i><'col-sm-4'p> >>",
-                buttons: [{
-                        className: 'btn btn-dark checkall',
-                        text: '<i class="fa-regular fa-square-check"></i>',
-                    },
-                    {
-                        text: '<i class="fa-solid fa-filter" style="margin-right:5px"></i>',
-                        className: 'btn btn-blue',
-                        attr: {
-                            'href': '#offcanvasEnd-lamaran',
-                            'data-bs-toggle': 'offcanvas',
-                            'role': 'button',
-                            'aria-controls': 'offcanvasEnd',
-                        }
-                    },
-                    {
-                        extend: 'excelHtml5',
-                        autoFilter: true,
-                        className: 'btn btn-success',
-                        text: '<i class="fa fa-file-excel text-white" style="margin-right:5px"></i>',
-                        action: newexportaction,
-                    },
-                ],
                 "language": {
                     "lengthMenu": "Menampilkan _MENU_",
                     "zeroRecords": "Data Tidak Ditemukan",
@@ -315,8 +305,16 @@
                         "previous": '<svg xmlns="http://www.w3.org/2000/svg" class="icon" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z" fill="none"></path><path d="M15 6l-6 6l6 6"></path></svg>',
                     },
                 },
-                ajax: "{{ route('getLibur.index') }}",
+                // ajax: "{{ route('getLibur.index') }}",
+                "ajax": {
+                    "url": "{{ route('getLibur.index') }}",
+                    "data": function(data) {
+                        data._token = "{{ csrf_token() }}";
+                        data.tahun = $('#selectYear').val();
+                    }
+                },
                 columns: [{
+                        title: 'Opsi',
                         data: 'action',
                         name: 'action',
                         orderable: false,
@@ -324,26 +322,25 @@
                         className: 'cuspad0 text-center w-0'
                     },
                     {
-                        data: 'entitas',
-                        name: 'entitas',
-                        className: 'cuspad0 text-center w-0'
-                    },
-                    {
+                        title: 'Tanggal',
                         data: 'tanggal',
                         name: 'tanggal',
-                        className: 'cuspad0 text-center w-0'
+                        className: 'cuspad0'
                     },
                     {
+                        title: 'Libur',
                         data: 'libur_nasional',
                         name: 'libur_nasional',
                         className: 'cuspad0'
                     },
                     {
+                        title: 'Sumber',
                         data: 'sumber_ketentuan',
                         name: 'sumber_ketentuan',
                         className: 'cuspad0 text-center'
                     },
                     {
+                        title: 'Keterangan',
                         data: 'keterangan',
                         name: 'keterangan',
                         className: 'cuspad0 text-center'
@@ -385,10 +382,10 @@
             });
 
             /*------------------------------------------
-               --------------------------------------------
-               Edit Update
-               --------------------------------------------
-               --------------------------------------------*/
+            --------------------------------------------
+            Edit Update
+            --------------------------------------------
+            --------------------------------------------*/
             $(document).on('click', '.edit-btn', function() {
                 var id = $(this).data('id');
                 var entitas = $(this).data('entitas');
@@ -398,38 +395,32 @@
                 var keterangan = $(this).data('keterangan');
 
                 $('#modal-edit-liburnas .fetched-edit-liburnas').html(`
-                <div class="card-stamp card-stamp-lg">
-                            <div class="card-stamp-icon bg-primary">
-                                <i class="fa-solid fa-pen-to-square"></i>
+                            <div class="card-stamp card-stamp-lg">
+                                <div class="card-stamp-icon bg-primary">
+                                    <i class="fa-solid fa-pen-to-square"></i>
+                                </div>
                             </div>
-                        </div>
-                        <div class="mb-3">
-                            <label class="form-label">Entitas</label>
-                            <input type="text" class="form-control border border-dark" name="entitas" id="editentitas" value="${entitas}">
-                        </div>
-                        <div class="mb-3">
-                            <label class="form-label">Tanggal</label>
-                            <input type="date" class="form-control border border-dark" name="tanggal" id="edittanggal" value="${tanggal}">
-                        </div>
-                        <div class="mb-3">
-                            <label class="form-label">Libur Nasional</label>
-                            <input type="text" class="form-control border border-dark" name="libur_nasional" id="editlibur_nasional" value="${libur_nasional}">
-                        </div>
-                        <div class="mb-3">
-                            <label class="form-label">Sumber Ketentuan</label>
-                            <input type="text" class="form-control border border-dark" name="sumber_ketentuan" id="editsumber_ketentuan" value="${sumber_ketentuan}">
-                        </div>
-                        <div class="mb-3">
-                            <label class="form-label">Keterangan</label>
-                            <input type="text" class="form-control border border-dark" name="keterangan" id="editketerangan"value="${keterangan}">
-                        </div>
-                        </div>
-                        <div class="modal-footer">
-                        <button type="submit" id="submiteditliburnas" class="btn btn-success" data-bs-dismiss="modal"
-                            data-id="${id}">
-                            <i class="fa-solid fa-pen-nib" style="margin-right:5px"></i> Update
-                        </button>
-                    </div>
+                            <div class="mb-3">
+                                <label class="form-label">Entitas</label>
+                                <input type="hidden" name="idlibur" id="idlibur" value="${id}">
+                                <input type="text" class="form-control border border-dark bg-secondary-lt" readonly name="entitas" id="editentitas" value="${entitas}">
+                            </div>
+                            <div class="mb-3">
+                                <label class="form-label">Tanggal</label>
+                                <input type="date" class="form-control border border-dark" name="tanggal" id="edittanggal" value="${tanggal}">
+                            </div>
+                            <div class="mb-3">
+                                <label class="form-label">Libur Nasional</label>
+                                <input type="text" class="form-control border border-dark" name="libur_nasional" id="editlibur_nasional" value="${libur_nasional}">
+                            </div>
+                            <div class="mb-3">
+                                <label class="form-label">Sumber Ketentuan</label>
+                                <input type="text" class="form-control border border-dark" name="sumber_ketentuan" id="editsumber_ketentuan" value="${sumber_ketentuan}">
+                            </div>
+                            <div class="mb-3">
+                                <label class="form-label">Keterangan</label>
+                                <input type="text" class="form-control border border-dark" name="keterangan" id="editketerangan"value="${keterangan}">
+                            </div>
                 `);
             });
 
@@ -487,13 +478,8 @@
                 });
             });
 
-            /*------------------------------------------==============================================================================================================================================================
-                 --------------------------------------------==============================================================================================================================================================
-                 Create Data
-                 --------------------------------------------==============================================================================================================================================================
-                 --------------------------------------------==============================================================================================================================================================*/
-            if ($("#formlibur").length > 0) {
-                $("#formlibur").validate({
+            if ($("#editliburnasional").length > 0) {
+                $("#editliburnasional").validate({
                     rules: {
                         entitas: {
                             required: true,
@@ -506,9 +492,6 @@
                             required: true,
                         },
                         sumber_ketentuan: {
-                            required: true,
-                        },
-                        keterangan: {
                             required: true,
                         },
                     },
@@ -525,9 +508,111 @@
                         sumber_ketentuan: {
                             required: "Masukkan Sumber Ketentuan",
                         },
-                        keterangan: {
-                            required: "Masukkan Keterangan"
-                        }
+                    },
+
+                    submitHandler: function(form) {
+                        $.ajaxSetup({
+                            headers: {
+                                'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                            }
+                        });
+                        $('#submiteditliburnas').html(
+                            '<i class="fa-solid fa-fw fa-spinner fa-spin"></i> Please Wait...');
+                        $("#submiteditliburnas").attr("disabled", true);
+                        $.ajax({
+                            url: "{{ url('updatelibur') }}",
+                            type: "POST",
+                            data: $('#editliburnasional').serialize(),
+                            beforeSend: function() {
+                                Swal.fire({
+                                    title: 'Mohon Menunggu',
+                                    html: '<center><lottie-player src="https://lottie.host/933bb0e2-47c0-4fa6-83f9-3330b433b883/yymyeZt49h.json"  background="transparent"  speed="1"  style="width: 300px; height: 300px;"  loop autoplay></lottie-player></center><br><h1 class="h4">Sedang memproses data, Proses mungkin membutuhkan beberapa menit. <br><br><b class="text-danger">(Jangan menutup jendela ini, bisa mengakibatkan error)</b></h1>',
+                                    showConfirmButton: false,
+                                    timerProgressBar: true,
+                                    allowOutsideClick: false,
+                                    allowEscapeKey: false,
+                                })
+                            },
+                            success: function(response) {
+                                console.log('Completed.');
+                                $('#submiteditliburnas').html(
+                                    '<svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-device-floppy" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><path d="M6 4h10l4 4v10a2 2 0 0 1 -2 2h-12a2 2 0 0 1 -2 -2v-12a2 2 0 0 1 2 -2" /><path d="M12 14m-2 0a2 2 0 1 0 4 0a2 2 0 1 0 -4 0" /><path d="M14 4l0 4l-6 0l0 -4" /></svg> Simpan'
+                                );
+                                $("#submiteditliburnas").attr("disabled", false);
+                                tablePos.ajax.reload();
+                                const Toast = Swal.mixin({
+                                    toast: true,
+                                    position: "top-end",
+                                    showConfirmButton: false,
+                                    timer: 4000,
+                                    timerProgressBar: true,
+                                    didOpen: (toast) => {
+                                        toast.onmouseenter = Swal.stopTimer;
+                                        toast.onmouseleave = Swal.resumeTimer;
+                                    }
+                                });
+                                Toast.fire({
+                                    icon: "success",
+                                    title: response.msg,
+                                });
+                                var sp = $('#selectEntitas').val();
+                                $('#entitas').val(sp);
+                            },
+                            error: function(data) {
+                                console.log('Error:', data);
+                                // const obj = JSON.parse(data.responseJSON);
+                                tablePos.ajax.reload();
+                                Swal.fire({
+                                    icon: 'error',
+                                    title: 'Gagal Input',
+                                    html: data.responseJSON.message,
+                                    showConfirmButton: true
+                                });
+                                $('#submiteditliburnas').html(
+                                    '<svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-device-floppy" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><path d="M6 4h10l4 4v10a2 2 0 0 1 -2 2h-12a2 2 0 0 1 -2 -2v-12a2 2 0 0 1 2 -2" /><path d="M12 14m-2 0a2 2 0 1 0 4 0a2 2 0 1 0 -4 0" /><path d="M14 4l0 4l-6 0l0 -4" /></svg> Simpan'
+                                );
+                                $("#submiteditliburnas").attr("disabled", false);
+                            }
+                        });
+                    }
+                })
+            }
+
+            /*------------------------------------------==============================================================================================================================================================
+            --------------------------------------------==============================================================================================================================================================
+            Create Data
+            --------------------------------------------==============================================================================================================================================================
+            --------------------------------------------==============================================================================================================================================================*/
+            if ($("#formlibur").length > 0) {
+                $("#formlibur").validate({
+                    rules: {
+                        entitas: {
+                            required: true,
+                        },
+                        tanggal: {
+                            required: true,
+                            date: true
+                        },
+                        libur_nasional: {
+                            required: true,
+                        },
+                        sumber_ketentuan: {
+                            required: true,
+                        },
+                    },
+                    messages: {
+                        entitas: {
+                            required: "Masukkan Entitas",
+                        },
+                        tanggal: {
+                            required: "Masukkan Tanggal",
+                        },
+                        libur_nasional: {
+                            required: "Masukkan Libur Nasional",
+                        },
+                        sumber_ketentuan: {
+                            required: "Masukkan Sumber Ketentuan",
+                        },
                     },
 
                     submitHandler: function(form) {
@@ -657,6 +742,7 @@
                                         nama +
                                         " Terhapus"
                                 });
+                                tablePos.ajax.reload();
                             },
                             error: function(data) {
                                 console.log('Error:', data.responseText);
@@ -666,6 +752,7 @@
                                     text: 'Error: ' + data.responseText,
                                     showConfirmButton: true,
                                 });
+                                tablePos.ajax.reload();
                             }
                         });
                     }

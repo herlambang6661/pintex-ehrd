@@ -1062,8 +1062,8 @@ class Absensi extends Controller
                         "k.userid, k.stb, k.nama, k.bagian, k.profesi,
                         (SELECT l.tglaw FROM penerimaan_legalitas l WHERE l.userid = k.userid ORDER BY l.tglaw DESC LIMIT 1 ) AS tglawal,
                         (SELECT l.tglak FROM penerimaan_legalitas l WHERE l.userid = k.userid ORDER BY l.tglaw DESC LIMIT 1 ) AS tglakhir,
-                    (SELECT sacuti FROM penerimaan_legalitas l WHERE l.userid = k.userid AND suratjns = 'PERJANJIAN' AND l.tglak >= tglawal AND l.tglak <= tglakhir ) AS sacuti,
-                    (SELECT sacuti FROM penerimaan_legalitas l WHERE l.userid = k.userid AND suratjns = 'CUTI' AND l.tglak >= tglawal AND l.tglak <= tglakhir ) AS sacuti2,
+                        (SELECT sacuti FROM penerimaan_legalitas l WHERE l.userid = k.userid AND suratjns = 'PERJANJIAN' AND l.tglak >= tglawal AND l.tglak <= tglakhir ) AS sacuti,
+                        (SELECT sacuti FROM penerimaan_legalitas l WHERE l.userid = k.userid AND suratjns = 'CUTI' AND l.tglak >= tglawal AND l.tglak <= tglakhir ) AS sacuti2,
                         (SELECT COUNT(o.sst) FROM absensi_komunikasiacc o WHERE o.userid = k.userid AND o.sst = 'C' AND o.tanggal >= tglawal AND o.tanggal <= tglakhir ) AS cutiterpakai"
                     ))
                     ->where('k.bagian', '=', $unit)
