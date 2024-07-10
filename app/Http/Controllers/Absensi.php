@@ -138,6 +138,16 @@ class Absensi extends Controller
                 $bagian = '%' . $request->bagian . '%';
             }
 
+            if ($request->fstatus) {
+                if ($request->fstatus == '*') {
+                    $fstatus = '%%';
+                } else {
+                    $fstatus = '%' . $request->fstatus . '%';
+                }
+            } else {
+                $fstatus = '%Aktif%';
+            }
+
             // echo json_encode($tgl2);
             // die();
             $results = DB::table('penerimaan_karyawan AS k')
@@ -173,8 +183,9 @@ class Absensi extends Controller
                     (SELECT a.sst FROM absensi_absensi a WHERE a.userid = k.userid AND a.tanggal = '$tgl29') AS _29, 
                     (SELECT a.sst FROM absensi_absensi a WHERE a.userid = k.userid AND a.tanggal = '$tgl30') AS _30, 
                     (SELECT a.sst FROM absensi_absensi a WHERE a.userid = k.userid AND a.tanggal = '$tgl31') AS _31"))
-                ->where('k.status', 'like', '%Aktif%')
+                // ->where('k.status', 'like', '%Aktif%')
                 ->where('k.bagian', 'like', $bagian)
+                ->where('k.status', 'like', $fstatus)
                 ->orderBy('k.nama', 'ASC')
                 ->get();
             echo '  
@@ -282,7 +293,7 @@ class Absensi extends Controller
                             `<"card-footer" <"row"<"col-sm-8"i><"col-sm-4"p> >>`,
                         buttons: [
                             {
-                                text: `<i class="fa-solid fa-filter" style="margin-right:5px"></i>`,
+                                text: `<i class="fa-solid fa-filter" style="margin-right:5px"></i> Filter Absensi`,
                                 className: "btn btn-blue w_filter",
                                 attr: {
                                     "href": "#offcanvasEnd-lamaran",
@@ -295,8 +306,8 @@ class Absensi extends Controller
                                 extend: "excelHtml5",
                                 autoFilter: true,
                                 className: "btn btn-success",
-                                text: `<i class="fa fa-file-excel text-white" style="margin-right:5px"></i>`,
-                                // action: newexportaction,
+                                text: `<i class="fa fa-file-excel text-white" style="margin-right:5px"></i> Download Excel`,
+                                action: newexportaction,
                             },
                         ],
                         "language": {
@@ -320,6 +331,48 @@ class Absensi extends Controller
                             "orderable": false,
                         } ]
                     });
+                    
+                    function newexportaction(e, dt, button, config) {
+                        var self = this;
+                        var oldStart = dt.settings()[0]._iDisplayStart;
+                        dt.one("preXhr", function(e, s, data) {
+                            // Just this once, load all data from the server...
+                            data.start = 0;
+                            data.length = 2147483647;
+                            dt.one("preDraw", function(e, settings) {
+                                // Call the original action function
+                                if (button[0].className.indexOf("buttons-copy") >= 0) {
+                                    $.fn.dataTable.ext.buttons.copyHtml5.action.call(self, e, dt, button, config);
+                                } else if (button[0].className.indexOf("buttons-excel") >= 0) {
+                                    $.fn.dataTable.ext.buttons.excelHtml5.available(dt, config) ?
+                                        $.fn.dataTable.ext.buttons.excelHtml5.action.call(self, e, dt, button, config) :
+                                        $.fn.dataTable.ext.buttons.excelFlash.action.call(self, e, dt, button, config);
+                                } else if (button[0].className.indexOf("buttons-csv") >= 0) {
+                                    $.fn.dataTable.ext.buttons.csvHtml5.available(dt, config) ?
+                                        $.fn.dataTable.ext.buttons.csvHtml5.action.call(self, e, dt, button, config) :
+                                        $.fn.dataTable.ext.buttons.csvFlash.action.call(self, e, dt, button, config);
+                                } else if (button[0].className.indexOf("buttons-pdf") >= 0) {
+                                    $.fn.dataTable.ext.buttons.pdfHtml5.available(dt, config) ?
+                                        $.fn.dataTable.ext.buttons.pdfHtml5.action.call(self, e, dt, button, config) :
+                                        $.fn.dataTable.ext.buttons.pdfFlash.action.call(self, e, dt, button, config);
+                                } else if (button[0].className.indexOf("buttons-print") >= 0) {
+                                    $.fn.dataTable.ext.buttons.print.action(e, dt, button, config);
+                                }
+                                dt.one("preXhr", function(e, s, data) {
+                                    // DataTables thinks the first item displayed is index 0, but we are not drawing that.
+                                    // Set the property to what it was before exporting.
+                                    settings._iDisplayStart = oldStart;
+                                    data.start = oldStart;
+                                });
+                                // Reload the grid with the original page. Otherwise, API functions like table.cell(this) dont work properly.
+                                setTimeout(dt.ajax.reload, 0);
+                                // Prevent rendering of the full data to the DOM
+                                return false;
+                            });
+                        });
+                        // Requery the server with the new one-time export settings
+                        dt.ajax.reload();
+                    }
                 </script>
                 ';
         }
@@ -344,27 +397,33 @@ class Absensi extends Controller
             echo '
             <div class="row">
                 <div class="col-lg-12 mb-2 mt-0">
-                    <form method="POST" action="printAbsen" target="_blank">
-                        <input type="hidden" name="_token" value="' . csrf_token() . '">
-                        <input type="hidden" name="userid" value="' . $u->userid . '">
-                        <input type="hidden" name="tglawal" value="' . $request->tglaw . '">
-                        <input type="hidden" name="tglakhir" value="' . $request->tglak . '">
-                        <button class="btn btn-primary" type="submit">
-                            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"
-                                fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
-                                stroke-linejoin="round" class="icon icon-tabler icons-tabler-outline icon-tabler-printer">
-                                <path stroke="none" d="M0 0h24v24H0z" fill="none" />
-                                <path d="M17 17h2a2 2 0 0 0 2 -2v-4a2 2 0 0 0 -2 -2h-14a2 2 0 0 0 -2 2v4a2 2 0 0 0 2 2h2" />
-                                <path d="M17 9v-4a2 2 0 0 0 -2 -2h-6a2 2 0 0 0 -2 2v4" />
-                                <path d="M7 13m0 2a2 2 0 0 1 2 -2h6a2 2 0 0 1 2 2v4a2 2 0 0 1 -2 2h-6a2 2 0 0 1 -2 -2z" />
-                            </svg>
-                            Print
-                        </button>
-                    </form>
-                    <a href="' . url("penerimaan/legalitas/edit/$u->userid") . '" target="_blank" data-toggle="tooltip" data-placement="top" title="Edit Data Legalitas Karyawan" class="btn btn-primary">
-                        <svg  xmlns="http://www.w3.org/2000/svg"  width="24"  height="24"  viewBox="0 0 24 24"  fill="none"  stroke="currentColor"  stroke-width="2"  stroke-linecap="round"  stroke-linejoin="round"  class="icon icon-tabler icons-tabler-outline icon-tabler-user-cog"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><path d="M8 7a4 4 0 1 0 8 0a4 4 0 0 0 -8 0" /><path d="M6 21v-2a4 4 0 0 1 4 -4h2.5" /><path d="M19.001 19m-2 0a2 2 0 1 0 4 0a2 2 0 1 0 -4 0" /><path d="M19.001 15.5v1.5" /><path d="M19.001 21v1.5" /><path d="M22.032 17.25l-1.299 .75" /><path d="M17.27 20l-1.3 .75" /><path d="M15.97 17.25l1.3 .75" /><path d="M20.733 20l1.3 .75" /></svg>
-                        Edit Legalitas
-                    </a>
+                    <div class="row">
+                        <div class="col">
+                            <form method="POST" action="printAbsen" target="_blank">
+                                <input type="hidden" name="_token" value="' . csrf_token() . '">
+                                <input type="hidden" name="userid" value="' . $u->userid . '">
+                                <input type="hidden" name="tglawal" value="' . $request->tglaw . '">
+                                <input type="hidden" name="tglakhir" value="' . $request->tglak . '">
+                                <button class="btn btn-blue w-100" type="submit">
+                                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"
+                                        fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                                        stroke-linejoin="round" class="icon icon-tabler icons-tabler-outline icon-tabler-printer">
+                                        <path stroke="none" d="M0 0h24v24H0z" fill="none" />
+                                        <path d="M17 17h2a2 2 0 0 0 2 -2v-4a2 2 0 0 0 -2 -2h-14a2 2 0 0 0 -2 2v4a2 2 0 0 0 2 2h2" />
+                                        <path d="M17 9v-4a2 2 0 0 0 -2 -2h-6a2 2 0 0 0 -2 2v4" />
+                                        <path d="M7 13m0 2a2 2 0 0 1 2 -2h6a2 2 0 0 1 2 2v4a2 2 0 0 1 -2 2h-6a2 2 0 0 1 -2 -2z" />
+                                    </svg>
+                                    Print Absensi ' . Carbon::parse($request->tglaw)->format('d-m') . ' s/d ' . Carbon::parse($request->tglak)->format('d-m') . '
+                                </button>
+                            </form>
+                        </div>
+                        <div class="col">
+                            <a href="' . url("penerimaan/legalitas/edit/$u->userid") . '" class="btn btn-blue w-100" target="_blank" data-toggle="tooltip" data-placement="top" title="Edit Data Legalitas Karyawan">
+                                <svg  xmlns="http://www.w3.org/2000/svg"  width="24"  height="24"  viewBox="0 0 24 24"  fill="none"  stroke="currentColor"  stroke-width="2"  stroke-linecap="round"  stroke-linejoin="round"  class="icon icon-tabler icons-tabler-outline icon-tabler-user-cog"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><path d="M8 7a4 4 0 1 0 8 0a4 4 0 0 0 -8 0" /><path d="M6 21v-2a4 4 0 0 1 4 -4h2.5" /><path d="M19.001 19m-2 0a2 2 0 1 0 4 0a2 2 0 1 0 -4 0" /><path d="M19.001 15.5v1.5" /><path d="M19.001 21v1.5" /><path d="M22.032 17.25l-1.299 .75" /><path d="M17.27 20l-1.3 .75" /><path d="M15.97 17.25l1.3 .75" /><path d="M20.733 20l1.3 .75" /></svg>
+                                Edit Legalitas
+                            </a>
+                        </div>
+                    </div>
                 </div>
                 <div class="col-lg-5">
                     <div class="row">
@@ -462,7 +521,7 @@ class Absensi extends Controller
             foreach ($absensi as $key) {
                 $setIn = !empty($key->in) ? Carbon::parse($key->in)->format('H:i:s') : '';
                 $setout = !empty($key->out) ? Carbon::parse($key->out)->format('H:i:s') : '';
-                $sstnm = $key->sst == 'A' ? 'text-red' : '';
+                $sstnm = $key->sst == 'A' ? 'text-red' : ($key->sst == 'I' || $key->sst == 'F1' || $key->sst == 'F2' || $key->sst == '½' ? 'text-yellow' : '');
 
                 echo '
                                 <tbody>
@@ -1304,7 +1363,7 @@ class Absensi extends Controller
     {
         $karyawan = DB::table('penerimaan_karyawan')->where('userid', $request->userid)->get();
         $absensi = DB::table('absensi_absensi AS a')
-            ->select('a.tanggal', 'a.in', 'a.out', 'a.qj', 'a.jis', 'a.qjnet', 'a.sst', 'b.keterangan', 'b.ket_acc')
+            ->select('a.tanggal', 'a.in', 'a.out', 'a.qj', 'a.jis', 'a.qjnet', 'a.sst', 'b.keterangan', 'b.suratid')
             ->leftJoin('absensi_komunikasiacc AS b', function ($join) {
                 $join->on('a.userid', '=', 'b.userid');
                 $join->on('a.tanggal', '=', 'b.tanggal');

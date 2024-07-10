@@ -64,84 +64,82 @@
                         Phone : 62-231-321366 (HUNTING) Faximile : 62-231-321389
                     </p>
                 </div>
+                <?php
+                foreach ($karyawan as $key => $v) {
+                    $stb = $v->stb;
+                    $nama = $v->nama;
+                    $divisi = $v->divisi;
+                    $jabatan = $v->jabatan;
+                }
+                ?>
                 <div class="col-md-8" style="margin-top: 20px">
                     <u class="text-center">
-                        <h2><b>FORMULIR SURAT KOMUNIKASI</b></h2>
+                        <h2><b>DATA KEHADIRAN {{ $nama }}</b></h2>
                     </u>
                 </div>
             </div>
             <hr style="margin-top: 5px;">
             <div class="container">
-                @foreach ($getData as $key => $v)
-                    <i>
-                        <h6>Tanggal : {{ Carbon::parse($v->tanggal)->format('d/m/Y') }}</h6>
-                        <h6>No Form : {{ $noform }}</h6>
-                    </i>
-                @endforeach
-                <br>
+                <table class="table table-sm table-borderless"
+                    style="color: black; border-color: black;text-transform: uppercase; font-size:10px">
+                    <tr>
+                        <td style="width: 10px">STB</td>
+                        <td style="width: 5px">:</td>
+                        <td>{{ $stb }}</td>
+                    </tr>
+                    <tr>
+                        <td>Nama</td>
+                        <td>:</td>
+                        <td>{{ $nama }}</td>
+                    </tr>
+                    <tr>
+                        <td>Divisi</td>
+                        <td>:</td>
+                        <td>{{ $divisi }}</td>
+                    </tr>
+                    <tr>
+                        <td>Jabatan</td>
+                        <td>:</td>
+                        <td>{{ $jabatan }}</td>
+                    </tr>
+                </table>
                 <table class="table table-sm table-bordered"
                     style="color: black; border-color: black;text-transform: uppercase; font-size:10px">
                     <thead class="text-black" style="border-color: black;">
-                        <th style="border-color: black;" class="text-center">No</th>
                         <th style="border-color: black;" class="text-center">Tanggal</th>
-                        <th style="border-color: black;" class="text-center">STB</th>
-                        <th style="border-color: black;" class="text-center">Nama</th>
-                        <th style="border-color: black;" class="text-center">Surat</th>
-                        <th style="border-color: black;" class="text-center">Status</th>
+                        <th style="border-color: black;" class="text-center">Hari</th>
+                        <th style="border-color: black;" class="text-center">In</th>
+                        <th style="border-color: black;" class="text-center">Out</th>
+                        <th style="border-color: black;" class="text-center">QJAM</th>
+                        <th style="border-color: black;" class="text-center">ISH</th>
+                        <th style="border-color: black;" class="text-center">JK</th>
+                        <th style="border-color: black;" class="text-center">ST</th>
+                        <th style="border-color: black;" class="text-center">Surat Komunikasi</th>
                         <th style="border-color: black;" class="text-center">Keterangan</th>
-                        <th style="border-color: black;" class="text-center">Paraf</th>
                     </thead>
                     <?php $i = 1; ?>
                     <tbody class="text-black" style="border-color: black;">
-                        @foreach ($getDataItm as $key => $w)
-                            <?php
-                            if ($w->tanggal == $w->tanggal2) {
-                                $tgls = Carbon::parse($w->tanggal)->format('d/m/Y');
-                            } else {
-                                $tgls = Carbon::parse($w->tanggal)->format('d') . '-' . Carbon::parse($w->tanggal2)->format('d/m/Y');
-                            }
-                            ?>
+                        @foreach ($absensi as $key => $w)
                             <tr>
-                                <td class="text-center">{{ $i }}</td>
-                                <td class="text-center">{{ $tgls }}</td>
-                                <td class="text-center">{{ $w->stb }}</td>
-                                <td class="text-center">{{ $w->nama }}</td>
-                                <td class="text-center">{{ $w->suratid }}</td>
+                                <td class="text-center">{{ $w->tanggal }}</td>
+                                <td class="text-center">{{ \Carbon\Carbon::parse($w->tanggal)->isoFormat('dddd') }}
+                                </td>
+                                <td class="text-center">
+                                    {{ !empty($w->in) ? \Carbon\Carbon::parse($w->in)->format('H:i:s') : '' }}
+                                </td>
+                                <td class="text-center">
+                                    {{ !empty($w->out) ? \Carbon\Carbon::parse($w->out)->format('H:i:s') : '' }}
+                                </td>
+                                <td class="text-center">{{ $w->qj }}</td>
+                                <td class="text-center">{{ $w->jis }}</td>
+                                <td class="text-center">{{ $w->qjnet }}</td>
                                 <td class="text-center">{{ $w->sst }}</td>
+                                <td class="text-center">{{ $w->suratid }}</td>
                                 <td class="text-center">{{ $w->keterangan }}</td>
-                                <td class="text-center"></td>
                             </tr>
-                            <?php $i++; ?>
                         @endforeach
                     </tbody>
                 </table>
-                <i>*Note : </i>
-                @foreach ($getData as $key => $v)
-                    {{ $v->keteranganform }}
-                @endforeach
-                <br>
-                <br>
-                <div class="row text-center">
-                    <div class="col">
-                        Diterima
-                    </div>
-                    <div class="col">
-                    </div>
-                    <div class="col">
-                        Dibuat
-                    </div>
-                </div>
-                <br><br><br><br><br>
-                <div class="row text-center">
-                    <div class="col">
-                        ( .................................................. )
-                    </div>
-                    <div class="col">
-                    </div>
-                    <div class="col">
-                        ( .................................................. )
-                    </div>
-                </div>
             </div>
         </div>
     </div>
