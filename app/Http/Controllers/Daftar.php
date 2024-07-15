@@ -9,6 +9,7 @@ use App\Models\Pos_pekerjaan;
 use Illuminate\Routing\Controller;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Session;
 
 class Daftar extends Controller
 {
@@ -375,16 +376,36 @@ class Daftar extends Controller
     {
 
         $libnas = DB::table('daftar_hari_libur_nasional')->where('id', $id)->first();
-
-        $up = DB::table('absensi_absensi')
-            ->where('tanggal', '=', $libnas->tanggal)
-            ->update(
-                array(
-                    'sst' => 'L',
-                    'updated_at' => date('Y-m-d H:i:s'),
-                )
-            );
-        return response()->json(['success' => true]);
+        $absens = DB::table('absensi_absensi')->where('tanggal', '=', $libnas->tanggal)->get();
+        try {
+            foreach ($absens as $key) {
+                if ($key->raw_sst == 'A' || $key->raw_sst == 'L') {
+                    $up = DB::table('absensi_absensi')
+                        ->where('tanggal', '=', $libnas->tanggal)
+                        ->where('userid', '=', $key->userid)
+                        ->update(
+                            array(
+                                'sst' => 'L',
+                                'updated_at' => date('Y-m-d H:i:s'),
+                            )
+                        );
+                } elseif ($key->raw_sst == 'H' || $key->raw_sst == 'F1' || $key->raw_sst == 'F2' || $key->raw_sst == '½') {
+                    $up = DB::table('absensi_absensi')
+                        ->where('tanggal', '=', $libnas->tanggal)
+                        ->where('userid', '=', $key->userid)
+                        ->update(
+                            array(
+                                'sst' => 'LS',
+                                'updated_at' => date('Y-m-d H:i:s'),
+                            )
+                        );
+                }
+            }
+            // Session::flash('success', 'Data Payroll Berhasil Diimport!');
+            return redirect('/daftar/liburnas')->with('success', 'Berhasil Diperbarui');
+        } catch (\Throwable $th) {
+            return redirect('/daftar/liburnas')->with('error', 'Gagal Diperbarui,' . $th);
+        }
     }
 
     public function kembalikanLibnas($tgl)

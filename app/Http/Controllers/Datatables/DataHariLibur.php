@@ -24,7 +24,7 @@ class DataHariLibur extends Controller
     public function index(Request $request)
     {
         if ($request->ajax()) {
-            $data = DB::table('daftar_hari_libur_nasional')->orderBy('id')->where('tahun', $request->tahun)->get();
+            $data = DB::table('daftar_hari_libur_nasional')->orderBy('tanggal', 'desc')->where('tahun', $request->tahun)->get();
             return DataTables::of($data)
                 ->addIndexColumn()
                 ->addColumn('tanggal', function ($row) {
@@ -32,7 +32,7 @@ class DataHariLibur extends Controller
                     return $tgl;
                 })
                 ->addColumn('action', function ($row) {
-                    $btn = ' <a href="prosesLibnas/' . $row->id . '" class="btn btn-outline-info btn-sm btn-icon"><i class="fa-solid fa-rotate"></i></a>';
+                    $btn = ' <a href="prosesLibnas/' . $row->id . '"  onclick="return loading();" class="btn btn-outline-info btn-sm btn-icon"><i class="fa-solid fa-rotate"></i></a>';
                     $btn = $btn . ' <a href="kembalikanLibnas/' . $row->tanggal . '" class="btn btn-outline-warning btn-sm btn-icon edit-btn"><i class="fa-solid fa-rotate-left"></i></a>';
                     $btn = $btn . ' <a href="javascript:void(0)" data-toggle="tooltip" data-nama="' . $row->tanggal . '" data-id="' . $row->id . '" data-original-title="Delete" class="btn btn-outline-danger btn-sm btn-icon deletePos"><i class="fa-solid fa-fw fa-trash-can"></i></a>';
                     return $btn;

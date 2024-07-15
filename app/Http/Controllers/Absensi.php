@@ -148,10 +148,10 @@ class Absensi extends Controller
                 $fstatus = '%Aktif%';
             }
 
-            // echo json_encode($tgl2);
-            // die();
+            // SQL Ambil Data Absensi by date
             $results = DB::table('penerimaan_karyawan AS k')
-                ->select(DB::raw("k.userid, k.stb, k.nama, 
+                ->select(DB::raw(
+                    "k.userid, k.stb, k.nama, 
                     (SELECT a.sst FROM absensi_absensi a WHERE a.userid = k.userid AND a.tanggal = '$tgl1') AS _01, 
                     (SELECT a.sst FROM absensi_absensi a WHERE a.userid = k.userid AND a.tanggal = '$tgl2') AS _02, 
                     (SELECT a.sst FROM absensi_absensi a WHERE a.userid = k.userid AND a.tanggal = '$tgl3') AS _03, 
@@ -182,8 +182,12 @@ class Absensi extends Controller
                     (SELECT a.sst FROM absensi_absensi a WHERE a.userid = k.userid AND a.tanggal = '$tgl28') AS _28, 
                     (SELECT a.sst FROM absensi_absensi a WHERE a.userid = k.userid AND a.tanggal = '$tgl29') AS _29, 
                     (SELECT a.sst FROM absensi_absensi a WHERE a.userid = k.userid AND a.tanggal = '$tgl30') AS _30, 
-                    (SELECT a.sst FROM absensi_absensi a WHERE a.userid = k.userid AND a.tanggal = '$tgl31') AS _31"))
-                // ->where('k.status', 'like', '%Aktif%')
+                    (SELECT a.sst FROM absensi_absensi a WHERE a.userid = k.userid AND a.tanggal = '$tgl31') AS _31,
+                    (SELECT COUNT(a.sst) FROM absensi_absensi a WHERE a.userid = k.userid AND a.sst = 'H' AND (a.tanggal BETWEEN '$request->tglaw' AND '$request->tglak')) AS _H,
+                    (SELECT COUNT(a.sst) FROM absensi_absensi a WHERE a.userid = k.userid AND a.sst = 'S' AND (a.tanggal BETWEEN '$request->tglaw' AND '$request->tglak')) AS _S,
+                    (SELECT COUNT(a.sst) FROM absensi_absensi a WHERE a.userid = k.userid AND a.sst = 'I' AND (a.tanggal BETWEEN '$request->tglaw' AND '$request->tglak')) AS _I,
+                    (SELECT COUNT(a.sst) FROM absensi_absensi a WHERE a.userid = k.userid AND a.sst = 'A' AND (a.tanggal BETWEEN '$request->tglaw' AND '$request->tglak')) AS _A"
+                ))
                 ->where('k.bagian', 'like', $bagian)
                 ->where('k.status', 'like', $fstatus)
                 ->orderBy('k.nama', 'ASC')
@@ -199,6 +203,10 @@ class Absensi extends Controller
                 $SST = !empty($request->tgl[$i]) ? ($request->tgl[$i]) : '';
                 echo '          <th style="width: 30px" class="text-center">' . $SST . '</th>';
             }
+            echo '              <th style="width: 30px" class="text-center">H</th>';
+            echo '              <th style="width: 30px" class="text-center">S</th>';
+            echo '              <th style="width: 30px" class="text-center">I</th>';
+            echo '              <th style="width: 30px" class="text-center">A</th>';
             echo '              
                             </tr>
                         </thead>
@@ -270,6 +278,10 @@ class Absensi extends Controller
                 echo '                  <td style="width: 30px" class="text-center ' . $sst29 . '">' . $item2->_29 . '</td>';
                 echo '                  <td style="width: 30px" class="text-center ' . $sst30 . '">' . $item2->_30 . '</td>';
                 echo '                  <td style="width: 30px" class="text-center ' . $sst31 . '">' . $item2->_31 . '</td>';
+                echo '                  <td style="width: 30px" class="text-center">' . $item2->_H . '</td>';
+                echo '                  <td style="width: 30px" class="text-center">' . $item2->_S . '</td>';
+                echo '                  <td style="width: 30px" class="text-center">' . $item2->_I . '</td>';
+                echo '                  <td style="width: 30px" class="text-center">' . $item2->_A . '</td>';
                 echo '          </tr>';
             }
             echo '   </tbody>

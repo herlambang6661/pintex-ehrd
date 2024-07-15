@@ -14,13 +14,13 @@
 
         td.cuspad2 {
             /* padding-top: 0.5px;
-                                                                                                                                                                                                                                                                                                                                                                                    padding-bottom: 0.5px;
-                                                                                                                                                                                                                                                                                                                                                                                    padding-right: 0.5px;
-                                                                                                                                                                                                                                                                                                                                                                                    padding-left: 0.5px;
-                                                                                                                                                                                                                                                                                                                                                                                    margin-top: 5px;
-                                                                                                                                                                                                                                                                                                                                                                                    margin-bottom: 5px;
-                                                                                                                                                                                                                                                                                                                                                                                    margin-right: 5px;
-                                                                                                                                                                                                                                                                                                                                                                                    margin-left: 5px; */
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                            padding-bottom: 0.5px;
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                            padding-right: 0.5px;
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                            padding-left: 0.5px;
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                            margin-top: 5px;
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                            margin-bottom: 5px;
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                            margin-right: 5px;
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                            margin-left: 5px; */
         }
 
         .unselectable {
@@ -77,7 +77,43 @@
             <!-- Page body -->
             <div class="page-body">
                 <div class="container-xl">
-                    <div class="row row-cards">
+                    <li class="list-group-item placeholder-glow placehold-absensi" style="display: none">
+                        <div class="row align-items-center">
+                            <div class="col-6">
+                                <div class="placeholder placeholder-xs col-12"></div>
+                                <div class="placeholder placeholder-xs col-12"></div>
+                                <div class="placeholder placeholder-xs col-12"></div>
+                                <div class="placeholder placeholder-xs col-12"></div>
+                                <div class="placeholder placeholder-xs col-12"></div>
+                                <div class="placeholder placeholder-xs col-12"></div>
+                                <div class="placeholder placeholder-xs col-12"></div>
+                                <div class="placeholder placeholder-xs col-12"></div>
+                                <div class="placeholder placeholder-xs col-12"></div>
+                                <div class="placeholder placeholder-xs col-12"></div>
+                                <div class="placeholder placeholder-xs col-12"></div>
+                                <div class="placeholder placeholder-xs col-12"></div>
+                                <div class="placeholder placeholder-xs col-12"></div>
+                                <div class="placeholder placeholder-xs col-12"></div>
+                            </div>
+                            <div class="col-6 ms-auto text-end">
+                                <div class="placeholder placeholder-xs col-12"></div>
+                                <div class="placeholder placeholder-xs col-12"></div>
+                                <div class="placeholder placeholder-xs col-12"></div>
+                                <div class="placeholder placeholder-xs col-12"></div>
+                                <div class="placeholder placeholder-xs col-12"></div>
+                                <div class="placeholder placeholder-xs col-12"></div>
+                                <div class="placeholder placeholder-xs col-12"></div>
+                                <div class="placeholder placeholder-xs col-12"></div>
+                                <div class="placeholder placeholder-xs col-12"></div>
+                                <div class="placeholder placeholder-xs col-12"></div>
+                                <div class="placeholder placeholder-xs col-12"></div>
+                                <div class="placeholder placeholder-xs col-12"></div>
+                                <div class="placeholder placeholder-xs col-12"></div>
+                                <div class="placeholder placeholder-xs col-12"></div>
+                            </div>
+                        </div>
+                    </li>
+                    <div class="row row-cards" id="tableShow">
                         <div class="col-6">
                             <div class="card card-xl border-success shadow rounded">
                                 <div class="card-stamp card-stamp-lg">
@@ -268,6 +304,12 @@
         function syn() {
             tablePos.ajax.reload();
         }
+
+        function loading() {
+            $("#tableShow").fadeOut(50);
+            $(".placehold-absensi").fadeIn(200);
+        }
+
         $(function() {
 
             /*------------------------------------------
@@ -279,7 +321,7 @@
             tablePos = $('.datatable-libur').DataTable({
                 "processing": true, //Feature control the processing indicator.
                 "serverSide": false, //Feature control DataTables' server-side processing mode.
-                "scrollX": true,
+                "scrollX": false,
                 "scrollCollapse": true,
                 "pagingType": 'full_numbers',
                 "lengthMenu": [
