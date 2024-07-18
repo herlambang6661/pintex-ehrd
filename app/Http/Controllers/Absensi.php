@@ -132,10 +132,10 @@ class Absensi extends Controller
                 $tgl31 = !empty($request->tglfull[30]) ? $request->tglfull[30] : '';
             }
 
-            if ($request->bagian == 'ALL') {
-                $bagian = '%%';
+            if ($request->fbagian == '*') {
+                $fbagian = '%%';
             } else {
-                $bagian = '%' . $request->bagian . '%';
+                $fbagian = '%' . $request->fbagian . '%';
             }
 
             if ($request->fstatus) {
@@ -146,6 +146,14 @@ class Absensi extends Controller
                 }
             } else {
                 $fstatus = '%Aktif%';
+            }
+
+            if ($request->fshift == '*') {
+                $shiftst = 'LIKE';
+                $fshift = '%%';
+            } else {
+                $shiftst = '=';
+                $fshift = $request->fshift;
             }
 
             // SQL Ambil Data Absensi by date
@@ -183,13 +191,14 @@ class Absensi extends Controller
                     (SELECT a.sst FROM absensi_absensi a WHERE a.userid = k.userid AND a.tanggal = '$tgl29') AS _29, 
                     (SELECT a.sst FROM absensi_absensi a WHERE a.userid = k.userid AND a.tanggal = '$tgl30') AS _30, 
                     (SELECT a.sst FROM absensi_absensi a WHERE a.userid = k.userid AND a.tanggal = '$tgl31') AS _31,
-                    (SELECT COUNT(a.sst) FROM absensi_absensi a WHERE a.userid = k.userid AND a.sst = 'H' AND (a.tanggal BETWEEN '$request->tglaw' AND '$request->tglak')) AS _H,
+                    (SELECT COUNT(a.sst) FROM absensi_absensi a WHERE a.userid = k.userid AND (a.sst = 'H' OR a.sst = 'L' OR a.sst = 'LS') AND (a.tanggal BETWEEN '$request->tglaw' AND '$request->tglak')) AS _H,
                     (SELECT COUNT(a.sst) FROM absensi_absensi a WHERE a.userid = k.userid AND a.sst = 'S' AND (a.tanggal BETWEEN '$request->tglaw' AND '$request->tglak')) AS _S,
                     (SELECT COUNT(a.sst) FROM absensi_absensi a WHERE a.userid = k.userid AND a.sst = 'I' AND (a.tanggal BETWEEN '$request->tglaw' AND '$request->tglak')) AS _I,
                     (SELECT COUNT(a.sst) FROM absensi_absensi a WHERE a.userid = k.userid AND a.sst = 'A' AND (a.tanggal BETWEEN '$request->tglaw' AND '$request->tglak')) AS _A"
                 ))
-                ->where('k.bagian', 'like', $bagian)
+                ->where('k.bagian', 'like', $fbagian)
                 ->where('k.status', 'like', $fstatus)
+                ->where('k.shift', $shiftst, $fshift)
                 ->orderBy('k.nama', 'ASC')
                 ->get();
             echo '  
