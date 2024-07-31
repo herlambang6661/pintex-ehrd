@@ -84,6 +84,7 @@
                     <thead class="text-black" style="border-color: black;">
                         <th style="border-color: black;" class="text-center">No</th>
                         <th style="border-color: black;" class="text-center">Tanggal</th>
+                        <th style="border-color: black;" class="text-center">Hari</th>
                         <th style="border-color: black;" class="text-center">STB</th>
                         <th style="border-color: black;" class="text-center">Nama</th>
                         <th style="border-color: black;" class="text-center">Surat</th>
@@ -95,6 +96,7 @@
                     <tbody class="text-black" style="border-color: black;">
                         @foreach ($getDataItm as $key => $w)
                             <?php
+                            $diff = 1 + Carbon::parse($u->tanggal)->diffInDays($u->tanggal2);
                             if ($w->tanggal == $w->tanggal2) {
                                 $tgls = Carbon::parse($w->tanggal)->format('d/m/Y');
                             } else {
@@ -104,6 +106,7 @@
                             <tr>
                                 <td class="text-center">{{ $i }}</td>
                                 <td class="text-center">{{ $tgls }}</td>
+                                <td class="text-center">{{ $diff }}</td>
                                 <td class="text-center">{{ $w->stb }}</td>
                                 <td class="text-center">{{ $w->nama }}</td>
                                 <td class="text-center">{{ $w->suratid }}</td>
