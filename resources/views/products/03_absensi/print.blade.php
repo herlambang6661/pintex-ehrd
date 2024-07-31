@@ -96,7 +96,7 @@
                     <tbody class="text-black" style="border-color: black;">
                         @foreach ($getDataItm as $key => $w)
                             <?php
-                            $diff = 1 + Carbon::parse($u->tanggal)->diffInDays($u->tanggal2);
+                            $diff = 1 + Carbon::parse($w->tanggal)->diffInDays($w->tanggal2);
                             if ($w->tanggal == $w->tanggal2) {
                                 $tgls = Carbon::parse($w->tanggal)->format('d/m/Y');
                             } else {
