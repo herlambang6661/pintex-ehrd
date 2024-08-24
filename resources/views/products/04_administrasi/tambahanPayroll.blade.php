@@ -353,7 +353,7 @@
                                                                 data-stb="{{ $t->stb }}"
                                                                 data-periode="{{ $periode }}"
                                                                 data-name="{{ $t->id }}" data-pk="koperasi">
-                                                                {{ $t->potongan_koperasi }}
+                                                                {{ !empty($t->potongan_koperasi) ? $t->potongan_koperasi : '' }}
                                                             </a>
                                                         </td>
                                                         <td class="text-center">
@@ -361,7 +361,7 @@
                                                                 data-stb="{{ $t->stb }}"
                                                                 data-periode="{{ $periode }}"
                                                                 data-name="{{ $t->id }}" data-pk="pinjaman">
-                                                                {{ $t->potongan_pinjaman }}
+                                                                {{ !empty($t->potongan_pinjaman) ? $t->potongan_pinjaman : '' }}
                                                             </a>
                                                         </td>
                                                         <td class="text-center">
