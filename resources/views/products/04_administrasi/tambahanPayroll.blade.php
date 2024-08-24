@@ -346,7 +346,8 @@
                                                         <td class="text-center">{{ $t->periode }}</td>
                                                         <td class="text-center">{{ $t->stb }}</td>
                                                         <td>{{ $t->nama }}</td>
-                                                        <td class="text-center">{{ $t->level }}</td>
+                                                        <td class="text-center">{{ !empty($t->level) ? $t->level : '' }}
+                                                        </td>
                                                         <td class="text-center">
                                                             <a href="" class="editable" data-type="number"
                                                                 data-stb="{{ $t->stb }}"
