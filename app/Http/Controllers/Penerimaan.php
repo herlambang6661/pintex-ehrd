@@ -1822,6 +1822,7 @@ class Penerimaan extends Controller
                 'tempat' => $request->tempat,
                 'tgllahir' => $request->tgllahir,
                 'pendidikan' => $request->pendidikan,
+                'alamat' => $request->alamat,
                 'jurusan' => $request->jurusan,
                 'notlp' => $request->notlp,
                 'serikat' => $request->serikat,
