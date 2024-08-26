@@ -1566,7 +1566,7 @@ class Penerimaan extends Controller
                     </div>
                 </div>
                 <div class="col-lg-5">
-                    <div class="card shadow bg-green-lt ">
+                    <div class="card shadow bg-green-lt">
                         <div class="card-body">
                             <div class="row">
                                 <div class="mb-3">
@@ -1575,7 +1575,7 @@ class Penerimaan extends Controller
                                             <label class="form-label">No. Map</label>
                                             <input type="hidden" name="id" placeholder="" value="' . $u->id . '" />
                                             <input type="hidden" name="userid" placeholder="" value="' . $u->userid . '" />
-                                            <input type="text" class="form-control" name="nomap" placeholder="" value="' . $u->nomap . '" style="border-color:black"  />
+                                            <input type="text" class="form-control" name="nomap" placeholder="" value="' . $u->nomap . '" disabled style="border-color:black"  />
                                         </div>
                                         <div class="col">
                                             <label class="form-label">STB</label>
@@ -1585,19 +1585,19 @@ class Penerimaan extends Controller
                                 </div>
                                 <div class="mb-3">
                                     <label class="form-label">KTP</label>
-                                    <input type="text" class="form-control" name="nik" placeholder="" value="' . $u->nik . '"
+                                    <input type="text" class="form-control" name="nik" placeholder="" value="' . $u->nik . '" disabled
                                         style="border-color:black"  />
                                 </div>
                                 <div class="mb-3">
                                     <label class="form-label">Nama</label>
-                                    <input type="text" class="form-control" name="nama" placeholder="" value="' . $u->nama . '"
+                                    <input type="text" class="form-control" name="nama" placeholder="" value="' . $u->nama . '" disabled
                                         style="border-color:black"  />
                                 </div>
                                 <div class="mb-3">
                                     <div class="row">
                                         <div class="col">
                                             <label class="form-label">Gender</label>
-                                            <select name="gender" id="gender" class="form-select border-dark">
+                                            <select name="gender" id="gender" class="form-select border-dark" disabled>
                                                 <option value="' . $u->gender . '" hidden>-- ' . $u->gender . ' --</option>
                                                 <option value="PRIA">Pria</option>
                                                 <option value="WANITA">Wanita</option>
@@ -1605,7 +1605,7 @@ class Penerimaan extends Controller
                                         </div>
                                         <div class="col">
                                             <label class="form-label">Agama</label>
-                                            <select name="agama" id="agama" class="form-select border-dark">
+                                            <select name="agama" id="agama" class="form-select border-dark" disabled>
                                                 <option value="' . $u->agama . '" hidden>-- ' . $u->agama . ' --</option>
                                                 <option value="Islam">Islam</option>
                                                 <option value="Kristen">Kristen</option>
@@ -1621,12 +1621,12 @@ class Penerimaan extends Controller
                                     <div class="row">
                                         <div class="col">
                                             <label class="form-label">Tinggi</label>
-                                            <input type="text" class="form-control" name="tinggi" placeholder="" value="' . $u->tinggi . '"
+                                            <input type="text" class="form-control" name="tinggi" placeholder="" value="' . $u->tinggi . '" disabled
                                                 style="border-color:black"  />
                                         </div>
                                         <div class="col">
                                             <label class="form-label">Berat</label>
-                                            <input type="text" class="form-control" name="berat" placeholder="" value="' . $u->berat . '"
+                                            <input type="text" class="form-control" name="berat" placeholder="" value="' . $u->berat . '" disabled
                                                 style="border-color:black"  />
                                         </div>
                                     </div>
@@ -1635,10 +1635,10 @@ class Penerimaan extends Controller
                                     <label class="form-label">Tempat, Tanggal Lahir</label>
                                     <div class="row">
                                         <div class="col">
-                                            <input type="text" class="form-control" name="tempat" placeholder="" value="' . $u->tempat . '" style="border-color:black"  />
+                                            <input type="text" class="form-control" name="tempat" placeholder="" value="' . $u->tempat . '" style="border-color:black" disabled />
                                         </div>
                                         <div class="col">
-                                            <input type="text" class="form-control" name="tgllahir" placeholder="" value="' . $u->tgllahir . '" style="border-color:black" id="datepicker3" />
+                                            <input type="text" class="form-control" name="tgllahir" placeholder="" value="' . $u->tgllahir . '" style="border-color:black" id="datepicker3" disabled />
                                             <script>
                                                 window.Litepicker && (new Litepicker({
                                                     element: document.getElementById("datepicker3"),
@@ -1652,14 +1652,22 @@ class Penerimaan extends Controller
                                     </div>
                                 </div>
                                 <div class="mb-3">
+                                    <label class="form-label">Alamat</label>
+                                    <div class="row">
+                                        <div class="col">
+                                            <textarea name="alamat" class="form-control border border-dark" id="alamat" cols="30" rows="10" disabled>' . $u->alamat . '</textarea>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="mb-3">
                                     <div class="row">
                                         <div class="col">
                                             <label class="form-label">Pendidikan</label>
-                                            <input type="text" class="form-control" name="pendidikan" placeholder="" value="' . $u->pendidikan . '" style="border-color:black"  />
+                                            <input type="text" class="form-control" name="pendidikan" placeholder="" value="' . $u->pendidikan . '" style="border-color:black" disabled />
                                         </div>
                                         <div class="col">
                                             <label class="form-label">Jurusan</label>
-                                            <input type="text" class="form-control" name="jurusan" placeholder="" value="' . $u->jurusan . '" style="border-color:black"  />
+                                            <input type="text" class="form-control" name="jurusan" placeholder="" value="' . $u->jurusan . '" style="border-color:black" disabled />
                                         </div>
                                     </div>
                                 </div>
@@ -1667,11 +1675,11 @@ class Penerimaan extends Controller
                                     <div class="row">
                                         <div class="col">
                                             <label class="form-label">Telepon</label>
-                                            <input type="text" class="form-control" name="notlp" placeholder="" value="' . $u->notlp . '" style="border-color:black"  />
+                                            <input type="text" class="form-control" name="notlp" placeholder="" value="' . $u->notlp . '" style="border-color:black" disabled />
                                         </div>
                                         <div class="col">
                                             <label class="form-label">Serikat</label>
-                                            <input type="text" class="form-control" name="serikat" placeholder="" value="' . $u->serikat . '"
+                                            <input type="text" class="form-control" name="serikat" placeholder="" value="' . $u->serikat . '" disabled
                                                 style="border-color:black"  />
                                         </div>
                                     </div>
