@@ -2242,7 +2242,7 @@ class Penerimaan extends Controller
     public function storedataEditLegalitas(Request $request)
     {
         $legalitas = DB::table('penerimaan_legalitas')->where('id', $request->idlegalitas)->first();
-        $latest_legalitas = DB::table('penerimaan_legalitas')->where('userid', $request->userid)->orderBy('id', 'desc')->first();
+        $latest_legalitas = DB::table('penerimaan_legalitas')->where('suratjns', $request->suratjns)->latest()->first();
         if ($request->suratjns == "BASIC") {
             $request->validate(
                 [
@@ -2275,7 +2275,7 @@ class Penerimaan extends Controller
                         'shift' => $request->shift,
                         'profesi' => $request->profesi,
                         'hrlibur'  => $request->hrlibur,
-                        'sethari' => $request->serhari,
+                        'sethari' => $request->sethari,
                         'keterangan' => $request->keterangan,
                         'id_cron'    => 'Updated',
                         'dibuat' => Auth::user()->name,
@@ -2317,7 +2317,7 @@ class Penerimaan extends Controller
                         'shift' => $request->shift,
                         'profesi' => $request->profesi,
                         'hrlibur'  => $request->hrlibur,
-                        'sethari' => $request->serhari,
+                        'sethari' => $request->sethari,
                         'keterangan' => $request->keterangan,
                         'id_cron'    => 'Updated',
                         'dibuat' => Auth::user()->name,
@@ -2328,44 +2328,33 @@ class Penerimaan extends Controller
             $arr = array('msg' => 'Data telah berhasil diproses', 'status' => true);
             return Response()->json($arr);
         } elseif ($request->suratjns == "PERJANJIAN") {
-            // GET IDJOB
-            $noform = date('y') . "00000";
-            $checknoform = DB::table('schedule')->orderBy('idjob', 'desc')->limit('1')->get();
-            foreach ($checknoform as $key) {
-                $noform = $key->idjob;
-            }
-            $y = substr($noform, 0, 2);
-            if (date('y') == $y) {
-                $noUrut = substr($noform, 2, 5);
-                $na = $noUrut + 1;
-                $char = date('y');
-                $kode = $char . sprintf("%05s", $na);
-            } else {
-                $kode = date('y') . "00001";
-            }
-            // GET IDJOB
-            // ================================================================
-            // kondisi jika tanggal perjanjian kurang dari sama dengan hari ini, 
-            // maka eksekusi sekarang, 
-            // tapi jika lebih besar dari hari ini maka masuk ke schedule
-            // ================================================================
-            if ($request->tglawal <= date('Y-m-d')) {
-                $inputLegalitas = DB::table('penerimaan_legalitas')->insert([
-                    'remember_token' => $request->_token,
-                    'suratjns' => $request->suratjns,
-                    'userid' => $request->userid,
-                    'nama' => $karyawan->nama,
-                    'inputtgl' => date('Y-m-d'),
-                    'legalitastgl' => $request->tglawal,
-                    'tglaw' => $request->tglawal,
-                    'tglak' => $request->tglakhir,
-                    'nmsurat' => $request->nmsurat,
-                    'suratket' => $request->jnssurat,
-                    'sacuti' => $request->cuti,
-                    'id_cron'    => 'Langsung Dibuat',
-                    'dibuat' => Auth::user()->name,
-                    'created_at' => date('Y-m-d H:i:s'),
-                ]);
+            $request->validate(
+                [
+                    '_token' => 'required',
+                    'idlegalitas' => 'required',
+                    'nmsurat' => 'required',
+                    'jnssurat' => 'required',
+                    'tglawal' => 'required',
+                    'tglakhir' => 'required',
+                ],
+            );
+            // ========================================================
+            // Kondisi jika id data yang diedit adalah id yang terbaru,
+            // maka data karyawan juga akan diedit
+            // ========================================================
+            if ($request->idlegalitas == $latest_legalitas->id) {
+                $updateLegalitas = DB::table('penerimaan_legalitas')
+                    ->where('id', $request->idlegalitas)
+                    ->limit(1)
+                    ->update([
+                        'nmsurat' => $request->nmsurat,
+                        'suratjns' => $request->jnssurat,
+                        'tglaw' => $request->tglawal,
+                        'tglak' => $request->tglakhir,
+                        'sacuti' => $request->cuti,
+                        'id_cron'    => 'Updated',
+                        'updated_at' => date('Y-m-d H:i:s'),
+                    ]);
                 // Edit di karyawan
                 $editKaryawan = DB::table('penerimaan_karyawan')
                     ->where('userid', $request->userid)
@@ -2378,70 +2367,48 @@ class Penerimaan extends Controller
                         'updated_at' => date('Y-m-d H:i:s'),
                     ]);
             } else {
-                $inputLegalitas = DB::table('penerimaan_legalitas')->insert([
-                    'remember_token' => $request->_token,
-                    'suratjns' => $request->suratjns,
-                    'userid' => $request->userid,
-                    'nama' => $karyawan->nama,
-                    'inputtgl' => date('Y-m-d'),
-                    'legalitastgl' => $request->tglawal,
-                    'tglaw' => $request->tglawal,
-                    'tglak' => $request->tglakhir,
-                    'nmsurat' => $request->nmsurat,
-                    'suratket' => $request->jnssurat,
-                    'sacuti' => $request->cuti,
-                    'id_cron'    => 'Langsung Dibuat',
-                    'updated_at' => date('Y-m-d H:i:s'),
-                ]);
-                $check = DB::table('schedule')->insert([
-                    'remember_token' => $request->_token,
-                    'entitas' => $request->entitas,
-                    'type' => 'Perjanjian',
-                    'title' => 'Penambahan Legalitas Perjanjian',
-                    'idjob' => $kode,
-                    'dbjob' => 'penerimaan_legalitas',
-                    'job' => 'add',
-                    'datejob' => $request->tglawal,
-                    'nama' => $karyawan->nama,
-                    'idemployee' => $request->userid,
-                    'dibuat' => Auth::user()->name,
-                    'created_at' => date('Y-m-d H:i:s'),
-                ]);
+                $updateLegalitas = DB::table('penerimaan_legalitas')
+                    ->where('id', $request->idlegalitas)
+                    ->limit(1)
+                    ->update([
+                        'nmsurat' => $request->nmsurat,
+                        'suratket' => $request->jnssurat,
+                        'suratjns' => $request->suratjns,
+                        'tglaw' => $request->tglawal,
+                        'tglak' => $request->tglakhir,
+                        'sacuti' => $request->cuti,
+                        'id_cron'    => 'Updated',
+                        'updated_at' => date('Y-m-d H:i:s'),
+                    ]);
             }
             // $arr = array('msg' => 'Something goes to wrong. Please try later', 'status' => false);
-            $arr = array('msg' => 'Data telah berhasil diproses', 'status' => true);
+            $arr = array('msg' => 'Data telah berhasil diubah', 'status' => true);
             return Response()->json($arr);
         } elseif ($request->suratjns == "INTERN") {
-            $inputLegalitas = DB::table('penerimaan_legalitas')->insert([
-                'remember_token' => $request->_token,
-                'suratjns' => $request->suratjns,
-                'userid' => $request->userid,
-                'nama' => $karyawan->nama,
-                'inputtgl' => date('Y-m-d'),
-                'legalitastgl' => $request->tglinternal,
-                'nmsurat' => $request->nmsurat,
-                'suratket' => $request->nmsurat,
-                'keterangan' => $request->keterangan,
-                'id_cron'    => 'Langsung Dibuat',
-                'dibuat' => Auth::user()->name,
-                'created_at' => date('Y-m-d H:i:s'),
-            ]);
-            $intern = DB::table('penerimaan_karyawan')->where('userid', $request->userid)->first();
-            // Edit di karyawan
-            if ($intern->internal) {
-                if ($request->tglinternal <= $intern->tglinternal) {
-                    // do nothing
-                } else {
-                    $editKaryawan = DB::table('penerimaan_karyawan')
-                        ->where('userid', $request->userid)
-                        ->limit(1)
-                        ->update([
-                            'tglinternal' => $request->tglinternal,
-                            'internal' => $request->nmsurat . " " . $request->keterangan,
-                            'updated_at' => date('Y-m-d H:i:s'),
-                        ]);
-                }
-            } else {
+            $request->validate(
+                [
+                    '_token' => 'required',
+                    'idlegalitas' => 'required',
+                    'nmsurat' => 'required',
+                    'tglinternal' => 'required',
+                    'keterangan' => 'required',
+                ],
+            );
+            // ========================================================
+            // Kondisi jika id data yang diedit adalah id yang terbaru,
+            // maka data karyawan juga akan diedit
+            // ========================================================
+            if ($request->idlegalitas == $latest_legalitas->id) {
+                $updateLegalitas = DB::table('penerimaan_legalitas')
+                    ->where('id', $request->idlegalitas)
+                    ->limit(1)
+                    ->update([
+                        'nmsurat' => $request->nmsurat,
+                        'legalitastgl' => $request->tglinternal,
+                        'keterangan' => $request->keterangan,
+                        'id_cron'    => 'Updated',
+                        'updated_at' => date('Y-m-d H:i:s'),
+                    ]);
                 $editKaryawan = DB::table('penerimaan_karyawan')
                     ->where('userid', $request->userid)
                     ->limit(1)
@@ -2450,72 +2417,95 @@ class Penerimaan extends Controller
                         'internal' => $request->nmsurat . " " . $request->keterangan,
                         'updated_at' => date('Y-m-d H:i:s'),
                     ]);
+            } else {
+                $updateLegalitas = DB::table('penerimaan_legalitas')
+                    ->where('id', $request->idlegalitas)
+                    ->limit(1)
+                    ->update([
+                        'nmsurat' => $request->nmsurat,
+                        'legalitastgl' => $request->tglinternal,
+                        'keterangan' => $request->keterangan,
+                        'id_cron'    => 'Updated',
+                        'updated_at' => date('Y-m-d H:i:s'),
+                    ]);
             }
+
             // $arr = array('msg' => 'Something goes to wrong. Please try later', 'status' => false);
             $arr = array('msg' => 'Data telah berhasil diproses', 'status' => true);
             return Response()->json($arr);
         } elseif ($request->suratjns == "STATUS") {
-            $inputLegalitas = DB::table('penerimaan_legalitas')->insert([
-                'remember_token' => $request->_token,
-                'suratjns' => $request->suratjns,
-                'userid' => $request->userid,
-                'nama' => $karyawan->nama,
-                'inputtgl' => date('Y-m-d'),
-                'legalitastgl' => $request->tglstatus,
-                'nmsurat' => $request->nmsurat,
-                'suratket' => $request->keterangan,
-                'id_cron'    => 'Langsung Dibuat',
-                'dibuat' => Auth::user()->name,
-                'created_at' => date('Y-m-d H:i:s'),
-            ]);
-            // Edit di karyawan
-            if ($request->nmsurat == "Surat Cuti Melahirkan") {
-                $status = "(Aktif) " . $request->nmsurat . " - " . $request->tglstatus;
+            $request->validate(
+                [
+                    '_token' => 'required',
+                    'idlegalitas' => 'required',
+                    'nmsurat' => 'required',
+                    'tglstatus' => 'required',
+                    'keterangan' => 'required',
+                ],
+            );
+            // ========================================================
+            // Kondisi jika id data yang diedit adalah id yang terbaru,
+            // maka data karyawan juga akan diedit
+            // ========================================================
+            if ($request->idlegalitas == $latest_legalitas->id) {
+                $updateLegalitas = DB::table('penerimaan_legalitas')
+                    ->where('id', $request->idlegalitas)
+                    ->limit(1)
+                    ->update([
+                        'nmsurat' => $request->nmsurat,
+                        'legalitastgl' => $request->tglstatus,
+                        'keterangan' => $request->keterangan,
+                        'suratket' => $request->keterangan,
+                        'id_cron'    => 'Updated',
+                        'updated_at' => date('Y-m-d H:i:s'),
+                    ]);
+                // Edit di karyawan
+                if ($request->nmsurat == "Surat Cuti Melahirkan") {
+                    $status = "(Aktif) " . $request->nmsurat . " - " . $request->tglstatus;
+                } else {
+                    $status = $request->nmsurat . " - " . $request->tglstatus;
+                }
+                $editKaryawan = DB::table('penerimaan_karyawan')
+                    ->where('userid', $request->userid)
+                    ->limit(1)
+                    ->update([
+                        'status' => $status,
+                        'updated_at' => date('Y-m-d H:i:s'),
+                    ]);
             } else {
-                $status = $request->nmsurat . " - " . $request->tglstatus;
+                $updateLegalitas = DB::table('penerimaan_legalitas')
+                    ->where('id', $request->idlegalitas)
+                    ->limit(1)
+                    ->update([
+                        'nmsurat' => $request->nmsurat,
+                        'legalitastgl' => $request->tglstatus,
+                        'keterangan' => $request->keterangan,
+                        'id_cron'    => 'Updated',
+                        'updated_at' => date('Y-m-d H:i:s'),
+                    ]);
             }
-            $editKaryawan = DB::table('penerimaan_karyawan')
-                ->where('userid', $request->userid)
-                ->limit(1)
-                ->update([
-                    'status' => $status,
-                    'updated_at' => date('Y-m-d H:i:s'),
-                ]);
             // $arr = array('msg' => 'Something goes to wrong. Please try later', 'status' => false);
             $arr = array('msg' => 'Data telah berhasil diproses', 'status' => true);
             return Response()->json($arr);
         } elseif ($request->suratjns == "CUTI") {
-            // GET IDJOB
-            $noform = date('y') . "00000";
-            $checknoform = DB::table('schedule')->orderBy('idjob', 'desc')->limit('1')->get();
-            foreach ($checknoform as $key) {
-                $noform = $key->idjob;
-            }
-            $y = substr($noform, 0, 2);
-            if (date('y') == $y) {
-                $noUrut = substr($noform, 2, 5);
-                $na = $noUrut + 1;
-                $char = date('y');
-                $kode = $char . sprintf("%05s", $na);
-            } else {
-                $kode = date('y') . "00001";
-            }
-            // GET IDJOB
-            $inputLegalitas = DB::table('penerimaan_legalitas')->insert([
-                'remember_token' => $request->_token,
-                'suratjns' => $request->suratjns,
-                'nmsurat' => $request->nmsurat,
-                'suratket' => $request->suratket,
-                'userid' => $request->userid,
-                'nama' => $karyawan->nama,
-                'inputtgl' => date('Y-m-d'),
-                'legalitastgl' => date('Y-m-d'),
-                'tglaw' => $request->tglawal,
-                'tglak' => $request->tglakhir,
-                'sacuti' => $request->cuti,
-                'id_cron'    => 'Langsung Dibuat',
-                'created_at' => date('Y-m-d H:i:s'),
-            ]);
+            $request->validate(
+                [
+                    '_token' => 'required',
+                    'tglawal' => 'required',
+                    'tglakhir' => 'required',
+                    'cuti' => 'required',
+                ],
+            );
+            $updateLegalitas = DB::table('penerimaan_legalitas')
+                ->where('id', $request->idlegalitas)
+                ->limit(1)
+                ->update([
+                    'tglaw' => $request->tglawal,
+                    'tglak' => $request->tglakhir,
+                    'sacuti' => $request->cuti,
+                    'id_cron'    => 'Updated',
+                    'updated_at' => date('Y-m-d H:i:s'),
+                ]);
             // $arr = array('msg' => 'Something goes to wrong. Please try later', 'status' => false);
             $arr = array('msg' => 'Data telah berhasil diproses', 'status' => true);
             return Response()->json($arr);
@@ -2688,7 +2678,7 @@ class Penerimaan extends Controller
             echo '
                         <tr>
                             <td class="text-center" style="padding: 2px 2px 2px 2px">
-                                <button type="button" class="btn btn-sm btn-info btn-icon btn-edit" data-id="' . $b->id . '" data-idtipe="basic" data-userid="' . $b->userid . '" data-nama="' . $b->nmsurat . '" data-tipe="Basic Informasi"><i class="fa-solid fa-edit"></i></button>
+                                <button type="button" class="btn btn-sm btn-info btn-icon btn-edit" data-id="' . $b->id . '" data-idtipe="basic" data-userid="' . $b->userid . '" data-nama="' . $b->nmsurat . '" data-tipe="Basic Information"><i class="fa-solid fa-edit"></i></button>
                                 <button type="button" class="btn btn-sm btn-danger btn-icon btn-delete" data-id="' . $b->id . '" data-userid="' . $b->userid . '" data-nama="' . $b->nmsurat . '" data-tipe="' . $b->suratjns . '" data-url="basicdelete"><i class="fa-solid fa-trash-can"></i></button>
                             </td>
                             <td class="text-end">' . date('d/m/Y', strtotime($b->legalitastgl)) . '</td>
@@ -2737,6 +2727,7 @@ class Penerimaan extends Controller
             echo '
                         <tr>
                             <td class="text-center" style="padding: 2px 2px 2px 2px">
+                                <button type="button" class="btn btn-sm btn-info btn-icon btn-edit" data-id="' . $p->id . '" data-idtipe="perjanjian" data-userid="' . $p->userid . '" data-nama="' . $p->nmsurat . '" data-tipe="Perjanjian"><i class="fa-solid fa-edit"></i></button>
                                 <button type="button" class="btn btn-sm btn-danger btn-icon btn-delete" data-id="' . $p->id . '" data-userid="' . $p->userid . '" data-nama="' . $p->nmsurat . '" data-tipe="' . $p->suratjns . '" data-url="perjanjiandelete"><i class="fa-solid fa-trash-can"></i></button>
                             </td>
                             <td class="text-end">' . date('d/m/Y', strtotime($p->legalitastgl)) . '</td>
@@ -2773,7 +2764,7 @@ class Penerimaan extends Controller
             echo '
                         <tr>
                             <td class="text-center" style="padding: 2px 2px 2px 2px">
-                                <!-- <a href="#" class="btn btn-sm btn-info btn-icon"><i class="fa-solid fa-edit"></i></a> -->
+                                <button type="button" class="btn btn-sm btn-info btn-icon btn-edit" data-id="' . $i->id . '" data-idtipe="intern" data-userid="' . $i->userid . '" data-nama="' . $i->nmsurat . '" data-tipe="Internal"><i class="fa-solid fa-edit"></i></button>
                                 <button type="button" class="btn btn-sm btn-danger btn-icon btn-delete" data-id="' . $i->id . '" data-userid="' . $i->userid . '" data-nama="' . $i->nmsurat . '" data-tipe="' . $i->suratjns . '" data-url="internaldelete"><i class="fa-solid fa-trash-can"></i></button>
                             </td>
                             <td class="text-center">' . date('d/m/Y', strtotime($i->legalitastgl)) . '</td>
@@ -2807,7 +2798,7 @@ class Penerimaan extends Controller
             echo '
                         <tr>
                             <td class="text-center" style="padding: 2px 2px 2px 2px">
-                                <!-- <a href="#" class="btn btn-sm btn-info btn-icon"><i class="fa-solid fa-edit"></i></a> -->
+                                <button type="button" class="btn btn-sm btn-info btn-icon btn-edit" data-id="' . $s->id . '" data-idtipe="status" data-userid="' . $s->userid . '" data-nama="' . $s->nmsurat . '" data-tipe="Status"><i class="fa-solid fa-edit"></i></button>
                                 <button type="button" class="btn btn-sm btn-danger btn-icon btn-delete" data-id="' . $s->id . '" data-userid="' . $s->userid . '" data-nama="' . $s->nmsurat . '" data-tipe="' . $s->suratjns . '" data-url="statusdelete"><i class="fa-solid fa-trash-can"></i></button>
                             </td>
                             <td class="text-end">' . date('d/m/Y', strtotime($s->legalitastgl)) . '</td>
@@ -2846,6 +2837,7 @@ class Penerimaan extends Controller
             echo '
                         <tr>
                             <td class="text-center" style="padding: 2px 2px 2px 2px">
+                                <button type="button" class="btn btn-sm btn-info btn-icon btn-edit" data-id="' . $p->id . '" data-idtipe="cuti" data-userid="' . $p->userid . '" data-nama="' . $p->nmsurat . '" data-tipe="Cuti Dispensasi"><i class="fa-solid fa-edit"></i></button>
                                 <button type="button" class="btn btn-sm btn-danger btn-icon btn-delete" data-id="' . $p->id . '" data-userid="' . $p->userid . '" data-nama="' . $p->nmsurat . '" data-tipe="' . $p->suratjns . '" data-url="perjanjiandelete"><i class="fa-solid fa-trash-can"></i></button>
                             </td>
                             <td class="text-end">' . date('d/m/Y', strtotime($p->legalitastgl)) . '</td>
@@ -3382,40 +3374,25 @@ class Penerimaan extends Controller
                 </div>
             ';
         } elseif ($request->idtipe == "perjanjian") {
+
             echo '<input type="hidden" name="suratjns" value="PERJANJIAN" id="suratjns">';
+            echo '<input type="hidden" name="idlegalitas" value="' . $request->id . '">';
             echo '<input type="hidden" name="userid" value="' . $request->id . '">';
             echo
             '
                 <div class="modal-body">
-                    <table class="table table-sm table-bordered bg-blue-lt text-white text-center">
-                        <thead>
-                            <tr>
-                                <td colspan="4">Perjanjian Terakhir : ' . $sebelumnya_perjanjian->suratket . '</td>
-                            </tr>
-                            <tr>
-                                <td>Awal</td>
-                                <td>Akhir</td>
-                                <td>Cuti</td>
-                            </tr>
-                        </thead>
-                        <tr>
-                            <td>' . Carbon::parse($sebelumnya_perjanjian->tglaw)->format('d/m/Y') . '</td>
-                            <td>' . Carbon::parse($sebelumnya_perjanjian->tglak)->format('d/m/Y') . '</td>
-                            <td>' . $sebelumnya_perjanjian->sacuti . '</td>
-                        </tr>
-                    </table>
                     <div class="row">
                         <div class="col-lg-12">
                             <div class="mb-3">
                             <label class="form-label">Nama Karyawan</label>
-                            <input type="text" name="nama" class="form-control" value="' . $karyawan->nama . '" readonly>
+                            <input type="text" name="nama" class="form-control" value="' . $kontrak->nama . '" readonly>
                             </div>
                         </div>
                         <div class="col-lg-6">
                             <div class="mb-3">
                             <label class="form-label">Nama Surat</label>
                                 <select name="nmsurat" id="nmsurat" class="form-select" onchange="setJenis()">
-                                <option hidden value="">-- Pilih Nama Surat --</option>';
+                                <option hidden value="' . $kontrak->nmsurat . '" selected>-- ' . $kontrak->nmsurat . ' --</option>';
             foreach ($perjanjian as $pe) {
                 echo            '<option value="' . $pe->nmsurat . '">' . $pe->nmsurat . '</option>';
             }
@@ -3425,7 +3402,7 @@ class Penerimaan extends Controller
                         <div class="col-lg-6">
                             <div class="mb-3">
                             <label class="form-label">Jenis Surat</label>
-                            <input type="text" name="jnssurat" id="jnssurat" class="form-control" placeholder="Masukkan Jenis Surat">
+                            <input type="text" name="jnssurat" id="jnssurat" class="form-control" placeholder="Masukkan Jenis Surat" value="' . $kontrak->suratket . '">
                             </div>
                         </div>
                     </div>
@@ -3433,17 +3410,17 @@ class Penerimaan extends Controller
                         <tr>
                             <td style="padding-top: 12px">Tanggal Awal</td>
                             <td style="padding-top: 12px">:</td>
-                            <td><input type="date" name="tglawal" class="form-control" value="' . date('Y-m-d', strtotime($sebelumnya_perjanjian->tglak . ' +1 day')) . '"></td>
+                            <td><input type="date" name="tglawal" class="form-control" value="' . $kontrak->tglaw . '"></td>
                         </tr>
                         <tr>
                             <td style="padding-top: 12px">Tanggal Akhir</td>
                             <td style="padding-top: 12px">:</td>
-                            <td><input type="date" name="tglakhir" class="form-control" value="' . date('Y-m-d', strtotime($sebelumnya_perjanjian->tglak . ' +1 day')) . '"></td>
+                            <td><input type="date" name="tglakhir" class="form-control" value="' . $kontrak->tglak . '"></td>
                         </tr>
                         <tr>
                             <td style="padding-top: 12px">Cuti</td>
                             <td style="padding-top: 12px">:</td>
-                            <td><input type="number" name="cuti" min="0" class="form-control" placeholder="Cuti"></td>
+                            <td><input type="number" name="cuti" min="0" class="form-control" placeholder="Cuti" value="' . $kontrak->sacuti . '"></td>
                         </tr>
                     </table>
                     
@@ -3466,6 +3443,7 @@ class Penerimaan extends Controller
             ';
         } elseif ($request->idtipe == "intern") {
             echo '<input type="hidden" name="suratjns" value="INTERN" id="suratjns">';
+            echo '<input type="hidden" name="idlegalitas" value="' . $request->id . '">';
             echo '<input type="hidden" name="userid" value="' . $request->id . '">';
             echo
             '
@@ -3474,14 +3452,14 @@ class Penerimaan extends Controller
                         <div class="col-lg-12">
                             <div class="mb-3">
                             <label class="form-label">Nama Karyawan</label>
-                            <input type="text" name="nama" class="form-control" value="' . $karyawan->nama .  '" readonly>
+                            <input type="text" name="nama" class="form-control" value="' . $kontrak->nama .  '" readonly>
                             </div>
                         </div>
                         <div class="col-lg-12">
                             <div class="mb-3">
                             <label class="form-label">Nama Surat</label>
                                 <select name="nmsurat" id="" class="form-select">
-                                <option hidden value="">-- Pilih Nama Surat --</option>';
+                                <option hidden value="' . $kontrak->nmsurat .  '">-- ' . $kontrak->nmsurat .  ' --</option>';
             foreach ($intern as $in) {
                 echo            '<option value="' . $in->nmsurat . '">' . $in->nmsurat . '</option>';
             }
@@ -3493,18 +3471,19 @@ class Penerimaan extends Controller
                         <tr>
                             <td style="padding-top: 12px;width:130px">Tanggal Internal</td>
                             <td style="padding-top: 12px">:</td>
-                            <td><input type="date" name="tglinternal" class="form-control" value="' . date("Y-m-d") . '"></td>
+                            <td><input type="date" name="tglinternal" class="form-control" value="' . $kontrak->legalitastgl . '"></td>
                         </tr>
                         <tr>
                             <td style="padding-top: 12px">Keterangan</td>
                             <td style="padding-top: 12px">:</td>
-                            <td><input type="text" name="keterangan" class="form-control" placeholder="Masukkan Keterangan"></td>
+                            <td><input type="text" name="keterangan" class="form-control" placeholder="Masukkan Keterangan" value="' . $kontrak->keterangan . '"></td>
                         </tr>
                     </table>
                 </div>
             ';
         } elseif ($request->idtipe == "status") {
             echo '<input type="hidden" name="suratjns" value="STATUS" id="suratjns">';
+            echo '<input type="hidden" name="idlegalitas" value="' . $request->id . '">';
             echo '<input type="hidden" name="userid" value="' . $request->id . '">';
             echo
             '
@@ -3513,14 +3492,14 @@ class Penerimaan extends Controller
                         <div class="col-lg-12">
                             <div class="mb-3">
                             <label class="form-label">Nama Karyawan</label>
-                            <input type="text" name="nama" class="form-control" value="' . $karyawan->nama . '" readonly>
+                            <input type="text" name="nama" class="form-control" value="' . $kontrak->nama . '" readonly>
                             </div>
                         </div>
                         <div class="col-lg-12">
                             <div class="mb-3">
                             <label class="form-label">Nama Surat</label>
                                 <select name="nmsurat" id="" class="form-select">
-                                <option hidden value="">-- Pilih Nama Surat --</option>';
+                                <option hidden value="' . $kontrak->nmsurat . '">-- ' . $kontrak->nmsurat . ' --</option>';
             foreach ($status as $st) {
                 echo            '<option value="' . $st->nmsurat . '">' . $st->nmsurat . '</option>';
             }
@@ -3532,12 +3511,12 @@ class Penerimaan extends Controller
                         <tr>
                             <td style="padding-top: 12px;width:130px">Tanggal Status</td>
                             <td style="padding-top: 12px">:</td>
-                            <td><input type="date" name="tglstatus" class="form-control disabled" value="' . date("Y-m-d") . '"></td>
+                            <td><input type="date" name="tglstatus" class="form-control disabled" value="' . $kontrak->legalitastgl . '"></td>
                         </tr>
                         <tr>
                             <td style="padding-top: 12px;width:130px">Keterangan tambahan</td>
                             <td style="padding-top: 12px">:</td>
-                            <td><input type="text" name="keterangan" class="form-control" placeholder="keterangan"></td>
+                            <td><input type="text" name="keterangan" class="form-control" placeholder="keterangan" value="' . $kontrak->suratket . '"></td>
                         </tr>
                     </table>
                 </div>
@@ -3546,6 +3525,7 @@ class Penerimaan extends Controller
             echo '<input type="hidden" name="suratjns" value="CUTI" id="suratjns">';
             echo '<input type="hidden" name="nmsurat" value="Cuti Dispensasi" id="nmsurat">';
             echo '<input type="hidden" name="suratket" value="Cuti Dispensasi Diluar Cuti Tahunan" id="suratket">';
+            echo '<input type="hidden" name="idlegalitas" value="' . $request->id . '">';
             echo '<input type="hidden" name="userid" value="' . $request->id . '">';
             echo
             '
@@ -3554,7 +3534,7 @@ class Penerimaan extends Controller
                         <div class="col-lg-12">
                             <div class="mb-3">
                             <label class="form-label">Nama Karyawan</label>
-                            <input type="text" name="nama" class="form-control" value="' . $karyawan->nama . '" readonly>
+                            <input type="text" name="nama" class="form-control" value="' . $kontrak->nama . '" readonly>
                             </div>
                         </div>
                     </div>
@@ -3562,17 +3542,17 @@ class Penerimaan extends Controller
                         <tr>
                             <td style="padding-top: 12px">Tanggal Awal</td>
                             <td style="padding-top: 12px">:</td>
-                            <td><input type="date" name="tglawal" class="form-control" value="' . date("Y-m-d") . '"></td>
+                            <td><input type="date" name="tglawal" class="form-control" value="' . $kontrak->tglaw . '"></td>
                         </tr>
                         <tr>
                             <td style="padding-top: 12px">Tanggal Akhir</td>
                             <td style="padding-top: 12px">:</td>
-                            <td><input type="date" name="tglakhir" class="form-control" value="' . date("Y-m-d") . '"></td>
+                            <td><input type="date" name="tglakhir" class="form-control" value="' . $kontrak->tglak . '"></td>
                         </tr>
                         <tr>
                             <td style="padding-top: 12px">Banyak Cuti</td>
                             <td style="padding-top: 12px">:</td>
-                            <td><input type="number" name="cuti" min="0" value="5" class="form-control" placeholder="Cuti"></td>
+                            <td><input type="number" name="cuti" min="0" value="5" class="form-control" placeholder="Cuti" value="' . $kontrak->sacuti . '"></td>
                         </tr>
                     </table>
                 </div>
