@@ -1277,8 +1277,8 @@ class Absensi extends Controller
                         </table>
                         <div class="accordion" id="accordionExample">
                             <div class="accordion-item">
-                                <h2 class="accordion-header" id="heading' . $key->stb . '">
-                                    <button class="accordion-button collapsed py-0" type="button" data-bs-toggle="collapse" data-bs-target="#collapse' . $key->stb . '" aria-expanded="false" aria-controls="collapse' . $key->stb . '">
+                                <h2 class="accordion-header bg-light" id="heading' . $key->stb . '">
+                                    <button class="accordion-button collapsed py-1 subheader" type="button" data-bs-toggle="collapse" data-bs-target="#collapse' . $key->stb . '" aria-expanded="false" aria-controls="collapse' . $key->stb . '">
                                         Riwayat ' . Carbon::parse($lega->tglaw)->isoFormat('D MMMM Y') . ' s/d ' . Carbon::parse($lega->tglak)->isoFormat('D MMMM Y') . '
                                     </button>
                                 </h2>
@@ -1287,13 +1287,15 @@ class Absensi extends Controller
                                         <div class="table-responsive">
                                             <table class="table table-vcenter table-bordered table-nowrap card-table table-sm">
                                         ';
-
+                $no = 1;
                 foreach ($getRiwayatperiodelalu as $y) {
                     echo '
                                             <tr class="text-secondary subheader">
+                                                <td class="w-1">' . $no . '</td>
                                                 <td style="text-align: end;" class="w-5">' . Carbon::parse($y->tanggal)->isoFormat('DD/MM/Y') . '</td>
                                                 <td colspan="3">' . $y->suratid . ': ' . $y->keterangan . '</td>
                                             </tr>';
+                    $no++;
                 }
                 echo '
                                             </table>
