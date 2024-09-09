@@ -1262,7 +1262,7 @@ class Absensi extends Controller
 
                 $lega = DB::table('penerimaan_legalitas as l')
                     ->where('l.userid', '=', $key->userid)
-                    // ->where('l.id', '<=', $key->id)
+                    ->whereIn('l.suratjns', ['PERJANJIAN', 'CUTI'])
                     ->orderBy('l.id', 'desc')
                     ->skip(1)
                     ->first();
