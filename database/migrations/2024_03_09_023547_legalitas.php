@@ -22,6 +22,8 @@ return new class extends Migration
             $table->date('tglmasuk')->nullable();
             $table->date('tglaw')->nullable();
             $table->date('tglak')->nullable();
+            $table->date('tglcuti_aw')->nullable();
+            $table->date('tglcuti_ak')->nullable();
             $table->string('nmsurat')->nullable();
             $table->string('suratket')->nullable();
             $table->string('divisi')->nullable();
