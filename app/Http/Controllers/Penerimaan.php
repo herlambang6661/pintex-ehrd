@@ -1835,6 +1835,7 @@ class Penerimaan extends Controller
                 'jurusan' => $request->jurusan,
                 'notlp' => $request->notlp,
                 'serikat' => $request->serikat,
+                'email' => $request->email,
                 'updated_at' => date('Y-m-d H:i:s'),
             ]);
         if ($editKaryawan) {

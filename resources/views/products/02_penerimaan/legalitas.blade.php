@@ -14,13 +14,13 @@
 
         td.cuspad2 {
             /* padding-top: 0.5px;
-                                                                                                                                                                                                                                                                padding-bottom: 0.5px;
-                                                                                                                                                                                                                                                                padding-right: 0.5px;
-                                                                                                                                                                                                                                                                padding-left: 0.5px;
-                                                                                                                                                                                                                                                                margin-top: 5px;
-                                                                                                                                                                                                                                                                margin-bottom: 5px;
-                                                                                                                                                                                                                                                                margin-right: 5px;
-                                                                                                                                                                                                                                                                margin-left: 5px; */
+                                                                                                                                                                                                                                                                        padding-bottom: 0.5px;
+                                                                                                                                                                                                                                                                        padding-right: 0.5px;
+                                                                                                                                                                                                                                                                        padding-left: 0.5px;
+                                                                                                                                                                                                                                                                        margin-top: 5px;
+                                                                                                                                                                                                                                                                        margin-bottom: 5px;
+                                                                                                                                                                                                                                                                        margin-right: 5px;
+                                                                                                                                                                                                                                                                        margin-left: 5px; */
         }
 
         .overlay {
@@ -166,7 +166,7 @@
                                                 <th>NIK</th>
                                                 <th>Nama</th>
                                                 <th>Gender</th>
-                                                <th>Sidik Jari</th>
+                                                <th>Email</th>
                                                 <th>Status</th>
                                                 <th>No Map</th>
                                                 <th>Bagian</th>
@@ -199,7 +199,7 @@
                                                 <th>NIK</th>
                                                 <th>Nama</th>
                                                 <th>Gender</th>
-                                                <th>Sidik Jari</th>
+                                                <th>Email</th>
                                                 <th>Status</th>
                                                 <th>No Map</th>
                                                 <th>Bagian</th>
@@ -232,7 +232,7 @@
                                                 <th>NIK</th>
                                                 <th>Nama</th>
                                                 <th>Gender</th>
-                                                <th>Sidik Jari</th>
+                                                <th>Email</th>
                                                 <th>Status</th>
                                                 <th>No Map</th>
                                                 <th>Bagian</th>
@@ -362,10 +362,10 @@
     </div>
     <script type="text/javascript">
         /*------------------------------------------
-                                                                                                                                                                                                                                                            --------------------------------------------
-                                                                                                                                                                                                                                                            Render DataTable
-                                                                                                                                                                                                                                                            --------------------------------------------
-                                                                                                                                                                                                                                                            --------------------------------------------*/
+                                                                                                                                                                                                                                                                    --------------------------------------------
+                                                                                                                                                                                                                                                                    Render DataTable
+                                                                                                                                                                                                                                                                    --------------------------------------------
+                                                                                                                                                                                                                                                                    --------------------------------------------*/
 
         function newexportaction(e, dt, button, config) {
             var self = this;
@@ -531,8 +531,8 @@
                         className: 'cuspad0 text-center'
                     },
                     {
-                        data: 'gender',
-                        name: 'gender',
+                        data: 'email',
+                        name: 'email',
                         className: 'cuspad0 text-center'
                     },
                     {
@@ -664,8 +664,8 @@
                         className: 'cuspad0 text-center'
                     },
                     {
-                        data: 'gender',
-                        name: 'gender',
+                        data: 'email',
+                        name: 'email',
                         className: 'cuspad0 text-center'
                     },
                     {
@@ -798,8 +798,8 @@
                         className: 'cuspad0 text-center'
                     },
                     {
-                        data: 'gender',
-                        name: 'gender',
+                        data: 'email',
+                        name: 'email',
                         className: 'cuspad0 text-center'
                     },
                     {
