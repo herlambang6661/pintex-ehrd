@@ -607,7 +607,7 @@
                                         </svg>
                                         Payroll
                                     </a>
-                                    <a class="dropdown-item {{ !empty($payroll) ? 'show' : '' }}"
+                                    <a class="dropdown-item {{ !empty($thr) ? 'show' : '' }}"
                                         href="{{ url('administrasi/thr') }}">
                                         <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24"
                                             style="margin-right: 10px" viewBox="0 0 24 24" fill="none"

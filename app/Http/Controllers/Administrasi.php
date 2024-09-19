@@ -45,6 +45,115 @@ class Administrasi extends Controller
         ]);
     }
 
+    public function thr()
+    {
+        $judul = "Tunjangan Hari Raya";
+        $administrasi = "active";
+        $thr = "active";
+
+        return view('products/04_administrasi.thr', [
+            'judul' => $judul,
+            'administrasi' => $administrasi,
+            'thr' => $thr,
+        ]);
+    }
+
+    public function generateTunjangan(Request $request)
+    {
+        $request->validate(
+            [
+                '_token' => 'required',
+                'tahun' => 'required',
+                'tglThr' => 'required',
+            ],
+        );
+
+        // get karyawan hanya yang aktif
+        $karyawanAktif = DB::table('penerimaan_karyawan')
+            ->where('status', 'LIKE', '%Aktif%')
+            ->orderBy('userid', 'asc')
+            ->get();
+
+        foreach ($karyawanAktif as $key) {
+            // cek karyawan
+            $cekUpdateKaryawan = DB::table('administrasi_tunjanganhariraya')
+                ->where('userid', '=', $key->userid)
+                ->where('periode', '=', $request->tahun)
+                ->first();
+
+            if ($cekUpdateKaryawan) {
+                $check = DB::table('administrasi_tunjanganhariraya')
+                    ->where('userid', '=', $key->userid)
+                    ->where('periode', '=', $request->tahun)
+                    ->limit(1)
+                    ->update(
+                        array(
+                            'entitas' => 'PINTEX',
+                            'periode' => $request->tahun,
+                            'tanggal_thr' => $request->tglThr,
+                            'tgl_masuk' => $key->tglmasuk,
+                            'stb' => $key->stb,
+                            'nama' => $key->nama,
+                            'level' => $key->level,
+                            'divisi' => $key->divisi,
+                            'bagian' => $key->bagian,
+                            'jabatan' => $key->jabatan,
+                            'grup' => $key->grup,
+                            'profesi' => $key->profesi,
+                            'shift' => $key->shift,
+                            'umr' => $key->gapok,
+                            'gapok' => $key->gapok,
+                            'bank' => $key->banknm,
+                            'rekening' => $key->bankrek,
+                            'tjabat' => $key->tjabat,
+                            'prestasi' => $key->tprestasi,
+                            'locked' => 0,
+                            'printed' => 0,
+                            'created_at' => date('Y-m-d H:i:s'),
+                        )
+                    );
+                Session::flash('success', 'Data Karyawan Berhasil Diperbarui untuk data Payroll');
+            } else {
+                // tidak menemukan karyawan sesuai, buat data baru
+                $check = DB::table('administrasi_tunjanganhariraya')
+                    ->insert(
+                        array(
+                            'entitas' => 'PINTEX',
+                            'periode' => $request->tahun,
+                            'tanggal_thr' => $request->tglThr,
+                            'tgl_masuk' => $key->tglmasuk,
+                            'userid' => $key->userid,
+                            'stb' => $key->stb,
+                            'nama' => $key->nama,
+                            'level' => $key->level,
+                            'divisi' => $key->divisi,
+                            'bagian' => $key->bagian,
+                            'jabatan' => $key->jabatan,
+                            'grup' => $key->grup,
+                            'profesi' => $key->profesi,
+                            'shift' => $key->shift,
+                            'umr' => $key->gapok,
+                            'gapok' => $key->gapok,
+                            'bank' => $key->banknm,
+                            'rekening' => $key->bankrek,
+                            'tjabat' => $key->tjabat,
+                            'prestasi' => $key->tprestasi,
+                            'locked' => 0,
+                            'printed' => 0,
+                            'created_at' => date('Y-m-d H:i:s'),
+                        )
+                    );
+                Session::flash('success', 'Data Karyawan Berhasil Dibuat untuk data Payroll');
+            }
+        }
+
+        $arr = array('msg' => 'Something goes to wrong. Please try later', 'status' => false);
+        if ($check) {
+            $arr = array('msg' => 'Data Periode ' . $request->tahun . ' telah berhasil disimpan', 'status' => true);
+        }
+        return Response()->json($arr);
+    }
+
     public function updateumr(Request $request)
     {
         if ($request->ajax()) {

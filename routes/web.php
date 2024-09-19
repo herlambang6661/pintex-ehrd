@@ -15,6 +15,7 @@ use App\Http\Controllers\ImageController;
 use App\Http\Controllers\Datatables\DataOL;
 use App\Http\Controllers\Datatables\DataPHL;
 use App\Http\Controllers\Datatables\DataPos;
+use App\Http\Controllers\Datatables\DataTHR;
 use App\Http\Controllers\Datatables\DataCuti;
 use App\Http\Controllers\Datatables\DataUpah;
 use App\Http\Controllers\Datatables\DataLoker;
@@ -117,6 +118,7 @@ Route::resources([
     'getAccKomunikasiitems' => DataACCItems::class,
     'getLoker' => DataLoker::class,
     'getPayroll' => DataPayroll::class,
+    'getTunjanganHariRaya' => DataTHR::class,
     'getTerlambat' => DataTerlambat::class,
     'getUpah' => DataUpah::class,
     'getPengguna' => DataPengguna::class,
@@ -294,6 +296,7 @@ Route::controller(DBLokal::class)->group(function () {
 // Modules Administrasi
 Route::controller(Administrasi::class)->group(function () {
     Route::get('administrasi/payroll', 'payroll')->name('administrasi/payroll');
+    Route::get('administrasi/thr', 'thr')->name('administrasi/thr');
     Route::get('administrasi/terlambat', 'terlambat')->name('administrasi/terlambat');
     Route::get('administrasi/bpjs', 'bpjs')->name('administrasi/bpjs');
     Route::get('administrasi/kupon', 'kupon')->name('administrasi/kupon');
@@ -322,6 +325,8 @@ Route::controller(Administrasi::class)->group(function () {
     Route::post('administrasi/printPayroll', 'printPayroll')->name('administrasi/printPayroll');
     Route::post('editLevelKaryawan', 'editLevelKaryawan');
     Route::post('storeUpdateLevelKaryawan', 'storeUpdateLevelKaryawan');
+
+    Route::post('generateTunjangan', 'generateTunjangan');
 });
 
 // Modules Database
