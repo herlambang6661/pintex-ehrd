@@ -61,12 +61,15 @@ class AuthController extends Controller
                 "errors" => $validator->errors()
             ]);
         } else {
-            if (Auth::attempt($request->only(["username", "password"]))) {
+            $rememberMe = $request->remember ? true : false;
+            $up = $request->only(["username", "password"]);
+            if (Auth::attempt($up, $rememberMe)) {
                 if ($_SERVER['SERVER_NAME'] == "127.0.0.1") {
                     try {
                         return response()->json([
                             "status" => true,
-                            "redirect" => url("loaderlocal")
+                            // "redirect" => url("loaderlocal")
+                            "redirect" => url("dashboard")
                         ]);
                     } catch (\Throwable $th) {
                         return view('products.dashboard');

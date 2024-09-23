@@ -1504,6 +1504,8 @@
                                     title: response.msg,
                                 });
                                 document.getElementById("formKomunikasi").reset();
+                                $('#tab-list-komunikasi').addClass('active show');
+                                $('#tab-create-new').removeClass('active show');
                             },
                             error: function(data) {
                                 console.log('Error:', data);
