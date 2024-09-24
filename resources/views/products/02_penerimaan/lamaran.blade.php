@@ -14,13 +14,13 @@
 
         td.cuspad2 {
             /* padding-top: 0.5px;
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                        padding-bottom: 0.5px;
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                        padding-right: 0.5px;
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                        padding-left: 0.5px;
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                        margin-top: 5px;
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                        margin-bottom: 5px;
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                        margin-right: 5px;
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                        margin-left: 5px; */
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                        padding-bottom: 0.5px;
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                        padding-right: 0.5px;
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                        padding-left: 0.5px;
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                        margin-top: 5px;
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                        margin-bottom: 5px;
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                        margin-right: 5px;
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                        margin-left: 5px; */
         }
 
         .unselectable {
@@ -111,30 +111,75 @@
                                         <i class="fa-solid fa-users"></i>
                                     </div>
                                 </div>
-                                <table style="width:100%; font-family: 'Trebuchet MS', Helvetica, sans-serif;"
-                                    class="display table table-vcenter card-table table-sm table-striped table-bordered table-hover text-nowrap datatable-lamaran"
-                                    id="tblamaran">
-                                    <thead>
-                                        <tr class="text-center">
-                                            <th></th>
-                                            <th>Opsi</th>
-                                            <th>NIK</th>
-                                            <th>Nama</th>
-                                            <th>Gender</th>
-                                            <th>Tempat, Tanggal Lahir</th>
-                                            <th>Umur</th>
-                                            <th>Pendidikan</th>
-                                            <th>Jurusan</th>
-                                            <th>Tinggi</th>
-                                            <th>Berat</th>
-                                            <th>No Telp</th>
-                                            <th>Email</th>
-                                            <th>Posisi Dituju</th>
-                                            <th>Ket</th>
-                                            <th>Wawancara</th>
-                                        </tr>
-                                    </thead>
-                                </table>
+                                <div class="table-responsive">
+                                    <form action="#" id="form-filter-lamaran" method="get" autocomplete="off"
+                                        novalidate="" class="">
+                                        <table class="mt-3 ms-3 mb-0">
+                                            <thead>
+                                                <tr>
+                                                    <th>Tanggal Awal</th>
+                                                    <th>Tanggal Akhir</th>
+                                                    <th></th>
+                                                </tr>
+                                            </thead>
+                                            <tbody>
+                                                <tr>
+                                                    <td>
+                                                        <input type="date" class="form-control tglaw"
+                                                            value="{{ date('Y-m-01') }}">
+                                                    </td>
+                                                    <td>
+                                                        <input type="date" class="form-control tglak"
+                                                            value="{{ date('Y-m-15') }}">
+                                                    </td>
+                                                    <td>
+                                                        <button type="button" class="btn btn-primary" onclick="syn();">
+                                                            <i
+                                                                class="fa-solid fa-magnifying-glass"style="margin-right:5px"></i>
+                                                            Perbarui
+                                                        </button>
+                                                    </td>
+                                                </tr>
+                                            </tbody>
+                                        </table>
+                                    </form>
+                                </div>
+                                <div class="table-responsive">
+                                    <table style="width:100%; font-family: 'Trebuchet MS', Helvetica, sans-serif;"
+                                        class="display table table-vcenter card-table table-sm table-striped table-bordered table-hover text-nowrap datatable-lamaran"
+                                        id="tblamaran">
+                                        <tfoot>
+                                            <tr>
+                                                <th class="px-1 py-1 text-center"> </th>
+                                                <th class="px-1 py-1 text-center">
+                                                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24"
+                                                        viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                                                        stroke-width="2" stroke-linecap="round" stroke-linejoin="round"
+                                                        class="icon icon-tabler icons-tabler-outline icon-tabler-search">
+                                                        <path stroke="none" d="M0 0h24v24H0z" fill="none" />
+                                                        <path d="M10 10m-7 0a7 7 0 1 0 14 0a7 7 0 1 0 -14 0" />
+                                                        <path d="M21 21l-6 -6" />
+                                                    </svg>
+                                                </th>
+                                                <th class="px-1 th py-1">Tgl Input</th>
+                                                <th class="px-1 th py-1">Nik Ktp</th>
+                                                <th class="px-1 th py-1">Nama Kandidat</th>
+                                                <th class="px-1 th py-1">Gender</th>
+                                                <th class="px-1 th py-1">Tempat & Tanggal Lahir</th>
+                                                <th class="px-1 th py-1">Usia</th>
+                                                <th class="px-1 th py-1">Pendidikan</th>
+                                                <th class="px-1 th py-1">Jurusan</th>
+                                                <th class="px-1 th py-1">Tinggi</th>
+                                                <th class="px-1 th py-1">Berat</th>
+                                                <th class="px-1 th py-1">No. Telepon</th>
+                                                <th class="px-1 th py-1">Email</th>
+                                                <th class="px-1 th py-1">Posisi Dituju</th>
+                                                <th class="px-1 th py-1">Keterangan</th>
+                                                <th class="px-1 th py-1">Wawancara</th>
+                                            </tr>
+                                        </tfoot>
+                                    </table>
+                                </div>
                             </div>
                         </div>
                     </div>
@@ -369,6 +414,16 @@
                 background: rgba(0, 0, 0, 0.6);
             }
 
+            .overlay2 {
+                position: fixed;
+                top: 0;
+                z-index: 100;
+                width: 100%;
+                height: 100%;
+                display: none;
+                background: rgba(0, 0, 0, 0.6);
+            }
+
             .cv-spinner {
                 height: 100%;
                 display: flex;
@@ -581,11 +636,11 @@
     {{-- Modal View --}}
     <div class="modal modal-blur fade" id="modal-view" tabindex="-1" role="dialog"
         aria-labelledby="exampleModalLabel" aria-hidden="true">
-        {{-- <div class="overlay">
+        <div class="overlay2">
             <div class="cv-spinner">
                 <span class="spinner"></span>
             </div>
-        </div> --}}
+        </div>
         <div class="modal-dialog modal-xl" role="document">
             <div class="modal-content">
                 <form action="javascript:void(0)" method="post">
@@ -595,7 +650,6 @@
                         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                     </div>
                     <div class="modal-body">
-
                         <div class="fetched-data-lamaran"></div>
                     </div>
                     <div class="modal-footer">
@@ -650,6 +704,12 @@
             dt.ajax.reload();
         }
 
+        var tableLamaran;
+
+        function syn() {
+            tableLamaran.ajax.reload();
+        }
+
         $(function() {
 
             /*------------------------------------------
@@ -658,10 +718,10 @@
             --------------------------------------------
             --------------------------------------------*/
 
-            var tableLamaran = $('.datatable-lamaran').DataTable({
+            tableLamaran = $('.datatable-lamaran').DataTable({
                 "processing": true, //Feature control the processing indicator.
                 "serverSide": false, //Feature control DataTables' server-side processing mode.
-                "scrollX": true,
+                "scrollX": false,
                 "scrollCollapse": true,
                 "pagingType": 'full_numbers',
                 "dom": "<'card-header h3' B>" +
@@ -669,25 +729,15 @@
                     "<'table-responsive' <'col-sm-12'tr> >" +
                     "<'card-footer' <'row'<'col-sm-8'i><'col-sm-4'p> >>",
                 buttons: [{
-                        text: '<i class="fa-solid fa-filter" style="margin-right:5px"></i>',
-                        className: 'btn btn-blue',
-                        attr: {
-                            'href': '#offcanvasEnd-lamaran',
-                            'data-bs-toggle': 'offcanvas',
-                            'role': 'button',
-                            'aria-controls': 'offcanvasEnd',
-                        }
-                    },
-                    {
                         extend: 'excelHtml5',
                         autoFilter: true,
                         className: 'btn btn-success',
-                        text: '<i class="fa fa-file-excel text-white" style="margin-right:5px"></i>',
+                        text: '<i class="fa fa-file-excel text-white" style="margin-right:5px"></i> Download Excel',
                         action: newexportaction,
                     },
                     {
                         className: 'btn btn-pink',
-                        text: '<i class="fa-solid fa-check-to-slot"></i>',
+                        text: '<i class="fa-solid fa-check-to-slot"></i> Proses Wawancara',
                         action: function(e, node, config) {
                             $('#myModalCheck').modal('show')
                         }
@@ -714,7 +764,15 @@
                         }
                     },
                 },
-                ajax: "{{ route('getLamaran.index') }}",
+                "ajax": {
+                    "url": "{{ route('getLamaran.index') }}",
+                    "data": function(data) {
+                        data._token = "{{ csrf_token() }}";
+                        data.dari = $('.tglaw').val();
+                        data.sampai = $('.tglak').val();
+                        console.log("mencari data dari " + data.dari + " sampai " + data.sampai);
+                    }
+                },
                 columnDefs: [{
                         'targets': 0,
                         "orderable": false,
@@ -729,14 +787,16 @@
                     'style': 'multi',
                     "selector": 'td:not(:nth-child(2))',
                 },
+                autoWidth: true,
                 columns: [{
                         data: 'select_orders',
                         name: 'select_orders',
-                        className: 'cuspad2',
+                        className: 'cuspad2 cursor-pointer',
                         orderable: false,
-                        searchable: false
+                        searchable: false,
                     },
                     {
+                        title: 'Opsi',
                         data: 'action',
                         name: 'action',
                         orderable: false,
@@ -744,77 +804,134 @@
                         className: 'cuspad0 text-center'
                     },
                     {
+                        title: 'Tgl Input',
+                        data: 'tglinput',
+                        name: 'tglinput',
+                        className: 'cuspad0 text-center cursor-pointer'
+                    },
+                    {
+                        title: 'NIK KTP',
                         data: 'nik',
                         name: 'nik',
-                        className: 'cuspad0 text-center'
+                        className: 'cuspad0 text-center cursor-pointer'
                     },
                     {
+                        title: 'Nama Kandidat',
                         data: 'nama',
                         name: 'nama',
-                        className: 'cuspad0'
+                        className: 'cuspad0 cursor-pointer'
                     },
                     {
+                        title: 'Gender',
                         data: 'gender',
                         name: 'gender',
-                        className: 'cuspad0 text-center'
+                        className: 'cuspad0 text-center cursor-pointer'
                     },
                     {
+                        title: 'Tempat & Tanggal Lahir',
                         data: 'ttl',
                         name: 'ttl',
-                        className: 'cuspad0 text-center'
+                        className: 'cuspad0 text-center cursor-pointer'
                     },
                     {
+                        title: 'Usia',
                         data: 'umur',
                         name: 'umur',
-                        className: 'cuspad0 text-center'
+                        className: 'cuspad0 text-center cursor-pointer'
                     },
                     {
+                        title: 'Pendidikan',
                         data: 'pendidikan',
                         name: 'pendidikan',
-                        className: 'cuspad0 text-center'
+                        className: 'cuspad0 text-center cursor-pointer'
                     },
                     {
+                        title: 'Jurusan',
                         data: 'jurusan',
                         name: 'jurusan',
-                        className: 'cuspad0 text-center'
+                        className: 'cuspad0 text-center cursor-pointer'
                     },
                     {
+                        title: 'Tinggi',
                         data: 'tinggi',
                         name: 'tinggi',
-                        className: 'cuspad0 text-center'
+                        className: 'cuspad0 text-center cursor-pointer'
                     },
                     {
+                        title: 'Berat',
                         data: 'berat',
                         name: 'berat',
-                        className: 'cuspad0 text-center'
+                        className: 'cuspad0 text-center cursor-pointer'
                     },
                     {
+                        title: 'No. Telepon',
                         data: 'notlp',
                         name: 'notlp',
-                        className: 'cuspad0 text-center'
+                        className: 'cuspad0 text-center cursor-pointer'
                     },
                     {
+                        title: 'Email',
                         data: 'email',
                         name: 'email',
-                        className: 'cuspad0 text-center'
+                        className: 'cuspad0 text-center cursor-pointer'
                     },
                     {
+                        title: 'Posisi Dituju',
                         data: 'posisi',
                         name: 'posisi',
-                        className: 'cuspad0 text-center'
+                        className: 'cuspad0 text-center cursor-pointer'
                     },
                     {
+                        title: 'Keterangan',
                         data: 'keterangan',
                         name: 'keterangan',
                         className: 'cuspad0'
                     },
                     {
+                        title: 'Wawancara',
                         data: 'status',
                         name: 'status',
-                        className: 'cuspad0 text-center'
+                        className: 'cuspad0 text-center cursor-pointer'
                     },
                 ],
+                "initComplete": function() {
+                    this.api()
+                        .columns()
+                        .every(function() {
+                            var that = this;
+                            $('input', this.footer()).on('keyup change clear', function() {
+                                if (that.search() !== this.value) {
+                                    that.search(this.value).draw();
+                                }
+                            });
+                        });
+                    // this.api().columns([5, 8, 9, 14]).every(function() {
+                    //     var column = this;
+                    //     var select = $('<select><option value=""></option></select>')
+                    //         .appendTo($(column.footer()).empty())
+                    //         .on('change', function() {
+                    //             var val = $.fn.dataTable.util.escapeRegex(
+                    //                 $(this).val()
+                    //             );
 
+                    //             column
+                    //                 .search(val ? '^' + val + '$' : '', true, false)
+                    //                 .draw();
+                    //         });
+
+                    //     column.data().unique().sort().each(function(d, j) {
+                    //         select.append('<option value="' + d + '">' + d +
+                    //             '</option>');
+                    //     });
+                    // });
+                }
+            });
+            $('.datatable-lamaran tfoot .th').each(function() {
+                var title = $(this).text();
+                $(this).html(
+                    '<input type="text" class="form-control form-control-sm my-0 border border-dark" placeholder="' +
+                    $(this).text() + '" />'
+                );
             });
 
             var selected = new Array();
@@ -859,7 +976,7 @@
             $('#modal-view').on('show.bs.modal', function(e) {
                 var rowid = $(e.relatedTarget).data('id');
                 console.log(rowid);
-                $(".overlay").fadeIn(300);
+                $(".overlay2").fadeIn(300);
 
                 $.ajaxSetup({
                     headers: {
@@ -880,7 +997,7 @@
                     }
                 }).done(function() {
                     setTimeout(function() {
-                        $(".overlay").fadeOut(300);
+                        $(".overlay2").fadeOut(300);
                     }, 500);
                 });
             });

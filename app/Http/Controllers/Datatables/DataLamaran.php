@@ -22,7 +22,21 @@ class DataLamaran extends Controller
     public function index(Request $request)
     {
         if ($request->ajax()) {
-            $data = DB::table('penerimaan_lamaran')->orderBy('id', 'desc')->get();
+            if ($request->dari) {
+                $dari = $request->dari;
+            } else {
+                $dari = date('Y-m-01');
+            }
+
+            if ($request->sampai) {
+                $sampai = $request->sampai;
+            } else {
+                $sampai = date('Y-m-d');
+            }
+            $data = DB::table('penerimaan_lamaran')
+                ->whereBetween('tglinput', [$dari, $sampai])
+                ->orderBy('id', 'desc')
+                ->get();
             return DataTables::of($data)
                 ->addIndexColumn()
                 ->addColumn('status', function ($row) {

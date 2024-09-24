@@ -368,140 +368,225 @@ class Penerimaan extends Controller
     {
         $data = DB::table('penerimaan_lamaran')->where('id', $request->id)->get();
         foreach ($data as $l) {
+            // echo '
+            // <div class="row">
+            //     <div class="col-4">
+            //         <div class="card">
+            //             <div class="card-header">
+            //                 <strong>Data Diri</strong>
+            //             </div>
+            //             <div class="table-responsive">
+            //                 <table class="table table-vcenter card-table table-striped">
+            //                     <tbody>
+            //                         <tr>
+            //                             <td>NIK</td>
+            //                             <td class="text-secondary">:</td>
+            //                             <td class="text-secondary">' . $l->nik . '</td>
+            //                         </tr>
+            //                         <tr>
+            //                             <td>Nama</td>
+            //                             <td class="text-secondary">:</td>
+            //                             <td class="text-secondary">' . $l->nama . '</td>
+            //                         </tr>
+            //                         <tr>
+            //                             <td>Gender</td>
+            //                             <td class="text-secondary">:</td>
+            //                             <td class="text-secondary">' . $l->gender . '</td>
+            //                         </tr>
+            //                         <tr>
+            //                             <td>Tempat, Tanggal Lahir</td>
+            //                             <td class="text-secondary">:</td>
+            //                             <td class="text-secondary">' . $l->tempat . ', ' . Carbon::parse($l->tgllahir)->format('d/m/Y') . '</td>
+            //                         </tr>
+            //                         <tr>
+            //                             <td>Alamat</td>
+            //                             <td class="text-secondary">:</td>
+            //                             <td class="text-secondary">' . $l->alamat . '</td>
+            //                         </tr>
+            //                         <tr>
+            //                             <td>Agama</td>
+            //                             <td class="text-secondary">:</td>
+            //                             <td class="text-secondary">' . $l->agama . '</td>
+            //                         </tr>
+            //                         <tr>
+            //                             <td>Tinggi Badan</td>
+            //                             <td class="text-secondary">:</td>
+            //                             <td class="text-secondary">' . $l->tinggi . '</td>
+            //                         </tr>
+            //                         <tr>
+            //                             <td>Berat Badan</td>
+            //                             <td class="text-secondary">:</td>
+            //                             <td class="text-secondary">' . $l->berat . '</td>
+            //                         </tr>
+            //                     </tbody>
+            //                 </table>
+            //             </div>
+            //         </div>
+            //     </div>
+            //     <div class="col-4">
+            //         <div class="card">
+            //             <div class="card-header">
+            //                 <strong>Riwayat Pendidikan</strong>
+            //             </div>
+            //             <div class="table-responsive">
+            //                 <table class="table table-vcenter card-table table-striped">
+            //                     <tbody>
+            //                         <tr>
+            //                             <td>Asal Sekolah</td>
+            //                             <td class="text-secondary">:</td>
+            //                             <td class="text-secondary">' . $l->pendidikan . '</td>
+            //                         </tr>
+            //                         <tr>
+            //                             <td>Pendidikan</td>
+            //                             <td class="text-secondary">:</td>
+            //                             <td class="text-secondary">' . $l->pendidikan . '</td>
+            //                         </tr>
+            //                         <tr>
+            //                             <td>Jurusan</td>
+            //                             <td class="text-secondary">:</td>
+            //                             <td class="text-secondary">' . $l->jurusan . '</td>
+            //                         </tr>
+            //                     </tbody>
+            //                 </table>
+            //             </div>
+            //         </div>
+            //     </div>
+            //     <div class="col-4">
+            //         <div class="row">
+            //             <div class="col-12 mb-3">
+            //                 <div class="card">
+            //                     <div class="card-header">
+            //                         <strong>Kontak yang dapat dihubungi</strong>
+            //                     </div>
+            //                     <div class="table-responsive">
+            //                         <table class="table table-vcenter card-table table-striped">
+            //                             <tbody>
+            //                                 <tr>
+            //                                     <td>No Tlp / Whatsapp</td>
+            //                                     <td class="text-secondary">:</td>
+            //                                     <td class="text-secondary">' . $l->notlp . '</td>
+            //                                 </tr>
+            //                                 <tr>
+            //                                     <td>Email</td>
+            //                                     <td class="text-secondary">:</td>
+            //                                     <td class="text-secondary">' . $l->email . '</td>
+            //                                 </tr>
+            //                             </tbody>
+            //                         </table>
+            //                     </div>
+            //                 </div>
+            //             </div>
+            //             <div class="col-12">
+            //                 <div class="card">
+            //                     <div class="card-header">
+            //                         Dokumen
+            //                     </div>
+            //                     <div class="table-responsive">
+            //                         <table class="table table-vcenter card-table table-striped">
+            //                             <tbody>
+            //                                 <tr>
+            //                                     <td>No Tlp / Whatsapp</td>
+            //                                     <td class="text-secondary">:</td>
+            //                                     <td class="text-secondary">' . $l->nik . '</td>
+            //                                 </tr>
+            //                                 <tr>
+            //                                     <td>Email</td>
+            //                                     <td class="text-secondary">:</td>
+            //                                     <td class="text-secondary">' . $l->nama . '</td>
+            //                                 </tr>
+            //                             </tbody>
+            //                         </table>
+            //                     </div>
+            //                 </div>
+            //             </div>
+            //         </div>
+            //     </div>
+            // </div>
+            // ';
             echo '
-            <div class="row">
-                <div class="col-4">
-                    <div class="card">
-                        <div class="card-header">
-                            <strong>Data Diri</strong>
-                        </div>
-                        <div class="table-responsive">
-                            <table class="table table-vcenter card-table table-striped">
-                                <tbody>
-                                    <tr>
-                                        <td>NIK</td>
-                                        <td class="text-secondary">:</td>
-                                        <td class="text-secondary">' . $l->nik . '</td>
-                                    </tr>
-                                    <tr>
-                                        <td>Nama</td>
-                                        <td class="text-secondary">:</td>
-                                        <td class="text-secondary">' . $l->nama . '</td>
-                                    </tr>
-                                    <tr>
-                                        <td>Gender</td>
-                                        <td class="text-secondary">:</td>
-                                        <td class="text-secondary">' . $l->gender . '</td>
-                                    </tr>
-                                    <tr>
-                                        <td>Tempat, Tanggal Lahir</td>
-                                        <td class="text-secondary">:</td>
-                                        <td class="text-secondary">' . $l->tempat . ', ' . Carbon::parse($l->tgllahir)->format('d/m/Y') . '</td>
-                                    </tr>
-                                    <tr>
-                                        <td>Alamat</td>
-                                        <td class="text-secondary">:</td>
-                                        <td class="text-secondary">' . $l->alamat . '</td>
-                                    </tr>
-                                    <tr>
-                                        <td>Agama</td>
-                                        <td class="text-secondary">:</td>
-                                        <td class="text-secondary">' . $l->agama . '</td>
-                                    </tr>
-                                    <tr>
-                                        <td>Tinggi Badan</td>
-                                        <td class="text-secondary">:</td>
-                                        <td class="text-secondary">' . $l->tinggi . '</td>
-                                    </tr>
-                                    <tr>
-                                        <td>Berat Badan</td>
-                                        <td class="text-secondary">:</td>
-                                        <td class="text-secondary">' . $l->berat . '</td>
-                                    </tr>
-                                </tbody>
-                            </table>
+                <div class="row">
+                    <div class="col-md-3 border-right">
+                        <div class="d-flex flex-column align-items-center text-center p-1 py-1">
+                            <img class="rounded-circle mt-5 img-thumbnail" width="150px"
+                                src="https://ei8ht.my.id/ricojei8ht.png">
+                            <span class="font-weight-bold">' . $l->nama . '</span>
+                            <span class="text-black-50">' . $l->email . '</span>
+                            <span> </span>
                         </div>
                     </div>
-                </div>
-                <div class="col-4">
-                    <div class="card">
-                        <div class="card-header">
-                            <strong>Riwayat Pendidikan</strong>
-                        </div>
-                        <div class="table-responsive">
-                            <table class="table table-vcenter card-table table-striped">
-                                <tbody>
-                                    <tr>
-                                        <td>Asal Sekolah</td>
-                                        <td class="text-secondary">:</td>
-                                        <td class="text-secondary">' . $l->pendidikan . '</td>
-                                    </tr>
-                                    <tr>
-                                        <td>Pendidikan</td>
-                                        <td class="text-secondary">:</td>
-                                        <td class="text-secondary">' . $l->pendidikan . '</td>
-                                    </tr>
-                                    <tr>
-                                        <td>Jurusan</td>
-                                        <td class="text-secondary">:</td>
-                                        <td class="text-secondary">' . $l->jurusan . '</td>
-                                    </tr>
-                                </tbody>
-                            </table>
-                        </div>
-                    </div>
-                </div>
-                <div class="col-4">
-                    <div class="row">
-                        <div class="col-12 mb-3">
-                            <div class="card">
-                                <div class="card-header">
-                                    <strong>Kontak yang dapat dihubungi</strong>
-                                </div>
-                                <div class="table-responsive">
-                                    <table class="table table-vcenter card-table table-striped">
-                                        <tbody>
-                                            <tr>
-                                                <td>No Tlp / Whatsapp</td>
-                                                <td class="text-secondary">:</td>
-                                                <td class="text-secondary">' . $l->notlp . '</td>
-                                            </tr>
-                                            <tr>
-                                                <td>Email</td>
-                                                <td class="text-secondary">:</td>
-                                                <td class="text-secondary">' . $l->email . '</td>
-                                            </tr>
-                                        </tbody>
-                                    </table>
+                    <div class="col-md-5 border-right">
+                        <div class="p-1 py-1">
+                            <div class="row mt-2">
+                                <div class="col-md-12">
+                                    <label class="labels">NIK KTP</label>
+                                    <input type="text" class="form-control" value="' . $l->nik . '">
                                 </div>
                             </div>
-                        </div>
-                        <div class="col-12">
-                            <div class="card">
-                                <div class="card-header">
-                                    Dokumen
+                            <div class="row mt-2">
+                                <div class="col-md-6">
+                                    <label class="labels">Nama Kandidat</label>
+                                    <input type="text" class="form-control" value="' . $l->nama . '">
                                 </div>
-                                <div class="table-responsive">
-                                    <table class="table table-vcenter card-table table-striped">
-                                        <tbody>
-                                            <tr>
-                                                <td>No Tlp / Whatsapp</td>
-                                                <td class="text-secondary">:</td>
-                                                <td class="text-secondary">' . $l->nik . '</td>
-                                            </tr>
-                                            <tr>
-                                                <td>Email</td>
-                                                <td class="text-secondary">:</td>
-                                                <td class="text-secondary">' . $l->nama . '</td>
-                                            </tr>
-                                        </tbody>
-                                    </table>
+                                <div class="col-md-6">
+                                    <label class="labels">No. Tlp</label>
+                                    <input type="text" class="form-control" value="' . $l->notlp . '">
+                                </div>
+                            </div>
+                            <div class="row mt-3">
+                                <div class="col-md-6">
+                                    <label class="labels">Gender</label>
+                                    <input type="text" class="form-control" value="' . $l->gender . '">
+                                </div>
+                                <div class="col-md-6">
+                                    <label class="labels">Email</label>
+                                    <input type="text" class="form-control" value="' . $l->email . '">
+                                </div>
+                            </div>
+                            <div class="row mt-3">
+                                <div class="col-md-6">
+                                    <label class="labels">Tempat</label>
+                                    <input type="text" class="form-control" value="' . $l->tempat . '">
+                                </div>
+                                <div class="col-md-6">
+                                    <label class="labels">Tanggal Lahir</label>
+                                    <input type="text" class="form-control" value="' . $l->tgllahir . '">
                                 </div>
                             </div>
                         </div>
                     </div>
+                    <div class="col-md-4">
+                        <div class="row mt-3">
+                            <div class="col-md-6">
+                                <label class="labels">Posisi</label>
+                                <input type="text" class="form-control" value="' . $l->posisi . '">
+                            </div>
+                            <div class="col-md-6">
+                                <label class="labels">Keterangan</label>
+                                <input type="text" class="form-control" value="' . $l->keterangan . '">
+                            </div>
+                        </div>
+                        <div class="row mt-3">
+                            <div class="col-md-6">
+                                <label class="labels">Pendidikan</label>
+                                <input type="text" class="form-control" value="' . $l->pendidikan . '">
+                            </div>
+                            <div class="col-md-6">
+                                <label class="labels">Jurusan</label>
+                                <input type="text" class="form-control" value="' . $l->jurusan . '">
+                            </div>
+                        </div>
+                        <div class="row mt-3">
+                            <div class="col-md-6">
+                                <label class="labels">Tinggi Badan</label>
+                                <input type="text" class="form-control" value="' . $l->tinggi . '">
+                            </div>
+                            <div class="col-md-6">
+                                <label class="labels">Berat Badan</label>
+                                <input type="text" class="form-control" value="' . $l->berat . '">
+                            </div>
+                        </div>
+                    </div>
                 </div>
-            </div>
             ';
         }
     }
