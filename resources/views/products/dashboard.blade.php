@@ -1,5 +1,29 @@
 @extends('layouts.app')
 @section('content')
+    <style>
+        .card-sponsor {
+            position: relative;
+            overflow: hidden;
+        }
+
+        .card-sponsor::before {
+            content: "";
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-size: cover;
+            background-position: center;
+            background-image: inherit;
+            transition: transform 0.3s ease;
+            z-index: 0;
+        }
+
+        .card-sponsor:hover::before {
+            transform: scale(1.1);
+        }
+    </style>
     <div class="page">
         <!-- Sidebar -->
         @include('shared.sidebar')
@@ -28,42 +52,53 @@
                 @if (Auth::user()->role != 'operator')
                     <div class="container-xl">
                         <div class="row row-deck row-cards mb-2">
-                            <div class="card card-sm">
-                                <div class="card-stamp card-stamp-lg">
-                                    <div class="card-stamp-icon bg-primary">
-                                        <svg xmlns="http://www.w3.org/2000/svg"
-                                            class="icon icon-tabler icon-tabler-users-group" width="24" height="24"
-                                            viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" fill="none"
-                                            stroke-linecap="round" stroke-linejoin="round">
-                                            <path stroke="none" d="M0 0h24v24H0z" fill="none" />
-                                            <path d="M10 13a2 2 0 1 0 4 0a2 2 0 0 0 -4 0" />
-                                            <path d="M8 21v-1a2 2 0 0 1 2 -2h4a2 2 0 0 1 2 2v1" />
-                                            <path d="M15 5a2 2 0 1 0 4 0a2 2 0 0 0 -4 0" />
-                                            <path d="M17 10h2a2 2 0 0 1 2 2v1" />
-                                            <path d="M5 5a2 2 0 1 0 4 0a2 2 0 0 0 -4 0" />
-                                            <path d="M3 13v-1a2 2 0 0 1 2 -2h2" />
-                                        </svg>
-                                    </div>
-                                </div>
-                                <div class="card-body">
-                                    <div class="row align-items-center">
-                                        <div class="col-3">
-                                            <iframe
-                                                src="https://lottie.host/embed/1ce72efc-e80e-45cc-95e4-039ab16464ce/5gd18ywFpr.json"
-                                                width="300px" height="300px"></iframe>
+                            <div class="col-sm-12 col-lg-10">
+                                <div class="card card-sm">
+                                    <div class="card-stamp card-stamp-lg">
+                                        <div class="card-stamp-icon bg-primary">
+                                            <svg xmlns="http://www.w3.org/2000/svg"
+                                                class="icon icon-tabler icon-tabler-users-group" width="24"
+                                                height="24" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor"
+                                                fill="none" stroke-linecap="round" stroke-linejoin="round">
+                                                <path stroke="none" d="M0 0h24v24H0z" fill="none" />
+                                                <path d="M10 13a2 2 0 1 0 4 0a2 2 0 0 0 -4 0" />
+                                                <path d="M8 21v-1a2 2 0 0 1 2 -2h4a2 2 0 0 1 2 2v1" />
+                                                <path d="M15 5a2 2 0 1 0 4 0a2 2 0 0 0 -4 0" />
+                                                <path d="M17 10h2a2 2 0 0 1 2 2v1" />
+                                                <path d="M5 5a2 2 0 1 0 4 0a2 2 0 0 0 -4 0" />
+                                                <path d="M3 13v-1a2 2 0 0 1 2 -2h2" />
+                                            </svg>
                                         </div>
-                                        <div class="col-9">
-                                            <h3 class="h1">Selamat Datang di E-HRD Online, {{ Auth::user()->name }} 🎉
-                                            </h3>
-                                            <div class="markdown text-secondary">
-                                                Aplikasi E-HRD ini adalah aplikasi untuk Mengelola Recruitment sampai dengan
-                                                Payroll di <b>PT. Plumbon International Textile.</b>
-                                                <br>
-                                                Silahkan pilih menu disamping untuk mulai menggunakan aplikasi.
+                                    </div>
+                                    <div class="card-body">
+                                        <div class="row align-items-center">
+                                            <div class="col-3">
+                                                <iframe
+                                                    src="https://lottie.host/embed/1ce72efc-e80e-45cc-95e4-039ab16464ce/5gd18ywFpr.json"
+                                                    width="300px" height="300px"></iframe>
+                                            </div>
+                                            <div class="col-9">
+                                                <h3 class="h1">Selamat Datang di E-HRD Online, {{ Auth::user()->name }}
+                                                    🎉
+                                                </h3>
+                                                <div class="markdown text-secondary">
+                                                    Aplikasi E-HRD ini adalah aplikasi untuk Mengelola Recruitment sampai
+                                                    dengan
+                                                    Payroll di <b>PT. Plumbon International Textile.</b>
+                                                    <br>
+                                                    Silahkan pilih menu disamping untuk mulai menggunakan aplikasi.
+                                                </div>
                                             </div>
                                         </div>
                                     </div>
                                 </div>
+                            </div>
+                            <div class="col-sm-12 col-lg-2">
+                                <a href="#" class="card card-sponsor" rel="noopener"
+                                    style="background-image: url('{{ asset('photo/pas/' . Auth::user()->userid . '.jpg') }}')"
+                                    aria-label="Sponsor Tabler!">
+                                    <div class="card-body"></div>
+                                </a>
                             </div>
 
                             <div class="col-sm-6 col-lg-3">
@@ -324,42 +359,55 @@
                 @else
                     <div class="container-xl">
                         <div class="row row-deck row-cards mb-2">
-                            <div class="card card-sm">
-                                <div class="card-stamp card-stamp-lg">
-                                    <div class="card-stamp-icon bg-primary">
-                                        <svg xmlns="http://www.w3.org/2000/svg"
-                                            class="icon icon-tabler icon-tabler-users-group" width="24"
-                                            height="24" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor"
-                                            fill="none" stroke-linecap="round" stroke-linejoin="round">
-                                            <path stroke="none" d="M0 0h24v24H0z" fill="none" />
-                                            <path d="M10 13a2 2 0 1 0 4 0a2 2 0 0 0 -4 0" />
-                                            <path d="M8 21v-1a2 2 0 0 1 2 -2h4a2 2 0 0 1 2 2v1" />
-                                            <path d="M15 5a2 2 0 1 0 4 0a2 2 0 0 0 -4 0" />
-                                            <path d="M17 10h2a2 2 0 0 1 2 2v1" />
-                                            <path d="M5 5a2 2 0 1 0 4 0a2 2 0 0 0 -4 0" />
-                                            <path d="M3 13v-1a2 2 0 0 1 2 -2h2" />
-                                        </svg>
-                                    </div>
-                                </div>
-                                <div class="card-body">
-                                    <div class="row align-items-center">
-                                        <div class="col-3">
-                                            <iframe
-                                                src="https://lottie.host/embed/1ce72efc-e80e-45cc-95e4-039ab16464ce/5gd18ywFpr.json"
-                                                width="300px" height="300px"></iframe>
+                            <div class="col-sm-12 col-lg-10">
+                                <div class="card card-sm">
+                                    <div class="card-stamp card-stamp-lg">
+                                        <div class="card-stamp-icon bg-primary">
+                                            <svg xmlns="http://www.w3.org/2000/svg"
+                                                class="icon icon-tabler icon-tabler-users-group" width="24"
+                                                height="24" viewBox="0 0 24 24" stroke-width="1.5"
+                                                stroke="currentColor" fill="none" stroke-linecap="round"
+                                                stroke-linejoin="round">
+                                                <path stroke="none" d="M0 0h24v24H0z" fill="none" />
+                                                <path d="M10 13a2 2 0 1 0 4 0a2 2 0 0 0 -4 0" />
+                                                <path d="M8 21v-1a2 2 0 0 1 2 -2h4a2 2 0 0 1 2 2v1" />
+                                                <path d="M15 5a2 2 0 1 0 4 0a2 2 0 0 0 -4 0" />
+                                                <path d="M17 10h2a2 2 0 0 1 2 2v1" />
+                                                <path d="M5 5a2 2 0 1 0 4 0a2 2 0 0 0 -4 0" />
+                                                <path d="M3 13v-1a2 2 0 0 1 2 -2h2" />
+                                            </svg>
                                         </div>
-                                        <div class="col-9">
-                                            <h3 class="h1">Selamat Datang di E-HRD Online, {{ Auth::user()->name }} 🎉
-                                            </h3>
-                                            <div class="markdown text-secondary">
-                                                Aplikasi E-HRD ini adalah aplikasi untuk Mengelola Recruitment sampai dengan
-                                                Payrolldi <b>PT. Plumbon International Textile.</b>
-                                                <br>
-                                                Silahkan pilih menu disamping untuk mulai menggunakan aplikasi.
+                                    </div>
+                                    <div class="card-body">
+                                        <div class="row align-items-center">
+                                            <div class="col-3">
+                                                <iframe
+                                                    src="https://lottie.host/embed/1ce72efc-e80e-45cc-95e4-039ab16464ce/5gd18ywFpr.json"
+                                                    width="300px" height="300px"></iframe>
+                                            </div>
+                                            <div class="col-9">
+                                                <h3 class="h1">Selamat Datang di E-HRD Online,
+                                                    {{ Auth::user()->name }}
+                                                    🎉
+                                                </h3>
+                                                <div class="markdown text-secondary">
+                                                    Aplikasi E-HRD ini adalah aplikasi untuk Mengelola Recruitment sampai
+                                                    dengan
+                                                    Payroll di <b>PT. Plumbon International Textile.</b>
+                                                    <br>
+                                                    Silahkan pilih menu disamping untuk mulai menggunakan aplikasi.
+                                                </div>
                                             </div>
                                         </div>
                                     </div>
                                 </div>
+                            </div>
+                            <div class="col-sm-12 col-lg-2">
+                                <a href="#" class="card card-sponsor" rel="noopener"
+                                    style="background-image: url('{{ asset('photo/pas/' . Auth::user()->userid . '.jpg') }}')"
+                                    aria-label="Sponsor Tabler!">
+                                    <div class="card-body"></div>
+                                </a>
                             </div>
                         </div>
                     </div>

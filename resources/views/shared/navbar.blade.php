@@ -176,29 +176,29 @@
                 <a href="#" class="nav-link d-flex lh-1 text-reset p-0" data-bs-toggle="dropdown"
                     aria-label="Open user menu">
                     <?php
-                    $role = Auth::user()->role;
-                    $username = Auth::user()->username;
+                    // $role = Auth::user()->role;
+                    // $username = Auth::user()->username;
                     
-                    if ($role === 'admin') {
-                        if ($username === 'alvin') {
-                            $avatarUrl = asset('assets/static/avatars/1.jpg');
-                        } elseif ($username === 'Brian') {
-                            $avatarUrl = asset('assets/static/avatars/2.jpg');
-                        } elseif ($username === 'felixjesse') {
-                            $avatarUrl = asset('assets/static/avatars/3.jpg');
-                        } else {
-                            $avatarUrl = asset('assets/static/avatars/avatar.png');
-                        }
-                    } elseif ($role === 'hrd') {
-                        $avatarUrl = asset('assets/static/avatars/hrd.png');
-                    } elseif ($role === 'operator') {
-                        $avatarUrl = asset('assets/static/avatars/operator.png');
-                    } else {
-                        $avatarUrl = asset('assets/static/avatars/default.png');
-                    }
+                    // if ($role === 'admin') {
+                    //     if ($username === 'alvin') {
+                    //         $avatarUrl = asset('assets/static/avatars/1.jpg');
+                    //     } elseif ($username === 'Brian') {
+                    //         $avatarUrl = asset('assets/static/avatars/2.jpg');
+                    //     } elseif ($username === 'felixjesse') {
+                    //         $avatarUrl = asset('assets/static/avatars/3.jpg');
+                    //     } else {
+                    //         $avatarUrl = asset('assets/static/avatars/avatar.png');
+                    //     }
+                    // } elseif ($role === 'hrd') {
+                    //     $avatarUrl = asset('assets/static/avatars/hrd.png');
+                    // } elseif ($role === 'operator') {
+                    //     $avatarUrl = asset('assets/static/avatars/operator.png');
+                    // } else {
+                    //     $avatarUrl = asset('assets/static/avatars/default.png');
+                    // }
                     ?>
                     <span class="avatar avatar-sm rounded"
-                        style="background-image: url('{{ $avatarUrl }}')"></span>
+                        style="background-image: url('{{ asset('photo/pas/' . Auth::user()->userid . '.jpg') }}')"></span>
 
                     <div class="d-none d-xl-block ps-2">
                         <div style="text-transform: capitalize;">{{ Auth::user()->name }}</div>
