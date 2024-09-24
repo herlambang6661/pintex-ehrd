@@ -33,8 +33,19 @@ class DataLamaran extends Controller
             } else {
                 $sampai = date('Y-m-d');
             }
+
+            if ($request->wawancara == '1') {
+                $wawancara = 1;
+            } elseif ($request->wawancara == '0') {
+                $wawancara = 0;
+            } else {
+                $wawancara = "";
+            }
+
             $data = DB::table('penerimaan_lamaran')
-                ->whereBetween('tglinput', [$dari, $sampai])
+                ->where('tglinput', '>=', $dari)
+                ->where('tglinput', '<=', $sampai)
+                ->where('wawancara', 'like', '%' . $wawancara . '%')
                 ->orderBy('id', 'desc')
                 ->get();
             return DataTables::of($data)
