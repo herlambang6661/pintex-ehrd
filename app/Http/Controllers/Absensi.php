@@ -159,7 +159,7 @@ class Absensi extends Controller
             // SQL Ambil Data Absensi by date
             $results = DB::table('penerimaan_karyawan AS k')
                 ->select(DB::raw(
-                    "k.userid, k.stb, k.nama, 
+                    "k.userid, k.stb, k.nama, k.bagian, k.grup,
                     (SELECT a.sst FROM absensi_absensi a WHERE a.userid = k.userid AND a.tanggal = '$tgl1') AS _01, 
                     (SELECT a.sst FROM absensi_absensi a WHERE a.userid = k.userid AND a.tanggal = '$tgl2') AS _02, 
                     (SELECT a.sst FROM absensi_absensi a WHERE a.userid = k.userid AND a.tanggal = '$tgl3') AS _03, 
@@ -206,12 +206,16 @@ class Absensi extends Controller
                     <table style="width:100%; font-size:12px" class="display table table-sm  table-bordered table-hover text-nowrap datatable-absensi" id="tbabsensi">
                         <thead>
                             <tr class="text-center">
-                            <th>STB</th>
-                            <th>NAMA</th> ';
+                                <th>STB</th>
+                                <th>NAMA</th> 
+                                <th>BAGIAN</th> 
+                                <th>GRUP</th> 
+                            ';
             for ($i = 0; $i < 31; $i++) {
                 $SST = !empty($request->tgl[$i]) ? ($request->tgl[$i]) : '';
                 echo '          <th style="width: 30px" class="text-center">' . $SST . '</th>';
             }
+            echo '              <th style="width: 30px" class="text-center"></th>';
             echo '              <th style="width: 30px" class="text-center">H</th>';
             echo '              <th style="width: 30px" class="text-center">S</th>';
             echo '              <th style="width: 30px" class="text-center">I</th>';
@@ -252,48 +256,52 @@ class Absensi extends Controller
                 $sst29 = ($item2->_29 == "A") ? "bg-pink text-white" : (($item2->_29 == "F1") ? "bg-warning text-white" : (($item2->_29 == "F2") ? "bg-warning text-white" : (($item2->_29 == "½") ? "bg-warning text-white" : "")));
                 $sst30 = ($item2->_30 == "A") ? "bg-pink text-white" : (($item2->_30 == "F1") ? "bg-warning text-white" : (($item2->_30 == "F2") ? "bg-warning text-white" : (($item2->_30 == "½") ? "bg-warning text-white" : "")));
                 $sst31 = ($item2->_31 == "A") ? "bg-pink text-white" : (($item2->_31 == "F1") ? "bg-warning text-white" : (($item2->_31 == "F2") ? "bg-warning text-white" : (($item2->_31 == "½") ? "bg-warning text-white" : "")));
-                echo '          <tr>
-                                        <th>
-                                        <a href="#" data-bs-toggle="modal" data-bs-target=".modal-detail-absensi" data-id="' . $item2->stb . '" data-tglaw="' . $request->tglaw . '" data-tglak="' . $request->tglak . '" style="text-decoration: none !important;color: inherit;">' . $item2->stb . '</a></th>
-                                        <th>' . $item2->nama . '</th>';
-                echo '                  <td style="width: 30px" class="text-center ' . $sst01 . '">' . $item2->_01 . '</td>';
-                echo '                  <td style="width: 30px" class="text-center ' . $sst02 . '">' . $item2->_02 . '</td>';
-                echo '                  <td style="width: 30px" class="text-center ' . $sst03 . '">' . $item2->_03 . '</td>';
-                echo '                  <td style="width: 30px" class="text-center ' . $sst04 . '">' . $item2->_04 . '</td>';
-                echo '                  <td style="width: 30px" class="text-center ' . $sst05 . '">' . $item2->_05 . '</td>';
-                echo '                  <td style="width: 30px" class="text-center ' . $sst06 . '">' . $item2->_06 . '</td>';
-                echo '                  <td style="width: 30px" class="text-center ' . $sst07 . '">' . $item2->_07 . '</td>';
-                echo '                  <td style="width: 30px" class="text-center ' . $sst08 . '">' . $item2->_08 . '</td>';
-                echo '                  <td style="width: 30px" class="text-center ' . $sst09 . '">' . $item2->_09 . '</td>';
-                echo '                  <td style="width: 30px" class="text-center ' . $sst10 . '">' . $item2->_10 . '</td>';
-                echo '                  <td style="width: 30px" class="text-center ' . $sst11 . '">' . $item2->_11 . '</td>';
-                echo '                  <td style="width: 30px" class="text-center ' . $sst12 . '">' . $item2->_12 . '</td>';
-                echo '                  <td style="width: 30px" class="text-center ' . $sst13 . '">' . $item2->_13 . '</td>';
-                echo '                  <td style="width: 30px" class="text-center ' . $sst14 . '">' . $item2->_14 . '</td>';
-                echo '                  <td style="width: 30px" class="text-center ' . $sst15 . '">' . $item2->_15 . '</td>';
-                echo '                  <td style="width: 30px" class="text-center ' . $sst16 . '">' . $item2->_16 . '</td>';
-                echo '                  <td style="width: 30px" class="text-center ' . $sst17 . '">' . $item2->_17 . '</td>';
-                echo '                  <td style="width: 30px" class="text-center ' . $sst18 . '">' . $item2->_18 . '</td>';
-                echo '                  <td style="width: 30px" class="text-center ' . $sst19 . '">' . $item2->_19 . '</td>';
-                echo '                  <td style="width: 30px" class="text-center ' . $sst20 . '">' . $item2->_20 . '</td>';
-                echo '                  <td style="width: 30px" class="text-center ' . $sst21 . '">' . $item2->_21 . '</td>';
-                echo '                  <td style="width: 30px" class="text-center ' . $sst22 . '">' . $item2->_22 . '</td>';
-                echo '                  <td style="width: 30px" class="text-center ' . $sst23 . '">' . $item2->_23 . '</td>';
-                echo '                  <td style="width: 30px" class="text-center ' . $sst24 . '">' . $item2->_24 . '</td>';
-                echo '                  <td style="width: 30px" class="text-center ' . $sst25 . '">' . $item2->_25 . '</td>';
-                echo '                  <td style="width: 30px" class="text-center ' . $sst26 . '">' . $item2->_26 . '</td>';
-                echo '                  <td style="width: 30px" class="text-center ' . $sst27 . '">' . $item2->_27 . '</td>';
-                echo '                  <td style="width: 30px" class="text-center ' . $sst28 . '">' . $item2->_28 . '</td>';
-                echo '                  <td style="width: 30px" class="text-center ' . $sst29 . '">' . $item2->_29 . '</td>';
-                echo '                  <td style="width: 30px" class="text-center ' . $sst30 . '">' . $item2->_30 . '</td>';
-                echo '                  <td style="width: 30px" class="text-center ' . $sst31 . '">' . $item2->_31 . '</td>';
-                echo '                  <td style="width: 30px" class="text-center">' . $item2->_H . '</td>';
-                echo '                  <td style="width: 30px" class="text-center">' . $item2->_S . '</td>';
-                echo '                  <td style="width: 30px" class="text-center">' . $item2->_I . '</td>';
-                echo '                  <td style="width: 30px" class="text-center">' . $item2->_A . '</td>';
-                echo '          </tr>';
+                echo '      <tr>
+                                <th>
+                                    <a href="#" data-bs-toggle="modal" data-bs-target=".modal-detail-absensi" data-id="' . $item2->stb . '" data-tglaw="' . $request->tglaw . '" data-tglak="' . $request->tglak . '" style="text-decoration: none !important;color: inherit;">' . $item2->stb . '</a>
+                                </th>
+                                <th>' . $item2->nama . '</th>
+                                <th>' . $item2->bagian . '</th>
+                                <th>' . $item2->grup . '</th>';
+                echo '          <td style="width: 30px" class="text-center ' . $sst01 . '">' . $item2->_01 . '</td>';
+                echo '          <td style="width: 30px" class="text-center ' . $sst02 . '">' . $item2->_02 . '</td>';
+                echo '          <td style="width: 30px" class="text-center ' . $sst03 . '">' . $item2->_03 . '</td>';
+                echo '          <td style="width: 30px" class="text-center ' . $sst04 . '">' . $item2->_04 . '</td>';
+                echo '          <td style="width: 30px" class="text-center ' . $sst05 . '">' . $item2->_05 . '</td>';
+                echo '          <td style="width: 30px" class="text-center ' . $sst06 . '">' . $item2->_06 . '</td>';
+                echo '          <td style="width: 30px" class="text-center ' . $sst07 . '">' . $item2->_07 . '</td>';
+                echo '          <td style="width: 30px" class="text-center ' . $sst08 . '">' . $item2->_08 . '</td>';
+                echo '          <td style="width: 30px" class="text-center ' . $sst09 . '">' . $item2->_09 . '</td>';
+                echo '          <td style="width: 30px" class="text-center ' . $sst10 . '">' . $item2->_10 . '</td>';
+                echo '          <td style="width: 30px" class="text-center ' . $sst11 . '">' . $item2->_11 . '</td>';
+                echo '          <td style="width: 30px" class="text-center ' . $sst12 . '">' . $item2->_12 . '</td>';
+                echo '          <td style="width: 30px" class="text-center ' . $sst13 . '">' . $item2->_13 . '</td>';
+                echo '          <td style="width: 30px" class="text-center ' . $sst14 . '">' . $item2->_14 . '</td>';
+                echo '          <td style="width: 30px" class="text-center ' . $sst15 . '">' . $item2->_15 . '</td>';
+                echo '          <td style="width: 30px" class="text-center ' . $sst16 . '">' . $item2->_16 . '</td>';
+                echo '          <td style="width: 30px" class="text-center ' . $sst17 . '">' . $item2->_17 . '</td>';
+                echo '          <td style="width: 30px" class="text-center ' . $sst18 . '">' . $item2->_18 . '</td>';
+                echo '          <td style="width: 30px" class="text-center ' . $sst19 . '">' . $item2->_19 . '</td>';
+                echo '          <td style="width: 30px" class="text-center ' . $sst20 . '">' . $item2->_20 . '</td>';
+                echo '          <td style="width: 30px" class="text-center ' . $sst21 . '">' . $item2->_21 . '</td>';
+                echo '          <td style="width: 30px" class="text-center ' . $sst22 . '">' . $item2->_22 . '</td>';
+                echo '          <td style="width: 30px" class="text-center ' . $sst23 . '">' . $item2->_23 . '</td>';
+                echo '          <td style="width: 30px" class="text-center ' . $sst24 . '">' . $item2->_24 . '</td>';
+                echo '          <td style="width: 30px" class="text-center ' . $sst25 . '">' . $item2->_25 . '</td>';
+                echo '          <td style="width: 30px" class="text-center ' . $sst26 . '">' . $item2->_26 . '</td>';
+                echo '          <td style="width: 30px" class="text-center ' . $sst27 . '">' . $item2->_27 . '</td>';
+                echo '          <td style="width: 30px" class="text-center ' . $sst28 . '">' . $item2->_28 . '</td>';
+                echo '          <td style="width: 30px" class="text-center ' . $sst29 . '">' . $item2->_29 . '</td>';
+                echo '          <td style="width: 30px" class="text-center ' . $sst30 . '">' . $item2->_30 . '</td>';
+                echo '          <td style="width: 30px" class="text-center ' . $sst31 . '">' . $item2->_31 . '</td>';
+                echo '          <td style="width: 30px" class="text-center"></td>';
+                echo '          <td style="width: 30px" class="text-center">' . $item2->_H . '</td>';
+                echo '          <td style="width: 30px" class="text-center">' . $item2->_S . '</td>';
+                echo '          <td style="width: 30px" class="text-center">' . $item2->_I . '</td>';
+                echo '          <td style="width: 30px" class="text-center">' . $item2->_A . '</td>';
+                echo '      </tr>';
             }
-            echo '   </tbody>
+            echo '      </tbody>
                     </table>
                 </div>';
             echo '
