@@ -68,8 +68,8 @@ class AuthController extends Controller
                     try {
                         return response()->json([
                             "status" => true,
-                            // "redirect" => url("loaderlocal")
-                            "redirect" => url("dashboard")
+                            "redirect" => url("loaderlocal")
+                            // "redirect" => url("dashboard")
                         ]);
                     } catch (\Throwable $th) {
                         return view('products.dashboard');

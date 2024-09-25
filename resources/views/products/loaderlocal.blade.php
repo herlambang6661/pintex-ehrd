@@ -90,16 +90,16 @@
                     $('.stt').text('');
                     $('.stt').text('Success Updating Data');
                     $('.fetched-data-absensi').html(data);
-                    window.location.href = '/dashboard';
+                    window.location.href = '/lokal/localabsence';
                 },
                 error: function(data) {
                     console.log('Error:', data.responseText);
                     $('.stt').text(
-                        'Driver ODBC Access tidak ditemukan, beralih ke Dashboard tanpa syncronisasi...'
+                        'Driver ODBC Access tidak ditemukan atau waktu tunggu terlalu lama. Silahkan tarik absen ODBC secara manual per hari. Halaman akan beralih ke Dashboard tanpa syncronisasi...'
                     );
                     setTimeout(function() {
-                        window.location.href = '/dashboard';
-                    }, 4000);
+                        window.location.href = '/lokal/localabsence';
+                    }, 10000);
                     // console.log(data);
                     // console.log('Error:', data.error);
                     // Swal.fire({
