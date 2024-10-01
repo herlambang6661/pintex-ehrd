@@ -46,6 +46,22 @@ class DataKaryawan extends Controller
                     return $btn;
                 })
 
+                ->addColumn('pas', function ($row) {
+                    if (file_exists(public_path() . '/photo/pas/' . $row->userid . '.jpg')) {
+                        return 'Sudah';
+                    } else {
+                        return 'Belum';
+                    }
+                })
+
+                ->editColumn('ktp', function ($row) {
+                    if (file_exists(public_path() . '/photo/ktp/' . $row->userid . '.jpg')) {
+                        return 'Sudah';
+                    } else {
+                        return 'Belum';
+                    }
+                })
+
                 ->addColumn('bpjs_jkk', function ($row) {
                     $btn = ($row->bpjs_jkk == "1") ? '<i class="fa-solid fa-check text-success"></i>' : '<i class="fa fa-xmark"></i>';
                     return $btn;
@@ -78,7 +94,7 @@ class DataKaryawan extends Controller
                     $btn = ' <a href="#editBPJS" data-bs-toggle="modal" data-toggle="tooltip" data-placement="top" title="Lihat Detail Data BPJS Karyawan" data-item="' . $row->nama . '" data-id="' . $row->id . '" class="btn btn-sm btn-info btn-icon"><i class="fa-solid fa-user-pen"></i></a>';
                     return $btn;
                 })
-                ->rawColumns(['status', 'action', 'actionBPJS', 'select_orders', 'ttl', 'umur', 'bpjs_jkk', 'bpjs_jkm', 'bpjs_jp', 'bpjs_jht', 'bpjs_ks', 'copystb',])
+                ->rawColumns(['status', 'action', 'actionBPJS', 'select_orders', 'ttl', 'umur', 'bpjs_jkk', 'bpjs_jkm', 'bpjs_jp', 'bpjs_jht', 'bpjs_ks', 'copystb', 'pas', 'ktp'])
                 ->make(true);
         }
         return view('products.02_penerimaan.wawancara');
