@@ -2750,9 +2750,9 @@ class Penerimaan extends Controller
                     <thead>
                         <tr>
                             <th class="w-1"></th>
+                            <th class="text-center">Tgl Masuk</th>
                             <th class="text-center">Tgl Aktif</th>
                             <th class="text-center">Nama Surat</th>
-                            <th class="text-center">Tgl Masuk</th>
                             <th class="text-center">STB</th>
                             <th class="text-center">Divisi</th>
                             <th class="text-center">Bagian</th>
@@ -2773,9 +2773,9 @@ class Penerimaan extends Controller
                                 <button type="button" class="btn btn-sm btn-info btn-icon btn-edit" data-id="' . $b->id . '" data-idtipe="basic" data-userid="' . $b->userid . '" data-nama="' . $b->nmsurat . '" data-tipe="Basic Information"><i class="fa-solid fa-edit"></i></button>
                                 <button type="button" class="btn btn-sm btn-danger btn-icon btn-delete" data-id="' . $b->id . '" data-userid="' . $b->userid . '" data-nama="' . $b->nmsurat . '" data-tipe="' . $b->suratjns . '" data-url="basicdelete"><i class="fa-solid fa-trash-can"></i></button>
                             </td>
+                            <td class="text-end">' . date('d/m/Y', strtotime($b->tglmasuk)) . '</td>
                             <td class="text-end">' . date('d/m/Y', strtotime($b->legalitastgl)) . '</td>
                             <td>' . $b->nmsurat . '</td>
-                            <td class="text-end">' . date('d/m/Y', strtotime($b->tglmasuk)) . '</td>
                             <td>' . $b->stb . '</td>
                             <td>' . $b->divisi . '</td>
                             <td>' . $b->bagian . '</td>
@@ -2963,9 +2963,165 @@ class Penerimaan extends Controller
         $status = DB::table('daftar_surat')->where('jenissurat', '=', 'Status')->get();
 
         if ($request->idtipe == "basic") {
-            echo '<input type="hidden" name="suratjns" value="BASIC" id="suratjns">';
-            echo '<input type="hidden" name="userid" value="' . $request->id . '">';
-            echo '
+            $last = DB::table('penerimaan_legalitas')
+                ->where('suratjns', 'Basic')
+                ->where('userid', $request->id)
+                ->orderBy('inputtgl', 'desc')
+                ->first();
+            if (DB::table('penerimaan_legalitas')->where('suratjns', 'Basic')->where('userid', $request->id)->exists()) {
+                echo '<input type="hidden" name="suratjns" value="BASIC" id="suratjns">';
+                echo '<input type="hidden" name="userid" value="' . $request->id . '">';
+                echo '
+                <div class="modal-body">
+                    <div class="row">
+                        <div class="col-lg-6">
+                            <div class="mb-3">
+                            <label class="form-label">Nama Karyawan</label>
+                            <input type="text" name="nama" class="form-control cursor-not-allowed" readonly value="' . $karyawan->nama . '" readonly required="true">
+                            </div>
+                        </div>
+                        <div class="col-lg-6">
+                            <div class="mb-3">
+                            <label class="form-label">Nama Surat</label>
+                            <input type="text" name="nmsurat" class="form-control cursor-not-allowed" readonly value="Surat Deskripsi Pekerjaan" readonly required="true">
+                            </div>
+                        </div>
+                    </div>
+                    <table class="table table-sm table-borderless">
+                        <tr>
+                            <td style="padding-top: 12px;width:130px">Tanggal Input</td>
+                            <td style="padding-top: 12px">:</td>
+                            <td><input type="date" name="tglinput" id="datepicker0" class="form-control" value="' . $last->inputtgl . '" required="true"></td>
+                        </tr>
+                        <tr>
+                            <td style="padding-top: 12px">Tanggal Surat</td>
+                            <td style="padding-top: 12px">:</td>
+                            <td><input type="date" name="tglaktif" id="datepicker1" class="form-control" value="' . $last->legalitastgl . '" required="true"></td>
+                        </tr>
+                        <tr>
+                            <td style="padding-top: 12px">Tanggal Masuk Karyawan</td>
+                            <td style="padding-top: 12px">:</td>
+                            <td><input type="date" name="tglmasuk" class="form-control" value="' . $last->tglmasuk . '" required="true"></td>
+                        </tr>
+                        <tr>
+                            <td style="padding-top: 12px">STB</td>
+                            <td style="padding-top: 12px">:</td>
+                            <td><input type="text" name="stb" id="stb" class="form-control" placeholder="Masukkan STB Karyawan" value="' . $karyawan->stb . '" required="true"></td>
+                        </tr>
+                        <tr>
+                            <td style="padding-top: 12px">Divisi</td>
+                            <td style="padding-top: 12px">:</td>
+                            <td>
+                                <select name="divisi" id="divisi" class="form-select" required="true">
+                                    <option hidden value="' . $karyawan->divisi . '">-- ' . $karyawan->divisi . ' --</option>';
+                foreach ($divisi as $d) {
+                    echo '
+                                    <option value="' . $d->desc . '">' . $d->desc . '</option>';
+                }
+                echo '
+                                </select>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td style="padding-top: 12px">Bagian</td>
+                            <td style="padding-top: 12px">:</td>
+                            <td>
+                                <select name="bagian" id="" class="form-select" required="true">
+                                    <option hidden value="' . $karyawan->bagian . '">-- ' . $karyawan->bagian . ' --</option>';
+                foreach ($bagian as $b) {
+                    echo '
+                                    <option value="' . $b->desc . '">' . $b->desc . '</option>';
+                }
+                echo '
+                                </select>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td style="padding-top: 12px">Jabatan</td>
+                            <td style="padding-top: 12px">:</td>
+                            <td>
+                                <select name="jabatan" id="" class="form-select" required="true">
+                                    <option hidden value="' . $karyawan->jabatan . '">-- ' . $karyawan->jabatan . ' --</option>';
+                foreach ($jabatan as $j) {
+                    echo '
+                                    <option value="' . $j->desc . '">' . $j->desc . '</option>';
+                }
+                echo '
+                                </select>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td style="padding-top: 12px">Grup</td>
+                            <td style="padding-top: 12px">:</td>
+                            <td>
+                                <select name="grup" id="" class="form-select" required="true">
+                                    <option hidden value="' . $karyawan->grup . '">-- ' . $karyawan->grup . ' --</option>';
+                foreach ($grup as $g) {
+                    echo '
+                                    <option value="' . $g->desc . '">' . $g->desc . '</option>';
+                }
+                echo '
+                                </select>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td style="padding-top: 12px">Jenis Shift</td>
+                            <td style="padding-top: 12px">:</td>
+                            <td>
+                                <select name="shift" id="" class="form-select" required="true">
+                                    <option hidden value="' . $karyawan->shift . '">-- ' . $karyawan->shift . ' --</option>';
+                foreach ($shift as $s) {
+                    echo '
+                                    <option value="' . $s->desc . '">' . $s->desc . '</option>';
+                }
+                echo '
+                                </select>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td style="padding-top: 12px">Profesi</td>
+                            <td style="padding-top: 12px">:</td>
+                            <td><input type="text" name="profesi" class="form-control" placeholder="Profesi Karyawan" value="' . $karyawan->profesi . '" required="true"></td>
+                        </tr>
+                        <tr>
+                            <td style="padding-top: 12px">Hari Libur</td>
+                            <td style="padding-top: 12px">:</td>
+                            <td>
+                                <select name="hrlibur" id="" class="form-select" required="true">
+                                    <option hidden value="' . $karyawan->hrlibur . '">-- ' . $karyawan->hrlibur . ' --</option>';
+                foreach ($hari as $h => $v) {
+                    echo '
+                                    <option value="' . $v . '">' . $v . '</option>';
+                }
+                echo '
+                                </select>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td style="padding-top: 12px">½ Hari</td>
+                            <td style="padding-top: 12px">:</td>
+                            <td>
+                                <select name="sethari" id="" class="form-select">
+                                    <option hidden value="' . $karyawan->sethari . '">-- ' . $karyawan->sethari . ' --</option>';
+                foreach ($hari as $h => $v) {
+                    echo '
+                                    <option value="' . $v . '">' . $v . '</option>';
+                }
+                echo '
+                                </select>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td style="padding-top: 12px">Keterangan</td>
+                            <td style="padding-top: 12px">:</td>
+                            <td><input type="text" name="keterangan" class="form-control" value="' . $karyawan->keterangan . '" placeholder="Masukkan Keterangan tambahan contoh: libur=SENIN,SELASA,KAMIS"></td>
+                        </tr>
+                    </table>
+                </div>';
+            } else {
+                echo '<input type="hidden" name="suratjns" value="BASIC" id="suratjns">';
+                echo '<input type="hidden" name="userid" value="' . $request->id . '">';
+                echo '
                 <div class="modal-body">
                     <div class="row">
                         <div class="col-lg-6">
@@ -3007,12 +3163,13 @@ class Penerimaan extends Controller
                             <td style="padding-top: 12px">:</td>
                             <td>
                                 <select name="divisi" id="divisi" class="form-select" required="true">
-                                <option hidden value="">-- Pilih Divisi --</option>';
-            foreach ($divisi as $d) {
-                echo            '<option value="' . $d->desc . '">' . $d->desc . '</option>';
-            }
-            echo
-            '</select>
+                                    <option hidden value="">-- Pilih Divisi --</option>';
+                foreach ($divisi as $d) {
+                    echo '
+                                    <option value="' . $d->desc . '">' . $d->desc . '</option>';
+                }
+                echo '
+                                </select>
                             </td>
                         </tr>
                         <tr>
@@ -3020,12 +3177,13 @@ class Penerimaan extends Controller
                             <td style="padding-top: 12px">:</td>
                             <td>
                                 <select name="bagian" id="" class="form-select" required="true">
-                                <option hidden value="">-- Pilih Bagian --</option>';
-            foreach ($bagian as $b) {
-                echo            '<option value="' . $b->desc . '">' . $b->desc . '</option>';
-            }
-            echo
-            '</select>
+                                    <option hidden value="">-- Pilih Bagian --</option>';
+                foreach ($bagian as $b) {
+                    echo '
+                                    <option value="' . $b->desc . '">' . $b->desc . '</option>';
+                }
+                echo '
+                                </select>
                             </td>
                         </tr>
                         <tr>
@@ -3033,12 +3191,13 @@ class Penerimaan extends Controller
                             <td style="padding-top: 12px">:</td>
                             <td>
                                 <select name="jabatan" id="" class="form-select" required="true">
-                                <option hidden value="">-- Pilih Jabatan --</option>';
-            foreach ($jabatan as $j) {
-                echo            '<option value="' . $j->desc . '">' . $j->desc . '</option>';
-            }
-            echo
-            '</select>
+                                    <option hidden value="">-- Pilih Jabatan --</option>';
+                foreach ($jabatan as $j) {
+                    echo '
+                                    <option value="' . $j->desc . '">' . $j->desc . '</option>';
+                }
+                echo '
+                                </select>
                             </td>
                         </tr>
                         <tr>
@@ -3046,12 +3205,13 @@ class Penerimaan extends Controller
                             <td style="padding-top: 12px">:</td>
                             <td>
                                 <select name="grup" id="" class="form-select" required="true">
-                                <option hidden value="">-- Pilih Grup --</option>';
-            foreach ($grup as $g) {
-                echo            '<option value="' . $g->desc . '">' . $g->desc . '</option>';
-            }
-            echo
-            '</select>
+                                    <option hidden value="">-- Pilih Grup --</option>';
+                foreach ($grup as $g) {
+                    echo '
+                                    <option value="' . $g->desc . '">' . $g->desc . '</option>';
+                }
+                echo '
+                                </select>
                             </td>
                         </tr>
                         <tr>
@@ -3059,11 +3219,13 @@ class Penerimaan extends Controller
                             <td style="padding-top: 12px">:</td>
                             <td>
                                 <select name="shift" id="" class="form-select" required="true">
-                                <option hidden value="">-- Jenis Shift --</option>';
-            foreach ($shift as $s) {
-                echo            '<option value="' . $s->desc . '">' . $s->desc . '</option>';
-            }
-            echo                '</select>
+                                    <option hidden value="">-- Jenis Shift --</option>';
+                foreach ($shift as $s) {
+                    echo '
+                                    <option value="' . $s->desc . '">' . $s->desc . '</option>';
+                }
+                echo '
+                                </select>
                             </td>
                         </tr>
                         <tr>
@@ -3076,12 +3238,13 @@ class Penerimaan extends Controller
                             <td style="padding-top: 12px">:</td>
                             <td>
                                 <select name="hrlibur" id="" class="form-select" required="true">
-                                <option hidden value="">-- Hari Libur --</option>';
-            foreach ($hari as $h => $v) {
-                echo            '<option value="' . $v . '">' . $v . '</option>';
-            }
-            echo
-            '</select>
+                                    <option hidden value="">-- Hari Libur --</option>';
+                foreach ($hari as $h => $v) {
+                    echo '
+                                    <option value="' . $v . '">' . $v . '</option>';
+                }
+                echo '
+                                </select>
                             </td>
                         </tr>
                         <tr>
@@ -3089,11 +3252,13 @@ class Penerimaan extends Controller
                             <td style="padding-top: 12px">:</td>
                             <td>
                                 <select name="sethari" id="" class="form-select">
-                                <option hidden value="">-- ½ Hari --</option>';
-            foreach ($hari as $h => $v) {
-                echo            '<option value="' . $v . '">' . $v . '</option>';
-            }
-            echo                '</select>
+                                    <option hidden value="">-- ½ Hari --</option>';
+                foreach ($hari as $h => $v) {
+                    echo '
+                                    <option value="' . $v . '">' . $v . '</option>';
+                }
+                echo '
+                                </select>
                             </td>
                         </tr>
                         <tr>
@@ -3102,8 +3267,8 @@ class Penerimaan extends Controller
                             <td><input type="text" name="keterangan" class="form-control" placeholder="Masukkan Keterangan tambahan contoh: libur=SENIN,SELASA,KAMIS"></td>
                         </tr>
                     </table>
-                </div>
-            ';
+                </div>';
+            }
         } elseif ($request->idtipe == "perjanjian") {
             echo '<input type="hidden" name="suratjns" value="PERJANJIAN" id="suratjns">';
             echo '<input type="hidden" name="userid" value="' . $request->id . '">';
@@ -3113,7 +3278,7 @@ class Penerimaan extends Controller
                     <table class="table table-sm table-bordered bg-blue-lt text-white text-center">
                         <thead>
                             <tr>
-                                <td colspan="4">Perjanjian Terakhir : ' . $sebelumnya_perjanjian->suratket . '</td>
+                                <td colspan="4"> Perjanjian Terakhir : ' . $sebelumnya_perjanjian->suratket . '</td>
                             </tr>
                             <tr>
                                 <td>Awal</td>
@@ -3133,7 +3298,7 @@ class Penerimaan extends Controller
                         <div class="col-lg-12">
                             <div class="mb-3">
                             <label class="form-label">Nama Karyawan</label>
-                            <input type="text" name="nama" class="form-control" value="' . $karyawan->nama . '" readonly>
+                            <input type="text" name="nama" class="form-control cursor-not-allowed" readonly value="' . $karyawan->nama . '" readonly>
                             </div>
                         </div>
                         <div class="col-lg-6">
