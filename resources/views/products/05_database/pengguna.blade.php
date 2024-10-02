@@ -49,17 +49,11 @@
                                                     style="background-image: url({{ asset('assets/static/avatars/3.jpg') }})"></span>
                                             @else
                                                 <span class="avatar avatar-xl mb-3 rounded"
-                                                    style="background-image: url({{ asset('assets/static/avatars/avatar.png') }})"></span>
+                                                    style="background-image: url('{{ asset('photo/pas/' . $user->userid . '.jpg') }}')"></span>
                                             @endif
-                                        @elseif ($user->role === 'hrd')
-                                            <span class="avatar avatar-xl mb-3 rounded"
-                                                style="background-image: url({{ asset('assets/static/avatars/hrd.png') }})"></span>
-                                        @elseif ($user->role === 'operator')
-                                            <span class="avatar avatar-xl mb-3 rounded"
-                                                style="background-image: url({{ asset('assets/static/avatars/operator.png') }})"></span>
                                         @else
                                             <span class="avatar avatar-xl mb-3 rounded"
-                                                style="background-image: url({{ asset('assets/static/avatars/default.png') }})"></span>
+                                                style="background-image: url('{{ asset('photo/pas/' . $user->userid . '.jpg') }}')"></span>
                                         @endif
 
                                         <h3 class="m-0 mb-1"><a href="#">{{ $user->name }}</a></h3>
