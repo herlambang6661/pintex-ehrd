@@ -204,6 +204,7 @@ Route::controller(ImageController::class)->group(function () {
 
 // Modules Penerimaan
 Route::controller(Penerimaan::class)->group(function () {
+    Route::get('penerimaan/lowongan', 'lowongan')->name('penerimaan.lowongan');
     Route::get('penerimaan/lamaran', 'lamaran')->name('penerimaan/lamaran');
     Route::post('listLamaran', 'listLamaran');
     Route::get('penerimaan/wawancara', 'wawancara')->name('penerimaan/wawancara');

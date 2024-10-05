@@ -3893,4 +3893,17 @@ class Penerimaan extends Controller
     }
 
     // ======================== END LEGALITAS ===========================================================================================
+
+    public function lowongan()
+    {
+        $judul = "Lowongan";
+        $penerimaan = "active";
+        $lowongan = "active";
+
+        return view('products.02_penerimaan.lowongan', [
+            'judul' => $judul,
+            'penerimaan' => $penerimaan,
+            'lowongan' => $lowongan
+        ]);
+    }
 }

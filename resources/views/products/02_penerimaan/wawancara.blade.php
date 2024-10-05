@@ -14,13 +14,23 @@
 
         td.cuspad2 {
             /* padding-top: 0.5px;
-                                                                                                                                                                    padding-bottom: 0.5px;
-                                                                                                                                                                    padding-right: 0.5px;
-                                                                                                                                                                    padding-left: 0.5px;
-                                                                                                                                                                    margin-top: 5px;
-                                                                                                                                                                    margin-bottom: 5px;
-                                                                                                                                                                    margin-right: 5px;
-                                                                                                                                                                    margin-left: 5px; */
+                                                                                                                                                                                                                padding-bottom: 0.5px;
+                                                                                                                                                                                                                padding-right: 0.5px;
+                                                                                                                                                                                                                padding-left: 0.5px;
+                                                                                                                                                                                                                margin-top: 5px;
+                                                                                                                                                                                                                margin-bottom: 5px;
+                                                                                                                                                                                                                margin-right: 5px;
+                                                                                                                                                                                                                margin-left: 5px; */
+        }
+
+        .unselectable {
+            -webkit-user-select: none;
+            -webkit-touch-callout: none;
+            -moz-user-select: none;
+            -ms-user-select: none;
+            user-select: none;
+            color: #cc0000;
+            font-weight: bolder;
         }
 
         .overlay {
@@ -157,6 +167,33 @@
                                             <th>Status</th>
                                         </tr>
                                     </thead>
+                                    <tfoot>
+                                        <th class="px-1 py-1 text-center"> </th>
+                                        <th class="px-1 py-1 text-center">
+                                            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24"
+                                                viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+                                                stroke-linecap="round" stroke-linejoin="round"
+                                                class="icon icon-tabler icons-tabler-outline icon-tabler-search">
+                                                <path stroke="none" d="M0 0h24v24H0z" fill="none" />
+                                                <path d="M10 10m-7 0a7 7 0 1 0 14 0a7 7 0 1 0 -14 0" />
+                                                <path d="M21 21l-6 -6" />
+                                            </svg>
+                                        </th>
+                                        <th class="px-1 th py-1">NIK</th>
+                                        <th class="px-1 th py-1">Nama</th>
+                                        <th class="px-1 th py-1">Gender</th>
+                                        <th class="px-1 th py-1">Tempat, Tanggal Lahir</th>
+                                        <th class="px-1 th py-1">Umur</th>
+                                        <th class="px-1 th py-1">Pendidikan</th>
+                                        <th class="px-1 th py-1">Jurusan</th>
+                                        <th class="px-1 th py-1">Tinggi</th>
+                                        <th class="px-1 th py-1">Berat</th>
+                                        <th class="px-1 th py-1">No Telp</th>
+                                        <th class="px-1 th py-1">Email</th>
+                                        <th class="px-1 th py-1">Posisi Dituju</th>
+                                        <th class="px-1 th py-1">Ket</th>
+                                        <th class="px-1 th py-1">Status</th>
+                                    </tfoot>
                                 </table>
                             </div>
                         </div>
@@ -325,10 +362,10 @@
     </div>
     <script type="text/javascript">
         /*------------------------------------------
-                                    --------------------------------------------
-                                    Render DataTable
-                                    --------------------------------------------
-                                    --------------------------------------------*/
+                                                                                --------------------------------------------
+                                                                                Render DataTable
+                                                                                --------------------------------------------
+                                                                                --------------------------------------------*/
 
         function newexportaction(e, dt, button, config) {
             var self = this;
@@ -485,6 +522,7 @@
                     'style': 'multi',
                     "selector": 'td:not(:nth-child(2))',
                 },
+                autoWidth: true,
                 columns: [{
                         data: 'select_orders',
                         name: 'select_orders',
@@ -570,8 +608,27 @@
                         className: 'cuspad0'
                     },
                 ],
-
+                "initComplete": function() {
+                    this.api()
+                        .columns()
+                        .every(function() {
+                            var that = this;
+                            $('input', this.footer()).on('keyup change clear', function() {
+                                if (that.search() !== this.value) {
+                                    that.search(this.value).draw();
+                                }
+                            });
+                        });
+                }
             });
+            $('.datatable-wawancara tfoot .th').each(function() {
+                var title = $(this).text();
+                $(this).html(
+                    '<input type="text" class="form-control form-control-sm my-0 border border-dark" placeholder="' +
+                    $(this).text() + '" />'
+                );
+            });
+
             var selected = new Array();
 
             $('#myModalProses').on('show.bs.modal', function(e) {
