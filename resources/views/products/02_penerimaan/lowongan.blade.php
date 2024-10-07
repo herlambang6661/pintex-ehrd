@@ -33,7 +33,6 @@
         }
     </style>
 
-
     <div class="page">
         <!-- Sidebar -->
         @include('shared.sidebar')
@@ -78,8 +77,7 @@
                         <!-- Page title actions -->
                         <div class="col-auto ms-auto d-print-none">
                             <div class="btn-list">
-                                <a href="#" class="btn btn-primary d-none d-sm-inline-block" data-bs-toggle="modal"
-                                    data-bs-target="#modal-lowongan" data-bs-backdrop="static" data-bs-keyboard="false">
+                                <a href="/penerimaan/tambahlowongan" class="btn btn-primary d-none d-sm-inline-block">
                                     <i class="fa-solid fa-user-plus"></i>
                                     Tambah Lowongan
                                 </a>

@@ -351,7 +351,7 @@
                                         </svg>
                                         Users
                                     </a>
-                                    <a class="dropdown-item {{ !empty($loker) ? $loker : '' }}"
+                                    {{-- <a class="dropdown-item {{ !empty($loker) ? $loker : '' }}"
                                         href="{{ url('daftar/loker') }}">
                                         <svg xmlns="http://www.w3.org/2000/svg" style="margin-right: 10px"
                                             width="24" height="24" viewBox="0 0 24 24" fill="none"
@@ -366,7 +366,7 @@
                                             <path d="M3 13a20 20 0 0 0 18 0" />
                                         </svg>
                                         Lowongan Pekerjaan
-                                    </a>
+                                    </a> --}}
                                     <a class="dropdown-item {{ !empty($upah) ? $upah : '' }}"
                                         href="{{ url('daftar/upah') }}">
                                         <svg xmlns="http://www.w3.org/2000/svg" style="margin-right: 10px"
@@ -416,15 +416,13 @@
                                             width="24" height="24" viewBox="0 0 24 24" fill="none"
                                             stroke="currentColor" stroke-width="2" stroke-linecap="round"
                                             stroke-linejoin="round"
-                                            class="icon icon-tabler icons-tabler-outline icon-tabler-calendar-user">
+                                            class="icon icon-tabler icons-tabler-outline icon-tabler-briefcase">
                                             <path stroke="none" d="M0 0h24v24H0z" fill="none" />
                                             <path
-                                                d="M12 21h-6a2 2 0 0 1 -2 -2v-12a2 2 0 0 1 2 -2h12a2 2 0 0 1 2 2v4.5" />
-                                            <path d="M16 3v4" />
-                                            <path d="M8 3v4" />
-                                            <path d="M4 11h16" />
-                                            <path d="M19 17m-2 0a2 2 0 1 0 4 0a2 2 0 1 0 -4 0" />
-                                            <path d="M22 22a2 2 0 0 0 -2 -2h-2a2 2 0 0 0 -2 2" />
+                                                d="M3 7m0 2a2 2 0 0 1 2 -2h14a2 2 0 0 1 2 2v9a2 2 0 0 1 -2 2h-14a2 2 0 0 1 -2 -2z" />
+                                            <path d="M8 7v-2a2 2 0 0 1 2 -2h4a2 2 0 0 1 2 2v2" />
+                                            <path d="M12 12l0 .01" />
+                                            <path d="M3 13a20 20 0 0 0 18 0" />
                                         </svg>
                                         Lowongan
                                     </a>
@@ -922,7 +920,7 @@
                                         </svg>
                                         Users
                                     </a>
-                                    <a class="dropdown-item {{ !empty($loker) ? $loker : '' }}"
+                                    {{-- <a class="dropdown-item {{ !empty($loker) ? $loker : '' }}"
                                         href="{{ url('daftar/loker') }}">
                                         <svg xmlns="http://www.w3.org/2000/svg" style="margin-right: 10px"
                                             width="24" height="24" viewBox="0 0 24 24" fill="none"
@@ -937,7 +935,7 @@
                                             <path d="M3 13a20 20 0 0 0 18 0" />
                                         </svg>
                                         Lowongan Pekerjaan
-                                    </a>
+                                    </a> --}}
                                     <a class="dropdown-item {{ !empty($upah) ? $upah : '' }}"
                                         href="{{ url('daftar/upah') }}">
                                         <svg xmlns="http://www.w3.org/2000/svg" style="margin-right: 10px"
@@ -987,15 +985,13 @@
                                             width="24" height="24" viewBox="0 0 24 24" fill="none"
                                             stroke="currentColor" stroke-width="2" stroke-linecap="round"
                                             stroke-linejoin="round"
-                                            class="icon icon-tabler icons-tabler-outline icon-tabler-calendar-user">
+                                            class="icon icon-tabler icons-tabler-outline icon-tabler-briefcase">
                                             <path stroke="none" d="M0 0h24v24H0z" fill="none" />
                                             <path
-                                                d="M12 21h-6a2 2 0 0 1 -2 -2v-12a2 2 0 0 1 2 -2h12a2 2 0 0 1 2 2v4.5" />
-                                            <path d="M16 3v4" />
-                                            <path d="M8 3v4" />
-                                            <path d="M4 11h16" />
-                                            <path d="M19 17m-2 0a2 2 0 1 0 4 0a2 2 0 1 0 -4 0" />
-                                            <path d="M22 22a2 2 0 0 0 -2 -2h-2a2 2 0 0 0 -2 2" />
+                                                d="M3 7m0 2a2 2 0 0 1 2 -2h14a2 2 0 0 1 2 2v9a2 2 0 0 1 -2 2h-14a2 2 0 0 1 -2 -2z" />
+                                            <path d="M8 7v-2a2 2 0 0 1 2 -2h4a2 2 0 0 1 2 2v2" />
+                                            <path d="M12 12l0 .01" />
+                                            <path d="M3 13a20 20 0 0 0 18 0" />
                                         </svg>
                                         Lowongan
                                     </a>
@@ -1036,10 +1032,9 @@
                                     <a class="dropdown-item {{ !empty($karyawan) ? $karyawan : '' }}"
                                         href="{{ url('penerimaan/karyawan') }}">
                                         <svg xmlns="http://www.w3.org/2000/svg" style="margin-right: 10px"
-                                            class="icon icon-tabler icon-tabler-users" width="24"
-                                            height="24" viewBox="0 0 24 24" stroke-width="1.5"
-                                            stroke="currentColor" fill="none" stroke-linecap="round"
-                                            stroke-linejoin="round">
+                                            class="icon icon-tabler icon-tabler-users" width="24" height="24"
+                                            viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor"
+                                            fill="none" stroke-linecap="round" stroke-linejoin="round">
                                             <path stroke="none" d="M0 0h24v24H0z" fill="none" />
                                             <path d="M9 7m-4 0a4 4 0 1 0 8 0a4 4 0 1 0 -8 0" />
                                             <path d="M3 21v-2a4 4 0 0 1 4 -4h4a4 4 0 0 1 4 4v2" />
@@ -1415,7 +1410,7 @@
                                         </svg>
                                         Users
                                     </a>
-                                    <a class="dropdown-item {{ !empty($loker) ? $loker : '' }}"
+                                    {{-- <a class="dropdown-item {{ !empty($loker) ? $loker : '' }}"
                                         href="{{ url('daftar/loker') }}">
                                         <svg xmlns="http://www.w3.org/2000/svg" style="margin-right: 10px"
                                             width="24" height="24" viewBox="0 0 24 24" fill="none"
@@ -1430,7 +1425,7 @@
                                             <path d="M3 13a20 20 0 0 0 18 0" />
                                         </svg>
                                         Lowongan Pekerjaan
-                                    </a>
+                                    </a> --}}
                                     <a class="dropdown-item {{ !empty($upah) ? $upah : '' }}"
                                         href="{{ url('daftar/upah') }}">
                                         <svg xmlns="http://www.w3.org/2000/svg" style="margin-right: 10px"
@@ -1480,15 +1475,13 @@
                                             width="24" height="24" viewBox="0 0 24 24" fill="none"
                                             stroke="currentColor" stroke-width="2" stroke-linecap="round"
                                             stroke-linejoin="round"
-                                            class="icon icon-tabler icons-tabler-outline icon-tabler-calendar-user">
+                                            class="icon icon-tabler icons-tabler-outline icon-tabler-briefcase">
                                             <path stroke="none" d="M0 0h24v24H0z" fill="none" />
                                             <path
-                                                d="M12 21h-6a2 2 0 0 1 -2 -2v-12a2 2 0 0 1 2 -2h12a2 2 0 0 1 2 2v4.5" />
-                                            <path d="M16 3v4" />
-                                            <path d="M8 3v4" />
-                                            <path d="M4 11h16" />
-                                            <path d="M19 17m-2 0a2 2 0 1 0 4 0a2 2 0 1 0 -4 0" />
-                                            <path d="M22 22a2 2 0 0 0 -2 -2h-2a2 2 0 0 0 -2 2" />
+                                                d="M3 7m0 2a2 2 0 0 1 2 -2h14a2 2 0 0 1 2 2v9a2 2 0 0 1 -2 2h-14a2 2 0 0 1 -2 -2z" />
+                                            <path d="M8 7v-2a2 2 0 0 1 2 -2h4a2 2 0 0 1 2 2v2" />
+                                            <path d="M12 12l0 .01" />
+                                            <path d="M3 13a20 20 0 0 0 18 0" />
                                         </svg>
                                         Lowongan
                                     </a>

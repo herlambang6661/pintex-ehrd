@@ -182,8 +182,8 @@ Route::controller(Daftar::class)->group(function () {
     Route::post('update/entitas', 'updateentitas');
 
     // Routes Lowongan Pekerjaan
-    Route::get('daftar/loker', 'loker');
-    Route::post('storeDataLoker', 'storeLoker');
+    // Route::get('daftar/loker', 'loker');
+    // Route::post('storeDataLoker', 'storeLoker');
 
     //Routes data upah
     Route::get('daftar/upah', 'upah');
@@ -205,6 +205,9 @@ Route::controller(ImageController::class)->group(function () {
 // Modules Penerimaan
 Route::controller(Penerimaan::class)->group(function () {
     Route::get('penerimaan/lowongan', 'lowongan')->name('penerimaan.lowongan');
+    Route::get('penerimaan/tambahlowongan', 'addLowongan')->name('penerimaan.tambahlowongan');
+    Route::post('reviewLowongan', 'reviewLowongan');
+
     Route::get('penerimaan/lamaran', 'lamaran')->name('penerimaan/lamaran');
     Route::post('listLamaran', 'listLamaran');
     Route::get('penerimaan/wawancara', 'wawancara')->name('penerimaan/wawancara');
