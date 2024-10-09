@@ -114,6 +114,8 @@
             font-size: 10px;
         }
     </style>
+    {{-- CALL TINYMCE --}}
+    <x-head.tinymce-config />
 
     <div class="page">
         <!-- Sidebar -->
@@ -163,7 +165,8 @@
 
             <div class="container">
                 <div class="row mt-4">
-                    <form action="" method="post">
+                    <form action="{{ route('lowongan.store') }}" method="post">
+                        @csrf
                         <div class="col-md-12">
                             <div class="card">
                                 <div class="card-header">
@@ -224,22 +227,22 @@
                                                 <div>
                                                     <label class="form-check form-check-inline">
                                                         <input type="checkbox" name="simA" id="simA"
-                                                            class="form-check-input">
+                                                            class="form-check-input" value="1">
                                                         <span class="form-check-label">SIM A</span>
                                                     </label>
                                                     <label class="form-check form-check-inline">
                                                         <input type="checkbox" name="simB" id="simB"
-                                                            class="form-check-input">
+                                                            class="form-check-input" value="1">
                                                         <span class="form-check-label">SIM B</span>
                                                     </label>
                                                     <label class="form-check form-check-inline">
                                                         <input type="checkbox" name="simB2" id="simB2"
-                                                            class="form-check-input">
+                                                            class="form-check-input" value="1">
                                                         <span class="form-check-label">SIM B2 Umum</span>
                                                     </label>
                                                     <label class="form-check form-check-inline">
                                                         <input type="checkbox" name="sio" id="sio"
-                                                            class="form-check-input">
+                                                            class="form-check-input" value="1">
                                                         <span class="form-check-label">Sertifikat SIO Forklift</span>
                                                     </label>
                                                 </div>
@@ -249,19 +252,34 @@
                                             <div class="mb-3 mb-0">
                                                 <label class="form-label">Requirement Pekerjaan</label>
                                                 <div class="border-success shadow rounded">
-                                                    <textarea class="content" name="requirement" id="requirement"></textarea>
+                                                    {{-- <textarea id="open-source-plugins"></textarea> --}}
+                                                    <textarea id="myeditorinstance" name="requirement" id="requirement">
+                                                        <center><b><h1>We Are Hiring!</h1></b></center>
+                                                        <center><b><h2>Operator Produksi</h2></b></center>
+                                                        <br>
+                                                        <b>Qualifications :</b>
+                                                            <ul>
+                                                                <li></li>
+                                                                <li></li>
+                                                            </ul>
+                                                        <br>
+                                                        <b>Job Descriptions :</b>
+                                                            <ul>
+                                                                <li></li>
+                                                                <li></li>
+                                                            </ul>
+                                                    </textarea>
+                                                    {{-- <textarea class="content" name="requirement" id="requirement"></textarea> --}}
                                                 </div>
                                             </div>
                                         </div>
                                     </div>
                                 </div>
                                 <div class="card-footer">
-                                    <a href="#" class="btn btn-primary d-none d-sm-inline-block"
-                                        data-bs-toggle="modal" data-bs-target="#myModalCheck" data-bs-backdrop="static"
-                                        data-bs-keyboard="false">
+                                    <button type="submit" class="btn btn-primary d-none d-sm-inline-block">
                                         <i class="fa-solid fa-user-plus"></i>
                                         Simpan
-                                    </a>
+                                    </button>
                                 </div>
                             </div>
                         </div>
@@ -271,32 +289,6 @@
             @include('shared.footer')
         </div>
     </div>
-    {{-- Modal start --}}
-    <div class="modal modal-blur fade" id="myModalCheck" tabindex="-1" style="display: none;" aria-hidden="true">
-        <div class="overlay">
-            <div class="loader">
-                <span class="spinner spinner1"></span>
-                <span class="spinner spinner2"></span>
-                <span class="spinner spinner3"></span>
-                <br>
-                <span class="loader-text">Membuat Review Sebelum Menyimpan</span>
-            </div>
-        </div>
-        <div class="modal-dialog modal-full-width  modal-dialog-centered" role="document">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <h5 class="modal-title">Review Lowongan</h5>
-                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                </div>
-                <form id="formAcc" name="formAcc" method="post" action="javascript:void(0)">
-                    @csrf
-                    <input type="hidden" name="_token" value="{{ csrf_token() }}" />
-                    <div class="resultChecklist"></div>
-                </form>
-            </div>
-        </div>
-    </div>
-    {{-- Modal end --}}
     <script>
         // const someCheckbox = document.getElementById('someID');
         document.getElementById('tdkadatgl').addEventListener('change', e => {
@@ -316,172 +308,6 @@
                 document.getElementById('tgltutup').classList.remove("cursor-not-allowed");
                 document.getElementById('tdkadatgl').value = "0";
             }
-        });
-        $('.content').richText({
-            // text formatting
-            bold: true,
-            italic: true,
-            underline: true,
-            // text alignment
-            leftAlign: true,
-            centerAlign: true,
-            rightAlign: true,
-            justify: true,
-            // lists
-            ol: true,
-            ul: true,
-            // title
-            heading: true,
-            // fonts
-            fonts: true,
-            fontList: ["Arial",
-                "Arial Black",
-                "Comic Sans MS",
-                "Courier New",
-                "Geneva",
-                "Georgia",
-                "Helvetica",
-                "Impact",
-                "Lucida Console",
-                "Tahoma",
-                "Times New Roman",
-                "Verdana"
-            ],
-            fontColor: true,
-            backgroundColor: false,
-            fontSize: true,
-            // uploads
-            imageUpload: false,
-            fileUpload: false,
-            // link
-            urls: false,
-            // tables
-            table: true,
-            // code
-            removeStyles: false,
-            code: false,
-            // colors
-            colors: [],
-            // dropdowns
-            fileHTML: '',
-            imageHTML: '',
-            // translations
-            translations: {
-                'title': 'Title',
-                'white': 'White',
-                'black': 'Black',
-                'brown': 'Brown',
-                'beige': 'Beige',
-                'darkBlue': 'Dark Blue',
-                'blue': 'Blue',
-                'lightBlue': 'Light Blue',
-                'darkRed': 'Dark Red',
-                'red': 'Red',
-                'darkGreen': 'Dark Green',
-                'green': 'Green',
-                'purple': 'Purple',
-                'darkTurquois': 'Dark Turquois',
-                'turquois': 'Turquois',
-                'darkOrange': 'Dark Orange',
-                'orange': 'Orange',
-                'yellow': 'Yellow',
-                'imageURL': 'Image URL',
-                'fileURL': 'File URL',
-                'linkText': 'Link text',
-                'url': 'URL',
-                'size': 'Size',
-                'responsive': '<a href="https://www.jqueryscript.net/tags.php?/Responsive/">Responsive</a>',
-                'text': 'Text',
-                'openIn': 'Open in',
-                'sameTab': 'Same tab',
-                'newTab': 'New tab',
-                'align': 'Align',
-                'left': 'Left',
-                'justify': 'Justify',
-                'center': 'Center',
-                'right': 'Right',
-                'rows': 'Rows',
-                'columns': 'Columns',
-                'add': 'Add',
-                'pleaseEnterURL': 'Please enter an URL',
-                'videoURLnotSupported': 'Video URL not supported',
-                'pleaseSelectImage': 'Please select an image',
-                'pleaseSelectFile': 'Please select a file',
-                'bold': 'Bold',
-                'italic': 'Italic',
-                'underline': 'Underline',
-                'alignLeft': 'Align left',
-                'alignCenter': 'Align centered',
-                'alignRight': 'Align right',
-                'addOrderedList': 'Ordered list',
-                'addUnorderedList': 'Unordered list',
-                'addHeading': 'Heading/title',
-                'addFont': 'Font',
-                'addFontColor': 'Font color',
-                'addBackgroundColor': 'Background color',
-                'addFontSize': 'Font size',
-                'addImage': 'Add image',
-                'addVideo': 'Add video',
-                'addFile': 'Add file',
-                'addURL': 'Add URL',
-                'addTable': 'Add table',
-                'removeStyles': 'Remove styles',
-                'code': 'Show HTML code',
-                'undo': 'Undo',
-                'redo': 'Redo',
-                'save': 'Save',
-                'close': 'Close'
-            },
-            // privacy
-            youtubeCookies: false,
-            // preview
-            preview: false,
-            // placeholder
-            placeholder: 'Masukkan Requirement Pekerjaan',
-            // dev settings
-            useSingleQuotes: false,
-            height: 150,
-            heightPercentage: 0,
-            adaptiveHeight: false,
-            id: "",
-            class: "",
-            useParagraph: false,
-            maxlength: 0,
-            maxlengthIncludeHTML: false,
-            callback: undefined,
-            useTabForNext: false,
-            save: false,
-            saveCallback: undefined,
-            saveOnBlur: 0,
-            undoRedo: true
-        });
-
-        $(function() {
-            $('#myModalCheck').on('show.bs.modal', function(e) {
-                $(".overlay").fadeIn(300);
-
-                $.ajaxSetup({
-                    headers: {
-                        'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
-                    }
-                });
-                //menggunakan fungsi ajax untuk pengambilan data
-                $.ajax({
-                    type: 'POST',
-                    url: '{{ url('reviewLowongan') }}',
-                    data: {
-                        "_token": "{{ csrf_token() }}",
-                        tipe: 'form',
-                    },
-                    success: function(data) {
-                        $('.resultChecklist').html(data);
-                    }
-                }).done(function() {
-                    setTimeout(function() {
-                        $(".overlay").fadeOut(300);
-                    }, 500);
-                });
-            });
         });
     </script>
 @endsection

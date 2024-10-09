@@ -89,7 +89,7 @@
 
             <div class="container">
                 <!-- Card with Carousel for displaying job images -->
-                <div class="card mt-4">
+                {{-- <div class="card mt-4">
                     <div class="card-body">
                         <div id="jobCarousel" class="carousel slide" data-bs-ride="carousel">
                             <div class="carousel-inner">
@@ -116,105 +116,56 @@
                             </a>
                         </div>
                     </div>
-                </div>
+                </div> --}}
 
                 <!-- Row for job information cards -->
                 <div class="row mt-4">
-                    <!-- Card 1 -->
-                    <div class="col-lg-6 col-md-6 mb-4">
-                        <div class="card h-100">
-                            <div class="card-header">
-                                <h5 class="card-title">PINTEX</h5>
-                            </div>
-                            <div class="card-body d-flex justify-content-between align-items-center">
-                                <div>
-                                    <h6>Lowongan: Damy IT</h6>
-                                    <p>Tanggal Buka: 01 Oktober 2024</p>
-                                    <p>Tanggal Tutup: 15 Oktober 2024</p>
-                                    <p>Kualifikasi: Minimal pengalaman 2 tahun di bidang IT, mahir dalam pengembangan web
-                                        dan aplikasi mobile.</p>
-                                    <a href="#" class="text-primary" data-bs-toggle="modal"
-                                        data-bs-target="#modal-edit">Show in edit <i class="fas fa-arrow-right"></i></a>
+                    @forelse($loker as $l)
+                        <!-- Card 1 -->
+                        <div class="col-lg-4 col-md-6 mb-4">
+                            <div class="card h-100">
+                                <div class="card-header">
+                                    <h2 class="mb-0">{{ $l->posisi }}</h2>
                                 </div>
-                                <div style="width: 200px; height: 200px; margin-left: 15px;">
-                                    <img src="{{ asset('assets/static/avatars/5.jpeg') }}" class="img-fluid rounded"
-                                        style="object-fit: cover; width: 100%; height: 100%;" alt="Job Image 1">
+                                <div class="card-body d-flex justify-content-between align-items-center">
+                                    <div>
+                                        <h4 class="mb-2">Pendidikan: {{ $l->pendidikan }}</h4>
+                                        <h4 class="mb-2">Entitas : {{ $l->entitas }}</h4>
+                                        <p class="mb-2">
+                                            Tanggal :
+                                            {{ $l->unlimited == 1 ? 'Tidak ada batas tanggal' : date('d/m/Y', strtotime($l->tgl_buka)) . ' s/d ' . date('d/m/Y', strtotime($l->tgl_tutup)) }}
+                                        </p>
+                                        {{ $l->sio == 0 ? '' : '- Sertifikat SIO Forklift Dibutuhkan' }}
+                                    </div>
+                                    <div style="max-width: 100px; max-height: 100px; margin-left: 15px;">
+                                        <img src="{{ asset('assets/static/avatars/5.jpeg') }}" class="img-fluid rounded"
+                                            style="object-fit: cover; width: 100%; height: 100%;" alt="Job Image 1">
+                                    </div>
                                 </div>
-                            </div>
-                        </div>
-                    </div>
-
-                    <!-- Card 2 -->
-                    <div class="col-lg-6 col-md-6 mb-4">
-                        <div class="card h-100">
-                            <div class="card-header">
-                                <h5 class="card-title">PINTEX</h5>
-                            </div>
-                            <div class="card-body d-flex justify-content-between align-items-center">
-                                <div>
-                                    <h6>Lowongan: Damy IT</h6>
-                                    <p>Tanggal Buka: 01 November 2024</p>
-                                    <p>Tanggal Tutup: 20 November 2024</p>
-                                    <p>Kualifikasi: Pengalaman dalam manajemen jaringan, pengetahuan dalam pengelolaan
-                                        sistem berbasis cloud.</p>
-                                    <a href="#" class="text-primary">Show in detail <i
-                                            class="fas fa-arrow-right"></i></a>
-                                </div>
-                                <div style="width: 200px; height: 200px; margin-left: 15px;">
-                                    <img src="{{ asset('assets/static/avatars/4.jpeg') }}" class="img-fluid rounded"
-                                        style="object-fit: cover; width: 100%; height: 100%;" alt="Job Image 2">
+                                <div class="card-footer">
+                                    <div class="row">
+                                        <div class="col text-center">
+                                            <a href="#" class="text-primary">
+                                                Edit loker
+                                                <i class="ms-2 fas fa-arrow-right"></i>
+                                            </a>
+                                        </div>
+                                        <div class="col text-center">
+                                            <a href="#" class="text-primary">
+                                                Lihat loker
+                                                <i class="ms-2 fas fa-eye"></i>
+                                            </a>
+                                        </div>
+                                    </div>
                                 </div>
                             </div>
                         </div>
-                    </div>
-
-                    <!-- Card 3 -->
-                    <div class="col-lg-6 col-md-6 mb-4">
-                        <div class="card h-100">
-                            <div class="card-header">
-                                <h5 class="card-title">PINTEX</h5>
-                            </div>
-                            <div class="card-body d-flex justify-content-between align-items-center">
-                                <div>
-                                    <h6>Lowongan: Damy IT</h6>
-                                    <p>Tanggal Buka: 10 Desember 2024</p>
-                                    <p>Tanggal Tutup: 31 Desember 2024</p>
-                                    <p>Kualifikasi: Kemampuan dalam UI/UX design, pengetahuan dasar tentang machine learning
-                                        dan artificial intelligence.</p>
-                                    <a href="#" class="text-primary">Show in detail <i
-                                            class="fas fa-arrow-right"></i></a>
-                                </div>
-                                <div style="width: 200px; height: 200px; margin-left: 15px;">
-                                    <img src="{{ asset('assets/static/avatars/3.jpeg') }}" class="img-fluid rounded"
-                                        style="object-fit: cover; width: 100%; height: 100%;" alt="Job Image 3">
-                                </div>
-                            </div>
+                    @empty
+                        <div class="text-center">
+                            <h3>No data available</h3>
                         </div>
-                    </div>
-
-                    <!-- Card 4 -->
-                    <div class="col-lg-6 col-md-6 mb-4">
-                        <div class="card h-100">
-                            <div class="card-header">
-                                <h5 class="card-title">PINTEX</h5>
-                            </div>
-                            <div class="card-body d-flex justify-content-between align-items-center">
-                                <div>
-                                    <h6>Lowongan: Damy IT</h6>
-                                    <p>Tanggal Buka: 10 Desember 2024</p>
-                                    <p>Tanggal Tutup: 31 Desember 2024</p>
-                                    <p>Kualifikasi: Kemampuan dalam UI/UX design, pengetahuan dasar tentang machine learning
-                                        dan artificial intelligence.</p>
-                                    <a href="#" class="text-primary">Show in detail <i
-                                            class="fas fa-arrow-right"></i></a>
-                                </div>
-                                <div style="width: 200px; height: 200px; margin-left: 15px;">
-                                    <img src="{{ asset('assets/static/avatars/3.jpeg') }}" class="img-fluid rounded"
-                                        style="object-fit: cover; width: 100%; height: 100%;" alt="Job Image 3">
-                                </div>
-                            </div>
-                        </div>
-                    </div>
+                    @endforelse
+                    {{ $loker->links() }}
                 </div>
 
             </div>
@@ -250,8 +201,7 @@
                         </div>
                         <div class="col-md-6">
                             <label class="form-selectgroup-item">
-                                <input type="radio" name="report-type" value="1"
-                                    class="form-selectgroup-input" />
+                                <input type="radio" name="report-type" value="1" class="form-selectgroup-input" />
                                 <span class="form-selectgroup-label d-flex align-items-center p-3">
                                     <span class="me-3">
                                         <span class="form-selectgroup-check"></span>
