@@ -124,8 +124,21 @@
                         <!-- Card 1 -->
                         <div class="col-lg-4 col-md-6 mb-4">
                             <div class="card h-100">
-                                <div class="card-header">
+                                <div class="card-header d-flex justify-content-between align-items-center">
                                     <h2 class="mb-0">{{ $l->posisi }}</h2>
+                                    @if ($l->release == 1)
+                                        <button class="btn" disabled>
+                                            Active <span class="badge bg-blue ms-2"><i class="fa-solid fa-check"></i></span>
+                                        </button>
+                                    @else
+                                        <form action="{{ route('updateRelease', $l->id) }}" method="POST">
+                                            @csrf
+                                            <button class="btn" type="submit">
+                                                InActive <span class="badge bg-red ms-2"><i
+                                                        class="fa-solid fa-xmark"></i></span>
+                                            </button>
+                                        </form>
+                                    @endif
                                 </div>
                                 <div class="card-body d-flex justify-content-between align-items-center">
                                     <div>
@@ -145,7 +158,7 @@
                                 <div class="card-footer">
                                     <div class="row">
                                         <div class="col text-center">
-                                            <a href="#" class="text-primary">
+                                            <a href="{{ route('penerimaan.editlowongan', $l->id) }}" class="text-primary">
                                                 Edit loker
                                                 <i class="ms-2 fas fa-arrow-right"></i>
                                             </a>
@@ -173,189 +186,6 @@
             @include('shared.footer')
         </div>
     </div>
-
-    {{-- Modal add lowongan --}}
-    <div class="modal" id="modal-lowongan" tabindex="-1">
-        <div class="modal-dialog modal-lg" role="document">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <h5 class="modal-title">New vacancies</h5>
-                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                </div>
-                <div class="modal-body">
-                    <label class="form-label">Entitas</label>
-                    <div class="form-selectgroup-boxes row mb-3">
-                        <div class="col-md-6">
-                            <label class="form-selectgroup-item">
-                                <input type="radio" name="report-type" value="1" class="form-selectgroup-input"
-                                    checked />
-                                <span class="form-selectgroup-label d-flex align-items-center p-3">
-                                    <span class="me-3">
-                                        <span class="form-selectgroup-check"></span>
-                                    </span>
-                                    <span class="form-selectgroup-label-content">
-                                        <span class="form-selectgroup-title strong mb-1">PINTEX</span>
-                                    </span>
-                                </span>
-                            </label>
-                        </div>
-                        <div class="col-md-6">
-                            <label class="form-selectgroup-item">
-                                <input type="radio" name="report-type" value="1" class="form-selectgroup-input" />
-                                <span class="form-selectgroup-label d-flex align-items-center p-3">
-                                    <span class="me-3">
-                                        <span class="form-selectgroup-check"></span>
-                                    </span>
-                                    <span class="form-selectgroup-label-content">
-                                        <span class="form-selectgroup-title strong mb-1">TFI</span>
-                                    </span>
-                                </span>
-                            </label>
-                        </div>
-                    </div>
-                    <div class="mb-3">
-                        <label class="form-label">Lowongan</label>
-                        <input type="text" class="form-control" name="example-text-input"
-                            placeholder="Your report name" />
-                    </div>
-                </div>
-                <div class="modal-body">
-                    <div class="row">
-                        <div class="col-lg-6">
-                            <div class="mb-3">
-                                <label class="form-label">Tanggal Buka</label>
-                                <input type="date" class="form-control" value="<?= date('Y-m-d') ?>" />
-                            </div>
-                        </div>
-                        <div class="col-lg-6">
-                            <div class="mb-3">
-                                <label class="form-label">Tanggal Tutup</label>
-                                <input type="date" class="form-control" />
-                            </div>
-                        </div>
-                        <div class="col-lg-12">
-                            <div>
-                                <label class="form-label">Keterangan</label>
-                                <textarea class="form-control" rows="3"></textarea>
-                            </div>
-                            <div class="mb-3">
-                                <div class="form-label">Foto</div>
-                                <input type="file" class="form-control" />
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <div class="modal-footer">
-                    <a href="#" class="btn btn-link link-secondary" data-bs-dismiss="modal">
-                        Cancel
-                    </a>
-                    <a href="#" class="btn btn-primary ms-auto" data-bs-dismiss="modal">
-                        <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-plus" width="24"
-                            height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none"
-                            stroke-linecap="round" stroke-linejoin="round">
-                            <path stroke="none" d="M0 0h24v24H0z" fill="none"></path>
-                            <path d="M12 5l0 14"></path>
-                            <path d="M5 12l14 0"></path>
-                        </svg>
-                        Create new vacancies
-                    </a>
-                </div>
-            </div>
-        </div>
-    </div>
-    {{-- end modal add lowongan --}}
-
-    {{-- modal edit lowongan --}}
-    <div class="modal" id="modal-edit" tabindex="-1">
-        <div class="modal-dialog modal-lg" role="document">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <h5 class="modal-title">Edit vacancies</h5>
-                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                </div>
-                <div class="modal-body">
-                    <label class="form-label">Entitas</label>
-                    <div class="form-selectgroup-boxes row mb-3">
-                        <div class="col-md-6">
-                            <label class="form-selectgroup-item">
-                                <input type="radio" name="report-type" value="1" class="form-selectgroup-input"
-                                    checked />
-                                <span class="form-selectgroup-label d-flex align-items-center p-3">
-                                    <span class="me-3">
-                                        <span class="form-selectgroup-check"></span>
-                                    </span>
-                                    <span class="form-selectgroup-label-content">
-                                        <span class="form-selectgroup-title strong mb-1">PINTEX</span>
-                                    </span>
-                                </span>
-                            </label>
-                        </div>
-                        <div class="col-md-6">
-                            <label class="form-selectgroup-item">
-                                <input type="radio" name="report-type" value="1"
-                                    class="form-selectgroup-input" />
-                                <span class="form-selectgroup-label d-flex align-items-center p-3">
-                                    <span class="me-3">
-                                        <span class="form-selectgroup-check"></span>
-                                    </span>
-                                    <span class="form-selectgroup-label-content">
-                                        <span class="form-selectgroup-title strong mb-1">TFI</span>
-                                    </span>
-                                </span>
-                            </label>
-                        </div>
-                    </div>
-                    <div class="mb-3">
-                        <label class="form-label">Lowongan</label>
-                        <input type="text" class="form-control" name="example-text-input"
-                            placeholder="Your report name" />
-                    </div>
-                </div>
-                <div class="modal-body">
-                    <div class="row">
-                        <div class="col-lg-6">
-                            <div class="mb-3">
-                                <label class="form-label">Tanggal Buka</label>
-                                <input type="date" class="form-control" />
-                            </div>
-                        </div>
-                        <div class="col-lg-6">
-                            <div class="mb-3">
-                                <label class="form-label">Tanggal Tutup</label>
-                                <input type="date" class="form-control" />
-                            </div>
-                        </div>
-                        <div class="col-lg-12">
-                            <div>
-                                <label class="form-label">Keterangan</label>
-                                <textarea class="form-control" rows="3"></textarea>
-                            </div>
-                            <div class="mb-3">
-                                <div class="form-label">Foto</div>
-                                <input type="file" class="form-control" />
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <div class="modal-footer">
-                    <a href="#" class="btn btn-link link-secondary" data-bs-dismiss="modal">
-                        Cancel
-                    </a>
-                    <a href="#" class="btn btn-primary ms-auto" data-bs-dismiss="modal">
-                        <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-plus" width="24"
-                            height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none"
-                            stroke-linecap="round" stroke-linejoin="round">
-                            <path stroke="none" d="M0 0h24v24H0z" fill="none"></path>
-                            <path d="M12 5l0 14"></path>
-                            <path d="M5 12l14 0"></path>
-                        </svg>
-                        Create new vacancies
-                    </a>
-                </div>
-            </div>
-        </div>
-    </div>
-    {{-- end modal edit lowongan --}}
 
     <script>
         const fotoInput = document.querySelector('input[type="file"]');

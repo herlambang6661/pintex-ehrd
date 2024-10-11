@@ -165,12 +165,12 @@
 
             <div class="container">
                 <div class="row mt-4">
-                    <form action="{{ route('lowongan.store') }}" method="post">
+                    <form action="{{ route('lowongan.update', $lwn->id) }}" method="post">
                         @csrf
                         <div class="col-md-12">
                             <div class="card">
                                 <div class="card-header">
-                                    <h3 class="card-title">Form Tambah Lowongan Pekerjaan</h3>
+                                    <h3 class="card-title">Form Edit Lowongan Pekerjaan</h3>
                                 </div>
                                 <div class="card-body">
                                     <div class="row row-cards">
@@ -179,19 +179,21 @@
                                                 <label class="form-label">Entitas</label>
                                                 <input type="text" name="entitas" id="entitas"
                                                     class="form-control bg-secondary-lt cursor-not-allowed" readonly
-                                                    value="PINTEX">
+                                                    value="{{ old('entitas', $lwn->entitas) }}">
                                             </div>
                                         </div>
                                         <div class="col-sm-6 col-md-3">
                                             <div class="mb-3">
                                                 <label class="form-label">Tanggal Buka</label>
-                                                <input type="date" name="tglbuka" id="tglbuka" class="form-control">
+                                                <input type="date" name="tglbuka" id="tglbuka" class="form-control"
+                                                    value="{{ old('tglbuka', $lwn->tgl_buka) }}">
                                             </div>
                                         </div>
                                         <div class="col-sm-6 col-md-4">
                                             <div class="mb-3">
                                                 <label class="form-label">Tanggal Tutup</label>
-                                                <input type="date" name="tgltutup" id="tgltutup" class="form-control">
+                                                <input type="date" name="tgltutup" id="tgltutup" class="form-control"
+                                                    value="{{ old('tgltutup', $lwn->tgl_tutup) }}">
                                             </div>
                                         </div>
                                         <div class="col-md-3">
@@ -201,7 +203,8 @@
                                                 <div>
                                                     <label class="form-check form-check-inline">
                                                         <input type="checkbox" name="tdkadatgl" id="tdkadatgl"
-                                                            class="form-check-input" value="0">
+                                                            class="form-check-input" value="1"
+                                                            {{ old('tdkadatgl', $lwn->unlimited) ? 'checked' : '' }}>
                                                         <span class="form-check-label">Tdk Ada Batas Tanggal</span>
                                                     </label>
                                                 </div>
@@ -211,14 +214,16 @@
                                             <div class="mb-3">
                                                 <label class="form-label">Lowongan Untuk</label>
                                                 <input type="text" name="lowongan" id="lowongan" class="form-control"
-                                                    placeholder="Operator Produksi, Helper Gudang">
+                                                    placeholder="Operator Produksi, Helper Gudang"
+                                                    value="{{ old('lowongan', $lwn->posisi) }}">
                                             </div>
                                         </div>
                                         <div class="col-sm-6 col-md-6">
                                             <div class="mb-3">
                                                 <label class="form-label">Pendidikan Minimal</label>
                                                 <input type="text" name="pendidikan" id="pendidikan" class="form-control"
-                                                    placeholder="SD, SMP, SMA, D3, S1">
+                                                    placeholder="SD, SMP, SMA, D3, S1"
+                                                    value="{{ old('pendidikan', $lwn->pendidikan) }}">
                                             </div>
                                         </div>
                                         <div class="col-md-4">
@@ -227,22 +232,26 @@
                                                 <div>
                                                     <label class="form-check form-check-inline">
                                                         <input type="checkbox" name="simA" id="simA"
-                                                            class="form-check-input" value="1">
+                                                            class="form-check-input" value="1"
+                                                            {{ old('simA', $lwn->sima) ? 'checked' : '' }}>
                                                         <span class="form-check-label">SIM A</span>
                                                     </label>
                                                     <label class="form-check form-check-inline">
                                                         <input type="checkbox" name="simB" id="simB"
-                                                            class="form-check-input" value="1">
+                                                            class="form-check-input" value="1"
+                                                            {{ old('simB', $lwn->simb) ? 'checked' : '' }}>
                                                         <span class="form-check-label">SIM B</span>
                                                     </label>
                                                     <label class="form-check form-check-inline">
                                                         <input type="checkbox" name="simB2" id="simB2"
-                                                            class="form-check-input" value="1">
+                                                            class="form-check-input" value="1"
+                                                            {{ old('simB2', $lwn->simb2) ? 'checked' : '' }}>
                                                         <span class="form-check-label">SIM B2 Umum</span>
                                                     </label>
                                                     <label class="form-check form-check-inline">
                                                         <input type="checkbox" name="sio" id="sio"
-                                                            class="form-check-input" value="1">
+                                                            class="form-check-input" value="1"
+                                                            {{ old('sio', $lwn->sio) ? 'checked' : '' }}>
                                                         <span class="form-check-label">Sertifikat SIO Forklift</span>
                                                     </label>
                                                 </div>
@@ -252,24 +261,7 @@
                                             <div class="mb-3 mb-0">
                                                 <label class="form-label">Requirement Pekerjaan</label>
                                                 <div class="border-success shadow rounded">
-                                                    {{-- <textarea id="open-source-plugins"></textarea> --}}
-                                                    <textarea id="myeditorinstance" name="requirement" id="requirement">
-                                                        <center><b><h1>We Are Hiring!</h1></b></center>
-                                                        <center><b><h2>Operator Produksi</h2></b></center>
-                                                        <br>
-                                                        <b>Qualifications :</b>
-                                                            <ul>
-                                                                <li></li>
-                                                                <li></li>
-                                                            </ul>
-                                                        <br>
-                                                        <b>Job Descriptions :</b>
-                                                            <ul>
-                                                                <li></li>
-                                                                <li></li>
-                                                            </ul>
-                                                    </textarea>
-                                                    {{-- <textarea class="content" name="requirement" id="requirement"></textarea> --}}
+                                                    <textarea id="myeditorinstance" name="requirement" class="form-control" rows="6">{{ old('requirement', $lwn->deskripsi) }}</textarea>
                                                 </div>
                                             </div>
                                         </div>
@@ -278,7 +270,7 @@
                                 <div class="card-footer">
                                     <button type="submit" class="btn btn-primary d-none d-sm-inline-block">
                                         <i class="fa-solid fa-user-plus"></i>
-                                        Simpan
+                                        Update
                                     </button>
                                     <a href="{{ route('penerimaan.lowongan') }}" type="button"
                                         class="btn btn-success d-none d-sm-inline-block">
@@ -289,6 +281,7 @@
                             </div>
                         </div>
                     </form>
+
                 </div>
             </div>
             @include('shared.footer')

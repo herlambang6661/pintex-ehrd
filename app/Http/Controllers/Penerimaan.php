@@ -11,6 +11,7 @@ use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Storage;
 use Symfony\Component\HttpFoundation\Response;
+use App\Models\PenerimaanLowongan;
 
 class Penerimaan extends Controller
 {
@@ -31,6 +32,7 @@ class Penerimaan extends Controller
         $lowongan = "active";
 
         $loker = Loker::simplePaginate(4);
+        // dd($loker);
 
         return view('products.02_penerimaan.lowongan', [
             'judul' => $judul,
@@ -92,6 +94,81 @@ class Penerimaan extends Controller
             // DEBUG IN CASE OF ERROR
             return redirect()->back()->with('error', 'Error with : ' . $e);
         }
+    }
+
+    public function editLowongan($id)
+    {
+        $judul = "Edit Lowongan";
+        $penerimaan = "active";
+        $lowongan = "active";
+
+        $lwn = PenerimaanLowongan::findOrFail($id);
+        return view('products.02_penerimaan.lowonganEdit', [
+            'judul' => $judul,
+            'penerimaan' => $penerimaan,
+            'lowongan' => $lowongan,
+            'lwn' => $lwn
+        ]);
+    }
+
+    public function updateLowongan(Request $request, $id)
+    {
+        // Validate the request
+        $request->validate(
+            [
+                '_token' => 'required',
+                'entitas' => 'required',
+                'lowongan' => 'required',
+                'pendidikan' => 'required',
+                'requirement' => 'required',
+            ],
+            [
+                'entitas.required' => 'Entitas Diperlukan',
+                'lowongan.required' => 'Lowongan Diperlukan',
+                'pendidikan.required' => 'Pendidikan Diperlukan',
+                'requirement.required' => 'Requirement Diperlukan',
+            ]
+        );
+
+        try {
+            $lowongan = DB::table('penerimaan_lowongan')->where('id', $id)->first();
+
+            if (!$lowongan) {
+                return redirect()->back()->with('error', 'Lowongan not found.');
+            }
+
+            DB::table('penerimaan_lowongan')->where('id', $id)->update([
+                'entitas' => $request->entitas,
+                'unlimited' => $request->tdkadatgl,
+                'tgl_buka' => $request->tglbuka,
+                'tgl_tutup' => $request->tgltutup,
+                'posisi' => $request->lowongan,
+                'pendidikan' => $request->pendidikan,
+                'sima' => $request->simA,
+                'simb' => $request->simB,
+                'simb2' => $request->simB2,
+                'sio' => $request->sio,
+                'deskripsi' => $request->requirement,
+                'dibuat' => Auth::user()->name,
+                'updated_at' => date('Y-m-d H:i:s'),
+            ]);
+
+            return redirect()->route('penerimaan.lowongan')->with('success', 'Lowongan Pekerjaan Berhasil Diperbarui.');
+        } catch (\Illuminate\Database\QueryException $e) {
+            // DEBUG IN CASE OF ERROR
+            return redirect()->back()->with('error', 'Error with : ' . $e);
+        }
+    }
+
+    public function updateRelease($id)
+    {
+        $loker = Loker::find($id);
+        if (!$loker) {
+            return redirect()->back()->with('error', 'Loker tidak ditemukan');
+        }
+        $loker->release = $loker->release == 1 ? 0 : 1;
+        $loker->save();
+        return redirect()->back()->with('success', 'Status release berhasil diubah');
     }
     // ======================== END LOWONGAN ==============================================================================================
 

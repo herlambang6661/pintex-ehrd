@@ -206,8 +206,11 @@ Route::controller(ImageController::class)->group(function () {
 Route::controller(Penerimaan::class)->group(function () {
     Route::get('penerimaan/lowongan', 'lowongan')->name('penerimaan.lowongan');
     Route::get('penerimaan/tambahlowongan', 'addLowongan')->name('penerimaan.tambahlowongan');
+    Route::get('penerimaan/editlowongan/{id}', 'editLowongan')->name('penerimaan.editlowongan');
     Route::post('reviewLowongan', 'reviewLowongan');
     Route::post('storeLowongan', 'storeLowongan')->name('lowongan.store');
+    Route::post('updateLowongan/{id}', 'updateLowongan')->name('lowongan.update');
+    Route::post('/update-release/{id}', 'updateRelease')->name('updateRelease');
 
     Route::get('penerimaan/lamaran', 'lamaran')->name('penerimaan/lamaran');
     Route::post('listLamaran', 'listLamaran');
