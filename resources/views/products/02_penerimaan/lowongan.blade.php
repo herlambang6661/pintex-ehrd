@@ -126,19 +126,19 @@
                             <div class="card h-100">
                                 <div class="card-header d-flex justify-content-between align-items-center">
                                     <h2 class="mb-0">{{ $l->posisi }}</h2>
-                                    @if ($l->release == 1)
-                                        <button class="btn" disabled>
-                                            Active <span class="badge bg-blue ms-2"><i class="fa-solid fa-check"></i></span>
-                                        </button>
-                                    @else
-                                        <form action="{{ route('updateRelease', $l->id) }}" method="POST">
-                                            @csrf
-                                            <button class="btn" type="submit">
+                                    <form action="{{ route('updateRelease', $l->id) }}" method="POST">
+                                        @csrf
+                                        <button class="btn" type="submit">
+                                            @if ($l->release == 1)
+                                                Active <span class="badge bg-blue ms-2"><i
+                                                        class="fa-solid fa-check"></i></span>
+                                            @else
                                                 InActive <span class="badge bg-red ms-2"><i
                                                         class="fa-solid fa-xmark"></i></span>
-                                            </button>
-                                        </form>
-                                    @endif
+                                            @endif
+                                        </button>
+                                    </form>
+
                                 </div>
                                 <div class="card-body d-flex justify-content-between align-items-center">
                                     <div>
@@ -164,7 +164,8 @@
                                             </a>
                                         </div>
                                         <div class="col text-center">
-                                            <a href="#" class="text-primary">
+                                            <a href="#" class="text-primary" data-bs-toggle="modal"
+                                                data-bs-target="#modal-show{{ $l->id }}">
                                                 Lihat loker
                                                 <i class="ms-2 fas fa-eye"></i>
                                             </a>
@@ -187,6 +188,73 @@
         </div>
     </div>
 
+    {{-- modal view --}}
+    @foreach ($loker as $l)
+        <div class="modal" id="modal-show{{ $l->id }}" tabindex="-1">
+            <div class="modal-dialog modal-xl" role="document">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title">{{ $judul }}</h5>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    </div>
+                    <div class="modal-body">
+                        <div class="container">
+                            <div class="row mt-4">
+                                <div class="col-lg-12">
+                                    <!-- Details -->
+                                    <div class="card mb-4">
+                                        <div class="card-body">
+                                            <div class="mb-4 d-flex justify-content-between">
+                                                <div>
+                                                    <span class="badge rounded-pill bg-info mb-2">
+                                                        <span class="mdi mdi-account-hard-hat"></span>
+                                                        {{ $l->posisi }}
+                                                    </span>
+                                                    <span class="badge rounded-pill bg-warning mb-2">
+                                                        <span class="mdi mdi-clipboard-text-clock"></span>
+                                                        {{ $l->unlimited == 1 ? 'Tidak ada batas tanggal' : date('d/m/Y', strtotime($l->tgl_buka)) . ' s/d ' . date('d/m/Y', strtotime($l->tgl_tutup)) }}
+                                                    </span>
+                                                    <span class="mb-2 badge rounded-pill bg-success">
+                                                        <span class="mdi mdi-school"></span>
+                                                        {{ $l->pendidikan }}
+                                                    </span>
+                                                </div>
+                                                {{-- <div class=" badge rounded-pill bg-primary">
+                                            <span class="mdi mdi-factory"></span>
+                                            PT {{ $l->entitas }}
+                                        </div> --}}
+                                            </div>
+                                            <div class="mb-5 p-4">
+                                                {!! $l->deskripsi !!}
+                                            </div>
+                                            @if ($l->unlimited != 1)
+                                                <div class="mb-0 d-flex justify-content-between">
+                                                    <div>
+                                                        <span class="me-3 badge rounded-pill bg-danger">
+                                                            <span class="mdi mdi-timer-alert-outline"></span>
+                                                            Ditutup
+                                                            {{ \Carbon\Carbon::parse($l->tgl_tutup)->diffForHumans() }}
+                                                        </span>
+                                                    </div>
+                                                </div>
+                                            @endif
+                                        </div>
+                                    </div>
+                                </div>
+
+                            </div>
+                        </div>
+                    </div>
+                    <div class="modal-footer">
+                        <a href="#" class="btn btn-link link-secondary" data-bs-dismiss="modal">
+                            Cancel
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    @endforeach
+    {{-- end modal view --}}
     <script>
         const fotoInput = document.querySelector('input[type="file"]');
         fotoInput.addEventListener('change', function() {
