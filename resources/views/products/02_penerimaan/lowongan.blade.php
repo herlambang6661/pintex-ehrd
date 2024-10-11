@@ -151,7 +151,7 @@
                                         {{ $l->sio == 0 ? '' : '- Sertifikat SIO Forklift Dibutuhkan' }}
                                     </div>
                                     <div style="max-width: 100px; max-height: 100px; margin-left: 15px;">
-                                        <img src="{{ asset('assets/static/avatars/5.jpeg') }}" class="img-fluid rounded"
+                                        <img src="{{ Storage::url($l->image) }}" class="img-fluid rounded"
                                             style="object-fit: cover; width: 100%; height: 100%;" alt="Job Image 1">
                                     </div>
                                 </div>

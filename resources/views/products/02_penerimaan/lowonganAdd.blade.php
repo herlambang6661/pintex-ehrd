@@ -165,7 +165,7 @@
 
             <div class="container">
                 <div class="row mt-4">
-                    <form action="{{ route('lowongan.store') }}" method="post">
+                    <form action="{{ route('lowongan.store') }}" method="post" enctype="multipart/form-data">
                         @csrf
                         <div class="col-md-12">
                             <div class="card">
@@ -221,6 +221,18 @@
                                                     placeholder="SD, SMP, SMA, D3, S1">
                                             </div>
                                         </div>
+                                        <div class="col-sm-8 col-md-6">
+                                            <div class="form-label">Foto</div>
+                                            <input type="file" class="form-control" name="image" id="imageInput"
+                                                onchange="previewImage(event)" />
+                                            <div class="img-preview-container" id="imgPreviewContainer"
+                                                style="display: none;">
+                                                <img id="imgPreview" class="img-preview" />
+                                                <button type="button" class="remove-img-btn"
+                                                    onclick="removeImage()">X</button>
+                                            </div>
+                                        </div>
+
                                         <div class="col-md-4">
                                             <div class="mb-3">
                                                 <label class="form-label">Dokumen Tambahan</label>
@@ -314,5 +326,33 @@
                 document.getElementById('tdkadatgl').value = "0";
             }
         });
+    </script>
+    <script>
+        function previewImage(event) {
+            const imageInput = document.getElementById('imageInput');
+            const imgPreviewContainer = document.getElementById('imgPreviewContainer');
+            const imgPreview = document.getElementById('imgPreview');
+
+            if (imageInput.files && imageInput.files[0]) {
+                const reader = new FileReader();
+
+                reader.onload = function(e) {
+                    imgPreview.src = e.target.result;
+                    imgPreviewContainer.style.display = 'inline-block';
+                };
+
+                reader.readAsDataURL(imageInput.files[0]);
+            }
+        }
+
+        function removeImage() {
+            const imageInput = document.getElementById('imageInput');
+            const imgPreviewContainer = document.getElementById('imgPreviewContainer');
+            const imgPreview = document.getElementById('imgPreview');
+
+            imageInput.value = '';
+            imgPreview.src = '';
+            imgPreviewContainer.style.display = 'none';
+        }
     </script>
 @endsection

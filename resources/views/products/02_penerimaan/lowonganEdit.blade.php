@@ -165,7 +165,7 @@
 
             <div class="container">
                 <div class="row mt-4">
-                    <form action="{{ route('lowongan.update', $lwn->id) }}" method="post">
+                    <form action="{{ route('lowongan.update', $lwn->id) }}" method="post" enctype="multipart/form-data">
                         @csrf
                         <div class="col-md-12">
                             <div class="card">
@@ -221,9 +221,28 @@
                                         <div class="col-sm-6 col-md-6">
                                             <div class="mb-3">
                                                 <label class="form-label">Pendidikan Minimal</label>
-                                                <input type="text" name="pendidikan" id="pendidikan" class="form-control"
-                                                    placeholder="SD, SMP, SMA, D3, S1"
+                                                <input type="text" name="pendidikan" id="pendidikan"
+                                                    class="form-control" placeholder="SD, SMP, SMA, D3, S1"
                                                     value="{{ old('pendidikan', $lwn->pendidikan) }}">
+                                            </div>
+                                        </div>
+                                        <div class="col-sm-8 col-md-6">
+                                            <div class="form-label">Foto</div>
+                                            <input type="file" class="form-control" name="image" id="imageInput"
+                                                onchange="previewImage(event)" />
+                                            @if ($lwn->image)
+                                                <img src="{{ asset('storage/' . $lwn->image) }}" alt="Current Image"
+                                                    id="currentImage" class="img-preview"
+                                                    style="max-width: 150px; max-height: 150px;">
+                                                <button type="button" class="remove-img-btn"
+                                                    onclick="removeImage()">X</button>
+                                            @endif
+                                            <div class="img-preview-container" id="imgPreviewContainer"
+                                                style="display: none;">
+                                                <img id="imgPreview" class="img-preview"
+                                                    style="max-width: 150px; max-height: 150px;" />
+                                                <button type="button" class="remove-img-btn"
+                                                    onclick="removeImage()">X</button>
                                             </div>
                                         </div>
                                         <div class="col-md-4">
@@ -307,5 +326,26 @@
                 document.getElementById('tdkadatgl').value = "0";
             }
         });
+
+        function previewImage(event) {
+            const imgPreviewContainer = document.getElementById('imgPreviewContainer');
+            const imgPreview = document.getElementById('imgPreview');
+            imgPreviewContainer.style.display = 'block';
+            imgPreview.src = URL.createObjectURL(event.target.files[0]);
+        }
+
+        function removeImage() {
+            const imgPreviewContainer = document.getElementById('imgPreviewContainer');
+            const imgPreview = document.getElementById('imgPreview');
+            const currentImage = document.getElementById('currentImage');
+
+            imgPreviewContainer.style.display = 'none';
+
+            document.getElementById('imageInput').value = '';
+
+            if (currentImage) {
+                currentImage.style.display = 'none';
+            }
+        }
     </script>
 @endsection

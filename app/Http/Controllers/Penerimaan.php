@@ -62,16 +62,29 @@ class Penerimaan extends Controller
                 'lowongan' => 'required',
                 'pendidikan' => 'required',
                 'requirement' => 'required',
+                'image' => 'required|image|mimes:jpeg,png,jpg,gif|max:2048',
             ],
             [
                 'entitas.required' => 'Entitas Diperlukan',
                 'lowongan.required' => 'Lowongan Diperlukan',
                 'pendidikan.required' => 'Pendidikan Diperlukan',
                 'requirement.required' => 'Requirement Diperlukan',
+                'image.image' => 'File yang diunggah harus berupa gambar',
+                'image.mimes' => 'Format gambar harus jpeg, png, jpg, atau gif',
+                'image.max' => 'Ukuran gambar maksimal 2MB',
             ]
         );
 
         try {
+            $imagePath = null;
+            if ($request->hasFile('image')) {
+                $image = $request->file('image');
+                $imagePath = $image->storeAs(
+                    'lowongan_images',
+                    uniqid() . '.' . $image->getClientOriginalExtension(),
+                    'public'
+                );
+            }
 
             $check = DB::table('penerimaan_lowongan')->insert([
                 'entitas' => $request->entitas,
@@ -85,10 +98,12 @@ class Penerimaan extends Controller
                 'simb2' => $request->simB2,
                 'sio' => $request->sio,
                 'deskripsi' => $request->requirement,
+                'image' => $imagePath,
                 'release' => 0,
                 'dibuat' => Auth::user()->name,
                 'created_at' => date('Y-m-d H:i:s'),
             ]);
+
             return redirect()->route('penerimaan.lowongan')->with('success', 'Lowongan Pekerjaan Berhasil Dibuat, silahkan mengaktifkan untuk Loker bisa dilihat oleh kandidat');
         } catch (\Illuminate\Database\QueryException $e) {
             // DEBUG IN CASE OF ERROR
@@ -121,12 +136,16 @@ class Penerimaan extends Controller
                 'lowongan' => 'required',
                 'pendidikan' => 'required',
                 'requirement' => 'required',
+                'image' => 'required|image|mimes:jpeg,png,jpg,gif|max:2048',
             ],
             [
                 'entitas.required' => 'Entitas Diperlukan',
                 'lowongan.required' => 'Lowongan Diperlukan',
                 'pendidikan.required' => 'Pendidikan Diperlukan',
                 'requirement.required' => 'Requirement Diperlukan',
+                'image.image' => 'File yang diunggah harus berupa gambar',
+                'image.mimes' => 'Format gambar harus jpeg, png, jpg, atau gif',
+                'image.max' => 'Ukuran gambar maksimal 2MB',
             ]
         );
 
@@ -135,6 +154,17 @@ class Penerimaan extends Controller
 
             if (!$lowongan) {
                 return redirect()->back()->with('error', 'Lowongan not found.');
+            }
+
+            $imagePath = $lowongan->image;
+
+            if ($request->hasFile('image')) {
+                $image = $request->file('image');
+                $imagePath = $image->storeAs(
+                    'lowongan_images',
+                    uniqid() . '.' . $image->getClientOriginalExtension(),
+                    'public'
+                );
             }
 
             DB::table('penerimaan_lowongan')->where('id', $id)->update([
@@ -148,6 +178,7 @@ class Penerimaan extends Controller
                 'simb' => $request->simB,
                 'simb2' => $request->simB2,
                 'sio' => $request->sio,
+                'image' => $imagePath,
                 'deskripsi' => $request->requirement,
                 'dibuat' => Auth::user()->name,
                 'updated_at' => date('Y-m-d H:i:s'),
