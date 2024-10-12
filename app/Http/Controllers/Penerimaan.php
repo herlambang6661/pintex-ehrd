@@ -31,7 +31,7 @@ class Penerimaan extends Controller
         $penerimaan = "active";
         $lowongan = "active";
 
-        $loker = Loker::simplePaginate(4);
+        $loker = Loker::simplePaginate(6);
 
         return view('products.02_penerimaan.lowongan', [
             'judul' => $judul,
@@ -75,13 +75,11 @@ class Penerimaan extends Controller
         );
 
         try {
-            $imagePath = null;
-            if ($request->hasFile('image')) {
-                $image = $request->file('image');
-                $imageName = uniqid() . '.' . $image->getClientOriginalExtension();
-                $image->storeAs('', $imageName, 'public');
-                $imagePath = $imageName;
-            }
+            // Generate a random filename for the image
+            $randomFileName = uniqid() . '.' . $request->file('image')->getClientOriginalExtension();
+
+            // Store the uploaded image in the storage directory
+            $imagePath = $request->file('image')->storeAs('', $randomFileName, 'public');
 
             $check = DB::table('penerimaan_lowongan')->insert([
                 'entitas' => $request->entitas,
@@ -94,8 +92,8 @@ class Penerimaan extends Controller
                 'simb' => $request->simB,
                 'simb2' => $request->simB2,
                 'sio' => $request->sio,
-                'deskripsi' => $request->requirement,
                 'image' => $imagePath,
+                'deskripsi' => $request->requirement,
                 'release' => 0,
                 'dibuat' => Auth::user()->name,
                 'created_at' => now(),
@@ -184,7 +182,6 @@ class Penerimaan extends Controller
         }
     }
 
-
     public function updateRelease($id)
     {
         $loker = Loker::find($id);
@@ -195,6 +192,24 @@ class Penerimaan extends Controller
         $loker->save();
         return redirect()->back()->with('success', 'Status release berhasil diubah');
     }
+
+    public function destroyLowongan(Request $request, $id)
+    {
+        try {
+            $lowongan = DB::table('penerimaan_lowongan')->where('id', $id)->first();
+            if (!$lowongan) {
+                return redirect()->back()->with('error', 'Lowongan tidak ditemukan.');
+            }
+            if ($lowongan->image) {
+                Storage::disk('public')->delete($lowongan->image);
+            }
+            DB::table('penerimaan_lowongan')->where('id', $id)->delete();
+            return redirect()->back()->with('success', 'Lowongan Pekerjaan Berhasil Dihapus.');
+        } catch (\Exception $e) {
+            return redirect()->back()->with('error', 'Terjadi kesalahan: ' . $e->getMessage());
+        }
+    }
+
     // ======================== END LOWONGAN ==============================================================================================
 
     // ======================== START LAMARAN ==============================================================================================

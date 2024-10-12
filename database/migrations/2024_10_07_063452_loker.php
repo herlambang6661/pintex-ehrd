@@ -13,7 +13,7 @@ return new class extends Migration
     {
         Schema::create('penerimaan_lowongan', function (Blueprint $table) {
             $table->id();
-            $table->longText('image')->charset('binary');
+            $table->string('image')->charset('binary');
             $table->string('entitas')->nullable();
             $table->tinyInteger('unlimited')->nullable();
             $table->date('tgl_buka')->nullable();

@@ -211,6 +211,7 @@ Route::controller(Penerimaan::class)->group(function () {
     Route::post('storeLowongan', 'storeLowongan')->name('lowongan.store');
     Route::post('updateLowongan/{id}', 'updateLowongan')->name('lowongan.update');
     Route::post('/update-release/{id}', 'updateRelease')->name('updateRelease');
+    Route::delete('destroylowongan/{id}', 'destroyLowongan')->name('lowongan.destroy');
 
     Route::get('penerimaan/lamaran', 'lamaran')->name('penerimaan/lamaran');
     Route::post('listLamaran', 'listLamaran');
