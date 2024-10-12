@@ -32,7 +32,6 @@ class Penerimaan extends Controller
         $lowongan = "active";
 
         $loker = Loker::simplePaginate(4);
-        // dd($loker);
 
         return view('products.02_penerimaan.lowongan', [
             'judul' => $judul,
@@ -79,11 +78,9 @@ class Penerimaan extends Controller
             $imagePath = null;
             if ($request->hasFile('image')) {
                 $image = $request->file('image');
-                $imagePath = $image->storeAs(
-                    'lowongan_images',
-                    uniqid() . '.' . $image->getClientOriginalExtension(),
-                    'public'
-                );
+                $imageName = uniqid() . '.' . $image->getClientOriginalExtension();
+                $image->storeAs('', $imageName, 'public');
+                $imagePath = $imageName;
             }
 
             $check = DB::table('penerimaan_lowongan')->insert([
@@ -101,15 +98,15 @@ class Penerimaan extends Controller
                 'image' => $imagePath,
                 'release' => 0,
                 'dibuat' => Auth::user()->name,
-                'created_at' => date('Y-m-d H:i:s'),
+                'created_at' => now(),
             ]);
 
             return redirect()->route('penerimaan.lowongan')->with('success', 'Lowongan Pekerjaan Berhasil Dibuat, silahkan mengaktifkan untuk Loker bisa dilihat oleh kandidat');
         } catch (\Illuminate\Database\QueryException $e) {
-            // DEBUG IN CASE OF ERROR
-            return redirect()->back()->with('error', 'Error with : ' . $e);
+            return redirect()->back()->with('error', 'Error with : ' . $e->getMessage());
         }
     }
+
 
     public function editLowongan($id)
     {
@@ -128,7 +125,6 @@ class Penerimaan extends Controller
 
     public function updateLowongan(Request $request, $id)
     {
-        // Validate the request
         $request->validate(
             [
                 '_token' => 'required',
@@ -136,7 +132,7 @@ class Penerimaan extends Controller
                 'lowongan' => 'required',
                 'pendidikan' => 'required',
                 'requirement' => 'required',
-                'image' => 'required|image|mimes:jpeg,png,jpg,gif|max:2048',
+                'image' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:2048', // Ubah menjadi nullable
             ],
             [
                 'entitas.required' => 'Entitas Diperlukan',
@@ -153,18 +149,16 @@ class Penerimaan extends Controller
             $lowongan = DB::table('penerimaan_lowongan')->where('id', $id)->first();
 
             if (!$lowongan) {
-                return redirect()->back()->with('error', 'Lowongan not found.');
+                return redirect()->back()->with('error', 'Lowongan tidak ditemukan.');
             }
 
             $imagePath = $lowongan->image;
 
             if ($request->hasFile('image')) {
                 $image = $request->file('image');
-                $imagePath = $image->storeAs(
-                    'lowongan_images',
-                    uniqid() . '.' . $image->getClientOriginalExtension(),
-                    'public'
-                );
+                $imageName = uniqid() . '.' . $image->getClientOriginalExtension();
+                $image->storeAs('', $imageName, 'public');
+                $imagePath = $imageName;
             }
 
             DB::table('penerimaan_lowongan')->where('id', $id)->update([
@@ -181,15 +175,15 @@ class Penerimaan extends Controller
                 'image' => $imagePath,
                 'deskripsi' => $request->requirement,
                 'dibuat' => Auth::user()->name,
-                'updated_at' => date('Y-m-d H:i:s'),
+                'updated_at' => now(),
             ]);
 
             return redirect()->route('penerimaan.lowongan')->with('success', 'Lowongan Pekerjaan Berhasil Diperbarui.');
         } catch (\Illuminate\Database\QueryException $e) {
-            // DEBUG IN CASE OF ERROR
-            return redirect()->back()->with('error', 'Error with : ' . $e);
+            return redirect()->back()->with('error', 'Error with : ' . $e->getMessage());
         }
     }
+
 
     public function updateRelease($id)
     {
