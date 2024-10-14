@@ -14,13 +14,13 @@
 
         td.cuspad2 {
             /* padding-top: 0.5px;
-                                                                                                                                                                                                                                                                                                                                padding-bottom: 0.5px;
-                                                                                                                                                                                                                                                                                                                                padding-right: 0.5px;
-                                                                                                                                                                                                                                                                                                                                padding-left: 0.5px;
-                                                                                                                                                                                                                                                                                                                                margin-top: 5px;
-                                                                                                                                                                                                                                                                                                                                margin-bottom: 5px;
-                                                                                                                                                                                                                                                                                                                                margin-right: 5px;
-                                                                                                                                                                                                                                                                                                                                margin-left: 5px; */
+                                                                                                                                                                                                                                                                                                                                    padding-bottom: 0.5px;
+                                                                                                                                                                                                                                                                                                                                    padding-right: 0.5px;
+                                                                                                                                                                                                                                                                                                                                    padding-left: 0.5px;
+                                                                                                                                                                                                                                                                                                                                    margin-top: 5px;
+                                                                                                                                                                                                                                                                                                                                    margin-bottom: 5px;
+                                                                                                                                                                                                                                                                                                                                    margin-right: 5px;
+                                                                                                                                                                                                                                                                                                                                    margin-left: 5px; */
         }
 
         .unselectable {
@@ -312,7 +312,7 @@
                                                             <tr>
                                                                 <td>Fingerprint</td>
                                                                 <td class="text-secondary">
-                                                                    {{-- {{ number_format($count_finger_access, 0, ',', '.') }} --}}
+                                                                    {{ number_format($count_finger_access, 0, ',', '.') }}
                                                                 </td>
                                                                 <td class="text-secondary">
                                                                     {{ number_format($count_finger_local, 0, ',', '.') }}

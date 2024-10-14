@@ -25,18 +25,25 @@ class DBLokal extends Controller
 
     public function mesinfinger()
     {
-        // try {
         $judul = "DB Lokal";
         $absensi = "active";
         $list = "active";
 
         $count_user_server = DB::table('access_userinfo')->count();
         $count_user_local = DB::connection('mysql_local')->table('access_userinfo')->count();
-        $count_user_access = DB::connection('odbc')->table('USERINFO')->count();
+        try {
+            $count_user_access = DB::connection('odbc')->table('USERINFO')->count();
+        } catch (\Exception $e) {
+            $count_user_access = 0;
+        }
+        try {
+            $count_finger_access = DB::connection('odbc')->table('CHECKINOUT')->count();
+        } catch (\Throwable $th) {
+            $count_finger_access = 0;
+        }
 
         $count_finger_server = DB::table('access_checkinout')->count();
         $count_finger_local = DB::connection('mysql_local')->table('access_checkinout')->count();
-        // $count_finger_access = DB::connection('odbc')->table('CHECKINOUT')->count();
 
         $count_absen_server = DB::table('absensi_absensi')->count();
         $count_absen_local = DB::connection('mysql_local')->table('absensi_absensi')->count();
@@ -50,14 +57,11 @@ class DBLokal extends Controller
             'count_user_access' => $count_user_access,
             'count_finger_server' => $count_finger_server,
             'count_finger_local' => $count_finger_local,
-            // 'count_finger_access' => $count_finger_access,
+            'count_finger_access' => $count_finger_access,
             'count_absen_server' => $count_absen_server,
             'count_absen_local' => $count_absen_local,
             'count_absen_access' => 0,
         ]);
-        // } catch (\Exception $e) {
-        //     return response()->view('errors.404', ['message' => 'Tidak bisa menemukan Driver, Mohon cek Mysql ODBC atau file access anda (.mdb)'], 404);
-        // }
     }
 
     public function loading()

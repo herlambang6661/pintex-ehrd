@@ -229,7 +229,7 @@
                                         <div class="col-sm-8 col-md-6">
                                             <div class="form-label">Foto</div>
                                             <input type="file" class="form-control" name="image" id="imageInput"
-                                                onchange="previewImage(event)" />
+                                                onchange="previewImage(event)" accept="image/*" />
                                             @if ($lwn->image)
                                                 <img src="{{ asset('storage/' . $lwn->image) }}" alt="Current Image"
                                                     id="currentImage" class="img-preview"
