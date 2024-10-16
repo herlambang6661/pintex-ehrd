@@ -1362,6 +1362,7 @@ class Absensi extends Controller
     {
         if ($request->input('jns') == "alpa") {
             $getAlpa = DB::table('absensi_absensi as a')
+                ->select('a.*', 'a.id as idabsensi', 'k.jabatan', 'k.bagian', 'k.profesi')
                 ->join('penerimaan_karyawan as k', 'a.userid', '=', 'k.userid')
                 ->where('a.sst', '=', 'A')
                 ->whereNull('a.koreksi')
@@ -1387,6 +1388,7 @@ class Absensi extends Controller
             ]);
         } elseif ($request->jns == "f1f2") {
             $getF1 = DB::table('absensi_absensi as a')
+                ->select('a.*', 'a.id as idabsensi', 'k.jabatan', 'k.bagian', 'k.profesi')
                 ->join('penerimaan_karyawan as k', 'a.userid', '=', 'k.userid')
                 ->whereNull('a.koreksi')
                 ->whereIn('a.sst', ['F1', 'F2', '½'])
@@ -1462,5 +1464,242 @@ class Absensi extends Controller
             ->orderBy('a.tanggal', 'asc')
             ->get();
         return view('products/03_absensi.printDetailAbsen', ['karyawan' => $karyawan, 'absensi' => $absensi]);
+    }
+
+    public function checkProses(Request $request)
+    {
+        if (empty($request->id)) {
+            echo '
+                    <div class="alert alert-danger" role="alert">
+                        <div class="d-flex">
+                            <div>
+                                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="icon alert-icon"><path stroke="none" d="M0 0h24v24H0z" fill="none"></path><path d="M3 12a9 9 0 1 0 18 0a9 9 0 0 0 -18 0"></path><path d="M12 8v4"></path><path d="M12 16h.01"></path></svg>
+                            </div>
+                            <div>
+                                Tidak Ada Item yang dipilih
+                            </div>
+                        </div>
+                    </div>
+                ';
+        } else {
+            echo '
+            <div class="row">
+                <div class="col-lg-3 mb-3">
+                    <label class="form-label">Tipe Proses</label>
+                    <select name="tipeUbah" id="tipeUbah" class="form-select border-dark">
+                        <option value="" hidden>Pilih Tipe</option>
+                        <option value="H">Hadir</option>
+                        <option value="½">Potong F1</option>
+                    </select>
+                </div>
+                <div class="col-lg-6">
+                    <label class="form-label">Keterangan</label>
+                    <input type="text" class="form-control border border-dark" name="ket" id="ket" placeholder="Masukkan Keterangan">
+                </div>
+                <div class="col-lg-12">
+                    <div class="table-responsive">
+                        <table class="table table-sm table-bordered table-striped mb-0 table-hover text-nowrap border border-dark">
+                            <thead>
+                                <tr>
+                                    <th class="text-center">No</th>
+                                    <th class="text-center">Tanggal</th>
+                                    <th class="text-center">STB</th>
+                                    <th class="text-center">Nama</th>
+                                    <th class="text-center">IN</th>
+                                    <th class="text-center">OUT</th>
+                                    <th class="text-center">Hari Libur</th>
+                                    <th class="text-center">Set. Hari</th>
+                                    <th class="text-center">Grup</th>
+                                    <th class="text-center">Bagian</th>
+                                    <th class="text-center">SST</th>
+                                </tr>
+                            </thead>
+                            <tbody>';
+            $no = 1;
+            $jml = count($request->id);
+            for ($i = 0; $i < $jml; $i++) {
+                $karyawan = DB::table('absensi_absensi as a')
+                    ->where('a.id', $request->id[$i])
+                    ->get();
+                foreach ($karyawan as $k) {
+                    echo '
+                            <input type="hidden" name="idabsen[]" value="' . $k->id . '">
+                            <input type="hidden" name="userid[]" value="' . $k->userid . '">
+                                    <tr>
+                                        <td class="text-center">' . $no . '</td>
+                                        <td class="text-center">' . $k->tanggal . '</td>
+                                        <td class="text-center">' . $k->stb . '</td>
+                                        <td class="">' . $k->name . '</td>
+                                        <td class="text-center">' . $k->in . '</td>
+                                        <td class="text-center">' . $k->out . '</td>
+                                        <td class="text-center">' . $k->hrlibur . '</td>
+                                        <td class="text-center">' . $k->sethari . '</td>
+                                        <td class="text-center">' . $k->grup . '</td>
+                                        <td class="text-center">' . $k->bagian . '</td>
+                                        <td class="text-center">' . $k->sst . '</td>
+                                    </tr>';
+                    $no++;
+                }
+            }
+            echo '
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        ';
+        }
+    }
+
+    public function storedataF1(Request $request)
+    {
+        $request->validate(
+            [
+                '_token'    => 'required',
+                'tipeUbah'  => 'required',
+                'ket'       => 'required',
+                "idabsen"   => "required",
+                "userid"    => "required",
+                // "name.*"  => "required|string|distinct|min:3",
+            ],
+            [
+                'tipeUbah.required' => 'Tipe Proses Diperlukan',
+                'ket.required' => 'Keterangan Diperlukan',
+                'idabsen.required' => 'ID Absen Diperlukan',
+                'userid.required' => 'Userid Diperlukan',
+            ]
+        );
+        try {
+            // Generate Komunikasi
+            $noform = 'K' . date('y') . "0001";
+            $checknoform = DB::table('absensi_komunikasi')
+                ->orderBy('noform', 'desc')
+                ->first();
+            $noform = $checknoform->noform;
+            $y = substr($noform, 1, 2);
+            if (date('y') == $y) {
+                $noUrut = substr($noform, 3, 4);
+                $na = $noUrut + 1;
+                $char = date('y');
+                $kodeSurat = "K" . $char . sprintf("%04s", $na);
+            } else {
+                $kodeSurat = "K" . date('y') . "0001";
+            }
+            // Insert Komunikasi
+            $check = DB::table('absensi_komunikasi')->insert([
+                'entitas' => 'PINTEX',
+                'noform' => $kodeSurat,
+                'tanggal' => date('Y-m-d'),
+                'dibuat' => Auth::user()->name,
+                'keteranganform' => $request->ket,
+                'created_at' => date('Y-m-d H:i:s'),
+            ]);
+            $jml = count($request->idabsen);
+            // Jika Tipe yang dipilih ½ maka akan create komunikasi F1
+            if ($request->tipeUbah == '½') {
+                // pengulangan berdasarkan banyaknya absen yang dipilih
+                for ($i = 0; $i < $jml; $i++) {
+                    // ambil data absensi
+                    $dataAbs = DB::table('absensi_absensi')
+                        ->where('id', $request->idabsen[$i])
+                        ->first();
+                    // update absensi
+                    $check = DB::table('absensi_absensi')
+                        ->where('id', '=', $request->idabsen[$i])
+                        ->update([
+                            'sst' => $request->tipeUbah,
+                            'koreksi' => 1,
+                            'updated_at' => date('Y-m-d H:i:s'),
+                        ]);
+                    // insert ke absensi komunikasiitm
+                    $check2 = DB::table('absensi_komunikasiitm')->insert([
+                        'entitas' => 'PINTEX',
+                        'noform' => $kodeSurat,
+                        'tanggal' => $dataAbs->tanggal,
+                        'tanggal2' => $dataAbs->tanggal,
+                        'userid' => $dataAbs->userid,
+                        'nama' => $dataAbs->name,
+                        'suratid' => 'Surat Izin Setengah Hari',
+                        'sst' => '½',
+                        'keterangan' => $request->ket,
+                        'dibuat' => Auth::user()->name,
+                        'statussurat' => "ACC",
+                        'created_at' => date('Y-m-d H:i:s'),
+                    ]);
+                    // insert ke absensi komunikasiacc
+                    $check3 = DB::table('absensi_komunikasiacc')->insert([
+                        'entitas' => 'PINTEX',
+                        'noform' => $kodeSurat,
+                        'tanggal' => $dataAbs->tanggal,
+                        'tanggal2' => null,
+                        'userid' => $dataAbs->userid,
+                        'nama' => $dataAbs->name,
+                        'suratid' => 'Surat Izin Setengah Hari',
+                        'sst' => '½',
+                        'ket_acc' => $request->ket,
+                        'keterangan' => $request->ket,
+                        'dibuat' => Auth::user()->name,
+                        'statussurat' => "ACC",
+                        'created_at' => date('Y-m-d H:i:s'),
+                    ]);
+                }
+            } elseif ($request->tipeUbah == 'H') {
+                // pengulangan berdasarkan banyaknya absen yang dipilih
+                for ($i = 0; $i < $jml; $i++) {
+                    // ambil data absensi
+                    $dataAbs = DB::table('absensi_absensi')
+                        ->where('id', $request->idabsen[$i])
+                        ->first();
+                    // update absensi
+                    $check = DB::table('absensi_absensi')
+                        ->where('id', '=', $request->idabsen[$i])
+                        ->update([
+                            'sst' => $request->tipeUbah,
+                            'koreksi' => 1,
+                            'updated_at' => date('Y-m-d H:i:s'),
+                        ]);
+                    // insert ke absensi komunikasiitm
+                    DB::table('absensi_komunikasiitm')->insert([
+                        'entitas' => 'PINTEX',
+                        'noform' => $kodeSurat,
+                        'tanggal' => $dataAbs->tanggal,
+                        'tanggal2' => $dataAbs->tanggal,
+                        'userid' => $dataAbs->userid,
+                        'nama' => $dataAbs->name,
+                        'suratid' => 'Keputusan-Mgr. Hadir',
+                        'sst' => 'H',
+                        'keterangan' => '',
+                        'dibuat' => Auth::user()->name,
+                        'statussurat' => "ACC",
+                        'created_at' => date('Y-m-d H:i:s'),
+                    ]);
+                    // insert ke absensi komunikasiacc
+                    DB::table('absensi_komunikasiacc')->insert([
+                        'entitas' => 'PINTEX',
+                        'noform' => $kodeSurat,
+                        'tanggal' => $dataAbs->tanggal,
+                        'tanggal2' => null,
+                        'userid' => $dataAbs->userid,
+                        'nama' => $dataAbs->name,
+                        'suratid' => 'Keputusan-Mgr. Hadir',
+                        'sst' => 'H',
+                        'ket_acc' => '',
+                        'keterangan' => '',
+                        'dibuat' => Auth::user()->name,
+                        'statussurat' => "ACC",
+                        'created_at' => date('Y-m-d H:i:s'),
+                    ]);
+                }
+            }
+            if ($check) {
+                $arr = array('msg' => 'Data telah berhasil diproses', 'status' => true);
+            } else {
+                $arr = array('msg' => 'Something goes to wrong. Please try later', 'status' => false);
+            }
+            return Response()->json($arr);
+        } catch (\Illuminate\Database\QueryException $e) {
+            $arr = array('msg' => 'Something goes to wrong. ' . $e->getMessage(), 'status' => false);
+            return Response()->json($arr);
+        }
     }
 }
