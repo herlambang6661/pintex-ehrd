@@ -286,6 +286,7 @@ Route::controller(Absensi::class)->group(function () {
     Route::post('absensi/printAbsen', 'printAbsen')->name('absensi/printAbsen');
     Route::post('checkProses', 'checkProses');
     Route::post('storedataF1', 'storedataF1');
+    Route::post('storedataAlpa', 'storedataAlpa');
 });
 
 // Modules Penarikan Data Mesin Fingerprint

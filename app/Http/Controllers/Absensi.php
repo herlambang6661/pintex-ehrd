@@ -1702,4 +1702,6 @@ class Absensi extends Controller
             return Response()->json($arr);
         }
     }
+
+    public function storedataAlpa(Request $request) {}
 }
