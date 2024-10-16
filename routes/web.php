@@ -215,6 +215,8 @@ Route::controller(Penerimaan::class)->group(function () {
 
     Route::get('penerimaan/lamaran', 'lamaran')->name('penerimaan/lamaran');
     Route::post('listLamaran', 'listLamaran');
+    Route::post('penerimaan/wawancaraa', 'byWhatsappWawancaraa')->name('proseswwn');
+
     Route::get('penerimaan/wawancara', 'wawancara')->name('penerimaan/wawancara');
     Route::get('penerimaan/karyawan', 'karyawan')->name('penerimaan/karyawan');
     Route::get('penerimaan/legalitas', 'legalitas')->name('penerimaan/legalitas');

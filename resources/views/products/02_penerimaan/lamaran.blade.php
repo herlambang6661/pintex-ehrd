@@ -14,13 +14,13 @@
 
         td.cuspad2 {
             /* padding-top: 0.5px;
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                    padding-bottom: 0.5px;
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                    padding-right: 0.5px;
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                    padding-left: 0.5px;
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                    margin-top: 5px;
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                    margin-bottom: 5px;
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                    margin-right: 5px;
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                    margin-left: 5px; */
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                        padding-bottom: 0.5px;
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                        padding-right: 0.5px;
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                        padding-left: 0.5px;
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                        margin-top: 5px;
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                        margin-bottom: 5px;
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                        margin-right: 5px;
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                        margin-left: 5px; */
         }
 
         .unselectable {
@@ -1195,64 +1195,68 @@
                         });
                         $('#submitCheck').html(
                             '<i class="fa-solid fa-fw fa-spinner fa-spin"></i> Please Wait...');
-                        $("#submitCheck").attr("disabled", true);
-                        $.ajax({
-                            url: "{{ url('storeChecklistLamaran') }}",
-                            type: "POST",
-                            data: $('#formCheckWawancara').serialize(),
-                            beforeSend: function() {
-                                console.log($('#formCheckWawancara').serialize());
-                                Swal.fire({
-                                    title: 'Mohon Menunggu',
-                                    html: '<center><lottie-player src="https://lottie.host/933bb0e2-47c0-4fa6-83f9-3330b433b883/yymyeZt49h.json"  background="transparent"  speed="1"  style="width: 300px; height: 300px;"  loop autoplay></lottie-player></center><br><h1 class="h4">Sedang memproses data, Proses mungkin membutuhkan beberapa menit. <br><br><b class="text-danger">(Jangan menutup jendela ini, bisa mengakibatkan error)</b></h1>',
-                                    showConfirmButton: false,
-                                    timerProgressBar: true,
-                                    allowOutsideClick: false,
-                                    allowEscapeKey: false,
-                                })
-                            },
-                            success: function(response) {
-                                console.log('Completed.');
-                                $('#submitCheck').html(
-                                    '<svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-device-floppy" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><path d="M6 4h10l4 4v10a2 2 0 0 1 -2 2h-12a2 2 0 0 1 -2 -2v-12a2 2 0 0 1 2 -2" /><path d="M12 14m-2 0a2 2 0 1 0 4 0a2 2 0 1 0 -4 0" /><path d="M14 4l0 4l-6 0l0 -4" /></svg> Simpan'
-                                );
-                                $("#submitCheck").attr("disabled", false);
-                                tableLamaran.ajax.reload();
-                                const Toast = Swal.mixin({
-                                    toast: true,
-                                    position: "top-end",
-                                    showConfirmButton: false,
-                                    timer: 4000,
-                                    timerProgressBar: true,
-                                    didOpen: (toast) => {
-                                        toast.onmouseenter = Swal.stopTimer;
-                                        toast.onmouseleave = Swal.resumeTimer;
+                        $('#submitCheck').on('click', function(e) {
+                            e.preventDefault();
+
+                            var selectedData = tableLamaran.rows({
+                                selected: true
+                            }).data();
+                            var selectedCandidates = [];
+
+                            selectedData.each(function(value) {
+                                selectedCandidates.push({
+                                    id: value.id,
+                                    notlp: value
+                                        .notlp,
+                                    name: value.nama
+                                });
+                            });
+
+                            if (selectedCandidates.length > 0) {
+                                $.ajax({
+                                    url: "{{ route('proseswwn') }}",
+                                    method: 'POST',
+                                    data: {
+                                        _token: "{{ csrf_token() }}",
+                                        candidates: selectedCandidates
+                                    },
+                                    success: function(response) {
+                                        Swal.fire({
+                                            icon: 'success',
+                                            title: 'Berhasil!',
+                                            text: 'Proses wawancara berhasil dilakukan dan pesan WhatsApp sudah dikirim.',
+                                            position: 'top-end',
+                                            showConfirmButton: false,
+                                            timer: 3000
+                                        }).then(() => {
+                                            tableLamaran.ajax
+                                                .reload(); // Reload tabel setelah proses
+                                            $('#myModalCheck').modal(
+                                                'hide');
+                                        });
+                                    },
+                                    error: function(xhr, status, error) {
+                                        console.error(xhr.responseText);
+                                        Swal.fire({
+                                            icon: 'error',
+                                            title: 'Gagal!',
+                                            text: 'Terjadi kesalahan saat memproses wawancara.',
+                                            position: 'top-end',
+                                            showConfirmButton: false,
+                                            timer: 3000
+                                        }).then(() => {
+                                            $('#submitCheck').html(
+                                                '<i class="fas fa-save" style="margin-right: 5px"></i> Proses'
+                                                ).prop('disabled',
+                                                false); // Reset tombol
+                                        });
                                     }
                                 });
-                                Toast.fire({
-                                    icon: "success",
-                                    title: response.msg,
-                                });
-                                document.getElementById("formCheckWawancara").reset();
-                                $('#myModalCheck').modal('hide');
-                                window.open('printLamaran/' + response.val, '_blank');
-                            },
-                            error: function(data) {
-                                console.log('Error:', data);
-                                // const obj = JSON.parse(data.responseJSON);
-                                tableLamaran.ajax.reload();
-                                Swal.fire({
-                                    icon: 'error',
-                                    title: 'Gagal Input',
-                                    html: data.responseJSON.message,
-                                    showConfirmButton: true
-                                });
-                                $('#submitCheck').html(
-                                    '<svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-device-floppy" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><path d="M6 4h10l4 4v10a2 2 0 0 1 -2 2h-12a2 2 0 0 1 -2 -2v-12a2 2 0 0 1 2 -2" /><path d="M12 14m-2 0a2 2 0 1 0 4 0a2 2 0 1 0 -4 0" /><path d="M14 4l0 4l-6 0l0 -4" /></svg> Simpan'
-                                );
-                                $("#submitCheck").attr("disabled", false);
+                            } else {
+                                alert('Tidak ada kandidat yang dipilih.');
                             }
                         });
+
                     }
                 })
             }

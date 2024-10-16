@@ -226,6 +226,60 @@ class Penerimaan extends Controller
         ]);
     }
 
+    //Proses wawancara by Whatsapp Gatewayy Fonnte
+    public function byWhatsappWawancaraa(Request $request)
+    {
+        $candidates = $request->candidates;
+
+        foreach ($candidates as $candidate) {
+            DB::table('penerimaan_lamaran')
+                ->where('id', $candidate['id'])
+                ->update(['wawancara' => 1]);
+
+            $this->sendWhatsAppMessage($candidate['notlp'], $candidate['name']);
+        }
+
+        return response()->json(['success' => 'Proses wawancara berhasil']);
+    }
+
+    // Fungsi untuk mengirim pesan WhatsApp menggunakan Fonnte
+    private function sendWhatsAppMessage($notlp, $name)
+    {
+
+        $curl = curl_init();
+        $token = 'f2XeVMEgV2Aqh!KHkZLF';
+        $message = "🌟 **PT INTERNATIONAL TEXTILE PLUMBON (PINTEX)** 🌟\n\n"
+            . "Halo *$name*,\n\n"
+            . "Kami dengan senang hati menginformasikan bahwa Anda telah dijadwalkan untuk wawancara.\n"
+            . "Kami berharap dapat bertemu dengan Anda dan mendiskusikan peluang karier yang menarik di perusahaan kami.\n\n"
+            . "Silakan konfirmasi kehadiran Anda dengan membalas pesan ini.\n\n"
+            . "Terima kasih, dan sampai jumpa di wawancara!\n\n"
+            . "Salam,\n"
+            . "*Tim Rekrutmen PINTEX*";
+        curl_setopt_array($curl, array(
+            CURLOPT_URL => 'https://api.fonnte.com/send',
+            CURLOPT_RETURNTRANSFER => true,
+            CURLOPT_ENCODING => '',
+            CURLOPT_MAXREDIRS => 10,
+            CURLOPT_TIMEOUT => 0,
+            CURLOPT_FOLLOWLOCATION => true,
+            CURLOPT_HTTP_VERSION => CURL_HTTP_VERSION_1_1,
+            CURLOPT_CUSTOMREQUEST => 'POST',
+            CURLOPT_POSTFIELDS => array(
+                'target' => $notlp,
+                'message' => $message,
+            ),
+            CURLOPT_HTTPHEADER => array(
+                'Authorization: ' . $token,
+            ),
+        ));
+
+        $response = curl_exec($curl);
+        curl_close($curl);
+
+        return $response;
+    }
+
     public function scanner()
     {
         return view('products/02_penerimaan.scanner');
