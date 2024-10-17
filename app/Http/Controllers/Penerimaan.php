@@ -753,7 +753,7 @@ class Penerimaan extends Controller
                     <div class="col-md-3 border-right">
                         <div class="d-flex flex-column align-items-center text-center p-1 py-1">
                             <img class="rounded-circle mt-5 img-thumbnail" width="150px"
-                                src="https://ei8ht.my.id/ricojei8ht.png">
+                                src="https://karir.pintex.co.id/storage/Pas_' . $l->nik . '.jpg">
                             <span class="font-weight-bold">' . $l->nama . '</span>
                             <span class="text-black-50">' . $l->email . '</span>
                             <span class="text-blue-50">
