@@ -22,11 +22,13 @@ class DataWawancara extends Controller
     public function index(Request $request)
     {
         if ($request->ajax()) {
-            $data = DB::table('penerimaan_lamaran')
-                ->where('wawancara', 1)
-                ->where('wawancara', 1)
-                ->orderBy('id', 'desc')
+            $data = DB::table('penerimaan_lamaran as a')
+                ->join('penerimaan_wawancara as b', 'a.id', '=', 'b.idlamaran')
+                ->select('b.noform', 'a.*')
+                ->where('a.wawancara', 1)
+                ->orderBy('a.id', 'desc')
                 ->get();
+
             return DataTables::of($data)
                 ->addIndexColumn()
                 ->addColumn('status', function ($row) {
@@ -54,7 +56,11 @@ class DataWawancara extends Controller
                 })
 
                 ->addColumn('action', function ($row) {
-                    $btn = ' <a href="javascript:void(0)" data-toggle="tooltip" data-item="' . $row->nik . '" data-id="' . $row->id . '" data-original-title="Delete" class="btn btn-sm btn-outline-info btn-icon deleteProduct"><i class="fa-solid fa-fw fa-eye"></i></a>';
+                    $btn = ' <a href="javascript:void(0)" data-toggle="tooltip" data-item="' . $row->nik . '" data-id="' . $row->id . '" data-original-title="Delete" class="btn btn-sm btn-outline-info btn-icon deleteProduct"><i class="fa-solid fa-fw fa-eye"></i></a>
+                   <a href="javascript:void(0)" data-toggle="tooltip" data-item="' . $row->nik . '" data-id="' . $row->id . '" data-noform="' . $row->noform . '" data-original-title="Print" class="btn btn-sm btn-outline-success btn-icon printButton" target="_blank">
+                    <i class="fa-solid fa-fw fa-print"></i>
+                    </a>
+                    ';
                     // $btn = $btn . ' <a href="javascript:void(0)" data-toggle="tooltip" data-noform="' . $row->noformwawancara . '" data-nama="' . $row->nama . '" data-id="' . $row->id . '" data-original-title="Delete" class="btn btn-sm btn-outline-warning btn-icon cancelWawancara"><i class="fa-solid fa-arrow-rotate-left"></i></a>';
                     // $btn = $btn . ' <a href="javascript:void(0)" data-toggle="tooltip" class="btn btn-outline-green btn-icon"><i class="fa-solid fa-check"></i></a>';
                     // $btn = $btn . ' <a href="javascript:void(0)" data-toggle="tooltip" class="btn btn-outline-red btn-icon"><i class="fa-solid fa-xmark"></i></a>';
@@ -62,6 +68,7 @@ class DataWawancara extends Controller
                 })
                 ->rawColumns(['status', 'action', 'select_orders', 'ttl', 'umur'])
                 ->make(true);
+            dd($noform);
         }
         return view('products.02_penerimaan.wawancara');
     }

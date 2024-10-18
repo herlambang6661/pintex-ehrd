@@ -14,13 +14,13 @@
 
         td.cuspad2 {
             /* padding-top: 0.5px;
-                                                                                                                                                                                                                padding-bottom: 0.5px;
-                                                                                                                                                                                                                padding-right: 0.5px;
-                                                                                                                                                                                                                padding-left: 0.5px;
-                                                                                                                                                                                                                margin-top: 5px;
-                                                                                                                                                                                                                margin-bottom: 5px;
-                                                                                                                                                                                                                margin-right: 5px;
-                                                                                                                                                                                                                margin-left: 5px; */
+                                                                                                                                                                                                                                                                                                            padding-bottom: 0.5px;
+                                                                                                                                                                                                                                                                                                            padding-right: 0.5px;
+                                                                                                                                                                                                                                                                                                            padding-left: 0.5px;
+                                                                                                                                                                                                                                                                                                            margin-top: 5px;
+                                                                                                                                                                                                                                                                                                            margin-bottom: 5px;
+                                                                                                                                                                                                                                                                                                            margin-right: 5px;
+                                                                                                                                                                                                                                                                                                            margin-left: 5px; */
         }
 
         .unselectable {
@@ -362,10 +362,10 @@
     </div>
     <script type="text/javascript">
         /*------------------------------------------
-                                                                                --------------------------------------------
-                                                                                Render DataTable
-                                                                                --------------------------------------------
-                                                                                --------------------------------------------*/
+                                                                                                                            --------------------------------------------
+                                                                                                                            Render DataTable
+                                                                                                                            --------------------------------------------
+                                                                                                                            --------------------------------------------*/
 
         function newexportaction(e, dt, button, config) {
             var self = this;
@@ -408,6 +408,19 @@
             // Requery the server with the new one-time export settings
             dt.ajax.reload();
         }
+
+        $(document).on('click', '.printButton', function(e) {
+            e.preventDefault();
+
+            var noform = $(this).data('noform');
+
+            if (noform) {
+                window.open('/penerimaan/printLamaran/' + noform, '_blank');
+            } else {
+                alert('Noform tidak ditemukan!');
+            }
+
+        });
 
         $(function() {
             /*------------------------------------------==============================================================================================================================================================

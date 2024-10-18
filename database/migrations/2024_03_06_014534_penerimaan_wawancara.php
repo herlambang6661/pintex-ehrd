@@ -17,6 +17,9 @@ return new class extends Migration
             $table->string('noform');
             $table->string('nama');
             $table->date('tglwawancara');
+            $table->time('jamwawancara');
+            $table->string('posisi');
+            $table->longText('cacatan');
             $table->string('user')->nullable();
             $table->integer('diterima')->nullable();
             $table->integer('butawarna')->nullable();
