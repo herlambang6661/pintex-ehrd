@@ -14,13 +14,13 @@
 
         td.cuspad2 {
             /* padding-top: 0.5px;
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                        padding-bottom: 0.5px;
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                        padding-right: 0.5px;
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                        padding-left: 0.5px;
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                        margin-top: 5px;
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                        margin-bottom: 5px;
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                        margin-right: 5px;
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                        margin-left: 5px; */
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                            padding-bottom: 0.5px;
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                            padding-right: 0.5px;
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                            padding-left: 0.5px;
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                            margin-top: 5px;
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                            margin-bottom: 5px;
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                            margin-right: 5px;
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                            margin-left: 5px; */
         }
 
         .unselectable {
@@ -31,6 +31,11 @@
             user-select: none;
             color: #cc0000;
             font-weight: bolder;
+        }
+
+        .small-swal {
+            width: 300px !important;
+            /* Sesuaikan ukuran modal */
         }
     </style>
     <div class="page">
@@ -1180,11 +1185,29 @@
                         tglwawancara: {
                             required: true,
                         },
+                        jamwawancara: {
+                            required: true,
+                        },
+                        posisi: {
+                            required: true,
+                        },
+                        catatan: {
+                            required: true,
+                        },
                     },
                     messages: {
                         tglwawancara: {
                             required: "Masukkan Tanggal Wawancara",
                         },
+                        jamwawancara: {
+                            required: "Masukkan Jam Wawancara",
+                        },
+                        posisi: {
+                            required: "Masukkan Posisi",
+                        },
+                        catatan: {
+                            required: "Masukkan Catatan Tambahan",
+                        }
                     },
 
                     submitHandler: function(form) {
@@ -1193,8 +1216,7 @@
                                 'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
                             }
                         });
-                        $('#submitCheck').html(
-                            '<i class="fa-solid fa-fw fa-spinner fa-spin"></i> Please Wait...');
+
                         $('#submitCheck').on('click', function(e) {
                             e.preventDefault();
 
@@ -1206,19 +1228,27 @@
                             selectedData.each(function(value) {
                                 selectedCandidates.push({
                                     id: value.id,
-                                    notlp: value
-                                        .notlp,
+                                    notlp: value.notlp,
                                     name: value.nama
                                 });
                             });
 
                             if (selectedCandidates.length > 0) {
+                                var tglwawancara = $('input[name="tglwawancara"]').val();
+                                var jamwawancara = $('input[name="jamwawancara"]').val();
+                                var posisi = $('input[name="posisi"]').val();
+                                var catatan = $('textarea[name="catatan"]').val();
+
                                 $.ajax({
                                     url: "{{ route('proseswwn') }}",
                                     method: 'POST',
                                     data: {
                                         _token: "{{ csrf_token() }}",
-                                        candidates: selectedCandidates
+                                        candidates: selectedCandidates,
+                                        tglwawancara: tglwawancara,
+                                        jamwawancara: jamwawancara,
+                                        posisi: posisi,
+                                        catatan: catatan
                                     },
                                     success: function(response) {
                                         Swal.fire({
@@ -1227,28 +1257,35 @@
                                             text: 'Proses wawancara berhasil dilakukan dan pesan WhatsApp sudah dikirim.',
                                             position: 'top-end',
                                             showConfirmButton: false,
-                                            timer: 3000
+                                            timer: 3000,
+                                            customClass: {
+                                                popup: 'small-swal'
+                                            },
                                         }).then(() => {
-                                            tableLamaran.ajax
-                                                .reload(); // Reload tabel setelah proses
+                                            tableLamaran.ajax.reload();
                                             $('#myModalCheck').modal(
                                                 'hide');
                                         });
                                     },
                                     error: function(xhr, status, error) {
                                         console.error(xhr.responseText);
+                                        console.error(error);
+                                        console.error(status);
                                         Swal.fire({
                                             icon: 'error',
                                             title: 'Gagal!',
                                             text: 'Terjadi kesalahan saat memproses wawancara.',
                                             position: 'top-end',
                                             showConfirmButton: false,
-                                            timer: 3000
+                                            timer: 3000,
+                                            customClass: {
+                                                popup: 'small-swal'
+                                            },
                                         }).then(() => {
                                             $('#submitCheck').html(
                                                 '<i class="fas fa-save" style="margin-right: 5px"></i> Proses'
-                                                ).prop('disabled',
-                                                false); // Reset tombol
+                                            ).prop('disabled',
+                                                false);
                                         });
                                     }
                                 });
@@ -1256,8 +1293,8 @@
                                 alert('Tidak ada kandidat yang dipilih.');
                             }
                         });
-
                     }
+
                 })
             }
 

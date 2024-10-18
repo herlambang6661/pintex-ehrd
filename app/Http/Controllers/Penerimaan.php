@@ -229,56 +229,110 @@ class Penerimaan extends Controller
     //Proses wawancara by Whatsapp Gatewayy Fonnte
     public function byWhatsappWawancaraa(Request $request)
     {
+        \Carbon\Carbon::setLocale('id');
+
+        // generate noform
+        $noform = date('y') . "00000";
+        // GET NOFORM
+        $checknoform = DB::table('penerimaan_wawancara')->orderBy('noform', 'desc')->first();
+        $noform = $checknoform->noform ?? $noform;
+
+        $y = substr($noform, 0, 2);
+        if (date('y') == $y) {
+            $noUrut = substr($noform, 2, 5);
+            $na = $noUrut + 1;
+            $char = date('y');
+            $kodeSurat = $char . sprintf("%05s", $na);
+        } else {
+            $kodeSurat = date('y') . "00001";
+        }
+        // generate noform
+
         $candidates = $request->candidates;
+        $tglwawancara = $request->tglwawancara;
+        $jamwawancara = $request->jamwawancara;
+        $posisi = $request->posisi;
+        $catatan = $request->catatan;
 
         foreach ($candidates as $candidate) {
+            $dataLamaran = DB::table('penerimaan_lamaran')->where('id', $candidate['id'])->first();
             DB::table('penerimaan_lamaran')
                 ->where('id', $candidate['id'])
                 ->update(['wawancara' => 1]);
 
-            $this->sendWhatsAppMessage($candidate['notlp'], $candidate['name']);
+            $curl = curl_init();
+            $token = 'f2XeVMEgV2Aqh!KHkZLF';
+
+            $hari = \Carbon\Carbon::parse($tglwawancara)->isoFormat('dddd');
+            $message = "🌟 Selamat Siang, {$candidate['name']} 🌟\n\n"
+                . "Dengan ini kami sampaikan dari pihak HRD PT. Pintex\n"
+                . "Ingin mengundang saudara/i agar turut hadir dalam seleksi wawancara untuk *$posisi*.\n\n"
+                . "Seleksi wawancara ini akan diadakan pada:\n\n"
+                . "Hari   : $hari\n"
+                . "Tanggal: " . date('d F Y', strtotime($tglwawancara)) . "\n"
+                . "Pukul  : " . date('H:i', strtotime($jamwawancara)) . " WIB\n"
+                . "Tempat : PT Pintex Jl Raya Cirebon-Bandung Km 12 Plumbon-Cirebon Jawa Barat 45155.\n\n"
+                . "Catatan:\n"
+                . "$catatan\n"
+                . "Diharapkan seluruh peserta yang menerima pesan ini untuk mengkonfirmasi kehadiran dengan format balasan: Nama-hadir/ tidak hadir.\n\n"
+                . "Contoh: Kade_hadir.\n\n"
+                . "Terima kasih,\n"
+                . "HRD PT PINTEX\n\n";
+
+            curl_setopt_array($curl, array(
+                CURLOPT_URL => 'https://api.fonnte.com/send',
+                CURLOPT_RETURNTRANSFER => true,
+                CURLOPT_ENCODING => '',
+                CURLOPT_MAXREDIRS => 10,
+                CURLOPT_TIMEOUT => 0,
+                CURLOPT_FOLLOWLOCATION => true,
+                CURLOPT_HTTP_VERSION => CURL_HTTP_VERSION_1_1,
+                CURLOPT_CUSTOMREQUEST => 'POST',
+                CURLOPT_POSTFIELDS => array(
+                    'target' => $candidate['notlp'],
+                    'message' => $message,
+                ),
+                CURLOPT_HTTPHEADER => array(
+                    'Authorization: ' . $token,
+                ),
+            ));
+
+            $response = curl_exec($curl);
+            curl_close($curl);
+
+            if (!$response) {
+                return response()->json(['error' => 'Gagal mengirim pesan WhatsApp'], 500);
+            }
         }
 
-        return response()->json(['success' => 'Proses wawancara berhasil']);
+        // Simpan ke dalam tabel penerimaan_wawancara
+        try {
+            DB::table('penerimaan_wawancara')->insert([
+                'idlamaran' => $candidate['id'],
+                'noform' => $kodeSurat,
+                'nama' => $dataLamaran->nama,
+                'tglwawancara' => $tglwawancara,
+                'jamwawancara' => $request->input('jamwawancara'),
+                'posisi' => $posisi,
+                'catatan' => $catatan,
+                'user' => $request->input('user', 'Kartika Dewi'),
+                'diterima' => 0,
+                'butawarna' => 0,
+                'mataminus' => 0,
+                'sikapbaik' => 0,
+                'jalancepat' => 0,
+                'dibuat' => Auth::user()->nama,
+                'created_at' => now(),
+                'updated_at' => now(),
+            ]);
+
+            return response()->json(['success' => 'Proses wawancara berhasil']);
+        } catch (\Exception $e) {
+            dd($e);
+            return response()->json(['error' => 'Gagal menyimpan data wawancara'], 500);
+        }
     }
 
-    // Fungsi untuk mengirim pesan WhatsApp menggunakan Fonnte
-    private function sendWhatsAppMessage($notlp, $name)
-    {
-
-        $curl = curl_init();
-        $token = 'f2XeVMEgV2Aqh!KHkZLF';
-        $message = "🌟 **PT INTERNATIONAL TEXTILE PLUMBON (PINTEX)** 🌟\n\n"
-            . "Halo *$name*,\n\n"
-            . "Kami dengan senang hati menginformasikan bahwa Anda telah dijadwalkan untuk wawancara.\n"
-            . "Kami berharap dapat bertemu dengan Anda dan mendiskusikan peluang karier yang menarik di perusahaan kami.\n\n"
-            . "Silakan konfirmasi kehadiran Anda dengan membalas pesan ini.\n\n"
-            . "Terima kasih, dan sampai jumpa di wawancara!\n\n"
-            . "Salam,\n"
-            . "*Tim Rekrutmen PINTEX*";
-        curl_setopt_array($curl, array(
-            CURLOPT_URL => 'https://api.fonnte.com/send',
-            CURLOPT_RETURNTRANSFER => true,
-            CURLOPT_ENCODING => '',
-            CURLOPT_MAXREDIRS => 10,
-            CURLOPT_TIMEOUT => 0,
-            CURLOPT_FOLLOWLOCATION => true,
-            CURLOPT_HTTP_VERSION => CURL_HTTP_VERSION_1_1,
-            CURLOPT_CUSTOMREQUEST => 'POST',
-            CURLOPT_POSTFIELDS => array(
-                'target' => $notlp,
-                'message' => $message,
-            ),
-            CURLOPT_HTTPHEADER => array(
-                'Authorization: ' . $token,
-            ),
-        ));
-
-        $response = curl_exec($curl);
-        curl_close($curl);
-
-        return $response;
-    }
 
     public function scanner()
     {
@@ -501,16 +555,34 @@ class Penerimaan extends Controller
                     </div>
                     <hr>
                     <div class="row">
-                        <div class="col-lg-4 col-md-12">
+                        <div class="col-lg-6 col-md-12">
                             <div class="mb-3">
                                 <label class="form-label">Tanggal Wawancara</label>
                                 <input type="date" class="form-control" name="tglwawancara" value="' . date("Y-m-d") . '">
                             </div>
                         </div>
-                        <div class="col-lg-8 col-md-12">
+                        <div class="col-lg-6 col-md-12">
+                            <div class="mb-3">
+                                <label class="form-label">Jam Wawancara</label>
+                                <input type="time" class="form-control" name="jamwawancara" value="09:30">
+                            </div>
+                        </div>
+                        <div class="col-lg-6 col-md-12">
+                            <div class="mb-3">
+                                <label class="form-label">Posisi</label>
+                                <input type="text" class="form-control" name="posisi" placeholder="Isi posisi">
+                            </div>
+                        </div>
+                        <div class="col-lg-6 col-md-12">
                             <div class="mb-3">
                                 <label class="form-label">User <i>(Optional)</i></label>
                                 <input type="text" class="form-control" name="user" placeholder="User yang ikut mewawancarai" value="Kartika Dewi, ">
+                            </div>
+                        </div>
+                        <div class="col-lg-12 col-md-12">
+                            <div class="mb-3">
+                                <label class="form-label">Catatan Tambahan</label>
+                                <textarea class="form-control" name="catatan" placeholder="Isi catatan tambahan"></textarea>
                             </div>
                         </div>
                     </div>';
@@ -589,6 +661,7 @@ class Penerimaan extends Controller
             ->join('penerimaan_lamaran', 'penerimaan_wawancara.idlamaran', '=', 'penerimaan_lamaran.id')
             ->where('noform', $id)
             ->get();
+        // dd($check);
         return view('products/02_penerimaan.print', ['getData' => $check, 'noform' => $id,]);
     }
 

@@ -225,7 +225,8 @@ Route::controller(Penerimaan::class)->group(function () {
     Route::get('penerimaan/karyawan/edit/{id}', 'editKaryawan')->name('penerimaan/karyawan/edit/{id}');
     Route::post('penerimaan/karyawaneditdata', 'karyawaneditdata')->name('penerimaan/karyawaneditdata');
 
-    Route::get('penerimaan/printLamaran/{id}', 'printLamaran')->name('penerimaan/printLamaran/{id}');
+    Route::get('penerimaan/printLamaran/{id}', 'printLamaran')->name('penerimaan.printLamaran');
+
 
     Route::post('storedataLamaran', 'storeLamaran');
     Route::post('checkLamaran', 'checkLamaran');
