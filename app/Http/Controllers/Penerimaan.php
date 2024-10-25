@@ -1794,17 +1794,17 @@ class Penerimaan extends Controller
                         ->where('stb', 'like', '%OL%')
                         ->orderBy('userid', 'desc')
                         ->first();
-                    if ($checknostb == null) {
-                        $nostb = "000";
-                    } else {
+                    if ($checknostb) {
                         $nostb =  substr($checknostb->stb, -3, 3);
-                    }
-                    if ($nostb != "000") {
-                        $ns = $nostb + 1;
-                        $kodestb = "OL-" . sprintf("%03s", $ns);
                     } else {
-                        $kodestb = "OL-001";
+                        $nostb = "000";
                     }
+                    // if ($nostb != "000") {
+                    $ns = $nostb + 1;
+                    $kodestb = "OL-" . sprintf("%03s", $ns);
+                    // } else {
+                    // $kodestb = "OL-001";
+                    // }
                     // GET STB OL
                     $statusditerima = "OL";
                     $perjanjian = 'OL (' . Carbon::parse($request->dari[$i])->format('d/m/Y') . ' s.d. ' . Carbon::parse($request->ke[$i])->format('d/m/Y') . ')';
