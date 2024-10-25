@@ -1817,12 +1817,12 @@ class Penerimaan extends Controller
                         ->where('stb', 'like', '%PHL%')
                         ->orderBy('userid', 'desc')
                         ->first();
-                    if ($checknostb == null) {
-                        $nostb = "001";
-                    } else {
+                    if ($checknostb) {
                         $nostb =  substr($checknostb->stb, -3, 3);
+                    } else {
+                        $nostb = "001";
                     }
-                    $nostb =  substr($checknostb->stb, -3, 3);
+                    // $nostb =  substr($checknostb->stb, -3, 3);
                     if ($nostb != "001") {
                         $ns = $nostb + 1;
                         $kodestb = "PHL-" . sprintf("%03s", $ns);
