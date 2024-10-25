@@ -1812,7 +1812,7 @@ class Penerimaan extends Controller
                     $suratket = "OL";
                 } elseif ($request->diterimasebagai[$i] == "PHL") {
                     // GET STB PHL
-                    $nostb = "001";
+                    // $nostb = "001";
                     $checknostb = DB::table('penerimaan_karyawan')
                         ->where('stb', 'like', '%PHL%')
                         ->orderBy('userid', 'desc')
@@ -1820,15 +1820,15 @@ class Penerimaan extends Controller
                     if ($checknostb) {
                         $nostb =  substr($checknostb->stb, -3, 3);
                     } else {
-                        $nostb = "001";
+                        $nostb = "000";
                     }
                     // $nostb =  substr($checknostb->stb, -3, 3);
-                    if ($nostb != "001") {
-                        $ns = $nostb + 1;
-                        $kodestb = "PHL-" . sprintf("%03s", $ns);
-                    } else {
-                        $kodestb = "PHL-001";
-                    }
+                    // if ($nostb != "001") {
+                    $ns = $nostb + 1;
+                    $kodestb = "PHL-" . sprintf("%03s", $ns);
+                    // } else {
+                    // $kodestb = "PHL-001";
+                    // }
                     // GET STB PHL
                     $statusditerima = "PHL";
                     $perjanjian = 'PHL (' . Carbon::parse($request->dari[$i])->format('d/m/Y') . ' s.d. ' . Carbon::parse($request->ke[$i])->format('d/m/Y') . ')';
