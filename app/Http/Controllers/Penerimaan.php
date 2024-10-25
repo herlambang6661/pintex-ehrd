@@ -1812,17 +1812,18 @@ class Penerimaan extends Controller
                     $suratket = "OL";
                 } elseif ($request->diterimasebagai[$i] == "PHL") {
                     // GET STB PHL
+                    $nostb = "001";
                     $checknostb = DB::table('penerimaan_karyawan')
                         ->where('stb', 'like', '%PHL%')
                         ->orderBy('userid', 'desc')
                         ->first();
                     if ($checknostb == null) {
-                        $nostb = "000";
+                        $nostb = "001";
                     } else {
                         $nostb =  substr($checknostb->stb, -3, 3);
                     }
                     $nostb =  substr($checknostb->stb, -3, 3);
-                    if ($nostb != "000") {
+                    if ($nostb != "001") {
                         $ns = $nostb + 1;
                         $kodestb = "PHL-" . sprintf("%03s", $ns);
                     } else {
