@@ -1663,17 +1663,17 @@ class Penerimaan extends Controller
                         ->where('stb', 'like', '%OL%')
                         ->orderBy('userid', 'desc')
                         ->first();
-                    if ($checknostb == null) {
-                        $nostb = "000";
-                    } else {
+                    if ($checknostb) {
                         $nostb =  substr($checknostb->stb, -3, 3);
-                    }
-                    if ($nostb != "000") {
-                        $ns = $nostb + 1;
-                        $kodestb = "OL-" . sprintf("%03s", $ns);
                     } else {
-                        $kodestb = "OL-001";
+                        $nostb = "000";
                     }
+                    // if ($nostb != "000") {
+                    $ns = $nostb + 1;
+                    $kodestb = "OL-" . sprintf("%03s", $ns);
+                    // } else {
+                    // $kodestb = "OL-001";
+                    // }
                     // GET STB OL
                     $statusditerima = "OL";
                     $perjanjian = 'OL (' . Carbon::parse($request->dari[$i])->format('d/m/Y') . ' s.d. ' . Carbon::parse($request->ke[$i])->format('d/m/Y') . ')';
@@ -1681,22 +1681,23 @@ class Penerimaan extends Controller
                     $suratket = "OL";
                 } elseif ($request->diterimasebagai[$i] == "PHL") {
                     // GET STB PHL
+                    // $nostb = "001";
                     $checknostb = DB::table('penerimaan_karyawan')
                         ->where('stb', 'like', '%PHL%')
                         ->orderBy('userid', 'desc')
                         ->first();
-                    if ($checknostb == null) {
-                        $nostb = "000";
-                    } else {
+                    if ($checknostb) {
                         $nostb =  substr($checknostb->stb, -3, 3);
-                    }
-                    $nostb =  substr($checknostb->stb, -3, 3);
-                    if ($nostb != "000") {
-                        $ns = $nostb + 1;
-                        $kodestb = "PHL-" . sprintf("%03s", $ns);
                     } else {
-                        $kodestb = "PHL-001";
+                        $nostb = "000";
                     }
+                    // $nostb =  substr($checknostb->stb, -3, 3);
+                    // if ($nostb != "001") {
+                    $ns = $nostb + 1;
+                    $kodestb = "PHL-" . sprintf("%03s", $ns);
+                    // } else {
+                    // $kodestb = "PHL-001";
+                    // }
                     // GET STB PHL
                     $statusditerima = "PHL";
                     $perjanjian = 'PHL (' . Carbon::parse($request->dari[$i])->format('d/m/Y') . ' s.d. ' . Carbon::parse($request->ke[$i])->format('d/m/Y') . ')';
