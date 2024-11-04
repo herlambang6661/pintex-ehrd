@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\KandidatModel;
 use App\Models\Loker;
 use Carbon\Carbon;
 use Nette\Utils\Image;
@@ -684,155 +685,20 @@ class Penerimaan extends Controller
 
     public function listLamaran(Request $request)
     {
-        $data = DB::table('penerimaan_lamaran')->where('id', $request->id)->get();
-        foreach ($data as $l) {
-            // echo '
-            // <div class="row">
-            //     <div class="col-4">
-            //         <div class="card">
-            //             <div class="card-header">
-            //                 <strong>Data Diri</strong>
-            //             </div>
-            //             <div class="table-responsive">
-            //                 <table class="table table-vcenter card-table table-striped">
-            //                     <tbody>
-            //                         <tr>
-            //                             <td>NIK</td>
-            //                             <td class="text-secondary">:</td>
-            //                             <td class="text-secondary">' . $l->nik . '</td>
-            //                         </tr>
-            //                         <tr>
-            //                             <td>Nama</td>
-            //                             <td class="text-secondary">:</td>
-            //                             <td class="text-secondary">' . $l->nama . '</td>
-            //                         </tr>
-            //                         <tr>
-            //                             <td>Gender</td>
-            //                             <td class="text-secondary">:</td>
-            //                             <td class="text-secondary">' . $l->gender . '</td>
-            //                         </tr>
-            //                         <tr>
-            //                             <td>Tempat, Tanggal Lahir</td>
-            //                             <td class="text-secondary">:</td>
-            //                             <td class="text-secondary">' . $l->tempat . ', ' . Carbon::parse($l->tgllahir)->format('d/m/Y') . '</td>
-            //                         </tr>
-            //                         <tr>
-            //                             <td>Alamat</td>
-            //                             <td class="text-secondary">:</td>
-            //                             <td class="text-secondary">' . $l->alamat . '</td>
-            //                         </tr>
-            //                         <tr>
-            //                             <td>Agama</td>
-            //                             <td class="text-secondary">:</td>
-            //                             <td class="text-secondary">' . $l->agama . '</td>
-            //                         </tr>
-            //                         <tr>
-            //                             <td>Tinggi Badan</td>
-            //                             <td class="text-secondary">:</td>
-            //                             <td class="text-secondary">' . $l->tinggi . '</td>
-            //                         </tr>
-            //                         <tr>
-            //                             <td>Berat Badan</td>
-            //                             <td class="text-secondary">:</td>
-            //                             <td class="text-secondary">' . $l->berat . '</td>
-            //                         </tr>
-            //                     </tbody>
-            //                 </table>
-            //             </div>
-            //         </div>
-            //     </div>
-            //     <div class="col-4">
-            //         <div class="card">
-            //             <div class="card-header">
-            //                 <strong>Riwayat Pendidikan</strong>
-            //             </div>
-            //             <div class="table-responsive">
-            //                 <table class="table table-vcenter card-table table-striped">
-            //                     <tbody>
-            //                         <tr>
-            //                             <td>Asal Sekolah</td>
-            //                             <td class="text-secondary">:</td>
-            //                             <td class="text-secondary">' . $l->pendidikan . '</td>
-            //                         </tr>
-            //                         <tr>
-            //                             <td>Pendidikan</td>
-            //                             <td class="text-secondary">:</td>
-            //                             <td class="text-secondary">' . $l->pendidikan . '</td>
-            //                         </tr>
-            //                         <tr>
-            //                             <td>Jurusan</td>
-            //                             <td class="text-secondary">:</td>
-            //                             <td class="text-secondary">' . $l->jurusan . '</td>
-            //                         </tr>
-            //                     </tbody>
-            //                 </table>
-            //             </div>
-            //         </div>
-            //     </div>
-            //     <div class="col-4">
-            //         <div class="row">
-            //             <div class="col-12 mb-3">
-            //                 <div class="card">
-            //                     <div class="card-header">
-            //                         <strong>Kontak yang dapat dihubungi</strong>
-            //                     </div>
-            //                     <div class="table-responsive">
-            //                         <table class="table table-vcenter card-table table-striped">
-            //                             <tbody>
-            //                                 <tr>
-            //                                     <td>No Tlp / Whatsapp</td>
-            //                                     <td class="text-secondary">:</td>
-            //                                     <td class="text-secondary">' . $l->notlp . '</td>
-            //                                 </tr>
-            //                                 <tr>
-            //                                     <td>Email</td>
-            //                                     <td class="text-secondary">:</td>
-            //                                     <td class="text-secondary">' . $l->email . '</td>
-            //                                 </tr>
-            //                             </tbody>
-            //                         </table>
-            //                     </div>
-            //                 </div>
-            //             </div>
-            //             <div class="col-12">
-            //                 <div class="card">
-            //                     <div class="card-header">
-            //                         Dokumen
-            //                     </div>
-            //                     <div class="table-responsive">
-            //                         <table class="table table-vcenter card-table table-striped">
-            //                             <tbody>
-            //                                 <tr>
-            //                                     <td>No Tlp / Whatsapp</td>
-            //                                     <td class="text-secondary">:</td>
-            //                                     <td class="text-secondary">' . $l->nik . '</td>
-            //                                 </tr>
-            //                                 <tr>
-            //                                     <td>Email</td>
-            //                                     <td class="text-secondary">:</td>
-            //                                     <td class="text-secondary">' . $l->nama . '</td>
-            //                                 </tr>
-            //                             </tbody>
-            //                         </table>
-            //                     </div>
-            //                 </div>
-            //             </div>
-            //         </div>
-            //     </div>
-            // </div>
-            // ';
-            echo '
+        $data = DB::table('penerimaan_lamaran')->where('id', $request->id)->first();
+        $kandidat = KandidatModel::where('ktp', $data->nik)->first();
+        echo '
                 <div class="row">
                     <div class="col-md-3 border-right">
                         <div class="d-flex flex-column align-items-center text-center p-1 py-1">
                             <img class="rounded-circle mt-5 img-thumbnail" width="150px"
-                                src="https://karir.pintex.co.id/storage/biodata/pas/Pas_' . $l->nik . '.jpg">
-                            <span class="font-weight-bold">' . $l->nama . '</span>
-                            <span class="text-black-50">' . $l->email . '</span>
+                                src="https://karir.pintex.co.id/storage/biodata/pas/' . $kandidat->foto_pas . '">
+                            <span class="font-weight-bold">' . $data->nama . '</span>
+                            <span class="text-black-50">' . $data->email . '</span>
                             <span class="text-blue-50">
-                                <a href="https://wa.me/62' . $l->notlp . '" target="_blank" rel="noopener noreferrer">
+                                <a href="https://wa.me/62' . $data->notlp . '" target="_blank" rel="noopener noreferrer">
                                     <svg  xmlns="http://www.w3.org/2000/svg"  width="24"  height="24"  viewBox="0 0 24 24"  fill="none"  stroke="currentColor"  stroke-width="2"  stroke-linecap="round"  stroke-linejoin="round"  class="icon icon-tabler icons-tabler-outline icon-tabler-brand-whatsapp"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><path d="M3 21l1.65 -3.8a9 9 0 1 1 3.4 2.9l-5.05 .9" /><path d="M9 10a.5 .5 0 0 0 1 0v-1a.5 .5 0 0 0 -1 0v1a5 5 0 0 0 5 5h1a.5 .5 0 0 0 0 -1h-1a.5 .5 0 0 0 0 1" /></svg>
-                                    ' . $l->notlp . '
+                                    ' . $data->notlp . '
                                 </a>
                             </span>
                             <span> </span>
@@ -843,76 +709,79 @@ class Penerimaan extends Controller
                             <div class="row mt-2">
                                 <div class="col-md-12">
                                     <label class="labels">NIK KTP</label>
-                                    <input type="text" class="form-control" value="' . $l->nik . '">
+                                    <input type="text" class="form-control" value="' . $data->nik . '">
                                 </div>
                             </div>
                             <div class="row mt-2">
-                                <div class="col-md-6">
+                                <div class="col-md-12">
                                     <label class="labels">Nama Kandidat</label>
-                                    <input type="text" class="form-control" value="' . $l->nama . '">
+                                    <input type="text" class="form-control" value="' . $data->nama . '">
                                 </div>
-                                <div class="col-md-6">
+                            </div>
+                            <div class="row mt-2">
+                                <div class="col-md-12">
                                     <label class="labels">No. Tlp</label>
-                                    <input type="text" class="form-control" value="' . $l->notlp . '">
+                                    <input type="text" class="form-control" value="' . $data->notlp . '">
                                 </div>
                             </div>
                             <div class="row mt-3">
-                                <div class="col-md-6">
+                                <div class="col-md-4">
                                     <label class="labels">Gender</label>
-                                    <input type="text" class="form-control" value="' . $l->gender . '">
+                                    <input type="text" class="form-control" value="' . $data->gender . '">
                                 </div>
-                                <div class="col-md-6">
+                                <div class="col-md-8">
                                     <label class="labels">Email</label>
-                                    <input type="text" class="form-control" value="' . $l->email . '">
+                                    <input type="text" class="form-control" value="' . $data->email . '">
                                 </div>
                             </div>
                             <div class="row mt-3">
                                 <div class="col-md-6">
                                     <label class="labels">Tempat</label>
-                                    <input type="text" class="form-control" value="' . $l->tempat . '">
+                                    <input type="text" class="form-control" value="' . $data->tempat . '">
                                 </div>
                                 <div class="col-md-6">
                                     <label class="labels">Tanggal Lahir</label>
-                                    <input type="text" class="form-control" value="' . $l->tgllahir . '">
+                                    <input type="text" class="form-control" value="' . $data->tgllahir . '">
                                 </div>
                             </div>
                         </div>
                     </div>
                     <div class="col-md-4">
                         <div class="row mt-3">
-                            <div class="col-md-6">
+                            <div class="col-md-12">
                                 <label class="labels">Posisi</label>
-                                <input type="text" class="form-control" value="' . $l->posisi . '">
+                                <input type="text" class="form-control" value="' . $data->posisi . '">
                             </div>
-                            <div class="col-md-6">
+                        </div>
+                        <div class="row mt-3">
+                            <div class="col-md-12">
                                 <label class="labels">Keterangan</label>
-                                <input type="text" class="form-control" value="' . $l->keterangan . '">
+                                <input type="text" class="form-control" value="' . $data->keterangan . '">
                             </div>
                         </div>
                         <div class="row mt-3">
                             <div class="col-md-6">
                                 <label class="labels">Pendidikan</label>
-                                <input type="text" class="form-control" value="' . $l->pendidikan . '">
+                                <input type="text" class="form-control" value="' . $data->pendidikan . '">
                             </div>
                             <div class="col-md-6">
                                 <label class="labels">Jurusan</label>
-                                <input type="text" class="form-control" value="' . $l->jurusan . '">
+                                <input type="text" class="form-control" value="' . $data->jurusan . '">
                             </div>
                         </div>
                         <div class="row mt-3">
                             <div class="col-md-6">
                                 <label class="labels">Tinggi Badan</label>
-                                <input type="text" class="form-control" value="' . $l->tinggi . '">
+                                <input type="text" class="form-control" value="' . $data->tinggi . '">
                             </div>
                             <div class="col-md-6">
                                 <label class="labels">Berat Badan</label>
-                                <input type="text" class="form-control" value="' . $l->berat . '">
+                                <input type="text" class="form-control" value="' . $data->berat . '">
                             </div>
                         </div>
                     </div>
                 </div>
             ';
-        }
     }
     // ======================== END LAMARAN ==============================================================================================
     // ======================== START WAWANCARA ==========================================================================================
@@ -2400,6 +2269,7 @@ class Penerimaan extends Controller
                     ->update([
                         'entitas' => 'PINTEX',
                         'stb' => $request->stb,
+                        'tglmasuk' => $request->tglmasuk,
                         'divisi' => $request->divisi,
                         'bagian' => $request->bagian,
                         'jabatan' => $request->jabatan,
