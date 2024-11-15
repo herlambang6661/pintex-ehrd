@@ -14,13 +14,13 @@
 
         td.cuspad2 {
             /* padding-top: 0.5px;
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                            padding-bottom: 0.5px;
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                            padding-right: 0.5px;
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                            padding-left: 0.5px;
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                            margin-top: 5px;
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                            margin-bottom: 5px;
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                            margin-right: 5px;
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                            margin-left: 5px; */
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                    padding-bottom: 0.5px;
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                    padding-right: 0.5px;
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                    padding-left: 0.5px;
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                    margin-top: 5px;
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                    margin-bottom: 5px;
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                    margin-right: 5px;
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                    margin-left: 5px; */
         }
 
         .unselectable {
@@ -481,8 +481,14 @@
                         <div class="fetched-data-pembelian-checklist"></div>
                     </div>
                     <div class="modal-footer">
-                        <button type="submit" class="btn btn-blue" id="submitCheck"><i class="fas fa-save"
-                                style="margin-right: 5px"></i> Proses</button>
+                        <button type="submit" class="btn btn-green" id="submitCheck">
+                            <i class="fa-brands fa-whatsapp" style="margin-right: 5px"></i>
+                            Proses dan Kirim WhatsApp
+                        </button>
+                        <button type="submit" class="btn btn-blue" id="submitChecktanpakirim">
+                            <i class="fa-solid fa-paper-plane" style="margin-right: 5px"></i>
+                            Proses tanpa Kirim WhatsApp
+                        </button>
                         <button type="button" class="btn btn-link link-secondary ms-auto" data-bs-dismiss="modal"><i
                                 class="fa-solid fa-fw fa-arrow-rotate-left"></i> Batal</button>
                     </div>
@@ -749,6 +755,13 @@
                         action: newexportaction,
                     },
                     {
+                        className: 'btn btn-dark',
+                        text: '<i class="fa-solid fa-arrows-rotate"></i> Refresh',
+                        action: function(e, dt, node, config) {
+                            dt.ajax.reload();
+                        }
+                    },
+                    {
                         className: 'btn btn-pink',
                         text: '<i class="fa-solid fa-check-to-slot"></i> Proses Wawancara',
                         action: function(e, node, config) {
@@ -784,7 +797,7 @@
                         data.dari = $('.tglaw').val();
                         data.sampai = $('.tglak').val();
                         data.wawancara = $('.wawancara').val();
-                        console.log("mencari data dari " + data.dari + " sampai " + data.sampai);
+                        // console.log("mencari data dari " + data.dari + " sampai " + data.sampai);
                     }
                 },
                 columnDefs: [{
@@ -1179,124 +1192,305 @@
                 })
             }
 
-            if ($("#formCheckWawancara").length > 0) {
-                $("#formCheckWawancara").validate({
-                    rules: {
-                        tglwawancara: {
-                            required: true,
-                        },
-                        jamwawancara: {
-                            required: true,
-                        },
-                        posisi: {
-                            required: true,
-                        },
-                        catatan: {
-                            required: true,
-                        },
-                    },
-                    messages: {
-                        tglwawancara: {
-                            required: "Masukkan Tanggal Wawancara",
-                        },
-                        jamwawancara: {
-                            required: "Masukkan Jam Wawancara",
-                        },
-                        posisi: {
-                            required: "Masukkan Posisi",
-                        },
-                        catatan: {
-                            required: "Masukkan Catatan Tambahan",
-                        }
-                    },
 
-                    submitHandler: function(form) {
-                        $.ajaxSetup({
-                            headers: {
-                                'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+            $('#submitCheck').on('click', function(e) {
+                // e.preventDefault();
+
+                if ($("#formCheckWawancara").length > 0) {
+                    $("#formCheckWawancara").validate({
+                        rules: {
+                            tglwawancara: {
+                                required: true,
+                            },
+                            jamwawancara: {
+                                required: true,
+                            },
+                            posisi: {
+                                required: true,
+                            },
+                            catatan: {
+                                required: true,
+                            },
+                        },
+                        messages: {
+                            tglwawancara: {
+                                required: "Masukkan Tanggal Wawancara",
+                            },
+                            jamwawancara: {
+                                required: "Masukkan Jam Wawancara",
+                            },
+                            posisi: {
+                                required: "Masukkan Posisi",
+                            },
+                            catatan: {
+                                required: "Masukkan Catatan Tambahan",
                             }
-                        });
-
-                        $('#submitCheck').on('click', function(e) {
-                            e.preventDefault();
-
-                            var selectedData = tableLamaran.rows({
-                                selected: true
-                            }).data();
-                            var selectedCandidates = [];
-
-                            selectedData.each(function(value) {
-                                selectedCandidates.push({
-                                    id: value.id,
-                                    notlp: value.notlp,
-                                    name: value.nama
-                                });
+                        },
+                        submitHandler: function(form) {
+                            $.ajaxSetup({
+                                headers: {
+                                    'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr(
+                                        'content')
+                                }
                             });
+                            $('#submitCheck').html(
+                                '<i class="fa-solid fa-fw fa-spinner fa-spin"></i> Memproses Data...'
+                            );
+                            $("#submitCheck").attr("disabled", true);
+                            $.ajax({
+                                url: "{{ route('proseswwn') }}",
+                                type: "POST",
+                                data: $('#formCheckWawancara').serialize(),
+                                beforeSend: function() {
+                                    console.log($('#formCheckWawancara')
+                                        .serialize());
+                                    Swal.fire({
+                                        title: 'Mohon Menunggu',
+                                        html: '<center><lottie-player src="https://lottie.host/933bb0e2-47c0-4fa6-83f9-3330b433b883/yymyeZt49h.json"  background="transparent"  speed="1"  style="width: 300px; height: 300px;"  loop autoplay></lottie-player></center><br><h1 class="h4">Sedang memproses data, Proses mungkin membutuhkan beberapa menit. <br><br><b class="text-danger">(Jangan menutup jendela ini, bisa mengakibatkan error)</b></h1>',
+                                        showConfirmButton: false,
+                                        timerProgressBar: true,
+                                        allowOutsideClick: false,
+                                        allowEscapeKey: false,
+                                    })
+                                },
+                                success: function(response) {
+                                    console.log('Completed.');
+                                    $('#submitCheck').html(
+                                        '<i class="fa-brands fa-whatsapp" style="margin-right: 5px"></i>Proses dan Kirim WhatsApp'
+                                    );
+                                    $("#submitCheck").attr("disabled",
+                                        false);
+                                    tableLamaran.ajax.reload();
+                                    const Toast = Swal.mixin({
+                                        toast: true,
+                                        position: "top-end",
+                                        showConfirmButton: false,
+                                        timer: 4000,
+                                        timerProgressBar: true,
+                                        didOpen: (toast) => {
+                                            toast.onmouseenter = Swal
+                                                .stopTimer;
+                                            toast.onmouseleave = Swal
+                                                .resumeTimer;
+                                        }
+                                    });
+                                    Toast.fire({
+                                        icon: "success",
+                                        title: response.msg,
+                                    });
+                                    document.getElementById("formCheckWawancara")
+                                        .reset();
+                                    $('#myModalCheck').modal('hide');
+                                    window.open('printLamaran/' + response.val,
+                                        '_blank');
+                                },
+                                error: function(data) {
+                                    console.log('Error:', data);
+                                    // const obj = JSON.parse(data.responseJSON);
+                                    tableLamaran.ajax.reload();
+                                    Swal.fire({
+                                        icon: 'error',
+                                        title: 'Gagal Input',
+                                        html: data.responseJSON.message,
+                                        showConfirmButton: true
+                                    });
+                                    $('#submitCheck').html(
+                                        '<i class="fa-brands fa-whatsapp" style="margin-right: 5px"></i>Proses dan Kirim WhatsApp'
+                                    );
+                                    $("#submitCheck").attr("disabled",
+                                        false);
+                                }
+                            });
+                        }
+                    })
+                }
+                // var selectedData = tableLamaran.rows({
+                //     selected: true
+                // }).data();
+                // var selectedCandidates = [];
 
-                            if (selectedCandidates.length > 0) {
-                                var tglwawancara = $('input[name="tglwawancara"]').val();
-                                var jamwawancara = $('input[name="jamwawancara"]').val();
-                                var posisi = $('input[name="posisi"]').val();
-                                var catatan = $('textarea[name="catatan"]').val();
+                // selectedData.each(function(value) {
+                //     selectedCandidates.push({
+                //         id: value.id,
+                //         notlp: value.notlp,
+                //         name: value.nama
+                //     });
+                // });
 
-                                $.ajax({
-                                    url: "{{ route('proseswwn') }}",
-                                    method: 'POST',
-                                    data: {
-                                        _token: "{{ csrf_token() }}",
-                                        candidates: selectedCandidates,
-                                        tglwawancara: tglwawancara,
-                                        jamwawancara: jamwawancara,
-                                        posisi: posisi,
-                                        catatan: catatan
-                                    },
-                                    success: function(response) {
-                                        Swal.fire({
-                                            icon: 'success',
-                                            title: 'Berhasil!',
-                                            text: 'Proses wawancara berhasil dilakukan dan pesan WhatsApp sudah dikirim.',
-                                            position: 'top-end',
-                                            showConfirmButton: false,
-                                            timer: 3000,
-                                            customClass: {
-                                                popup: 'small-swal'
-                                            },
-                                        }).then(() => {
-                                            tableLamaran.ajax.reload();
-                                            $('#myModalCheck').modal(
-                                                'hide');
-                                        });
-                                    },
-                                    error: function(xhr, status, error) {
-                                        console.error(xhr.responseText);
-                                        console.error(error);
-                                        console.error(status);
-                                        Swal.fire({
-                                            icon: 'error',
-                                            title: 'Gagal!',
-                                            text: 'Terjadi kesalahan saat memproses wawancara.',
-                                            position: 'top-end',
-                                            showConfirmButton: false,
-                                            timer: 3000,
-                                            customClass: {
-                                                popup: 'small-swal'
-                                            },
-                                        }).then(() => {
-                                            $('#submitCheck').html(
-                                                '<i class="fas fa-save" style="margin-right: 5px"></i> Proses'
-                                            ).prop('disabled',
-                                                false);
-                                        });
-                                    }
-                                });
-                            } else {
-                                alert('Tidak ada kandidat yang dipilih.');
+                // if (selectedCandidates.length > 0) {
+                //     var tglwawancara = $('input[name="tglwawancara"]').val();
+                //     var jamwawancara = $('input[name="jamwawancara"]').val();
+                //     var posisi = $('input[name="posisi"]').val();
+                //     var catatan = $('textarea[name="catatan"]').val();
+
+                //     $.ajax({
+                //         url: "{{ route('proseswwn') }}",
+                //         method: 'POST',
+                //         data: {
+                //             _token: "{{ csrf_token() }}",
+                //             candidates: selectedCandidates,
+                //             tglwawancara: tglwawancara,
+                //             jamwawancara: jamwawancara,
+                //             posisi: posisi,
+                //             catatan: catatan
+                //         },
+                //         success: function(response) {
+                //             Swal.fire({
+                //                 icon: 'success',
+                //                 title: 'Berhasil!',
+                //                 text: 'Proses wawancara berhasil dilakukan dan pesan WhatsApp sudah dikirim.',
+                //                 position: 'top-end',
+                //                 showConfirmButton: false,
+                //                 timer: 3000,
+                //                 customClass: {
+                //                     popup: 'small-swal'
+                //                 },
+                //             }).then(() => {
+                //                 tableLamaran.ajax.reload();
+                //                 $('#myModalCheck').modal(
+                //                     'hide');
+                //             });
+                //         },
+                //         error: function(xhr, status, error) {
+                //             console.error(xhr.responseText);
+                //             console.error(error);
+                //             console.error(status);
+                //             Swal.fire({
+                //                 icon: 'error',
+                //                 title: 'Gagal!',
+                //                 text: 'Terjadi kesalahan saat memproses wawancara.',
+                //                 position: 'top-end',
+                //                 showConfirmButton: false,
+                //                 timer: 3000,
+                //                 customClass: {
+                //                     popup: 'small-swal'
+                //                 },
+                //             }).then(() => {
+                //                 $('#submitCheck').html(
+                //                     '<i class="fas fa-save" style="margin-right: 5px"></i> Proses'
+                //                 ).prop('disabled',
+                //                     false);
+                //             });
+                //         }
+                //     });
+                // } else {
+                //     alert('Tidak ada kandidat yang dipilih.');
+                // }
+            });
+
+            $('#submitChecktanpakirim').on('click', function(e) {
+                // e.preventDefault();
+
+                if ($("#formCheckWawancara").length > 0) {
+                    $("#formCheckWawancara").validate({
+                        rules: {
+                            tglwawancara: {
+                                required: true,
+                            },
+                            jamwawancara: {
+                                required: true,
+                            },
+                            posisi: {
+                                required: true,
+                            },
+                            catatan: {
+                                required: true,
+                            },
+                        },
+                        messages: {
+                            tglwawancara: {
+                                required: "Masukkan Tanggal Wawancara",
+                            },
+                            jamwawancara: {
+                                required: "Masukkan Jam Wawancara",
+                            },
+                            posisi: {
+                                required: "Masukkan Posisi",
+                            },
+                            catatan: {
+                                required: "Masukkan Catatan Tambahan",
                             }
-                        });
-                    }
+                        },
+                        submitHandler: function(form) {
+                            $.ajaxSetup({
+                                headers: {
+                                    'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr(
+                                        'content')
+                                }
+                            });
+                            $('#submitChecktanpakirim').html(
+                                '<i class="fa-solid fa-fw fa-spinner fa-spin"></i> Memproses Data...'
+                            );
+                            $("#submitChecktanpakirim").attr("disabled", true);
+                            $.ajax({
+                                url: "{{ url('storeChecklistLamaran') }}",
+                                type: "POST",
+                                data: $('#formCheckWawancara').serialize(),
+                                beforeSend: function() {
+                                    console.log($('#formCheckWawancara')
+                                        .serialize());
+                                    Swal.fire({
+                                        title: 'Mohon Menunggu',
+                                        html: '<center><lottie-player src="https://lottie.host/933bb0e2-47c0-4fa6-83f9-3330b433b883/yymyeZt49h.json"  background="transparent"  speed="1"  style="width: 300px; height: 300px;"  loop autoplay></lottie-player></center><br><h1 class="h4">Sedang memproses data, Proses mungkin membutuhkan beberapa menit. <br><br><b class="text-danger">(Jangan menutup jendela ini, bisa mengakibatkan error)</b></h1>',
+                                        showConfirmButton: false,
+                                        timerProgressBar: true,
+                                        allowOutsideClick: false,
+                                        allowEscapeKey: false,
+                                    })
+                                },
+                                success: function(response) {
+                                    console.log('Completed.');
+                                    $('#submitChecktanpakirim').html(
+                                        '<i class="fa-solid fa-paper-plane" style="margin-right: 5px"></i> Proses tanpa Kirim WhatsApp'
+                                    );
+                                    $("#submitChecktanpakirim").attr("disabled",
+                                        false);
+                                    tableLamaran.ajax.reload();
+                                    const Toast = Swal.mixin({
+                                        toast: true,
+                                        position: "top-end",
+                                        showConfirmButton: false,
+                                        timer: 4000,
+                                        timerProgressBar: true,
+                                        didOpen: (toast) => {
+                                            toast.onmouseenter = Swal
+                                                .stopTimer;
+                                            toast.onmouseleave = Swal
+                                                .resumeTimer;
+                                        }
+                                    });
+                                    Toast.fire({
+                                        icon: "success",
+                                        title: response.msg,
+                                    });
+                                    document.getElementById("formCheckWawancara")
+                                        .reset();
+                                    $('#myModalCheck').modal('hide');
+                                    window.open('printLamaran/' + response.val,
+                                        '_blank');
+                                },
+                                error: function(data) {
+                                    console.log('Error:', data);
+                                    // const obj = JSON.parse(data.responseJSON);
+                                    tableLamaran.ajax.reload();
+                                    Swal.fire({
+                                        icon: 'error',
+                                        title: 'Gagal Input',
+                                        html: data.responseJSON.message,
+                                        showConfirmButton: true
+                                    });
+                                    $('#submitChecktanpakirim').html(
+                                        '<i class="fa-solid fa-paper-plane" style="margin-right: 5px"></i>Proses tanpa Kirim WhatsApp'
+                                    );
+                                    $("#submitChecktanpakirim").attr("disabled",
+                                        false);
+                                }
+                            });
+                        }
+                    })
+                }
 
-                })
-            }
+            });
 
             /*------------------------------------------
             --------------------------------------------

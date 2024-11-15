@@ -232,100 +232,112 @@ class Penerimaan extends Controller
     {
         \Carbon\Carbon::setLocale('id');
 
-        // generate noform
-        $noform = date('y') . "00000";
-        // GET NOFORM
-        $checknoform = DB::table('penerimaan_wawancara')->orderBy('noform', 'desc')->first();
-        $noform = $checknoform->noform ?? $noform;
-
-        $y = substr($noform, 0, 2);
-        if (date('y') == $y) {
-            $noUrut = substr($noform, 2, 5);
-            $na = $noUrut + 1;
-            $char = date('y');
-            $kodeSurat = $char . sprintf("%05s", $na);
-        } else {
-            $kodeSurat = date('y') . "00001";
-        }
-        // generate noform
-
-        $candidates = $request->candidates;
-        $tglwawancara = $request->tglwawancara;
-        $jamwawancara = $request->jamwawancara;
-        $posisi = $request->posisi;
-        $catatan = $request->catatan;
-
-        foreach ($candidates as $candidate) {
-            $dataLamaran = DB::table('penerimaan_lamaran')->where('id', $candidate['id'])->first();
-            DB::table('penerimaan_lamaran')
-                ->where('id', $candidate['id'])
-                ->update(['wawancara' => 1]);
-
-            $curl = curl_init();
-            $token = 'f2XeVMEgV2Aqh!KHkZLF';
-
-            $hari = \Carbon\Carbon::parse($tglwawancara)->isoFormat('dddd');
-            $message = "🌟 Selamat Siang, {$candidate['name']} 🌟\n\n"
-                . "Dengan ini kami sampaikan dari pihak HRD PT. Pintex\n"
-                . "Ingin mengundang saudara/i agar turut hadir dalam seleksi wawancara untuk *$posisi*.\n\n"
-                . "Seleksi wawancara ini akan diadakan pada:\n\n"
-                . "Hari   : $hari\n"
-                . "Tanggal: " . date('d F Y', strtotime($tglwawancara)) . "\n"
-                . "Pukul  : " . date('H:i', strtotime($jamwawancara)) . " WIB\n"
-                . "Tempat : PT Pintex Jl Raya Cirebon-Bandung Km 12 Plumbon-Cirebon Jawa Barat 45155.\n\n"
-                . "Catatan:\n"
-                . "$catatan\n"
-                . "Diharapkan seluruh peserta yang menerima pesan ini untuk mengkonfirmasi kehadiran dengan format balasan: Nama-hadir/ tidak hadir.\n\n"
-                . "Contoh: Kade_hadir.\n\n"
-                . "Terima kasih,\n"
-                . "HRD PT PINTEX\n\n";
-
-            curl_setopt_array($curl, array(
-                CURLOPT_URL => 'https://api.fonnte.com/send',
-                CURLOPT_RETURNTRANSFER => true,
-                CURLOPT_ENCODING => '',
-                CURLOPT_MAXREDIRS => 10,
-                CURLOPT_TIMEOUT => 0,
-                CURLOPT_FOLLOWLOCATION => true,
-                CURLOPT_HTTP_VERSION => CURL_HTTP_VERSION_1_1,
-                CURLOPT_CUSTOMREQUEST => 'POST',
-                CURLOPT_POSTFIELDS => array(
-                    'target' => $candidate['notlp'],
-                    'message' => $message,
-                ),
-                CURLOPT_HTTPHEADER => array(
-                    'Authorization: ' . $token,
-                ),
-            ));
-
-            $response = curl_exec($curl);
-            curl_close($curl);
-
-            if (!$response) {
-                return response()->json(['error' => 'Gagal mengirim pesan WhatsApp'], 500);
-            }
-        }
-
         // Simpan ke dalam tabel penerimaan_wawancara
         try {
-            DB::table('penerimaan_wawancara')->insert([
-                'idlamaran' => $candidate['id'],
-                'noform' => $kodeSurat,
-                'nama' => $dataLamaran->nama,
-                'tglwawancara' => $tglwawancara,
-                'jamwawancara' => $request->input('jamwawancara'),
-                'posisi' => $posisi,
-                'catatan' => $catatan,
-                'user' => $request->input('user', 'Kartika Dewi'),
-                'diterima' => 0,
-                'butawarna' => 0,
-                'mataminus' => 0,
-                'sikapbaik' => 0,
-                'jalancepat' => 0,
-                'dibuat' => Auth::user()->nama,
-                'created_at' => now(),
-                'updated_at' => now(),
-            ]);
+            // generate noform
+            $noform = date('y') . "00000";
+            // // GET NOFORM
+            $checknoform = DB::table('penerimaan_wawancara')->orderBy('noform', 'desc')->limit('1')->get();
+            foreach ($checknoform as $key) {
+                $noform = $key->noform;
+            }
+            $y = substr($noform, 0, 2);
+            if (date('y') == $y) {
+                $noUrut = substr($noform, 2, 5);
+                $na = $noUrut + 1;
+                $char = date('y');
+                $kodeSurat = $char . sprintf("%05s", $na);
+            } else {
+                $kodeSurat = date('y') . "00001";
+            }
+            // generate noform
+
+            // $candidates = $request->candidates;
+            // $tglwawancara = $request->tglwawancara;
+            // $jamwawancara = $request->jamwawancara;
+            // $posisi = $request->posisi;
+            // $catatan = $request->catatan;
+            for ($i = 0; $i < count($request->idlamaran); $i++) {
+                DB::table('penerimaan_wawancara')->insert([
+                    'remember_token' => $request->_token,
+                    'idlamaran' => $request->idlamaran[$i],
+                    'noform' => $kodeSurat,
+                    'nama' => $request->nama[$i],
+                    'jamwawancara' => $request->jamwawancara,
+                    'tglwawancara' => $request->tglwawancara,
+                    'catatan' => $request->catatan,
+                    'posisi' => $request->posisi,
+                    'diterima' => 0,
+                    'butawarna' => 0,
+                    'mataminus' => 0,
+                    'sikapbaik' => 0,
+                    'jalancepat' => 0,
+                    'user' => $request->user,
+                    'dibuat' => Auth::user()->name,
+                    'created_at' => date('Y-m-d H:i:s'),
+                ]);
+
+                $check = DB::table('penerimaan_lamaran')
+                    ->where('id', $request->idlamaran[$i])
+                    ->limit(1)
+                    ->update(
+                        array(
+                            'remember_token' => $request->_token,
+                            'wawancara' => 1,
+                            'noformwawancara' => $kodeSurat,
+                            'dibuat' => Auth::user()->name,
+                            'updated_at' => date('Y-m-d H:i:s'),
+                        )
+                    );
+
+
+                $dataLamaran = DB::table('penerimaan_lamaran')->where('id', $request->idlamaran[$i])->first();
+                DB::table('penerimaan_lamaran')
+                    ->where('id', $request->idlamaran[$i])
+                    ->update(['wawancara' => 1]);
+
+                $curl = curl_init();
+                $token = 'f2XeVMEgV2Aqh!KHkZLF';
+
+                $hari = \Carbon\Carbon::parse($request->tglwawancara)->isoFormat('dddd');
+                $message = "🌟 Selamat Siang, {$dataLamaran->nama} 🌟\n\n"
+                    . "Dengan ini kami sampaikan dari pihak HRD PT. Pintex\n"
+                    . "Ingin mengundang saudara/i agar turut hadir dalam seleksi wawancara untuk *$request->posisi*.\n\n"
+                    . "Seleksi wawancara ini akan diadakan pada:\n\n"
+                    . "Hari   : $hari\n"
+                    . "Tanggal: " . date('d F Y', strtotime($request->tglwawancara)) . "\n"
+                    . "Pukul  : " . date('H:i', strtotime($request->jamwawancara)) . " WIB\n"
+                    . "Tempat : PT Pintex Jl Raya Cirebon-Bandung Km 12 Plumbon-Cirebon Jawa Barat 45155.\n\n"
+                    . "Catatan:\n"
+                    . "$request->catatan\n"
+                    . "Diharapkan seluruh peserta yang menerima pesan ini untuk mengkonfirmasi kehadiran dengan format balasan: Nama-hadir/ tidak hadir.\n\n"
+                    . "Contoh: Kade_hadir.\n\n"
+                    . "Terima kasih,\n"
+                    . "HRD PT PINTEX\n\n";
+
+                curl_setopt_array($curl, array(
+                    CURLOPT_URL => 'https://api.fonnte.com/send',
+                    CURLOPT_RETURNTRANSFER => true,
+                    CURLOPT_ENCODING => '',
+                    CURLOPT_MAXREDIRS => 10,
+                    CURLOPT_TIMEOUT => 0,
+                    CURLOPT_FOLLOWLOCATION => true,
+                    CURLOPT_HTTP_VERSION => CURL_HTTP_VERSION_1_1,
+                    CURLOPT_CUSTOMREQUEST => 'POST',
+                    CURLOPT_POSTFIELDS => array(
+                        'target' => $dataLamaran->notlp,
+                        'message' => $message,
+                    ),
+                    CURLOPT_HTTPHEADER => array(
+                        'Authorization: ' . $token,
+                    ),
+                ));
+                $response = curl_exec($curl);
+                curl_close($curl);
+                if (!$response) {
+                    return response()->json(['error' => 'Gagal mengirim pesan WhatsApp'], 500);
+                }
+            }
 
             return response()->json(['success' => 'Proses wawancara berhasil']);
         } catch (\Exception $e) {
@@ -333,8 +345,6 @@ class Penerimaan extends Controller
             return response()->json(['error' => 'Gagal menyimpan data wawancara'], 500);
         }
     }
-
-
     public function scanner()
     {
         return view('products/02_penerimaan.scanner');
@@ -593,67 +603,68 @@ class Penerimaan extends Controller
 
     public function storeChecklistLamaran(Request $request)
     {
-        $request->validate(
-            [
-                '_token' => 'required',
-                'idlamaran' => 'required',
-            ],
-        );
-        $jml = count($request->idlamaran);
+        try {
+            $request->validate(
+                [
+                    '_token' => 'required',
+                    'idlamaran' => 'required',
+                ],
+            );
 
-        $noform = date('y') . "00000";
-        // // GET NOFORM
-        $checknoform = DB::table('penerimaan_wawancara')->orderBy('noform', 'desc')->limit('1')->get();
-        foreach ($checknoform as $key) {
-            $noform = $key->noform;
-        }
-        $y = substr($noform, 0, 2);
-        if (date('y') == $y) {
-            $noUrut = substr($noform, 2, 5);
-            $na = $noUrut + 1;
-            $char = date('y');
-            $kodeSurat = $char . sprintf("%05s", $na);
-        } else {
-            $kodeSurat = date('y') . "00001";
-        }
-
-        for ($i = 0; $i < $jml; $i++) {
-            $check = DB::table('penerimaan_lamaran')
-                ->where('id', $request->idlamaran[$i])
-                ->limit(1)
-                ->update(
-                    array(
-                        'remember_token' => $request->_token,
-                        'wawancara' => 1,
-                        'noformwawancara' => $kodeSurat,
-                        'dibuat' => Auth::user()->name,
-                        'updated_at' => date('Y-m-d H:i:s'),
-                    )
-                );
-
-            // GET NOFORM
-            DB::table('penerimaan_wawancara')->insert([
-                'remember_token' => $request->_token,
-                'idlamaran' => $request->idlamaran[$i],
-                'noform' => $kodeSurat,
-                'nama' => $request->nama[$i],
-                'tglwawancara' => $request->tglwawancara,
-                'user' => $request->user,
-                'dibuat' => Auth::user()->name,
-                'created_at' => date('Y-m-d H:i:s'),
-            ]);
-        }
-        $arr = array('msg' => 'Something goes to wrong. Please try later', 'status' => false);
-        if ($check) {
-            $arr = array('msg' => 'Data telah berhasil diproses', 'status' => true);
-
-            $product = DB::table('penerimaan_wawancara')->orderBy('id', 'desc')->limit('1')->get();
-            foreach ($product as $key) {
+            $noform = date('y') . "00000";
+            // // GET NOFORM
+            $checknoform = DB::table('penerimaan_wawancara')->orderBy('noform', 'desc')->limit('1')->get();
+            foreach ($checknoform as $key) {
                 $noform = $key->noform;
             }
-            $arr = array('val' => $noform);
+            $y = substr($noform, 0, 2);
+            if (date('y') == $y) {
+                $noUrut = substr($noform, 2, 5);
+                $na = $noUrut + 1;
+                $char = date('y');
+                $kodeSurat = $char . sprintf("%05s", $na);
+            } else {
+                $kodeSurat = date('y') . "00001";
+            }
+
+            for ($i = 0; $i < count($request->idlamaran); $i++) {
+                $check = DB::table('penerimaan_lamaran')
+                    ->where('id', $request->idlamaran[$i])
+                    ->limit(1)
+                    ->update(
+                        array(
+                            'remember_token' => $request->_token,
+                            'wawancara' => 1,
+                            'noformwawancara' => $kodeSurat,
+                            'dibuat' => Auth::user()->name,
+                            'updated_at' => date('Y-m-d H:i:s'),
+                        )
+                    );
+
+                // GET NOFORM
+                DB::table('penerimaan_wawancara')->insert([
+                    'remember_token' => $request->_token,
+                    'idlamaran' => $request->idlamaran[$i],
+                    'noform' => $kodeSurat,
+                    'nama' => $request->nama[$i],
+                    'jamwawancara' => $request->jamwawancara,
+                    'tglwawancara' => $request->tglwawancara,
+                    'catatan' => $request->catatan,
+                    'posisi' => $request->posisi,
+                    'diterima' => 0,
+                    'butawarna' => 0,
+                    'mataminus' => 0,
+                    'sikapbaik' => 0,
+                    'jalancepat' => 0,
+                    'user' => $request->user,
+                    'dibuat' => Auth::user()->name,
+                    'created_at' => date('Y-m-d H:i:s'),
+                ]);
+            }
+            return response()->json(['success' => 'Proses wawancara berhasil']);
+        } catch (\Throwable $th) {
+            return response()->json(['error' => 'Gagal menyimpan data wawancara'], 500);
         }
-        return Response()->json($arr);
     }
 
     public function printLamaran($id)
