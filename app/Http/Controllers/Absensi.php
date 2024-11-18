@@ -1490,6 +1490,8 @@ class Absensi extends Controller
                         <option value="" hidden>Pilih Tipe</option>
                         <option value="H">Hadir</option>
                         <option value="½">Potong F1</option>
+                        <option value="½">Potong Setengah Hari (PC)</option>
+                        <option value="I">Potong Satu Hari</option>
                     </select>
                 </div>
                 <div class="col-lg-6">
@@ -1685,6 +1687,53 @@ class Absensi extends Controller
                         'sst' => 'H',
                         'ket_acc' => '',
                         'keterangan' => '',
+                        'dibuat' => Auth::user()->name,
+                        'statussurat' => "ACC",
+                        'created_at' => date('Y-m-d H:i:s'),
+                    ]);
+                }
+            } elseif ($request->tipeUbah == 'I') {
+                // pengulangan berdasarkan banyaknya absen yang dipilih
+                for ($i = 0; $i < $jml; $i++) {
+                    // ambil data absensi
+                    $dataAbs = DB::table('absensi_absensi')
+                        ->where('id', $request->idabsen[$i])
+                        ->first();
+                    // update absensi
+                    $check = DB::table('absensi_absensi')
+                        ->where('id', '=', $request->idabsen[$i])
+                        ->update([
+                            'sst' => $request->tipeUbah,
+                            'koreksi' => 1,
+                            'updated_at' => date('Y-m-d H:i:s'),
+                        ]);
+                    // insert ke absensi komunikasiitm
+                    DB::table('absensi_komunikasiitm')->insert([
+                        'entitas' => 'PINTEX',
+                        'noform' => $kodeSurat,
+                        'tanggal' => $dataAbs->tanggal,
+                        'tanggal2' => $dataAbs->tanggal,
+                        'userid' => $dataAbs->userid,
+                        'nama' => $dataAbs->name,
+                        'suratid' => 'Keputusan-Mgr. Izin',
+                        'sst' => 'I',
+                        'keterangan' => $request->ket,
+                        'dibuat' => Auth::user()->name,
+                        'statussurat' => "ACC",
+                        'created_at' => date('Y-m-d H:i:s'),
+                    ]);
+                    // insert ke absensi komunikasiacc
+                    DB::table('absensi_komunikasiacc')->insert([
+                        'entitas' => 'PINTEX',
+                        'noform' => $kodeSurat,
+                        'tanggal' => $dataAbs->tanggal,
+                        'tanggal2' => null,
+                        'userid' => $dataAbs->userid,
+                        'nama' => $dataAbs->name,
+                        'suratid' => 'Keputusan-Mgr. Izin',
+                        'sst' => 'I',
+                        'ket_acc' => $request->ket,
+                        'keterangan' => $request->ket,
                         'dibuat' => Auth::user()->name,
                         'statussurat' => "ACC",
                         'created_at' => date('Y-m-d H:i:s'),
