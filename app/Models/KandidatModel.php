@@ -46,6 +46,5 @@ class KandidatModel extends Model
         'remember_token',
         'created_at',
         'updated_at',
-
     ];
 }

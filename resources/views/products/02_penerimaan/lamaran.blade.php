@@ -13,14 +13,7 @@
         }
 
         td.cuspad2 {
-            /* padding-top: 0.5px;
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                        padding-bottom: 0.5px;
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                        padding-right: 0.5px;
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                        padding-left: 0.5px;
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                        margin-top: 5px;
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                        margin-bottom: 5px;
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                        margin-right: 5px;
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                        margin-left: 5px; */
+            min-width: 25px;
         }
 
         .unselectable {
@@ -174,9 +167,9 @@
                                                         <path d="M21 21l-6 -6" />
                                                     </svg>
                                                 </th>
+                                                <th class="px-1 th py-1">Nama Kandidat</th>
                                                 <th class="px-1 th py-1">Tgl Input</th>
                                                 <th class="px-1 th py-1">Nik Ktp</th>
-                                                <th class="px-1 th py-1">Nama Kandidat</th>
                                                 <th class="px-1 th py-1">Gender</th>
                                                 <th class="px-1 th py-1">Tempat & Tanggal Lahir</th>
                                                 <th class="px-1 th py-1">Usia</th>
@@ -188,6 +181,17 @@
                                                 <th class="px-1 th py-1">Email</th>
                                                 <th class="px-1 th py-1">Posisi Dituju</th>
                                                 <th class="px-1 th py-1">Keterangan</th>
+                                                <th class="px-1 py-1"></th>
+                                                <th class="px-1 py-1"></th>
+                                                <th class="px-1 py-1"></th>
+                                                <th class="px-1 py-1"></th>
+                                                <th class="px-1 py-1"></th>
+                                                <th class="px-1 py-1"></th>
+                                                <th class="px-1 py-1"></th>
+                                                <th class="px-1 py-1"></th>
+                                                <th class="px-1 py-1"></th>
+                                                <th class="px-1 py-1"></th>
+                                                <th class="px-1 py-1"></th>
                                                 <th class="px-1 th py-1">Wawancara</th>
                                             </tr>
                                         </tfoot>
@@ -812,13 +816,18 @@
                 ],
                 select: {
                     'style': 'multi',
-                    "selector": 'td:not(:nth-child(2))',
+                    "selector": 'td:not(:nth-child(2), :nth-child(17),:nth-child(18),:nth-child(19),:nth-child(20),:nth-child(21),:nth-child(22),:nth-child(23),:nth-child(24),:nth-child(25),:nth-child(26),:nth-child(27))',
+                },
+                //Set column definition initialisation properties.
+                "fixedColumns": {
+                    left: 3,
+                    right: 0,
                 },
                 autoWidth: true,
                 columns: [{
                         data: 'select_orders',
                         name: 'select_orders',
-                        className: 'cuspad2 cursor-pointer',
+                        className: 'cursor-pointer',
                         orderable: false,
                         searchable: false,
                     },
@@ -831,6 +840,12 @@
                         className: 'cuspad0 text-center'
                     },
                     {
+                        title: 'Nama Kandidat',
+                        data: 'nama',
+                        name: 'nama',
+                        className: 'cuspad0 cursor-pointer'
+                    },
+                    {
                         title: 'Tgl Input',
                         data: 'tglinput',
                         name: 'tglinput',
@@ -841,12 +856,6 @@
                         data: 'nik',
                         name: 'nik',
                         className: 'cuspad0 text-center cursor-pointer'
-                    },
-                    {
-                        title: 'Nama Kandidat',
-                        data: 'nama',
-                        name: 'nama',
-                        className: 'cuspad0 cursor-pointer'
                     },
                     {
                         title: 'Gender',
@@ -913,6 +922,94 @@
                         data: 'keterangan',
                         name: 'keterangan',
                         className: 'cuspad0'
+                    },
+                    {
+                        title: 'Foto',
+                        data: 'foto_pas',
+                        name: 'foto_pas',
+                        orderable: false,
+                        searchable: false,
+                        className: 'cuspad0 text-center cuspad2'
+                    },
+                    {
+                        title: 'KTP',
+                        data: 'foto_ktp',
+                        name: 'foto_ktp',
+                        orderable: false,
+                        searchable: false,
+                        className: 'cuspad0 text-center cuspad2'
+                    },
+                    {
+                        title: 'KK',
+                        data: 'foto_kk',
+                        name: 'foto_kk',
+                        orderable: false,
+                        searchable: false,
+                        className: 'cuspad0 text-center cuspad2'
+                    },
+                    {
+                        title: 'Ijazah',
+                        data: 'foto_ijazah',
+                        name: 'foto_ijazah',
+                        orderable: false,
+                        searchable: false,
+                        className: 'cuspad0 text-center cuspad2'
+                    },
+                    {
+                        title: 'KS',
+                        data: 'foto_suratsehat',
+                        name: 'foto_suratsehat',
+                        orderable: false,
+                        searchable: false,
+                        className: 'cuspad0 text-center cuspad2'
+                    },
+                    {
+                        title: 'CV',
+                        data: 'file_cv',
+                        name: 'file_cv',
+                        orderable: false,
+                        searchable: false,
+                        className: 'cuspad0 text-center cuspad2'
+                    },
+                    {
+                        title: 'Penga',
+                        data: 'file_pengalaman',
+                        name: 'file_pengalaman',
+                        orderable: false,
+                        searchable: false,
+                        className: 'cuspad0 text-center cuspad2'
+                    },
+                    {
+                        title: 'SIM A',
+                        data: 'file_sima',
+                        name: 'file_sima',
+                        orderable: false,
+                        searchable: false,
+                        className: 'cuspad0 text-center cuspad2'
+                    },
+                    {
+                        title: 'SIM B',
+                        data: 'file_simb',
+                        name: 'file_simb',
+                        orderable: false,
+                        searchable: false,
+                        className: 'cuspad0 text-center cuspad2'
+                    },
+                    {
+                        title: 'SIM B2 Umum',
+                        data: 'file_simb2',
+                        name: 'file_simb2',
+                        orderable: false,
+                        searchable: false,
+                        className: 'cuspad0 text-center cuspad2'
+                    },
+                    {
+                        title: 'SIO',
+                        data: 'file_sio',
+                        name: 'file_sio',
+                        orderable: false,
+                        searchable: false,
+                        className: 'cuspad0 text-center cuspad2'
                     },
                     {
                         title: 'Wawancara',

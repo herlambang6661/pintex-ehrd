@@ -30,6 +30,8 @@
 
 <script src="{{ asset('assets/extentions/datatables/Select-1.6.0/js/dataTables.select.min.js') }}"></script>
 <script src="{{ asset('assets/extentions/datatables/Select-1.6.0/js/select.dataTables.min.js') }}"></script>
+<script src="{{ asset('assets/extentions/datatables/FixedColumns-4.2.1/js/dataTables.fixedColumns.min.js') }}">
+</script>
 
 <script src="{{ asset('assets/extentions/select2/js/select2.full.min.js') }}" defer></script>
 <script src="https://unpkg.com/@lottiefiles/lottie-player@latest/dist/lottie-player.js"></script>

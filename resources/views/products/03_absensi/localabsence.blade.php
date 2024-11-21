@@ -12,16 +12,7 @@
             text-transform: uppercase;
         }
 
-        td.cuspad2 {
-            /* padding-top: 0.5px;
-                                                                                                                                                                                                                                    padding-bottom: 0.5px;
-                                                                                                                                                                                                                                    padding-right: 0.5px;
-                                                                                                                                                                                                                                    padding-left: 0.5px;
-                                                                                                                                                                                                                                    margin-top: 5px;
-                                                                                                                                                                                                                                    margin-bottom: 5px;
-                                                                                                                                                                                                                                    margin-right: 5px;
-                                                                                                                                                                                                                                    margin-left: 5px; */
-        }
+        td.cuspad2 {}
 
         .unselectable {
             -webkit-user-select: none;
@@ -466,7 +457,7 @@
                         autoFilter: true,
                         className: 'btn btn-success',
                         text: '<i class="fa fa-file-excel text-white" style="margin-right:5px"></i>',
-                        action: newexportaction,
+                        //action: newexportaction,
                     },
                 ],
                 "language": {
