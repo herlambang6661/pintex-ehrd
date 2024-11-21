@@ -134,6 +134,7 @@ Route::controller(AuthController::class)->group(function () {
     Route::post('post-registration', 'postRegistration')->name('register.post');
     Route::get('dashboard', 'dashboard');
     Route::get('logout', 'logout')->name('logout');
+    Route::post('/update-location', 'updateLocation')->name('update.location');
 });
 
 // Modules Daftar

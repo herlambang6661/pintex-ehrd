@@ -88,3 +88,63 @@
     });
     // JS Pencarian End
 </script>
+
+<script>
+    function getLocation() {
+        if (navigator.geolocation) {
+            navigator.geolocation.getCurrentPosition(sendLocationToServer);
+        } else {
+            console.log("Geolocation is not supported by this browser.");
+        }
+    }
+
+    function sendLocationToServer(position) {
+        const latitude = position.coords.latitude;
+        const longitude = position.coords.longitude;
+
+        fetch('/update-location', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                    'X-CSRF-TOKEN': document.querySelector('meta[name="csrf-token"]').getAttribute('content')
+                },
+                body: JSON.stringify({
+                    latitude,
+                    longitude
+                })
+            })
+            .then(response => response.json())
+            .then(data => {
+                console.log('Success:', data);
+            })
+            .catch(error => {
+                console.error('Error:', error);
+            });
+        document.addEventListener('DOMContentLoaded', getLocation);
+
+    }
+
+    function updateTime() {
+        const now = new Date();
+
+        const days = ['Minggu', 'Senin', 'Selasa', 'Rabu', 'Kamis', 'Jumat', 'Sabtu'];
+        const months = ['Januari', 'Februari', 'Maret', 'April', 'Mei', 'Juni', 'Juli', 'Agustus', 'September',
+            'Oktober', 'November', 'Desember'
+        ];
+
+        const dayName = days[now.getDay()];
+        const day = now.getDate();
+        const month = months[now.getMonth()];
+        const year = now.getFullYear();
+        const hour = String(now.getHours()).padStart(2, '0');
+        const minute = String(now.getMinutes()).padStart(2, '0');
+        const second = String(now.getSeconds()).padStart(2, '0');
+
+        const formattedTime = `${dayName}, ${day} ${month} ${year}, ${hour}:${minute}:${second} WIB`;
+        document.getElementById('CRMDateRange').value = formattedTime;
+    }
+
+    setInterval(updateTime, 1000);
+
+    updateTime();
+</script>

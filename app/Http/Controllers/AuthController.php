@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Carbon\Carbon;
 use App\Models\User;
+use App\Services\WeatherService;
 use Illuminate\Http\Request;
 use Illuminate\Routing\Controller;
 use Illuminate\Support\Facades\DB;
@@ -15,8 +16,11 @@ use Illuminate\Support\Facades\Validator;
 class AuthController extends Controller
 {
     protected $Dblocal;
-    public function __construct(DBLokal $Dblocal)
+    protected $weatherService;
+
+    public function __construct(DBLokal $Dblocal, WeatherService $weatherService)
     {
+        $this->weatherService = $weatherService;
         $this->Dblocal = $Dblocal;
         date_default_timezone_set('Asia/Jakarta');
         setlocale(LC_TIME, 'id_ID');
@@ -130,6 +134,8 @@ class AuthController extends Controller
     public function dashboard()
     {
         if (Auth::check()) {
+            $latitude = session('latitude');
+            $longitude = session('longitude');
             $judul = "Dashboard";
             $countLamaran = DB::table('penerimaan_lamaran')->count();
             $countKaryawan = DB::table('penerimaan_karyawan')->where('status', 'like', '%Aktif%')->count();
@@ -142,11 +148,21 @@ class AuthController extends Controller
                 $absen = Carbon::parse($ab->tanggal)->format('d-m-Y');
             }
 
+            if (!$latitude || !$longitude) {
+                return view('products.dashboard', [
+                    'active' => 'Dashboard',
+                    'judul' => 'Dashboard',
+                    'weatherData' => 'N/A',
+                ]);
+            }
+            $currentWeatherData = $this->weatherService->getCurrentWeatherData($latitude, $longitude);
+
             return view('products.dashboard', [
                 'judul' => $judul,
                 'lamaran' => $countLamaran,
                 'karyawan' => $countKaryawan,
                 'komunikasi' => $countKomunikasi,
+                'weatherData' => $currentWeatherData,
                 'absen' => $absen,
                 'kontrak' => $kontrak,
                 'sp' => $sp,
@@ -182,5 +198,19 @@ class AuthController extends Controller
         Auth::logout();
 
         return Redirect('login');
+    }
+
+    public function updateLocation(Request $request)
+    {
+        $request->validate([
+            'latitude' => 'required|numeric',
+            'longitude' => 'required|numeric',
+        ]);
+
+        // Simpan lokasi ke session atau database
+        session(['latitude' => $request->latitude]);
+        session(['longitude' => $request->longitude]);
+
+        return response()->json(['status' => 'Location updated']);
     }
 }

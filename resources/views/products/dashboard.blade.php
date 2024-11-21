@@ -35,15 +35,58 @@
             <div class="page-header d-print-none">
                 <div class="container-xl">
                     <div class="row g-2 align-items-center">
-                        <div class="col">
-                            <!-- Page pre-title -->
-                            <div class="page-pretitle">
-                                Selamat Datang
+                        @if (Auth::user()->role != 'operator')
+                            <div class="col">
+                                <div class="card bg-100 shadow-none border">
+                                    <div class="row gx-0 flex-between-center">
+                                        <!-- Bagian Kiri -->
+                                        <div class="col-sm-9 d-flex align-items-center">
+                                            <img class="ms-n2" src="{{ asset('assets/static/crm-bar-chart.png') }}"
+                                                alt="" width="100" />
+                                            <div>
+                                                <h5 class="text-primary fs--1 mb-0">Welcome to E-HRD Online
+                                                    <strong>{{ Auth::user()->name }} 🎉</strong>
+                                                </h5>
+                                                <h4 class="text-primary fw-bold mb-0">
+                                                    <span class="text-info fw-medium">
+                                                        Aplikasi E-HRD ini adalah aplikasi untuk mengelola recruitment
+                                                        sampai
+                                                        dengan payroll <br> di
+                                                        <b>PT. Plumbon International Textile.</b>
+                                                    </span>
+                                                </h4>
+                                            </div>
+                                            <img class="ms-n4 d-md-none d-lg-block"
+                                                src="{{ asset('assets/static/crm-line-chart.png') }}" alt=""
+                                                width="150" />
+                                        </div>
+
+                                        <!-- Bagian Kanan -->
+                                        <div class="col-md-3 p-3">
+                                            <form class="row align-items-center g-3">
+                                                <div class="col-md-12 position-relative">
+                                                    <input class="form-control form-control-sm datetimepicker ps-4"
+                                                        id="CRMDateRange" type="text" readonly />
+                                                    <span
+                                                        class="fas fa-calendar-alt text-primary position-absolute top-50 translate-middle-y ms-2"></span>
+                                                </div>
+                                            </form>
+                                        </div>
+                                    </div>
+                                </div>
                             </div>
-                            <h2 class="page-title">
-                                Halaman Dashboard
-                            </h2>
-                        </div>
+                        @else
+                            <div class="col">
+                                <!-- Page pre-title -->
+                                <div class="page-pretitle">
+                                    Selamat Datang
+                                </div>
+                                <h2 class="page-title">
+                                    Halaman Dashboard
+                                </h2>
+                            </div>
+                        @endif
+
                     </div>
                 </div>
             </div>
@@ -52,7 +95,167 @@
                 @if (Auth::user()->role != 'operator')
                     <div class="container-xl">
                         <div class="row row-deck row-cards mb-2">
-                            <div class="col-sm-12 col-lg-10">
+
+                            <!-- Foto -->
+                            <div class="col-md-6 col-xl-3">
+                                <a class="card card-link" href="{{ url()->current() }}">
+                                    <div class="card-cover card-cover-blurred text-center"
+                                        style="background-image: url(assets/static/photos/city-lights-reflected-in-the-water-at-night.jpg)">
+                                        <span class="avatar avatar-xl avatar-thumb rounded"
+                                            style="background-image: url('{{ asset('photo/pas/' . Auth::user()->userid . '.jpg') }}')"></span>
+                                    </div>
+                                    <div class="card-body text-center">
+                                        <div class="card-title mb-1">{{ strtoupper(Auth::user()->username) }}</div>
+                                        <div class="text-primary">
+                                            {{ \Carbon\Carbon::parse(Auth::user()->created_at)->format('d M Y H:i') }}
+                                            WIB
+                                        </div>
+                                    </div>
+                                </a>
+                            </div>
+
+                            <!-- Weather -->
+                            <div class="col-sm-6 col-md-9">
+                                <div class="card h-md-100">
+                                    <div class="card-header d-flex align-items-center justify-content-between pb-0">
+                                        <h4><i class="fa-solid fa-location-dot" style="color: red"></i> Weather</h4>
+                                        <div class="dropdown font-sans-serif btn-reveal-trigger ms-auto">
+                                            <button
+                                                class="btn btn-link text-600 btn-sm dropdown-toggle dropdown-caret-none btn-reveal"
+                                                type="button" id="dropdown-weather-update" data-bs-toggle="dropdown"
+                                                data-boundary="viewport" aria-haspopup="true" aria-expanded="false">
+                                                <span class="fas fa-ellipsis-h fs--2"></span>
+                                            </button>
+                                            <div class="dropdown-menu dropdown-menu-end border py-2"
+                                                aria-labelledby="dropdown-weather-update">
+                                                <a class="dropdown-item text-primary" href="{{ url()->current() }}"><i
+                                                        class="fas fa-sync fs--1"></i><span class="ms-1">Reload</span></a>
+                                                <div class="dropdown-divider"></div>
+                                                <a class="dropdown-item text-warning"><strong>Informasi Cuaca</strong></a>
+                                                <a class="dropdown-item"><strong>Pressure:</strong>
+                                                    {{ $weatherData['main']['pressure'] ?? 'N/A' }} hPa</a>
+                                                <a class="dropdown-item"><strong>Humidity:</strong>
+                                                    {{ $weatherData['main']['humidity'] ?? 'N/A' }}%</a>
+                                                <a class="dropdown-item"><strong>Wind:</strong>
+                                                    {{ $weatherData['wind']['speed'] ?? 'N/A' }}
+                                                    m/s,
+                                                    {{ $weatherData['wind']['deg'] ?? 'N/A' }}°</a>
+                                                <a class="dropdown-item"><strong>Cloudiness:</strong>
+                                                    {{ $weatherData['clouds']['all'] ?? 'N/A' }}%</a>
+                                                <a class="dropdown-item"><strong>Visibility:</strong>
+                                                    {{ $weatherData['visibility'] ?? 'N/A' }}
+                                                    m</a>
+                                                <a class="dropdown-item"><strong>Sunrise:</strong>
+                                                    {{ isset($weatherData['sys']['sunrise']) ? date('H:i:s', $weatherData['sys']['sunrise']) : 'N/A' }}
+                                                    WIB</a>
+                                                <a class="dropdown-item"><strong>Sunset:</strong>
+                                                    {{ isset($weatherData['sys']['sunset']) ? date('H:i:s', $weatherData['sys']['sunset']) : 'N/A' }}
+                                                    WIB</a>
+                                                <a class="dropdown-item text-warning"><strong>Informasi Lokasi</strong></a>
+                                                <a class="dropdown-item"
+                                                    style="white-space: normal; word-wrap: break-word; max-width: 200px; font-size: 10px;">
+                                                    {{ $weatherData['display_name'] ?? 'Unknown' }}
+                                                </a>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="card-body pt-2">
+                                        <div class="row g-0 h-100 align-items-center">
+                                            <div class="col">
+                                                <div class="d-flex align-items-center">
+                                                    {{-- @php
+                                                        $temperature = $weatherData['temperature'] ?? null;
+                                                        $iconPath = 'assets/static/weather-icon.png';
+    
+                                                        if ($temperature !== null) {
+                                                            if ($temperature > 30) {
+                                                                $iconPath = 'assets/static/weather-icon.png';
+                                                            } elseif ($temperature > 20) {
+                                                                $iconPath = 'assets/static/weather.jpg';
+                                                            } else {
+                                                                $iconPath = 'assets/static/weather-icon-cold.png';
+                                                            }
+                                                        }
+                                                    @endphp --}}
+                                                    @php
+                                                        $temperature = $weatherData['main']['temp'] ?? null;
+                                                        $weatherCondition =
+                                                            $weatherData['weather'][0]['main'] ?? 'Clear';
+                                                        $currentTime = date('H');
+                                                        $iconClass = 'fas fa-sun';
+
+                                                        if ($temperature !== null) {
+                                                            if ($temperature > 30) {
+                                                                $iconClass = 'fas fa-thermometer-full';
+                                                            } elseif ($temperature > 20) {
+                                                                $iconClass = 'fas fa-thermometer-half';
+                                                            } else {
+                                                                $iconClass = 'fas fa-thermometer-quarter';
+                                                            }
+                                                        }
+
+                                                        switch ($weatherCondition) {
+                                                            case 'Rain':
+                                                                $iconClass = 'assets/static/shower.png';
+                                                                break;
+                                                            case 'Clouds':
+                                                                $iconClass = 'assets/static/weather.png';
+                                                                break;
+                                                            case 'Clear':
+                                                                if ($currentTime >= 6 && $currentTime < 18) {
+                                                                    $iconClass = 'assets/static/weather-icon.png';
+                                                                } else {
+                                                                    $iconClass = 'assets/static/moon.png';
+                                                                }
+                                                                break;
+                                                            case 'Snow':
+                                                                $iconClass = 'assets/static/snowflake.png';
+                                                                break;
+                                                            default:
+                                                                $iconClass = 'assets/static/weather.png';
+                                                                break;
+                                                        }
+                                                    @endphp
+                                                    <img class="me-3" src="{{ asset($iconClass) }}" alt=""
+                                                        height="50" />
+                                                    <div>
+                                                        <h6 class="mb-2" style="font-size: 12px;">
+                                                            {{ isset($locationData['suburb'], $locationData['city_district']) &&
+                                                            $locationData['suburb'] &&
+                                                            $locationData['city_district']
+                                                                ? $locationData['suburb'] . ' - ' . $locationData['city_district']
+                                                                : ($weatherData['display_name']
+                                                                    ? collect(explode(',', $weatherData['display_name']))->slice(2, 2)->implode(', ')
+                                                                    : $weatherData['city'] ?? 'Unknown') }}
+
+                                                        </h6>
+                                                        <div class="fs--2 fw-semi-bold">
+                                                            <div class="text-warning">
+                                                                {{ isset($weatherData['weather'][0]['main']) ? ucfirst($weatherData['weather'][0]['main']) : 'N/A' }}
+                                                            </div>
+                                                            Precipitation:
+                                                            {{ $weatherData['weather'][0]['description'] ?? 'N/A' }}
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="col-auto text-center ps-2">
+                                                <div class="fs-4 fw-normal font-sans-serif text-primary mb-1 lh-1">
+                                                    {{ isset($weatherData['main']['temp']) ? round($weatherData['main']['temp'], 2) . '°C' : 'N/A' }}
+                                                </div>
+                                                <div class="fs--1 text-800">
+                                                    {{ isset($weatherData['main']['temp_max']) ? round($weatherData['main']['temp_max'], 2) . '°C' : 'N/A' }}&deg;
+                                                    /
+                                                    {{ isset($weatherData['main']['temp_min']) ? round($weatherData['main']['temp_min'], 2) . '°C' : 'N/A' }}&deg;
+                                                </div>
+
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            {{-- <div class="col-sm-12 col-lg-10">
                                 <div class="card card-sm">
                                     <div class="card-stamp card-stamp-lg">
                                         <div class="card-stamp-icon bg-primary">
@@ -78,7 +281,8 @@
                                                     width="300px" height="300px"></iframe>
                                             </div>
                                             <div class="col-9">
-                                                <h3 class="h1">Selamat Datang di E-HRD Online, {{ Auth::user()->name }}
+                                                <h3 class="h1">Selamat Datang di E-HRD Online,
+                                                    {{ Auth::user()->name }}
                                                     🎉
                                                 </h3>
                                                 <div class="markdown text-secondary">
@@ -99,7 +303,7 @@
                                     aria-label="Sponsor Tabler!">
                                     <div class="card-body"></div>
                                 </a>
-                            </div>
+                            </div> --}}
 
                             <div class="col-sm-6 col-lg-3">
                                 <div class="card card-sm">

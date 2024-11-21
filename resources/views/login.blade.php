@@ -267,6 +267,52 @@
             --------------------------------------------==============================================================================================================================================================*/
         });
     </script>
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            const submitLoginButton = document.getElementById('submitLogin');
+
+            submitLoginButton.setAttribute('disabled', true);
+
+            if (navigator.geolocation) {
+                navigator.geolocation.getCurrentPosition(
+                    function(position) {
+                        const latitude = position.coords.latitude;
+                        const longitude = position.coords.longitude;
+
+                        updateLocation(latitude, longitude);
+
+                        submitLoginButton.removeAttribute('disabled');
+                    },
+                    function(error) {
+                        alert("Harap izinkan akses lokasi untuk melanjutkan.");
+                        console.error(error);
+
+                        submitLoginButton.setAttribute('disabled', true);
+                    }
+                );
+            } else {
+                alert("Perangkat Anda tidak mendukung Geolocation.");
+            }
+        });
+
+        function updateLocation(latitude, longitude) {
+            $.ajax({
+                url: "{{ route('update.location') }}",
+                method: "POST",
+                data: {
+                    _token: "{{ csrf_token() }}",
+                    latitude: latitude,
+                    longitude: longitude
+                },
+                success: function(response) {
+                    console.log("Lokasi berhasil diperbarui:", response);
+                },
+                error: function(xhr) {
+                    console.error("Gagal memperbarui lokasi:", xhr.responseText);
+                }
+            });
+        }
+    </script>
 </body>
 
 </html>
