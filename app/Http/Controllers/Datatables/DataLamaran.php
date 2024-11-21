@@ -81,9 +81,9 @@ class DataLamaran extends Controller
 
                 ->addColumn('foto_pas', function ($row) {
                     $dataKandidat = KandidatModel::where('ktp', $row->nik)->first();
-                    $PasFotoUrl = $dataKandidat ? 'https://karir.pintex.co.id/storage/biodata/pas/' . $dataKandidat->file_pas : 'default_image_path';
+                    $PasFotoUrl = $dataKandidat ? 'https://karir.pintex.co.id/storage/biodata/pas/' . $dataKandidat->foto_pas : 'default_image_path';
 
-                    if ($dataKandidat && !empty($dataKandidat->file_pas)) {
+                    if ($dataKandidat && !empty($dataKandidat->foto_pas)) {
                         $iconSvg = '
                         <a href="' . $PasFotoUrl . '" target="_blank">
                         <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="green" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="icon icon-tabler icons-tabler-outline icon-tabler-script"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><path d="M17 20h-11a3 3 0 0 1 0 -6h11a3 3 0 0 0 0 6h1a3 3 0 0 0 3 -3v-11a2 2 0 0 0 -2 -2h-10a2 2 0 0 0 -2 2v8" /></svg>
