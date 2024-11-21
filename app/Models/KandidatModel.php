@@ -47,4 +47,10 @@ class KandidatModel extends Model
         'created_at',
         'updated_at',
     ];
+
+    // KandidatModel.php
+    public function penerimaanLamaran()
+    {
+        return $this->hasOne(PenerimaanLamaranModel::class, 'userid', 'userid');
+    }
 }
