@@ -51,26 +51,18 @@
                                                     <span class="text-info fw-medium">
                                                         Aplikasi E-HRD ini adalah aplikasi untuk mengelola recruitment
                                                         sampai
-                                                        dengan payroll <br> di
-                                                        <b>PT. Plumbon International Textile.</b>
+                                                        dengan payroll di PT. Plumbon International Textile.</b>
                                                     </span>
                                                 </h4>
                                             </div>
-                                            <img class="ms-n4 d-md-none d-lg-block"
-                                                src="{{ asset('assets/static/crm-line-chart.png') }}" alt=""
-                                                width="150" />
+
                                         </div>
 
                                         <!-- Bagian Kanan -->
-                                        <div class="col-md-3 p-3">
-                                            <form class="row align-items-center g-3">
-                                                <div class="col-md-12 position-relative">
-                                                    <input class="form-control form-control-sm datetimepicker ps-4"
-                                                        id="CRMDateRange" type="text" readonly />
-                                                    <span
-                                                        class="fas fa-calendar-alt text-primary position-absolute top-50 translate-middle-y ms-2"></span>
-                                                </div>
-                                            </form>
+                                        <div class="col-md-3 p-4">
+                                            <img class="ms-n4 d-md-none d-lg-block"
+                                                src="{{ asset('assets/static/crm-line-chart.png') }}" alt=""
+                                                width="150" />
                                         </div>
                                     </div>
                                 </div>

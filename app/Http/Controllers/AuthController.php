@@ -202,10 +202,10 @@ class AuthController extends Controller
 
     public function updateLocation(Request $request)
     {
-        $request->validate([
-            'latitude' => 'required|numeric',
-            'longitude' => 'required|numeric',
-        ]);
+        // $request->validate([
+        //     'latitude' => 'required|numeric',
+        //     'longitude' => 'required|numeric',
+        // ]);
 
         // Simpan lokasi ke session atau database
         session(['latitude' => $request->latitude]);

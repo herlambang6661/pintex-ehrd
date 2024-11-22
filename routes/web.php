@@ -61,34 +61,37 @@ use App\Http\Controllers\Datatables\DataLegalitasKaryawanPhl;
 */
 
 Route::get('logs', [\Rap2hpoutre\LaravelLogViewer\LogViewerController::class, 'index']);
+// Route::get('logs', [AuthController::class, 'index']);
 
-Route::get('/', function () {
-    if (Auth::check()) {
-        $judul = "Dashboard";
-        $countLamaran = DB::table('penerimaan_lamaran')->count();
-        $countKaryawan = DB::table('penerimaan_karyawan')->where('status', 'like', '%Aktif%')->count();
-        $countKomunikasi = DB::table('absensi_komunikasiitm')->count();
-        $absensi = DB::table('absensi_absensi')->orderBy('tanggal', 'desc')->limit('1')->get();
-        $kontrak = DB::table('penerimaan_legalitas')->where('nmsurat', 'Perjanjian Kontrak')->where('tglak', '>', date('Y-m-d'))->orderBy('tglak', 'asc')->limit('50')->get();
-        $sp = DB::table('penerimaan_legalitas')->where('nmsurat', 'Surat Peringatan (SP)')->where('legalitastgl', '>=', now()->subMonths(6))->orderBy('legalitastgl', 'desc')->limit('50')->get();
+// Route::get('/', function () {
+//     if (Auth::check()) {
+//         $judul = "Dashboard";
+//         $countLamaran = DB::table('penerimaan_lamaran')->count();
+//         $countKaryawan = DB::table('penerimaan_karyawan')->where('status', 'like', '%Aktif%')->count();
+//         $countKomunikasi = DB::table('absensi_komunikasiitm')->count();
+//         $absensi = DB::table('absensi_absensi')->orderBy('tanggal', 'desc')->limit('1')->get();
+//         $kontrak = DB::table('penerimaan_legalitas')->where('nmsurat', 'Perjanjian Kontrak')->where('tglak', '>', date('Y-m-d'))->orderBy('tglak', 'asc')->limit('50')->get();
+//         $sp = DB::table('penerimaan_legalitas')->where('nmsurat', 'Surat Peringatan (SP)')->where('legalitastgl', '>=', now()->subMonths(6))->orderBy('legalitastgl', 'desc')->limit('50')->get();
 
-        foreach ($absensi as $ab) {
-            $absen = Carbon::parse($ab->tanggal)->format('d-m-Y');
-        }
+//         foreach ($absensi as $ab) {
+//             $absen = Carbon::parse($ab->tanggal)->format('d-m-Y');
+//         }
+//         // dd('ASJHAJSHAJSHJAHS');
 
-        return view('products.dashboard', [
-            'judul' => $judul,
-            'lamaran' => $countLamaran,
-            'karyawan' => $countKaryawan,
-            'komunikasi' => $countKomunikasi,
-            'absen' => $absen,
-            'kontrak' => $kontrak,
-            'sp' => $sp,
-        ]);
-    } else {
-        return redirect("login")->withSuccess('Opps! You do not have access');
-    }
-});
+//         // return view('products.dashboard', [
+//         //     'judul' => $judul,
+//         //     'lamaran' => $countLamaran,
+//         //     'karyawan' => $countKaryawan,
+//         //     'komunikasi' => $countKomunikasi,
+//         //     'absen' => $absen,
+//         //     'kontrak' => $kontrak,
+//         //     'sp' => $sp,
+//         // ]);
+
+//     } else {
+//         return redirect("login")->withSuccess('Opps! You do not have access');
+//     }
+// });
 
 // Modules Source untuk datatables
 Route::resources([
@@ -135,6 +138,7 @@ Route::controller(AuthController::class)->group(function () {
     Route::get('dashboard', 'dashboard');
     Route::get('logout', 'logout')->name('logout');
     Route::post('/update-location', 'updateLocation')->name('update.location');
+    Route::get('/', 'dashboard');
 });
 
 // Modules Daftar
@@ -216,6 +220,7 @@ Route::controller(Penerimaan::class)->group(function () {
 
     Route::get('penerimaan/lamaran', 'lamaran')->name('penerimaan/lamaran');
     Route::post('listLamaran', 'listLamaran');
+    Route::post('viewFoto', 'viewFoto');
     Route::post('penerimaan/wawancaraa', 'byWhatsappWawancaraa')->name('proseswwn');
 
     Route::get('penerimaan/wawancara', 'wawancara')->name('penerimaan/wawancara');

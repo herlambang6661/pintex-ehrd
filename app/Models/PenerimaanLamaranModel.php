@@ -8,10 +8,9 @@ use Illuminate\Database\Eloquent\Model;
 class PenerimaanLamaranModel extends Model
 {
     use HasFactory;
-    protected $table = 'penerimaan_lamaran'; // Nama tabel di database
-    protected $primaryKey = 'id'; // Primary key, secara default Laravel menggunakan 'id'
+    protected $table = 'penerimaan_lamaran';
+    protected $primaryKey = 'id';
 
-    // Kolom yang boleh diisi secara mass-assignment
     protected $fillable = [
         'entitas',
         'nik',
@@ -39,9 +38,8 @@ class PenerimaanLamaranModel extends Model
         'remember_token',
     ];
 
-    // Jika Anda ingin menambahkan relasi dengan model KandidatModel
     public function kandidat()
     {
-        return $this->belongsTo(KandidatModel::class, 'nik', 'ktp'); // Asumsi kolom nik di penerimaan_lamaran berhubungan dengan kolom ktp di users
+        return $this->belongsTo(KandidatModel::class, 'nik', 'ktp');
     }
 }
