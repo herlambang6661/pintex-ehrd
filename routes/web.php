@@ -64,6 +64,19 @@ Route::get('logs', [\Rap2hpoutre\LaravelLogViewer\LogViewerController::class, 'i
 
 Route::get('/', function () {
     if (Auth::check()) {
+
+        $latitude = session('latitude');
+        $longitude = session('longitude');
+
+        if (!$latitude || !$longitude) {
+            return view('products.dashboard', [
+                'active' => 'Dashboard',
+                'judul' => 'Dashboard',
+                'weatherData' => 'N/A',
+            ]);
+        }
+        $currentWeatherData = $this->weatherService->getCurrentWeatherData($latitude, $longitude);
+
         $judul = "Dashboard";
         $countLamaran = DB::table('penerimaan_lamaran')->count();
         $countKaryawan = DB::table('penerimaan_karyawan')->where('status', 'like', '%Aktif%')->count();
@@ -83,6 +96,7 @@ Route::get('/', function () {
             'komunikasi' => $countKomunikasi,
             'absen' => $absen,
             'kontrak' => $kontrak,
+            'weatherData' => $currentWeatherData,
             'sp' => $sp,
         ]);
     } else {
