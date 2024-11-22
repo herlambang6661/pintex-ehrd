@@ -34,10 +34,12 @@
                         </div>
                     @endif
                 @endif --}}
-                <div class="nav-link px-0" style="margin-right: 20px">
-                    <a href="{{ url('lokal/localabsence') }}" class="btn btn-green"><i class="fa-solid fa-robot"
-                            style="margin-right: 7px; margin-bottom:3px"></i> Daftar Absen</a>
-                </div>
+                @if (Auth::user()->role != 'operator')
+                    <div class="nav-link px-0" style="margin-right: 20px">
+                        <a href="{{ url('lokal/localabsence') }}" class="btn btn-green"><i class="fa-solid fa-robot"
+                                style="margin-right: 7px; margin-bottom:3px"></i> Daftar Absen</a>
+                    </div>
+                @endif
                 <a href="?theme=dark" class="nav-link px-0 hide-theme-dark" title="Enable dark mode"
                     data-bs-toggle="tooltip" data-bs-placement="bottom">
                     <svg xmlns="http://www.w3.org/2000/svg" class="icon" width="24" height="24"
