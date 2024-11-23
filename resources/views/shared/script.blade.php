@@ -126,27 +126,27 @@
 
     }
 
-    function updateTime() {
-        const now = new Date();
+    // function updateTime() {
+    //     const now = new Date();
 
-        const days = ['Minggu', 'Senin', 'Selasa', 'Rabu', 'Kamis', 'Jumat', 'Sabtu'];
-        const months = ['Januari', 'Februari', 'Maret', 'April', 'Mei', 'Juni', 'Juli', 'Agustus', 'September',
-            'Oktober', 'November', 'Desember'
-        ];
+    //     const days = ['Minggu', 'Senin', 'Selasa', 'Rabu', 'Kamis', 'Jumat', 'Sabtu'];
+    //     const months = ['Januari', 'Februari', 'Maret', 'April', 'Mei', 'Juni', 'Juli', 'Agustus', 'September',
+    //         'Oktober', 'November', 'Desember'
+    //     ];
 
-        const dayName = days[now.getDay()];
-        const day = now.getDate();
-        const month = months[now.getMonth()];
-        const year = now.getFullYear();
-        const hour = String(now.getHours()).padStart(2, '0');
-        const minute = String(now.getMinutes()).padStart(2, '0');
-        const second = String(now.getSeconds()).padStart(2, '0');
+    //     const dayName = days[now.getDay()];
+    //     const day = now.getDate();
+    //     const month = months[now.getMonth()];
+    //     const year = now.getFullYear();
+    //     const hour = String(now.getHours()).padStart(2, '0');
+    //     const minute = String(now.getMinutes()).padStart(2, '0');
+    //     const second = String(now.getSeconds()).padStart(2, '0');
 
-        const formattedTime = `${dayName}, ${day} ${month} ${year}, ${hour}:${minute}:${second} WIB`;
-        document.getElementById('CRMDateRange').value = formattedTime;
-    }
+    //     const formattedTime = `${dayName}, ${day} ${month} ${year}, ${hour}:${minute}:${second} WIB`;
+    //     document.getElementById('CRMDateRange').value = formattedTime;
+    // }
 
-    setInterval(updateTime, 1000);
+    // setInterval(updateTime, 1000);
 
-    updateTime();
+    // updateTime();
 </script>

@@ -181,17 +181,6 @@
                                                 <th class="px-1 th py-1">Email</th>
                                                 <th class="px-1 th py-1">Posisi Dituju</th>
                                                 <th class="px-1 th py-1">Keterangan</th>
-                                                <th class="px-1 py-1"></th>
-                                                <th class="px-1 py-1"></th>
-                                                <th class="px-1 py-1"></th>
-                                                <th class="px-1 py-1"></th>
-                                                <th class="px-1 py-1"></th>
-                                                <th class="px-1 py-1"></th>
-                                                <th class="px-1 py-1"></th>
-                                                <th class="px-1 py-1"></th>
-                                                <th class="px-1 py-1"></th>
-                                                <th class="px-1 py-1"></th>
-                                                <th class="px-1 py-1"></th>
                                                 <th class="px-1 th py-1">Wawancara</th>
                                             </tr>
                                         </tfoot>
@@ -683,7 +672,33 @@
             </div>
         </div>
     </div>
-
+    {{-- Modal View Foto --}}
+    <div class="modal modal-blur fade" id="modal-view-foto" tabindex="-1" role="dialog"
+        aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="overlay2">
+            <div class="cv-spinner">
+                <span class="spinner"></span>
+            </div>
+        </div>
+        <div class="modal-dialog modal-xl" role="document">
+            <div class="modal-content">
+                <form action="javascript:void(0)" method="post">
+                    @csrf
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="exampleModalLabel">Detail Foto</h5>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    </div>
+                    <div class="modal-body">
+                        <div class="fetched-data-foto"></div>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-primary" data-bs-dismiss="modal"><i
+                                class="fa-solid fa-arrow-rotate-left" style="margin-right:5px"></i> Close</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
     <script type="text/javascript">
         function newexportaction(e, dt, button, config) {
             var self = this;
@@ -924,94 +939,6 @@
                         className: 'cuspad0'
                     },
                     {
-                        title: 'Foto',
-                        data: 'foto_pas',
-                        name: 'foto_pas',
-                        orderable: false,
-                        searchable: false,
-                        className: 'cuspad0 text-center cuspad2'
-                    },
-                    {
-                        title: 'KTP',
-                        data: 'foto_ktp',
-                        name: 'foto_ktp',
-                        orderable: false,
-                        searchable: false,
-                        className: 'cuspad0 text-center cuspad2'
-                    },
-                    {
-                        title: 'KK',
-                        data: 'foto_kk',
-                        name: 'foto_kk',
-                        orderable: false,
-                        searchable: false,
-                        className: 'cuspad0 text-center cuspad2'
-                    },
-                    {
-                        title: 'Ijazah',
-                        data: 'foto_ijazah',
-                        name: 'foto_ijazah',
-                        orderable: false,
-                        searchable: false,
-                        className: 'cuspad0 text-center cuspad2'
-                    },
-                    {
-                        title: 'KS',
-                        data: 'foto_suratsehat',
-                        name: 'foto_suratsehat',
-                        orderable: false,
-                        searchable: false,
-                        className: 'cuspad0 text-center cuspad2'
-                    },
-                    {
-                        title: 'CV',
-                        data: 'file_cv',
-                        name: 'file_cv',
-                        orderable: false,
-                        searchable: false,
-                        className: 'cuspad0 text-center cuspad2'
-                    },
-                    {
-                        title: 'Penga',
-                        data: 'file_pengalaman',
-                        name: 'file_pengalaman',
-                        orderable: false,
-                        searchable: false,
-                        className: 'cuspad0 text-center cuspad2'
-                    },
-                    {
-                        title: 'SIM A',
-                        data: 'file_sima',
-                        name: 'file_sima',
-                        orderable: false,
-                        searchable: false,
-                        className: 'cuspad0 text-center cuspad2'
-                    },
-                    {
-                        title: 'SIM B',
-                        data: 'file_simb',
-                        name: 'file_simb',
-                        orderable: false,
-                        searchable: false,
-                        className: 'cuspad0 text-center cuspad2'
-                    },
-                    {
-                        title: 'SIM B2 Umum',
-                        data: 'file_simb2',
-                        name: 'file_simb2',
-                        orderable: false,
-                        searchable: false,
-                        className: 'cuspad0 text-center cuspad2'
-                    },
-                    {
-                        title: 'SIO',
-                        data: 'file_sio',
-                        name: 'file_sio',
-                        orderable: false,
-                        searchable: false,
-                        className: 'cuspad0 text-center cuspad2'
-                    },
-                    {
                         title: 'Wawancara',
                         data: 'status',
                         name: 'status',
@@ -1115,6 +1042,35 @@
                     },
                     success: function(data) {
                         $('.fetched-data-lamaran').html(data); //menampilkan data ke dalam modal
+                        // alert(itemTables);
+                    }
+                }).done(function() {
+                    setTimeout(function() {
+                        $(".overlay2").fadeOut(300);
+                    }, 500);
+                });
+            });
+
+            $('#modal-view-foto').on('show.bs.modal', function(e) {
+                var rowid = $(e.relatedTarget).data('id');
+                console.log(rowid);
+                $(".overlay2").fadeIn(300);
+
+                $.ajaxSetup({
+                    headers: {
+                        'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                    }
+                });
+                //menggunakan fungsi ajax untuk pengambilan data
+                $.ajax({
+                    type: 'POST',
+                    url: '{{ url('viewFoto') }}',
+                    data: {
+                        "_token": "{{ csrf_token() }}",
+                        id: rowid,
+                    },
+                    success: function(data) {
+                        $('.fetched-data-foto').html(data); //menampilkan data ke dalam modal
                         // alert(itemTables);
                     }
                 }).done(function() {
