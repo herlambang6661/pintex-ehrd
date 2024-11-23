@@ -932,13 +932,24 @@ class Administrasi extends Controller
 
     private function absensi($params, $userid, $start, $end)
     {
-        $absensi = DB::table('absensi_absensi')
-            ->select(DB::raw("SUM(IF(sst = '$params', 1, 0)) as Result"))
-            ->where('userid', '=', $userid)
-            ->whereBetween('tanggal', [$start, $end])
-            ->get();
-        foreach ($absensi as $a) {
-            $result = $a->Result;
+        if ($params == "½") {
+            $absensi = DB::table('absensi_absensi')
+                ->select(DB::raw("SUM(IF(sst = '$params', 0.5, 0)) as Result"))
+                ->where('userid', '=', $userid)
+                ->whereBetween('tanggal', [$start, $end])
+                ->get();
+            foreach ($absensi as $a) {
+                $result = $a->Result;
+            }
+        } else {
+            $absensi = DB::table('absensi_absensi')
+                ->select(DB::raw("SUM(IF(sst = '$params', 1, 0)) as Result"))
+                ->where('userid', '=', $userid)
+                ->whereBetween('tanggal', [$start, $end])
+                ->get();
+            foreach ($absensi as $a) {
+                $result = $a->Result;
+            }
         }
 
         return $result;
