@@ -332,7 +332,7 @@ class Administrasi extends Controller
                 ->limit(1)
                 ->update(
                     array(
-                        'potongan_absen' => ($sakit + $izin),
+                        'potongan_absen' => ($sakit + $izin + $set),
                         'potongan_absen_rp' => - ($absen_rp),
                         'H' => $hadir,
                         'S' => $sakit,
