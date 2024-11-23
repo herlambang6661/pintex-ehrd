@@ -357,6 +357,7 @@
                                                     <th class="text-center text-blue">S</th>
                                                     <th class="text-center text-blue">I</th>
                                                     <th class="text-center text-blue">A</th>
+                                                    <th class="text-center text-blue">½</th>
                                                     <th class="text-center text-red">Absensi</th>
                                                     <th class="text-center text-green">Absensi Input</th>
                                                     <th class="text-center">Absensi Fix</th>
@@ -371,6 +372,7 @@
                                                         <td class="text-center text-blue">{{ $t->S }}</td>
                                                         <td class="text-center text-blue">{{ $t->I }}</td>
                                                         <td class="text-center text-blue">{{ $t->A }}</td>
+                                                        <td class="text-center text-blue">{{ $t->SET }}</td>
                                                         <td class="text-center text-red">{{ $t->potongan_absen }}</td>
                                                         <td class="text-center text-green">{{ $t->potongan_absen_input }}
                                                         </td>

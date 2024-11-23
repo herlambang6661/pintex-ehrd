@@ -323,6 +323,7 @@ class Administrasi extends Controller
             $sakit  = $this->absensi('S', $key->userid, date("Y-m-d", strtotime($request->tahun . '-' . $request->bulan . '-16' . "-1 month")), $request->tahun . '-' . $request->bulan . '-15');
             $izin   = $this->absensi('I', $key->userid, date("Y-m-d", strtotime($request->tahun . '-' . $request->bulan . '-16' . "-1 month")), $request->tahun . '-' . $request->bulan . '-15');
             $alpha  = $this->absensi('A', $key->userid, date("Y-m-d", strtotime($request->tahun . '-' . $request->bulan . '-16' . "-1 month")), $request->tahun . '-' . $request->bulan . '-15');
+            $set    = $this->absensi('½', $key->userid, date("Y-m-d", strtotime($request->tahun . '-' . $request->bulan . '-16' . "-1 month")), $request->tahun . '-' . $request->bulan . '-15');
             // hitung potongan absen = (bruto/25)*jml_absen. bruto = gapok + prestasi + tunj.jabatan.
             $absen_rp = (($key->gapok + $key->prestasi + $key->tjabat) / 25) * $key->potongan_absen_fix;
             DB::table('administrasi_payroll')
@@ -337,6 +338,7 @@ class Administrasi extends Controller
                         'S' => $sakit,
                         'I' => $izin,
                         'A' => $alpha,
+                        'SET' => $set,
                         'updated_at' => date('Y-m-d H:i:s'),
                     )
                 );
