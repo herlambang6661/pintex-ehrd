@@ -685,7 +685,7 @@
                 <form action="javascript:void(0)" method="post">
                     @csrf
                     <div class="modal-header">
-                        <h5 class="modal-title" id="exampleModalLabel">Detail Foto</h5>
+                        <h5 class="modal-title" id="exampleModalLabel">Detail Dokumen Kandidat</h5>
                         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                     </div>
                     <div class="modal-body">

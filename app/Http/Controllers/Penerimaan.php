@@ -804,9 +804,8 @@ class Penerimaan extends Controller
     <div class="row">
         <!-- Foto dan Detail Kandidat -->
         <div class="col-md-3 text-center border-right">
-            <img class="rounded-circle img-thumbnail mt-3" width="150px" 
-                src="https://karir.pintex.co.id/storage/biodata/pas/' . $kandidat->foto_pas . '">
-            <span class="font-weight-bold d-block mt-2">' . $data->nama . '</span>
+            <img class="rounded-circle img-thumbnail mt-3" width="150px" src="https://karir.pintex.co.id/storage/biodata/pas/' . $kandidat->foto_pas . '">
+            <span class="font-weight-bold d-block mt-2">' . $data->nama . ' ( ' . Carbon::parse($data->tgllahir)->age . ' Tahun )</span>
             <span class="text-black-50 d-block">' . $data->email . '</span>
             <a href="https://wa.me/62' . $data->notlp . '" target="_blank" class="text-blue-50">
                 <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" 
@@ -823,253 +822,244 @@ class Penerimaan extends Controller
             <div class="p-1 py-1">
                 <div class="row mt-2">
                     <!-- Foto KTP -->
-                    <div class="col-md-6 col-xl-3">
-                        <div class="card card-sm">
+                    <div class="col-md-6 col-xl-3 mb-3">
+                        ' . (!empty($kandidat->foto_ktp) ?
+            '<a href="https://karir.pintex.co.id/storage/biodata/ktp/' . $kandidat->foto_ktp . '" target="_blank"><div class="card card-sm bg-green-lt">' : '<div class="card card-sm bg-red-lt cursor-not-allowed">') . '
                             <div class="card-body">
                                 <div class="row align-items-center">
                                     <div class="col-auto">
-                                        <span class="bg-primary text-white avatar">
-                                            <svg  xmlns="http://www.w3.org/2000/svg"  width="24"  height="24"  viewBox="0 0 24 24"  fill="currentColor"  class="icon icon-tabler icons-tabler-filled icon-tabler-camera"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><path d="M15 3a2 2 0 0 1 1.995 1.85l.005 .15a1 1 0 0 0 .883 .993l.117 .007h1a3 3 0 0 1 2.995 2.824l.005 .176v9a3 3 0 0 1 -2.824 2.995l-.176 .005h-14a3 3 0 0 1 -2.995 -2.824l-.005 -.176v-9a3 3 0 0 1 2.824 -2.995l.176 -.005h1a1 1 0 0 0 1 -1a2 2 0 0 1 1.85 -1.995l.15 -.005h6zm-3 7a3 3 0 0 0 -2.985 2.698l-.011 .152l-.004 .15l.004 .15a3 3 0 1 0 2.996 -3.15z" /></svg>
+                                        <span class="bg-primary-lt text-white avatar">
+                                            <svg  xmlns="http://www.w3.org/2000/svg"  width="24"  height="24"  viewBox="0 0 24 24"  fill="none"  stroke="currentColor"  stroke-width="2"  stroke-linecap="round"  stroke-linejoin="round"  class="icon icon-tabler icons-tabler-outline icon-tabler-id-badge-2"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><path d="M7 12h3v4h-3z" /><path d="M10 6h-6a1 1 0 0 0 -1 1v12a1 1 0 0 0 1 1h16a1 1 0 0 0 1 -1v-12a1 1 0 0 0 -1 -1h-6" /><path d="M10 3m0 1a1 1 0 0 1 1 -1h2a1 1 0 0 1 1 1v3a1 1 0 0 1 -1 1h-2a1 1 0 0 1 -1 -1z" /><path d="M14 16h2" /><path d="M14 12h4" /></svg>
                                         </span>
                                     </div>
                                     <div class="col">
-                                        <div class="font-weight-medium">
-                                            ' . (!empty($kandidat->foto_ktp) ?
-            '<a href="https://karir.pintex.co.id/storage/biodata/ktp/' . $kandidat->foto_ktp . '" target="_blank">Foto KTP</a>' :
-            'Foto KTP Tidak Ada') . '
+                                        <div class="font-weight-medium" style="font-size: 12px">
+                                            Foto KTP
                                         </div>
-                                        <div class="text-secondary">
+                                        <div class="text-secondary" style="font-size: 10px">
                                             ' . (!empty($kandidat->foto_ktp) ? 'Klik untuk melihat' : 'Tidak tersedia') . '
                                         </div>
                                     </div>
                                 </div>
                             </div>
                         </div>
+                        ' . (!empty($kandidat->foto_ktp) ? '</a>' : '') . '
                     </div>
 
                     <!-- Foto KK -->
                     <div class="col-md-6 col-xl-3">
-                        <div class="card card-sm">
+                        ' . (!empty($kandidat->foto_kk) ? '<a href="https://karir.pintex.co.id/storage/biodata/kk/' . $kandidat->foto_kk . '" target="_blank"><div class="card card-sm bg-green-lt">' : '<div class="card card-sm bg-red-lt cursor-not-allowed">') . '
                             <div class="card-body">
                                 <div class="row align-items-center">
                                     <div class="col-auto">
-                                        <span class="bg-primary text-white avatar">
-                                            <svg  xmlns="http://www.w3.org/2000/svg"  width="24"  height="24"  viewBox="0 0 24 24"  fill="currentColor"  class="icon icon-tabler icons-tabler-filled icon-tabler-camera"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><path d="M15 3a2 2 0 0 1 1.995 1.85l.005 .15a1 1 0 0 0 .883 .993l.117 .007h1a3 3 0 0 1 2.995 2.824l.005 .176v9a3 3 0 0 1 -2.824 2.995l-.176 .005h-14a3 3 0 0 1 -2.995 -2.824l-.005 -.176v-9a3 3 0 0 1 2.824 -2.995l.176 -.005h1a1 1 0 0 0 1 -1a2 2 0 0 1 1.85 -1.995l.15 -.005h6zm-3 7a3 3 0 0 0 -2.985 2.698l-.011 .152l-.004 .15l.004 .15a3 3 0 1 0 2.996 -3.15z" /></svg>
+                                        <span class="bg-primary-lt text-white avatar">
+                                            <svg  xmlns="http://www.w3.org/2000/svg"  width="24"  height="24"  viewBox="0 0 24 24"  fill="none"  stroke="currentColor"  stroke-width="2"  stroke-linecap="round"  stroke-linejoin="round"  class="icon icon-tabler icons-tabler-outline icon-tabler-users-group"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><path d="M10 13a2 2 0 1 0 4 0a2 2 0 0 0 -4 0" /><path d="M8 21v-1a2 2 0 0 1 2 -2h4a2 2 0 0 1 2 2v1" /><path d="M15 5a2 2 0 1 0 4 0a2 2 0 0 0 -4 0" /><path d="M17 10h2a2 2 0 0 1 2 2v1" /><path d="M5 5a2 2 0 1 0 4 0a2 2 0 0 0 -4 0" /><path d="M3 13v-1a2 2 0 0 1 2 -2h2" /></svg>
                                         </span>
                                     </div>
                                     <div class="col">
-                                        <div class="font-weight-medium">
-                                            ' . (!empty($kandidat->foto_kk) ?
-            '<a href="https://karir.pintex.co.id/storage/biodata/kk/' . $kandidat->foto_kk . '" target="_blank">Foto KK</a>' :
-            'Foto KK Tidak Ada') . '
+                                        <div class="font-weight-medium" style="font-size: 12px">
+                                            Foto KK
                                         </div>
-                                        <div class="text-secondary">
+                                        <div class="text-secondary" style="font-size: 10px">
                                             ' . (!empty($kandidat->foto_kk) ? 'Klik untuk melihat' : 'Tidak tersedia') . '
                                         </div>
                                     </div>
                                 </div>
                             </div>
                         </div>
+                        ' . (!empty($kandidat->foto_kk) ? '</a>' : '') . '
                     </div>
 
                     <!-- Foto Ijazah -->
                     <div class="col-md-6 col-xl-3">
-                        <div class="card card-sm">
+                        ' . (!empty($kandidat->foto_ijazah) ? '<a href="https://karir.pintex.co.id/storage/biodata/ijazah/' . $kandidat->foto_ijazah . '" target="_blank"><div class="card card-sm bg-green-lt">' : '<div class="card card-sm bg-red-lt cursor-not-allowed">') . '
                             <div class="card-body">
                                 <div class="row align-items-center">
                                     <div class="col-auto">
-                                        <span class="bg-primary text-white avatar">
-                                            <svg  xmlns="http://www.w3.org/2000/svg"  width="24"  height="24"  viewBox="0 0 24 24"  fill="currentColor"  class="icon icon-tabler icons-tabler-filled icon-tabler-camera"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><path d="M15 3a2 2 0 0 1 1.995 1.85l.005 .15a1 1 0 0 0 .883 .993l.117 .007h1a3 3 0 0 1 2.995 2.824l.005 .176v9a3 3 0 0 1 -2.824 2.995l-.176 .005h-14a3 3 0 0 1 -2.995 -2.824l-.005 -.176v-9a3 3 0 0 1 2.824 -2.995l.176 -.005h1a1 1 0 0 0 1 -1a2 2 0 0 1 1.85 -1.995l.15 -.005h6zm-3 7a3 3 0 0 0 -2.985 2.698l-.011 .152l-.004 .15l.004 .15a3 3 0 1 0 2.996 -3.15z" /></svg>
+                                        <span class="bg-primary-lt text-white avatar">
+                                            <svg  xmlns="http://www.w3.org/2000/svg"  width="24"  height="24"  viewBox="0 0 24 24"  fill="none"  stroke="currentColor"  stroke-width="2"  stroke-linecap="round"  stroke-linejoin="round"  class="icon icon-tabler icons-tabler-outline icon-tabler-license"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><path d="M15 21h-9a3 3 0 0 1 -3 -3v-1h10v2a2 2 0 0 0 4 0v-14a2 2 0 1 1 2 2h-2m2 -4h-11a3 3 0 0 0 -3 3v11" /><path d="M9 7l4 0" /><path d="M9 11l4 0" /></svg>
                                         </span>
                                     </div>
                                     <div class="col">
-                                        <div class="font-weight-medium">
-                                            ' . (!empty($kandidat->foto_ijazah) ?
-            '<a href="https://karir.pintex.co.id/storage/biodata/ijazah/' . $kandidat->foto_ijazah . '" target="_blank">Foto Ijazah</a>' :
-            'Foto Ijazah Tidak Ada') . '
+                                        <div class="font-weight-medium" style="font-size: 12px">
+                                            Foto Ijazah
                                         </div>
-                                        <div class="text-secondary">
+                                        <div class="text-secondary" style="font-size: 10px">
                                             ' . (!empty($kandidat->foto_ijazah) ? 'Klik untuk melihat' : 'Tidak tersedia') . '
                                         </div>
                                     </div>
                                 </div>
                             </div>
                         </div>
+                        ' . (!empty($kandidat->foto_ijazah) ? '</a>' : '') . '
                     </div>
 
                     <!-- Foto SuratSehat -->
                     <div class="col-md-6 col-xl-3">
-                        <div class="card card-sm">
+                        ' . (!empty($kandidat->foto_suratsehat) ? '<a href="https://karir.pintex.co.id/storage/biodata/suratsehat/' . $kandidat->foto_suratsehat . '" target="_blank"><div class="card card-sm bg-green-lt">' : '<div class="card card-sm bg-red-lt cursor-not-allowed">') . '
                             <div class="card-body">
                                 <div class="row align-items-center">
                                     <div class="col-auto">
-                                        <span class="bg-primary text-white avatar">
-                                            <svg  xmlns="http://www.w3.org/2000/svg"  width="24"  height="24"  viewBox="0 0 24 24"  fill="currentColor"  class="icon icon-tabler icons-tabler-filled icon-tabler-camera"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><path d="M15 3a2 2 0 0 1 1.995 1.85l.005 .15a1 1 0 0 0 .883 .993l.117 .007h1a3 3 0 0 1 2.995 2.824l.005 .176v9a3 3 0 0 1 -2.824 2.995l-.176 .005h-14a3 3 0 0 1 -2.995 -2.824l-.005 -.176v-9a3 3 0 0 1 2.824 -2.995l.176 -.005h1a1 1 0 0 0 1 -1a2 2 0 0 1 1.85 -1.995l.15 -.005h6zm-3 7a3 3 0 0 0 -2.985 2.698l-.011 .152l-.004 .15l.004 .15a3 3 0 1 0 2.996 -3.15z" /></svg>
+                                        <span class="bg-primary-lt text-white avatar">
+                                            <svg  xmlns="http://www.w3.org/2000/svg"  width="24"  height="24"  viewBox="0 0 24 24"  fill="none"  stroke="currentColor"  stroke-width="2"  stroke-linecap="round"  stroke-linejoin="round"  class="icon icon-tabler icons-tabler-outline icon-tabler-clipboard-heart"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><path d="M9 5h-2a2 2 0 0 0 -2 2v12a2 2 0 0 0 2 2h10a2 2 0 0 0 2 -2v-12a2 2 0 0 0 -2 -2h-2" /><path d="M9 3m0 2a2 2 0 0 1 2 -2h2a2 2 0 0 1 2 2v0a2 2 0 0 1 -2 2h-2a2 2 0 0 1 -2 -2z" /><path d="M11.993 16.75l2.747 -2.815a1.9 1.9 0 0 0 0 -2.632a1.775 1.775 0 0 0 -2.56 0l-.183 .188l-.183 -.189a1.775 1.775 0 0 0 -2.56 0a1.899 1.899 0 0 0 0 2.632l2.738 2.825z" /></svg>
                                         </span>
                                     </div>
                                     <div class="col">
-                                        <div class="font-weight-medium">
-                                            ' . (!empty($kandidat->foto_suratsehat) ?
-            '<a href="https://karir.pintex.co.id/storage/biodata/suratsehat/' . $kandidat->foto_suratsehat . '" target="_blank">Foto Surat Sehat</a>' :
-            'Foto Surat Sehat Tidak Ada') . '
+                                        <div class="font-weight-medium" style="font-size: 12px">
+                                            Foto Surat Sehat
                                         </div>
-                                        <div class="text-secondary">
+                                        <div class="text-secondary" style="font-size: 10px">
                                             ' . (!empty($kandidat->foto_suratsehat) ? 'Klik untuk melihat' : 'Tidak tersedia') . '
                                         </div>
                                     </div>
                                 </div>
                             </div>
                         </div>
+                        ' . (!empty($kandidat->foto_suratsehat) ? '</a>' : '') . '
                     </div>
 
                     <!-- File Cv -->
-                    <div class="col-md-6 col-xl-3">
-                        <div class="card card-sm">
+                    <div class="col-md-6 col-xl-3 mb-3">
+                        ' . (!empty($kandidat->file_cv) ? '<a href="https://karir.pintex.co.id/storage/biodata/cv/' . $kandidat->file_cv . '" target="_blank"><div class="card card-sm bg-green-lt">' : '<div class="card card-sm bg-red-lt cursor-not-allowed">') . '
                             <div class="card-body">
                                 <div class="row align-items-center">
                                     <div class="col-auto">
-                                        <span class="bg-primary text-white avatar">
-                                            <svg  xmlns="http://www.w3.org/2000/svg"  width="24"  height="24"  viewBox="0 0 24 24"  fill="none"  stroke="currentColor"  stroke-width="2"  stroke-linecap="round"  stroke-linejoin="round"  class="icon icon-tabler icons-tabler-outline icon-tabler-files"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><path d="M15 3v4a1 1 0 0 0 1 1h4" /><path d="M18 17h-7a2 2 0 0 1 -2 -2v-10a2 2 0 0 1 2 -2h4l5 5v7a2 2 0 0 1 -2 2z" /><path d="M16 17v2a2 2 0 0 1 -2 2h-7a2 2 0 0 1 -2 -2v-10a2 2 0 0 1 2 -2h2" /></svg>
+                                        <span class="bg-primary-lt text-white avatar">
+                                            <svg  xmlns="http://www.w3.org/2000/svg"  width="24"  height="24"  viewBox="0 0 24 24"  fill="none"  stroke="currentColor"  stroke-width="2"  stroke-linecap="round"  stroke-linejoin="round"  class="icon icon-tabler icons-tabler-outline icon-tabler-id"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><path d="M3 4m0 3a3 3 0 0 1 3 -3h12a3 3 0 0 1 3 3v10a3 3 0 0 1 -3 3h-12a3 3 0 0 1 -3 -3z" /><path d="M9 10m-2 0a2 2 0 1 0 4 0a2 2 0 1 0 -4 0" /><path d="M15 8l2 0" /><path d="M15 12l2 0" /><path d="M7 16l10 0" /></svg>
                                         </span>
                                     </div>
                                     <div class="col">
-                                        <div class="font-weight-medium">
-                                            ' . (!empty($kandidat->file_cv) ?
-            '<a href="https://karir.pintex.co.id/storage/biodata/cv/' . $kandidat->file_cv . '" target="_blank">File Cv</a>' :
-            'File Cv Tidak Ada') . '
+                                        <div class="font-weight-medium" style="font-size: 12px">
+                                            File Cv
                                         </div>
-                                        <div class="text-secondary">
+                                        <div class="text-secondary" style="font-size: 10px">
                                             ' . (!empty($kandidat->file_cv) ? 'Klik untuk melihat' : 'Tidak tersedia') . '
                                         </div>
                                     </div>
                                 </div>
                             </div>
                         </div>
+                        ' . (!empty($kandidat->file_cv) ? '</a>' : '') . '
                     </div>
 
                     <!-- File Pengalaman -->
                     <div class="col-md-6 col-xl-3">
-                        <div class="card card-sm">
-                            <div class="card-body">
-                                <div class="row align-items-center">
-                                    <div class="col-auto">
-                                        <span class="bg-primary text-white avatar">
-                                            <svg  xmlns="http://www.w3.org/2000/svg"  width="24"  height="24"  viewBox="0 0 24 24"  fill="none"  stroke="currentColor"  stroke-width="2"  stroke-linecap="round"  stroke-linejoin="round"  class="icon icon-tabler icons-tabler-outline icon-tabler-files"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><path d="M15 3v4a1 1 0 0 0 1 1h4" /><path d="M18 17h-7a2 2 0 0 1 -2 -2v-10a2 2 0 0 1 2 -2h4l5 5v7a2 2 0 0 1 -2 2z" /><path d="M16 17v2a2 2 0 0 1 -2 2h-7a2 2 0 0 1 -2 -2v-10a2 2 0 0 1 2 -2h2" /></svg>
-                                        </span>
-                                    </div>
+                    ' . (!empty($kandidat->file_pengalaman) ? '<a href="https://karir.pintex.co.id/storage/biodata/pengalaman/' . $kandidat->file_cv . '" target="_blank"><div class="card card-sm bg-green-lt">' : '<div class="card card-sm bg-red-lt cursor-not-allowed">') . '
+                        <div class="card-body">
+                            <div class="row align-items-center">
+                                <div class="col-auto">
+                                    <span class="bg-primary-lt text-white avatar">
+                                        <svg  xmlns="http://www.w3.org/2000/svg"  width="24"  height="24"  viewBox="0 0 24 24"  fill="currentColor"  class="icon icon-tabler icons-tabler-filled icon-tabler-briefcase"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><path d="M22 13.478v4.522a3 3 0 0 1 -3 3h-14a3 3 0 0 1 -3 -3v-4.522l.553 .277a20.999 20.999 0 0 0 18.897 -.002l.55 -.275zm-8 -11.478a3 3 0 0 1 3 3v1h2a3 3 0 0 1 3 3v2.242l-1.447 .724a19.002 19.002 0 0 1 -16.726 .186l-.647 -.32l-1.18 -.59v-2.242a3 3 0 0 1 3 -3h2v-1a3 3 0 0 1 3 -3h4zm-2 8a1 1 0 0 0 -1 1a1 1 0 1 0 2 .01c0 -.562 -.448 -1.01 -1 -1.01zm2 -6h-4a1 1 0 0 0 -1 1v1h6v-1a1 1 0 0 0 -1 -1z" /></svg>
+                                    </span>
+                                </div>
                                     <div class="col">
-                                        <div class="font-weight-medium">
-                                            ' . (!empty($kandidat->file_pengalaman) ?
-            '<a href="https://karir.pintex.co.id/storage/biodata/pengalaman/' . $kandidat->file_pengalaman . '" target="_blank">Pengalaman</a>' :
-            'Pengalaman Tidak Ada') . '
+                                        <div class="font-weight-medium" style="font-size: 12px">
+                                            Pengalaman
                                         </div>
-                                        <div class="text-secondary">
+                                        <div class="text-secondary" style="font-size: 10px">
                                             ' . (!empty($kandidat->file_pengalaman) ? 'Klik untuk melihat' : 'Tidak tersedia') . '
                                         </div>
                                     </div>
                                 </div>
                             </div>
                         </div>
+                        ' . (!empty($kandidat->file_pengalaman) ? '</a>' : '') . '
                     </div>
 
                     <!-- File simA -->
                     <div class="col-md-6 col-xl-3">
-                        <div class="card card-sm">
+                        ' . (!empty($kandidat->file_sima) ? '<a href="https://karir.pintex.co.id/storage/biodata/sima/' . $kandidat->file_sima . '" target="_blank"><div class="card card-sm bg-green-lt">' : '<div class="card card-sm bg-red-lt cursor-not-allowed">') . '
                             <div class="card-body">
                                 <div class="row align-items-center">
                                     <div class="col-auto">
-                                        <span class="bg-primary text-white avatar">
-                                            <svg  xmlns="http://www.w3.org/2000/svg"  width="24"  height="24"  viewBox="0 0 24 24"  fill="none"  stroke="currentColor"  stroke-width="2"  stroke-linecap="round"  stroke-linejoin="round"  class="icon icon-tabler icons-tabler-outline icon-tabler-files"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><path d="M15 3v4a1 1 0 0 0 1 1h4" /><path d="M18 17h-7a2 2 0 0 1 -2 -2v-10a2 2 0 0 1 2 -2h4l5 5v7a2 2 0 0 1 -2 2z" /><path d="M16 17v2a2 2 0 0 1 -2 2h-7a2 2 0 0 1 -2 -2v-10a2 2 0 0 1 2 -2h2" /></svg>
+                                        <span class="bg-primary-lt text-white avatar">
+                                            <svg  xmlns="http://www.w3.org/2000/svg"  width="24"  height="24"  viewBox="0 0 24 24"  fill="none"  stroke="currentColor"  stroke-width="2"  stroke-linecap="round"  stroke-linejoin="round"  class="icon icon-tabler icons-tabler-outline icon-tabler-car"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><path d="M7 17m-2 0a2 2 0 1 0 4 0a2 2 0 1 0 -4 0" /><path d="M17 17m-2 0a2 2 0 1 0 4 0a2 2 0 1 0 -4 0" /><path d="M5 17h-2v-6l2 -5h9l4 5h1a2 2 0 0 1 2 2v4h-2m-4 0h-6m-6 -6h15m-6 0v-5" /></svg>
                                         </span>
                                     </div>
                                     <div class="col">
-                                        <div class="font-weight-medium">
-                                            ' . (!empty($kandidat->file_sima) ?
-            '<a href="https://karir.pintex.co.id/storage/biodata/sima/' . $kandidat->file_sima . '" target="_blank">File Sim A</a>' :
-            'File SimA Tidak Ada') . '
+                                        <div class="font-weight-medium" style="font-size: 12px">
+                                            File Sim A
                                         </div>
-                                        <div class="text-secondary">
+                                        <div class="text-secondary" style="font-size: 10px">
                                             ' . (!empty($kandidat->file_sima) ? 'Klik untuk melihat' : 'Tidak tersedia') . '
                                         </div>
                                     </div>
                                 </div>
                             </div>
                         </div>
+                        ' . (!empty($kandidat->file_sima) ? '</a>' : '') . '
                     </div>
 
                     <!-- File simB -->
                     <div class="col-md-6 col-xl-3">
-                        <div class="card card-sm">
+                        ' . (!empty($kandidat->file_simb) ? '<a href="https://karir.pintex.co.id/storage/biodata/simb/' . $kandidat->file_simb . '" target="_blank"><div class="card card-sm bg-green-lt">' : '<div class="card card-sm bg-red-lt cursor-not-allowed">') . '
                             <div class="card-body">
                                 <div class="row align-items-center">
                                     <div class="col-auto">
-                                        <span class="bg-primary text-white avatar">
-                                            <svg  xmlns="http://www.w3.org/2000/svg"  width="24"  height="24"  viewBox="0 0 24 24"  fill="none"  stroke="currentColor"  stroke-width="2"  stroke-linecap="round"  stroke-linejoin="round"  class="icon icon-tabler icons-tabler-outline icon-tabler-files"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><path d="M15 3v4a1 1 0 0 0 1 1h4" /><path d="M18 17h-7a2 2 0 0 1 -2 -2v-10a2 2 0 0 1 2 -2h4l5 5v7a2 2 0 0 1 -2 2z" /><path d="M16 17v2a2 2 0 0 1 -2 2h-7a2 2 0 0 1 -2 -2v-10a2 2 0 0 1 2 -2h2" /></svg>
+                                        <span class="bg-primary-lt text-white avatar">
+                                            <svg  xmlns="http://www.w3.org/2000/svg"  width="24"  height="24"  viewBox="0 0 24 24"  fill="none"  stroke="currentColor"  stroke-width="2"  stroke-linecap="round"  stroke-linejoin="round"  class="icon icon-tabler icons-tabler-outline icon-tabler-truck"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><path d="M7 17m-2 0a2 2 0 1 0 4 0a2 2 0 1 0 -4 0" /><path d="M17 17m-2 0a2 2 0 1 0 4 0a2 2 0 1 0 -4 0" /><path d="M5 17h-2v-11a1 1 0 0 1 1 -1h9v12m-4 0h6m4 0h2v-6h-8m0 -5h5l3 5" /></svg>
                                         </span>
                                     </div>
                                     <div class="col">
-                                        <div class="font-weight-medium">
-                                            ' . (!empty($kandidat->file_simb) ?
-            '<a href="https://karir.pintex.co.id/storage/biodata/simb/' . $kandidat->file_simb . '" target="_blank">File Sim B</a>' :
-            'File SimB Tidak Ada') . '
+                                        <div class="font-weight-medium" style="font-size: 12px">
+                                            File Sim B
                                         </div>
-                                        <div class="text-secondary">
+                                        <div class="text-secondary" style="font-size: 10px">
                                             ' . (!empty($kandidat->file_simb) ? 'Klik untuk melihat' : 'Tidak tersedia') . '
                                         </div>
                                     </div>
                                 </div>
                             </div>
                         </div>
+                        ' . (!empty($kandidat->file_simb) ? '</a>' : '') . '
                     </div>
 
                     <!-- File simB2 -->
                     <div class="col-md-6 col-xl-3">
-                        <div class="card card-sm">
+                        ' . (!empty($kandidat->file_simb2) ? '<a href="https://karir.pintex.co.id/storage/biodata/simb2/' . $kandidat->file_simb2 . '" target="_blank"><div class="card card-sm bg-green-lt">' : '<div class="card card-sm bg-red-lt cursor-not-allowed">') . '
                             <div class="card-body">
                                 <div class="row align-items-center">
                                     <div class="col-auto">
-                                        <span class="bg-primary text-white avatar">
-                                            <svg  xmlns="http://www.w3.org/2000/svg"  width="24"  height="24"  viewBox="0 0 24 24"  fill="none"  stroke="currentColor"  stroke-width="2"  stroke-linecap="round"  stroke-linejoin="round"  class="icon icon-tabler icons-tabler-outline icon-tabler-files"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><path d="M15 3v4a1 1 0 0 0 1 1h4" /><path d="M18 17h-7a2 2 0 0 1 -2 -2v-10a2 2 0 0 1 2 -2h4l5 5v7a2 2 0 0 1 -2 2z" /><path d="M16 17v2a2 2 0 0 1 -2 2h-7a2 2 0 0 1 -2 -2v-10a2 2 0 0 1 2 -2h2" /></svg>
+                                        <span class="bg-primary-lt text-white avatar">
+                                            <svg  xmlns="http://www.w3.org/2000/svg"  width="24"  height="24"  viewBox="0 0 24 24"  fill="none"  stroke="currentColor"  stroke-width="2"  stroke-linecap="round"  stroke-linejoin="round"  class="icon icon-tabler icons-tabler-outline icon-tabler-truck-delivery"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><path d="M7 17m-2 0a2 2 0 1 0 4 0a2 2 0 1 0 -4 0" /><path d="M17 17m-2 0a2 2 0 1 0 4 0a2 2 0 1 0 -4 0" /><path d="M5 17h-2v-4m-1 -8h11v12m-4 0h6m4 0h2v-6h-8m0 -5h5l3 5" /><path d="M3 9l4 0" /></svg>
                                         </span>
                                     </div>
                                     <div class="col">
-                                        <div class="font-weight-medium">
-                                            ' . (!empty($kandidat->file_simb2) ?
-            '<a href="https://karir.pintex.co.id/storage/biodata/simb2/' . $kandidat->file_simb2 . '" target="_blank">File Sim B2</a>' :
-            'File SimB2 Tidak Ada') . '
+                                        <div class="font-weight-medium" style="font-size: 12px">
+                                            File Sim B2
                                         </div>
-                                        <div class="text-secondary">
+                                        <div class="text-secondary" style="font-size: 10px">
                                             ' . (!empty($kandidat->file_simb2) ? 'Klik untuk melihat' : 'Tidak tersedia') . '
                                         </div>
                                     </div>
                                 </div>
                             </div>
                         </div>
+                        ' . (!empty($kandidat->file_simb2) ? '</a>' : '') . '
                     </div>
 
                     <!-- File sio -->
                     <div class="col-md-6 col-xl-3">
-                        <div class="card card-sm">
+                        ' . (!empty($kandidat->file_sio) ? '<a href="https://karir.pintex.co.id/storage/biodata/sio/' . $kandidat->file_sio . '" target="_blank"><div class="card card-sm bg-green-lt">' : '<div class="card card-sm bg-red-lt cursor-not-allowed">') . '
                             <div class="card-body">
                                 <div class="row align-items-center">
                                     <div class="col-auto">
-                                        <span class="bg-primary text-white avatar">
-                                            <svg  xmlns="http://www.w3.org/2000/svg"  width="24"  height="24"  viewBox="0 0 24 24"  fill="none"  stroke="currentColor"  stroke-width="2"  stroke-linecap="round"  stroke-linejoin="round"  class="icon icon-tabler icons-tabler-outline icon-tabler-files"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><path d="M15 3v4a1 1 0 0 0 1 1h4" /><path d="M18 17h-7a2 2 0 0 1 -2 -2v-10a2 2 0 0 1 2 -2h4l5 5v7a2 2 0 0 1 -2 2z" /><path d="M16 17v2a2 2 0 0 1 -2 2h-7a2 2 0 0 1 -2 -2v-10a2 2 0 0 1 2 -2h2" /></svg>
+                                        <span class="bg-primary-lt text-white avatar">
+                                            <svg  xmlns="http://www.w3.org/2000/svg"  width="24"  height="24"  viewBox="0 0 24 24"  fill="none"  stroke="currentColor"  stroke-width="2"  stroke-linecap="round"  stroke-linejoin="round"  class="icon icon-tabler icons-tabler-outline icon-tabler-forklift"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><path d="M5 17m-2 0a2 2 0 1 0 4 0a2 2 0 1 0 -4 0" /><path d="M14 17m-2 0a2 2 0 1 0 4 0a2 2 0 1 0 -4 0" /><path d="M7 17l5 0" /><path d="M3 17v-6h13v6" /><path d="M5 11v-4h4" /><path d="M9 11v-6h4l3 6" /><path d="M22 15h-3v-10" /><path d="M16 13l3 0" /></svg>
                                         </span>
                                     </div>
                                     <div class="col">
-                                        <div class="font-weight-medium">
-                                            ' . (!empty($kandidat->file_sio) ?
-            '<a href="https://karir.pintex.co.id/storage/biodata/sio/' . $kandidat->file_sio . '" target="_blank">File Sio</a>' :
-            'File Sio Tidak Ada') . '
+                                        <div class="font-weight-medium" style="font-size: 12px">
+                                            File Sio
                                         </div>
-                                        <div class="text-secondary">
+                                        <div class="text-secondary" style="font-size: 10px">
                                             ' . (!empty($kandidat->file_sio) ? 'Klik untuk melihat' : 'Tidak tersedia') . '
                                         </div>
                                     </div>
                                 </div>
                             </div>
                         </div>
+                        ' . (!empty($kandidat->file_sio) ? '</a>' : '') . '
                     </div>
                 </div> <!-- end row -->
             </div>
