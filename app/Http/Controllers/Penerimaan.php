@@ -944,7 +944,7 @@ class Penerimaan extends Controller
 
                     <!-- File Pengalaman -->
                     <div class="col-md-6 col-xl-3">
-                    ' . (!empty($kandidat->file_pengalaman) ? '<a href="https://karir.pintex.co.id/storage/biodata/pengalaman/' . $kandidat->file_cv . '" target="_blank"><div class="card card-sm bg-green-lt">' : '<div class="card card-sm bg-red-lt cursor-not-allowed">') . '
+                    ' . (!empty($kandidat->file_pengalaman) ? '<a href="https://karir.pintex.co.id/storage/biodata/pengalaman/' . $kandidat->file_pengalaman . '" target="_blank"><div class="card card-sm bg-green-lt">' : '<div class="card card-sm bg-red-lt cursor-not-allowed">') . '
                         <div class="card-body">
                             <div class="row align-items-center">
                                 <div class="col-auto">
