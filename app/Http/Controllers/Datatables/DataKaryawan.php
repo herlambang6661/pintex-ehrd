@@ -48,17 +48,17 @@ class DataKaryawan extends Controller
 
                 ->addColumn('pas', function ($row) {
                     if (file_exists(public_path() . '/photo/pas/' . $row->userid . '.jpg')) {
-                        return 'Sudah';
+                        return "<b class='text-success'>Sudah</b>";
                     } else {
-                        return 'Belum';
+                        return "<b class='text-danger'>Belum</b>";
                     }
                 })
 
                 ->editColumn('ktp', function ($row) {
                     if (file_exists(public_path() . '/photo/ktp/' . $row->userid . '.jpg')) {
-                        return 'Sudah';
+                        return "<b class='text-success'>Sudah</b>";
                     } else {
-                        return 'Belum';
+                        return "<b class='text-danger'>Belum</b>";
                     }
                 })
 
