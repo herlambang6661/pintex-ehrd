@@ -19,13 +19,30 @@ return new class extends Migration
             $table->string('role'); // ADMIN, HRD, OPERATOR
             $table->string('phone')->nullable();
             $table->string('email')->nullable();
-            $table->string('admin')->nullable(); // ALL, SATU, DUA, GUDANG, TFI
+            $table->string('admin')->nullable(); // ALL : Semua bagian, 1 : Unit 1, 2 : Unit 2, 3 : Gudang, 4 : TFI
             // auth akses ke administrasi
-            $table->string('payroll')->nullable();
-            $table->string('terlambat')->nullable();
-            $table->string('bpjs')->nullable();
-            $table->string('kupon')->nullable();
-            $table->string('lembur')->nullable();
+            $table->integer('payroll')->default(0);
+            $table->integer('thr')->default(0);
+            $table->integer('terlambat')->default(0);
+            $table->integer('bpjs')->default(0);
+            $table->integer('kupon')->default(0);
+            $table->integer('lembur')->default(0);
+            $table->integer('setting')->default(0);
+            $table->integer('schedule')->default(0);
+            $table->integer('logs')->default(0);
+            $table->integer('pengguna')->default(0);
+            $table->integer('daftar')->default(0);
+            $table->integer('penerimaan')->default(0);
+            $table->integer('lowongan')->default(0);
+            $table->integer('lamaran')->default(0);
+            $table->integer('wawancara')->default(0);
+            $table->integer('karyawan')->default(0);
+            $table->integer('legalitas')->default(0);
+            $table->integer('absensi')->default(0);
+            $table->integer('absen')->default(0);
+            $table->integer('surat')->default(0);
+            $table->integer('cuti')->default(0);
+            $table->integer('administrasi')->default(0);
             $table->rememberToken();
             $table->timestamps();
         });
