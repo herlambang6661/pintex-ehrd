@@ -181,6 +181,7 @@
                                                 <th class="px-1 th py-1">Email</th>
                                                 <th class="px-1 th py-1">Posisi Dituju</th>
                                                 <th class="px-1 th py-1">Keterangan</th>
+                                                <th class="px-1 th py-1">Alamat</th>
                                                 <th class="px-1 th py-1">Wawancara</th>
                                             </tr>
                                         </tfoot>
@@ -936,6 +937,12 @@
                         title: 'Keterangan',
                         data: 'keterangan',
                         name: 'keterangan',
+                        className: 'cuspad0'
+                    },
+                    {
+                        title: 'Alamat',
+                        data: 'alamat',
+                        name: 'alamat',
                         className: 'cuspad0'
                     },
                     {
