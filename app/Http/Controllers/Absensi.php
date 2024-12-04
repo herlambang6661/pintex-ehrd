@@ -336,7 +336,6 @@ class Absensi extends Controller
                                 autoFilter: true,
                                 className: "btn btn-success",
                                 text: `<i class="fa fa-file-excel text-white" style="margin-right:5px"></i> Download Excel`,
-                                action: newexportaction,
                             },
                         ],
                         "language": {
@@ -722,7 +721,6 @@ class Absensi extends Controller
                                 autoFilter: true,
                                 className: "btn btn-success",
                                 text: `<i class="fa fa-file-excel text-white" style="margin-right:5px"></i>`,
-                                // action: newexportaction,
                             },
                         ],
                         "language": {
