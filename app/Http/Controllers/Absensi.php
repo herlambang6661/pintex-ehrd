@@ -1359,19 +1359,19 @@ class Absensi extends Controller
     function absenkosong(Request $request)
     {
         if ($request->input('jns') == "alpa") {
-            $getAlpa = DB::table('absensi_absensi as a')
-                ->select('a.*', 'a.id as idabsensi', 'k.jabatan', 'k.bagian', 'k.profesi')
-                ->join('penerimaan_karyawan as k', 'a.userid', '=', 'k.userid')
-                ->where('a.sst', '=', 'A')
-                ->whereNull('a.koreksi')
-                ->where('a.stb', 'NOT LIKE', '%PHL-%')
-                ->where('a.stb', 'NOT LIKE', '%OL-%')
-                ->where('k.status', 'LIKE', '%Aktif%')
-                ->whereBetween('a.tanggal', [$request->input('tglstart'), $request->input('tglend')])
-                ->orderBy('a.bagian', 'asc')
-                ->orderBy('a.grup', 'asc')
-                ->orderBy('a.name', 'asc')
-                ->get();
+            // $getAlpa = DB::table('absensi_absensi as a')
+            //     ->select('a.*', 'a.id as idabsensi', 'k.jabatan', 'k.bagian', 'k.profesi')
+            //     ->join('penerimaan_karyawan as k', 'a.userid', '=', 'k.userid')
+            //     ->where('a.sst', '=', 'A')
+            //     ->whereNull('a.koreksi')
+            //     ->where('a.stb', 'NOT LIKE', '%PHL-%')
+            //     ->where('a.stb', 'NOT LIKE', '%OL-%')
+            //     ->where('k.status', 'LIKE', '%Aktif%')
+            //     ->whereBetween('a.tanggal', [$request->input('tglstart'), $request->input('tglend')])
+            //     ->orderBy('a.bagian', 'asc')
+            //     ->orderBy('a.grup', 'asc')
+            //     ->orderBy('a.name', 'asc')
+            //     ->get();
             $judul = "Absensi Alpa";
             $absensi = "active";
             $list = "active";
@@ -1379,25 +1379,25 @@ class Absensi extends Controller
                 'judul' => $judul,
                 'absensi' => $absensi,
                 'list' => $list,
-                'getalpa' => $getAlpa,
+                'jenis' => 'alpa',
                 'dari' => $request->input('tglstart'),
                 'sampai' => $request->input('tglend'),
                 'jns' => $request->input('jns'),
             ]);
         } elseif ($request->jns == "f1f2") {
-            $getF1 = DB::table('absensi_absensi as a')
-                ->select('a.*', 'a.id as idabsensi', 'k.jabatan', 'k.bagian', 'k.profesi')
-                ->join('penerimaan_karyawan as k', 'a.userid', '=', 'k.userid')
-                ->whereNull('a.koreksi')
-                ->whereIn('a.sst', ['F1', 'F2', '½'])
-                ->where('a.stb', 'NOT LIKE', '%PHL-%')
-                ->where('a.stb', 'NOT LIKE', '%OL-%')
-                ->where('k.status', 'LIKE', '%Aktif%')
-                ->whereBetween('a.tanggal', [$request->input('tglstart'), $request->input('tglend')])
-                ->orderBy('a.bagian', 'asc')
-                ->orderBy('a.grup', 'asc')
-                ->orderBy('a.name', 'asc')
-                ->get();
+            // $getF1 = DB::table('absensi_absensi as a')
+            //     ->select('a.*', 'a.id as idabsensi', 'k.jabatan', 'k.bagian', 'k.profesi')
+            //     ->join('penerimaan_karyawan as k', 'a.userid', '=', 'k.userid')
+            //     ->whereNull('a.koreksi')
+            //     ->whereIn('a.sst', ['F1', 'F2', '½'])
+            //     ->where('a.stb', 'NOT LIKE', '%PHL-%')
+            //     ->where('a.stb', 'NOT LIKE', '%OL-%')
+            //     ->where('k.status', 'LIKE', '%Aktif%')
+            //     ->whereBetween('a.tanggal', [$request->input('tglstart'), $request->input('tglend')])
+            //     ->orderBy('a.bagian', 'asc')
+            //     ->orderBy('a.grup', 'asc')
+            //     ->orderBy('a.name', 'asc')
+            //     ->get();
             $judul = "Absensi F1F2";
             $absensi = "active";
             $list = "active";
@@ -1405,7 +1405,7 @@ class Absensi extends Controller
                 'judul' => $judul,
                 'absensi' => $absensi,
                 'list' => $list,
-                'getalpa' => $getF1,
+                'jenis' => 'f1f2',
                 'dari' => $request->input('tglstart'),
                 'sampai' => $request->input('tglend'),
                 'jns' => $request->input('jns'),
@@ -1798,5 +1798,249 @@ class Absensi extends Controller
         }
     }
 
-    public function storedataAlpa(Request $request) {}
+    public function storedataAlpa(Request $request)
+    {
+        $request->validate(
+            [
+                '_token'    => 'required',
+                'tipeUbah'  => 'required',
+                'ket'       => 'required',
+                "idabsen"   => "required",
+                "userid"    => "required",
+                // "name.*"  => "required|string|distinct|min:3",
+            ],
+            [
+                'tipeUbah.required' => 'Tipe Proses Diperlukan',
+                'ket.required' => 'Keterangan Diperlukan',
+                'idabsen.required' => 'ID Absen Diperlukan',
+                'userid.required' => 'Userid Diperlukan',
+            ]
+        );
+        try {
+            // Generate Komunikasi
+            $noform = 'K' . date('y') . "0001";
+            $checknoform = DB::table('absensi_komunikasi')
+                ->orderBy('noform', 'desc')
+                ->first();
+            $noform = $checknoform->noform;
+            $y = substr($noform, 1, 2);
+            if (date('y') == $y) {
+                $noUrut = substr($noform, 3, 4);
+                $na = $noUrut + 1;
+                $char = date('y');
+                $kodeSurat = "K" . $char . sprintf("%04s", $na);
+            } else {
+                $kodeSurat = "K" . date('y') . "0001";
+            }
+            // Insert Komunikasi
+            $check = DB::table('absensi_komunikasi')->insert([
+                'entitas' => 'PINTEX',
+                'noform' => $kodeSurat,
+                'tanggal' => date('Y-m-d'),
+                'dibuat' => Auth::user()->name,
+                'keteranganform' => $request->ket,
+                'created_at' => date('Y-m-d H:i:s'),
+            ]);
+            $jml = count($request->idabsen);
+            // Jika Tipe yang dipilih ½ maka akan create komunikasi F1
+            if ($request->tipeUbah == '½') {
+                // pengulangan berdasarkan banyaknya absen yang dipilih
+                for ($i = 0; $i < $jml; $i++) {
+                    // ambil data absensi
+                    $dataAbs = DB::table('absensi_absensi')
+                        ->where('id', $request->idabsen[$i])
+                        ->first();
+                    // update absensi
+                    $check = DB::table('absensi_absensi')
+                        ->where('id', '=', $request->idabsen[$i])
+                        ->update([
+                            'sst' => $request->tipeUbah,
+                            'koreksi' => 1,
+                            'updated_at' => date('Y-m-d H:i:s'),
+                        ]);
+                    // insert ke absensi komunikasiitm
+                    $check2 = DB::table('absensi_komunikasiitm')->insert([
+                        'entitas' => 'PINTEX',
+                        'noform' => $kodeSurat,
+                        'tanggal' => $dataAbs->tanggal,
+                        'tanggal2' => $dataAbs->tanggal,
+                        'userid' => $dataAbs->userid,
+                        'nama' => $dataAbs->name,
+                        'suratid' => 'Surat Izin Setengah Hari',
+                        'sst' => '½',
+                        'keterangan' => $request->ket,
+                        'dibuat' => Auth::user()->name,
+                        'statussurat' => "ACC",
+                        'created_at' => date('Y-m-d H:i:s'),
+                    ]);
+                    // insert ke absensi komunikasiacc
+                    $check3 = DB::table('absensi_komunikasiacc')->insert([
+                        'entitas' => 'PINTEX',
+                        'noform' => $kodeSurat,
+                        'tanggal' => $dataAbs->tanggal,
+                        'tanggal2' => null,
+                        'userid' => $dataAbs->userid,
+                        'nama' => $dataAbs->name,
+                        'suratid' => 'Surat Izin Setengah Hari',
+                        'sst' => '½',
+                        'ket_acc' => $request->ket,
+                        'keterangan' => $request->ket,
+                        'dibuat' => Auth::user()->name,
+                        'statussurat' => "ACC",
+                        'created_at' => date('Y-m-d H:i:s'),
+                    ]);
+                }
+            } elseif ($request->tipeUbah == 'H') {
+                // pengulangan berdasarkan banyaknya absen yang dipilih
+                for ($i = 0; $i < $jml; $i++) {
+                    // ambil data absensi
+                    $dataAbs = DB::table('absensi_absensi')
+                        ->where('id', $request->idabsen[$i])
+                        ->first();
+                    // update absensi
+                    $check = DB::table('absensi_absensi')
+                        ->where('id', '=', $request->idabsen[$i])
+                        ->update([
+                            'sst' => $request->tipeUbah,
+                            'koreksi' => 1,
+                            'updated_at' => date('Y-m-d H:i:s'),
+                        ]);
+                    // insert ke absensi komunikasiitm
+                    DB::table('absensi_komunikasiitm')->insert([
+                        'entitas' => 'PINTEX',
+                        'noform' => $kodeSurat,
+                        'tanggal' => $dataAbs->tanggal,
+                        'tanggal2' => $dataAbs->tanggal,
+                        'userid' => $dataAbs->userid,
+                        'nama' => $dataAbs->name,
+                        'suratid' => 'Keputusan-Mgr. Hadir',
+                        'sst' => 'H',
+                        'keterangan' => '',
+                        'dibuat' => Auth::user()->name,
+                        'statussurat' => "ACC",
+                        'created_at' => date('Y-m-d H:i:s'),
+                    ]);
+                    // insert ke absensi komunikasiacc
+                    DB::table('absensi_komunikasiacc')->insert([
+                        'entitas' => 'PINTEX',
+                        'noform' => $kodeSurat,
+                        'tanggal' => $dataAbs->tanggal,
+                        'tanggal2' => null,
+                        'userid' => $dataAbs->userid,
+                        'nama' => $dataAbs->name,
+                        'suratid' => 'Keputusan-Mgr. Hadir',
+                        'sst' => 'H',
+                        'ket_acc' => '',
+                        'keterangan' => '',
+                        'dibuat' => Auth::user()->name,
+                        'statussurat' => "ACC",
+                        'created_at' => date('Y-m-d H:i:s'),
+                    ]);
+                }
+            } elseif ($request->tipeUbah == 'I') {
+                // pengulangan berdasarkan banyaknya absen yang dipilih
+                for ($i = 0; $i < $jml; $i++) {
+                    // ambil data absensi
+                    $dataAbs = DB::table('absensi_absensi')
+                        ->where('id', $request->idabsen[$i])
+                        ->first();
+                    // update absensi
+                    $check = DB::table('absensi_absensi')
+                        ->where('id', '=', $request->idabsen[$i])
+                        ->update([
+                            'sst' => $request->tipeUbah,
+                            'koreksi' => 1,
+                            'updated_at' => date('Y-m-d H:i:s'),
+                        ]);
+                    // insert ke absensi komunikasiitm
+                    DB::table('absensi_komunikasiitm')->insert([
+                        'entitas' => 'PINTEX',
+                        'noform' => $kodeSurat,
+                        'tanggal' => $dataAbs->tanggal,
+                        'tanggal2' => $dataAbs->tanggal,
+                        'userid' => $dataAbs->userid,
+                        'nama' => $dataAbs->name,
+                        'suratid' => 'Keputusan-Mgr. Izin',
+                        'sst' => 'I',
+                        'keterangan' => $request->ket,
+                        'dibuat' => Auth::user()->name,
+                        'statussurat' => "ACC",
+                        'created_at' => date('Y-m-d H:i:s'),
+                    ]);
+                    // insert ke absensi komunikasiacc
+                    DB::table('absensi_komunikasiacc')->insert([
+                        'entitas' => 'PINTEX',
+                        'noform' => $kodeSurat,
+                        'tanggal' => $dataAbs->tanggal,
+                        'tanggal2' => null,
+                        'userid' => $dataAbs->userid,
+                        'nama' => $dataAbs->name,
+                        'suratid' => 'Keputusan-Mgr. Izin',
+                        'sst' => 'I',
+                        'ket_acc' => $request->ket,
+                        'keterangan' => $request->ket,
+                        'dibuat' => Auth::user()->name,
+                        'statussurat' => "ACC",
+                        'created_at' => date('Y-m-d H:i:s'),
+                    ]);
+                }
+            } elseif ($request->tipeUbah == 'L') {
+                // pengulangan berdasarkan banyaknya absen yang dipilih
+                for ($i = 0; $i < $jml; $i++) {
+                    // ambil data absensi
+                    $dataAbs = DB::table('absensi_absensi')
+                        ->where('id', $request->idabsen[$i])
+                        ->first();
+                    // update absensi
+                    $check = DB::table('absensi_absensi')
+                        ->where('id', '=', $request->idabsen[$i])
+                        ->update([
+                            'sst' => $request->tipeUbah,
+                            'koreksi' => 1,
+                            'updated_at' => date('Y-m-d H:i:s'),
+                        ]);
+                    // insert ke absensi komunikasiitm
+                    $check2 = DB::table('absensi_komunikasiitm')->insert([
+                        'entitas' => 'PINTEX',
+                        'noform' => $kodeSurat,
+                        'tanggal' => $dataAbs->tanggal,
+                        'tanggal2' => $dataAbs->tanggal,
+                        'userid' => $dataAbs->userid,
+                        'nama' => $dataAbs->name,
+                        'suratid' => 'Surat Geser/Tukar Libur',
+                        'sst' => 'L',
+                        'keterangan' => $request->ket,
+                        'dibuat' => Auth::user()->name,
+                        'statussurat' => "ACC",
+                        'created_at' => date('Y-m-d H:i:s'),
+                    ]);
+                    // insert ke absensi komunikasiacc
+                    $check3 = DB::table('absensi_komunikasiacc')->insert([
+                        'entitas' => 'PINTEX',
+                        'noform' => $kodeSurat,
+                        'tanggal' => $dataAbs->tanggal,
+                        'tanggal2' => null,
+                        'userid' => $dataAbs->userid,
+                        'nama' => $dataAbs->name,
+                        'suratid' => 'Surat Geser/Tukar Libur',
+                        'sst' => 'L',
+                        'ket_acc' => $request->ket,
+                        'keterangan' => $request->ket,
+                        'dibuat' => Auth::user()->name,
+                        'statussurat' => "ACC",
+                        'created_at' => date('Y-m-d H:i:s'),
+                    ]);
+                }
+            }
+            if ($check) {
+                $arr = array('msg' => 'Data telah berhasil diproses', 'status' => true);
+            } else {
+                $arr = array('msg' => 'Something goes to wrong. Please try later', 'status' => false);
+            }
+            return Response()->json($arr);
+        } catch (\Illuminate\Database\QueryException $e) {
+            $arr = array('msg' => 'Something goes to wrong. ' . $e->getMessage(), 'status' => false);
+            return Response()->json($arr);
+        }
+    }
 }

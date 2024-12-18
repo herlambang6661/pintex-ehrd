@@ -18,6 +18,7 @@ use App\Http\Controllers\Datatables\DataPos;
 use App\Http\Controllers\Datatables\DataTHR;
 use App\Http\Controllers\Datatables\DataCuti;
 use App\Http\Controllers\Datatables\DataUpah;
+use App\Http\Controllers\Datatables\DataAlpha;
 use App\Http\Controllers\Datatables\DataLoker;
 use App\Http\Controllers\Datatables\DataShift;
 use App\Http\Controllers\Datatables\DataSurat;
@@ -127,6 +128,7 @@ Route::resources([
     'getPengguna' => DataPengguna::class,
     'getDataUsers' => DataUsers::class,
     'getLembur' => DataLembur::class,
+    'getAlphaDatatables' => DataAlpha::class,
 ]);
 
 // Modules Auth

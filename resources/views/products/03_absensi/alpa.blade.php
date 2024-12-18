@@ -37,30 +37,30 @@
         }
 
         /* .cv-spinner {
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                        height: 100%;
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                        display: flex;
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                        justify-content: center;
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                        align-items: center;
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                    }
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                height: 100%;
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                display: flex;
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                justify-content: center;
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                align-items: center;
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                            }
 
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                    .spinner {
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                        width: 40px;
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                        height: 40px;
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                        border: 4px #ddd solid;
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                        border-top: 4px #2e93e6 solid;
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                        border-radius: 50%;
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                        animation: sp-anime 0.8s infinite linear;
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                    }
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                            .spinner {
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                width: 40px;
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                height: 40px;
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                border: 4px #ddd solid;
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                border-top: 4px #2e93e6 solid;
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                border-radius: 50%;
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                animation: sp-anime 0.8s infinite linear;
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                            }
 
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                    @keyframes sp-anime {
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                        100% {
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                            transform: rotate(360deg);
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                        }
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                    }
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                            @keyframes sp-anime {
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                100% {
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                    transform: rotate(360deg);
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                }
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                            }
 
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                    .is-hide {
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                        display: none;
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                    } */
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                            .is-hide {
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                display: none;
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                            } */
         .loader {
             position: fixed;
             z-index: 301;
@@ -215,7 +215,7 @@
                                                 <table
                                                     class="table table-sm table-bordered table-striped mb-0 table-hover text-nowrap"
                                                     id="table-alpa">
-                                                    <thead>
+                                                    {{-- <thead>
                                                         <tr>
                                                             <th class="text-center"></th>
                                                             <th class="text-center">Tanggal</th>
@@ -232,8 +232,8 @@
                                                             <th class="text-center">Profesi</th>
                                                             <th class="text-center">SST</th>
                                                         </tr>
-                                                    </thead>
-                                                    <tbody>
+                                                    </thead> --}}
+                                                    {{-- <tbody>
                                                         @foreach ($getalpa as $a)
                                                             <tr class="cursor-pointer">
                                                                 <td class="text-center">{{ $a->idabsensi }}</td>
@@ -254,11 +254,30 @@
                                                                 <td class="text-center">{{ $a->sst }}</td>
                                                             </tr>
                                                         @endforeach
-                                                    </tbody>
+                                                    </tbody> --}}
+                                                    <tfoot>
+                                                        <tr>
+                                                            <th class="px-1 py-1 text-center"></th>
+                                                            <th class="px-1 th py-1 text-center">Tanggal</th>
+                                                            <th class="px-1 th py-1 text-center">STB</th>
+                                                            <th class="px-1 th py-1 text-center">Nama</th>
+                                                            <th class="px-1 th py-1 text-center">IN</th>
+                                                            <th class="px-1 th py-1 text-center">OUT</th>
+                                                            <th class="px-1 py-1 text-center">Hari</th>
+                                                            <th class="px-1 py-1 text-center">Libur</th>
+                                                            <th class="px-1 py-1 text-center">Bagian</th>
+                                                            <th class="px-1 py-1 text-center">Set. Hari</th>
+                                                            <th class="px-1 py-1 text-center">Grup</th>
+                                                            <th class="px-1 py-1 text-center">Bagian</th>
+                                                            <th class="px-1 py-1 text-center">Jabatan</th>
+                                                            <th class="px-1 py-1 text-center">Profesi</th>
+                                                            <th class="px-1 py-1 text-center">SST</th>
+                                                        </tr>
+                                                    </tfoot>
                                                 </table>
                                             </div>
                                         </div>
-                                        <div class="fetched-data-absensi"></div>
+                                        {{-- <div class="fetched-data-absensi"></div> --}}
                                     </div>
                                 </div>
                             </div>
@@ -294,9 +313,9 @@
                         </div>
                         <div class="modal-footer">
                             <button type="submit" id="btnProses" class="btn btn-primary">
-                                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24"
-                                    viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
-                                    stroke-linecap="round" stroke-linejoin="round"
+                                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"
+                                    fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                                    stroke-linejoin="round"
                                     class="icon icon-tabler icons-tabler-outline icon-tabler-device-floppy">
                                     <path stroke="none" d="M0 0h24v24H0z" fill="none" />
                                     <path d="M6 4h10l4 4v10a2 2 0 0 1 -2 2h-12a2 2 0 0 1 -2 -2v-12a2 2 0 0 1 2 -2" />
@@ -366,35 +385,162 @@
                             }
                         },
                     },
-                    // "ajax": {
-                    //     "url": "{{ route('getListKomunikasi.index') }}",
-                    //     "data": function(data) {
-                    //         data._token = "{{ csrf_token() }}";
-                    //         data.dari = $('.ListDari').val();
-                    //         data.sampai = $('.ListSampai').val();
-                    //     }
-                    // },
+                    "ajax": {
+                        "url": "{{ route('getAlphaDatatables.index') }}",
+                        "data": function(data) {
+                            data._token = "{{ csrf_token() }}";
+                            data.dari = "{{ $dari }}";
+                            data.sampai = "{{ $sampai }}";
+                            data.jns = "{{ $jns }}";
+                        }
+                    },
                     autoWidth: true,
                     select: {
                         'style': 'multi',
                     },
-                    columnDefs: [{
-                            'targets': 0,
-                            'visible': false,
-                            'className': 'select-checkbox',
-                            'checkboxes': {
-                                'selectRow': true
-                            },
-                        }
-
+                    columns: [{
+                            data: 'select_orders',
+                            name: 'select_orders',
+                            className: 'cursor-pointer',
+                            orderable: false,
+                            searchable: false,
+                        },
+                        {
+                            title: 'Tanggal',
+                            data: 'tanggal',
+                            name: 'tanggal',
+                            className: 'cuspad0 text-center'
+                        },
+                        {
+                            title: 'STB',
+                            data: 'stb',
+                            name: 'stb',
+                            className: 'cuspad0'
+                        },
+                        {
+                            title: 'Nama',
+                            data: 'name',
+                            name: 'name',
+                            visible: true,
+                            className: 'cuspad0 text-center'
+                        },
+                        {
+                            title: 'In',
+                            data: 'in',
+                            name: 'in',
+                            className: 'cuspad0 text-center'
+                        },
+                        {
+                            title: 'Out',
+                            data: 'out',
+                            name: 'out',
+                            className: 'cuspad0 text-center'
+                        },
+                        {
+                            title: 'Hari',
+                            data: 'hari',
+                            name: 'hari',
+                            className: 'cuspad0 text-center'
+                        },
+                        {
+                            title: 'Libur',
+                            data: 'hrlibur',
+                            name: 'hrlibur',
+                            className: 'cuspad0 text-center'
+                        },
+                        {
+                            title: 'Bagian',
+                            data: 'bagian',
+                            name: 'bagian',
+                            className: 'cuspad0 text-center'
+                        },
+                        {
+                            title: 'Set.Hari',
+                            data: 'sethari',
+                            name: 'sethari',
+                            className: 'cuspad0 text-center'
+                        },
+                        {
+                            title: 'Grup',
+                            data: 'grup',
+                            name: 'grup',
+                            className: 'cuspad0 text-center'
+                        },
+                        {
+                            title: 'Bagian',
+                            data: 'bagian',
+                            name: 'bagian',
+                            className: 'cuspad0 text-center'
+                        },
+                        {
+                            title: 'Jabatan',
+                            data: 'jabatan',
+                            name: 'jabatan',
+                            className: 'cuspad0'
+                        },
+                        {
+                            title: 'Profesi',
+                            data: 'profesi',
+                            name: 'profesi',
+                            className: 'cuspad0 text-center'
+                        },
+                        {
+                            title: 'SST',
+                            data: 'sst',
+                            name: 'sst',
+                            className: 'cuspad0 text-center'
+                        },
                     ],
+                    columnDefs: [{
+                        'targets': 0,
+                        "orderable": false,
+                        'className': 'select-checkbox',
+                        'checkboxes': {
+                            'selectRow': true
+                        },
+                    }],
+                    "initComplete": function() {
+                        this.api()
+                            .columns()
+                            .every(function() {
+                                var that = this;
+                                $('input', this.footer()).on('keyup change clear', function() {
+                                    if (that.search() !== this.value) {
+                                        that.search(this.value).draw();
+                                    }
+                                });
+                            });
+                        this.api().columns([6, 7, 8, 9, 10, 11, 12, 13, 14]).every(function() {
+                            var column = this;
+                            var select = $('<select><option value="">Semua</option></select>')
+                                .appendTo($(column.footer()).empty())
+                                .on('change', function() {
+                                    var val = $.fn.dataTable.util.escapeRegex(
+                                        $(this).val()
+                                    );
+                                    column
+                                        .search(val ? '^' + val + '$' : '', true, false)
+                                        .draw();
+                                });
+                            column.data().unique().sort().each(function(d, j) {
+                                select.append('<option value="' + d + '">' + d +
+                                    '</option>');
+                            });
+                        });
+                    },
                     "aaSorting": [
                         [9, 'asc'],
                         [8, 'asc'],
                         [2, 'asc'],
                         [0, 'asc'],
                     ],
-
+                });
+                $('#table-alpa tfoot tr .th').each(function() {
+                    var title = $(this).text();
+                    $(this).html(
+                        '<input type="text" class="form-control form-control-sm my-0 border border-dark" placeholder="' +
+                        $(this).text() + '" />'
+                    );
                 });
 
                 $('#modalProses').on('show.bs.modal', function(e) {
@@ -404,7 +550,7 @@
 
                     $.each(tableAlpa.rows('.selected').nodes(), function(index, rowId) {
                         var rows_selected = tableAlpa.rows('.selected').data();
-                        itemTables.push(rows_selected[index][0]);
+                        itemTables.push(rows_selected[index]['idabsensi']);
                     });
                     console.log(itemTables);
 
