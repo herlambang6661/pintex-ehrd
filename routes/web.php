@@ -288,7 +288,7 @@ Route::controller(Absensi::class)->group(function () {
     Route::post('checkAccKomunikasi', 'checkAccKomunikasi');
     Route::post('absensi/storeAcc', 'storeKomunikasiAcc')->name('absensi/storeAcc');
     Route::post('syncKom', 'syncKom')->name('syncKom');
-    Route::post('getcuti', 'getcuti')->name('getcuti');
+    Route::post('getcuti', 'getNewCuti')->name('getcuti');
     Route::post('fixUmum', 'fixUmum')->name('fixUmum');
     Route::post('exportAbsen', 'exportAbsensi')->name('exportAbsen');
     Route::post('exportSKD', 'exportSKD')->name('exportSKD');
@@ -296,6 +296,7 @@ Route::controller(Absensi::class)->group(function () {
     Route::post('checkProses', 'checkProses');
     Route::post('storedataF1', 'storedataF1');
     Route::post('storedataAlpa', 'storedataAlpa');
+    Route::post('syncCuti', 'syncCuti')->name('syncCuti');
 });
 
 // Modules Penarikan Data Mesin Fingerprint

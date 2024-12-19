@@ -596,28 +596,35 @@ class Absensi extends Controller
         $stb = $request->stb;
         $sst = $request->sst;
         if ($sst == "C") {
+            // $data = DB::table('penerimaan_karyawan as k')
+            //     // ->select('k.userid', 'k.stb', 'k.nama')
+            //     ->select(DB::raw(
+            //         "k.userid, k.stb, k.nama, 
+            //         (SELECT tglaw FROM penerimaan_legalitas l WHERE l.userid = k.userid ORDER BY tglaw DESC LIMIT 1 ) AS tglawal,
+            //         (SELECT tglak FROM penerimaan_legalitas l WHERE l.userid = k.userid ORDER BY tglaw DESC LIMIT 1 ) AS tglakhir,
+            //         (SELECT sacuti FROM penerimaan_legalitas l WHERE l.userid = k.userid AND suratjns = 'PERJANJIAN' AND l.tglak >= tglawal AND l.tglak <= tglakhir ) AS sacuti,
+            //         (SELECT sacuti FROM penerimaan_legalitas l WHERE l.userid = k.userid AND suratjns = 'CUTI' AND l.tglak >= tglawal AND l.tglak <= tglakhir ) AS sacuti2,
+            //         (SELECT COUNT(o.sst) FROM absensi_komunikasiacc o WHERE o.userid = k.userid AND o.sst = 'C' AND o.tanggal >= tglawal AND o.tanggal <= tglakhir ) AS cutiterpakai
+            //         "
+            //     ))
+            //     ->where('k.status', 'like', '%aktif%')
+            //     ->where('k.stb', $stb)
+            //     ->get();
             $data = DB::table('penerimaan_karyawan as k')
-                // ->select('k.userid', 'k.stb', 'k.nama')
-                ->select(DB::raw(
-                    "k.userid, k.stb, k.nama, 
-                    (SELECT tglaw FROM penerimaan_legalitas l WHERE l.userid = k.userid ORDER BY tglaw DESC LIMIT 1 ) AS tglawal,
-                    (SELECT tglak FROM penerimaan_legalitas l WHERE l.userid = k.userid ORDER BY tglaw DESC LIMIT 1 ) AS tglakhir,
-                    (SELECT sacuti FROM penerimaan_legalitas l WHERE l.userid = k.userid AND suratjns = 'PERJANJIAN' AND l.tglak >= tglawal AND l.tglak <= tglakhir ) AS sacuti,
-                    (SELECT sacuti FROM penerimaan_legalitas l WHERE l.userid = k.userid AND suratjns = 'CUTI' AND l.tglak >= tglawal AND l.tglak <= tglakhir ) AS sacuti2,
-                    (SELECT COUNT(o.sst) FROM absensi_komunikasiacc o WHERE o.userid = k.userid AND o.sst = 'C' AND o.tanggal >= tglawal AND o.tanggal <= tglakhir ) AS cutiterpakai
-                    "
-                ))
+                ->select(DB::raw("k.userid, k.stb, k.nama, k.tgl_awalcuti, k.tgl_akhircuti, k.cutiaktif"))
                 ->where('k.status', 'like', '%aktif%')
                 ->where('k.stb', $stb)
                 ->get();
             if ($data->isNotEmpty()) {
                 foreach ($data as $k) {
-                    if (!empty($k->sacuti)) {
-                        $sisacuti = $k->sacuti;
-                    } else {
-                        $sisacuti = $k->sacuti2;
-                    }
-                    return ['success' => 'Data Ditemukan', 'stat' => true, 'result' => $k->nama, 'userid' => $k->userid, 'sisacuti' => $sisacuti, 'cutidikomunikasi' => $k->cutiterpakai, 'tglawal' => $k->tglawal, 'tglakhir' => $k->tglakhir];
+
+                    $ctTerpakai = DB::table('absensi_komunikasiacc')
+                        ->where('userid', $k->userid)
+                        ->where('sst', 'C')
+                        ->whereBetween('tanggal', [$k->tgl_awalcuti, $k->tgl_akhircuti])
+                        ->get();
+                    $sisacuti = $k->cutiaktif;
+                    return ['success' => 'Data Ditemukan', 'stat' => true, 'result' => '( Sisa Cuti : ' . ($sisacuti - $ctTerpakai->count()) . ' ) ' . $k->nama, 'userid' => $k->userid, 'sisacuti' => $sisacuti, 'cutidikomunikasi' => $ctTerpakai->count(), 'tglawal' => $k->tgl_awalcuti, 'tglakhir' => $k->tgl_akhircuti];
                 }
             } else {
                 return ['error' => 'Data Tidak Ditemukan', 'stat' => false];
@@ -1275,7 +1282,6 @@ class Absensi extends Controller
                     }
                 }
 
-
                 $lega = DB::table('penerimaan_legalitas as l')
                     ->where('l.userid', '=', $key->userid)
                     ->whereIn('l.suratjns', ['PERJANJIAN', 'CUTI'])
@@ -1296,6 +1302,194 @@ class Absensi extends Controller
                                 <h2 class="accordion-header bg-light" id="heading' . $key->stb . '">
                                     <button class="accordion-button collapsed py-1 subheader" type="button" data-bs-toggle="collapse" data-bs-target="#collapse' . $key->stb . '" aria-expanded="false" aria-controls="collapse' . $key->stb . '">
                                         Riwayat ' . Carbon::parse($lega->tglaw)->isoFormat('D MMMM Y') . ' s/d ' . Carbon::parse($lega->tglak)->isoFormat('D MMMM Y') . '
+                                    </button>
+                                </h2>
+                                <div id="collapse' . $key->stb . '" class="accordion-collapse collapse" aria-labelledby="heading' . $key->stb . '" data-bs-parent="#accordionExample">
+                                    <div class="accordion-body py-0 px-0">
+                                        <div class="table-responsive">
+                                            <table class="table table-vcenter table-bordered table-nowrap card-table table-sm">
+                                        ';
+                $no = 1;
+                foreach ($getRiwayatperiodelalu as $y) {
+                    echo '
+                                            <tr class="text-secondary subheader">
+                                                <td class="w-1">' . $no . '</td>
+                                                <td style="text-align: end;" class="w-5">' . Carbon::parse($y->tanggal)->isoFormat('DD/MM/Y') . '</td>
+                                                <td colspan="3">' . $y->suratid . ': ' . $y->keterangan . '</td>
+                                            </tr>';
+                    $no++;
+                }
+                echo '
+                                            </table>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            ';
+            }
+        }
+    }
+
+    public function getNewCuti(Request $request)
+    {
+        // $getKaryawan = DB::table('penerimaan_karyawan')->where('nama', 'like', '%' . $request->idcari . '%')->orWhere('stb', '=', $request->idcari)->where('status', 'like', '%aktif%')->get();
+        if (empty($request->idcari)) {
+            echo '<div class="alert alert-important alert-warning alert-dismissible" role="alert">
+                    <div class="d-flex">
+                    <div>
+                        <svg xmlns="http://www.w3.org/2000/svg" class="icon alert-icon" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z" fill="none"></path><path d="M12 9v4"></path><path d="M10.363 3.591l-8.106 13.534a1.914 1.914 0 0 0 1.636 2.871h16.214a1.914 1.914 0 0 0 1.636 -2.87l-8.106 -13.536a1.914 1.914 0 0 0 -3.274 0z"></path><path d="M12 16h.01"></path></svg>
+                    </div>
+                    <div>
+                        Kolom Tidak Boleh Kosong
+                    </div>
+                    </div>
+                    <a class="btn-close" data-bs-dismiss="alert" aria-label="close"></a>
+                </div>';
+        } else {
+            if (Auth::user()->admin == '1') {
+                // Untuk Admin Unit 1
+                $unit = 'UNIT 1';
+                $getKaryawan = DB::table('penerimaan_karyawan as k')
+                    ->select(DB::raw(
+                        "k.userid, k.stb, k.nama, k.bagian, k.profesi,
+                        (SELECT l.tglaw FROM penerimaan_legalitas l WHERE l.userid = k.userid ORDER BY l.tglaw DESC LIMIT 1 ) AS tglawal,
+                        (SELECT l.tglak FROM penerimaan_legalitas l WHERE l.userid = k.userid ORDER BY l.tglaw DESC LIMIT 1 ) AS tglakhir,
+                        (SELECT sacuti FROM penerimaan_legalitas l WHERE l.userid = k.userid AND suratjns = 'PERJANJIAN' AND l.tglak >= tglawal AND l.tglak <= tglakhir ) AS sacuti,
+                        (SELECT sacuti FROM penerimaan_legalitas l WHERE l.userid = k.userid AND suratjns = 'CUTI' AND l.tglak >= tglawal AND l.tglak <= tglakhir ) AS sacuti2,
+                        (SELECT COUNT(o.sst) FROM absensi_komunikasiacc o WHERE o.userid = k.userid AND o.sst = 'C' AND o.tanggal >= tglawal AND o.tanggal <= tglakhir ) AS cutiterpakai"
+                    ))
+                    ->where('k.bagian', '=', $unit)
+                    ->where('k.nama', 'like', '%' . $request->idcari . '%')
+                    ->orWhere('k.stb', '=', $request->idcari)
+                    ->where('k.status', 'like', '%aktif%')
+                    ->get();
+            } elseif (Auth::user()->admin == '2') {
+                // Untuk Admin Unit 2
+                $getKaryawan = DB::table('penerimaan_karyawan as k')
+                    ->select(DB::raw(
+                        "k.id, k.userid, k.stb, k.nama, k.bagian, k.profesi,
+                        (SELECT l.tglaw FROM penerimaan_legalitas l WHERE l.userid = k.userid ORDER BY l.tglaw DESC LIMIT 1 ) AS tglawal,
+                        (SELECT l.tglak FROM penerimaan_legalitas l WHERE l.userid = k.userid ORDER BY l.tglaw DESC LIMIT 1 ) AS tglakhir,
+                        (SELECT sacuti FROM penerimaan_legalitas l WHERE l.userid = k.userid AND suratjns = 'PERJANJIAN' AND l.tglak >= tglawal AND l.tglak <= tglakhir ) AS sacuti,
+                        (SELECT sacuti FROM penerimaan_legalitas l WHERE l.userid = k.userid AND suratjns = 'CUTI' AND l.tglak >= tglawal AND l.tglak <= tglakhir ) AS sacuti2,
+                        (SELECT COUNT(o.sst) FROM absensi_komunikasiacc o WHERE o.userid = k.userid AND o.sst = 'C' AND o.tanggal >= tglawal AND o.tanggal <= tglakhir ) AS cutiterpakai"
+                    ))
+                    ->whereIn('k.bagian', ['TFO', 'TFO 1', 'TFO 2', 'UNIT 2', 'WCR & WORKSHOP'])
+                    ->where('k.nama', 'like', '%' . $request->idcari . '%')
+                    ->orWhere('k.stb', '=', $request->idcari)
+                    ->where('k.status', 'like', '%aktif%')
+                    ->get();
+            } elseif (Auth::user()->admin == '3') {
+                // Untuk Admin Unit 3
+                $getKaryawan = DB::table('penerimaan_karyawan as k')
+                    ->select(DB::raw(
+                        "k.id, k.userid, k.stb, k.nama, k.bagian, k.profesi,
+                        (SELECT l.tglaw FROM penerimaan_legalitas l WHERE l.userid = k.userid ORDER BY l.tglaw DESC LIMIT 1 ) AS tglawal,
+                        (SELECT l.tglak FROM penerimaan_legalitas l WHERE l.userid = k.userid ORDER BY l.tglaw DESC LIMIT 1 ) AS tglakhir,
+                        (SELECT sacuti FROM penerimaan_legalitas l WHERE l.userid = k.userid AND suratjns = 'PERJANJIAN' AND l.tglak >= tglawal AND l.tglak <= tglakhir ) AS sacuti,
+                        (SELECT sacuti FROM penerimaan_legalitas l WHERE l.userid = k.userid AND suratjns = 'CUTI' AND l.tglak >= tglawal AND l.tglak <= tglakhir ) AS sacuti2,
+                        (SELECT COUNT(o.sst) FROM absensi_komunikasiacc o WHERE o.userid = k.userid AND o.sst = 'C' AND o.tanggal >= tglawal AND o.tanggal <= tglakhir ) AS cutiterpakai"
+                    ))
+                    ->whereIn('k.bagian', ['GUDANG', 'GUDANG 1', 'GUDANG 2', 'UMUM'])
+                    ->where('k.nama', 'like', '%' . $request->idcari . '%')
+                    ->orWhere('k.stb', '=', $request->idcari)
+                    ->where('k.status', 'like', '%aktif%')
+                    ->get();
+            } else {
+                $getKaryawan = DB::table('penerimaan_karyawan as k')
+                    ->select(DB::raw("k.id, k.userid, k.stb, k.nama, k.bagian, k.profesi, k.cutiaktif, k.tgl_awalcuti, k.tgl_akhircuti"))
+                    ->where('k.nama', 'like', '%' . $request->idcari . '%')
+                    ->orWhere('k.stb', '=', $request->idcari)
+                    ->where('k.status', 'like', '%aktif%')
+                    ->get();
+            }
+
+            foreach ($getKaryawan as $key) {
+                $dtKaryawan = DB::table('absensi_komunikasiacc')
+                    ->where('userid', $key->userid)
+                    ->where('sst', 'C')
+                    ->whereBetween('tanggal', [$key->tgl_awalcuti, $key->tgl_akhircuti])
+                    ->get();
+                echo '
+                <div class="card mb-5 shadow border border-azure">
+                    <div class="table-responsive">
+                        <table class="table table-vcenter table-bordered table-nowrap card-table table-sm">
+                            <thead>
+                                <tr>
+                                    <td class="w-50" rowspan="3">
+                                        <h2>( ' . $key->stb . ' ) ' . $key->nama . '</h2>
+                                        <div class="text-secondary text-wrap">
+                                            Bagian: ' . $key->bagian . ', Profesi: ' . $key->profesi . '
+                                        </div>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td colspan="3" class="text-blue font-weight-medium">
+                                        ';
+                if ((empty($key->cutiaktif) ? 0 : $key->cutiaktif) > 0) {
+                    echo '                      
+                                        <svg  xmlns="http://www.w3.org/2000/svg"  width="24"  height="24"  viewBox="0 0 24 24"  fill="none"  stroke="currentColor"  stroke-width="2"  stroke-linecap="round"  stroke-linejoin="round"  class="icon icon-tabler icons-tabler-outline icon-tabler-calendar-month"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><path d="M4 7a2 2 0 0 1 2 -2h12a2 2 0 0 1 2 2v12a2 2 0 0 1 -2 2h-12a2 2 0 0 1 -2 -2v-12z" /><path d="M16 3v4" /><path d="M8 3v4" /><path d="M4 11h16" /><path d="M7 14h.013" /><path d="M10.01 14h.005" /><path d="M13.01 14h.005" /><path d="M16.015 14h.005" /><path d="M13.015 17h.005" /><path d="M7.01 17h.005" /><path d="M10.01 17h.005" /></svg>
+                                        <i> Dapat digunakan pada Periode: ' . Carbon::parse($key->tgl_awalcuti)->isoFormat('D MMMM Y') . ' s/d ' . Carbon::parse($key->tgl_akhircuti)->isoFormat('D MMMM Y') . '</i>';
+                }
+                echo '
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td class="text-center">
+                                        <div class="text-uppercase text-secondary font-weight-medium">Total Cuti</div>
+                                        <div class="display-6 fw-bold my-3">' . (empty($key->cutiaktif) ? 0 : $key->cutiaktif) . '</div>
+                                    </td>
+                                    <td class="text-center">
+                                        <div class="text-uppercase text-secondary font-weight-medium">Cuti Terpakai</div>
+                                        <div class="display-6 fw-bold my-3">' . $dtKaryawan->count() . '</div>
+                                    </td>
+                                    <td class="text-center">
+                                        <div class="text-uppercase text-secondary font-weight-medium">Sisa Cuti</div>
+                                        <div class="display-6 fw-bold my-3">' . ((empty($key->cutiaktif) ? 0 : $key->cutiaktif) - $dtKaryawan->count()) . '</div>
+                                    </td>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                ';
+                if ($dtKaryawan->count() > 0) {
+                    $getRiwayat = DB::table('absensi_komunikasiacc')->Where('userid', '=', $key->userid)->where('sst', '=', 'C')->whereBetween('tanggal', [$key->tgl_awalcuti, $key->tgl_akhircuti])->get();
+                    echo '
+                                <tr class="bg-light">
+                                    <th colspan="4" class="subheader">Riwayat Cuti ' . Carbon::parse($key->tgl_awalcuti)->isoFormat('D MMMM Y') . ' s/d ' . Carbon::parse($key->tgl_akhircuti)->isoFormat('D MMMM Y') . '</th>
+                                </tr>
+                    ';
+                    foreach ($getRiwayat as $x) {
+                        echo '
+                                <tr>
+                                    <td style="text-align: end;">' . Carbon::parse($x->tanggal)->isoFormat('DD/MM/Y') . '</td>
+                                    <td colspan="3">' . $x->suratid . ': ' . $x->keterangan . '</td>
+                                </tr>';
+                    }
+                }
+
+                $lega = DB::table('penerimaan_legalitas as l')
+                    ->where('l.userid', '=', $key->userid)
+                    ->whereIn('l.suratjns', ['PERJANJIAN', 'CUTI'])
+                    ->orderBy('l.id', 'desc')
+                    ->skip(1)
+                    ->first();
+                $getRiwayatperiodelalu = DB::table('absensi_komunikasiacc as a')
+                    ->where('a.userid', '=', $key->userid)
+                    ->where('a.sst', '=', 'C')
+                    ->whereBetween('a.tanggal', [date('Y-m-d'), date('Y-m-d', strtotime("-12 months"))])
+                    ->orderBy('a.tanggal', 'desc')
+                    ->get();
+                echo '
+                            </tbody>
+                        </table>
+                        <div class="accordion" id="accordionExample">
+                            <div class="accordion-item">
+                                <h2 class="accordion-header bg-light" id="heading' . $key->stb . '">
+                                    <button class="accordion-button collapsed py-1 subheader" type="button" data-bs-toggle="collapse" data-bs-target="#collapse' . $key->stb . '" aria-expanded="false" aria-controls="collapse' . $key->stb . '">
+                                        Riwayat Cuti Lain
                                     </button>
                                 </h2>
                                 <div id="collapse' . $key->stb . '" class="accordion-collapse collapse" aria-labelledby="heading' . $key->stb . '" data-bs-parent="#accordionExample">
@@ -2042,5 +2236,58 @@ class Absensi extends Controller
             $arr = array('msg' => 'Something goes to wrong. ' . $e->getMessage(), 'status' => false);
             return Response()->json($arr);
         }
+    }
+
+    public function syncCuti(Request $request)
+    {
+        $karyawan = DB::table('penerimaan_karyawan')->where('status', 'like', '%Aktif%')->get();
+        for ($i = 0; $i < $karyawan->count(); $i++) {
+            if ($karyawan[$i]->custom_cuti > 0) {
+                try {
+                    $dataLegalitas = DB::table('penerimaan_legalitas')
+                        ->where('userid', $karyawan[$i]->userid)
+                        ->where('sacuti', '>', 0)
+                        ->where('suratjns', 'like', '%cuti%')
+                        ->where('tglaw', '<', date('Y-m-d'))
+                        ->where('tglak', '>', date('Y-m-d'))
+                        ->orderBy('legalitastgl', 'desc')
+                        ->first();
+                    $update = DB::table('penerimaan_karyawan')
+                        ->where('userid', $karyawan[$i]->userid)
+                        ->update(
+                            array(
+                                'cutiaktif' => empty($dataLegalitas->sacuti) ? 0 : $dataLegalitas->sacuti,
+                                'tgl_awalcuti' => empty($dataLegalitas->tglaw) ? null : $dataLegalitas->tglaw,
+                                'tgl_akhircuti' => empty($dataLegalitas->tglak) ? null : $dataLegalitas->tglak,
+                            )
+                        );
+                } catch (\Illuminate\Database\QueryException $e) {
+                    return response()->json('Error. ' . $e->getMessage());
+                }
+            } else {
+                try {
+                    $dataLegalitas = DB::table('penerimaan_legalitas')
+                        ->where('userid', $karyawan[$i]->userid)
+                        ->where('sacuti', '>', 0)
+                        ->where('suratjns', 'like', '%perjanjian%')
+                        ->where('tglaw', '<', date('Y-m-d'))
+                        ->where('tglak', '>', date('Y-m-d'))
+                        ->orderBy('legalitastgl', 'desc')
+                        ->first();
+                    $update = DB::table('penerimaan_karyawan')
+                        ->where('userid', $karyawan[$i]->userid)
+                        ->update(
+                            array(
+                                'cutiaktif' => empty($dataLegalitas->sacuti) ? 0 : $dataLegalitas->sacuti,
+                                'tgl_awalcuti' => empty($dataLegalitas->tglaw) ? null : $dataLegalitas->tglaw,
+                                'tgl_akhircuti' => empty($dataLegalitas->tglak) ? null : $dataLegalitas->tglak,
+                            )
+                        );
+                } catch (\Illuminate\Database\QueryException $e) {
+                    return response()->json('Error. ' . $e->getMessage());
+                }
+            }
+        }
+        return response()->json('Berhasil Sinkronisasi ' . $karyawan->count() . ' Karyawan. ');
     }
 }

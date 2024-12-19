@@ -36,31 +36,6 @@
             background: rgba(0, 0, 0, 0.6);
         }
 
-        /* .cv-spinner {
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                        height: 100%;
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                        display: flex;
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                        justify-content: center;
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                        align-items: center;
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                    }
-
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                    .spinner {
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                        width: 40px;
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                        height: 40px;
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                        border: 4px #ddd solid;
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                        border-top: 4px #2e93e6 solid;
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                        border-radius: 50%;
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                        animation: sp-anime 0.8s infinite linear;
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                    }
-
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                    @keyframes sp-anime {
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                        100% {
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                            transform: rotate(360deg);
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                        }
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                    }
-
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                    .is-hide {
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                        display: none;
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                    } */
         .loader {
             position: fixed;
             z-index: 301;
@@ -175,40 +150,37 @@
                             </div>
                         </div>
 
-                        <!-- Page title actions -->
-                        {{-- <div class="col-auto ms-auto d-print-none">
-                            <div class="btn-list">
-                                <a href="#" class="btn btn-danger d-none d-sm-inline-block" onclick="alpha();">
-                                    <i class="fa-solid fa-person-running"></i>
-                                    Data Alfa
-                                </a>
-                                <a href="#" class="btn btn-warning d-none d-sm-inline-block" onclick="f1();">
-                                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24"
-                                        viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
-                                        stroke-linecap="round" stroke-linejoin="round"
-                                        class="icon icon-tabler icons-tabler-outline icon-tabler-fingerprint-off">
-                                        <path stroke="none" d="M0 0h24v24H0z" fill="none" />
-                                        <path d="M18.9 7a8 8 0 0 1 1.1 5v1a6 6 0 0 0 .8 3" />
-                                        <path
-                                            d="M8 11c0 -.848 .264 -1.634 .713 -2.28m2.4 -1.621a4 4 0 0 1 4.887 3.901l0 1" />
-                                        <path d="M12 12v1a14 14 0 0 0 2.5 8" />
-                                        <path d="M8 15a18 18 0 0 0 1.8 6" />
-                                        <path
-                                            d="M4.9 19a22 22 0 0 1 -.9 -7v-1a8 8 0 0 1 1.854 -5.143m2.176 -1.825a8 8 0 0 1 7.97 .018" />
-                                        <path d="M3 3l18 18" />
-                                    </svg>
-                                    Data F1F2
-                                </a>
-                                <a href="#" class="btn btn-danger d-sm-none btn-icon" data-bs-toggle="modal"
-                                    data-bs-target="#modal-lamaran" aria-label="Tambah Lamaran">
-                                    <i class="fa-solid fa-person-running"></i>
-                                </a>
-                                <a href="#" class="btn btn-warning d-sm-none btn-icon" data-bs-toggle="modal"
-                                    data-bs-target="#modal-upload" aria-label="Upload Excel">
-                                    <i class="fa-solid fa-user-slash"></i>
-                                </a>
+                        @if (Auth::user()->role == 'super' || Auth::user()->role == 'admin')
+                            <!-- Page title actions -->
+                            <div class="col-auto ms-auto d-print-none">
+                                <div class="btn-list">
+                                    <a href="#"
+                                        class="btn bg-azure-lt border border-azure d-none d-sm-inline-block btnSynCuti">
+                                        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24"
+                                            viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+                                            stroke-linecap="round" stroke-linejoin="round"
+                                            class="icon icon-tabler icons-tabler-outline icon-tabler-refresh">
+                                            <path stroke="none" d="M0 0h24v24H0z" fill="none" />
+                                            <path d="M20 11a8.1 8.1 0 0 0 -15.5 -2m-.5 -4v4h4" />
+                                            <path d="M4 13a8.1 8.1 0 0 0 15.5 2m.5 4v-4h-4" />
+                                        </svg>
+                                        Sinkronisasi Cuti
+                                    </a>
+                                    <a href="#" class="btn bg-azure-lt border border-azure d-sm-none btn-icon"
+                                        data-bs-toggle="modal" data-bs-target="#modal-upload" aria-label="Upload Excel">
+                                        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24"
+                                            viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+                                            stroke-linecap="round" stroke-linejoin="round"
+                                            class="icon icon-tabler icons-tabler-outline icon-tabler-refresh">
+                                            <path stroke="none" d="M0 0h24v24H0z" fill="none" />
+                                            <path d="M20 11a8.1 8.1 0 0 0 -15.5 -2m-.5 -4v4h4" />
+                                            <path d="M4 13a8.1 8.1 0 0 0 15.5 2m.5 4v-4h-4" />
+                                        </svg>
+                                    </a>
+                                </div>
                             </div>
-                        </div> --}}
+                        @endif
+
                     </div>
                 </div>
             </div>
@@ -497,5 +469,74 @@
                     }, 300);
                 });
             }
+
+            $(document).on('click', '.btnSynCuti', function() {
+                // var id = $(this).data('id');
+                // var noform = $(this).data('noform');
+                // var kode = $(this).data('kode');
+                // var typeHapus = $(this).data('typehapus');
+                // var kodeproduksi = $(this).data('kodeproduksi');
+                // var token = $("meta[name='csrf-token']").attr("content");
+                // nama = (typeHapus == "form") ? noform : kode;
+                // console.log("menghapus " + kodeproduksi);
+                // let r = (Math.random() + 1).toString(36).substring(2);
+                swal.fire({
+                    title: 'Sinkronisasi',
+                    html: 'Apakah anda yakin ingin sinkronisasi data cuti ?',
+                    icon: 'info',
+                    showCancelButton: true,
+                    confirmButtonColor: '#3085d6',
+                    cancelButtonColor: '#d33',
+                    confirmButtonText: 'Ya',
+                    cancelButtonText: 'Batal',
+                }).then((result) => {
+                    if (result.isConfirmed) {
+                        $.ajax({
+                            type: "POST",
+                            url: "{{ route('syncCuti') }}",
+                            data: {
+                                "_token": "{{ csrf_token() }}",
+                                // "tipeHapus": typeHapus,
+                            },
+                            beforeSend: function() {
+                                Swal.fire({
+                                    title: 'Mohon Menunggu',
+                                    html: '<center><lottie-player src="https://lottie.host/54b33864-47d1-4f30-b38c-bc2b9bdc3892/1xkjwmUkku.json"  background="transparent"  speed="1"  style="width: 400px; height: 400px;"  loop autoplay></lottie-player></center><br><h1 class="h4">Sedang menghapus data, Proses mungkin membutuhkan beberapa menit. <br><br><b class="text-danger">(Jangan menutup jendela ini, bisa mengakibatkan error)</b></h1>',
+                                    timerProgressBar: true,
+                                    showConfirmButton: false,
+                                    allowOutsideClick: false,
+                                    allowEscapeKey: false,
+                                })
+                            },
+                            success: function(data) {
+                                // tablePengebonan.ajax.reload(null,
+                                //     false);
+                                $('#modalViewItem').modal('hide');
+                                Swal.fire({
+                                    icon: 'success',
+                                    title: 'Berhasil',
+                                    html: data,
+                                    showConfirmButton: true
+                                });
+                                // if (kodeproduksi) {
+                                //     $("#btn-remove" + kodeproduksi).remove();
+                                // }
+                            },
+                            error: function(data) {
+                                // tablePengebonan.ajax.reload(null,
+                                //     false);
+                                // console.log('Error:', data
+                                //     .responseText);
+                                Swal.fire({
+                                    icon: 'error',
+                                    title: 'Gagal!',
+                                    text: 'Error: ' + data.responseText,
+                                    showConfirmButton: true,
+                                });
+                            }
+                        });
+                    }
+                })
+            });
         </script>
     @endsection
