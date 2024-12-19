@@ -1353,49 +1353,28 @@ class Absensi extends Controller
                 // Untuk Admin Unit 1
                 $unit = 'UNIT 1';
                 $getKaryawan = DB::table('penerimaan_karyawan as k')
-                    ->select(DB::raw(
-                        "k.userid, k.stb, k.nama, k.bagian, k.profesi,
-                        (SELECT l.tglaw FROM penerimaan_legalitas l WHERE l.userid = k.userid ORDER BY l.tglaw DESC LIMIT 1 ) AS tglawal,
-                        (SELECT l.tglak FROM penerimaan_legalitas l WHERE l.userid = k.userid ORDER BY l.tglaw DESC LIMIT 1 ) AS tglakhir,
-                        (SELECT sacuti FROM penerimaan_legalitas l WHERE l.userid = k.userid AND suratjns = 'PERJANJIAN' AND l.tglak >= tglawal AND l.tglak <= tglakhir ) AS sacuti,
-                        (SELECT sacuti FROM penerimaan_legalitas l WHERE l.userid = k.userid AND suratjns = 'CUTI' AND l.tglak >= tglawal AND l.tglak <= tglakhir ) AS sacuti2,
-                        (SELECT COUNT(o.sst) FROM absensi_komunikasiacc o WHERE o.userid = k.userid AND o.sst = 'C' AND o.tanggal >= tglawal AND o.tanggal <= tglakhir ) AS cutiterpakai"
-                    ))
-                    ->where('k.bagian', '=', $unit)
+                    ->select(DB::raw("k.id, k.userid, k.stb, k.nama, k.bagian, k.profesi, k.cutiaktif, k.tgl_awalcuti, k.tgl_akhircuti"))
                     ->where('k.nama', 'like', '%' . $request->idcari . '%')
                     ->orWhere('k.stb', '=', $request->idcari)
+                    ->where('k.bagian', '=', $unit)
                     ->where('k.status', 'like', '%aktif%')
                     ->get();
             } elseif (Auth::user()->admin == '2') {
                 // Untuk Admin Unit 2
                 $getKaryawan = DB::table('penerimaan_karyawan as k')
-                    ->select(DB::raw(
-                        "k.id, k.userid, k.stb, k.nama, k.bagian, k.profesi,
-                        (SELECT l.tglaw FROM penerimaan_legalitas l WHERE l.userid = k.userid ORDER BY l.tglaw DESC LIMIT 1 ) AS tglawal,
-                        (SELECT l.tglak FROM penerimaan_legalitas l WHERE l.userid = k.userid ORDER BY l.tglaw DESC LIMIT 1 ) AS tglakhir,
-                        (SELECT sacuti FROM penerimaan_legalitas l WHERE l.userid = k.userid AND suratjns = 'PERJANJIAN' AND l.tglak >= tglawal AND l.tglak <= tglakhir ) AS sacuti,
-                        (SELECT sacuti FROM penerimaan_legalitas l WHERE l.userid = k.userid AND suratjns = 'CUTI' AND l.tglak >= tglawal AND l.tglak <= tglakhir ) AS sacuti2,
-                        (SELECT COUNT(o.sst) FROM absensi_komunikasiacc o WHERE o.userid = k.userid AND o.sst = 'C' AND o.tanggal >= tglawal AND o.tanggal <= tglakhir ) AS cutiterpakai"
-                    ))
-                    ->whereIn('k.bagian', ['TFO', 'TFO 1', 'TFO 2', 'UNIT 2', 'WCR & WORKSHOP'])
+                    ->select(DB::raw("k.id, k.userid, k.stb, k.nama, k.bagian, k.profesi, k.cutiaktif, k.tgl_awalcuti, k.tgl_akhircuti"))
                     ->where('k.nama', 'like', '%' . $request->idcari . '%')
                     ->orWhere('k.stb', '=', $request->idcari)
+                    ->whereIn('k.bagian', ['TFO', 'TFO 1', 'TFO 2', 'UNIT 2', 'WCR & WORKSHOP'])
                     ->where('k.status', 'like', '%aktif%')
                     ->get();
             } elseif (Auth::user()->admin == '3') {
                 // Untuk Admin Unit 3
                 $getKaryawan = DB::table('penerimaan_karyawan as k')
-                    ->select(DB::raw(
-                        "k.id, k.userid, k.stb, k.nama, k.bagian, k.profesi,
-                        (SELECT l.tglaw FROM penerimaan_legalitas l WHERE l.userid = k.userid ORDER BY l.tglaw DESC LIMIT 1 ) AS tglawal,
-                        (SELECT l.tglak FROM penerimaan_legalitas l WHERE l.userid = k.userid ORDER BY l.tglaw DESC LIMIT 1 ) AS tglakhir,
-                        (SELECT sacuti FROM penerimaan_legalitas l WHERE l.userid = k.userid AND suratjns = 'PERJANJIAN' AND l.tglak >= tglawal AND l.tglak <= tglakhir ) AS sacuti,
-                        (SELECT sacuti FROM penerimaan_legalitas l WHERE l.userid = k.userid AND suratjns = 'CUTI' AND l.tglak >= tglawal AND l.tglak <= tglakhir ) AS sacuti2,
-                        (SELECT COUNT(o.sst) FROM absensi_komunikasiacc o WHERE o.userid = k.userid AND o.sst = 'C' AND o.tanggal >= tglawal AND o.tanggal <= tglakhir ) AS cutiterpakai"
-                    ))
-                    ->whereIn('k.bagian', ['GUDANG', 'GUDANG 1', 'GUDANG 2', 'UMUM'])
+                    ->select(DB::raw("k.id, k.userid, k.stb, k.nama, k.bagian, k.profesi, k.cutiaktif, k.tgl_awalcuti, k.tgl_akhircuti"))
                     ->where('k.nama', 'like', '%' . $request->idcari . '%')
                     ->orWhere('k.stb', '=', $request->idcari)
+                    ->whereIn('k.bagian', ['GUDANG', 'GUDANG 1', 'GUDANG 2', 'UMUM'])
                     ->where('k.status', 'like', '%aktif%')
                     ->get();
             } else {
