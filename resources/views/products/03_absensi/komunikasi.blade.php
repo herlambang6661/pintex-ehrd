@@ -302,6 +302,38 @@
                                     </div>
                                     @if (Auth::user()->role != 'operator')
                                         <div class="tab-pane" id="tab-acc-komunikasi" role="tabpanel">
+                                            <div class="table-responsive">
+                                                <form action="#" id="form-filter-items" method="get"
+                                                    autocomplete="off" novalidate="" class="">
+                                                    <table class="table mb-0">
+                                                        <thead>
+                                                            <tr>
+                                                                <th class="text-center">Tgl Awal</th>
+                                                                <th class="text-center">Tgl Akhir</th>
+                                                                <th class="text-center"></th>
+                                                            </tr>
+                                                        </thead>
+                                                        <tbody>
+                                                            <tr>
+                                                                <td>
+                                                                    <input type="date" id="idfilter_acc_dari"
+                                                                        class="form-control" value="{{ date('Y-m-01') }}">
+                                                                </td>
+                                                                <td>
+                                                                    <input type="date" id="idfilter_acc_sampai"
+                                                                        class="form-control " value="{{ date('Y-m-t') }}">
+                                                                </td>
+                                                                <td>
+                                                                    <button type="button" class="btn btn-primary"
+                                                                        onclick="synFormList()">
+                                                                        <i class="fa-solid fa-magnifying-glass"></i>
+                                                                    </button>
+                                                                </td>
+                                                            </tr>
+                                                        </tbody>
+                                                    </table>
+                                                </form>
+                                            </div>
                                             <ul class="nav nav-tabs card-header-tabs mb-3 mt-3 ms-auto"
                                                 data-bs-toggle="tabs" role="tablist">
                                                 <li class="nav-item" role="presentation">
@@ -322,6 +354,30 @@
                                                 <div class="tab-pane active show" id="tabs-form" role="tabpanel">
                                                     <table style="width: 100%"
                                                         class="table table-striped table-bordered table-hover text-nowrap datatable-acc-komunikasi">
+                                                        <tfoot>
+                                                            <tr>
+                                                                <th class="px-1 py-1 text-center" style="width: 1%">
+                                                                    <svg xmlns="http://www.w3.org/2000/svg" width="24"
+                                                                        height="24" viewBox="0 0 24 24" fill="none"
+                                                                        stroke="currentColor" stroke-width="2"
+                                                                        stroke-linecap="round" stroke-linejoin="round"
+                                                                        class="icon icon-tabler icons-tabler-outline icon-tabler-list-search">
+                                                                        <path stroke="none" d="M0 0h24v24H0z"
+                                                                            fill="none" />
+                                                                        <path
+                                                                            d="M15 15m-4 0a4 4 0 1 0 8 0a4 4 0 1 0 -8 0" />
+                                                                        <path d="M18.5 18.5l2.5 2.5" />
+                                                                        <path d="M4 6h16" />
+                                                                        <path d="M4 12h4" />
+                                                                        <path d="M4 18h4" />
+                                                                    </svg>
+                                                                </th>
+                                                                <th class="px-1 th py-1" style="width: 1%">Noform</th>
+                                                                <th class="px-1 th py-1" style="width: 1%">Tanggal</th>
+                                                                <th class="px-1 th py-1" style="width: 1%">Dibuat</th>
+                                                                <th class="px-1 th py-1">List</th>
+                                                            </tr>
+                                                        </tfoot>
                                                     </table>
                                                 </div>
                                                 <div class="tab-pane" id="tabs-items" role="tabpanel">
@@ -942,6 +998,11 @@
             tableKomunikasi.ajax.reload();
         }
 
+        function synFormList() {
+            tableKomunikasi.ajax.reload();
+            tableAccKomunikasi.ajax.reload();
+        }
+
         $(function() {
             var token = $("meta[name='csrf-token']").attr("content");
             tableKaryawan = $('.datatable-karyawan').DataTable({
@@ -974,9 +1035,7 @@
                 },
                 ajax: "{{ route('getKaryawan.index') }}",
                 autoWidth: false,
-                columns: [
-
-                    {
+                columns: [{
                         title: 'STB',
                         data: 'stb',
                         name: 'stb',
@@ -1034,7 +1093,14 @@
                         autoFilter: true,
                         className: 'btn btn-green',
                         text: '<i class="fa fa-file-excel text-white" style="margin-right:5px"></i> Download Excel',
-                        action: newexportaction,
+                        // action: newexportaction,
+                    },
+                    {
+                        className: 'btn btn-dark',
+                        text: '<i class="fa-solid fa-arrows-rotate"></i> Refresh',
+                        action: function(e, dt, node, config) {
+                            dt.ajax.reload();
+                        }
                     },
                 ],
                 "language": {
@@ -1179,13 +1245,10 @@
                 buttons: [
 
                     {
-                        text: '<i class="fa-solid fa-filter" style="margin-right:5px"></i> Saring Surat Komunikasi',
-                        className: 'btn btn-blue',
-                        attr: {
-                            'href': '#offcanvasEnd-acc',
-                            'data-bs-toggle': 'offcanvas',
-                            'role': 'button',
-                            'aria-controls': 'offcanvasEnd',
+                        className: 'btn btn-dark',
+                        text: '<i class="fa-solid fa-arrows-rotate"></i> Refresh',
+                        action: function(e, dt, node, config) {
+                            dt.ajax.reload();
                         }
                     },
                     {
@@ -1193,7 +1256,7 @@
                         autoFilter: true,
                         className: 'btn btn-green',
                         text: '<i class="fa fa-file-excel text-white" style="margin-right:5px"></i> Download Excel',
-                        action: newexportaction,
+                        // action: newexportaction,
                     },
                     {
                         className: 'btn btn-red',
@@ -1224,7 +1287,14 @@
                         }
                     },
                 },
-                ajax: "{{ route('getAccKomunikasi.index') }}",
+                "ajax": {
+                    "url": "{{ route('getAccKomunikasi.index') }}",
+                    "data": function(data) {
+                        data._token = "{{ csrf_token() }}";
+                        data.dari = $('#idfilter_acc_dari').val();
+                        data.sampai = $('#idfilter_acc_sampai').val();
+                    }
+                },
                 autoWidth: false,
                 select: {
                     'style': 'multi',
@@ -1265,7 +1335,51 @@
                         name: 'dibuat',
                         className: 'cuspad0 text-center',
                     },
+                    {
+                        title: 'List',
+                        data: 'list',
+                        name: 'list',
+                        className: 'cuspad0 text-start',
+                    },
                 ],
+                "initComplete": function() {
+                    this.api()
+                        .columns()
+                        .every(function() {
+                            var that = this;
+                            $('input', this.footer()).on('keyup change clear', function() {
+                                if (that.search() !== this.value) {
+                                    that.search(this.value).draw();
+                                }
+                            });
+                        });
+                    this.api().columns([3]).every(function() {
+                        var column = this;
+                        var select = $(
+                                '<select class="form-select form-select-sm"><option value="">Semua</option></select>'
+                            )
+                            .appendTo($(column.footer()).empty())
+                            .on('change', function() {
+                                var val = $.fn.dataTable.util.escapeRegex(
+                                    $(this).val()
+                                );
+                                column
+                                    .search(val ? '^' + val + '$' : '', true, false)
+                                    .draw();
+                            });
+                        column.data().unique().sort().each(function(d, j) {
+                            select.append('<option value="' + d + '">' + d +
+                                '</option>');
+                        });
+                    });
+                }
+            });
+            $('.datatable-acc-komunikasi tfoot .th').each(function() {
+                var title = $(this).text();
+                $(this).html(
+                    '<input type="text" class="form-control form-control-sm my-0 border" placeholder="' +
+                    $(this).text().toUpperCase() + '" />'
+                );
             });
 
             tableAccItems = $('.datatable-acc-items').DataTable({

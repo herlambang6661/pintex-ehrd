@@ -810,7 +810,7 @@ class Absensi extends Controller
             } else {
                 $tgl2 = $request->tanggalitm[$i];
             }
-
+            $getDataKaryawan = DB::table('penerimaan_karyawan')->select('nama')->where('userid', $request->userid[$i])->first();
             // for ($j = 0; $j < $jmlTgl; $j++) {
             $checkitm = DB::table('absensi_komunikasiitm')->insert([
                 'entitas' => 'PINTEX',
@@ -818,7 +818,7 @@ class Absensi extends Controller
                 'tanggal' => $request->tanggalitm[$i],
                 'tanggal2' => $tgl2,
                 'userid' => $request->userid[$i],
-                'nama' => $request->nama[$i],
+                'nama' => $getDataKaryawan->nama,
                 'suratid' => $request->suratid[$i],
                 'sst' => $request->sst[$i],
                 'keterangan' => $request->keterangan[$i],

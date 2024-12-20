@@ -23,27 +23,27 @@ class DataACCKomunikasi extends Controller
     {
         if ($request->ajax()) {
             // Set Dari tanggal
-            // if ($request->dari) {
-            //     $dari = $request->dari;
-            // } else {
-            //     $dari = date('Y-m-01');
-            // }
-            // // Set Sampai tanggal
-            // if ($request->sampai) {
-            //     $sampai = $request->sampai;
-            // } else {
-            //     $sampai = date('Y-m-d');
-            // }
-            // $data = DB::table('absensi_komunikasiitm AS b')
-            //     ->select('b.id', 'b.noform', 'b.tanggal', 'b.nama', 'b.suratid', 'b.sst', 'b.keterangan', 'b.statussurat')
-            //     ->whereBetween('b.tanggal', [date('Y-m-01'), date('Y-m-t')])
-            //     ->where('statussurat', 'PENGAJUAN')
-            //     ->orderBy('b.id', 'desc')
-            //     ->get();
+            if ($request->dari) {
+                $dari = $request->dari;
+            } else {
+                $dari = date('Y-m-01');
+            }
+            // Set Sampai tanggal
+            if ($request->sampai) {
+                $sampai = $request->sampai;
+            } else {
+                $sampai = date('Y-m-d');
+            }
             $data = DB::table('absensi_komunikasi AS b')
-                // ->whereBetween('b.tanggal', [$dari, $sampai])
+                // ->select('b.id', 'b.noform', 'b.tanggal', 'b.nama', 'b.suratid', 'b.sst', 'b.keterangan', 'b.statussurat')
+                ->whereBetween('b.tanggal', [$dari, $sampai])
+                // ->where('statussurat', 'PENGAJUAN')
                 ->orderBy('b.id', 'desc')
                 ->get();
+            // $data = DB::table('absensi_komunikasi AS b')
+            // ->whereBetween('b.tanggal', [$dari, $sampai])
+            // ->orderBy('b.id', 'desc')
+            // ->get();
             return DataTables::of($data)
                 ->addIndexColumn()
 
@@ -54,6 +54,12 @@ class DataACCKomunikasi extends Controller
                 ->addColumn('tanggal', function ($row) {
                     $tgl = Carbon::parse($row->tanggal)->format('d/m/Y');
                     return $tgl;
+                })
+                ->addColumn('list', function ($row) {
+                    $list = DB::table('absensi_komunikasiitm')->select('nama')->where('noform', $row->noform)->get();
+                    // return $list->count() . ' Item : ' . implode(', ', $list->pluck('nama' . 'tanggal')->toArray());
+                    // return $list->count() . ' Item : ' . $list->implode('nama', ', ')->limit(50);
+                    return $list->count() . ' Item : ' . $list->implode('nama', ', ');
                 })
 
                 // ->addColumn('statussurat', function ($row) {
@@ -75,7 +81,7 @@ class DataACCKomunikasi extends Controller
                 //         return $btn;
                 //     }
                 // })
-                ->rawColumns(['action', 'statussurat', 'select_orders'])
+                ->rawColumns(['action', 'statussurat', 'select_orders', 'list'])
                 ->make(true);
         }
         return view('products.03_absensi.komunikasi');
