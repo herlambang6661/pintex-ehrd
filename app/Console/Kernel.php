@@ -13,15 +13,15 @@ class Kernel extends ConsoleKernel
     protected $commands = [
         Commands\ScheduleLegalitas::class,
         Commands\ScheduleKomunikasi::class,
-        Commands\ScheduleKaryawanUmum::class,
+        Commands\ScheduleUpdateDataCuti::class,
     ];
 
     protected function schedule(Schedule $schedule): void
     {
         // $schedule->command('inspire')->hourly();
         $schedule->command('komunikasi:cron')->dailyAt('01:00')->timezone('Asia/Jakarta');
-        $schedule->command('karyawanumum:cron')->dailyAt('04:00')->timezone('Asia/Jakarta');
-        $schedule->command('legalitas:cron')->dailyAt('06:00')->timezone('Asia/Jakarta');
+        $schedule->command('datacuti:cron')->dailyAt('03:00')->timezone('Asia/Jakarta');
+        $schedule->command('legalitas:cron')->dailyAt('05:00')->timezone('Asia/Jakarta');
         $schedule->command('cache: clear')->daily();
     }
 
